@@ -1,10 +1,10 @@
-// Generated from if_simple_dynamic.mod.py
+// Generated from if_simple_unknown_rank.mod.py
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
 using namespace test_helper;
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_true() {
     static TestModel model = {
@@ -71,7 +71,7 @@ const TestModel& get_test_model_true() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -175,11 +175,11 @@ const TestModel& get_test_model_true() {
     return model;
 }
 
-const auto dummy_test_model_true = TestModelManager::get().add("if_simple_dynamic_true", get_test_model_true());
+const auto dummy_test_model_true = TestModelManager::get().add("if_simple_unknown_rank_true", get_test_model_true());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_true_all_inputs_as_internal() {
     static TestModel model = {
@@ -280,7 +280,7 @@ const TestModel& get_test_model_true_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -384,11 +384,11 @@ const TestModel& get_test_model_true_all_inputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_true_all_inputs_as_internal = TestModelManager::get().add("if_simple_dynamic_true_all_inputs_as_internal", get_test_model_true_all_inputs_as_internal());
+const auto dummy_test_model_true_all_inputs_as_internal = TestModelManager::get().add("if_simple_unknown_rank_true_all_inputs_as_internal", get_test_model_true_all_inputs_as_internal());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_true_all_outputs_as_internal() {
     static TestModel model = {
@@ -489,7 +489,7 @@ const TestModel& get_test_model_true_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {7}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -593,11 +593,11 @@ const TestModel& get_test_model_true_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_true_all_outputs_as_internal = TestModelManager::get().add("if_simple_dynamic_true_all_outputs_as_internal", get_test_model_true_all_outputs_as_internal());
+const auto dummy_test_model_true_all_outputs_as_internal = TestModelManager::get().add("if_simple_unknown_rank_true_all_outputs_as_internal", get_test_model_true_all_outputs_as_internal());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_true_relaxed() {
     static TestModel model = {
@@ -768,11 +768,11 @@ const TestModel& get_test_model_true_relaxed() {
     return model;
 }
 
-const auto dummy_test_model_true_relaxed = TestModelManager::get().add("if_simple_dynamic_true_relaxed", get_test_model_true_relaxed());
+const auto dummy_test_model_true_relaxed = TestModelManager::get().add("if_simple_unknown_rank_true_relaxed", get_test_model_true_relaxed());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_true_relaxed_all_inputs_as_internal() {
     static TestModel model = {
@@ -977,11 +977,11 @@ const TestModel& get_test_model_true_relaxed_all_inputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_true_relaxed_all_inputs_as_internal = TestModelManager::get().add("if_simple_dynamic_true_relaxed_all_inputs_as_internal", get_test_model_true_relaxed_all_inputs_as_internal());
+const auto dummy_test_model_true_relaxed_all_inputs_as_internal = TestModelManager::get().add("if_simple_unknown_rank_true_relaxed_all_inputs_as_internal", get_test_model_true_relaxed_all_inputs_as_internal());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_true_relaxed_all_outputs_as_internal() {
     static TestModel model = {
@@ -1186,11 +1186,11 @@ const TestModel& get_test_model_true_relaxed_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_true_relaxed_all_outputs_as_internal = TestModelManager::get().add("if_simple_dynamic_true_relaxed_all_outputs_as_internal", get_test_model_true_relaxed_all_outputs_as_internal());
+const auto dummy_test_model_true_relaxed_all_outputs_as_internal = TestModelManager::get().add("if_simple_unknown_rank_true_relaxed_all_outputs_as_internal", get_test_model_true_relaxed_all_outputs_as_internal());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_true_float16() {
     static TestModel model = {
@@ -1257,7 +1257,7 @@ const TestModel& get_test_model_true_float16() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -1361,11 +1361,11 @@ const TestModel& get_test_model_true_float16() {
     return model;
 }
 
-const auto dummy_test_model_true_float16 = TestModelManager::get().add("if_simple_dynamic_true_float16", get_test_model_true_float16());
+const auto dummy_test_model_true_float16 = TestModelManager::get().add("if_simple_unknown_rank_true_float16", get_test_model_true_float16());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_true_float16_all_inputs_as_internal() {
     static TestModel model = {
@@ -1466,7 +1466,7 @@ const TestModel& get_test_model_true_float16_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -1570,11 +1570,11 @@ const TestModel& get_test_model_true_float16_all_inputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_true_float16_all_inputs_as_internal = TestModelManager::get().add("if_simple_dynamic_true_float16_all_inputs_as_internal", get_test_model_true_float16_all_inputs_as_internal());
+const auto dummy_test_model_true_float16_all_inputs_as_internal = TestModelManager::get().add("if_simple_unknown_rank_true_float16_all_inputs_as_internal", get_test_model_true_float16_all_inputs_as_internal());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_true_float16_all_outputs_as_internal() {
     static TestModel model = {
@@ -1675,7 +1675,7 @@ const TestModel& get_test_model_true_float16_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {7}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -1779,11 +1779,11 @@ const TestModel& get_test_model_true_float16_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_true_float16_all_outputs_as_internal = TestModelManager::get().add("if_simple_dynamic_true_float16_all_outputs_as_internal", get_test_model_true_float16_all_outputs_as_internal());
+const auto dummy_test_model_true_float16_all_outputs_as_internal = TestModelManager::get().add("if_simple_unknown_rank_true_float16_all_outputs_as_internal", get_test_model_true_float16_all_outputs_as_internal());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_true_int32() {
     static TestModel model = {
@@ -1850,7 +1850,7 @@ const TestModel& get_test_model_true_int32() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -1954,11 +1954,11 @@ const TestModel& get_test_model_true_int32() {
     return model;
 }
 
-const auto dummy_test_model_true_int32 = TestModelManager::get().add("if_simple_dynamic_true_int32", get_test_model_true_int32());
+const auto dummy_test_model_true_int32 = TestModelManager::get().add("if_simple_unknown_rank_true_int32", get_test_model_true_int32());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_true_quant8() {
     static TestModel model = {
@@ -2025,7 +2025,7 @@ const TestModel& get_test_model_true_quant8() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -2129,11 +2129,11 @@ const TestModel& get_test_model_true_quant8() {
     return model;
 }
 
-const auto dummy_test_model_true_quant8 = TestModelManager::get().add("if_simple_dynamic_true_quant8", get_test_model_true_quant8());
+const auto dummy_test_model_true_quant8 = TestModelManager::get().add("if_simple_unknown_rank_true_quant8", get_test_model_true_quant8());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_true_quant8_all_inputs_as_internal() {
     static TestModel model = {
@@ -2234,7 +2234,7 @@ const TestModel& get_test_model_true_quant8_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -2338,11 +2338,11 @@ const TestModel& get_test_model_true_quant8_all_inputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_true_quant8_all_inputs_as_internal = TestModelManager::get().add("if_simple_dynamic_true_quant8_all_inputs_as_internal", get_test_model_true_quant8_all_inputs_as_internal());
+const auto dummy_test_model_true_quant8_all_inputs_as_internal = TestModelManager::get().add("if_simple_unknown_rank_true_quant8_all_inputs_as_internal", get_test_model_true_quant8_all_inputs_as_internal());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_true_quant8_all_outputs_as_internal() {
     static TestModel model = {
@@ -2443,7 +2443,7 @@ const TestModel& get_test_model_true_quant8_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {7}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -2547,11 +2547,11 @@ const TestModel& get_test_model_true_quant8_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_true_quant8_all_outputs_as_internal = TestModelManager::get().add("if_simple_dynamic_true_quant8_all_outputs_as_internal", get_test_model_true_quant8_all_outputs_as_internal());
+const auto dummy_test_model_true_quant8_all_outputs_as_internal = TestModelManager::get().add("if_simple_unknown_rank_true_quant8_all_outputs_as_internal", get_test_model_true_quant8_all_outputs_as_internal());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_true_quant8_signed() {
     static TestModel model = {
@@ -2618,7 +2618,7 @@ const TestModel& get_test_model_true_quant8_signed() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -2722,11 +2722,11 @@ const TestModel& get_test_model_true_quant8_signed() {
     return model;
 }
 
-const auto dummy_test_model_true_quant8_signed = TestModelManager::get().add("if_simple_dynamic_true_quant8_signed", get_test_model_true_quant8_signed());
+const auto dummy_test_model_true_quant8_signed = TestModelManager::get().add("if_simple_unknown_rank_true_quant8_signed", get_test_model_true_quant8_signed());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_true_quant8_signed_all_inputs_as_internal() {
     static TestModel model = {
@@ -2827,7 +2827,7 @@ const TestModel& get_test_model_true_quant8_signed_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -2931,11 +2931,11 @@ const TestModel& get_test_model_true_quant8_signed_all_inputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_true_quant8_signed_all_inputs_as_internal = TestModelManager::get().add("if_simple_dynamic_true_quant8_signed_all_inputs_as_internal", get_test_model_true_quant8_signed_all_inputs_as_internal());
+const auto dummy_test_model_true_quant8_signed_all_inputs_as_internal = TestModelManager::get().add("if_simple_unknown_rank_true_quant8_signed_all_inputs_as_internal", get_test_model_true_quant8_signed_all_inputs_as_internal());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_true_quant8_signed_all_outputs_as_internal() {
     static TestModel model = {
@@ -3036,7 +3036,7 @@ const TestModel& get_test_model_true_quant8_signed_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {7}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -3140,11 +3140,11 @@ const TestModel& get_test_model_true_quant8_signed_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_true_quant8_signed_all_outputs_as_internal = TestModelManager::get().add("if_simple_dynamic_true_quant8_signed_all_outputs_as_internal", get_test_model_true_quant8_signed_all_outputs_as_internal());
+const auto dummy_test_model_true_quant8_signed_all_outputs_as_internal = TestModelManager::get().add("if_simple_unknown_rank_true_quant8_signed_all_outputs_as_internal", get_test_model_true_quant8_signed_all_outputs_as_internal());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_false() {
     static TestModel model = {
@@ -3211,7 +3211,7 @@ const TestModel& get_test_model_false() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -3315,11 +3315,11 @@ const TestModel& get_test_model_false() {
     return model;
 }
 
-const auto dummy_test_model_false = TestModelManager::get().add("if_simple_dynamic_false", get_test_model_false());
+const auto dummy_test_model_false = TestModelManager::get().add("if_simple_unknown_rank_false", get_test_model_false());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_false_all_inputs_as_internal() {
     static TestModel model = {
@@ -3420,7 +3420,7 @@ const TestModel& get_test_model_false_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -3524,11 +3524,11 @@ const TestModel& get_test_model_false_all_inputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_false_all_inputs_as_internal = TestModelManager::get().add("if_simple_dynamic_false_all_inputs_as_internal", get_test_model_false_all_inputs_as_internal());
+const auto dummy_test_model_false_all_inputs_as_internal = TestModelManager::get().add("if_simple_unknown_rank_false_all_inputs_as_internal", get_test_model_false_all_inputs_as_internal());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_false_all_outputs_as_internal() {
     static TestModel model = {
@@ -3629,7 +3629,7 @@ const TestModel& get_test_model_false_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {7}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -3733,11 +3733,11 @@ const TestModel& get_test_model_false_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_false_all_outputs_as_internal = TestModelManager::get().add("if_simple_dynamic_false_all_outputs_as_internal", get_test_model_false_all_outputs_as_internal());
+const auto dummy_test_model_false_all_outputs_as_internal = TestModelManager::get().add("if_simple_unknown_rank_false_all_outputs_as_internal", get_test_model_false_all_outputs_as_internal());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_false_relaxed() {
     static TestModel model = {
@@ -3908,11 +3908,11 @@ const TestModel& get_test_model_false_relaxed() {
     return model;
 }
 
-const auto dummy_test_model_false_relaxed = TestModelManager::get().add("if_simple_dynamic_false_relaxed", get_test_model_false_relaxed());
+const auto dummy_test_model_false_relaxed = TestModelManager::get().add("if_simple_unknown_rank_false_relaxed", get_test_model_false_relaxed());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_false_relaxed_all_inputs_as_internal() {
     static TestModel model = {
@@ -4117,11 +4117,11 @@ const TestModel& get_test_model_false_relaxed_all_inputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_false_relaxed_all_inputs_as_internal = TestModelManager::get().add("if_simple_dynamic_false_relaxed_all_inputs_as_internal", get_test_model_false_relaxed_all_inputs_as_internal());
+const auto dummy_test_model_false_relaxed_all_inputs_as_internal = TestModelManager::get().add("if_simple_unknown_rank_false_relaxed_all_inputs_as_internal", get_test_model_false_relaxed_all_inputs_as_internal());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_false_relaxed_all_outputs_as_internal() {
     static TestModel model = {
@@ -4326,11 +4326,11 @@ const TestModel& get_test_model_false_relaxed_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_false_relaxed_all_outputs_as_internal = TestModelManager::get().add("if_simple_dynamic_false_relaxed_all_outputs_as_internal", get_test_model_false_relaxed_all_outputs_as_internal());
+const auto dummy_test_model_false_relaxed_all_outputs_as_internal = TestModelManager::get().add("if_simple_unknown_rank_false_relaxed_all_outputs_as_internal", get_test_model_false_relaxed_all_outputs_as_internal());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_false_float16() {
     static TestModel model = {
@@ -4397,7 +4397,7 @@ const TestModel& get_test_model_false_float16() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -4501,11 +4501,11 @@ const TestModel& get_test_model_false_float16() {
     return model;
 }
 
-const auto dummy_test_model_false_float16 = TestModelManager::get().add("if_simple_dynamic_false_float16", get_test_model_false_float16());
+const auto dummy_test_model_false_float16 = TestModelManager::get().add("if_simple_unknown_rank_false_float16", get_test_model_false_float16());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_false_float16_all_inputs_as_internal() {
     static TestModel model = {
@@ -4606,7 +4606,7 @@ const TestModel& get_test_model_false_float16_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -4710,11 +4710,11 @@ const TestModel& get_test_model_false_float16_all_inputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_false_float16_all_inputs_as_internal = TestModelManager::get().add("if_simple_dynamic_false_float16_all_inputs_as_internal", get_test_model_false_float16_all_inputs_as_internal());
+const auto dummy_test_model_false_float16_all_inputs_as_internal = TestModelManager::get().add("if_simple_unknown_rank_false_float16_all_inputs_as_internal", get_test_model_false_float16_all_inputs_as_internal());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_false_float16_all_outputs_as_internal() {
     static TestModel model = {
@@ -4815,7 +4815,7 @@ const TestModel& get_test_model_false_float16_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {7}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -4919,11 +4919,11 @@ const TestModel& get_test_model_false_float16_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_false_float16_all_outputs_as_internal = TestModelManager::get().add("if_simple_dynamic_false_float16_all_outputs_as_internal", get_test_model_false_float16_all_outputs_as_internal());
+const auto dummy_test_model_false_float16_all_outputs_as_internal = TestModelManager::get().add("if_simple_unknown_rank_false_float16_all_outputs_as_internal", get_test_model_false_float16_all_outputs_as_internal());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_false_int32() {
     static TestModel model = {
@@ -4990,7 +4990,7 @@ const TestModel& get_test_model_false_int32() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -5094,11 +5094,11 @@ const TestModel& get_test_model_false_int32() {
     return model;
 }
 
-const auto dummy_test_model_false_int32 = TestModelManager::get().add("if_simple_dynamic_false_int32", get_test_model_false_int32());
+const auto dummy_test_model_false_int32 = TestModelManager::get().add("if_simple_unknown_rank_false_int32", get_test_model_false_int32());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_false_quant8() {
     static TestModel model = {
@@ -5165,7 +5165,7 @@ const TestModel& get_test_model_false_quant8() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -5269,11 +5269,11 @@ const TestModel& get_test_model_false_quant8() {
     return model;
 }
 
-const auto dummy_test_model_false_quant8 = TestModelManager::get().add("if_simple_dynamic_false_quant8", get_test_model_false_quant8());
+const auto dummy_test_model_false_quant8 = TestModelManager::get().add("if_simple_unknown_rank_false_quant8", get_test_model_false_quant8());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_false_quant8_all_inputs_as_internal() {
     static TestModel model = {
@@ -5374,7 +5374,7 @@ const TestModel& get_test_model_false_quant8_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -5478,11 +5478,11 @@ const TestModel& get_test_model_false_quant8_all_inputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_false_quant8_all_inputs_as_internal = TestModelManager::get().add("if_simple_dynamic_false_quant8_all_inputs_as_internal", get_test_model_false_quant8_all_inputs_as_internal());
+const auto dummy_test_model_false_quant8_all_inputs_as_internal = TestModelManager::get().add("if_simple_unknown_rank_false_quant8_all_inputs_as_internal", get_test_model_false_quant8_all_inputs_as_internal());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_false_quant8_all_outputs_as_internal() {
     static TestModel model = {
@@ -5583,7 +5583,7 @@ const TestModel& get_test_model_false_quant8_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {7}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -5687,11 +5687,11 @@ const TestModel& get_test_model_false_quant8_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_false_quant8_all_outputs_as_internal = TestModelManager::get().add("if_simple_dynamic_false_quant8_all_outputs_as_internal", get_test_model_false_quant8_all_outputs_as_internal());
+const auto dummy_test_model_false_quant8_all_outputs_as_internal = TestModelManager::get().add("if_simple_unknown_rank_false_quant8_all_outputs_as_internal", get_test_model_false_quant8_all_outputs_as_internal());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_false_quant8_signed() {
     static TestModel model = {
@@ -5758,7 +5758,7 @@ const TestModel& get_test_model_false_quant8_signed() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -5862,11 +5862,11 @@ const TestModel& get_test_model_false_quant8_signed() {
     return model;
 }
 
-const auto dummy_test_model_false_quant8_signed = TestModelManager::get().add("if_simple_dynamic_false_quant8_signed", get_test_model_false_quant8_signed());
+const auto dummy_test_model_false_quant8_signed = TestModelManager::get().add("if_simple_unknown_rank_false_quant8_signed", get_test_model_false_quant8_signed());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_false_quant8_signed_all_inputs_as_internal() {
     static TestModel model = {
@@ -5967,7 +5967,7 @@ const TestModel& get_test_model_false_quant8_signed_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -6071,11 +6071,11 @@ const TestModel& get_test_model_false_quant8_signed_all_inputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_false_quant8_signed_all_inputs_as_internal = TestModelManager::get().add("if_simple_dynamic_false_quant8_signed_all_inputs_as_internal", get_test_model_false_quant8_signed_all_inputs_as_internal());
+const auto dummy_test_model_false_quant8_signed_all_inputs_as_internal = TestModelManager::get().add("if_simple_unknown_rank_false_quant8_signed_all_inputs_as_internal", get_test_model_false_quant8_signed_all_inputs_as_internal());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
-namespace generated_tests::if_simple_dynamic {
+namespace generated_tests::if_simple_unknown_rank {
 
 const TestModel& get_test_model_false_quant8_signed_all_outputs_as_internal() {
     static TestModel model = {
@@ -6176,7 +6176,7 @@ const TestModel& get_test_model_false_quant8_signed_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {7}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -6280,7 +6280,7 @@ const TestModel& get_test_model_false_quant8_signed_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_false_quant8_signed_all_outputs_as_internal = TestModelManager::get().add("if_simple_dynamic_false_quant8_signed_all_outputs_as_internal", get_test_model_false_quant8_signed_all_outputs_as_internal());
+const auto dummy_test_model_false_quant8_signed_all_outputs_as_internal = TestModelManager::get().add("if_simple_unknown_rank_false_quant8_signed_all_outputs_as_internal", get_test_model_false_quant8_signed_all_outputs_as_internal());
 
-}  // namespace generated_tests::if_simple_dynamic
+}  // namespace generated_tests::if_simple_unknown_rank
 
