@@ -7,10 +7,12 @@ import("//common-mk/pkg_config.gni")
 group("all") {
   deps = [
     ":libneuralnetworks",
+    ":driver_cache",
   ]
   if (use.test) {
     deps += [
       ":chromeos_testrunner",
+      ":driver_cache_testrunner",
       ":runtime_testrunner",
     ]
   }
@@ -295,6 +297,42 @@ if (use.test) {
     sources = [
       "chromeos/tests/common/includes_test.cc",
       "chromeos/tests/common/random_test.cc",
+    ]
+  }
+}
+
+static_library("driver_cache") {
+  configs += [
+    ":target_defaults",
+    "//common-mk:pic",
+  ]
+  include_dirs = [
+    "driver/cache/BlobCache",
+    "driver/cache/nnCache",
+  ]
+  sources = [
+    "driver/cache/BlobCache/BlobCache.cpp",
+    "driver/cache/nnCache/nnCache.cpp",
+  ]
+}
+
+if (use.test) {
+  executable("driver_cache_testrunner") {
+    include_dirs = [
+      "driver/cache/BlobCache",
+      "driver/cache/nNCache"
+    ]
+    configs += [
+      ":target_defaults",
+      "//common-mk:test",
+    ]
+    deps = [
+      ":driver_cache",
+      "//common-mk/testrunner:testrunner",
+    ]
+    sources = [
+      "driver/cache/BlobCache/BlobCache_test.cpp",
+      "driver/cache/nnCache/nnCache_test.cpp",
     ]
   }
 }
