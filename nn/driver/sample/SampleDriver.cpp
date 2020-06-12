@@ -20,7 +20,9 @@
 
 #include <android-base/logging.h>
 #include <android-base/properties.h>
+#if !defined(NNAPI_CHROMEOS)
 #include <hidl/LegacySupport.h>
+#endif
 
 #include <algorithm>
 #include <chrono>
@@ -300,6 +302,7 @@ Return<void> SampleDriver::allocate(const V1_3::BufferDesc& desc,
 }
 
 int SampleDriver::run() {
+#if !defined(NNAPI_CHROMEOS)
     android::hardware::configureRpcThreadpool(4, true);
     if (registerAsService(mName) != android::OK) {
         LOG(ERROR) << "Could not register service";
@@ -307,6 +310,7 @@ int SampleDriver::run() {
     }
     android::hardware::joinRpcThreadpool();
     LOG(ERROR) << "Service exited!";
+#endif
     return 1;
 }
 

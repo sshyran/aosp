@@ -17,7 +17,9 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_DRIVER_SAMPLE_SAMPLE_DRIVER_H
 #define ANDROID_FRAMEWORKS_ML_NN_DRIVER_SAMPLE_SAMPLE_DRIVER_H
 
+#if !defined(NNAPI_CHROMEOS)
 #include <hwbinder/IPCThreadState.h>
+#endif
 
 #include <memory>
 #include <string>

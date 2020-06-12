@@ -8,6 +8,7 @@ group("all") {
   deps = [
     ":libneuralnetworks",
     ":driver_cache",
+    ":vendor-nn-hal",
   ]
   if (use.test) {
     deps += [
@@ -397,4 +398,27 @@ if (use.test) {
       "driver/cache/nnCache/nnCache_test.cpp",
     ]
   }
+}
+
+shared_library("vendor-nn-hal") {
+  deps = [
+    ":sample_driver",
+  ]
+}
+
+static_library("sample_driver") {
+  configs += [
+    ":common_defaults",
+    ":target_defaults",
+    "//common-mk:pic",
+  ]
+  include_dirs = [
+    "driver/sample",
+    "runtime/include",
+  ]
+  sources = [
+    "driver/sample/SampleDriver.cpp",
+    "driver/sample/SampleDriverFull.cpp",
+    "driver/sample/SampleDriverUtils.cpp",
+  ]
 }

@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
+#if !defined(NNAPI_CHROMEOS)
 #include <hwbinder/IPCThreadState.h>
+#endif
 
 #include <thread>
 
@@ -49,7 +51,11 @@ hal::ErrorStatus prepareModelBase(const T_Model& model, const SampleDriver* driv
                                   const hal::OptionalTimePoint& halDeadline,
                                   const sp<T_IPreparedModelCallback>& callback,
                                   bool isFullModelSupported = true) {
+#if !defined(NNAPI_CHROMEOS)
     const uid_t userId = hardware::IPCThreadState::self()->getCallingUid();
+#else
+    const uid_t userId = getuid();
+#endif
     if (callback.get() == nullptr) {
         LOG(ERROR) << "invalid callback passed to prepareModelBase";
         return hal::ErrorStatus::INVALID_ARGUMENT;
