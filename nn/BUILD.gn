@@ -260,6 +260,8 @@ static_library("common") {
   deps = [
   ]
   cflags_cc = [
+    # Utils.cpp has unused parameters
+    "-Wno-unused-parameter",
   ]
   include_dirs = [
     "runtime/include",
@@ -279,7 +281,7 @@ static_library("common") {
     "common/OperationsUtils.cpp",
     "common/QuantUtils.cpp",
     "common/TokenHasher.cpp",
-    #"common/Utils.cpp",                    # sys/system_properties.h not found
+    "common/Utils.cpp",
     #"common/UtilsTest.cpp",                # must be compiled as a standalone test
     "common/ValidateHal.cpp",
   ]

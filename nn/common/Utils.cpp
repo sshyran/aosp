@@ -23,7 +23,10 @@
 #include <android-base/strings.h>
 #include <errno.h>
 #include <poll.h>
-#include <sys/system_properties.h>
+// TODO(avg): upstream this IWYU fix. (cfloat included for FLT_MAX.
+// system_properties.h is not required otherwise.)
+#include <cfloat>
+//#include <sys/system_properties.h>
 
 #include <algorithm>
 #include <functional>
