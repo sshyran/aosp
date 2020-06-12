@@ -633,13 +633,22 @@ int ExecutionPlan::CompoundBody::finish(const SourceModels* sourceModels,
                 return n;
             }
         } else if (IfStep* step = logicalStep->tryIfStep()) {
-            if (containsUnknownSize(step->outerOutputOperands)) {
-                mHasStepModelOutputOfUnknownSize = true;
-            }
+            // The partitioner does not support dynamic temporaries (b/132458982).
+            CHECK(!containsUnknownSize(step->outerInputOperands));
+            CHECK(!containsUnknownSize(step->outerOutputOperands));
+            // step->conditionOperandIndex has a static shape. See b/158557728.
+            CHECK(!containsUnknownSize(step->thenBranchInputOperands));
+            CHECK(!containsUnknownSize(step->thenBranchOutputOperands));
+            CHECK(!containsUnknownSize(step->elseBranchInputOperands));
+            CHECK(!containsUnknownSize(step->elseBranchOutputOperands));
         } else if (WhileStep* step = logicalStep->tryWhileStep()) {
-            if (containsUnknownSize(step->outerOutputOperands)) {
-                mHasStepModelOutputOfUnknownSize = true;
-            }
+            // The partitioner does not support dynamic temporaries (b/132458982).
+            CHECK(!containsUnknownSize(step->outerInputOperands));
+            CHECK(!containsUnknownSize(step->outerOutputOperands));
+            CHECK(!containsUnknownSize(step->condInputOperands));
+            // step->condOutputOperand has a static shape. See b/158557728.
+            CHECK(!containsUnknownSize(step->bodyInputOperands));
+            CHECK(!containsUnknownSize(step->bodyOutputOperands));
         } else {
             CHECK(logicalStep->isGoto());
         }
@@ -1629,14 +1638,18 @@ int ModelBuilder::partitionTheWorkInternal(uint32_t sourceModelIndex,
     // A special value produced by findBestDeviceForEachOperation meaning that
     // this is a control flow operation scheduled for interpreted execution
     // (see LogicalStep).
-    const int kControlFlow = deviceCount;
+    const int kControlFlowInterpreter = deviceCount;
 
-    // If one device will run all the operations, we don't need to split the work.
+    // If one device will run all the operations, we don't need to split the
+    // work. This shortcut does not apply when recursively partitioning
+    // referenced models because our plan representation is flat.
     if (sourceModelIndex == kMainModelInSourceModels &&
         std::adjacent_find(bestDeviceForOperation.begin(), bestDeviceForOperation.end(),
                            std::not_equal_to<int>()) == bestDeviceForOperation.end()) {
         const int bestDeviceIndex = bestDeviceForOperation[0];
-        if (bestDeviceIndex != kControlFlow) {  // The model is not a single control flow operation.
+        // Bypass the partitioning process unless the only operation is a
+        // control flow operation scheduled for interpreted execution.
+        if (bestDeviceIndex != kControlFlowInterpreter) {
             VLOG(COMPILATION) << "ModelBuilder::partitionTheWork: only one best device: "
                               << bestDeviceIndex << " = " << devices[bestDeviceIndex]->getName();
             plan->becomeSingleStep(devices[bestDeviceIndex], this);
@@ -1686,7 +1699,7 @@ int ModelBuilder::partitionTheWorkInternal(uint32_t sourceModelIndex,
 
         // Assign as much as possible to this device.
         auto& queue = perDeviceQueue[deviceIndex];
-        if (deviceIndex != kControlFlow) {
+        if (deviceIndex != kControlFlowInterpreter) {
             ExecutionStep* step =
                     plan->createNewExecutionStep(sourceModelIndex, devices[deviceIndex]);
             while (!queue.empty()) {
@@ -1899,6 +1912,59 @@ float ModelBuilder::getPerformance(uint32_t preference, const std::shared_ptr<De
     return applyPreference(device->getPerformance(operandType));
 }
 
+bool ModelBuilder::supportedByControlFlowInterpreter(uint32_t operationIndex) const {
+    auto containsUnknownSize = [](const ModelBuilder* model,
+                                  const std::vector<uint32_t>& operandIndexes) {
+        for (uint32_t operandIndex : operandIndexes) {
+            if (hasUnknownSize(model->getOperand(operandIndex))) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    const Operation& operation = mOperations[operationIndex];
+
+    if (operation.type == OperationType::IF) {
+        namespace op = operation_if;
+        const Operand& thenOperand = getOperand(operation.inputs[op::kThenModelOperand]);
+        const Operand& elseOperand = getOperand(operation.inputs[op::kElseModelOperand]);
+        const ModelBuilder* thenModel = getReferencedModel(thenOperand);
+        const ModelBuilder* elseModel = getReferencedModel(elseOperand);
+        if (containsUnknownSize(this, operation.inputs) ||
+            containsUnknownSize(this, operation.outputs) ||
+            containsUnknownSize(thenModel, thenModel->getInputOperandIndexes()) ||
+            containsUnknownSize(thenModel, thenModel->getOutputOperandIndexes()) ||
+            containsUnknownSize(elseModel, elseModel->getInputOperandIndexes()) ||
+            containsUnknownSize(elseModel, elseModel->getOutputOperandIndexes())) {
+            // The partitioner does not support dynamic temporaries (b/132458982).
+            return false;
+        }
+        return true;
+    }
+
+    if (operation.type == OperationType::WHILE) {
+        namespace op = operation_while;
+        const Operand& condOperand = getOperand(operation.inputs[op::kCondModelOperand]);
+        const Operand& bodyOperand = getOperand(operation.inputs[op::kBodyModelOperand]);
+        const ModelBuilder* condModel = getReferencedModel(condOperand);
+        const ModelBuilder* bodyModel = getReferencedModel(bodyOperand);
+        if (containsUnknownSize(this, operation.inputs) ||
+            containsUnknownSize(this, operation.outputs) ||
+            containsUnknownSize(condModel, condModel->getInputOperandIndexes()) ||
+            containsUnknownSize(condModel, condModel->getOutputOperandIndexes()) ||
+            containsUnknownSize(bodyModel, bodyModel->getInputOperandIndexes()) ||
+            containsUnknownSize(bodyModel, bodyModel->getOutputOperandIndexes())) {
+            // The partitioner does not support dynamic temporaries (b/132458982).
+            return false;
+        }
+        return true;
+    }
+
+    // Not a control flow operation.
+    return false;
+}
+
 namespace {
 
 // This class determines whether a given device can execute a given operation
@@ -1959,12 +2025,11 @@ int ModelBuilder::findBestDeviceForEachOperation(
             LOG(ERROR) << "No driver can do operation " << toString(operation.type);
             return ANEURALNETWORKS_BAD_DATA;
         } else if (devices[bestChoice] == DeviceManager::getCpuDevice() &&
-                   (operation.type == OperationType::IF ||
-                    operation.type == OperationType::WHILE)) {
+                   supportedByControlFlowInterpreter(operationIndex)) {
             // Run control flow on the ExecutionPlan::next() interpreter and try
             // to delegate referenced models.
-            const int kControlFlow = deviceCount;
-            (*bestDeviceForOperation)[operationIndex] = kControlFlow;
+            const int kControlFlowInterpreter = deviceCount;
+            (*bestDeviceForOperation)[operationIndex] = kControlFlowInterpreter;
             VLOG(COMPILATION) << "ModelBuilder::findBestDeviceForEachOperation("
                               << toString(operation.type) << ") = -1"
                               << " (NNAPI)";
