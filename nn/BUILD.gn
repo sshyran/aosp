@@ -12,6 +12,7 @@ group("all") {
   if (use.test) {
     deps += [
       ":chromeos_testrunner",
+      ":common_testrunner",
       ":driver_cache_testrunner",
       ":runtime_testrunner",
     ]
@@ -299,8 +300,6 @@ static_library("common") {
     "common/ExecutionBurstServer.cpp",
     "common/GraphDump.cpp",
     "common/IndexedShapeWrapper.cpp",
-    "common/LogTagTest.cpp",
-    "common/LogTagTestExtra.cpp",
     "common/MemoryUtils.cpp",
     "common/MetaModel.cpp",
     "common/OperationResolver.cpp",
@@ -308,9 +307,30 @@ static_library("common") {
     "common/QuantUtils.cpp",
     "common/TokenHasher.cpp",
     "common/Utils.cpp",
-    #"common/UtilsTest.cpp",                # must be compiled as a standalone test
     "common/ValidateHal.cpp",
   ]
+}
+
+
+if (use.test) {
+  executable("common_testrunner") {
+    include_dirs = [
+      "runtime/include",
+    ]
+    configs += [
+      ":common_defaults",
+      "//common-mk:test",
+    ]
+    deps = [
+      ":common",
+      "//common-mk/testrunner:testrunner",
+    ]
+    sources = [
+      "common/LogTagTest.cpp",
+      "common/LogTagTestExtra.cpp",
+      "common/UtilsTest.cpp",
+    ]
+  }
 }
 
 
