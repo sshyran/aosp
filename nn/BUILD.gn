@@ -269,8 +269,8 @@ static_library("common") {
   sources = [
     "common/BufferTracker.cpp",
     "common/CpuExecutor.cpp",
-    # "common/ExecutionBurstController.cpp",  # unused type alias
-    # "common/ExecutionBurstServer.cpp",    # unused type alias
+    "common/ExecutionBurstController.cpp",
+    "common/ExecutionBurstServer.cpp",
     "common/GraphDump.cpp",
     "common/IndexedShapeWrapper.cpp",
     "common/LogTagTest.cpp",

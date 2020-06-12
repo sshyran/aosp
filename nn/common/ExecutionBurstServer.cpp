@@ -360,7 +360,9 @@ void RequestChannelReceiver::invalidate() {
 }
 
 std::optional<std::vector<FmqRequestDatum>> RequestChannelReceiver::getPacketBlocking() {
-    using discriminator = FmqRequestDatum::hidl_discriminator;
+    // Unused type alias
+    // TODO(avg): upstream this change
+    // using discriminator = FmqRequestDatum::hidl_discriminator;
 
     if (mTeardown) {
         return std::nullopt;

@@ -281,7 +281,9 @@ void ResultChannelReceiver::invalidate() {
 }
 
 std::optional<std::vector<FmqResultDatum>> ResultChannelReceiver::getPacketBlocking() {
-    using discriminator = FmqResultDatum::hidl_discriminator;
+    // Unused type alias
+    // TODO(avg): upstream this change
+    //using discriminator = FmqResultDatum::hidl_discriminator;
 
     if (!mValid) {
         return std::nullopt;
