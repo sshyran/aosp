@@ -5441,7 +5441,8 @@ typedef enum {
      * The inputs and outputs of the two referenced models must agree with the
      * signature of this operation. That is, if the operation has (3 + n) inputs
      * and m outputs, both models must have n inputs and m outputs with the same
-     * types as the corresponding operation inputs and outputs.
+     * types, ranks (if specified), and dimensions (if specified) as the
+     * corresponding operation inputs and outputs.
      *
      * Inputs:
      * * 0: A value of type {@link ANEURALNETWORKS_TENSOR_BOOL8} and shape [1]
@@ -5510,13 +5511,13 @@ typedef enum {
      * Inputs:
      * * 0: A {@link ANEURALNETWORKS_MODEL} reference to the condition
      *      model. The model must have (m + k + n) inputs with
-     *      the same types as the corresponding inputs of the WHILE operation
-     *      and exactly one output of {@link ANEURALNETWORKS_TENSOR_BOOL8}
-     *      and shape [1].
+     *      the same types, ranks (if specified), and dimensions (if specified)
+     *      as the corresponding inputs of the WHILE operation and exactly one
+     *      output of {@link ANEURALNETWORKS_TENSOR_BOOL8} and shape [1].
      * * 1: A {@link ANEURALNETWORKS_MODEL} reference to the body model.
      *      The model must have (m + k + n) inputs and (m + k) outputs with
-     *      the same types as the corresponding inputs and outputs of the WHILE
-     *      operation.
+     *      the same types, ranks (if specified), and dimensions (if specified)
+     *      as the corresponding inputs and outputs of the WHILE operation.
      * * (m inputs): Initial values for input-output operands.
      * * (k inputs): Initial values for state-only operands.
      * * (n inputs): Values for input-only operands.
@@ -6162,7 +6163,9 @@ typedef struct ANeuralNetworksBurst ANeuralNetworksBurst;
  *
  * If a tensor operand's type is not fully specified, the dimensions
  * of the operand are deduced from the operand types and values of the
- * operation for which that operand is an output.
+ * operation for which that operand is an output or from the corresponding
+ * {@link ANEURALNETWORKS_IF} or {@link ANEURALNETWORKS_WHILE} operation input
+ * operand type in the case of referenced model input operands.
  *
  * <p>In the following situations, a tensor operand type must be fully
  * specified:<ul>
@@ -6171,10 +6174,10 @@ typedef struct ANeuralNetworksBurst ANeuralNetworksBurst;
  *         non-nullptr buffer) or
  *         {@link ANeuralNetworksModel_setOperandValueFromMemory}.</li>
  *     <li>The operand is a model input (see
- *         {@link ANeuralNetworksModel_identifyInputsAndOutputs}).  A
- *         fully specified tensor operand type must either be provided
- *         to {@link ANeuralNetworksModel_addOperand}; or it must be
- *         provided to the corresponding
+ *         {@link ANeuralNetworksModel_identifyInputsAndOutputs}) of the main
+ *         model within a compilation.  A fully specified tensor operand type
+ *         must either be provided to {@link ANeuralNetworksModel_addOperand};
+ *         or it must be provided to the corresponding
  *         {@link ANeuralNetworksExecution_setInput}, or
  *         {@link ANeuralNetworksExecution_setInputFromMemory}.
  *         EXCEPTION: If the input is optional and omitted
@@ -6182,9 +6185,9 @@ typedef struct ANeuralNetworksBurst ANeuralNetworksBurst;
  *         {@link ANeuralNetworksExecution_setInput}) then it need
  *         not have a fully specified tensor operand type.</li>
  *     <li>The operand is a model output (see
- *         {@link ANeuralNetworksModel_identifyInputsAndOutputs})
- *         and is to be used with
- *         {@link ANeuralNetworksExecution_startComputeWithDependencies}.
+ *         {@link ANeuralNetworksModel_identifyInputsAndOutputs}) of the main
+ *         model within a compilation and is to be used with {@link
+ *         ANeuralNetworksExecution_startComputeWithDependencies}.
  *         A fully specified tensor operand type must either be provided
  *         to {@link ANeuralNetworksModel_addOperand}; or it must be
  *         provided to the corresponding
