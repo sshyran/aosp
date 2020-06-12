@@ -47,6 +47,10 @@ pkg_config("target_defaults") {
   include_dirs = [ "${sysroot}/usr/include/aosp" ]
   defines = [
     "__ANDROID_API__=30",  # Android R
+    "__ANDROID_API_O_MR1__=27",
+    "__ANDROID_API_P__=28",
+    "__ANDROID_API_Q__=29",
+    "__ANDROID_API_R__=30",
   ]
   pkg_deps = [ "libnnapi-support" ]
 }
@@ -99,13 +103,13 @@ static_library("runtime") {
     "runtime/CompilationBuilder.cpp",
     "runtime/ExecutionBuilder.cpp",
     "runtime/ExecutionPlan.cpp",
-    # "runtime/Manager.cpp",
-    # "runtime/Memory.cpp",
+    # "runtime/Manager.cpp",  # Missing IServiceManager.h
+    "runtime/Memory.cpp",
     "runtime/ModelArgumentInfo.cpp",
     "runtime/ModelBuilder.cpp",
-    # "runtime/NeuralNetworks.cpp",
-    # "runtime/TypeManager.cpp",
-    # "runtime/VersionedInterfaces.cpp",
+    "runtime/NeuralNetworks.cpp",
+    # "runtime/TypeManager.cpp",  # Missing PackageInfo.h
+    "runtime/VersionedInterfaces.cpp",
   ]
 }
 
