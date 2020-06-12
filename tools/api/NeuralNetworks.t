@@ -594,7 +594,9 @@ typedef struct ANeuralNetworksBurst ANeuralNetworksBurst;
  *
  * If a tensor operand's type is not fully specified, the dimensions
  * of the operand are deduced from the operand types and values of the
- * operation for which that operand is an output.
+ * operation for which that operand is an output or from the corresponding
+ * {@link ANEURALNETWORKS_IF} or {@link ANEURALNETWORKS_WHILE} operation input
+ * operand type in the case of referenced model input operands.
  *
  * <p>In the following situations, a tensor operand type must be fully
  * specified:<ul>
@@ -603,10 +605,10 @@ typedef struct ANeuralNetworksBurst ANeuralNetworksBurst;
  *         non-nullptr buffer) or
  *         {@link ANeuralNetworksModel_setOperandValueFromMemory}.</li>
  *     <li>The operand is a model input (see
- *         {@link ANeuralNetworksModel_identifyInputsAndOutputs}).  A
- *         fully specified tensor operand type must either be provided
- *         to {@link ANeuralNetworksModel_addOperand}; or it must be
- *         provided to the corresponding
+ *         {@link ANeuralNetworksModel_identifyInputsAndOutputs}) of the main
+ *         model within a compilation.  A fully specified tensor operand type
+ *         must either be provided to {@link ANeuralNetworksModel_addOperand};
+ *         or it must be provided to the corresponding
  *         {@link ANeuralNetworksExecution_setInput}, or
  *         {@link ANeuralNetworksExecution_setInputFromMemory}.
  *         EXCEPTION: If the input is optional and omitted
@@ -614,9 +616,9 @@ typedef struct ANeuralNetworksBurst ANeuralNetworksBurst;
  *         {@link ANeuralNetworksExecution_setInput}) then it need
  *         not have a fully specified tensor operand type.</li>
  *     <li>The operand is a model output (see
- *         {@link ANeuralNetworksModel_identifyInputsAndOutputs})
- *         and is to be used with
- *         {@link ANeuralNetworksExecution_startComputeWithDependencies}.
+ *         {@link ANeuralNetworksModel_identifyInputsAndOutputs}) of the main
+ *         model within a compilation and is to be used with {@link
+ *         ANeuralNetworksExecution_startComputeWithDependencies}.
  *         A fully specified tensor operand type must either be provided
  *         to {@link ANeuralNetworksModel_addOperand}; or it must be
  *         provided to the corresponding
