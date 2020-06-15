@@ -835,8 +835,13 @@ std::shared_ptr<Device> DeviceManager::forTest_makeDriverDevice(const std::strin
 void DeviceManager::findAvailableDevices() {
     VLOG(MANAGER) << "findAvailableDevices";
 
-    // TODO(b/158791375): Add code to load HAL from a shared library.
-    #ifndef NNAPI_CHROMEOS
+#ifdef NNAPI_CHROMEOS
+    // ChromeOS doesn't support HIDL service registeration and querying,
+    // so just return a getService implementation here.
+    registerDevice("default", [](bool /*blocking*/) {
+        return V1_0::IDevice::getService("default");
+    });
+#else
     // register driver devices
     const auto names = hardware::getAllHalInstanceNames(V1_0::IDevice::descriptor);
     for (const auto& name : names) {
@@ -846,7 +851,7 @@ void DeviceManager::findAvailableDevices() {
         };
         registerDevice(name, makeDevice);
     }
-    #endif
+#endif
 
     // register CPU fallback device
     mDevices.push_back(CpuDevice::get());

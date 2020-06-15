@@ -56,7 +56,7 @@ pkg_config("target_defaults") {
     "NNAPI_CHROMEOS",
   ]
   pkg_deps = [
-    "libnnapi-support", 
+    "libnnapi-support",
     "openssl",
   ]
 }
@@ -103,11 +103,13 @@ static_library("runtime") {
   ]
   include_dirs = [
     "common/include",
+    "driver/sample",
     "runtime/include",
   ]
   sources = [
     # Commented out files require:
     # b/157388904 - Implementation of hardware buffers API
+    "chromeos/sampledriver.cpp",
     "runtime/BurstBuilder.cpp",
     "runtime/Callbacks.cpp",
     "runtime/CompilationBuilder.cpp",
@@ -153,13 +155,16 @@ if (use.test) {
       ":common_operations",
       ":generated_test_harness",
       ":runtime",
+      ":sample_driver",
       "//common-mk/testrunner:testrunner",
     ]
     libs = [
+      "rt",              # For shm_*
       "textclassifier",  # For Farmhash.
       "tensorflowlite",
     ]
     sources = [
+      "chromeos/tests/runtime/sampledriver_test.cc",
       "runtime/test/Bridge.cpp",
       "runtime/test/GeneratedTestUtils.cpp",
       "runtime/test/RequireDebug.cpp",
