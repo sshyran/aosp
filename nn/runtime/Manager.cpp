@@ -18,11 +18,15 @@
 
 #include "Manager.h"
 
+#ifdef NNAPI_CHROMEOS
+#include <cutils/native_handle.h>
+#else
 #include <android/hidl/manager/1.2/IServiceManager.h>
 #include <build/version.h>
 #include <cutils/native_handle.h>
 #include <hidl/HidlTransportSupport.h>
 #include <hidl/ServiceManagement.h>
+#endif  // NNAPI_CHROMEOS
 
 #include <algorithm>
 #include <functional>
@@ -585,7 +589,11 @@ class CpuDevice : public Device {
     CpuDevice() = default;
     const int64_t kFeatureLevel = __ANDROID_API__;
     const std::string kName = "nnapi-reference";
+    #ifdef NNAPI_CHROMEOS
+    const std::string kVersionString = "chromeos";
+    #else
     const std::string kVersionString = build::GetBuildNumber();
+    #endif  // NNAPI_CHROMEOS
     // Since the performance is a ratio compared to the CPU performance,
     // by definition the performance of the CPU is 1.0.
     const PerformanceInfo kPerformance = {.execTime = 1.0f, .powerUsage = 1.0f};
@@ -827,6 +835,8 @@ std::shared_ptr<Device> DeviceManager::forTest_makeDriverDevice(const std::strin
 void DeviceManager::findAvailableDevices() {
     VLOG(MANAGER) << "findAvailableDevices";
 
+    // TODO(b/158791375): Add code to load HAL from a shared library.
+    #ifndef NNAPI_CHROMEOS
     // register driver devices
     const auto names = hardware::getAllHalInstanceNames(V1_0::IDevice::descriptor);
     for (const auto& name : names) {
@@ -836,6 +846,7 @@ void DeviceManager::findAvailableDevices() {
         };
         registerDevice(name, makeDevice);
     }
+    #endif
 
     // register CPU fallback device
     mDevices.push_back(CpuDevice::get());

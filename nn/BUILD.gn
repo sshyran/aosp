@@ -51,6 +51,7 @@ pkg_config("target_defaults") {
     "__ANDROID_API_P__=28",
     "__ANDROID_API_Q__=29",
     "__ANDROID_API_R__=30",
+    "NNAPI_CHROMEOS",
   ]
   pkg_deps = [ "libnnapi-support" ]
 }
@@ -103,7 +104,7 @@ static_library("runtime") {
     "runtime/CompilationBuilder.cpp",
     "runtime/ExecutionBuilder.cpp",
     "runtime/ExecutionPlan.cpp",
-    # "runtime/Manager.cpp",  # Missing IServiceManager.h
+    "runtime/Manager.cpp",
     "runtime/Memory.cpp",
     "runtime/ModelArgumentInfo.cpp",
     "runtime/ModelBuilder.cpp",
