@@ -56,6 +56,11 @@ static uint64_t allowedPasses = ~uint64_t(0);
 // true, and if we are asked to set it to false, we return 0 ("success") without
 // running tests.
 static int test(bool useCpuOnly, Execution::ComputeMode computeMode, bool allowSyncExecHal = true) {
+    // NOTE: The test mapping configuration (frameworks/ml/nn/TEST_MAPPING) uses
+    // the value of 1024 to only run pass 10 of the test, corresponding to
+    // "useCpuOnly = 0, computeMode = ComputeMode::ASYNC, allowSyncExecHal = 1".
+    // If you change the bit representation here, also make the corresponding
+    // change to the TEST_MAPPING file to run the equivalent pass of the test.
     uint32_t passIndex =
             (useCpuOnly << 0) + (static_cast<uint32_t>(computeMode) << 1) + (allowSyncExecHal << 3);
 
