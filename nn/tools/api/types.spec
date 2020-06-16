@@ -6176,7 +6176,8 @@
      * The inputs and outputs of the two referenced %{model_or_subgraph}s must agree with the
      * signature of this operation. That is, if the operation has (3 + n) inputs
      * and m outputs, both %{model_or_subgraph}s must have n inputs and m outputs with the same
-     * types as the corresponding operation inputs and outputs.
+     * types, ranks (if specified), and dimensions (if specified) as the
+     * corresponding operation inputs and outputs.
      *
      * Inputs:
      * * 0: A value of type {@link %{OperandTypeLinkPfx}TENSOR_BOOL8} and shape [1]
@@ -6246,13 +6247,13 @@
      * Inputs:
      * * 0: A {@link %{OperandTypeLinkPfx}%{MODEL_or_SUBGRAPH}} reference to the condition
      *      %{model_or_subgraph}. The %{model_or_subgraph} must have (m + k + n) inputs with
-     *      the same types as the corresponding inputs of the WHILE operation
-     *      and exactly one output of {@link %{OperandTypeLinkPfx}TENSOR_BOOL8}
-     *      and shape [1].
+     *      the same types, ranks (if specified), and dimensions (if specified)
+     *      as the corresponding inputs of the WHILE operation and exactly one
+     *      output of {@link %{OperandTypeLinkPfx}TENSOR_BOOL8} and shape [1].
      * * 1: A {@link %{OperandTypeLinkPfx}%{MODEL_or_SUBGRAPH}} reference to the body %{model_or_subgraph}.
      *      The %{model_or_subgraph} must have (m + k + n) inputs and (m + k) outputs with
-     *      the same types as the corresponding inputs and outputs of the WHILE
-     *      operation.
+     *      the same types, ranks (if specified), and dimensions (if specified)
+     *      as the corresponding inputs and outputs of the WHILE operation.
      * * (m inputs): Initial values for input-output operands.
      * * (k inputs): Initial values for state-only operands.
      * * (n inputs): Values for input-only operands.
