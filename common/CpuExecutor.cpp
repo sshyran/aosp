@@ -991,6 +991,9 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
             }
         } break;
         case OperationType::EMBEDDING_LOOKUP: {
+            if (!allParametersPresent(2, 1)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
             const RunTimeOperandInfo& values = operands[ins[EmbeddingLookup::kValueTensor]];
             const RunTimeOperandInfo& lookups = operands[ins[EmbeddingLookup::kLookupTensor]];
             RunTimeOperandInfo& output = operands[outs[EmbeddingLookup::kOutputTensor]];
@@ -1002,6 +1005,9 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                       setInfoAndAllocateIfNeeded(&output, outputShape, &result) && lookup.Eval();
         } break;
         case OperationType::HASHTABLE_LOOKUP: {
+            if (!allParametersPresent(3, 2)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
             const RunTimeOperandInfo& lookups = operands[ins[HashtableLookup::kLookupTensor]];
             const RunTimeOperandInfo& keys = operands[ins[HashtableLookup::kKeyTensor]];
             const RunTimeOperandInfo& values = operands[ins[HashtableLookup::kValueTensor]];
@@ -1102,6 +1108,9 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                       setInfoAndAllocateIfNeeded(&output, outputShape, &result) && lstm_cell.Eval();
         } break;
         case OperationType::RANDOM_MULTINOMIAL: {
+            if (!allParametersPresent(3, 1)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
             const RunTimeOperandInfo& lookups = operands[ins[HashtableLookup::kLookupTensor]];
             const RunTimeOperandInfo& keys = operands[ins[HashtableLookup::kKeyTensor]];
             const RunTimeOperandInfo& values = operands[ins[HashtableLookup::kValueTensor]];
@@ -1115,6 +1124,10 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                       multinomial.Eval();
         } break;
         case OperationType::RNN: {
+            if (!allParametersPresent(6, 2)) {
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+
             RunTimeOperandInfo& hiddenStateOut = operands[outs[RNN::kHiddenStateOutTensor]];
             RunTimeOperandInfo& output = operands[outs[RNN::kOutputTensor]];
 
@@ -1409,8 +1422,8 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                       expand_dims::eval(input.buffer, input.shape(), axis, output.buffer, outShape);
         } break;
         case OperationType::SPLIT: {
-            if (ins.size() != 3) {
-                LOG(ERROR) << "Wrong input count";
+            const size_t outCount = outs.size();
+            if (!allParametersPresent(3, outCount)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
 
@@ -1787,6 +1800,15 @@ int CpuExecutor::executeWhileOperation(const Operation& operation, RunTimeOperan
     std::vector<uint8_t*> tmp1(bodySubgraph.outputIndexes.size());
     std::vector<uint8_t*> tmp2(bodySubgraph.outputIndexes.size());
 
+    // For body outputs with unknown shape, we skip double buffering and
+    // allocate on each iteration instead. This allows growing output tensors
+    // inside a WHILE loop.
+    std::vector<bool> bodyOutputHasUnknownShape(bodySubgraph.outputIndexes.size());
+    for (uint32_t i = 0, n = bodySubgraph.outputIndexes.size(); i < n; ++i) {
+        const Operand& operand = bodySubgraph.operands[bodySubgraph.outputIndexes[i]];
+        bodyOutputHasUnknownShape[i] = nonExtensionOperandSizeOfData(operand) == 0;
+    }
+
     // Initialize condition inputs from outer operands.
     for (uint32_t i = 0, n = condSubgraph.inputIndexes.size(); i < n; ++i) {
         setInfoExceptLifetime(&condOperands[condSubgraph.inputIndexes[i]],
@@ -1829,16 +1851,27 @@ int CpuExecutor::executeWhileOperation(const Operation& operation, RunTimeOperan
         for (uint32_t i = 0, n = bodySubgraph.inputIndexes.size(); i < n; ++i) {
             bodyOperands[bodySubgraph.inputIndexes[i]] = condOperands[condSubgraph.inputIndexes[i]];
         }
-        // Switch body outputs.
+        // Set body outputs.
         auto& outputBuffer = iteration % 2 == 0 ? tmp1 : tmp2;
-        auto& otherBuffer = iteration % 2 == 0 ? tmp2 : tmp1;
         for (uint32_t i = 0, n = bodySubgraph.outputIndexes.size(); i < n; ++i) {
             RunTimeOperandInfo& info = bodyOperands[bodySubgraph.outputIndexes[i]];
-            otherBuffer[i] = info.buffer;
+            if (bodyOutputHasUnknownShape[i]) {
+                // Reset dimensions and buffer.
+                info.dimensions = bodySubgraph.operands[bodySubgraph.outputIndexes[i]].dimensions;
+                if (outputBuffer[i] != nullptr) {
+                    delete[] outputBuffer[i];
+                    outputBuffer[i] = nullptr;
+                }
+            }
             info.buffer = outputBuffer[i];
         }
 
         NN_RETURN_IF_ERROR(executeSubgraph(bodySubgraph, bodyOperands.data()));
+
+        // Update output buffer information in case we have allocated new buffers.
+        for (uint32_t i = 0, n = bodySubgraph.outputIndexes.size(); i < n; ++i) {
+            outputBuffer[i] = bodyOperands[bodySubgraph.outputIndexes[i]].buffer;
+        }
     }
 
     // Copy body outputs to outer outputs.
@@ -1850,7 +1883,7 @@ int CpuExecutor::executeWhileOperation(const Operation& operation, RunTimeOperan
         }
         CHECK_EQ(outerOperand.length, innerOperand.length);
         // TODO: Use the outer buffer as tmp1 to avoid copies.
-        memcpy(outerOperand.buffer, innerOperand.buffer, innerOperand.length);
+        std::memcpy(outerOperand.buffer, innerOperand.buffer, innerOperand.length);
     }
 
     auto freeLoopOutputs = [](const std::vector<uint8_t*>& tmp) {
