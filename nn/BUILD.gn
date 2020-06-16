@@ -54,7 +54,10 @@ pkg_config("target_defaults") {
     "__ANDROID_API_R__=30",
     "NNAPI_CHROMEOS",
   ]
-  pkg_deps = [ "libnnapi-support" ]
+  pkg_deps = [
+    "libnnapi-support", 
+    "openssl",
+  ]
 }
 
 pkg_config("common_defaults") {
@@ -134,6 +137,7 @@ if (use.test) {
   }
   executable("runtime_testrunner") {
     include_dirs = [
+      "driver/sample",
       "runtime",
       "runtime/include",
       "tools/test_generator/test_harness/include",
@@ -145,9 +149,13 @@ if (use.test) {
     ]
     deps = [
       ":common",
+      ":common_operations",
       ":generated_test_harness",
       ":runtime",
       "//common-mk/testrunner:testrunner",
+    ]
+    libs = [
+      "textclassifier",  # For Farmhash.
     ]
     sources = [
       "runtime/test/Bridge.cpp",
@@ -155,12 +163,12 @@ if (use.test) {
       "runtime/test/RequireDebug.cpp",
       "runtime/test/TestAssertions.cpp",
       # "runtime/test/TestCompilationCaching.cpp",      # needs SampleDriver.h
-      # "runtime/test/TestCompliance.cpp",              # needs common/Utils.cpp
+      # "runtime/test/TestCompliance.cpp",              # needs Farmhash
       # "runtime/test/TestControlFlow.cpp",             # needs TypeManager
       # "runtime/test/TestExecution.cpp",               # needs SampleDriver
       # "runtime/test/TestExtensions.cpp",              # needs SampleDriver
       # "runtime/test/FailingDriver.cpp",               # needs SampleDriver
-      # "runtime/test/TestFree.cpp",                    # needs TypeManager
+      # "runtime/test/TestFree.cpp",                    # needs Farmhash
       # "runtime/test/TestGenerated.cpp",               # needs <android/sharedmem.h>
       # "runtime/test/TestIntrospectionControl.cpp",    # needs SampleDriver
       # "runtime/test/TestMemory.cpp",                  # warning ignore return value.
@@ -171,7 +179,7 @@ if (use.test) {
       # "runtime/test/TestPartitioning.cpp",            # needs SampleDriver
       # "runtime/test/TestPartitioningRandom.cpp",      # needs SampleDriver
       # "runtime/test/TestRemoveDefaultArguments.cpp",  # needs SampleDriver
-      # "runtime/test/TestTrivialModel.cpp",            # needs TypeManager
+      # "runtime/test/TestTrivialModel.cpp",            # needs Farmhash
       # "runtime/test/TestUnknownDimensions.cpp",       # needs TypeManager
       # "runtime/test/TestValidateModel.cpp",           # needs TypeManager
       # "runtime/test/TestValidateOperations.cpp",      # needs TypeManager
