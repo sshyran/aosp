@@ -71,7 +71,7 @@ const TestModel& get_test_model_true() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -280,7 +280,7 @@ const TestModel& get_test_model_true_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -489,7 +489,7 @@ const TestModel& get_test_model_true_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {7}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -1257,7 +1257,7 @@ const TestModel& get_test_model_true_float16() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -1466,7 +1466,7 @@ const TestModel& get_test_model_true_float16_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -1675,7 +1675,7 @@ const TestModel& get_test_model_true_float16_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {7}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -1850,7 +1850,7 @@ const TestModel& get_test_model_true_int32() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -2025,7 +2025,7 @@ const TestModel& get_test_model_true_quant8() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -2234,7 +2234,7 @@ const TestModel& get_test_model_true_quant8_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -2443,7 +2443,7 @@ const TestModel& get_test_model_true_quant8_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {7}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -2618,7 +2618,7 @@ const TestModel& get_test_model_true_quant8_signed() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -2827,7 +2827,7 @@ const TestModel& get_test_model_true_quant8_signed_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -3036,7 +3036,7 @@ const TestModel& get_test_model_true_quant8_signed_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {7}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y1
@@ -3211,7 +3211,7 @@ const TestModel& get_test_model_false() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -3420,7 +3420,7 @@ const TestModel& get_test_model_false_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -3629,7 +3629,7 @@ const TestModel& get_test_model_false_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {7}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -4397,7 +4397,7 @@ const TestModel& get_test_model_false_float16() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -4606,7 +4606,7 @@ const TestModel& get_test_model_false_float16_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -4815,7 +4815,7 @@ const TestModel& get_test_model_false_float16_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {7}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -4990,7 +4990,7 @@ const TestModel& get_test_model_false_int32() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -5165,7 +5165,7 @@ const TestModel& get_test_model_false_quant8() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -5374,7 +5374,7 @@ const TestModel& get_test_model_false_quant8_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -5583,7 +5583,7 @@ const TestModel& get_test_model_false_quant8_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {7}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -5758,7 +5758,7 @@ const TestModel& get_test_model_false_quant8_signed() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -5967,7 +5967,7 @@ const TestModel& get_test_model_false_quant8_signed_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {4}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4
@@ -6176,7 +6176,7 @@ const TestModel& get_test_model_false_quant8_signed_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {7}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // param
                 .inputIndexes = {0},
                 .operands = {{ // y4

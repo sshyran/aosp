@@ -91,7 +91,7 @@ const TestModel& get_test_model_n_2_unused_output() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib
@@ -466,7 +466,7 @@ const TestModel& get_test_model_n_2_unused_output_all_tensors_as_inputs() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib
@@ -875,7 +875,7 @@ const TestModel& get_test_model_n_2_unused_output_all_tensors_as_inputs_all_inpu
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib
@@ -1284,7 +1284,7 @@ const TestModel& get_test_model_n_2_unused_output_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib
@@ -3227,7 +3227,7 @@ const TestModel& get_test_model_n_2_unused_output_float16() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib
@@ -3602,7 +3602,7 @@ const TestModel& get_test_model_n_2_unused_output_float16_all_tensors_as_inputs(
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib
@@ -4011,7 +4011,7 @@ const TestModel& get_test_model_n_2_unused_output_float16_all_tensors_as_inputs_
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib
@@ -4420,7 +4420,7 @@ const TestModel& get_test_model_n_2_unused_output_float16_all_outputs_as_interna
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib
@@ -4795,7 +4795,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib
@@ -5170,7 +5170,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_all_tensors_as_inputs()
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib
@@ -5579,7 +5579,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_all_tensors_as_inputs_a
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib
@@ -5988,7 +5988,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_all_outputs_as_internal
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib
@@ -6363,7 +6363,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_signed() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib
@@ -6738,7 +6738,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_signed_all_tensors_as_i
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib
@@ -7147,7 +7147,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_signed_all_tensors_as_i
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib
@@ -7556,7 +7556,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_signed_all_outputs_as_i
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib
@@ -7931,7 +7931,7 @@ const TestModel& get_test_model_n_3_unused_output() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib2
@@ -8306,7 +8306,7 @@ const TestModel& get_test_model_n_3_unused_output_all_tensors_as_inputs() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib2
@@ -8715,7 +8715,7 @@ const TestModel& get_test_model_n_3_unused_output_all_tensors_as_inputs_all_inpu
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib2
@@ -9124,7 +9124,7 @@ const TestModel& get_test_model_n_3_unused_output_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib2
@@ -11067,7 +11067,7 @@ const TestModel& get_test_model_n_3_unused_output_float16() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib2
@@ -11442,7 +11442,7 @@ const TestModel& get_test_model_n_3_unused_output_float16_all_tensors_as_inputs(
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib2
@@ -11851,7 +11851,7 @@ const TestModel& get_test_model_n_3_unused_output_float16_all_tensors_as_inputs_
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib2
@@ -12260,7 +12260,7 @@ const TestModel& get_test_model_n_3_unused_output_float16_all_outputs_as_interna
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib2
@@ -12635,7 +12635,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib2
@@ -13010,7 +13010,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_all_tensors_as_inputs()
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib2
@@ -13419,7 +13419,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_all_tensors_as_inputs_a
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib2
@@ -13828,7 +13828,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_all_outputs_as_internal
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib2
@@ -14203,7 +14203,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_signed() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib2
@@ -14578,7 +14578,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_signed_all_tensors_as_i
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib2
@@ -14987,7 +14987,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_signed_all_tensors_as_i
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib2
@@ -15396,7 +15396,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_signed_all_outputs_as_i
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib2
@@ -15771,7 +15771,7 @@ const TestModel& get_test_model_n_4_unused_output() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib4
@@ -16146,7 +16146,7 @@ const TestModel& get_test_model_n_4_unused_output_all_tensors_as_inputs() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib4
@@ -16555,7 +16555,7 @@ const TestModel& get_test_model_n_4_unused_output_all_tensors_as_inputs_all_inpu
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib4
@@ -16964,7 +16964,7 @@ const TestModel& get_test_model_n_4_unused_output_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib4
@@ -18907,7 +18907,7 @@ const TestModel& get_test_model_n_4_unused_output_float16() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib4
@@ -19282,7 +19282,7 @@ const TestModel& get_test_model_n_4_unused_output_float16_all_tensors_as_inputs(
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib4
@@ -19691,7 +19691,7 @@ const TestModel& get_test_model_n_4_unused_output_float16_all_tensors_as_inputs_
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib4
@@ -20100,7 +20100,7 @@ const TestModel& get_test_model_n_4_unused_output_float16_all_outputs_as_interna
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib4
@@ -20475,7 +20475,7 @@ const TestModel& get_test_model_n_4_unused_output_quant8() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib4
@@ -20850,7 +20850,7 @@ const TestModel& get_test_model_n_4_unused_output_quant8_all_tensors_as_inputs()
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib4
@@ -21259,7 +21259,7 @@ const TestModel& get_test_model_n_4_unused_output_quant8_all_tensors_as_inputs_a
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib4
@@ -21668,7 +21668,7 @@ const TestModel& get_test_model_n_4_unused_output_quant8_all_outputs_as_internal
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib4
@@ -22043,7 +22043,7 @@ const TestModel& get_test_model_n_4_unused_output_quant8_signed() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib4
@@ -22418,7 +22418,7 @@ const TestModel& get_test_model_n_4_unused_output_quant8_signed_all_tensors_as_i
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib4
@@ -22827,7 +22827,7 @@ const TestModel& get_test_model_n_4_unused_output_quant8_signed_all_tensors_as_i
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib4
@@ -23236,7 +23236,7 @@ const TestModel& get_test_model_n_4_unused_output_quant8_signed_all_outputs_as_i
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib4
@@ -23601,7 +23601,7 @@ const TestModel& get_test_model_n_5() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib6
@@ -23966,7 +23966,7 @@ const TestModel& get_test_model_n_5_all_tensors_as_inputs() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib6
@@ -24365,7 +24365,7 @@ const TestModel& get_test_model_n_5_all_tensors_as_inputs_all_inputs_as_internal
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib6
@@ -24764,7 +24764,7 @@ const TestModel& get_test_model_n_5_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {8}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib6
@@ -26657,7 +26657,7 @@ const TestModel& get_test_model_n_5_float16() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib6
@@ -27022,7 +27022,7 @@ const TestModel& get_test_model_n_5_float16_all_tensors_as_inputs() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib6
@@ -27421,7 +27421,7 @@ const TestModel& get_test_model_n_5_float16_all_tensors_as_inputs_all_inputs_as_
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib6
@@ -27820,7 +27820,7 @@ const TestModel& get_test_model_n_5_float16_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {8}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib6
@@ -28185,7 +28185,7 @@ const TestModel& get_test_model_n_5_quant8() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib6
@@ -28550,7 +28550,7 @@ const TestModel& get_test_model_n_5_quant8_all_tensors_as_inputs() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib6
@@ -28949,7 +28949,7 @@ const TestModel& get_test_model_n_5_quant8_all_tensors_as_inputs_all_inputs_as_i
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib6
@@ -29348,7 +29348,7 @@ const TestModel& get_test_model_n_5_quant8_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {8}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib6
@@ -29713,7 +29713,7 @@ const TestModel& get_test_model_n_5_quant8_signed() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib6
@@ -30078,7 +30078,7 @@ const TestModel& get_test_model_n_5_quant8_signed_all_tensors_as_inputs() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib6
@@ -30477,7 +30477,7 @@ const TestModel& get_test_model_n_5_quant8_signed_all_tensors_as_inputs_all_inpu
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib6
@@ -30876,7 +30876,7 @@ const TestModel& get_test_model_n_5_quant8_signed_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {8}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib6
@@ -31241,7 +31241,7 @@ const TestModel& get_test_model_n_6() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib8
@@ -31606,7 +31606,7 @@ const TestModel& get_test_model_n_6_all_tensors_as_inputs() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib8
@@ -32005,7 +32005,7 @@ const TestModel& get_test_model_n_6_all_tensors_as_inputs_all_inputs_as_internal
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib8
@@ -32404,7 +32404,7 @@ const TestModel& get_test_model_n_6_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {8}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib8
@@ -34297,7 +34297,7 @@ const TestModel& get_test_model_n_6_float16() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib8
@@ -34662,7 +34662,7 @@ const TestModel& get_test_model_n_6_float16_all_tensors_as_inputs() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib8
@@ -35061,7 +35061,7 @@ const TestModel& get_test_model_n_6_float16_all_tensors_as_inputs_all_inputs_as_
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib8
@@ -35460,7 +35460,7 @@ const TestModel& get_test_model_n_6_float16_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {8}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib8
@@ -35825,7 +35825,7 @@ const TestModel& get_test_model_n_6_quant8() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib8
@@ -36190,7 +36190,7 @@ const TestModel& get_test_model_n_6_quant8_all_tensors_as_inputs() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib8
@@ -36589,7 +36589,7 @@ const TestModel& get_test_model_n_6_quant8_all_tensors_as_inputs_all_inputs_as_i
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib8
@@ -36988,7 +36988,7 @@ const TestModel& get_test_model_n_6_quant8_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {8}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib8
@@ -37353,7 +37353,7 @@ const TestModel& get_test_model_n_6_quant8_signed() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib8
@@ -37718,7 +37718,7 @@ const TestModel& get_test_model_n_6_quant8_signed_all_tensors_as_inputs() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib8
@@ -38117,7 +38117,7 @@ const TestModel& get_test_model_n_6_quant8_signed_all_tensors_as_inputs_all_inpu
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib8
@@ -38516,7 +38516,7 @@ const TestModel& get_test_model_n_6_quant8_signed_all_outputs_as_internal() {
                         }},
                 .outputIndexes = {8}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib8
@@ -38891,7 +38891,7 @@ const TestModel& get_test_model_n_2_unused_output_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib10
@@ -39266,7 +39266,7 @@ const TestModel& get_test_model_n_2_unused_output_all_tensors_as_inputs_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib10
@@ -39675,7 +39675,7 @@ const TestModel& get_test_model_n_2_unused_output_all_tensors_as_inputs_all_inpu
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib10
@@ -40084,7 +40084,7 @@ const TestModel& get_test_model_n_2_unused_output_all_outputs_as_internal_2() {
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib10
@@ -42027,7 +42027,7 @@ const TestModel& get_test_model_n_2_unused_output_float16_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib10
@@ -42402,7 +42402,7 @@ const TestModel& get_test_model_n_2_unused_output_float16_all_tensors_as_inputs_
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib10
@@ -42811,7 +42811,7 @@ const TestModel& get_test_model_n_2_unused_output_float16_all_tensors_as_inputs_
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib10
@@ -43220,7 +43220,7 @@ const TestModel& get_test_model_n_2_unused_output_float16_all_outputs_as_interna
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib10
@@ -43595,7 +43595,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib10
@@ -43970,7 +43970,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_all_tensors_as_inputs_2
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib10
@@ -44379,7 +44379,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_all_tensors_as_inputs_a
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib10
@@ -44788,7 +44788,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_all_outputs_as_internal
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib10
@@ -45163,7 +45163,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_signed_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib10
@@ -45538,7 +45538,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_signed_all_tensors_as_i
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib10
@@ -45947,7 +45947,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_signed_all_tensors_as_i
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib10
@@ -46356,7 +46356,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_signed_all_outputs_as_i
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib10
@@ -46731,7 +46731,7 @@ const TestModel& get_test_model_n_3_unused_output_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib12
@@ -47106,7 +47106,7 @@ const TestModel& get_test_model_n_3_unused_output_all_tensors_as_inputs_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib12
@@ -47515,7 +47515,7 @@ const TestModel& get_test_model_n_3_unused_output_all_tensors_as_inputs_all_inpu
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib12
@@ -47924,7 +47924,7 @@ const TestModel& get_test_model_n_3_unused_output_all_outputs_as_internal_2() {
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib12
@@ -49867,7 +49867,7 @@ const TestModel& get_test_model_n_3_unused_output_float16_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib12
@@ -50242,7 +50242,7 @@ const TestModel& get_test_model_n_3_unused_output_float16_all_tensors_as_inputs_
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib12
@@ -50651,7 +50651,7 @@ const TestModel& get_test_model_n_3_unused_output_float16_all_tensors_as_inputs_
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib12
@@ -51060,7 +51060,7 @@ const TestModel& get_test_model_n_3_unused_output_float16_all_outputs_as_interna
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib12
@@ -51435,7 +51435,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib12
@@ -51810,7 +51810,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_all_tensors_as_inputs_2
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib12
@@ -52219,7 +52219,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_all_tensors_as_inputs_a
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib12
@@ -52628,7 +52628,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_all_outputs_as_internal
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib12
@@ -53003,7 +53003,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_signed_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib12
@@ -53378,7 +53378,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_signed_all_tensors_as_i
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib12
@@ -53787,7 +53787,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_signed_all_tensors_as_i
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib12
@@ -54196,7 +54196,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_signed_all_outputs_as_i
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib12
@@ -54571,7 +54571,7 @@ const TestModel& get_test_model_n_4_unused_output_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib14
@@ -54946,7 +54946,7 @@ const TestModel& get_test_model_n_4_unused_output_all_tensors_as_inputs_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib14
@@ -55355,7 +55355,7 @@ const TestModel& get_test_model_n_4_unused_output_all_tensors_as_inputs_all_inpu
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib14
@@ -55764,7 +55764,7 @@ const TestModel& get_test_model_n_4_unused_output_all_outputs_as_internal_2() {
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib14
@@ -57707,7 +57707,7 @@ const TestModel& get_test_model_n_4_unused_output_float16_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib14
@@ -58082,7 +58082,7 @@ const TestModel& get_test_model_n_4_unused_output_float16_all_tensors_as_inputs_
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib14
@@ -58491,7 +58491,7 @@ const TestModel& get_test_model_n_4_unused_output_float16_all_tensors_as_inputs_
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib14
@@ -58900,7 +58900,7 @@ const TestModel& get_test_model_n_4_unused_output_float16_all_outputs_as_interna
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib14
@@ -59275,7 +59275,7 @@ const TestModel& get_test_model_n_4_unused_output_quant8_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib14
@@ -59650,7 +59650,7 @@ const TestModel& get_test_model_n_4_unused_output_quant8_all_tensors_as_inputs_2
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib14
@@ -60059,7 +60059,7 @@ const TestModel& get_test_model_n_4_unused_output_quant8_all_tensors_as_inputs_a
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib14
@@ -60468,7 +60468,7 @@ const TestModel& get_test_model_n_4_unused_output_quant8_all_outputs_as_internal
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib14
@@ -60843,7 +60843,7 @@ const TestModel& get_test_model_n_4_unused_output_quant8_signed_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib14
@@ -61218,7 +61218,7 @@ const TestModel& get_test_model_n_4_unused_output_quant8_signed_all_tensors_as_i
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib14
@@ -61627,7 +61627,7 @@ const TestModel& get_test_model_n_4_unused_output_quant8_signed_all_tensors_as_i
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib14
@@ -62036,7 +62036,7 @@ const TestModel& get_test_model_n_4_unused_output_quant8_signed_all_outputs_as_i
                         }},
                 .outputIndexes = {9}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib14
@@ -62401,7 +62401,7 @@ const TestModel& get_test_model_n_5_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib16
@@ -62766,7 +62766,7 @@ const TestModel& get_test_model_n_5_all_tensors_as_inputs_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib16
@@ -63165,7 +63165,7 @@ const TestModel& get_test_model_n_5_all_tensors_as_inputs_all_inputs_as_internal
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib16
@@ -63564,7 +63564,7 @@ const TestModel& get_test_model_n_5_all_outputs_as_internal_2() {
                         }},
                 .outputIndexes = {8}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib16
@@ -65457,7 +65457,7 @@ const TestModel& get_test_model_n_5_float16_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib16
@@ -65822,7 +65822,7 @@ const TestModel& get_test_model_n_5_float16_all_tensors_as_inputs_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib16
@@ -66221,7 +66221,7 @@ const TestModel& get_test_model_n_5_float16_all_tensors_as_inputs_all_inputs_as_
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib16
@@ -66620,7 +66620,7 @@ const TestModel& get_test_model_n_5_float16_all_outputs_as_internal_2() {
                         }},
                 .outputIndexes = {8}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib16
@@ -66985,7 +66985,7 @@ const TestModel& get_test_model_n_5_quant8_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib16
@@ -67350,7 +67350,7 @@ const TestModel& get_test_model_n_5_quant8_all_tensors_as_inputs_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib16
@@ -67749,7 +67749,7 @@ const TestModel& get_test_model_n_5_quant8_all_tensors_as_inputs_all_inputs_as_i
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib16
@@ -68148,7 +68148,7 @@ const TestModel& get_test_model_n_5_quant8_all_outputs_as_internal_2() {
                         }},
                 .outputIndexes = {8}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib16
@@ -68513,7 +68513,7 @@ const TestModel& get_test_model_n_5_quant8_signed_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib16
@@ -68878,7 +68878,7 @@ const TestModel& get_test_model_n_5_quant8_signed_all_tensors_as_inputs_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib16
@@ -69277,7 +69277,7 @@ const TestModel& get_test_model_n_5_quant8_signed_all_tensors_as_inputs_all_inpu
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib16
@@ -69676,7 +69676,7 @@ const TestModel& get_test_model_n_5_quant8_signed_all_outputs_as_internal_2() {
                         }},
                 .outputIndexes = {8}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib16
@@ -70041,7 +70041,7 @@ const TestModel& get_test_model_n_6_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib18
@@ -70406,7 +70406,7 @@ const TestModel& get_test_model_n_6_all_tensors_as_inputs_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib18
@@ -70805,7 +70805,7 @@ const TestModel& get_test_model_n_6_all_tensors_as_inputs_all_inputs_as_internal
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib18
@@ -71204,7 +71204,7 @@ const TestModel& get_test_model_n_6_all_outputs_as_internal_2() {
                         }},
                 .outputIndexes = {8}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib18
@@ -73097,7 +73097,7 @@ const TestModel& get_test_model_n_6_float16_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib18
@@ -73462,7 +73462,7 @@ const TestModel& get_test_model_n_6_float16_all_tensors_as_inputs_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib18
@@ -73861,7 +73861,7 @@ const TestModel& get_test_model_n_6_float16_all_tensors_as_inputs_all_inputs_as_
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib18
@@ -74260,7 +74260,7 @@ const TestModel& get_test_model_n_6_float16_all_outputs_as_internal_2() {
                         }},
                 .outputIndexes = {8}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib18
@@ -74625,7 +74625,7 @@ const TestModel& get_test_model_n_6_quant8_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib18
@@ -74990,7 +74990,7 @@ const TestModel& get_test_model_n_6_quant8_all_tensors_as_inputs_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib18
@@ -75389,7 +75389,7 @@ const TestModel& get_test_model_n_6_quant8_all_tensors_as_inputs_all_inputs_as_i
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib18
@@ -75788,7 +75788,7 @@ const TestModel& get_test_model_n_6_quant8_all_outputs_as_internal_2() {
                         }},
                 .outputIndexes = {8}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib18
@@ -76153,7 +76153,7 @@ const TestModel& get_test_model_n_6_quant8_signed_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib18
@@ -76518,7 +76518,7 @@ const TestModel& get_test_model_n_6_quant8_signed_all_tensors_as_inputs_2() {
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib18
@@ -76917,7 +76917,7 @@ const TestModel& get_test_model_n_6_quant8_signed_all_tensors_as_inputs_all_inpu
                         }},
                 .outputIndexes = {5}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib18
@@ -77316,7 +77316,7 @@ const TestModel& get_test_model_n_6_quant8_signed_all_outputs_as_internal_2() {
                         }},
                 .outputIndexes = {8}
             },
-        .minSupportedVersion = TestHalVersion::V1_3,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .referenced = {{ // cond
                 .inputIndexes = {0, 1, 2},
                 .operands = {{ // fib18
