@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#include <android/log.h>  // Contains __INTRODUCED_IN macro.
+#include <android/hardware_buffer.h>
 #include <gtest/gtest.h>
 
 #include "GeneratedTestUtils.h"

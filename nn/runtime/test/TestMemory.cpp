@@ -18,6 +18,7 @@
 
 #include "TestNeuralNetworksWrapper.h"
 
+#include <android/hardware_buffer.h>
 #include <gtest/gtest.h>
 #include <sys/mman.h>
 #include <sys/types.h>

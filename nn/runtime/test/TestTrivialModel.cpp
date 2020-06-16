@@ -17,6 +17,7 @@
 #include "TestNeuralNetworksWrapper.h"
 
 //#include <android-base/logging.h>
+#include <android/hardware_buffer.h>
 #include <gtest/gtest.h>
 
 using namespace android::nn::test_wrapper;

@@ -143,14 +143,40 @@ if (use.test) {
       "//common-mk:test",
     ]
     deps = [
+      ":common",
       ":generated_test_harness",
       ":runtime",
       "//common-mk/testrunner:testrunner",
     ]
     sources = [
       "runtime/test/Bridge.cpp",
+      "runtime/test/GeneratedTestUtils.cpp",
       "runtime/test/RequireDebug.cpp",
       "runtime/test/TestAssertions.cpp",
+      # "runtime/test/TestCompilationCaching.cpp",      # needs SampleDriver.h
+      # "runtime/test/TestCompliance.cpp",              # needs common/Utils.cpp
+      # "runtime/test/TestControlFlow.cpp",             # needs TypeManager
+      # "runtime/test/TestExecution.cpp",               # needs SampleDriver
+      # "runtime/test/TestExtensions.cpp",              # needs SampleDriver
+      # "runtime/test/FailingDriver.cpp",               # needs SampleDriver
+      # "runtime/test/TestFree.cpp",                    # needs TypeManager
+      # "runtime/test/TestGenerated.cpp",               # needs <android/sharedmem.h>
+      # "runtime/test/TestIntrospectionControl.cpp",    # needs SampleDriver
+      # "runtime/test/TestMemory.cpp",                  # warning ignore return value.
+      # "runtime/test/TestMemoryDomain.cpp",            # needs <android/hardware/neuralnetworks/1.2/ADevice.h>
+      # "runtime/test/TestMemoryInternal.cpp",          # needs <android/sharedmem.h>
+      "runtime/test/TestNeuralNetworksWrapper.cpp",
+      # "runtime/test/TestOpenmpSettings.cpp",          # not needed?
+      # "runtime/test/TestPartitioning.cpp",            # needs SampleDriver
+      # "runtime/test/TestPartitioningRandom.cpp",      # needs SampleDriver
+      # "runtime/test/TestRemoveDefaultArguments.cpp",  # needs SampleDriver
+      # "runtime/test/TestTrivialModel.cpp",            # needs TypeManager
+      # "runtime/test/TestUnknownDimensions.cpp",       # needs TypeManager
+      # "runtime/test/TestValidateModel.cpp",           # needs TypeManager
+      # "runtime/test/TestValidateOperations.cpp",      # needs TypeManager
+      # "runtime/test/TestValidation.cpp",              # needs <android/sharedmem.h>
+      # "runtime/test/TestVersionedInterfaces.cpp",     # needs <android/hardware/neuralnetworks/1.2/ADevice.h>
+      # "runtime/test/TestWrapper.cpp",                 # needs common/Utils.cpp
     ]
   }
 }
