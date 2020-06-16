@@ -51,7 +51,7 @@ bool RNN::Prepare(const Operation& operation, RunTimeOperandInfo* operands, Shap
     NNTRACE_TRANS("RNN::Prepare");
     // Check we have all the inputs and outputs we need.
     const int num_inputs = NumInputsWithValues(operation, operands);
-    NN_CHECK(num_inputs == 5 || num_inputs == 6);
+    NN_CHECK(num_inputs == 6);
     NN_CHECK_EQ(NumOutputs(operation), 2);
 
     const RunTimeOperandInfo* input = GetInput(operation, operands, kInputTensor);
