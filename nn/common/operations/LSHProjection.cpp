@@ -104,7 +104,7 @@ int runningSignBit(const RunTimeOperandInfo* input, const RunTimeOperandInfo* we
         memcpy(key.get(), &seed, seed_size);
         memcpy(key.get() + seed_size, input_ptr, input_item_bytes);
 
-        int64_t hash_signature = farmhash::Fingerprint64(key.get(), key_bytes);
+        int64_t hash_signature = tc3farmhash::Fingerprint64(key.get(), key_bytes);
         double running_value = static_cast<double>(hash_signature);
         input_ptr += input_item_bytes;
         if (weight->lifetime == OperandLifeTime::NO_VALUE) {

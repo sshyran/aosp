@@ -157,6 +157,7 @@ if (use.test) {
     ]
     libs = [
       "textclassifier",  # For Farmhash.
+      "tensorflowlite",
     ]
     sources = [
       "runtime/test/Bridge.cpp",
@@ -164,12 +165,12 @@ if (use.test) {
       "runtime/test/RequireDebug.cpp",
       "runtime/test/TestAssertions.cpp",
       # "runtime/test/TestCompilationCaching.cpp",      # needs SampleDriver.h
-      # "runtime/test/TestCompliance.cpp",              # needs Farmhash
+      # "runtime/test/TestCompliance.cpp",              # compiles, but line 162: Failure
       # "runtime/test/TestControlFlow.cpp",             # needs TypeManager
       # "runtime/test/TestExecution.cpp",               # needs SampleDriver
       # "runtime/test/TestExtensions.cpp",              # needs SampleDriver
       # "runtime/test/FailingDriver.cpp",               # needs SampleDriver
-      # "runtime/test/TestFree.cpp",                    # needs Farmhash
+      "runtime/test/TestFree.cpp",
       # "runtime/test/TestGenerated.cpp",               # needs <android/sharedmem.h>
       # "runtime/test/TestIntrospectionControl.cpp",    # needs SampleDriver
       # "runtime/test/TestMemory.cpp",                  # warning ignore return value.
@@ -180,7 +181,7 @@ if (use.test) {
       # "runtime/test/TestPartitioning.cpp",            # needs SampleDriver
       # "runtime/test/TestPartitioningRandom.cpp",      # needs SampleDriver
       # "runtime/test/TestRemoveDefaultArguments.cpp",  # needs SampleDriver
-      # "runtime/test/TestTrivialModel.cpp",            # needs Farmhash
+      # "runtime/test/TestTrivialModel.cpp",            # compiles, but line 122: Failure
       # "runtime/test/TestUnknownDimensions.cpp",       # needs TypeManager
       # "runtime/test/TestValidateModel.cpp",           # needs TypeManager
       # "runtime/test/TestValidateOperations.cpp",      # needs TypeManager
@@ -209,9 +210,6 @@ static_library("common_operations") {
   include_dirs = [
     "runtime/include",
     "${sysroot}/usr/include/libtextclassifier",
-  ]
-  defines = [
-    "NAMESPACE_FOR_HASH_FUNCTIONS=farmhash",
   ]
   sources = [
     "common/operations/Activation.cpp",
