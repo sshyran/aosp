@@ -388,7 +388,7 @@ int MemoryBuilder::addRole(const CompilationBuilder& compilation, IOType ioType,
     }
 
     mRoles.emplace(&compilation, ioType, index);
-    for (const auto [preparedModel, type, ind] : roles) {
+    for (const auto& [preparedModel, type, ind] : roles) {
         uint32_t modelIndex = mDesc.preparedModels.add(preparedModel);
         BufferRole role = {.modelIndex = modelIndex, .ioIndex = ind, .frequency = freq};
         if (type == IOType::INPUT) {
