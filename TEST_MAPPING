@@ -1,21 +1,11 @@
 {
   "presubmit": [
     {
-      "name": "CtsNNAPITestCases",
-      "options": [
-        {
-          // b/153876253, temporarily filter out failing l2_norm tests
-          "include-filter": "-*l2_normalization_axis_corner_case*"
-        }
-      ]
+      "name": "CtsNNAPITestCases"
     },
     {
       "name": "NeuralNetworksTest_static",
       "options": [
-        {
-          // b/153876253, temporarily filter out failing l2_norm tests
-          "include-filter": "-*l2_normalization_axis_corner_case*"
-        },
         {
           // Restrict NeuralNetworksTest_static to run only a single
           // pass consisting of:
