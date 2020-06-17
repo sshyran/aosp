@@ -48,9 +48,9 @@ TEST_F(MemoryTest, TestFd) {
     const uint32_t offsetForMatrix3 = 200;
     static_assert(offsetForMatrix2 + sizeof(matrix2) < offsetForMatrix3, "matrices overlap");
     lseek(fd, offsetForMatrix2, SEEK_SET);
-    write(fd, matrix2, sizeof(matrix2));
+    ASSERT_NE(write(fd, matrix2, sizeof(matrix2)), -1);
     lseek(fd, offsetForMatrix3, SEEK_SET);
-    write(fd, matrix3, sizeof(matrix3));
+    ASSERT_NE(write(fd, matrix3, sizeof(matrix3)), -1);
     fsync(fd);
 
     WrapperMemory weights(offsetForMatrix3 + sizeof(matrix3), PROT_READ, fd, 0);
