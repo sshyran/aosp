@@ -29,6 +29,7 @@ shared_library("libneuralnetworks") {
     ":runtime",
   ]
   libs = [
+    "rt",
     "tensorflowlite",
   ]
 }
@@ -107,8 +108,6 @@ static_library("runtime") {
     "runtime/include",
   ]
   sources = [
-    # Commented out files require:
-    # b/157388904 - Implementation of hardware buffers API
     "chromeos/sampledriver.cpp",
     "runtime/BurstBuilder.cpp",
     "runtime/Callbacks.cpp",
@@ -171,26 +170,26 @@ if (use.test) {
       "runtime/test/TestAssertions.cpp",
       # "runtime/test/TestCompilationCaching.cpp",      # needs SampleDriver.h
       # "runtime/test/TestCompliance.cpp",              # compiles, but line 162: Failure
-      # "runtime/test/TestControlFlow.cpp",             # needs TypeManager
+      # "runtime/test/TestControlFlow.cpp",             # Tests Fail
       # "runtime/test/TestExecution.cpp",               # needs SampleDriver
       # "runtime/test/TestExtensions.cpp",              # needs SampleDriver
       # "runtime/test/FailingDriver.cpp",               # needs SampleDriver
       "runtime/test/TestFree.cpp",
-      # "runtime/test/TestGenerated.cpp",               # needs <android/sharedmem.h>
+      "runtime/test/TestGenerated.cpp",
       # "runtime/test/TestIntrospectionControl.cpp",    # needs SampleDriver
       # "runtime/test/TestMemory.cpp",                  # warning ignore return value.
       # "runtime/test/TestMemoryDomain.cpp",            # needs <android/hardware/neuralnetworks/1.2/ADevice.h>
-      # "runtime/test/TestMemoryInternal.cpp",          # needs <android/sharedmem.h>
+      # "runtime/test/TestMemoryInternal.cpp",          # Tests fail
       "runtime/test/TestNeuralNetworksWrapper.cpp",
       # "runtime/test/TestOpenmpSettings.cpp",          # not needed?
       # "runtime/test/TestPartitioning.cpp",            # needs SampleDriver
       # "runtime/test/TestPartitioningRandom.cpp",      # needs SampleDriver
       # "runtime/test/TestRemoveDefaultArguments.cpp",  # needs SampleDriver
       # "runtime/test/TestTrivialModel.cpp",            # compiles, but line 122: Failure
-      # "runtime/test/TestUnknownDimensions.cpp",       # needs TypeManager
-      # "runtime/test/TestValidateModel.cpp",           # needs TypeManager
-      # "runtime/test/TestValidateOperations.cpp",      # needs TypeManager
-      # "runtime/test/TestValidation.cpp",              # needs <android/sharedmem.h>
+      # "runtime/test/TestUnknownDimensions.cpp",       # Tests fail
+      # "runtime/test/TestValidateModel.cpp",           # Tests fail
+      # "runtime/test/TestValidateOperations.cpp",      # Tests fail
+      # "runtime/test/TestValidation.cpp",              # Tests fail
       # "runtime/test/TestVersionedInterfaces.cpp",     # needs <android/hardware/neuralnetworks/1.2/ADevice.h>
       # "runtime/test/TestWrapper.cpp",                 # needs common/Utils.cpp
     ]

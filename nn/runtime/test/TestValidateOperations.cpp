@@ -203,7 +203,7 @@ class TensorRankConstraint {
 
    private:
     std::vector<OperandTypeWithExtraParams> ModifyForRank(
-            const std::vector<OperandTypeWithExtraParams>& operandsTypeWithParams, uint_t newRank) {
+            const std::vector<OperandTypeWithExtraParams>& operandsTypeWithParams, uint32_t newRank) {
         std::vector<OperandTypeWithExtraParams> result;
         std::transform(operandsTypeWithParams.cbegin(), operandsTypeWithParams.cend(),
                        std::back_inserter(result),
@@ -214,7 +214,7 @@ class TensorRankConstraint {
     }
 
     OperandTypeWithExtraParams ModifyForRank(
-            const OperandTypeWithExtraParams& operandTypeWithParams, uint_t newRank) {
+            const OperandTypeWithExtraParams& operandTypeWithParams, uint32_t newRank) {
         if (operandTypeWithParams.operandType.dimensionCount == newRank) {
             return operandTypeWithParams;
         }

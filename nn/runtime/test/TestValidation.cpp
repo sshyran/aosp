@@ -14,8 +14,12 @@
  * limitations under the License.
  */
 
+// android/log.h contains __INTRODUCED_IN() macro and must be included before
+// sharedmem.h
+#include <android/log.h>
 #include <android-base/logging.h>
 #include <android-base/scopeguard.h>
+#include <android/hardware_buffer.h>
 #include <android/sharedmem.h>
 #include <gtest/gtest.h>
 #include <sys/mman.h>
