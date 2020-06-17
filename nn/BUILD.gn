@@ -180,7 +180,7 @@ if (use.test) {
       "runtime/test/TestGenerated.cpp",                 # No tests are run?
       # "runtime/test/TestIntrospectionControl.cpp",    # Tests fail
       # "runtime/test/TestMemory.cpp",                  # Tests fail
-      # "runtime/test/TestMemoryDomain.cpp",            # needs <android/hardware/neuralnetworks/1.2/ADevice.h>
+      # "runtime/test/TestMemoryDomain.cpp",            # Tests SIGSEGV(11)
       # "runtime/test/TestMemoryInternal.cpp",          # Tests fail
       "runtime/test/TestNeuralNetworksWrapper.cpp",     # mostly empty - no tests
       # "runtime/test/TestOpenmpSettings.cpp",          # not needed?
@@ -194,7 +194,7 @@ if (use.test) {
       # "runtime/test/TestValidateModel.cpp",           # Tests fail
       # "runtime/test/TestValidateOperations.cpp",      # Tests fail
       # "runtime/test/TestValidation.cpp",              # Tests fail
-      # "runtime/test/TestVersionedInterfaces.cpp",     # needs <android/hardware/neuralnetworks/1.2/ADevice.h>
+      # "runtime/test/TestVersionedInterfaces.cpp",     # Tests fail
       "runtime/test/TestWrapper.cpp",
     ]
   }
