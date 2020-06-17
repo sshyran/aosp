@@ -23,6 +23,8 @@
 #include <utility>
 #include <vector>
 
+#include "Utils.h"
+
 namespace android::nn::fuzz {
 namespace {
 
@@ -59,15 +61,13 @@ std::vector<uint32_t> convert(const Dimensions& dimensions) {
     return std::vector<uint32_t>(repeatedDimension.begin(), repeatedDimension.end());
 }
 
-TestBuffer convert(bool makeEmpty, const Buffer& buffer) {
-    if (makeEmpty) {
+TestBuffer convert(size_t size, const Buffer& buffer) {
+    if (size == 0) {
         return TestBuffer();
     }
     const uint32_t randomSeed = buffer.random_seed();
     std::default_random_engine generator{randomSeed};
-    std::uniform_int_distribution<uint32_t> dist{0, kMaxSize};
-    const uint32_t size = dist(generator);
-    return TestBuffer::createFromRng<uint32_t>(size, &generator);
+    return TestBuffer::createRandom(size % kMaxSize, &generator);
 }
 
 TestOperand convert(const Operand& operand) {
@@ -77,10 +77,15 @@ TestOperand convert(const Operand& operand) {
     const int32_t zeroPoint = operand.zero_point();
     const TestOperandLifeTime lifetime = convert(operand.lifetime());
     auto channelQuant = convert(operand.channel_quant());
+
     const bool isIgnored = false;
+    const auto halType = static_cast<hal::OperandType>(type);
+    const bool willOverflow = nonExtensionOperandSizeOfDataOverflowsUInt32(halType, dimensions);
     const bool makeEmpty = (lifetime == TestOperandLifeTime::NO_VALUE ||
-                            lifetime == TestOperandLifeTime::TEMPORARY_VARIABLE);
-    TestBuffer data = convert(makeEmpty, operand.data());
+                            lifetime == TestOperandLifeTime::TEMPORARY_VARIABLE || willOverflow);
+    const size_t bufferSize = makeEmpty ? 0 : nonExtensionOperandSizeOfData(halType, dimensions);
+    TestBuffer data = convert(bufferSize, operand.data());
+
     return {.type = type,
             .dimensions = std::move(dimensions),
             .numberOfConsumers = 0,
