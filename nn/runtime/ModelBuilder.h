@@ -133,7 +133,8 @@ class ModelBuilder {
    private:
     // TODO(b/132322449): move partitionTheWork, findBestDeviceForEachOperation,
     // getPerformance, supportedByControlFlowInterpreter,
-    // partitionTheWorkInternal, sortIntoRunOrder to CompilationBuilder?
+    // isControlFlowOperationWithOperandOfUnknownSize, partitionTheWorkInternal,
+    // sortIntoRunOrder to CompilationBuilder?
 
     // Populates bestDeviceForOperation
     //
@@ -151,6 +152,10 @@ class ModelBuilder {
     float getPerformance(uint32_t preference, const std::shared_ptr<Device> device,
                          uint32_t operationIndex) const;
     bool supportedByControlFlowInterpreter(uint32_t operationIndex) const;
+
+    // Returns true if the operation is IF or WHILE and has an inner or outer
+    // input or output of unknown size.
+    bool isControlFlowOperationWithOperandOfUnknownSize(uint32_t operationIndex) const;
 
     int partitionTheWorkInternal(uint32_t sourceModelIndex,
                                  const std::vector<std::shared_ptr<Device>>& devices,
