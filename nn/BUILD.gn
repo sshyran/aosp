@@ -315,6 +315,10 @@ if (use.test) {
       "runtime/include",
       "tools/test_generator/test_harness/include",
     ]
+    cflags_cc = [
+      # TestPartitioning moving local object in return statements
+      "-Wno-pessimizing-move",
+    ]
     configs += [
       ":target_defaults",
       ":common_defaults",
