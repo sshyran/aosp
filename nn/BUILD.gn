@@ -77,6 +77,7 @@ pkg_config("common_defaults") {
     "common/random",
   ]
   defines = [
+    "NN_INCLUDE_CPU_IMPLEMENTATION",
     "TF_LITE_DISABLE_X86_NEON",
   ]
   pkg_deps = [ "libnnapi-support" ]
@@ -172,16 +173,16 @@ if (use.test) {
       "runtime/test/TestAssertions.cpp",
       # "runtime/test/TestCompilationCaching.cpp",      # Tests fail
       # "runtime/test/TestCompliance.cpp",              # Tests fail
-      # "runtime/test/TestControlFlow.cpp",             # Tests fail
+      "runtime/test/TestControlFlow.cpp",
       # "runtime/test/TestExecution.cpp",               # Tests fail
       # "runtime/test/TestExtensions.cpp",              # Tests fail
-      # "runtime/test/TestFailingDriver.cpp",           # Tests fail
+      "runtime/test/TestFailingDriver.cpp",
       "runtime/test/TestFree.cpp",
       "runtime/test/TestGenerated.cpp",                 # No tests are run?
       # "runtime/test/TestIntrospectionControl.cpp",    # Tests fail
       # "runtime/test/TestMemory.cpp",                  # Tests fail
       # "runtime/test/TestMemoryDomain.cpp",            # Tests SIGSEGV(11)
-      # "runtime/test/TestMemoryInternal.cpp",          # Tests fail
+      "runtime/test/TestMemoryInternal.cpp",
       "runtime/test/TestNeuralNetworksWrapper.cpp",     # mostly empty - no tests
       # "runtime/test/TestOpenmpSettings.cpp",          # not needed?
       "runtime/test/TestOperandExtraParams.cpp",
@@ -189,12 +190,12 @@ if (use.test) {
       # "runtime/test/TestPartitioningRandom.cpp",      # Tests fail (HARD_SWISH)
       # "runtime/test/TestRemoveDefaultArguments.cpp",  # needs symbols in generated/spec_V1_2/avg_pool_v1_2.example.cpp
       # "runtime/test/TestTrivialModel.cpp",            # Tests fail
-      # "runtime/test/TestUnknownDimensions.cpp",       # Tests fail
-      # "runtime/test/TestUnspecifiedDimensions.cpp",   # Tests fail
+      "runtime/test/TestUnknownDimensions.cpp",         # -lots- of log output
+      "runtime/test/TestUnspecifiedDimensions.cpp",     # -lots- of log output
       # "runtime/test/TestValidateModel.cpp",           # Tests fail
       # "runtime/test/TestValidateOperations.cpp",      # Tests fail
       # "runtime/test/TestValidation.cpp",              # Tests fail
-      # "runtime/test/TestVersionedInterfaces.cpp",     # Tests fail
+      "runtime/test/TestVersionedInterfaces.cpp",
       "runtime/test/TestWrapper.cpp",
     ]
   }
