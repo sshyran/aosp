@@ -14,6 +14,7 @@ group("all") {
     deps += [
       ":chromeos_testrunner",
       ":common_testrunner",
+      ":common_operations_testrunner",
       ":driver_cache_testrunner",
       ":runtime_testrunner",
     ]
@@ -234,7 +235,6 @@ static_library("common_operations") {
     "common/operations/Elementwise.cpp",
     "common/operations/Elu.cpp",
     "common/operations/EmbeddingLookup.cpp",
-    "common/operations/EmbeddingLookupTest.cpp",
     "common/operations/ExpandDims.cpp",
     "common/operations/Fill.cpp",
     "common/operations/FullyConnected.cpp",
@@ -242,22 +242,17 @@ static_library("common_operations") {
     "common/operations/GenerateProposals.cpp",
     "common/operations/GroupedConv2D.cpp",
     "common/operations/HashtableLookup.cpp",
-    "common/operations/HashtableLookupTest.cpp",
     "common/operations/HeatmapMaxKeypoint.cpp",
     "common/operations/InstanceNormalization.cpp",
     "common/operations/L2Normalization.cpp",
-    "common/operations/LayerNormLSTMTest.cpp",
     "common/operations/LocalResponseNormalization.cpp",
     "common/operations/LogicalAndOr.cpp",
     "common/operations/LogicalNot.cpp",
     "common/operations/LogSoftmax.cpp",
     "common/operations/LSHProjection.cpp",
-    "common/operations/LSHProjectionTest.cpp",
     "common/operations/LSTM.cpp",
-    "common/operations/LSTMTest.cpp",
     "common/operations/MaximumMinimum.cpp",
     "common/operations/Multinomial.cpp",
-    "common/operations/MultinomialTest.cpp",
     "common/operations/Neg.cpp",
     "common/operations/Pooling.cpp",
     "common/operations/Pow.cpp",
@@ -265,13 +260,11 @@ static_library("common_operations") {
     "common/operations/QLSTM.cpp",
     "common/operations/Quantize.cpp",
     "common/operations/QuantizedLSTM.cpp",
-    "common/operations/QuantizedLSTMTest.cpp",
     "common/operations/Rank.cpp",
     "common/operations/Reduce.cpp",
     "common/operations/Reshape.cpp",
     "common/operations/ResizeImageOps.cpp",
     "common/operations/RNN.cpp",
-    "common/operations/RNNTest.cpp",
     "common/operations/RoiAlign.cpp",
     "common/operations/RoiPooling.cpp",
     "common/operations/Select.cpp",
@@ -282,7 +275,6 @@ static_library("common_operations") {
     "common/operations/Squeeze.cpp",
     "common/operations/StridedSlice.cpp",
     "common/operations/SVDF.cpp",
-    "common/operations/SVDFTest.cpp",
     "common/operations/Tile.cpp",
     "common/operations/TopK_V2.cpp",
     "common/operations/TransposeConv2D.cpp",
@@ -292,6 +284,40 @@ static_library("common_operations") {
   ]
 }
 
+if (use.test) {
+  executable("common_operations_testrunner") {
+    include_dirs = [
+      "runtime/include",
+    ]
+    configs += [
+      ":common_defaults",
+      "//common-mk:pic",
+    ]
+    deps = [
+      ":common",
+      ":common_operations",
+      ":runtime",
+      ":sample_driver",
+      "//common-mk/testrunner:testrunner",
+    ]
+    libs = [
+      "rt",
+      "tensorflowlite",
+      "textclassifier",  # For Farmhash.
+    ]
+    sources = [
+      "common/operations/EmbeddingLookupTest.cpp",
+      "common/operations/HashtableLookupTest.cpp",
+      "common/operations/LayerNormLSTMTest.cpp",
+      "common/operations/LSHProjectionTest.cpp",
+      "common/operations/LSTMTest.cpp",
+      "common/operations/MultinomialTest.cpp",
+      "common/operations/QuantizedLSTMTest.cpp",
+      "common/operations/RNNTest.cpp",
+      "common/operations/SVDFTest.cpp",
+    ]
+  }
+}
 
 static_library("common") {
   configs += [
