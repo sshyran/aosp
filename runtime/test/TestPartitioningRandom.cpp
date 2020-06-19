@@ -1221,10 +1221,10 @@ TEST_P(RandomPartitioningTest, Test) {
 #endif
 
     // For execution:
-    // - create master inputs (one long vector) and master output value
-    //   - master inputs will be copied to actual inputs before each
+    // - create golden inputs (one long vector) and golden output value
+    //   - golden inputs will be copied to actual inputs before each
     //     of the two executions
-    //   - master output will be used to fill actual outputs before each
+    //   - golden output will be used to fill actual outputs before each
     //     of the two executions
     // - create actual inputs and outputs
     // - first execution (non-partitioned)
@@ -1243,15 +1243,15 @@ TEST_P(RandomPartitioningTest, Test) {
     // versus partitioned execution.  Similarly, execution behavior
     // should not be dependent on the outputs; but we'll initialize the
     // outputs anyway.
-    std::vector<float> masterInputs(problemSize * problemSize * model.inputCount());
-    std::generate(masterInputs.begin(), masterInputs.end(), [this] { return randFrac(); });
+    std::vector<float> goldenInputs(problemSize * problemSize * model.inputCount());
+    std::generate(goldenInputs.begin(), goldenInputs.end(), [this] { return randFrac(); });
 #ifdef VERBOSE
     {
         std::cout << "flat inputs = ";
-        dump(masterInputs.begin(), masterInputs.end());
+        dump(goldenInputs.begin(), goldenInputs.end());
     }
 #endif
-    const float masterOutput = randFrac();
+    const float goldenOutput = randFrac();
 
     // Create the memory for the actual inputs and outputs.
     struct InputOutputDescriptor {
@@ -1301,21 +1301,21 @@ TEST_P(RandomPartitioningTest, Test) {
 
     // Function to set up actual inputs and outputs (initializing them
     // and telling the WrapperExecution about them).
-    auto prepareForExecution = [&model, &ioDescriptors, &ioMemories, &masterInputs, &masterOutput,
+    auto prepareForExecution = [&model, &ioDescriptors, &ioMemories, &goldenInputs, &goldenOutput,
                                 problemSize, &problemType](WrapperExecution* e) {
         uint32_t inputIndex = 0, outputIndex = 0;
         for (auto& desc : ioDescriptors) {
             if (desc.getLocation() == InputOutputDescriptor::VECTOR) {
                 if (desc.mKind == InputOutputDescriptor::INPUT) {
                     const size_t inputOffset = inputIndex * problemSize * problemSize;
-                    std::copy(masterInputs.begin() + inputOffset,
-                              masterInputs.begin() + inputOffset + problemSize * problemSize,
+                    std::copy(goldenInputs.begin() + inputOffset,
+                              goldenInputs.begin() + inputOffset + problemSize * problemSize,
                               desc.mVector.begin());
                     e->setInput(inputIndex++, desc.mVector.data(),
                                 desc.mVector.size() * sizeof(float));
                 } else {
                     std::fill(desc.mVector.begin(),
-                              desc.mVector.begin() + problemSize * problemSize, masterOutput);
+                              desc.mVector.begin() + problemSize * problemSize, goldenOutput);
                     e->setOutput(outputIndex++, desc.mVector.data(),
                                  desc.mVector.size() * sizeof(float), &problemType.operandType);
                 }
@@ -1327,12 +1327,12 @@ TEST_P(RandomPartitioningTest, Test) {
                 CHECK(length == problemSize * problemSize * sizeof(float));
                 if (desc.mKind == InputOutputDescriptor::INPUT) {
                     const size_t inputOffset = inputIndex * problemSize * problemSize;
-                    std::copy(masterInputs.begin() + inputOffset,
-                              masterInputs.begin() + inputOffset + problemSize * problemSize,
+                    std::copy(goldenInputs.begin() + inputOffset,
+                              goldenInputs.begin() + inputOffset + problemSize * problemSize,
                               region);
                     e->setInputFromMemory(inputIndex++, memory, offset, length);
                 } else {
-                    std::fill(region, region + problemSize * problemSize, masterOutput);
+                    std::fill(region, region + problemSize * problemSize, goldenOutput);
                     e->setOutputFromMemory(outputIndex++, memory, offset, length,
                                            &problemType.operandType);
                 }
