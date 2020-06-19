@@ -57,6 +57,9 @@ pkg_config("target_defaults") {
     "__ANDROID_API_R__=30",
     "NNAPI_CHROMEOS",
   ]
+  if (use.test) {
+    defines += [ "NN_DEBUGGABLE" ]
+  }
   pkg_deps = [
     "libnnapi-support",
     "openssl",
@@ -194,7 +197,7 @@ if (use.test) {
       "runtime/test/TestUnspecifiedDimensions.cpp",     # -lots- of log output
       # "runtime/test/TestValidateModel.cpp",           # Tests fail
       # "runtime/test/TestValidateOperations.cpp",      # Tests fail
-      # "runtime/test/TestValidation.cpp",              # Tests fail
+      "runtime/test/TestValidation.cpp",
       "runtime/test/TestVersionedInterfaces.cpp",
       "runtime/test/TestWrapper.cpp",
     ]

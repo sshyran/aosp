@@ -469,12 +469,14 @@ TEST_F(ValidationTestModel, SetOperandSymmPerChannelQuantParams) {
 }
 
 #ifndef NNTEST_ONLY_PUBLIC_API
-TEST_F(ValidationTestModelExtensions, AddOperand_UnknownPrefix) {
+// TODO(b/158632389): Extensions have been disabled.
+TEST_F(ValidationTestModelExtensions, DISABLED_AddOperand_UnknownPrefix) {
     ANeuralNetworksOperandType type = {.type = -1};
     ASSERT_EQ(ANeuralNetworksModel_addOperand(mModel, &type), ANEURALNETWORKS_BAD_DATA);
 }
 
-TEST_F(ValidationTestModelExtensions, SetOperandSymmPerChannelQuantParams_ExtensionOperand) {
+// TODO(b/158632389): Extensions have been disabled.
+TEST_F(ValidationTestModelExtensions, DISABLED_SetOperandSymmPerChannelQuantParams_ExtensionOperand) {
     const int32_t operandIndex =
             addTensorOperand(getExtensionOperandType(kTestExtensionTensorType));
 
@@ -490,7 +492,8 @@ TEST_F(ValidationTestModelExtensions, SetOperandSymmPerChannelQuantParams_Extens
               ANEURALNETWORKS_BAD_DATA);
 }
 
-TEST_F(ValidationTestModelExtensions, SetOperandExtensionData) {
+// TODO(b/158632389): Extensions have been disabled.
+TEST_F(ValidationTestModelExtensions, DISABLED_SetOperandExtensionData) {
     const int32_t operandIndex =
             addTensorOperand(getExtensionOperandType(kTestExtensionTensorType));
     const int32_t data = 42;
@@ -510,14 +513,16 @@ TEST_F(ValidationTestModelExtensions, SetOperandExtensionData) {
               ANEURALNETWORKS_NO_ERROR);
 }
 
-TEST_F(ValidationTestModelExtensions, SetOperandExtensionData_Empty) {
+// TODO(b/158632389): Extensions have been disabled.
+TEST_F(ValidationTestModelExtensions, DISABLED_SetOperandExtensionData_Empty) {
     const int32_t operandIndex =
             addTensorOperand(getExtensionOperandType(kTestExtensionTensorType));
     EXPECT_EQ(ANeuralNetworksModel_setOperandExtensionData(mModel, operandIndex, nullptr, 0),
               ANEURALNETWORKS_NO_ERROR);
 }
 
-TEST_F(ValidationTestModelExtensions, SetOperandExtensionData_NonExtensionOperand) {
+// TODO(b/158632389): Extensions have been disabled.
+TEST_F(ValidationTestModelExtensions, DISABLED_SetOperandExtensionData_NonExtensionOperand) {
     const int32_t operandIndex = addTensorOperand();
     const int32_t data = 42;
     const size_t dataLength = sizeof(data);
@@ -525,7 +530,8 @@ TEST_F(ValidationTestModelExtensions, SetOperandExtensionData_NonExtensionOperan
               ANEURALNETWORKS_BAD_DATA);
 }
 
-TEST_F(ValidationTestModelExtensions, SetOperandValue_UnspecifiedDimension) {
+// TODO(b/158632389): Extensions have been disabled.
+TEST_F(ValidationTestModelExtensions, DISABLED_SetOperandValue_UnspecifiedDimension) {
     const uint32_t dimensions[2] = {3, 0};
     ANeuralNetworksOperandType type = {
             .type = getExtensionOperandType(kTestExtensionTensorType),
@@ -538,7 +544,8 @@ TEST_F(ValidationTestModelExtensions, SetOperandValue_UnspecifiedDimension) {
               ANEURALNETWORKS_BAD_DATA);
 }
 
-TEST_F(ValidationTestModelExtensions, SetOperandValue_UnspecifiedRank) {
+// TODO(b/158632389): Extensions have been disabled.
+TEST_F(ValidationTestModelExtensions, DISABLED_SetOperandValue_UnspecifiedRank) {
     ANeuralNetworksOperandType type = {
             .type = getExtensionOperandType(kTestExtensionTensorType),
             .dimensionCount = 0,
@@ -550,7 +557,8 @@ TEST_F(ValidationTestModelExtensions, SetOperandValue_UnspecifiedRank) {
               ANEURALNETWORKS_BAD_DATA);
 }
 
-TEST_F(ValidationTestModelExtensions, AddOperandDimensionProductOverflow) {
+// TODO(b/158632389): Extensions have been disabled.
+TEST_F(ValidationTestModelExtensions, DISABLED_AddOperandDimensionProductOverflow) {
     uint32_t dimensions[] = {5, 4, 4, 786433, 5, 3, 16777216, 4, 5};
     ANeuralNetworksOperandType operandType = {
             .type = getExtensionOperandType(kTestExtensionTensorType),
