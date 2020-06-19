@@ -135,7 +135,8 @@ TEST_F(ComplianceTest, Rank0TensorTemporaryVariable) {
     testAvailableSinceV1_2(model);
 }
 
-TEST_F(ComplianceTest, HardwareBufferModel) {
+// b/157388904: Hardware buffers not implemented on ChromeOS.
+TEST_F(ComplianceTest, DISABLED_HardwareBufferModel) {
     const size_t memorySize = 20;
     AHardwareBuffer_Desc desc{
             .width = memorySize,
@@ -166,7 +167,8 @@ TEST_F(ComplianceTest, HardwareBufferModel) {
     AHardwareBuffer_release(buffer);
 }
 
-TEST_F(ComplianceTest, HardwareBufferRequest) {
+// b/157388904: Hardware buffers not implemented on ChromeOS.
+TEST_F(ComplianceTest, DISABLED_HardwareBufferRequest) {
     const auto [n, ahwb] = MemoryRuntimeAHWB::create(1024);
     ASSERT_EQ(n, ANEURALNETWORKS_NO_ERROR);
     Request::MemoryPool sharedMemoryPool, ahwbMemoryPool = ahwb->getMemoryPool();

@@ -175,7 +175,7 @@ if (use.test) {
       "runtime/test/RequireDebug.cpp",
       "runtime/test/TestAssertions.cpp",
       "runtime/test/TestCompilationCaching.cpp",
-      # "runtime/test/TestCompliance.cpp",              # Tests fail
+      "runtime/test/TestCompliance.cpp",
       "runtime/test/TestControlFlow.cpp",
       # "runtime/test/TestExecution.cpp",               # Tests fail
       # "runtime/test/TestExtensions.cpp",              # Tests fail
