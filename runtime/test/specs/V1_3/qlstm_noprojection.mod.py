@@ -44,7 +44,8 @@ cell_to_input_weights = Input("cell_to_input_weights", CellWeightsType)
 cell_to_forget_weights = Input("cell_to_forget_weights", CellWeightsType)
 cell_to_output_weights = Input("cell_to_output_weights", CellWeightsType)
 
-BiasType = ("TENSOR_INT32", [num_units], 4.65661e-08, 0)
+# The bias scale value here is not used.
+BiasType = ("TENSOR_INT32", [num_units], 0.0, 0)
 input_gate_bias = Input("input_gate_bias", BiasType)
 forget_gate_bias = Input("forget_gate_bias", BiasType)
 cell_gate_bias = Input("cell_gate_bias", BiasType)
