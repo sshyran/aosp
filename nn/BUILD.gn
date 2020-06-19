@@ -196,7 +196,7 @@ if (use.test) {
       "runtime/test/TestUnknownDimensions.cpp",         # -lots- of log output
       "runtime/test/TestUnspecifiedDimensions.cpp",     # -lots- of log output
       # "runtime/test/TestValidateModel.cpp",           # Tests fail
-      # "runtime/test/TestValidateOperations.cpp",      # Tests fail
+      "runtime/test/TestValidateOperations.cpp",
       "runtime/test/TestValidation.cpp",
       "runtime/test/TestVersionedInterfaces.cpp",
       "runtime/test/TestWrapper.cpp",
