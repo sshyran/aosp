@@ -22,16 +22,21 @@ group("all") {
 }
 
 shared_library("libneuralnetworks") {
-  configs += [ ":target_defaults" ]
+  configs += [
+    ":target_defaults",
+  ]
   deps = [
     ":common",
     ":common_random",
     ":common_operations",
     ":runtime",
+    ":sample_driver",  # Needed to link, probably shouldn't be here.
   ]
   libs = [
+    "pthread",
     "rt",
     "tensorflowlite",
+    "textclassifier",  # For Farmhash.
   ]
 }
 
@@ -47,6 +52,10 @@ pkg_config("target_defaults") {
     "-Wno-inconsistent-missing-override",
     # gemmlowp library has many signed with unsigned compares.
     "-Wno-sign-compare",
+  ]
+  ldflags = [
+    "-Wl,--no-as-needed",
+    "-Wl,--no-undefined",
   ]
   include_dirs = [ "${sysroot}/usr/include/aosp" ]
   defines = [
@@ -102,6 +111,7 @@ static_library("runtime") {
   configs += [
     ":target_defaults",
     "//common-mk:pic",
+    "//common-mk:visibility_default",
   ]
   cflags_cc = [
     # Stubbed out functions have unused parameters
@@ -295,7 +305,6 @@ if (use.test) {
     ]
     configs += [
       ":common_defaults",
-      "//common-mk:pic",
     ]
     deps = [
       ":common",
@@ -446,6 +455,7 @@ static_library("sample_driver") {
     ":common_defaults",
     ":target_defaults",
     "//common-mk:pic",
+    "//common-mk:visibility_default",
   ]
   include_dirs = [
     "driver/sample",
