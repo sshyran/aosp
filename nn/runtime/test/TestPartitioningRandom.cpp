@@ -742,7 +742,8 @@ V1_0::IDevice* RandomPartitioningTest::makeTestDriver(HalVersion version, const 
 INSTANTIATE_TEST_CASE_P(Seed, RandomPartitioningTest,
                         ::testing::Range(kFirstSeed, kFirstSeed + kNumTestCases));
 
-TEST_P(RandomPartitioningTest, Test) {
+// TODO(b/157948826): Enable when HardSwish is supported after TFLite uprev.
+TEST_P(RandomPartitioningTest, DISABLED_Test) {
     LOG(INFO) << "RandomPartitioningTest: GetParam() = " << GetParam();
 
 #ifdef VERBOSE

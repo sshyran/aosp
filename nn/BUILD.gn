@@ -199,8 +199,8 @@ if (use.test) {
       "runtime/test/TestNeuralNetworksWrapper.cpp",     # mostly empty - no tests
       # "runtime/test/TestOpenmpSettings.cpp",          # not needed?
       "runtime/test/TestOperandExtraParams.cpp",
-      # "runtime/test/TestPartitioning.cpp",            # Tests fail (HARD_SWISH)
-      # "runtime/test/TestPartitioningRandom.cpp",      # Tests fail (HARD_SWISH)
+      "runtime/test/TestPartitioning.cpp",
+      "runtime/test/TestPartitioningRandom.cpp",
       # "runtime/test/TestRemoveDefaultArguments.cpp",  # needs symbols in generated/spec_V1_2/avg_pool_v1_2.example.cpp
       # "runtime/test/TestTrivialModel.cpp",            # Tests fail
       "runtime/test/TestUnknownDimensions.cpp",         # -lots- of log output

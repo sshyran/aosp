@@ -1432,7 +1432,8 @@ TEST_F(PartitioningTest, SimpleModel) {
     }
 }
 
-TEST_F(PartitioningTest, SliceModel) {
+// TODO(b/157948826): Enable when HardSwish is supported after TFLite uprev.
+TEST_F(PartitioningTest, DISABLED_SliceModel) {
     PartitioningModel model;
     uint32_t opnd0 = model.addFloatOperand();
     uint32_t opnd1 = model.addFloatOperand();
@@ -1559,7 +1560,8 @@ TEST_F(PartitioningTest, SliceModel) {
     // devices.
 }
 
-TEST_F(PartitioningTest, SliceModelToEmpty) {
+// TODO(b/157948826): Enable when HardSwish is supported after TFLite uprev.
+TEST_F(PartitioningTest, DISABLED_SliceModelToEmpty) {
     PartitioningModel model;
     uint32_t opnd0 = model.addFloatOperand();
     uint32_t opnd1 = model.addOperation1To1V1_3(0, opnd0);
@@ -1956,7 +1958,7 @@ class CacheTest : public PartitioningTest {
    protected:
     virtual void SetUp() override {
         PartitioningTest::SetUp();
-        char cacheDirTemp[] = "/data/local/tmp/TestCompilationCachingXXXXXX";
+        char cacheDirTemp[] = "/tmp/TestCompilationCachingXXXXXX";
         char* cacheDir = mkdtemp(cacheDirTemp);
         ASSERT_NE(cacheDir, nullptr);
         mCacheDir = cacheDir;
