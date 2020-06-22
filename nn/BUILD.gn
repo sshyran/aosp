@@ -30,7 +30,7 @@ shared_library("libneuralnetworks") {
     ":common_random",
     ":common_operations",
     ":runtime",
-    ":sample_driver",  # Needed to link, probably shouldn't be here.
+    ":vendor-nn-hal",
   ]
   libs = [
     "pthread",
@@ -123,7 +123,6 @@ static_library("runtime") {
     "runtime/include",
   ]
   sources = [
-    "chromeos/sampledriver.cpp",
     "runtime/BurstBuilder.cpp",
     "runtime/Callbacks.cpp",
     "runtime/CompilationBuilder.cpp",
@@ -445,23 +444,36 @@ if (use.test) {
 }
 
 shared_library("vendor-nn-hal") {
+  configs += [
+    ":target_defaults",
+  ]
   deps = [
     ":sample_driver",
+  ]
+  libs = [
+    "pthread",
+    "rt",
+    "tensorflowlite",
+    "textclassifier",  # For Farmhash.
   ]
 }
 
 static_library("sample_driver") {
   configs += [
     ":common_defaults",
-    ":target_defaults",
     "//common-mk:pic",
     "//common-mk:visibility_default",
+  ]
+  deps = [
+    ":common",
+    ":common_operations",
   ]
   include_dirs = [
     "driver/sample",
     "runtime/include",
   ]
   sources = [
+    "chromeos/sampledriver.cpp",
     "driver/sample/SampleDriver.cpp",
     "driver/sample/SampleDriverFull.cpp",
     "driver/sample/SampleDriverPartial.cpp",
