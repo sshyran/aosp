@@ -192,7 +192,7 @@ if (use.test) {
       "runtime/test/TestFree.cpp",
       # "runtime/test/TestIntrospectionControl.cpp",    # Tests fail
       "runtime/test/TestMemory.cpp",
-      # "runtime/test/TestMemoryDomain.cpp",            # Tests SIGSEGV(11)
+      "runtime/test/TestMemoryDomain.cpp",
       "runtime/test/TestMemoryInternal.cpp",
       "runtime/test/TestNeuralNetworksWrapper.cpp",
       # "runtime/test/TestOpenmpSettings.cpp",          # not needed?

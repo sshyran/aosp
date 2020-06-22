@@ -143,26 +143,24 @@ class TestDriverLatest : public sample_driver::SampleDriver {
 //               +--- SUB ---> temp    ---+
 //     input2 ---+
 //
-test_wrapper::Model createTestModel() {
-    test_wrapper::Model model;
+void createTestModel(test_wrapper::Model *model) {
     test_wrapper::OperandType tensorTypeFullySpecified(Type::TENSOR_FLOAT32, {1});
     test_wrapper::OperandType tensorTypeDynamicShape(Type::TENSOR_FLOAT32, {0});
     test_wrapper::OperandType actType(Type::INT32, {});
-    uint32_t input0 = model.addOperand(&tensorTypeFullySpecified);
-    uint32_t input1 = model.addOperand(&tensorTypeFullySpecified);
-    uint32_t input2 = model.addOperand(&tensorTypeFullySpecified);
-    uint32_t temp = model.addOperand(&tensorTypeFullySpecified);
-    uint32_t output0 = model.addOperand(&tensorTypeFullySpecified);
-    uint32_t output1 = model.addOperand(&tensorTypeDynamicShape);
-    uint32_t act = model.addOperand(&actType);
+    uint32_t input0 = model->addOperand(&tensorTypeFullySpecified);
+    uint32_t input1 = model->addOperand(&tensorTypeFullySpecified);
+    uint32_t input2 = model->addOperand(&tensorTypeFullySpecified);
+    uint32_t temp = model->addOperand(&tensorTypeFullySpecified);
+    uint32_t output0 = model->addOperand(&tensorTypeFullySpecified);
+    uint32_t output1 = model->addOperand(&tensorTypeDynamicShape);
+    uint32_t act = model->addOperand(&actType);
     int32_t activation = 0;
-    model.setOperandValue(act, &activation, sizeof(int32_t));
-    model.addOperation(ANEURALNETWORKS_ADD, {input0, input1, act}, {output0});
-    model.addOperation(ANEURALNETWORKS_SUB, {input1, input2, act}, {temp});
-    model.addOperation(ANEURALNETWORKS_MUL, {output0, temp, act}, {output1});
-    model.identifyInputsAndOutputs({input0, input1, input2}, {output0, output1});
-    EXPECT_EQ(model.finish(), Result::NO_ERROR);
-    return model;
+    model->setOperandValue(act, &activation, sizeof(int32_t));
+    model->addOperation(ANEURALNETWORKS_ADD, {input0, input1, act}, {output0});
+    model->addOperation(ANEURALNETWORKS_SUB, {input1, input2, act}, {temp});
+    model->addOperation(ANEURALNETWORKS_MUL, {output0, temp, act}, {output1});
+    model->identifyInputsAndOutputs({input0, input1, input2}, {output0, output1});
+    EXPECT_EQ(model->finish(), Result::NO_ERROR);
 }
 
 class MemoryDomainTestBase : public ::testing::Test {
@@ -172,6 +170,7 @@ class MemoryDomainTestBase : public ::testing::Test {
         if (DeviceManager::get()->getUseCpuOnly()) {
             GTEST_SKIP();
         }
+        createTestModel(&mModel);
         // Clear the device list.
         DeviceManager::get()->forTest_setDevices({});
     }
@@ -202,10 +201,10 @@ class MemoryDomainTestBase : public ::testing::Test {
                            [&deviceMap](const std::string& name) { return deviceMap.at(name); });
             Result result;
             std::tie(result, compilation) =
-                    test_wrapper::Compilation::createForDevices(&kModel, devices);
+                    test_wrapper::Compilation::createForDevices(&mModel, devices);
             EXPECT_EQ(result, Result::NO_ERROR);
         } else {
-            compilation = test_wrapper::Compilation(&kModel);
+            compilation = test_wrapper::Compilation(&mModel);
         }
         EXPECT_EQ(compilation.finish(), Result::NO_ERROR);
         return compilation;
@@ -233,10 +232,8 @@ class MemoryDomainTestBase : public ::testing::Test {
         return {n, test_wrapper::Memory(memory)};
     }
 
-    static const test_wrapper::Model kModel;
+    test_wrapper::Model mModel;
 };
-
-const test_wrapper::Model MemoryDomainTestBase::kModel = createTestModel();
 
 // Test memory domain with the following parameters
 // - If true, use a V1_2 driver, otherwise, use the latest version;
@@ -276,8 +273,9 @@ class MemoryDomainTest : public MemoryDomainTestBase,
     const AllocateReturn kAllocateReturn = std::get<2>(GetParam());
 };
 
+// b/157388904: Hardware buffers not implemented on ChromeOS.
 // Test device memory allocation on a compilation with only a single partition.
-TEST_P(MemoryDomainTest, SinglePartition) {
+TEST_P(MemoryDomainTest, DISABLED_SinglePartition) {
     createAndRegisterDriver("test_driver",
                             {OperationType::ADD, OperationType::SUB, OperationType::MUL},
                             kAllocateReturn);
@@ -312,8 +310,9 @@ TEST_P(MemoryDomainTest, SinglePartition) {
     }
 }
 
+// b/157388904: Hardware buffers not implemented on ChromeOS.
 // Test device memory allocation on a compilation with multiple partitions.
-TEST_P(MemoryDomainTest, MultiplePartitions) {
+TEST_P(MemoryDomainTest, DISABLED_MultiplePartitions) {
     createAndRegisterDriver("test_driver_add", {OperationType::ADD}, kAllocateReturn);
     createAndRegisterDriver("test_driver_sub", {OperationType::SUB}, kAllocateReturn);
     createAndRegisterDriver("test_driver_mul", {OperationType::MUL}, kAllocateReturn);
@@ -431,7 +430,8 @@ INSTANTIATE_TEST_CASE_P(DeviceVersionV1_2, MemoryDomainTest,
 
 class MemoryDomainCopyTest : public MemoryDomainTestBase {};
 
-TEST_F(MemoryDomainCopyTest, MemoryCopyTest) {
+// b/157388904: Hardware buffers not implemented on ChromeOS.
+TEST_F(MemoryDomainCopyTest, DISABLED_MemoryCopyTest) {
     sp<sample_driver::SampleDriverFull> driver(new sample_driver::SampleDriverFull(
             "test_driver", {.execTime = 0.1f, .powerUsage = 0.1f}));
     DeviceManager::get()->forTest_registerDevice("test_driver", driver);
