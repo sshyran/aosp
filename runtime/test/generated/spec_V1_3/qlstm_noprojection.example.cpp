@@ -140,7 +140,7 @@ const TestModel& get_test_model() {
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 4.65661e-08f,
+                            .scale = 0.0f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
                         }, { // forget_gate_bias
@@ -150,7 +150,7 @@ const TestModel& get_test_model() {
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 4.65661e-08f,
+                            .scale = 0.0f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
                         }, { // cell_gate_bias
@@ -160,7 +160,7 @@ const TestModel& get_test_model() {
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 4.65661e-08f,
+                            .scale = 0.0f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
                         }, { // output_gate_bias
@@ -170,7 +170,7 @@ const TestModel& get_test_model() {
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 4.65661e-08f,
+                            .scale = 0.0f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
                         }, { // projection_weights
@@ -517,7 +517,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 4.65661e-08f,
+                            .scale = 0.0f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
                         }, { // forget_gate_bias
@@ -527,7 +527,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 4.65661e-08f,
+                            .scale = 0.0f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
                         }, { // cell_gate_bias
@@ -537,7 +537,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 4.65661e-08f,
+                            .scale = 0.0f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
                         }, { // output_gate_bias
@@ -547,7 +547,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 4.65661e-08f,
+                            .scale = 0.0f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
                         }, { // projection_weights
