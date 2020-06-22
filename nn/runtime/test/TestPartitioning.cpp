@@ -22,12 +22,14 @@
 #include <map>
 #include <memory>
 #include <queue>
+#include <set>
 #include <string>
 #include <type_traits>
 #include <utility>
 #include <vector>
 
 #include "CompilationBuilder.h"
+#include "ControlFlow.h"
 #include "ExecutionPlan.h"
 #include "HalInterfaces.h"
 #include "Manager.h"
@@ -67,7 +69,6 @@
 // specify which operations in a test graph can be executed on which
 // devices.  We accomplish this in the following way:
 // - A unary OEM operation is available.
-// - Control flow operations (IF and WHILE) are not supported.
 // - There is a collection of operations (each of which has two inputs
 //   and one output):
 //   - Eight kinds of operations available at driver version V1_0 or
@@ -86,7 +87,7 @@
 //     MINIMUM, POW, or PRELU.  These operations take no activation
 //     function, so we only get 4 operation kinds, for which we
 //     use operation encodings 16..19.
-// - There is another collection of operations (each of which has one inpus
+// - There is another collection of operations (each of which has one input
 //   and one output):
 //   - Single operation available at driver version V1_3 or
 //     later.  It is represented in the graph as HARD_SWISH.
@@ -278,15 +279,12 @@ uint32_t lookupOperation(std::function<const Operation&(uint32_t)> getOperation,
     return kBadOperation;
 }
 
-uint32_t lookupOperation(const HidlModel& model, uint32_t operationIndex) {
+uint32_t lookupOperation(const HidlModel& model, const Subgraph& subgraph,
+                         uint32_t operationIndex) {
     return lookupOperation(
-            [&model](uint32_t index) -> const Operation& { return model.main.operations[index]; },
-            [&model](uint32_t index) -> const Operand& { return model.main.operands[index]; },
+            [&subgraph](uint32_t index) -> const Operation& { return subgraph.operations[index]; },
+            [&subgraph](uint32_t index) -> const Operand& { return subgraph.operands[index]; },
             [&model](uint32_t offset) { return &model.operandValues[offset]; }, operationIndex);
-}
-
-bool isControlFlowOperation(OperationType type) {
-    return type == OperationType::IF || type == OperationType::WHILE;
 }
 
 #ifdef VERBOSE
@@ -303,12 +301,13 @@ void dump(const char* name, const ModelBuilder* model) {
 }
 #endif
 
-// This is an IDevice for testing purposes.  It only has a few
-// interesting properties, all of which are specified as constructor
-// arguments: device capabilities; which subset of operation kinds
-// (0..19) does the device support; does the device support the OEM
-// operation.  The subset is represented with a bitmask, in which
-// operation kind K corresponds to the bit (1 << K).
+// This is an IDevice for testing purposes.  It only has a few interesting
+// properties, all of which are specified as constructor arguments: device
+// capabilities; which subset of operation kinds (0..19) does the device
+// support; does the device support the OEM operation; does the device support
+// other operations.  The subset is represented with a bitmask, in which
+// operation kind K corresponds to the bit (1 << K).  The other operations are
+// represented by a set of OperationType.
 class PartitioningDriver : public SampleDriver {
    private:
     // Dummy class -- a prepared model must not be nullptr.
@@ -364,12 +363,19 @@ class PartitioningDriver : public SampleDriver {
     };
 
     PartitioningDriver(const char* name, const char* version, Capabilities capabilities,
-                       uint32_t operationMask, OEM oem = OEMNo)
+                       uint32_t operationMask, OEM oem = OEMNo,
+                       std::set<OperationType> operationTypes = {})
         : SampleDriver(name),
           mVersionString(version),
           mCapabilities(capabilities),
           mOperationMask(operationMask),
-          mOEM(oem) {}
+          mOEM(oem),
+          mOperationTypes(std::move(operationTypes)) {
+        CHECK_EQ(mOperationTypes.count(OperationType::OEM_OPERATION), size_t(0));
+        std::for_each(mOperationTypes.begin(), mOperationTypes.end(), [](OperationType type) {
+            CHECK_EQ(operationToFirstEncoding.count(type), size_t(0));
+        });
+    }
     ~PartitioningDriver() override {}
 
     Return<void> getVersionString(getVersionString_cb cb) override {
@@ -407,26 +413,7 @@ class PartitioningDriver : public SampleDriver {
             cb(V1_3::ErrorStatus::INVALID_ARGUMENT, std::vector<bool>());
             return Void();
         }
-
-        const size_t count = model.main.operations.size();
-        std::vector<bool> supported(count);
-        for (size_t i = 0; i < count; i++) {
-            if (model.main.operations[i].type == OperationType::OEM_OPERATION) {
-                supported[i] = (mOEM != OEMNo);
-                continue;
-            }
-            // PartitioningDriver does not support control flow operations.
-            if (isControlFlowOperation(model.main.operations[i].type)) {
-                supported[i] = false;
-                continue;
-            }
-            supported[i] = false;
-            uint32_t operation = lookupOperation(model, i);
-            if ((operation != kBadOperation) && (mOperationMask & (1 << operation))) {
-                supported[i] = true;
-            }
-        }
-        cb(V1_3::ErrorStatus::NONE, supported);
+        cb(V1_3::ErrorStatus::NONE, getSupportedOperationsForSubgraph(model, model.main));
         return Void();
     }
 
@@ -443,10 +430,53 @@ class PartitioningDriver : public SampleDriver {
     }
 
    private:
+    std::vector<bool> getSupportedOperationsForSubgraph(const Model& model,
+                                                        const Subgraph& subgraph) {
+        auto supportsEntireSubgraph = [this, &model, &subgraph](uint32_t refSubgraphOperandIndex) {
+            const Operand& refSubgraphOperand = subgraph.operands[refSubgraphOperandIndex];
+            const Subgraph& refSubgraph = model.referenced[refSubgraphOperand.location.offset];
+            std::vector<bool> supported = getSupportedOperationsForSubgraph(model, refSubgraph);
+            return std::all_of(supported.begin(), supported.end(), [](bool x) { return x; });
+        };
+        const size_t count = subgraph.operations.size();
+        std::vector<bool> supported(count);
+        for (size_t i = 0; i < count; i++) {
+            const Operation operation = subgraph.operations[i];
+            if (mOperationTypes.count(operation.type)) {
+                if (operation.type == OperationType::IF) {
+                    namespace op = android::nn::operation_if;
+                    supported[i] =
+                            supportsEntireSubgraph(operation.inputs[op::kThenModelOperand]) &&
+                            supportsEntireSubgraph(operation.inputs[op::kElseModelOperand]);
+                } else if (operation.type == OperationType::WHILE) {
+                    namespace op = android::nn::operation_while;
+                    supported[i] =
+                            supportsEntireSubgraph(operation.inputs[op::kCondModelOperand]) &&
+                            supportsEntireSubgraph(operation.inputs[op::kBodyModelOperand]);
+                } else {
+                    supported[i] = true;
+                }
+                continue;
+            }
+            if (operation.type == OperationType::OEM_OPERATION) {
+                supported[i] = (mOEM != OEMNo);
+                continue;
+            }
+            supported[i] = false;
+            uint32_t operationEncoding = lookupOperation(model, subgraph, i);
+            if ((operationEncoding != kBadOperation) &&
+                (mOperationMask & (1 << operationEncoding))) {
+                supported[i] = true;
+            }
+        }
+        return supported;
+    }
+
     std::string mVersionString;
     Capabilities mCapabilities;
     uint32_t mOperationMask;
     OEM mOEM;
+    std::set<OperationType> mOperationTypes;
 };
 
 // Like PartitioningDriver, but implementing 1.2
@@ -454,8 +484,10 @@ class PartitioningDriverV1_2 : public V1_2::IDevice {
    public:
     PartitioningDriverV1_2(const char* name, const char* version, Capabilities capabilities,
                            uint32_t operationMask,
-                           PartitioningDriver::OEM oem = PartitioningDriver::OEMNo)
-        : mLatestDriver(new PartitioningDriver(name, version, capabilities, operationMask, oem)) {}
+                           PartitioningDriver::OEM oem = PartitioningDriver::OEMNo,
+                           std::set<OperationType> operationTypes = {})
+        : mLatestDriver(new PartitioningDriver(name, version, capabilities, operationMask, oem,
+                                               operationTypes)) {}
     Return<void> getCapabilities_1_2(getCapabilities_1_2_cb _hidl_cb) override {
         return mLatestDriver->getCapabilities_1_2(_hidl_cb);
     }
@@ -521,8 +553,10 @@ class PartitioningDriverV1_1 : public V1_1::IDevice {
    public:
     PartitioningDriverV1_1(const char* name, const char* version, Capabilities capabilities,
                            uint32_t operationMask,
-                           PartitioningDriver::OEM oem = PartitioningDriver::OEMNo)
-        : mLatestDriver(new PartitioningDriver(name, version, capabilities, operationMask, oem)) {}
+                           PartitioningDriver::OEM oem = PartitioningDriver::OEMNo,
+                           std::set<OperationType> operationTypes = {})
+        : mLatestDriver(new PartitioningDriver(name, version, capabilities, operationMask, oem,
+                                               operationTypes)) {}
     Return<void> getCapabilities_1_1(getCapabilities_1_1_cb _hidl_cb) override {
         return mLatestDriver->getCapabilities_1_1(_hidl_cb);
     }
@@ -558,8 +592,10 @@ class PartitioningDriverV1_0 : public V1_0::IDevice {
    public:
     PartitioningDriverV1_0(const char* name, const char* version, Capabilities capabilities,
                            uint32_t operationMask,
-                           PartitioningDriver::OEM oem = PartitioningDriver::OEMNo)
-        : mLatestDriver(new PartitioningDriver(name, version, capabilities, operationMask, oem)) {}
+                           PartitioningDriver::OEM oem = PartitioningDriver::OEMNo,
+                           std::set<OperationType> operationTypes = {})
+        : mLatestDriver(new PartitioningDriver(name, version, capabilities, operationMask, oem,
+                                               operationTypes)) {}
     Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
         return mLatestDriver->getCapabilities(_hidl_cb);
     }
@@ -591,15 +627,31 @@ class PartitioningModel : private WrapperModel {
     using WrapperModel::isValid;
     using WrapperModel::relaxComputationFloat32toFloat16;
 
+    enum class Dimensioned { NO, YES };
+
     // Create a tensor operand of the specified type, and return the
     // corresponding operand index.
-    uint32_t addFloatOperand() { return addOperand(WrapperType::TENSOR_FLOAT32); }
-    uint32_t addQuantOperand() { return addOperand(WrapperType::TENSOR_QUANT8_ASYMM); }
-    uint32_t addBooleanOperand() { return addOperand(WrapperType::TENSOR_BOOL8); }
+    uint32_t addFloatOperand(Dimensioned dimensioned = Dimensioned::YES) {
+        return addOperand(WrapperType::TENSOR_FLOAT32, dimensioned);
+    }
+    uint32_t addQuantOperand(Dimensioned dimensioned = Dimensioned::YES) {
+        return addOperand(WrapperType::TENSOR_QUANT8_ASYMM, dimensioned);
+    }
+    uint32_t addBooleanOperand(Dimensioned dimensioned = Dimensioned::YES) {
+        return addOperand(WrapperType::TENSOR_BOOL8, dimensioned);
+    }
 
     // Create an operand of the specified type, and return the corresponding
     // operand index.
-    uint32_t addOperand(WrapperType wrapperType) {
+    uint32_t addOperand(WrapperType wrapperType, Dimensioned dimensioned = Dimensioned::YES) {
+        auto dimensions = [dimensioned]() -> std::vector<uint32_t> {
+            if (dimensioned == Dimensioned::YES) {
+                return {1};
+            } else {
+                return {};
+            }
+        };
+
         switch (static_cast<int>(wrapperType)) {
             case ANEURALNETWORKS_BOOL:
             case ANEURALNETWORKS_FLOAT16:
@@ -608,18 +660,14 @@ class PartitioningModel : private WrapperModel {
             case ANEURALNETWORKS_UINT32:
             case ANEURALNETWORKS_MODEL:
             case ANEURALNETWORKS_OEM_SCALAR: {
-                WrapperOperandType wrapperOperandType(wrapperType, {});
-                mWrapperOperandType.push_back(wrapperOperandType);
-                return WrapperModel::addOperand(&wrapperOperandType);
+                return addOperand(WrapperOperandType{wrapperType, {}});
             }
 
             case ANEURALNETWORKS_TENSOR_BOOL8:
             case ANEURALNETWORKS_TENSOR_FLOAT16:
             case ANEURALNETWORKS_TENSOR_FLOAT32:
             case ANEURALNETWORKS_TENSOR_OEM_BYTE: {
-                WrapperOperandType wrapperOperandType(wrapperType, {1});
-                mWrapperOperandType.push_back(wrapperOperandType);
-                return WrapperModel::addOperand(&wrapperOperandType);
+                return addOperand(WrapperOperandType{wrapperType, dimensions()});
             }
 
             case ANEURALNETWORKS_TENSOR_INT32:
@@ -628,16 +676,12 @@ class PartitioningModel : private WrapperModel {
             case ANEURALNETWORKS_TENSOR_QUANT8_SYMM:
             case ANEURALNETWORKS_TENSOR_QUANT16_ASYMM:
             case ANEURALNETWORKS_TENSOR_QUANT16_SYMM: {
-                WrapperOperandType wrapperOperandType(wrapperType, {1}, 1.0f);
-                mWrapperOperandType.push_back(wrapperOperandType);
-                return WrapperModel::addOperand(&wrapperOperandType);
+                return addOperand(WrapperOperandType{wrapperType, dimensions(), 1.0f});
             }
 
             case ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL: {
-                WrapperOperandType wrapperOperandType(wrapperType, {1},
-                                                      WrapperSymmPerChannelQuantParams({1.0f}, 0));
-                mWrapperOperandType.push_back(wrapperOperandType);
-                return WrapperModel::addOperand(&wrapperOperandType);
+                return addOperand(WrapperOperandType{wrapperType, dimensions(),
+                                                     WrapperSymmPerChannelQuantParams({1.0f}, 0)});
             }
 
             default:
@@ -646,7 +690,24 @@ class PartitioningModel : private WrapperModel {
         }
     }
 
-    enum class Dimensioned { NO, YES };
+    // Create an operand of the specified operand type, and return the
+    // corresponding operand index.
+    uint32_t addOperand(const WrapperOperandType& wrapperOperandType) {
+        mWrapperOperandType.push_back(wrapperOperandType);
+        return WrapperModel::addOperand(&wrapperOperandType);
+    }
+
+    // Create an operation with any number of inputs and one output, specifying
+    // the operation type (e.g., ANEURALNETWORKS_ADD), the input operand
+    // indexes, and the output type (e.g., WrapperType::TENSOR_FLOAT32).
+    // Returns the output operand index.
+    uint32_t addExplicitOperationXTo1(ANeuralNetworksOperationType operationType,
+                                      const std::vector<uint32_t>& inputs, WrapperType outputType,
+                                      Dimensioned dimensionedOutput = Dimensioned::YES) {
+        uint32_t output = addOperand(outputType, dimensionedOutput);
+        addOperation(operationType, inputs, {output});
+        return output;
+    }
 
     // Create a V1_0 operation with two inputs and one output, specifying the
     // operation kind (where 0 is the first V1_0 operation) and the input
@@ -698,8 +759,8 @@ class PartitioningModel : private WrapperModel {
         return output;
     }
 
-    // Create an IF operation with the given condition operand and two reference models for the true
-    // and false cases.
+    // Create an IF operation with the given condition operand and two
+    // referenced models for the true and false cases.
     void addIfOperation(const uint32_t cond, const PartitioningModel& trueModel,
                         const PartitioningModel& falseModel, const std::vector<uint32_t>& inputs,
                         const std::vector<uint32_t>& outputs) {
@@ -708,6 +769,17 @@ class PartitioningModel : private WrapperModel {
         std::vector<uint32_t> ifInputs = {cond, opndTrue, opndFalse};
         ifInputs.insert(ifInputs.end(), inputs.begin(), inputs.end());
         addOperation(ANEURALNETWORKS_IF, ifInputs, outputs);
+    }
+
+    // Create a WHILE operation with the given condition and body referenced models.
+    void addWhileOperation(const PartitioningModel& condModel, const PartitioningModel& bodyModel,
+                           const std::vector<uint32_t>& inputs,
+                           const std::vector<uint32_t>& outputs) {
+        const uint32_t condOperand = addRefModelOperand(condModel);
+        const uint32_t bodyOperand = addRefModelOperand(bodyModel);
+        std::vector<uint32_t> whileInputs = {condOperand, bodyOperand};
+        whileInputs.insert(whileInputs.end(), inputs.begin(), inputs.end());
+        addOperation(ANEURALNETWORKS_WHILE, whileInputs, outputs);
     }
 
     // Run the partitioning algorithm to create an ExecutionPlan.
@@ -861,20 +933,29 @@ class PartitioningTest : public ::testing::Test {
               mOperationMask(operationMask),
               mOEM(oem) {}
         DeviceSpecification(const std::string& name, float perf, uint32_t operationMask,
-                            PartitioningDriver::OEM oem = PartitioningDriver::OEMNo)
-            : DeviceSpecification(name, perf, perf, operationMask, oem) {}
+                            PartitioningDriver::OEM oem = PartitioningDriver::OEMNo,
+                            std::set<OperationType> operationTypes = {})
+            : DeviceSpecification(name, perf, perf, operationMask, oem, operationTypes) {}
         DeviceSpecification(const std::string& name, float perf, float perfRelaxed,
                             uint32_t operationMask,
-                            PartitioningDriver::OEM oem = PartitioningDriver::OEMNo)
-            : DeviceSpecification(name, kVersionString, perf, perfRelaxed, operationMask, oem) {}
+                            PartitioningDriver::OEM oem = PartitioningDriver::OEMNo,
+                            std::set<OperationType> operationTypes = {})
+            : DeviceSpecification(name, kVersionString, perf, perfRelaxed, operationMask, oem,
+                                  operationTypes) {}
         DeviceSpecification(const std::string& name, const std::string& version, float perf,
                             uint32_t operationMask,
-                            PartitioningDriver::OEM oem = PartitioningDriver::OEMNo)
-            : DeviceSpecification(name, version, perf, perf, operationMask, oem) {}
+                            PartitioningDriver::OEM oem = PartitioningDriver::OEMNo,
+                            std::set<OperationType> operationTypes = {})
+            : DeviceSpecification(name, version, perf, perf, operationMask, oem, operationTypes) {}
         DeviceSpecification(const std::string& name, const std::string& version, float perf,
                             float perfRelaxed, uint32_t operationMask,
-                            PartitioningDriver::OEM oem = PartitioningDriver::OEMNo)
-            : mName(name), mVersionString(version), mOperationMask(operationMask), mOEM(oem) {
+                            PartitioningDriver::OEM oem = PartitioningDriver::OEMNo,
+                            std::set<OperationType> operationTypes = {})
+            : mName(name),
+              mVersionString(version),
+              mOperationMask(operationMask),
+              mOEM(oem),
+              mOperationTypes(std::move(operationTypes)) {
             PerformanceInfo perfInfo = {.execTime = perf, .powerUsage = perf};
             PerformanceInfo perfRelaxedInfo = {.execTime = perfRelaxed, .powerUsage = perfRelaxed};
             mCapabilities = {
@@ -902,6 +983,7 @@ class PartitioningTest : public ::testing::Test {
         HalVersion mHalVersion = HalVersion::LATEST;
         uint32_t mOperationMask;
         PartitioningDriver::OEM mOEM = PartitioningDriver::OEMNo;
+        std::set<OperationType> mOperationTypes;
 
         static constexpr char kVersionString[] = "JUST_AN_EXAMPLE";
 
@@ -961,25 +1043,25 @@ class PartitioningTest : public ::testing::Test {
                     halDriver = new PartitioningDriver(
                             specification.mName.c_str(), specification.mVersionString.c_str(),
                             specification.mCapabilities, specification.mOperationMask,
-                            specification.mOEM);
+                            specification.mOEM, specification.mOperationTypes);
                     break;
                 case HalVersion::V1_2:
                     halDriver = new PartitioningDriverV1_2(
                             specification.mName.c_str(), specification.mVersionString.c_str(),
                             specification.mCapabilities, specification.mOperationMask,
-                            specification.mOEM);
+                            specification.mOEM, specification.mOperationTypes);
                     break;
                 case HalVersion::V1_1:
                     halDriver = new PartitioningDriverV1_1(
                             specification.mName.c_str(), specification.mVersionString.c_str(),
                             specification.mCapabilities, specification.mOperationMask,
-                            specification.mOEM);
+                            specification.mOEM, specification.mOperationTypes);
                     break;
                 case HalVersion::V1_0:
                     halDriver = new PartitioningDriverV1_0(
                             specification.mName.c_str(), specification.mVersionString.c_str(),
                             specification.mCapabilities, specification.mOperationMask,
-                            specification.mOEM);
+                            specification.mOEM, specification.mOperationTypes);
                     break;
                 default:
                     ADD_FAILURE() << "Unexpected";
@@ -2406,7 +2488,7 @@ TEST_F(CacheTest, CacheTokenDifferentReferenceModelPartitions) {
     createControlFlowModelForCachingTests(&models);
     const auto& main = *models[0];
 
-    // DeviceA executes the two referenced models but does not support control flow operations.
+    // DeviceA executes the two referenced models but does not support IF.
     // There will be two partitions on deviceA.
     const auto devices = makeDevices({{"deviceA", 0.8, ~0U}});
 
@@ -2467,6 +2549,206 @@ TEST_F(PerfTest, Lookup) {
     OperandType operandType =
             static_cast<OperandType>(static_cast<uint32_t>(OperandTypeRange::BASE_MAX) + 1);
     EXPECT_EQ(lookupExecTime(capabilities, operandType), FLT_MAX);
+}
+
+class ControlFlowPartitioningTest : public PartitioningTest {
+   protected:
+    // opnd0 --> +-----+
+    //           | ADD | --> opnd2
+    // opnd1 --> +-----+
+    std::unique_ptr<PartitioningModel> createBranchOrBodyModel() {
+        auto model = std::make_unique<PartitioningModel>();
+        const uint32_t opnd0 = model->addFloatOperand();
+        const uint32_t opnd1 = model->addFloatOperand();
+        const uint32_t opnd2 = model->addOperation2To1V1_0(0, opnd0, opnd1);
+        model->identifyInputsAndOutputs({opnd0, opnd1}, {opnd2});
+        model->finish();
+        EXPECT_TRUE(model->isValid());
+        return model;
+    }
+
+    // opnd0 --> +-------+
+    //           | EQUAL | --> opnd2
+    // opnd1 --> +-------+
+    std::unique_ptr<PartitioningModel> createCondModel() {
+        auto model = std::make_unique<PartitioningModel>();
+        const uint32_t opnd0 = model->addFloatOperand();
+        const uint32_t opnd1 = model->addFloatOperand();
+        const uint32_t opnd2 = model->addExplicitOperationXTo1(
+                ANEURALNETWORKS_EQUAL, {opnd0, opnd1}, WrapperType::TENSOR_BOOL8);
+        model->identifyInputsAndOutputs({opnd0, opnd1}, {opnd2});
+        model->finish();
+        EXPECT_TRUE(model->isValid());
+        return model;
+    }
+
+    // opnd0 --> +----+
+    // opnd1 --> | IF | --> opnd3
+    // opnd2 --> +----+
+    std::vector<std::unique_ptr<PartitioningModel>> createIfModel(
+            bool firstOuterInputUnknownSize = false) {
+        auto thenModel = createBranchOrBodyModel();
+        auto elseModel = createBranchOrBodyModel();
+
+        auto mainModel = std::make_unique<PartitioningModel>();
+        const uint32_t opnd0 = mainModel->addBooleanOperand();
+        const uint32_t opnd1 = mainModel->addFloatOperand(
+                firstOuterInputUnknownSize ? PartitioningModel::Dimensioned::NO
+                                           : PartitioningModel::Dimensioned::YES);
+        const uint32_t opnd2 = mainModel->addFloatOperand();
+        const uint32_t opnd3 = mainModel->addFloatOperand();
+        mainModel->addIfOperation(opnd0, *thenModel, *elseModel, {opnd1, opnd2}, {opnd3});
+        mainModel->identifyInputsAndOutputs({opnd0, opnd1, opnd2}, {opnd3});
+        mainModel->finish();
+        EXPECT_TRUE(mainModel->isValid());
+
+        std::vector<std::unique_ptr<PartitioningModel>> models;
+        models.push_back(std::move(mainModel));
+        models.push_back(std::move(thenModel));
+        models.push_back(std::move(elseModel));
+        return std::move(models);
+    }
+
+    // opnd0 --> +-------+
+    //           | WHILE | --> opnd2
+    // opnd1 --> +-------+
+    std::vector<std::unique_ptr<PartitioningModel>> createWhileModel(
+            bool firstOuterInputUnknownSize = false) {
+        auto condModel = createCondModel();
+        auto bodyModel = createBranchOrBodyModel();
+
+        auto mainModel = std::make_unique<PartitioningModel>();
+        const uint32_t opnd0 = mainModel->addFloatOperand(
+                firstOuterInputUnknownSize ? PartitioningModel::Dimensioned::NO
+                                           : PartitioningModel::Dimensioned::YES);
+        const uint32_t opnd1 = mainModel->addFloatOperand();
+        const uint32_t opnd2 = mainModel->addFloatOperand();
+        mainModel->addWhileOperation(*condModel, *bodyModel, {opnd0, opnd1}, {opnd2});
+        mainModel->identifyInputsAndOutputs({opnd0, opnd1}, {opnd2});
+        mainModel->finish();
+        EXPECT_TRUE(mainModel->isValid());
+
+        std::vector<std::unique_ptr<PartitioningModel>> models;
+        models.push_back(std::move(mainModel));
+        models.push_back(std::move(condModel));
+        models.push_back(std::move(bodyModel));
+        return std::move(models);
+    }
+};
+
+TEST_F(ControlFlowPartitioningTest, IF_Interpreted) {
+    const auto models = createIfModel();
+
+    // The device supports the referenced models but does not support IF.
+    const auto devices = makeDevices({{"V1_0", 0.9, HalVersion::V1_0, ~0U}});
+
+    ExecutionPlan plan;
+    ASSERT_EQ(models[0]->partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER,
+                                          ExecutePriority::DEFAULT, {}, &plan),
+              ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::COMPOUND);
+    const auto& steps = plan.forTest_compoundGetSteps();
+    ASSERT_EQ(steps.size(), size_t(4));
+    ASSERT_TRUE(steps[0]->isIf());
+    ASSERT_TRUE(steps[1]->isExecution());
+    ASSERT_TRUE(steps[2]->isGoto());
+    ASSERT_TRUE(steps[3]->isExecution());
+    ASSERT_EQ(steps[1]->executionStep()->getDevice()->getName(), "V1_0");
+    ASSERT_EQ(steps[3]->executionStep()->getDevice()->getName(), "V1_0");
+}
+
+TEST_F(ControlFlowPartitioningTest, WHILE_Interpreted) {
+    const auto models = createWhileModel();
+
+    // The device supports the body model but does not support WHILE or the
+    // condition model (because of EQUAL).
+    const auto devices = makeDevices({{"V1_0", 0.9, HalVersion::V1_0, ~0U}});
+
+    ExecutionPlan plan;
+    ASSERT_EQ(models[0]->partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER,
+                                          ExecutePriority::DEFAULT, {}, &plan),
+              ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::COMPOUND);
+    const auto& steps = plan.forTest_compoundGetSteps();
+    ASSERT_EQ(steps.size(), size_t(5));
+    ASSERT_TRUE(steps[0]->isWhile());
+    ASSERT_TRUE(steps[1]->isExecution());
+    ASSERT_TRUE(steps[2]->isGoto());
+    ASSERT_TRUE(steps[3]->isExecution());
+    ASSERT_TRUE(steps[4]->isGoto());
+    ASSERT_EQ(steps[1]->executionStep()->getDevice()->getName(),
+              DeviceManager::getCpuDevice()->getName());
+    ASSERT_EQ(steps[3]->executionStep()->getDevice()->getName(), "V1_0");
+}
+
+TEST_F(ControlFlowPartitioningTest, IF_SimplePlan) {
+    const auto models = createIfModel();
+
+    // The device supports all operations.
+    const auto devices =
+            makeDevices({{"ALL", 0.9, ~0U, PartitioningDriver::OEMNo, {OperationType::IF}}});
+
+    ExecutionPlan plan;
+    ASSERT_EQ(models[0]->partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER,
+                                          ExecutePriority::DEFAULT, {}, &plan),
+              ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
+    ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), "ALL");
+}
+
+TEST_F(ControlFlowPartitioningTest, WHILE_SimplePlan) {
+    const auto models = createWhileModel();
+
+    // The device supports all operations.
+    const auto devices = makeDevices({{"ALL",
+                                       0.9,
+                                       ~0U,
+                                       PartitioningDriver::OEMNo,
+                                       {OperationType::WHILE, OperationType::EQUAL}}});
+
+    ExecutionPlan plan;
+    ASSERT_EQ(models[0]->partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER,
+                                          ExecutePriority::DEFAULT, {}, &plan),
+              ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
+    ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), "ALL");
+}
+
+TEST_F(ControlFlowPartitioningTest, IF_UnknownSize) {
+    const auto models = createIfModel(/*firstOuterInputUnknownSize=*/true);
+
+    // The device supports all operations but the partitioner ignores its IF
+    // support due to http://b/159076604#comment5.
+    const auto devices =
+            makeDevices({{"ALL", 0.9, ~0U, PartitioningDriver::OEMNo, {OperationType::IF}}});
+
+    ExecutionPlan plan;
+    ASSERT_EQ(models[0]->partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER,
+                                          ExecutePriority::DEFAULT, {}, &plan),
+              ANEURALNETWORKS_NO_ERROR);
+    // The control flow interpreter does not support unknown size (b/132458982).
+    ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
+    ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), DeviceManager::getCpuDevice()->getName());
+}
+
+TEST_F(ControlFlowPartitioningTest, WHILE_UnknownSize) {
+    const auto models = createWhileModel(/*firstOuterInputUnknownSize=*/true);
+
+    // The device supports all operations but the partitioner ignores its WHILE
+    // support due to http://b/159076604#comment5.
+    const auto devices = makeDevices({{"ALL",
+                                       0.9,
+                                       ~0U,
+                                       PartitioningDriver::OEMNo,
+                                       {OperationType::WHILE, OperationType::EQUAL}}});
+
+    ExecutionPlan plan;
+    ASSERT_EQ(models[0]->partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER,
+                                          ExecutePriority::DEFAULT, {}, &plan),
+              ANEURALNETWORKS_NO_ERROR);
+    // The control flow interpreter does not support unknown size (b/132458982).
+    ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
+    ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), DeviceManager::getCpuDevice()->getName());
 }
 
 }  // namespace
