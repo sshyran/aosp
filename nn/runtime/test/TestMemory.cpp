@@ -42,7 +42,7 @@ class MemoryTest : public ::testing::Test {
 
 TEST_F(MemoryTest, TestFd) {
     // Create a file that contains matrix2 and matrix3.
-    char path[] = "/data/local/tmp/TestMemoryXXXXXX";
+    char path[] = "/tmp/TestMemoryXXXXXX";
     int fd = mkstemp(path);
     const uint32_t offsetForMatrix2 = 20;
     const uint32_t offsetForMatrix3 = 200;
@@ -91,7 +91,8 @@ TEST_F(MemoryTest, TestFd) {
     unlink(path);
 }
 
-TEST_F(MemoryTest, TestAHardwareBuffer) {
+// b/157388904: Hardware buffers not implemented on ChromeOS.
+TEST_F(MemoryTest, DISABLED_TestAHardwareBuffer) {
     const uint32_t offsetForMatrix2 = 20;
     const uint32_t offsetForMatrix3 = 200;
 

@@ -330,7 +330,7 @@ void GeneratedTests::execute(const TestModel& testModel) {
 
 void GeneratedTests::SetUp() {
     GeneratedTestBase::SetUp();
-    char cacheDirTemp[] = "/data/local/tmp/TestCompilationCachingXXXXXX";
+    char cacheDirTemp[] = "/tmp/TestCompilationCachingXXXXXX";
     char* cacheDir = mkdtemp(cacheDirTemp);
     ASSERT_NE(cacheDir, nullptr);
     mCacheDir = cacheDir;
