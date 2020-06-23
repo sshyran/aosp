@@ -37,6 +37,10 @@ enum class HalVersion : int32_t {
 enum class IOType { INPUT, OUTPUT };
 using PreparedModelRole = std::tuple<const hal::IPreparedModel*, IOType, uint32_t>;
 
+// 1.3 HAL does not support control flow operations with operands of unknown size.
+// See http://b/132458982#comment63.
+enum class ValidationMode { DRIVER, RUNTIME };
+
 // Verifies that the model is valid, i.e. it is consistent, takes
 // only acceptable values, the constants don't extend outside the memory
 // regions they are part of, etc.
@@ -44,7 +48,7 @@ using PreparedModelRole = std::tuple<const hal::IPreparedModel*, IOType, uint32_
 // are correctly defined, as these are specific to each implementation.
 // Each driver should do their own validation of OEM types.
 template <class T_Model>
-bool validateModel(const T_Model& model);
+bool validateModel(const T_Model& model, ValidationMode mode = ValidationMode::DRIVER);
 
 // Verifies that the request for the given model is valid.
 // IMPORTANT: This function cannot validate that OEM operation and operands
