@@ -49,11 +49,9 @@ namespace generated_tests::depth_to_space_v1_2 {
 const test_helper::TestModel& get_test_model_nhwc();
 }  // namespace generated_tests::depth_to_space_v1_2
 
-// TODO(jmpollock): b/159414785 disabled for
-//                  spec_V1_2/l2_normalization_axis.example.cpp
-// namespace generated_tests::l2_normalization_axis {
-// const test_helper::TestModel& get_test_model_dim4_axis3_neg();
-// }  // namespace generated_tests::l2_normalization_axis
+namespace generated_tests::l2_normalization_axis {
+const test_helper::TestModel& get_test_model_dim4_axis3_neg();
+}  // namespace generated_tests::l2_normalization_axis
 
 namespace generated_tests::l2_pool_v1_2 {
 const test_helper::TestModel& get_test_model_nhwc();
@@ -73,11 +71,9 @@ namespace generated_tests::resize_bilinear_v1_2 {
 const test_helper::TestModel& get_test_model_shape_nhwc();
 }  // namespace generated_tests::resize_bilinear_v1_2
 
-// TODO(jmpollock): b/159414785 disabled for
-//                  spec_V1_3/resize_bilinear_v1_3.example.cpp
-// namespace generated_tests::resize_bilinear_v1_3 {
-// const test_helper::TestModel& get_test_model_align_corners_2x2_to_1x1();
-// }  // namespace generated_tests::resize_bilinear_v1_3
+namespace generated_tests::resize_bilinear_v1_3 {
+const test_helper::TestModel& get_test_model_align_corners_2x2_to_1x1();
+}  // namespace generated_tests::resize_bilinear_v1_3
 
 namespace generated_tests::softmax_v1_2 {
 const test_helper::TestModel& get_test_model_axis_quant8_dim1_axis0_neg();
@@ -257,14 +253,12 @@ TEST_F(TestRemoveDefaultArguments, DEPTH_TO_SPACE_3_inputs_to_2_inputs) {
          expectedInputCount);
 }
 
-// TODO(jmpollock): b/159414785 disabled for
-//                  spec_V1_2/l2_normalization_axis.example.cpp
-// TEST_F(TestRemoveDefaultArguments, L2_NORMALIZATION_2_inputs_to_1_input) {
-//     const uint32_t originalInputCount = 2;
-//     const uint32_t expectedInputCount = 1;
-//     test(::generated_tests::l2_normalization_axis::get_test_model_dim4_axis3_neg(),
-//          originalInputCount, expectedInputCount);
-// }
+TEST_F(TestRemoveDefaultArguments, L2_NORMALIZATION_2_inputs_to_1_input) {
+    const uint32_t originalInputCount = 2;
+    const uint32_t expectedInputCount = 1;
+    test(::generated_tests::l2_normalization_axis::get_test_model_dim4_axis3_neg(),
+         originalInputCount, expectedInputCount);
+}
 
 TEST_F(TestRemoveDefaultArguments, L2_POOL_2D_11_inputs_to_10_inputs) {
     const uint32_t originalInputCount = 11;
@@ -301,14 +295,12 @@ TEST_F(TestRemoveDefaultArguments, MAX_POOL_2D_8_inputs_to_7_inputs) {
          expectedInputCount);
 }
 
-// TODO(jmpollock): b/159414785 disabled for
-//                  spec_V1_3/resize_bilinear_v1_3.example.cpp
-// TEST_F(TestRemoveDefaultArguments, RESIZE_BILINEAR_by_shape_6_inputs_to_5_inputs) {
-//     const uint32_t originalInputCount = 6;
-//     const uint32_t expectedInputCount = 5;
-//     test(::generated_tests::resize_bilinear_v1_3::get_test_model_align_corners_2x2_to_1x1(),
-//          originalInputCount, expectedInputCount);
-// }
+TEST_F(TestRemoveDefaultArguments, RESIZE_BILINEAR_by_shape_6_inputs_to_5_inputs) {
+    const uint32_t originalInputCount = 6;
+    const uint32_t expectedInputCount = 5;
+    test(::generated_tests::resize_bilinear_v1_3::get_test_model_align_corners_2x2_to_1x1(),
+         originalInputCount, expectedInputCount);
+}
 
 TEST_F(TestRemoveDefaultArguments, RESIZE_BILINEAR_by_shape_4_inputs_to_3_inputs) {
     const uint32_t originalInputCount = 4;

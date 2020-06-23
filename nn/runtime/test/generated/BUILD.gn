@@ -464,7 +464,7 @@ static_library("generated_spec_v1_2") {
     "spec_V1_2/grouped_conv2d.example.cpp",
     "spec_V1_2/heatmap_max_keypoint.example.cpp",
     "spec_V1_2/instance_normalization.example.cpp",
-    #"spec_V1_2/l2_normalization_axis.example.cpp",  TODO(jmpollock): b/159414785
+    "spec_V1_2/l2_normalization_axis.example.cpp",
     "spec_V1_2/l2_normalization_v1_2.example.cpp",
     "spec_V1_2/l2_pool_v1_2.example.cpp",
     "spec_V1_2/layer_norm_lstm.example.cpp",
@@ -665,7 +665,7 @@ static_library("generated_spec_v1_3") {
     "spec_V1_3/relu6_quant8_signed.example.cpp",
     "spec_V1_3/relu_quant8_signed.example.cpp",
     "spec_V1_3/reshape_quant8_signed.example.cpp",
-    #"spec_V1_3/resize_bilinear_v1_3.example.cpp",  TODO(jmpollock): b/159414785
+    "spec_V1_3/resize_bilinear_v1_3.example.cpp",
     "spec_V1_3/resize_nearest_neighbor_v1_3.example.cpp",
     "spec_V1_3/resize_quant8_signed.example.cpp",
     "spec_V1_3/roi_align_quant8_signed.example.cpp",

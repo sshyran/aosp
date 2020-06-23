@@ -170,6 +170,7 @@ if (use.test) {
       ":generated_test_harness",
       ":runtime",
       ":sample_driver",
+      "runtime/test/generated:all",
       "//common-mk/testrunner:testrunner",
     ]
     libs = [
@@ -199,6 +200,7 @@ if (use.test) {
       "runtime/test/TestOperandExtraParams.cpp",
       "runtime/test/TestPartitioning.cpp",
       "runtime/test/TestPartitioningRandom.cpp",
+      "runtime/test/TestRemoveDefaultArguments.cpp",
       "runtime/test/TestTrivialModel.cpp",
       "runtime/test/TestUnknownDimensions.cpp",         # -lots- of log output
       "runtime/test/TestUnspecifiedDimensions.cpp",     # -lots- of log output
@@ -236,10 +238,10 @@ if (use.test) {
       "tensorflowlite",
     ]
     sources = [
+      "chromeos/tests/runtime/generated_test_loader.cc",
       "runtime/test/GeneratedTestUtils.cpp",
       "runtime/test/TestNeuralNetworksWrapper.cpp",
       "runtime/test/TestGenerated.cpp",
-      "runtime/test/TestRemoveDefaultArguments.cpp",
     ]
   }
 }
