@@ -391,6 +391,9 @@ struct SubgraphValidationHelper {
     std::function<const hal::Operand*(const hal::Operand&, uint32_t)> getSubgraphInputOperand;
     // Gets the specified output operand of a subgraph referenced by a given operand.
     std::function<const hal::Operand*(const hal::Operand&, uint32_t)> getSubgraphOutputOperand;
+    // Whether control flow operations with inner or outer input or output
+    // operands of unknown size are allowed.
+    bool allowControlFlowOperationWithOperandOfUnknownSize;
 };
 
 // Returns ANEURALNETWORKS_NO_ERROR if the corresponding operation is defined and can handle the
