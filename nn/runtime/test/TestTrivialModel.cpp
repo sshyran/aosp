@@ -123,7 +123,8 @@ TEST_F(TrivialTest, AddTwo) {
     ASSERT_EQ(CompareMatrices(expected2, actual), 0);
 }
 
-TEST_F(TrivialTest, AddTwoWithHardwareBufferInput) {
+// TODO(b/157388904): Hardware buffer APIs are not implemented.
+TEST_F(TrivialTest, DISABLED_AddTwoWithHardwareBufferInput) {
     Model modelAdd2;
     CreateAddTwoTensorModel(&modelAdd2);
 

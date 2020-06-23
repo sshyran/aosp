@@ -199,7 +199,7 @@ if (use.test) {
       "runtime/test/TestOperandExtraParams.cpp",
       "runtime/test/TestPartitioning.cpp",
       "runtime/test/TestPartitioningRandom.cpp",
-      # "runtime/test/TestTrivialModel.cpp",            # Tests fail
+      "runtime/test/TestTrivialModel.cpp",
       "runtime/test/TestUnknownDimensions.cpp",         # -lots- of log output
       "runtime/test/TestUnspecifiedDimensions.cpp",     # -lots- of log output
       "runtime/test/TestValidateModel.cpp",
