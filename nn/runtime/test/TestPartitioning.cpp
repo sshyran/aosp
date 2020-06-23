@@ -432,8 +432,16 @@ class PartitioningDriver : public SampleDriver {
    private:
     std::vector<bool> getSupportedOperationsForSubgraph(const Model& model,
                                                         const Subgraph& subgraph) {
+        CHECK(&subgraph == &model.main ||
+              std::find_if(model.referenced.begin(), model.referenced.end(),
+                           [&subgraph](const Subgraph& refSubgraph) {
+                               return &subgraph == &refSubgraph;
+                           }) != model.referenced.end());
         auto supportsEntireSubgraph = [this, &model, &subgraph](uint32_t refSubgraphOperandIndex) {
+            CHECK_LT(refSubgraphOperandIndex, subgraph.operands.size());
             const Operand& refSubgraphOperand = subgraph.operands[refSubgraphOperandIndex];
+            CHECK(refSubgraphOperand.lifetime == OperandLifeTime::SUBGRAPH);
+            CHECK_LT(refSubgraphOperand.location.offset, model.referenced.size());
             const Subgraph& refSubgraph = model.referenced[refSubgraphOperand.location.offset];
             std::vector<bool> supported = getSupportedOperationsForSubgraph(model, refSubgraph);
             return std::all_of(supported.begin(), supported.end(), [](bool x) { return x; });
@@ -441,15 +449,17 @@ class PartitioningDriver : public SampleDriver {
         const size_t count = subgraph.operations.size();
         std::vector<bool> supported(count);
         for (size_t i = 0; i < count; i++) {
-            const Operation operation = subgraph.operations[i];
+            const Operation& operation = subgraph.operations[i];
             if (mOperationTypes.count(operation.type)) {
                 if (operation.type == OperationType::IF) {
                     namespace op = android::nn::operation_if;
+                    CHECK_GE(operation.inputs.size(), op::kFirstInput);
                     supported[i] =
                             supportsEntireSubgraph(operation.inputs[op::kThenModelOperand]) &&
                             supportsEntireSubgraph(operation.inputs[op::kElseModelOperand]);
                 } else if (operation.type == OperationType::WHILE) {
                     namespace op = android::nn::operation_while;
+                    CHECK_GE(operation.inputs.size(), op::kFirstInput);
                     supported[i] =
                             supportsEntireSubgraph(operation.inputs[op::kCondModelOperand]) &&
                             supportsEntireSubgraph(operation.inputs[op::kBodyModelOperand]);
@@ -614,6 +624,12 @@ class PartitioningDriverV1_0 : public V1_0::IDevice {
     const sp<V1_3::IDevice> mLatestDriver;
 };
 
+enum class Dimensioned { NO, YES };
+
+std::string toString(Dimensioned dimensioned) {
+    return dimensioned == Dimensioned::NO ? "NO" : "YES";
+}
+
 // This class adds some simple abstractions and utilities on top of
 // WrapperModel.  For example, it provides methods that work in terms of
 // operation kind (0..7); and because we care about graph topology rather than
@@ -626,8 +642,6 @@ class PartitioningModel : private WrapperModel {
     using WrapperModel::identifyInputsAndOutputs;
     using WrapperModel::isValid;
     using WrapperModel::relaxComputationFloat32toFloat16;
-
-    enum class Dimensioned { NO, YES };
 
     // Create a tensor operand of the specified type, and return the
     // corresponding operand index.
@@ -659,30 +673,26 @@ class PartitioningModel : private WrapperModel {
             case ANEURALNETWORKS_INT32:
             case ANEURALNETWORKS_UINT32:
             case ANEURALNETWORKS_MODEL:
-            case ANEURALNETWORKS_OEM_SCALAR: {
+            case ANEURALNETWORKS_OEM_SCALAR:
                 return addOperand(WrapperOperandType{wrapperType, {}});
-            }
 
             case ANEURALNETWORKS_TENSOR_BOOL8:
             case ANEURALNETWORKS_TENSOR_FLOAT16:
             case ANEURALNETWORKS_TENSOR_FLOAT32:
-            case ANEURALNETWORKS_TENSOR_OEM_BYTE: {
+            case ANEURALNETWORKS_TENSOR_OEM_BYTE:
                 return addOperand(WrapperOperandType{wrapperType, dimensions()});
-            }
 
             case ANEURALNETWORKS_TENSOR_INT32:
             case ANEURALNETWORKS_TENSOR_QUANT8_ASYMM:
             case ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED:
             case ANEURALNETWORKS_TENSOR_QUANT8_SYMM:
             case ANEURALNETWORKS_TENSOR_QUANT16_ASYMM:
-            case ANEURALNETWORKS_TENSOR_QUANT16_SYMM: {
+            case ANEURALNETWORKS_TENSOR_QUANT16_SYMM:
                 return addOperand(WrapperOperandType{wrapperType, dimensions(), 1.0f});
-            }
 
-            case ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL: {
+            case ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL:
                 return addOperand(WrapperOperandType{wrapperType, dimensions(),
                                                      WrapperSymmPerChannelQuantParams({1.0f}, 0)});
-            }
 
             default:
                 ADD_FAILURE() << "Unexpected type " << static_cast<uint32_t>(wrapperType);
@@ -1773,8 +1783,7 @@ TEST_F(PartitioningTest, SetPartitioning) {
     PartitioningModel model;
     uint32_t opnd0 = model.addFloatOperand();
     uint32_t opnd1 = model.addFloatOperand();
-    uint32_t opnd2 =
-            model.addOperation2To1V1_0(0, opnd0, opnd1, PartitioningModel::Dimensioned::NO);
+    uint32_t opnd2 = model.addOperation2To1V1_0(0, opnd0, opnd1, Dimensioned::NO);
     uint32_t opnd3 = model.addFloatOperand();
     uint32_t opnd4 = model.addOperation2To1V1_0(1, opnd2, opnd3);
     model.identifyInputsAndOutputs({opnd0, opnd1, opnd3}, {opnd4});
@@ -2554,13 +2563,13 @@ TEST_F(PerfTest, Lookup) {
 class ControlFlowPartitioningTest : public PartitioningTest {
    protected:
     // opnd0 --> +-----+
-    //           | ADD | --> opnd2
+    //           | op0 | --> opnd2
     // opnd1 --> +-----+
-    std::unique_ptr<PartitioningModel> createBranchOrBodyModel() {
+    std::unique_ptr<PartitioningModel> createBranchOrBodyModel(Dimensioned dimensioned) {
         auto model = std::make_unique<PartitioningModel>();
-        const uint32_t opnd0 = model->addFloatOperand();
-        const uint32_t opnd1 = model->addFloatOperand();
-        const uint32_t opnd2 = model->addOperation2To1V1_0(0, opnd0, opnd1);
+        const uint32_t opnd0 = model->addFloatOperand(dimensioned);
+        const uint32_t opnd1 = model->addFloatOperand(dimensioned);
+        const uint32_t opnd2 = model->addOperation2To1V1_0(0, opnd0, opnd1, dimensioned);
         model->identifyInputsAndOutputs({opnd0, opnd1}, {opnd2});
         model->finish();
         EXPECT_TRUE(model->isValid());
@@ -2570,10 +2579,10 @@ class ControlFlowPartitioningTest : public PartitioningTest {
     // opnd0 --> +-------+
     //           | EQUAL | --> opnd2
     // opnd1 --> +-------+
-    std::unique_ptr<PartitioningModel> createCondModel() {
+    std::unique_ptr<PartitioningModel> createCondModel(Dimensioned dimensioned) {
         auto model = std::make_unique<PartitioningModel>();
-        const uint32_t opnd0 = model->addFloatOperand();
-        const uint32_t opnd1 = model->addFloatOperand();
+        const uint32_t opnd0 = model->addFloatOperand(dimensioned);
+        const uint32_t opnd1 = model->addFloatOperand(dimensioned);
         const uint32_t opnd2 = model->addExplicitOperationXTo1(
                 ANEURALNETWORKS_EQUAL, {opnd0, opnd1}, WrapperType::TENSOR_BOOL8);
         model->identifyInputsAndOutputs({opnd0, opnd1}, {opnd2});
@@ -2586,17 +2595,17 @@ class ControlFlowPartitioningTest : public PartitioningTest {
     // opnd1 --> | IF | --> opnd3
     // opnd2 --> +----+
     std::vector<std::unique_ptr<PartitioningModel>> createIfModel(
-            bool firstOuterInputUnknownSize = false) {
-        auto thenModel = createBranchOrBodyModel();
-        auto elseModel = createBranchOrBodyModel();
+            Dimensioned dimensionedMain = Dimensioned::YES,
+            Dimensioned dimensionedThen = Dimensioned::YES,
+            Dimensioned dimensionedElse = Dimensioned::YES) {
+        auto thenModel = createBranchOrBodyModel(dimensionedThen);
+        auto elseModel = createBranchOrBodyModel(dimensionedElse);
 
         auto mainModel = std::make_unique<PartitioningModel>();
         const uint32_t opnd0 = mainModel->addBooleanOperand();
-        const uint32_t opnd1 = mainModel->addFloatOperand(
-                firstOuterInputUnknownSize ? PartitioningModel::Dimensioned::NO
-                                           : PartitioningModel::Dimensioned::YES);
-        const uint32_t opnd2 = mainModel->addFloatOperand();
-        const uint32_t opnd3 = mainModel->addFloatOperand();
+        const uint32_t opnd1 = mainModel->addFloatOperand(dimensionedMain);
+        const uint32_t opnd2 = mainModel->addFloatOperand(dimensionedMain);
+        const uint32_t opnd3 = mainModel->addFloatOperand(dimensionedMain);
         mainModel->addIfOperation(opnd0, *thenModel, *elseModel, {opnd1, opnd2}, {opnd3});
         mainModel->identifyInputsAndOutputs({opnd0, opnd1, opnd2}, {opnd3});
         mainModel->finish();
@@ -2613,16 +2622,16 @@ class ControlFlowPartitioningTest : public PartitioningTest {
     //           | WHILE | --> opnd2
     // opnd1 --> +-------+
     std::vector<std::unique_ptr<PartitioningModel>> createWhileModel(
-            bool firstOuterInputUnknownSize = false) {
-        auto condModel = createCondModel();
-        auto bodyModel = createBranchOrBodyModel();
+            Dimensioned dimensionedMain = Dimensioned::YES,
+            Dimensioned dimensionedCond = Dimensioned::YES,
+            Dimensioned dimensionedBody = Dimensioned::YES) {
+        auto condModel = createCondModel(dimensionedCond);
+        auto bodyModel = createBranchOrBodyModel(dimensionedBody);
 
         auto mainModel = std::make_unique<PartitioningModel>();
-        const uint32_t opnd0 = mainModel->addFloatOperand(
-                firstOuterInputUnknownSize ? PartitioningModel::Dimensioned::NO
-                                           : PartitioningModel::Dimensioned::YES);
-        const uint32_t opnd1 = mainModel->addFloatOperand();
-        const uint32_t opnd2 = mainModel->addFloatOperand();
+        const uint32_t opnd0 = mainModel->addFloatOperand(dimensionedMain);
+        const uint32_t opnd1 = mainModel->addFloatOperand(dimensionedMain);
+        const uint32_t opnd2 = mainModel->addFloatOperand(dimensionedMain);
         mainModel->addWhileOperation(*condModel, *bodyModel, {opnd0, opnd1}, {opnd2});
         mainModel->identifyInputsAndOutputs({opnd0, opnd1}, {opnd2});
         mainModel->finish();
@@ -2634,6 +2643,11 @@ class ControlFlowPartitioningTest : public PartitioningTest {
         models.push_back(std::move(bodyModel));
         return std::move(models);
     }
+
+    void testIfUnknownSize(Dimensioned dimensionedMain, Dimensioned dimensionedThen,
+                           Dimensioned dimensionedElse);
+    void testWhileUnknownSize(Dimensioned dimensionedMain, Dimensioned dimensionedThen,
+                              Dimensioned dimensionedElse);
 };
 
 TEST_F(ControlFlowPartitioningTest, IF_Interpreted) {
@@ -2714,8 +2728,16 @@ TEST_F(ControlFlowPartitioningTest, WHILE_SimplePlan) {
     ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), "ALL");
 }
 
-TEST_F(ControlFlowPartitioningTest, IF_UnknownSize) {
-    const auto models = createIfModel(/*firstOuterInputUnknownSize=*/true);
+void ControlFlowPartitioningTest::testIfUnknownSize(Dimensioned dimensionedMain,
+                                                    Dimensioned dimensionedThen,
+                                                    Dimensioned dimensionedElse) {
+    if (dimensionedMain == Dimensioned::YES && dimensionedThen == Dimensioned::YES &&
+        dimensionedElse == Dimensioned::YES) {
+        // No unknown size.
+        return;
+    }
+
+    const auto models = createIfModel(dimensionedMain, dimensionedThen, dimensionedElse);
 
     // The device supports all operations but the partitioner ignores its IF
     // support due to http://b/159076604#comment5.
@@ -2731,8 +2753,31 @@ TEST_F(ControlFlowPartitioningTest, IF_UnknownSize) {
     ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), DeviceManager::getCpuDevice()->getName());
 }
 
-TEST_F(ControlFlowPartitioningTest, WHILE_UnknownSize) {
-    const auto models = createWhileModel(/*firstOuterInputUnknownSize=*/true);
+TEST_F(ControlFlowPartitioningTest, IF_UnknownSize) {
+    const std::vector<Dimensioned> configurations = {Dimensioned::NO, Dimensioned::YES};
+    for (Dimensioned dimensionedMain : configurations) {
+        SCOPED_TRACE(testing::Message() << "dimensionedMain: " << toString(dimensionedMain));
+        for (Dimensioned dimensionedThen : configurations) {
+            SCOPED_TRACE(testing::Message() << "dimensionedThen: " << toString(dimensionedThen));
+            for (Dimensioned dimensionedElse : configurations) {
+                SCOPED_TRACE(testing::Message()
+                             << "dimensionedElse: " << toString(dimensionedElse));
+                testIfUnknownSize(dimensionedMain, dimensionedThen, dimensionedElse);
+            }
+        }
+    }
+}
+
+void ControlFlowPartitioningTest::testWhileUnknownSize(Dimensioned dimensionedMain,
+                                                       Dimensioned dimensionedCond,
+                                                       Dimensioned dimensionedBody) {
+    if (dimensionedMain == Dimensioned::YES && dimensionedCond == Dimensioned::YES &&
+        dimensionedBody == Dimensioned::YES) {
+        // No unknown size.
+        return;
+    }
+
+    const auto models = createWhileModel(dimensionedMain, dimensionedCond, dimensionedBody);
 
     // The device supports all operations but the partitioner ignores its WHILE
     // support due to http://b/159076604#comment5.
@@ -2749,6 +2794,21 @@ TEST_F(ControlFlowPartitioningTest, WHILE_UnknownSize) {
     // The control flow interpreter does not support unknown size (b/132458982).
     ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
     ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), DeviceManager::getCpuDevice()->getName());
+}
+
+TEST_F(ControlFlowPartitioningTest, WHILE_UnknownSize) {
+    const std::vector<Dimensioned> configurations = {Dimensioned::NO, Dimensioned::YES};
+    for (Dimensioned dimensionedMain : configurations) {
+        SCOPED_TRACE(testing::Message() << "dimensionedMain: " << toString(dimensionedMain));
+        for (Dimensioned dimensionedCond : configurations) {
+            SCOPED_TRACE(testing::Message() << "dimensionedCond: " << toString(dimensionedCond));
+            for (Dimensioned dimensionedBody : configurations) {
+                SCOPED_TRACE(testing::Message()
+                             << "dimensionedBody: " << toString(dimensionedBody));
+                testWhileUnknownSize(dimensionedMain, dimensionedCond, dimensionedBody);
+            }
+        }
+    }
 }
 
 }  // namespace
