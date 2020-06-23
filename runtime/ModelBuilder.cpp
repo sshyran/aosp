@@ -388,13 +388,14 @@ int ModelBuilder::addOperation(ANeuralNetworksOperationType type, uint32_t input
     auto getOutputOperand = [this](const Operand& modelOperand, uint32_t index) -> const Operand* {
         return &getReferencedModel(modelOperand)->getOutputOperand(index);
     };
-    NN_RETURN_IF_ERROR(validateOperation(type, inputCount, inputs, outputCount, outputs, mOperands,
-                                         HalVersion::LATEST,
-                                         {.isValidSubgraphReference = isValidSubgraphReference,
-                                          .getSubgraphInputCount = getInputCount,
-                                          .getSubgraphOutputCount = getOutputCount,
-                                          .getSubgraphInputOperand = getInputOperand,
-                                          .getSubgraphOutputOperand = getOutputOperand}));
+    NN_RETURN_IF_ERROR(validateOperation(
+            type, inputCount, inputs, outputCount, outputs, mOperands, HalVersion::LATEST,
+            {.isValidSubgraphReference = isValidSubgraphReference,
+             .getSubgraphInputCount = getInputCount,
+             .getSubgraphOutputCount = getOutputCount,
+             .getSubgraphInputOperand = getInputOperand,
+             .getSubgraphOutputOperand = getOutputOperand,
+             .allowControlFlowOperationWithOperandOfUnknownSize = true}));
 
     uint32_t operationIndex = operationCount();
     if (operationIndex >= MAX_NUMBER_OF_OPERATIONS) {
@@ -523,7 +524,7 @@ int ModelBuilder::finish() {
     //       a CONSTANT_REFERENCE operand will not have correct .poolIndex, and
     //       validation will not work properly.
     const Model modelForValidation = makeHidlModel();
-    if (!validateModel(modelForValidation)) {
+    if (!validateModel(modelForValidation, ValidationMode::RUNTIME)) {
         LOG(ERROR) << "ANeuralNetworksModel_finish called on invalid model";
         mInvalidModel = true;
         return ANEURALNETWORKS_BAD_DATA;
