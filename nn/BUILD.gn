@@ -190,7 +190,7 @@ if (use.test) {
       # "runtime/test/TestExtensions.cpp",              # Tests fail
       "runtime/test/TestFailingDriver.cpp",
       "runtime/test/TestFree.cpp",
-      # "runtime/test/TestIntrospectionControl.cpp",    # Tests fail
+      "runtime/test/TestIntrospectionControl.cpp",
       "runtime/test/TestMemory.cpp",
       "runtime/test/TestMemoryDomain.cpp",
       "runtime/test/TestMemoryInternal.cpp",
