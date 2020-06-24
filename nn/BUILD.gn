@@ -101,6 +101,10 @@ static_library("common_random") {
     ":common_defaults",
     "//common-mk:pic",
   ]
+  cflags_cc = [
+    # Eigen functions have unused parameters in release builds.
+    "-Wno-unused-parameter",
+  ]
   sources = [
     "common/random/guarded_philox_random.cc",
     "common/random/random.cc",
