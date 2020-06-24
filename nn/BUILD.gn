@@ -187,7 +187,7 @@ if (use.test) {
       "runtime/test/TestCompliance.cpp",
       "runtime/test/TestControlFlow.cpp",
       "runtime/test/TestExecution.cpp",
-      # "runtime/test/TestExtensions.cpp",              # Tests fail
+      "runtime/test/TestExtensions.cpp",
       "runtime/test/TestFailingDriver.cpp",
       "runtime/test/TestFree.cpp",
       "runtime/test/TestIntrospectionControl.cpp",

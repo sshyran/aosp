@@ -121,7 +121,8 @@ TEST_F(ExtensionsTest, DeviceReportsSupportedExtensions) {
     EXPECT_TRUE(testDriverSupportsExtension(kTestExtension3));
 }
 
-TEST_F(ExtensionsTest, TestAllowedNativeBinaries) {
+// TODO(b/158632389): Determine whether NNAPI extensions should be allowed.
+TEST_F(ExtensionsTest, DISABLED_TestAllowedNativeBinaries) {
     std::vector<std::string> allowlist = {"/data/foo",    "/vendor/foo",         "/odm/foo",
                                           "/product/foo", "/system/allowlisted", "/foobar/foo"};
 
@@ -188,7 +189,8 @@ TEST_F(ExtensionsTest, TestAllowedNativeBinaries) {
                                                      allowlist));
 }
 
-TEST_F(ExtensionsTest, TestAllowedApps) {
+// TODO(b/158632389): Determine whether NNAPI extensions should be allowed.
+TEST_F(ExtensionsTest, DISABLED_TestAllowedApps) {
     std::string app_process32 = "/system/bin/app_process32";
     std::string app_process64 = "/system/bin/app_process64";
     std::string other_binary = "/system/bin/foo";
