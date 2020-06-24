@@ -109,12 +109,16 @@ void initVLogMask();
     while (UNLIKELY(!(condition))) NN_RET_CHECK_FAIL() << #condition << " "
 
 // Helper for NN_CHECK_xx(x, y) macros.
-#define NN_RET_CHECK_OP(LHS, RHS, OP)                                                 \
-    for (auto _values = ::android::base::MakeEagerEvaluator(LHS, RHS);                \
-         UNLIKELY(!(_values.lhs OP _values.rhs));                                     \
-         /* empty */)                                                                 \
-    NN_RET_CHECK_FAIL() << #LHS << " " << #OP << " " << #RHS << " (" << #LHS << " = " \
-                        << _values.lhs << ", " << #RHS << " = " << _values.rhs << ") "
+#define NN_RET_CHECK_OP(LHS, RHS, OP)                                                       \
+    for (auto _values = ::android::base::MakeEagerEvaluator(LHS, RHS);                      \
+         UNLIKELY(!(_values.lhs.v OP _values.rhs.v));                                       \
+         /* empty */)                                                                       \
+    NN_RET_CHECK_FAIL()                                                                     \
+            << #LHS << " " << #OP << " " << #RHS << " (" << #LHS << " = "                   \
+            << ::android::base::LogNullGuard<decltype(_values.lhs.v)>::Guard(_values.lhs.v) \
+            << ", " << #RHS << " = "                                                        \
+            << ::android::base::LogNullGuard<decltype(_values.rhs.v)>::Guard(_values.rhs.v) \
+            << ") "
 
 // Logs an error and returns false if a condition between x and y does not hold. Extra logging can
 // be appended using << after. For example:
