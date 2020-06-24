@@ -626,6 +626,7 @@ TEST(GeneratedTestsLoader, V1_0_Loader) {
   generated_tests::max_pool_quant8_2::get_test_model();
   generated_tests::max_pool_quant8_3::get_test_model();
   generated_tests::max_pool_quant8_4::get_test_model();
+  // TODO(b/157388904): Hardware buffers not implemented on ChromeOS.
   // generated_tests::mobilenet_224_gender_basic_fixed::get_test_model();
   // generated_tests::mobilenet_quantized::get_test_model();
   generated_tests::mul_broadcast_quant8::get_test_model();
@@ -758,6 +759,7 @@ TEST(GeneratedTestsLoader, V1_1_Loader) {
   generated_tests::mean_quant8_1::get_test_model();
   generated_tests::mean_quant8_2::get_test_model();
   generated_tests::mean_relaxed::get_test_model();
+  // TODO(b/157388904): Hardware buffers not implemented on ChromeOS.
   // generated_tests::mobilenet_224_gender_basic_fixed_relaxed::get_test_model();
   generated_tests::mul_relaxed::get_test_model();
   generated_tests::mul_relu_relaxed::get_test_model();
@@ -990,6 +992,7 @@ TEST(GeneratedTestsLoader, V1_3_Loader) {
   generated_tests::avg_pool_quant8_signed::get_test_model();
   generated_tests::batch_to_space_quant8_signed::get_test_model();
   generated_tests::concat_quant8_signed::get_test_model();
+  // TODO(b/159780866) uprev TFLite
   // generated_tests::conv2d_quant8_signed::get_test_model();
   generated_tests::depth_to_space_quant8_signed::get_test_model();
   generated_tests::depthwise_conv2d_quant8_signed::get_test_model();
@@ -997,6 +1000,7 @@ TEST(GeneratedTestsLoader, V1_3_Loader) {
   generated_tests::div_int32::get_test_model();
   generated_tests::fully_connected_quant8_signed::get_test_model();
   generated_tests::if_no_value::get_test_model();
+  // TODO(b/159780866) uprev TFLite
   // generated_tests::l2_normalization_zeros::get_test_model();
   generated_tests::logistic_quant8_signed::get_test_model();
   generated_tests::max_pool_quant8_signed::get_test_model();
