@@ -29,6 +29,12 @@ cc_library_headers {
 }
 
 cc_library_headers {
+    name: "libneuralnetworks_headers_ndk",
+    export_include_dirs: ["include"],
+    sdk_version: "current",
+}
+
+cc_library_headers {
     name: "libneuralnetworks_private_headers",
     host_supported: false,
     export_include_dirs: ["."],
