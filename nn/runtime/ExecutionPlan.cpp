@@ -554,6 +554,11 @@ int ExecutionStep::finishStepModel(const ModelBuilder* mainModel, bool* hasOutpu
                    [](auto& e) { return e.second; });
     NN_RETURN_IF_ERROR(mStepModel.identifyInputsAndOutputs(inputs.size(), inputs.data(),
                                                            outputs.size(), outputs.data()));
+    // TODO: Model::finish() should use ValidationMode::RUNTIME when sending the
+    // step model to CpuDevice. Right now, this is harmless because the only
+    // difference in validation occurs with control flow operations and inputs
+    // or outputs of unknown size and we never send control flow operations to
+    // CpuDevice. We need to address this if this behavior changes (b/151634976).
     NN_RETURN_IF_ERROR(mStepModel.finish());
 
     // TODO: Move compilation elsewhere?
@@ -1911,7 +1916,7 @@ float ModelBuilder::getPerformance(uint32_t preference, const std::shared_ptr<De
     return applyPreference(device->getPerformance(operandType));
 }
 
-bool ModelBuilder::supportedByControlFlowInterpreter(uint32_t operationIndex) const {
+bool ModelBuilder::isControlFlowOperationWithOperandOfUnknownSize(uint32_t operationIndex) const {
     auto containsUnknownSize = [](const ModelBuilder* model,
                                   const std::vector<uint32_t>& operandIndexes) {
         for (uint32_t operandIndex : operandIndexes) {
@@ -1922,7 +1927,7 @@ bool ModelBuilder::supportedByControlFlowInterpreter(uint32_t operationIndex) co
         return false;
     };
 
-    const Operation& operation = mOperations[operationIndex];
+    const Operation& operation = getOperation(operationIndex);
 
     if (operation.type == OperationType::IF) {
         namespace op = operation_if;
@@ -1930,16 +1935,12 @@ bool ModelBuilder::supportedByControlFlowInterpreter(uint32_t operationIndex) co
         const Operand& elseOperand = getOperand(operation.inputs[op::kElseModelOperand]);
         const ModelBuilder* thenModel = getReferencedModel(thenOperand);
         const ModelBuilder* elseModel = getReferencedModel(elseOperand);
-        if (containsUnknownSize(this, operation.inputs) ||
-            containsUnknownSize(this, operation.outputs) ||
-            containsUnknownSize(thenModel, thenModel->getInputOperandIndexes()) ||
-            containsUnknownSize(thenModel, thenModel->getOutputOperandIndexes()) ||
-            containsUnknownSize(elseModel, elseModel->getInputOperandIndexes()) ||
-            containsUnknownSize(elseModel, elseModel->getOutputOperandIndexes())) {
-            // The partitioner does not support dynamic temporaries (b/132458982).
-            return false;
-        }
-        return true;
+        return containsUnknownSize(this, operation.inputs) ||
+               containsUnknownSize(this, operation.outputs) ||
+               containsUnknownSize(thenModel, thenModel->getInputOperandIndexes()) ||
+               containsUnknownSize(thenModel, thenModel->getOutputOperandIndexes()) ||
+               containsUnknownSize(elseModel, elseModel->getInputOperandIndexes()) ||
+               containsUnknownSize(elseModel, elseModel->getOutputOperandIndexes());
     }
 
     if (operation.type == OperationType::WHILE) {
@@ -1948,20 +1949,23 @@ bool ModelBuilder::supportedByControlFlowInterpreter(uint32_t operationIndex) co
         const Operand& bodyOperand = getOperand(operation.inputs[op::kBodyModelOperand]);
         const ModelBuilder* condModel = getReferencedModel(condOperand);
         const ModelBuilder* bodyModel = getReferencedModel(bodyOperand);
-        if (containsUnknownSize(this, operation.inputs) ||
-            containsUnknownSize(this, operation.outputs) ||
-            containsUnknownSize(condModel, condModel->getInputOperandIndexes()) ||
-            containsUnknownSize(condModel, condModel->getOutputOperandIndexes()) ||
-            containsUnknownSize(bodyModel, bodyModel->getInputOperandIndexes()) ||
-            containsUnknownSize(bodyModel, bodyModel->getOutputOperandIndexes())) {
-            // The partitioner does not support dynamic temporaries (b/132458982).
-            return false;
-        }
-        return true;
+        return containsUnknownSize(this, operation.inputs) ||
+               containsUnknownSize(this, operation.outputs) ||
+               containsUnknownSize(condModel, condModel->getInputOperandIndexes()) ||
+               containsUnknownSize(condModel, condModel->getOutputOperandIndexes()) ||
+               containsUnknownSize(bodyModel, bodyModel->getInputOperandIndexes()) ||
+               containsUnknownSize(bodyModel, bodyModel->getOutputOperandIndexes());
     }
 
     // Not a control flow operation.
     return false;
+}
+
+bool ModelBuilder::supportedByControlFlowInterpreter(uint32_t operationIndex) const {
+    const Operation& operation = getOperation(operationIndex);
+    return (operation.type == OperationType::IF || operation.type == OperationType::WHILE) &&
+           // The partitioner does not support dynamic temporaries (b/132458982).
+           !isControlFlowOperationWithOperandOfUnknownSize(operationIndex);
 }
 
 namespace {
@@ -2000,26 +2004,42 @@ int ModelBuilder::findBestDeviceForEachOperation(
         const Operation& operation = getOperation(operationIndex);
         // Find which device, including CPU fallback, gives the best performance for this operation.
         int bestChoice = -1;
-        float bestPerfVal = 0.0;  // Do not check bestPerfVal if bestChoice < 0.
-        for (size_t deviceIndex = 0; deviceIndex < deviceCount; deviceIndex++) {
-            const auto& device = devices[deviceIndex];
-            if (canDo[deviceIndex].check(operationIndex)) {
-                const float perfVal = getPerformance(preference, device, operationIndex);
-                if (bestChoice < 0 || perfVal < bestPerfVal ||
-                    (perfVal == bestPerfVal && device == DeviceManager::getCpuDevice())) {
-                    bestChoice = deviceIndex;
-                    bestPerfVal = perfVal;
+
+        if (isControlFlowOperationWithOperandOfUnknownSize(operationIndex)) {
+            // Do not schedule control flow operations with unknown size to
+            // non-CPU devices because this is not supported by the 1.3 HAL.
+            // See http://b/159076604#comment5.
+            auto cpuDeviceIterator =
+                    std::find(devices.begin(), devices.end(), DeviceManager::getCpuDevice());
+            if (cpuDeviceIterator != devices.end()) {
+                int cpuDeviceIndex = cpuDeviceIterator - devices.begin();
+                if (canDo[cpuDeviceIndex].check(operationIndex)) {
+                    bestChoice = cpuDeviceIndex;
                 }
-            } else {
-                // Somewhat noisy logging, but only place where the user of NNAPI can get
-                // feedback on why an operation was not run on a specific device.
-                //
-                // Logs O(operationCount * deviceCount) times, but typically deviceCount is
-                // very small.
-                VLOG(COMPILATION) << "Device " << device->getName() << " can't do operation "
-                                  << toString(operation.type);
+            }
+        } else {
+            float bestPerfVal = 0.0;  // Do not check bestPerfVal if bestChoice < 0.
+            for (size_t deviceIndex = 0; deviceIndex < deviceCount; deviceIndex++) {
+                const auto& device = devices[deviceIndex];
+                if (canDo[deviceIndex].check(operationIndex)) {
+                    const float perfVal = getPerformance(preference, device, operationIndex);
+                    if (bestChoice < 0 || perfVal < bestPerfVal ||
+                        (perfVal == bestPerfVal && device == DeviceManager::getCpuDevice())) {
+                        bestChoice = deviceIndex;
+                        bestPerfVal = perfVal;
+                    }
+                } else {
+                    // Somewhat noisy logging, but only place where the user of NNAPI can get
+                    // feedback on why an operation was not run on a specific device.
+                    //
+                    // Logs O(operationCount * deviceCount) times, but typically deviceCount is
+                    // very small.
+                    VLOG(COMPILATION) << "Device " << device->getName() << " can't do operation "
+                                      << toString(operation.type);
+                }
             }
         }
+
         if (bestChoice < 0) {
             LOG(ERROR) << "No driver can do operation " << toString(operation.type);
             return ANEURALNETWORKS_BAD_DATA;
