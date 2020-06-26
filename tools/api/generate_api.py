@@ -277,7 +277,7 @@ class Specification(Reader):
         key = match[1]
         assert not key in self.defmacro, "Duplicate definition of \"" + key + "\" on " + self.context()
         tail = match[2]
-        match = re.search("\s*(.*)$", tail)
+        match = re.search("\s(.*)$", tail)
         if match:
           self.defmacro[key] = match[1]
         else:
