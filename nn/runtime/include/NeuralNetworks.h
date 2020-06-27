@@ -5441,12 +5441,14 @@ typedef enum {
      * The inputs and outputs of the two referenced models must agree with the
      * signature of this operation. That is, if the operation has (3 + n) inputs
      * and m outputs, both models must have n inputs and m outputs with the same
-     * types, ranks (if specified), and dimensions (if specified) as the
-     * corresponding operation inputs and outputs.
+     * types, ranks (if specified), dimensions (if specified), scales,
+     * zeroPoints, and other operand parameters as the corresponding operation
+     * inputs and outputs.
      *
      * Inputs:
      * * 0: A value of type {@link ANEURALNETWORKS_TENSOR_BOOL8} and shape [1]
      *      that determines which of the two referenced models to execute.
+     *      The operand must have fully specified dimensions.
      * * 1: A {@link ANEURALNETWORKS_MODEL} reference to the model to be
      *      executed if the condition is true.
      * * 2: A {@link ANEURALNETWORKS_MODEL} reference to the model to be
@@ -5511,13 +5513,16 @@ typedef enum {
      * Inputs:
      * * 0: A {@link ANEURALNETWORKS_MODEL} reference to the condition
      *      model. The model must have (m + k + n) inputs with
-     *      the same types, ranks (if specified), and dimensions (if specified)
-     *      as the corresponding inputs of the WHILE operation and exactly one
-     *      output of {@link ANEURALNETWORKS_TENSOR_BOOL8} and shape [1].
+     *      the same types, ranks (if specified), dimensions (if specified),
+     *      scales, zeroPoints, and other operand parameters as the
+     *      corresponding inputs of the WHILE operation and exactly one output
+     *      of {@link ANEURALNETWORKS_TENSOR_BOOL8} and shape [1].
+     *      The output operand must have fully specified dimensions.
      * * 1: A {@link ANEURALNETWORKS_MODEL} reference to the body model.
      *      The model must have (m + k + n) inputs and (m + k) outputs with
-     *      the same types, ranks (if specified), and dimensions (if specified)
-     *      as the corresponding inputs and outputs of the WHILE operation.
+     *      the same types, ranks (if specified), dimensions (if specified),
+     *      scales, zeroPoints, and other operand parameters as the
+     *      corresponding inputs and outputs of the WHILE operation.
      * * (m inputs): Initial values for input-output operands.
      * * (k inputs): Initial values for state-only operands.
      * * (n inputs): Values for input-only operands.
