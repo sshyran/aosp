@@ -433,6 +433,10 @@ if (use.test) {
       ":common",
       ":nn_testrunner",
     ]
+    cflags_cc = [
+      # UtilsTest.cpp transitively incl lite/experimental/ruy/check_macros.h:30
+      "-Wno-unused-parameter",
+    ]
     sources = [
       "common/LogTagTest.cpp",
       "common/LogTagTestExtra.cpp",

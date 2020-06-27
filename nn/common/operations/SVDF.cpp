@@ -198,8 +198,8 @@ void SVDF::EvalFloat32(const float* inputData, const float* inputStateData, cons
         float* state_out_ptr_batch = outputStateData + b * memory_size * num_filters;
         float* scratch_ptr_batch = scratch + b * num_filters;
         tflite::tensor_utils::BatchVectorBatchVectorDotProduct(
-                weightsTimeData, state_out_ptr_batch, memory_size, num_filters, scratch_ptr_batch,
-                /*result_stride=*/1);
+                weightsTimeData, state_out_ptr_batch, memory_size, num_filters, scratch_ptr_batch
+                );
     }
 
     // Initialize output with bias if provided.
@@ -228,9 +228,8 @@ void SVDF::EvalFloat32(const float* inputData, const float* inputStateData, cons
     for (int b = 0; b < batch_size; b++) {
         float* state_out_ptr_batch = outputStateData + b * memory_size * num_filters;
         for (int f = 0; f < num_filters; f++) {
-            // TODO(avg): b/157951487 Replace with VectorShiftLeft<float> when uprevving TFlite
-            tflite::tensor_utils::VectorShiftLeft(state_out_ptr_batch, memory_size,
-                                                  /*shift_value=*/0.0);
+            tflite::tensor_utils::VectorShiftLeft<float>(state_out_ptr_batch, memory_size,
+                                                         /*shift_value=*/0.0);
             state_out_ptr_batch += memory_size;
         }
     }
