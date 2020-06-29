@@ -1618,23 +1618,19 @@ TEST(OperationValidationTest, LOGISTIC_quant8_signed) {
     activationOpTest(ANEURALNETWORKS_LOGISTIC, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
-// TODO(b/157948826): HardSwish requires TFLite uprev.
-TEST(OperationValidationTest, DISABLED_HARD_SWISH_float16) {
+TEST(OperationValidationTest, HARD_SWISH_float16) {
     activationOpTest(ANEURALNETWORKS_HARD_SWISH, ANEURALNETWORKS_TENSOR_FLOAT16);
 }
 
-// TODO(b/157948826): HardSwish requires TFLite uprev.
-TEST(OperationValidationTest, DISABLED_HARD_SWISH_float32) {
+TEST(OperationValidationTest, HARD_SWISH_float32) {
     activationOpTest(ANEURALNETWORKS_HARD_SWISH, ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
-// TODO(b/157948826): HardSwish requires TFLite uprev.
-TEST(OperationValidationTest, DISABLED_HARD_SWISH_quant8) {
+TEST(OperationValidationTest, HARD_SWISH_quant8) {
     activationOpTest(ANEURALNETWORKS_HARD_SWISH, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
-// TODO(b/157948826): HardSwish requires TFLite uprev.
-TEST(OperationValidationTest, DISABLED_HARD_SWISH_quant8_signed) {
+TEST(OperationValidationTest, HARD_SWISH_quant8_signed) {
     activationOpTest(ANEURALNETWORKS_HARD_SWISH, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 

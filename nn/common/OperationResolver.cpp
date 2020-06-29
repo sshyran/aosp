@@ -124,8 +124,7 @@ BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_GENERATE_PROPOSALS());
     registerOperation(register_GREATER());
     registerOperation(register_GREATER_EQUAL());
-    // TODO(b/157948826): HardSwish needs TfLite uprev.
-    //registerOperation(register_HARD_SWISH());
+    registerOperation(register_HARD_SWISH());
     registerOperation(register_HEATMAP_MAX_KEYPOINT());
     registerOperation(register_INSTANCE_NORMALIZATION());
     registerOperation(register_L2_NORMALIZATION());

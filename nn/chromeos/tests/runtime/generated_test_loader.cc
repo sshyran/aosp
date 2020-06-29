@@ -992,16 +992,14 @@ TEST(GeneratedTestsLoader, V1_3_Loader) {
   generated_tests::avg_pool_quant8_signed::get_test_model();
   generated_tests::batch_to_space_quant8_signed::get_test_model();
   generated_tests::concat_quant8_signed::get_test_model();
-  // TODO(b/159780866) uprev TFLite
-  // generated_tests::conv2d_quant8_signed::get_test_model();
+  generated_tests::conv2d_quant8_signed::get_test_model();
   generated_tests::depth_to_space_quant8_signed::get_test_model();
   generated_tests::depthwise_conv2d_quant8_signed::get_test_model();
   generated_tests::dequantize_quant8_signed::get_test_model();
   generated_tests::div_int32::get_test_model();
   generated_tests::fully_connected_quant8_signed::get_test_model();
   generated_tests::if_no_value::get_test_model();
-  // TODO(b/159780866) uprev TFLite
-  // generated_tests::l2_normalization_zeros::get_test_model();
+  generated_tests::l2_normalization_zeros::get_test_model();
   generated_tests::logistic_quant8_signed::get_test_model();
   generated_tests::max_pool_quant8_signed::get_test_model();
   generated_tests::mean_quant8_signed::get_test_model();

@@ -1432,8 +1432,7 @@ TEST_F(PartitioningTest, SimpleModel) {
     }
 }
 
-// TODO(b/157948826): Enable when HardSwish is supported after TFLite uprev.
-TEST_F(PartitioningTest, DISABLED_SliceModel) {
+TEST_F(PartitioningTest, SliceModel) {
     PartitioningModel model;
     uint32_t opnd0 = model.addFloatOperand();
     uint32_t opnd1 = model.addFloatOperand();
@@ -1560,8 +1559,7 @@ TEST_F(PartitioningTest, DISABLED_SliceModel) {
     // devices.
 }
 
-// TODO(b/157948826): Enable when HardSwish is supported after TFLite uprev.
-TEST_F(PartitioningTest, DISABLED_SliceModelToEmpty) {
+TEST_F(PartitioningTest, SliceModelToEmpty) {
     PartitioningModel model;
     uint32_t opnd0 = model.addFloatOperand();
     uint32_t opnd1 = model.addOperation1To1V1_3(0, opnd0);
