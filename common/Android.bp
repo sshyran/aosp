@@ -229,6 +229,37 @@ cc_library_static {
 }
 
 cc_defaults {
+    name: "neuralnetworks_utils_defaults",
+    host_supported: true,
+    vendor_available: true,
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wextra",
+    ],
+}
+
+cc_library_static {
+    name: "neuralnetworks_types",
+    defaults: ["neuralnetworks_utils_defaults"],
+    srcs: [
+        "Types.cpp",
+    ],
+    local_include_dirs: ["include/nnapi"],
+    export_include_dirs: ["include"],
+    shared_libs: [
+        "libbase",
+        "libcutils",
+        "libutils",
+    ],
+    export_shared_lib_headers: [
+        "libbase",
+        "libcutils",
+        "libutils",
+    ],
+}
+
+cc_defaults {
     name: "NeuralNetworksTest_common",
     defaults: ["neuralnetworks_float16"],
     shared_libs: [
