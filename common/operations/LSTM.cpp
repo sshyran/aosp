@@ -477,8 +477,8 @@ bool LSTMCell::LSTMEvalFloat32(
                         : nullptr;
     float* outputCurrentTimeStep =
             outputData + (forwardSequence ? 0 : batchOutputSize * (maxTime - 1));
-    const int batchInputDelta = forwardSequence ? batchInputSize : -batchInputSize;
-    const int batchOutputDelta = forwardSequence ? batchOutputSize : -batchOutputSize;
+    const int batchInputDelta = (forwardSequence ? 1 : -1) * static_cast<int>(batchInputSize);
+    const int batchOutputDelta = (forwardSequence ? 1 : -1) * static_cast<int>(batchOutputSize);
 
     for (int t = 0; t < maxTime; ++t) {
         LSTMStep(params, inputCurrentTimeStep, batchInputShape, input_to_input_weights_buffer,
@@ -715,8 +715,8 @@ bool LSTMCell::LSTMEvalFloat16(
                         : nullptr;
     float* outputCurrentTimeStep =
             outputData + (forwardSequence ? 0 : batchOutputSize * (maxTime - 1));
-    const int batchInputDelta = forwardSequence ? batchInputSize : -batchInputSize;
-    const int batchOutputDelta = forwardSequence ? batchOutputSize : -batchOutputSize;
+    const int batchInputDelta = (forwardSequence ? 1 : -1) * static_cast<int>(batchInputSize);
+    const int batchOutputDelta = (forwardSequence ? 1 : -1) * static_cast<int>(batchOutputSize);
 
     for (int t = 0; t < maxTime; ++t) {
         LSTMStep(params, inputCurrentTimeStep, batchInputShape,
