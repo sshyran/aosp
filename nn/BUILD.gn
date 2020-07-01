@@ -96,6 +96,17 @@ pkg_config("common_defaults") {
   pkg_deps = [ "libnnapi-support" ]
 }
 
+if (use.test) {
+  static_library("nn_testrunner") {
+    configs += [
+      "//common-mk:test",
+      ":target_defaults",
+    ]
+    deps = []
+    sources = [ "chromeos/testrunner.cpp" ]
+  }
+}
+
 static_library("common_random") {
   configs += [
     ":common_defaults",
@@ -172,10 +183,10 @@ if (use.test) {
       ":common",
       ":common_operations",
       ":generated_test_harness",
+      ":nn_testrunner",
       ":runtime",
       ":sample_driver",
       "runtime/test/generated:all",
-      "//common-mk/testrunner:testrunner",
     ]
     libs = [
       "rt",              # For shm_*
@@ -231,10 +242,10 @@ if (use.test) {
       ":common",
       ":common_operations",
       ":generated_test_harness",
+      ":nn_testrunner",
       ":runtime",
       ":sample_driver",
       "runtime/test/generated:all",
-      "//common-mk/testrunner:testrunner",
     ]
     libs = [
       "rt",              # For shm_*
@@ -345,9 +356,9 @@ if (use.test) {
     deps = [
       ":common",
       ":common_operations",
+      ":nn_testrunner",
       ":runtime",
       ":sample_driver",
-      "//common-mk/testrunner:testrunner",
     ]
     libs = [
       "rt",
@@ -412,7 +423,7 @@ if (use.test) {
     ]
     deps = [
       ":common",
-      "//common-mk/testrunner:testrunner",
+      ":nn_testrunner",
     ]
     sources = [
       "common/LogTagTest.cpp",
@@ -435,7 +446,7 @@ if (use.test) {
     deps = [
       ":common",
       ":common_random",
-      "//common-mk/testrunner:testrunner",
+      ":nn_testrunner",
     ]
     sources = [
       "chromeos/tests/common/includes_test.cc",
@@ -471,7 +482,7 @@ if (use.test) {
     ]
     deps = [
       ":driver_cache",
-      "//common-mk/testrunner:testrunner",
+      ":nn_testrunner",
     ]
     sources = [
       "driver/cache/BlobCache/BlobCache_test.cpp",
