@@ -349,7 +349,8 @@ using CompilationCachingTestParam = std::tuple<uint32_t, uint32_t, ErrorStatus>;
 class CompilationCachingTest : public ::testing::TestWithParam<CompilationCachingTestParam> {
    protected:
     virtual void SetUp() override {
-        char cacheDirTemp[] = "/data/local/tmp/TestCompilationCachingXXXXXX";
+        char cacheDirTemp[] =
+                "/data/local/tmp/AVeryLongDirectoryNameForTestCompilationCachingXXXXXX";
         char* cacheDir = mkdtemp(cacheDirTemp);
         ASSERT_NE(cacheDir, nullptr);
         mCacheDir = cacheDir;
