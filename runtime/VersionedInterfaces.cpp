@@ -1157,12 +1157,14 @@ static bool getCacheHandles(const std::string& cacheDir, const CacheToken& token
     CHECK(cacheDir.empty() || cacheDir.back() == '/');
     std::string cacheFileName = cacheDir + filename;
 
-    cacheFileName[ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN * 2] = '1';
+    const uint32_t cacheTypeIdentifierIndex =
+            cacheDir.size() + ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN * 2;
+    cacheFileName[cacheTypeIdentifierIndex] = '1';
     *modelCache = createCacheHandleVec(numCacheFiles.first, cacheFileName, createIfNotExist);
     if (modelCache->size() != numCacheFiles.first) {
         return false;
     }
-    cacheFileName[ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN * 2] = '2';
+    cacheFileName[cacheTypeIdentifierIndex] = '2';
     *dataCache = createCacheHandleVec(numCacheFiles.second, cacheFileName, createIfNotExist);
     if (dataCache->size() != numCacheFiles.second) {
         modelCache->resize(0);
