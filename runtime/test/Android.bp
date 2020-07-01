@@ -194,7 +194,10 @@ cc_test {
 
 cc_fuzz {
     name: "libneuralnetworks_fuzzer",
-    defaults: ["NeuralNetworksTest_default_libs"],
+    defaults: [
+        "NeuralNetworksTest_default_libs",
+        "libneuralnetworks_fuzzer_defaults",
+    ],
     owner: "google",
     fuzz_config: {
         cc: ["butlermichael@google.com"],
@@ -203,24 +206,21 @@ cc_fuzz {
         fuzz_on_haiku_device: false,
     },
     srcs: [
-        "android_fuzzing/Converter.cpp",
         "android_fuzzing/FuzzTest.cpp",
-        "android_fuzzing/StaticAssert.cpp",
     ],
-    corpus: ["android_fuzzing/corpus/*"],
-    shared_libs: ["libprotobuf-cpp-full"],
     static_libs: [
         "libneuralnetworks_common",
-        "libneuralnetworks_fuzzer_proto",
         "libneuralnetworks_generated_test_harness",
         "libneuralnetworks_static",
-        "libprotobuf-mutator",
     ],
 }
 
 cc_fuzz {
     name: "libneuralnetworks_driver_fuzzer",
-    defaults: ["NeuralNetworksTest_default_libs"],
+    defaults: [
+        "NeuralNetworksTest_default_libs",
+        "libneuralnetworks_fuzzer_defaults",
+    ],
     owner: "google",
     fuzz_config: {
         cc: ["butlermichael@google.com"],
@@ -229,19 +229,13 @@ cc_fuzz {
         fuzz_on_haiku_device: false,
     },
     srcs: [
-        "android_fuzzing/Converter.cpp",
         "android_fuzzing/DriverFuzzTest.cpp",
-        "android_fuzzing/StaticAssert.cpp",
     ],
-    corpus: ["android_fuzzing/corpus/*"],
-    shared_libs: ["libprotobuf-cpp-full"],
     static_libs: [
         "libSampleDriver",
         "libneuralnetworks_common",
-        "libneuralnetworks_fuzzer_proto",
         "libneuralnetworks_generated_test_harness",
         "libneuralnetworks_static",
-        "libprotobuf-mutator",
     ],
 }
 
