@@ -26,19 +26,14 @@
 #include <utility>
 #include <vector>
 
-#include "Converter.h"
 #include "MemoryUtils.h"
-#include "Model.pb.h"
 #include "SampleDriverFull.h"
 #include "TestHarness.h"
 #include "Utils.h"
-#include "src/libfuzzer/libfuzzer_macro.h"
 
 namespace {
 
 using ::android::hidl::memory::V1_0::IMemory;
-using ::android::nn::fuzz::convertToTestModel;
-using ::android_nn_fuzz::Test;
 using ::test_helper::TestModel;
 using namespace test_helper;
 using namespace android;
@@ -307,29 +302,9 @@ void execute(const sp<V1_3::IPreparedModel>& preparedModel, const V1_3::Request&
     preparedModel->executeSynchronously_1_3(request, V1_2::MeasureTiming::YES, {}, {}, cb);
 }
 
-bool operandOverflows(const TestOperand& operand) {
-    const auto operandType = static_cast<V1_3::OperandType>(operand.type);
-    const std::vector<uint32_t> dims = {1};
-    uint64_t product = nn::nonExtensionOperandSizeOfData(operandType, dims);
-    for (uint32_t dim : operand.dimensions) {
-        // Only check non-zero dimensions.
-        if (dim == 0) {
-            continue;
-        }
+}  // anonymous namespace
 
-        product *= dim;
-        if (product >= std::numeric_limits<uint32_t>::max()) {
-            return true;
-        }
-    }
-    return false;
-}
-
-bool shouldSkip(const TestModel& model) {
-    return std::any_of(model.main.operands.begin(), model.main.operands.end(), operandOverflows);
-}
-
-void runTest(const TestModel& testModel) {
+void nnapiFuzzTest(const TestModel& testModel) {
     // Set up device.
     const auto device = getDevice();
     CHECK(device != nullptr);
@@ -346,13 +321,4 @@ void runTest(const TestModel& testModel) {
 
     // Perform execution.
     execute(preparedModel, request);
-}
-
-}  // anonymous namespace
-
-DEFINE_PROTO_FUZZER(const Test& model) {
-    const TestModel testModel = convertToTestModel(model);
-    if (!shouldSkip(testModel)) {
-        runTest(testModel);
-    }
 }
