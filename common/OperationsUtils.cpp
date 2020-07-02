@@ -463,9 +463,7 @@ bool embeddingLookupPrepare(const Shape& valueShape, const Shape& lookupShape, S
     NN_OPS_CHECK(getNumberOfDimensions(valueShape) >= 2);
     NN_OPS_CHECK(getNumberOfDimensions(lookupShape) == 1);
 
-    const uint32_t rows = getSizeOfDimension(valueShape, 0);
     const uint32_t columns = getSizeOfDimension(valueShape, 1);
-
     const uint32_t lookups = getSizeOfDimension(lookupShape, 0);
 
     outputShape->type = valueShape.type;
@@ -486,8 +484,6 @@ bool hashtableLookupPrepare(const Shape& lookupShape, const Shape& keyShape,
     NN_OPS_CHECK(getNumberOfDimensions(valueShape) >= 1);
 
     const uint32_t lookups = getSizeOfDimension(lookupShape, 0);
-    const uint32_t keys = getSizeOfDimension(keyShape, 0);
-    const uint32_t rows = getSizeOfDimension(valueShape, 0);
     outputShape->type = valueShape.type;
     outputShape->dimensions = {lookups};
     for (uint32_t i = 1; i < getNumberOfDimensions(valueShape); i++) {
