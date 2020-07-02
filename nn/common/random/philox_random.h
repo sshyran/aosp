@@ -20,10 +20,7 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_LIB_RANDOM_PHILOX_RANDOM_H_
 #define TENSORFLOW_CORE_LIB_RANDOM_PHILOX_RANDOM_H_
 
-// <cstdint> Required for uint{16,32,64}_t. Some C++ environments also provide
-// these types through stdlib.h.
-// TODO(avg): upstream to NNAPI - b/157528421
-#include <cstdint>
+#include <stdint.h>
 
 // Function qualifiers that need to work on both CPU and GPU.
 #if defined(__CUDACC__)
