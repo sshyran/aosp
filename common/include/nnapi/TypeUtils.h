@@ -23,6 +23,7 @@
 
 #include "nnapi/OperandTypes.h"
 #include "nnapi/OperationTypes.h"
+#include "nnapi/Result.h"
 #include "nnapi/Types.h"
 
 namespace android::nn {
@@ -44,7 +45,7 @@ std::vector<uint32_t> countNumberOfConsumers(size_t numberOfOperands,
                                              const std::vector<nn::Operation>& operations);
 
 // Combine two tensor dimensions, both may have unspecified dimensions or rank.
-std::optional<Dimensions> combineDimensions(const Dimensions& lhs, const Dimensions& rhs);
+Result<Dimensions> combineDimensions(const Dimensions& lhs, const Dimensions& rhs);
 
 // Set of output utility functions.
 std::ostream& operator<<(std::ostream& os, const DeviceStatus& deviceStatus);

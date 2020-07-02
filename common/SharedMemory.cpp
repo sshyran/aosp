@@ -22,6 +22,7 @@
 #include <variant>
 #include <vector>
 
+#include "Result.h"
 #include "SharedMemory.h"
 #include "Types.h"
 
@@ -66,7 +67,7 @@ bool MutableMemoryBuilder::empty() const {
     return mSize == 0;
 }
 
-std::optional<Memory> MutableMemoryBuilder::finish() {
+Result<Memory> MutableMemoryBuilder::finish() {
     return createSharedMemory(mSize);
 }
 
@@ -83,25 +84,17 @@ bool ConstantMemoryBuilder::empty() const {
     return mBuilder.empty();
 }
 
-std::optional<Memory> ConstantMemoryBuilder::finish() {
+Result<Memory> ConstantMemoryBuilder::finish() {
     // Allocate the memory.
-    auto maybeMemory = mBuilder.finish();
-    if (!maybeMemory.has_value()) {
-        return std::nullopt;
-    }
-    auto memory = std::move(maybeMemory).value();
+    auto memory = NN_TRY(mBuilder.finish());
 
     // Map the memory.
-    auto maybeMapping = map(memory);
-    if (!maybeMapping.has_value()) {
-        return std::nullopt;
-    }
-    const auto [pointer, size, context] = std::move(maybeMapping).value();
+    const auto [pointer, size, context] = NN_TRY(map(memory););
 
     // Get mutable pointer.
     if (!std::holds_alternative<void*>(pointer)) {
-        LOG(ERROR) << "MemoryBuilder::finish failed because the mapped pointer is not mutable";
-        return std::nullopt;
+        return NN_ERROR()
+               << "MemoryBuilder::finish failed because the mapped pointer is not mutable";
     }
     uint8_t* mutablePointer = static_cast<uint8_t*>(std::get<void*>(pointer));
 

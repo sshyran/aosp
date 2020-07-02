@@ -23,6 +23,7 @@
 #include <variant>
 #include <vector>
 
+#include "nnapi/Result.h"
 #include "nnapi/Types.h"
 
 // Forward declare AHardwareBuffer
@@ -42,7 +43,7 @@ class MutableMemoryBuilder {
     DataLocation append(size_t length);
     bool empty() const;
 
-    std::optional<Memory> finish();
+    Result<Memory> finish();
 
    private:
     uint32_t mPoolIndex;
@@ -56,7 +57,7 @@ class ConstantMemoryBuilder {
     DataLocation append(const void* data, size_t length);
     bool empty() const;
 
-    std::optional<Memory> finish();
+    Result<Memory> finish();
 
    private:
     struct LazyCopy {
@@ -69,13 +70,13 @@ class ConstantMemoryBuilder {
     std::vector<LazyCopy> mSlices;
 };
 
-std::optional<Memory> createSharedMemory(size_t size);
+Result<Memory> createSharedMemory(size_t size);
 
-std::optional<Memory> createSharedMemoryFromFd(size_t size, int prot, int fd, size_t offset);
+Result<Memory> createSharedMemoryFromFd(size_t size, int prot, int fd, size_t offset);
 
-std::optional<Memory> createSharedMemoryFromHidlMemory(const hardware::hidl_memory& memory);
+Result<Memory> createSharedMemoryFromHidlMemory(const hardware::hidl_memory& memory);
 
-std::optional<Memory> createSharedMemoryFromAHWB(const AHardwareBuffer& ahwb);
+Result<Memory> createSharedMemoryFromAHWB(const AHardwareBuffer& ahwb);
 
 struct Mapping {
     std::variant<void*, const void*> pointer;
@@ -83,7 +84,7 @@ struct Mapping {
     std::any context;
 };
 
-std::optional<Mapping> map(const Memory& memory);
+Result<Mapping> map(const Memory& memory);
 
 bool flush(const Mapping& mapping);
 

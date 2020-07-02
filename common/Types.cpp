@@ -28,6 +28,7 @@
 
 #include "OperandTypes.h"
 #include "OperationTypes.h"
+#include "Result.h"
 
 namespace android::nn {
 namespace {
@@ -87,15 +88,14 @@ Capabilities::OperandPerformanceTable::OperandPerformanceTable(
         std::vector<OperandPerformance> operandPerformances)
     : mSorted(std::move(operandPerformances)) {}
 
-std::optional<Capabilities::OperandPerformanceTable> Capabilities::OperandPerformanceTable::create(
+Result<Capabilities::OperandPerformanceTable> Capabilities::OperandPerformanceTable::create(
         std::vector<OperandPerformance> operandPerformances) {
     const auto notUnique = [](const auto& lhs, const auto& rhs) { return !(lhs.type < rhs.type); };
     const bool isUnique = std::adjacent_find(operandPerformances.begin(), operandPerformances.end(),
                                              notUnique) == operandPerformances.end();
     if (!isUnique) {
-        LOG(ERROR) << "Failed to create OperandPerformanceTable: Input must be sorted by key (in "
-                      "ascending order), and there must be no duplicate keys";
-        return std::nullopt;
+        return NN_ERROR() << "Failed to create OperandPerformanceTable: Input must be sorted by "
+                             "key (in ascending order), and there must be no duplicate keys";
     }
 
     return Capabilities::OperandPerformanceTable(std::move(operandPerformances));
