@@ -656,11 +656,21 @@ typedef struct ANeuralNetworksOperandType {
     const uint32_t* dimensions;
 
     /**
-     * These two fields are only used for quantized tensors.
-     * They must be zero for all other types.
-     * The dequantized value of each entry is (value - zeroPoint) * scale.
+     * The quantization scale.
+     *
+     * Must be 0 when not applicable to an operand type.
+     *
+     * See {@link OperandCode}.
      */
     float scale;
+
+    /**
+     * The quantization zero point.
+     *
+     * Must be 0 when not applicable to an operand type.
+     *
+     * See {@link OperandCode}.
+     */
     int32_t zeroPoint;
 } ANeuralNetworksOperandType;
 
