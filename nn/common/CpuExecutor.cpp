@@ -1116,10 +1116,6 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
             if (!allParametersPresent(3, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            // TODO(avg): upstream fix for unused variables
-            //const RunTimeOperandInfo& lookups = operands[ins[HashtableLookup::kLookupTensor]];
-            //const RunTimeOperandInfo& keys = operands[ins[HashtableLookup::kKeyTensor]];
-            //const RunTimeOperandInfo& values = operands[ins[HashtableLookup::kValueTensor]];
             RunTimeOperandInfo& output = operands[outs[Multinomial::kOutputTensor]];
 
             Shape outputShape;

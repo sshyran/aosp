@@ -478,8 +478,6 @@ static bool validateOperations(const hidl_vec<VersionedOperation>& operations,
         CHECK_LT(subgraph.outputIndexes[index], subgraph.operands.size());
         return &subgraph.operands[subgraph.outputIndexes[index]];
     };
-    // TODO(avg): upstream fix for unused variable
-    //const size_t operandCount = operands.size();
     for (auto& op : operations) {
         // TODO Validate the shapes and any known values. This is currently
         // done in CpuExecutor but should be done here for all drivers.
