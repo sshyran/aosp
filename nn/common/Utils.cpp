@@ -29,6 +29,7 @@
 #include <poll.h>
 
 #include <algorithm>
+#include <cfloat>
 #include <functional>
 #include <iostream>
 #include <limits>
