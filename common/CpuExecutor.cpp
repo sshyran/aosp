@@ -389,9 +389,9 @@ std::optional<RunTimePoolInfo> RunTimePoolInfo::createFromHidlMemory(
 
         AHardwareBuffer_Desc desc{
                 .width = width,
-                .format = format,
                 .height = height,
                 .layers = layers,
+                .format = format,
                 .usage = usage,
                 .stride = stride,
         };
