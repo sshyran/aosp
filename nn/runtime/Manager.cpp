@@ -838,8 +838,8 @@ void DeviceManager::findAvailableDevices() {
 #ifdef NNAPI_CHROMEOS
     // ChromeOS doesn't support HIDL service registeration and querying,
     // so just return a getService implementation here.
-    registerDevice("default", [](bool /*blocking*/) {
-        return V1_0::IDevice::getService("default");
+    registerDevice("cros-nnapi-default", [](bool /*blocking*/) {
+        return V1_0::IDevice::getService("cros-nnapi-default");
     });
 #else
     // register driver devices

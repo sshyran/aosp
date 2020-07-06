@@ -528,6 +528,7 @@ static_library("sample_driver") {
     "chromeos/sampledriver.cpp",
     "driver/sample/SampleDriver.cpp",
     "driver/sample/SampleDriverFull.cpp",
+    "driver/sample/SampleDriverMinimal.cpp",
     "driver/sample/SampleDriverPartial.cpp",
     "driver/sample/SampleDriverUtils.cpp",
   ]

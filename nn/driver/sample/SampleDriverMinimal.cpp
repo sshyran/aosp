@@ -17,14 +17,17 @@
 #define LOG_TAG "SampleDriverMinimal"
 
 #include <android-base/logging.h>
+#if !defined(NNAPI_CHROMEOS)
 #include <hidl/LegacySupport.h>
+#endif
+
 
 #include <thread>
 #include <vector>
 
 #include "HalInterfaces.h"
 #include "NeuralNetworksOEM.h"
-#include "SampleDriverPartial.h"
+#include "SampleDriverMinimal.h"
 #include "Utils.h"
 #include "ValidateHal.h"
 
@@ -33,15 +36,6 @@ namespace nn {
 namespace sample_driver {
 
 using namespace hal;
-
-class SampleDriverMinimal : public SampleDriverPartial {
-   public:
-    SampleDriverMinimal() : SampleDriverPartial("nnapi-sample_minimal") {}
-    Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
-
-   private:
-    std::vector<bool> getSupportedOperationsImpl(const V1_3::Model& model) const override;
-};
 
 Return<void> SampleDriverMinimal::getCapabilities_1_3(getCapabilities_1_3_cb cb) {
     android::nn::initVLogMask();
@@ -63,6 +57,7 @@ Return<void> SampleDriverMinimal::getCapabilities_1_3(getCapabilities_1_3_cb cb)
 }
 
 std::vector<bool> SampleDriverMinimal::getSupportedOperationsImpl(const V1_3::Model& model) const {
+    VLOG(DRIVER) << "getSupportedOperationsImpl()";
     const size_t count = model.main.operations.size();
     std::vector<bool> supported(count);
     // Simulate supporting just a few ops
@@ -89,11 +84,3 @@ std::vector<bool> SampleDriverMinimal::getSupportedOperationsImpl(const V1_3::Mo
 }  // namespace sample_driver
 }  // namespace nn
 }  // namespace android
-
-using android::sp;
-using android::nn::sample_driver::SampleDriverMinimal;
-
-int main() {
-    sp<SampleDriverMinimal> driver(new SampleDriverMinimal());
-    return driver->run();
-}
