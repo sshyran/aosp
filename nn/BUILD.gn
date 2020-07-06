@@ -274,6 +274,7 @@ static_library("common_operations") {
   ]
   cflags_cc = [
     # Many functions ignore some parameters
+    "-Wno-unused-local-typedef",
     "-Wno-unused-parameter",
     "-Wno-unused-variable",
     "-Wno-deprecated-copy",
