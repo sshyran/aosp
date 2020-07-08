@@ -357,6 +357,10 @@ if (use.test) {
     configs += [
       ":common_defaults",
     ]
+    cflags_cc = [
+      # Eigen functions have unused parameters in release builds.
+      "-Wno-unused-parameter",
+    ]
     deps = [
       ":common",
       ":common_operations",
@@ -446,6 +450,10 @@ if (use.test) {
     configs += [
       ":common_defaults",
       "//common-mk:test",
+    ]
+    cflags_cc = [
+      # Eigen functions have unused parameters in release builds.
+      "-Wno-unused-parameter",
     ]
     deps = [
       ":common",
