@@ -1095,7 +1095,6 @@ class Example:
         self.name = name
         self.expectedMultinomialDistributionTolerance = 0
         self.expectFailure = False
-        self.testDynamicOutputShape = True
         self.testLifeTimeVariation = True
         self.feedDicts = []
         for feedDict in args:
@@ -1291,10 +1290,6 @@ class Example:
     def ExpectFailure(self):
         assert self.expectedMultinomialDistributionTolerance == 0
         self.expectFailure = True
-        return self
-
-    def DisableDynamicOutputShapeVariation(self):
-        self.testDynamicOutputShape = False
         return self
 
     def DisableLifeTimeVariation(self):
