@@ -232,16 +232,11 @@ By default, the test generator will apply the following variations automatically
 
 - **AllInputsAsInternalCoverter:** Add a dummy ADD operation before each model input to make it as an internal operand. Will skip if the model does not have any input tensor that is compatible to the ADD operation, or if the model has more than one operations. If not explicitly disabled, this variation will be automatically applied to all tests.
 
-- **DynamicOutputShapeConverter:** Convert the model to enable dynamic output shape test. If not explicitly disabled, this variation will be automatically applied to all tests introduce in HAL version 1.2 or later.
-
 You can opt-out by invoking the corresponding methods on examples.
 
 ```Python
 # Disable AllTensorsAsInputsConverter and AllInputsAsInternalCoverter.
 example.DisableLifeTimeVariation()
-
-# Disable DynamicOutputShapeConverter.
-example.DisableDynamicOutputShapeVariation()
 ```
 
 You may also specify a certain operand to be input/const-only that `AllInputsAsInternalCoverter` will skip converting this operand.
