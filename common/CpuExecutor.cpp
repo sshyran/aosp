@@ -389,9 +389,9 @@ std::optional<RunTimePoolInfo> RunTimePoolInfo::createFromHidlMemory(
 
         AHardwareBuffer_Desc desc{
                 .width = width,
-                .format = format,
                 .height = height,
                 .layers = layers,
+                .format = format,
                 .usage = usage,
                 .stride = stride,
         };
@@ -1111,9 +1111,6 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
             if (!allParametersPresent(3, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& lookups = operands[ins[HashtableLookup::kLookupTensor]];
-            const RunTimeOperandInfo& keys = operands[ins[HashtableLookup::kKeyTensor]];
-            const RunTimeOperandInfo& values = operands[ins[HashtableLookup::kValueTensor]];
             RunTimeOperandInfo& output = operands[outs[Multinomial::kOutputTensor]];
 
             Shape outputShape;
