@@ -222,26 +222,8 @@ class Type(NamedVariable):
     def IsScalar(self):
         return not self.type.startswith("TENSOR_")
 
-    def GetElementByteSize(self):
-        cppTypeString = self.GetCppTypeString()
-        if cppTypeString in ["uint8_t", "int8_t", "bool8"]:
-            return 1
-        elif cppTypeString in ["int16_t", "uint16_t", "_Float16"]:
-            return 2
-        else:
-            return 4
-
-    def GetByteSize(self):
-        return self.GetElementByteSize() * self.GetNumberOfElements()
-
-    def GetDimensionsString(self):
-        return "{" + GetJointStr(self.dimensions) + "}"
-
     def GetSignatureTuple(self):
         return (self.type, self.dimensions, self.scale, self.zeroPoint)
-
-    def ToUnspecifiedDim(self):
-        return Type.GetType(self.type, [0] * len(self.dimensions), self.scale, self.zeroPoint)
 
 # To track implicitly convertible parameter types
 class ImplicitParameter():
@@ -266,17 +248,6 @@ class SymmPerChannelQuantParams():
         bshape = [1] * len(dimensions)
         bshape[self.channelDim] = len(self.scales)
         return np.array(self.scales).reshape(bshape)
-
-    def GetConstructor(self):
-        return "SymmPerChannelQuantParams({%s},%d)" % (
-            ", ".join(str(x) + "f" for x in self.scales), self.channelDim)
-
-    def GetVtsSetter(self):
-        return "channelQuant"
-
-    def GetVtsConstructor(self):
-        return "SymmPerChannelQuantParams{.scales={%s}, .channelDim=%d}" % (
-            ", ".join(str(x) + "f" for x in self.scales), self.channelDim)
 
 
 # An operand that can be fed into operations. Also, an operand is always
@@ -319,10 +290,6 @@ class Operand(NamedVariable):
             return "{%s}"%(GetJointStr(self.value, method=lambda v: "true" if v else "false"))
         else:
             return "{%s}"%(GetJointStr(self.value, method=lambda x: str(int(x))))
-
-    def ToUnspecifiedDim(self):
-        self.dimensions = self.type.dimensions
-        self.type = self.type.ToUnspecifiedDim()
 
     def ConvertTo(self, DerivedClass, name=None):
         assert issubclass(DerivedClass, Operand)
@@ -494,12 +461,6 @@ class Model:
         self.version = FileNames.version
         self.referenced_models = None
         Model.models.append(self)
-
-    def WithSuffix(self, *args):
-        self.createFunctionName = GlobalVariable("CreateModel", self.name, *args)
-        self.createTestFunctionName = GlobalVariable("createTestModel", self.name, *args)
-        self.isIgnoredFunctionName = GlobalVariable("is_ignored", self.name, *args)
-        return self
 
     def AddOperand(self, operand):
         if operand not in self.operands:
@@ -1266,7 +1227,7 @@ class Example:
                                                    *varNames)
                 if str(self.testName) in Example.versionOverrides:
                     self.model.IntroducedIn(Example.versionOverrides[str(self.testName)])
-                self.model.WithSuffix(*varNames).Compile()
+                self.model.Compile()
 
                 # Dump files
                 if DumpExample is not None and example_fd is not None:
