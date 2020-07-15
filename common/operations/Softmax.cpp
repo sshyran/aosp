@@ -20,6 +20,7 @@
 #include <tensorflow/lite/kernels/internal/optimized/optimized_ops.h>
 
 #include <algorithm>
+#include <cfloat>
 #include <limits>
 #include <vector>
 
