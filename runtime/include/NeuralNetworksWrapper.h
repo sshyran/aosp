@@ -21,6 +21,7 @@
 
 #include "NeuralNetworks.h"
 
+#include <assert.h>
 #include <math.h>
 #include <algorithm>
 #include <optional>
