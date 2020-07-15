@@ -23,9 +23,9 @@
 #include <android-base/strings.h>
 #include <errno.h>
 #include <poll.h>
-#include <sys/system_properties.h>
 
 #include <algorithm>
+#include <cfloat>
 #include <functional>
 #include <iostream>
 #include <limits>
