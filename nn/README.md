@@ -53,7 +53,7 @@ NNAPI can be built by using the
 ```bash
 $ export BOARD=<your board>
 $ setup_board --board=${BOARD}
-$ USE="nnapi" ./setup_packages --board=${BOARD}
+$ USE="nnapi" ./build_packages --board=${BOARD}
 $ USE="nnapi" ./build_image --board=${BOARD} test
 ```
 
@@ -91,6 +91,7 @@ to load a shared library with this name.
 
 Remember that the HAL will be loaded into the same process as NNAPI, so there will be no use of HardwareBuffers or Android IPC.
 
+
 ## Debugging
 
 TODO, provide instructions for
@@ -101,8 +102,65 @@ TODO, provide instructions for
 
 ## Testing
 
-TODO, provide instructions for
+### Running the label\_image tensorflow sample
 
-1. The label_image tensorflow sample.
+Building for board named 'betty':
+
+1.  Follow instructions above to build and deploy NNAPI
+1.  Then build tensorflow with USE=benchmark\_model and deploy it:
+    ```
+    $ USE="label_image benchmark_model" emerge-betty sci-libs/tensorflow
+    $ cros deploy $DUP_IP sci-libs/tensorflow
+    ```
+1.  Put model and labels file into betty's `/root` directory:
+    ````
+    $ git clone https://android.googlesource.com/platform/test/mlts/models
+    $ scp -P 9222 models/assets/mobilenet_v1_1.0_224_quant.tflite root@localhost:/root/mobilenet_quant_v1_224.tflite
+    $ scp -P 9222 models/assets/image_classification/labels.txt root@localhost:/root/labels.txt
+    $ wget https://coral.ai/static/docs/images/grace_hopper.bmp
+    $ scp grace_hopper.bmp root@localhost:/root/grace_hopper.bmp
+    ```
+1.  On a terminal inside betty run label\_image and benchmark\_model without
+    NNAPI:
+    ```
+    localhost ~ # label_image
+    Loaded model ./mobilenet_quant_v1_224.tflite
+    resolved reporter
+    INFO: Initialized TensorFlow Lite runtime.
+    invoked 
+    average time: 178.725 ms 
+    0.780392: 653 military uniform
+    0.105882: 907 windsor tie
+    0.0156863: 458 bow tie
+    0.0117647: 466 bulletproof vest
+    0.00784314: 835 suit
+
+    localhost ~ # benchmark_model --graph=mobilenet_quant_v1_224.tflite
+    <...>
+    count=50 first=128709 curr=128080 min=127952 max=130551 avg=128344 std=381
+    ```
+1.  Then run with NNAPI:
+    ```
+    localhost ~ # label_image --accelerated 1
+    Loaded model ./mobilenet_quant_v1_224.tflite
+    resolved reporter
+    INFO: Initialized TensorFlow Lite runtime.
+    INFO: Created TensorFlow Lite delegate for NNAPI.
+    Applied NNAPI delegate.invoked 
+    average time: 447.802 ms 
+    0.780392: 653 military uniform
+    0.105882: 907 windsor tie
+    0.0156863: 458 bow tie
+    0.0117647: 466 bulletproof vest
+    0.00784314: 835 suit
+
+    localhost ~ # benchmark_model --graph=mobilenet_quant_v1_224.tflite --use_nnapi=true
+    <...>
+    count=50 first=406697 curr=416490 min=324026 max=478962 avg=406625 std=29184
+    ```
+### TODO
+
+Provide instructions for:
+
 1. The tensorflow benchmarking tool.
 1. The Chrome OS ML benchmarking tool.
