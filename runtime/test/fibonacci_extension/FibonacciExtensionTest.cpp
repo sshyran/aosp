@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+#include <gtest/gtest.h>
+
+#include <vector>
+
+#include "FibonacciDriver.h"
+#include "FibonacciExtension.h"
 #include "HalInterfaces.h"
 #include "Manager.h"
 #include "NeuralNetworks.h"
@@ -23,13 +29,6 @@
 #include "TypeManager.h"
 #include "Utils.h"
 #include "ValidateHal.h"
-
-#include <gtest/gtest.h>
-
-#include "FibonacciDriver.h"
-#include "FibonacciExtension.h"
-
-#include <vector>
 
 namespace android {
 namespace nn {
@@ -58,27 +57,26 @@ class FibonacciExtensionTest : public ::testing::Test {
 
         uint32_t numDevices = 0;
         ASSERT_EQ(ANeuralNetworks_getDeviceCount(&numDevices), ANEURALNETWORKS_NO_ERROR);
-        ANeuralNetworksDevice* fibonacciDevice = nullptr;
-        ANeuralNetworksDevice* cpuDevice = nullptr;
         for (uint32_t i = 0; i < numDevices; i++) {
             ANeuralNetworksDevice* device = nullptr;
             EXPECT_EQ(ANeuralNetworks_getDevice(i, &device), ANEURALNETWORKS_NO_ERROR);
+            mAllDevices.push_back(device);
             bool supportsFibonacciExtension;
             ASSERT_EQ(
                     ANeuralNetworksDevice_getExtensionSupport(
                             device, EXAMPLE_FIBONACCI_EXTENSION_NAME, &supportsFibonacciExtension),
                     ANEURALNETWORKS_NO_ERROR);
             if (supportsFibonacciExtension) {
-                ASSERT_EQ(fibonacciDevice, nullptr) << "Found multiple Fibonacci drivers";
-                fibonacciDevice = device;
+                ASSERT_EQ(mFibonacciDevice, nullptr) << "Found multiple Fibonacci drivers";
+                mFibonacciDevice = device;
             } else if (DeviceManager::get()->forTest_isCpuDevice(device)) {
-                ASSERT_EQ(cpuDevice, nullptr) << "Found multiple CPU drivers";
-                cpuDevice = device;
+                ASSERT_EQ(mCpuDevice, nullptr) << "Found multiple CPU drivers";
+                mCpuDevice = device;
             }
         }
-        ASSERT_NE(fibonacciDevice, nullptr) << "Expecting Fibonacci driver to be available";
-        ASSERT_NE(cpuDevice, nullptr) << "Expecting CPU driver to be available";
-        mDevices = {fibonacciDevice, cpuDevice};
+        ASSERT_NE(mFibonacciDevice, nullptr) << "Expecting Fibonacci driver to be available";
+        ASSERT_NE(mCpuDevice, nullptr) << "Expecting CPU driver to be available";
+        mDevices = {mFibonacciDevice, mCpuDevice};
     }
 
     virtual void TearDown() {
@@ -92,17 +90,22 @@ class FibonacciExtensionTest : public ::testing::Test {
         TypeManager::get()->forTest_reset();
     }
 
-    void checkSupportedOperations(const std::vector<bool>& expected) {
+    void checkSupportedOperations(const std::vector<bool>& expected,
+                                  const std::vector<ANeuralNetworksDevice*> devices) {
         const uint32_t kMaxNumberOperations = 256;
         EXPECT_LE(expected.size(), kMaxNumberOperations);
         bool supported[kMaxNumberOperations] = {false};
         EXPECT_EQ(ANeuralNetworksModel_getSupportedOperationsForDevices(
-                          mModel.getHandle(), mDevices.data(), mDevices.size(), supported),
+                          mModel.getHandle(), devices.data(), devices.size(), supported),
                   ANEURALNETWORKS_NO_ERROR);
         for (size_t i = 0; i < expected.size(); ++i) {
             SCOPED_TRACE(::testing::Message() << "i = " << i);
             EXPECT_EQ(supported[i], expected[i]);
         }
+    }
+
+    void checkSupportedOperations(const std::vector<bool>& expected) {
+        checkSupportedOperations(expected, mDevices);
     }
 
     void prepareForExecution() {
@@ -114,7 +117,10 @@ class FibonacciExtensionTest : public ::testing::Test {
                   ANEURALNETWORKS_NO_ERROR);
     }
 
-    std::vector<ANeuralNetworksDevice*> mDevices;
+    ANeuralNetworksDevice* mFibonacciDevice = nullptr;
+    ANeuralNetworksDevice* mCpuDevice = nullptr;
+    std::vector<ANeuralNetworksDevice*> mDevices;  // Fibonacci and CPU devices.
+    std::vector<ANeuralNetworksDevice*> mAllDevices;
     ANeuralNetworksExecution* mExecution = nullptr;
     ANeuralNetworksCompilation* mCompilation = nullptr;
     ExtensionModel mModel;
@@ -332,6 +338,20 @@ TEST_F(FibonacciExtensionTest, InvalidOperation) {
                                                           mDevices.size(), &mCompilation),
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(ANeuralNetworksCompilation_finish(mCompilation), ANEURALNETWORKS_BAD_DATA);
+}
+
+TEST_F(FibonacciExtensionTest, GetSupportedOperations) {
+    ExtensionOperandType inputType(Type::TENSOR_FLOAT32, {1});
+    ExtensionOperandType outputType(Type::TENSOR_FLOAT32, {1});
+    createModel(&mModel, inputType, outputType, /*addNopOperations=*/false);
+
+    for (ANeuralNetworksDevice* device : mAllDevices) {
+        const char* name = nullptr;
+        ASSERT_EQ(ANeuralNetworksDevice_getName(device, &name), ANEURALNETWORKS_NO_ERROR);
+        SCOPED_TRACE(::testing::Message() << "device = " << name);
+        // Only Fibonacci device should support Fibonacci operation.
+        checkSupportedOperations({device == mFibonacciDevice}, {device});
+    }
 }
 
 }  // namespace
