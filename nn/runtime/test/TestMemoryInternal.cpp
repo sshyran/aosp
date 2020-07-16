@@ -101,8 +101,8 @@ TEST_F(MemoryLeakTest, TestASharedMemory) {
     // Layout where to place matrix2 and matrix3 in the memory we'll allocate.
     // We have gaps to test that we don't assume contiguity.
     constexpr uint32_t offsetForMatrix2 = 20;
-    constexpr uint32_t offsetForMatrix3 = offsetForMatrix2 + sizeof(matrix2) + 30;
-    constexpr uint32_t weightsSize = offsetForMatrix3 + sizeof(matrix3) + 60;
+    constexpr uint32_t offsetForMatrix3 = offsetForMatrix2 + sizeof(matrix2) + 40;
+    constexpr uint32_t weightsSize = offsetForMatrix3 + sizeof(matrix3) + 80;
 
     int weightsFd = ASharedMemory_create("weights", weightsSize);
     ASSERT_GT(weightsFd, -1);
