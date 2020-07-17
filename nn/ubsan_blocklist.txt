@@ -1,0 +1,4 @@
+# Supress intentional divide by zero in test.
+[float-divide-by-zero]
+fun:*tflite*reference_ops*Div*
+
