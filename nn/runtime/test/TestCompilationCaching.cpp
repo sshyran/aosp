@@ -383,6 +383,9 @@ class CompilationCachingTest : public ::testing::TestWithParam<CompilationCachin
                       ANEURALNETWORKS_NO_ERROR);
         }
         ASSERT_EQ(ANeuralNetworksCompilation_finish(compilation), ANEURALNETWORKS_NO_ERROR);
+
+        // close memory
+        ANeuralNetworksCompilation_free(compilation);
     }
 
     void createCache() {
