@@ -1722,11 +1722,10 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
     }
     if (result != ANEURALNETWORKS_NO_ERROR) {
         LOG(ERROR) << getOperationName(operation.type) << " failed.";
-        return result;
     }
 
     consumeOperationInputs(ins, operands);
-    return ANEURALNETWORKS_NO_ERROR;
+    return result;
 }
 
 // Copies RunTimeOperandInfo, preserving the original lifetime and numberOfUsesLeft
