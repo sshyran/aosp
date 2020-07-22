@@ -644,6 +644,7 @@ TEST_F(ValidationTestModel, SetOperandValueFromMemory) {
               ANEURALNETWORKS_BAD_STATE);
 
     // close memory
+    ANeuralNetworksMemory_free(memory);
     close(memoryFd);
 }
 
@@ -675,6 +676,8 @@ TEST_F(ValidationTestModel, SetOperandValueFromAHardwareBuffer) {
     EXPECT_EQ(ANeuralNetworksModel_setOperandValueFromMemory(mModel, 0, memory, 0, sizeof(uint8_t)),
               ANEURALNETWORKS_BAD_DATA);
 
+    // close memory
+    ANeuralNetworksMemory_free(memory);
     AHardwareBuffer_release(buffer);
 }
 
@@ -710,6 +713,8 @@ TEST_F(ValidationTestModel, SetOperandValueFromAHardwareBufferBlob) {
                                                              sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
 
+    // close memory
+    ANeuralNetworksMemory_free(memory);
     AHardwareBuffer_release(buffer);
 }
 
@@ -1189,6 +1194,9 @@ TEST_F(ValidationTestCompilation, ExecutionTiming) {
     EXPECT_EQ(ANeuralNetworksExecution_setMeasureTiming(execution, false),
               ANEURALNETWORKS_BAD_DATA);
     EXPECT_EQ(ANeuralNetworksExecution_setMeasureTiming(execution, true), ANEURALNETWORKS_BAD_DATA);
+
+    // close memory
+    ANeuralNetworksExecution_free(execution);
 }
 
 // Also see TEST_F(ValidationTestCompilationForDevices_1, ExecutionTiming)
@@ -1313,6 +1321,11 @@ TEST_F(ValidationTestCompilation, ExecutionUsability) {
             default:
                 FAIL() << "Unreachable";
         }
+
+        // close memory
+        ANeuralNetworksExecution_free(execution);
+        ANeuralNetworksMemory_free(memory);
+        close(memoryFd);
     }
 }
 
@@ -1449,6 +1462,7 @@ TEST_F(ValidationTestExecution, SetInputFromMemory) {
               ANEURALNETWORKS_BAD_STATE);
 
     // close memory
+    ANeuralNetworksMemory_free(memory);
     close(memoryFd);
 }
 
@@ -1492,6 +1506,8 @@ TEST_F(ValidationTestExecution, SetInputFromAHardwareBufferBlob) {
                                                           memory, 0, sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
 
+    // close memory
+    ANeuralNetworksMemory_free(memory);
     AHardwareBuffer_release(buffer);
 }
 
@@ -1558,6 +1574,8 @@ TEST_F(ValidationTestExecution, SetOutputFromMemory) {
               ANEURALNETWORKS_BAD_STATE);
 
     // close memory
+    ANeuralNetworksMemory_free(memory);
+    ANeuralNetworksExecution_free(execution);
     close(memoryFd);
 }
 
@@ -1602,6 +1620,8 @@ TEST_F(ValidationTestExecution, SetOutputFromAHardwareBufferBlob) {
                                                            memory, 0, sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
 
+    // close memory
+    ANeuralNetworksMemory_free(memory);
     AHardwareBuffer_release(buffer);
 }
 
@@ -1773,6 +1793,9 @@ TEST_F(ValidationTestExecution, StartCompute) {
               ANEURALNETWORKS_UNEXPECTED_NULL);
     EXPECT_EQ(ANeuralNetworksExecution_startCompute(execution, nullptr),
               ANEURALNETWORKS_UNEXPECTED_NULL);
+
+    // close memory
+    ANeuralNetworksExecution_free(execution);
 }
 
 TEST_F(ValidationTestExecution, EventWait) {
@@ -1889,6 +1912,10 @@ TEST_F(ValidationTestExecution, GetOutputOperandRankAndDimensions) {
               ANEURALNETWORKS_NO_ERROR);
     EXPECT_EQ(rank, expectedRank);
     EXPECT_EQ(dims[0], expectedDims);
+
+    // close memory
+    ANeuralNetworksEvent_free(event);
+    ANeuralNetworksExecution_free(execution);
 }
 
 // Regression test for b/146044137.
@@ -2002,6 +2029,10 @@ TEST_F(ValidationTestBurst, BurstComputeBadCompilation) {
 
     ANeuralNetworksBurst* burst;
     EXPECT_EQ(ANeuralNetworksBurst_create(compilation, &burst), ANEURALNETWORKS_BAD_STATE);
+
+    // close memory
+    ANeuralNetworksBurst_free(burst);
+    ANeuralNetworksCompilation_free(compilation);
 }
 
 TEST_F(ValidationTestBurst, BurstComputeDifferentCompilations) {
@@ -2483,6 +2514,9 @@ TEST_F(ValidationTestCompilationForDevices_2, ExecutionTiming) {
     EXPECT_EQ(ANeuralNetworksExecution_setMeasureTiming(execution, false),
               ANEURALNETWORKS_BAD_DATA);
     EXPECT_EQ(ANeuralNetworksExecution_setMeasureTiming(execution, true), ANEURALNETWORKS_BAD_DATA);
+
+    // close memory
+    ANeuralNetworksExecution_free(execution);
 }
 
 class ValidationTestInvalidCompilation : public ValidationTestModel {
@@ -2708,6 +2742,9 @@ TEST_F(ValidationTestCompilationForDevices_1, ExecutionTiming) {
                 }
             }
         }
+
+        // close memory
+        ANeuralNetworksExecution_free(execution);
     }
 }
 
