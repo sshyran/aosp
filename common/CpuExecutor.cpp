@@ -19,6 +19,8 @@
 #include "CpuExecutor.h"
 
 #include <android/hardware_buffer.h>
+#include <android-base/scopeguard.h>
+
 #include <sys/mman.h>
 #include <vndk/hardware_buffer.h>
 
@@ -1796,6 +1798,25 @@ int CpuExecutor::executeWhileOperation(const Operation& operation, RunTimeOperan
     std::vector<uint8_t*> tmp1(bodySubgraph.outputIndexes.size());
     std::vector<uint8_t*> tmp2(bodySubgraph.outputIndexes.size());
 
+    // Ensure objects are freed
+    auto cleanupGuard = base::make_scope_guard(
+        [&tmp1, &tmp2, &condOperands, &bodyOperands, &operation, &operands] {
+            auto freeLoopOutputs = [](const std::vector<uint8_t*>& tmp) {
+                for (auto buffer : tmp) {
+                    if (buffer != nullptr) {
+                        delete[] buffer;
+                    }
+                }
+            };
+
+            freeLoopOutputs(tmp1);
+            freeLoopOutputs(tmp2);
+            freeUnusedSubgraphOperands(&condOperands);
+            freeUnusedSubgraphOperands(&bodyOperands);
+            consumeOperationInputs(operation.inputs, operands);
+        }
+    );
+
     // For body outputs with unknown shape, we skip double buffering and
     // allocate on each iteration instead. This allows growing output tensors
     // inside a WHILE loop.
@@ -1881,19 +1902,6 @@ int CpuExecutor::executeWhileOperation(const Operation& operation, RunTimeOperan
         // TODO: Use the outer buffer as tmp1 to avoid copies.
         std::memcpy(outerOperand.buffer, innerOperand.buffer, innerOperand.length);
     }
-
-    auto freeLoopOutputs = [](const std::vector<uint8_t*>& tmp) {
-        for (auto buffer : tmp) {
-            if (buffer != nullptr) {
-                delete[] buffer;
-            }
-        }
-    };
-    freeLoopOutputs(tmp1);
-    freeLoopOutputs(tmp2);
-    freeUnusedSubgraphOperands(&condOperands);
-    freeUnusedSubgraphOperands(&bodyOperands);
-    consumeOperationInputs(operation.inputs, operands);
 
     return ANEURALNETWORKS_NO_ERROR;
 }
