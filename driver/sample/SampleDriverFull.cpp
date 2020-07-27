@@ -48,6 +48,10 @@ Return<void> SampleDriverFull::getSupportedOperations_1_3(const V1_3::Model& mod
     if (validateModel(model)) {
         const size_t count = model.main.operations.size();
         std::vector<bool> supported(count, true);
+        for (size_t i = 0; i < count; i++) {
+            const Operation& operation = model.main.operations[i];
+            supported[i] = !isExtensionOperationType(operation.type);
+        }
         cb(ErrorStatus::NONE, supported);
     } else {
         std::vector<bool> supported;
