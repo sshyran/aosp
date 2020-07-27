@@ -67,7 +67,7 @@ std::vector<bool> SampleDriverFloatSlow::getSupportedOperationsImpl(
     std::vector<bool> supported(count);
     for (size_t i = 0; i < count; i++) {
         const Operation& operation = model.main.operations[i];
-        if (operation.inputs.size() > 0) {
+        if (!isExtensionOperationType(operation.type) && operation.inputs.size() > 0) {
             const Operand& firstOperand = model.main.operands[operation.inputs[0]];
             supported[i] = firstOperand.type == OperandType::TENSOR_FLOAT32;
         }
