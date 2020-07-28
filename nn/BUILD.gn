@@ -256,7 +256,11 @@ if (use.test) {
       "tensorflowlite",
     ]
     sources = [
-      "chromeos/tests/runtime/generated_test_loader.cc",
+      "chromeos/tests/runtime/generated_test_loader_V1_0.cc",
+      "chromeos/tests/runtime/generated_test_loader_V1_1.cc",
+      "chromeos/tests/runtime/generated_test_loader_V1_2.cc",
+      "chromeos/tests/runtime/generated_test_loader_V1_3.cc",
+      "chromeos/tests/runtime/generated_test_loader_V1_3_cts.cc",
       "runtime/test/GeneratedTestUtils.cpp",
       "runtime/test/TestNeuralNetworksWrapper.cpp",
       "runtime/test/TestGenerated.cpp",
