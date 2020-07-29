@@ -1,0 +1,177 @@
+# Copyright 2020 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//common-mk/pkg_config.gni")
+
+nn_src = "//aosp/frameworks/ml/nn"
+vts_src = "//aosp/hardware/interfaces/neuralnetworks"
+
+group("all") {
+  deps = [
+    ":vts",
+  ]
+}
+
+group("vts") {
+  deps = [
+    ":cros_nnapi_vts_1_0",
+    ":cros_nnapi_vts_1_1",
+    ":cros_nnapi_vts_1_2",
+    ":cros_nnapi_vts_1_3",
+  ]
+}
+
+pkg_config("vts_defaults") {
+  include_dirs = [
+    "${vts_src}/1.0/vts/functional/include",
+    "${nn_src}/common",
+    "${nn_src}/common/include",
+    "${nn_src}/runtime/include",
+    "${nn_src}/tools/test_generator/test_harness/include",
+    "${sysroot}/usr/include/aosp",
+  ]
+  pkg_deps = [
+    "libnnapi-support",
+  ]
+}
+
+static_library("vts_common") {
+  configs += [
+    ":vts_defaults",
+    "//aosp/frameworks/ml/nn:target_defaults",
+    "//common-mk:test",
+  ]
+  cflags_cc = [
+    # ExecutionBurstController has signed vs unsigned compares
+    "-Wno-sign-compare",
+    # Utils.cpp has unused parameters
+    "-Wno-unused-parameter",
+  ]
+  deps = [
+    "${nn_src}:vendor-nn-hal",
+  ]
+  sources = [
+    "${vts_src}/1.0/vts/functional/Callbacks.cpp",
+    "${vts_src}/1.0/vts/functional/Utils.cpp",
+    "${nn_src}/chromeos/testrunner.cpp",
+    "${nn_src}/chromeos/versioned_drivers.cpp",
+    "${nn_src}/common/ExecutionBurstController.cpp",
+    "${nn_src}/common/ExecutionBurstServer.cpp",
+    "${nn_src}/common/MemoryUtils.cpp",
+    "${nn_src}/common/Utils.cpp",
+    "${nn_src}/tools/test_generator/test_harness/TestHarness.cpp",
+  ]
+}
+
+executable("cros_nnapi_vts_1_0") {
+  configs += [
+    ":vts_defaults",
+    "//aosp/frameworks/ml/nn:target_defaults",
+  ]
+  deps = [
+    ":vts_common",
+    "${nn_src}/chromeos/tests/runtime/generated:generated_spec_v1_0",
+  ]
+  sources = [
+    "${vts_src}/1.0/vts/functional/BasicTests.cpp",
+    "${vts_src}/1.0/vts/functional/GeneratedTestHarness.cpp",
+    "${vts_src}/1.0/vts/functional/TestAssertions.cpp",
+    "${vts_src}/1.0/vts/functional/ValidateModel.cpp",
+    "${vts_src}/1.0/vts/functional/ValidateRequest.cpp",
+    "${vts_src}/1.0/vts/functional/VtsHalNeuralnetworks.cpp",
+    "${nn_src}/chromeos/tests/runtime/generated_test_loader_V1_0.cc",
+  ]
+}
+
+executable("cros_nnapi_vts_1_1") {
+  include_dirs = [
+    "${vts_src}/1.1/vts/functional/include",
+  ]
+  configs += [
+    ":vts_defaults",
+    "//aosp/frameworks/ml/nn:target_defaults",
+  ]
+  deps = [
+    ":vts_common",
+    "${nn_src}/chromeos/tests/runtime/generated:generated_spec_v1_0",
+    "${nn_src}/chromeos/tests/runtime/generated:generated_spec_v1_1",
+  ]
+  sources = [
+    "${vts_src}/1.1/vts/functional/BasicTests.cpp",
+    "${vts_src}/1.1/vts/functional/GeneratedTestHarness.cpp",
+    "${vts_src}/1.1/vts/functional/TestAssertions.cpp",
+    "${vts_src}/1.1/vts/functional/ValidateModel.cpp",
+    "${vts_src}/1.1/vts/functional/ValidateRequest.cpp",
+    "${vts_src}/1.1/vts/functional/VtsHalNeuralnetworks.cpp",
+    "${nn_src}/chromeos/tests/runtime/generated_test_loader_V1_0.cc",
+    "${nn_src}/chromeos/tests/runtime/generated_test_loader_V1_1.cc",
+  ]
+}
+
+executable("cros_nnapi_vts_1_2") {
+  include_dirs = [
+    "${vts_src}/1.2/vts/functional/include",
+  ]
+  configs += [
+    ":vts_defaults",
+    "//aosp/frameworks/ml/nn:target_defaults",
+  ]
+  deps = [
+    ":vts_common",
+    "${nn_src}/chromeos/tests/runtime/generated:generated_spec_v1_0",
+    "${nn_src}/chromeos/tests/runtime/generated:generated_spec_v1_1",
+    "${nn_src}/chromeos/tests/runtime/generated:generated_spec_v1_2",
+  ]
+  sources = [
+    "${vts_src}/1.2/vts/functional/BasicTests.cpp",
+    "${vts_src}/1.2/vts/functional/Callbacks.cpp",
+    "${vts_src}/1.2/vts/functional/CompilationCachingTests.cpp",
+    "${vts_src}/1.2/vts/functional/GeneratedTestHarness.cpp",
+    "${vts_src}/1.2/vts/functional/TestAssertions.cpp",
+    "${vts_src}/1.2/vts/functional/Utils.cpp",
+    "${vts_src}/1.2/vts/functional/ValidateBurst.cpp",
+    "${vts_src}/1.2/vts/functional/ValidateModel.cpp",
+    "${vts_src}/1.2/vts/functional/ValidateRequest.cpp",
+    "${vts_src}/1.2/vts/functional/VtsHalNeuralnetworks.cpp",
+    "${nn_src}/chromeos/tests/runtime/generated_test_loader_V1_0.cc",
+    "${nn_src}/chromeos/tests/runtime/generated_test_loader_V1_1.cc",
+    "${nn_src}/chromeos/tests/runtime/generated_test_loader_V1_2.cc",
+  ]
+}
+
+executable("cros_nnapi_vts_1_3") {
+  include_dirs = [
+    "${vts_src}/1.2/vts/functional/include",
+    "${vts_src}/1.3/vts/functional/include",
+  ]
+  configs += [
+    ":vts_defaults",
+    "//aosp/frameworks/ml/nn:target_defaults",
+  ]
+  deps = [
+    ":vts_common",
+    "${nn_src}/chromeos/tests/runtime/generated:generated_spec_v1_0",
+    "${nn_src}/chromeos/tests/runtime/generated:generated_spec_v1_1",
+    "${nn_src}/chromeos/tests/runtime/generated:generated_spec_v1_2",
+    "${nn_src}/chromeos/tests/runtime/generated:generated_spec_v1_3",
+  ]
+  sources = [
+    "${vts_src}/1.3/vts/functional/BasicTests.cpp",
+    "${vts_src}/1.3/vts/functional/Callbacks.cpp",
+    "${vts_src}/1.3/vts/functional/CompilationCachingTests.cpp",
+    "${vts_src}/1.3/vts/functional/GeneratedTestHarness.cpp",
+    "${vts_src}/1.3/vts/functional/MemoryDomainTests.cpp",
+    "${vts_src}/1.3/vts/functional/QualityOfServiceTests.cpp",
+    "${vts_src}/1.3/vts/functional/TestAssertions.cpp",
+    "${vts_src}/1.3/vts/functional/Utils.cpp",
+    "${vts_src}/1.3/vts/functional/ValidateBurst.cpp",
+    "${vts_src}/1.3/vts/functional/ValidateModel.cpp",
+    "${vts_src}/1.3/vts/functional/ValidateRequest.cpp",
+    "${vts_src}/1.3/vts/functional/VtsHalNeuralnetworks.cpp",
+    "${nn_src}/chromeos/tests/runtime/generated_test_loader_V1_0.cc",
+    "${nn_src}/chromeos/tests/runtime/generated_test_loader_V1_1.cc",
+    "${nn_src}/chromeos/tests/runtime/generated_test_loader_V1_2.cc",
+    "${nn_src}/chromeos/tests/runtime/generated_test_loader_V1_3.cc",
+  ]
+}

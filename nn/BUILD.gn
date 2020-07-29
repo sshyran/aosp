@@ -9,6 +9,7 @@ group("all") {
     ":libneuralnetworks",
     ":driver_cache",
     ":vendor-nn-hal",
+    "chromeos/tests:vts",
   ]
   if (use.test) {
     deps += [
@@ -109,6 +110,7 @@ static_library("runtime") {
     "runtime/include",
   ]
   sources = [
+    "chromeos/versioned_drivers.cpp",
     "runtime/BurstBuilder.cpp",
     "runtime/Callbacks.cpp",
     "runtime/CompilationBuilder.cpp",
