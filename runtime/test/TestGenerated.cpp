@@ -15,6 +15,7 @@
  */
 
 #include <android-base/logging.h>
+#include <android-base/properties.h>
 #include <ftw.h>
 #include <gtest/gtest.h>
 #include <unistd.h>
@@ -26,6 +27,7 @@
 #include <iostream>
 #include <map>
 #include <memory>
+#include <set>
 #include <string>
 #include <thread>
 #include <utility>
@@ -60,6 +62,8 @@ class GeneratedTests : public GeneratedTestBase {
     void SetUp() override;
     void TearDown() override;
 
+    bool shouldSkipTest();
+
     std::optional<Compilation> compileModel(const Model& model);
     void executeWithCompilation(const Compilation& compilation, const TestModel& testModel);
     void executeOnce(const Model& model, const TestModel& testModel);
@@ -67,6 +71,9 @@ class GeneratedTests : public GeneratedTestBase {
     void executeMultithreadedSharedCompilation(const Model& model, const TestModel& testModel);
     // Test driver for those generated from ml/nn/runtime/test/spec
     void execute(const TestModel& testModel);
+
+    // VNDK version of the device under test.
+    static int mVndkVersion;
 
     std::string mCacheDir;
     std::vector<uint8_t> mToken;
@@ -76,6 +83,8 @@ class GeneratedTests : public GeneratedTestBase {
     bool mTestQuantizationCoupling = false;
     bool mTestDeviceMemory = false;
 };
+
+int GeneratedTests::mVndkVersion = __ANDROID_API_FUTURE__;
 
 // Tag for the dynamic output shape tests
 class DynamicOutputShapeTest : public GeneratedTests {
@@ -328,8 +337,35 @@ void GeneratedTests::execute(const TestModel& testModel) {
     }
 }
 
+bool GeneratedTests::shouldSkipTest() {
+    // A map of {min VNDK version -> tests that should be skipped with earlier VNDK versions}.
+    // The listed tests are added in a later release, but exercising old APIs. They should be
+    // skipped if the device has a mixed build of system and vendor partitions.
+    static const std::map<int, std::set<std::string>> kMapOfMinVndkVersionToTests = {
+            {
+                    __ANDROID_API_R__,
+                    {
+                            "add_broadcast_quant8_all_inputs_as_internal",
+                    },
+            },
+    };
+    for (const auto& [minVersion, names] : kMapOfMinVndkVersionToTests) {
+        if (mVndkVersion < minVersion && names.count(kTestName) > 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void GeneratedTests::SetUp() {
     GeneratedTestBase::SetUp();
+
+    mVndkVersion = ::android::base::GetIntProperty("ro.vndk.version", __ANDROID_API_FUTURE__);
+    if (shouldSkipTest()) {
+        GTEST_SKIP();
+        return;
+    }
+
     char cacheDirTemp[] = "/data/local/tmp/TestCompilationCachingXXXXXX";
     char* cacheDir = mkdtemp(cacheDirTemp);
     ASSERT_NE(cacheDir, nullptr);
