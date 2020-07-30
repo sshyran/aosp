@@ -14,7 +14,6 @@ group("all") {
     deps += [
       ":chromeos_testrunner",
       ":common_testrunner",
-      ":common_operations_testrunner",
       ":driver_cache_testrunner",
       ":runtime_testrunner",
       ":runtime_generated_testrunner",
@@ -28,8 +27,6 @@ shared_library("libneuralnetworks") {
   ]
   deps = [
     ":common",
-    ":common_random",
-    ":common_operations",
     ":runtime",
     ":vendor-nn-hal",
   ]
@@ -99,33 +96,6 @@ pkg_config("common_defaults") {
   pkg_deps = [ "libnnapi-support" ]
 }
 
-if (use.test) {
-  static_library("nn_testrunner") {
-    configs += [
-      "//common-mk:test",
-      ":target_defaults",
-    ]
-    deps = []
-    sources = [ "chromeos/testrunner.cpp" ]
-  }
-}
-
-static_library("common_random") {
-  configs += [
-    ":common_defaults",
-    "//common-mk:pic",
-  ]
-  cflags_cc = [
-    # Eigen functions have unused parameters in release builds.
-    "-Wno-unused-parameter",
-  ]
-  sources = [
-    "common/random/guarded_philox_random.cc",
-    "common/random/random.cc",
-    "common/random/simple_philox.cc",
-  ]
-}
-
 static_library("runtime") {
   configs += [
     ":target_defaults",
@@ -157,124 +127,10 @@ static_library("runtime") {
   ]
 }
 
-if (use.test) {
-  static_library("generated_test_harness") {
-    include_dirs = [
-      "tools/test_generator/test_harness/include",
-    ]
-    configs += [
-      ":target_defaults",
-      "//common-mk:test",
-    ]
-    sources = [
-      "tools/test_generator/test_harness/TestHarness.cpp",
-    ]
-  }
-  executable("runtime_testrunner") {
-    include_dirs = [
-      "driver/sample",
-      "runtime",
-      "runtime/include",
-      "tools/test_generator/test_harness/include",
-    ]
-    configs += [
-      ":target_defaults",
-      ":common_defaults",
-      "//common-mk:test",
-    ]
-    deps = [
-      ":common",
-      ":common_operations",
-      ":generated_test_harness",
-      ":nn_testrunner",
-      ":runtime",
-      ":sample_driver",
-      "runtime/test/generated:all",
-    ]
-    libs = [
-      "rt",              # For shm_*
-      "textclassifier",  # For Farmhash.
-      "tensorflowlite",
-    ]
-    sources = [
-      "chromeos/tests/runtime/sampledriver_test.cc",
-      "runtime/test/Bridge.cpp",
-      "runtime/test/GeneratedTestUtils.cpp",
-      "runtime/test/RequireDebug.cpp",
-      "runtime/test/TestAssertions.cpp",
-      "runtime/test/TestCompilationCaching.cpp",
-      "runtime/test/TestCompliance.cpp",
-      "runtime/test/TestControlFlow.cpp",
-      "runtime/test/TestExecution.cpp",
-      "runtime/test/TestExtensions.cpp",
-      "runtime/test/TestFailingDriver.cpp",
-      "runtime/test/TestFree.cpp",
-      "runtime/test/TestIntrospectionControl.cpp",
-      "runtime/test/TestMemory.cpp",
-      "runtime/test/TestMemoryDomain.cpp",
-      "runtime/test/TestMemoryInternal.cpp",
-      "runtime/test/TestNeuralNetworksWrapper.cpp",
-      # "runtime/test/TestOpenmpSettings.cpp",          # not needed?
-      "runtime/test/TestOperandExtraParams.cpp",
-      "runtime/test/TestPartitioning.cpp",
-      "runtime/test/TestPartitioningRandom.cpp",
-      "runtime/test/TestRemoveDefaultArguments.cpp",
-      "runtime/test/TestTrivialModel.cpp",
-      "runtime/test/TestUnknownDimensions.cpp",         # -lots- of log output
-      "runtime/test/TestUnspecifiedDimensions.cpp",     # -lots- of log output
-      "runtime/test/TestValidateModel.cpp",
-      "runtime/test/TestValidateOperations.cpp",
-      "runtime/test/TestValidation.cpp",
-      "runtime/test/TestVersionedInterfaces.cpp",
-      "runtime/test/TestWrapper.cpp",
-    ]
-  }
-  executable("runtime_generated_testrunner") {
-    include_dirs = [
-      "driver/sample",
-      "runtime",
-      "runtime/include",
-      "tools/test_generator/test_harness/include",
-    ]
-    configs += [
-      ":target_defaults",
-      ":common_defaults",
-      "//common-mk:test",
-    ]
-    deps = [
-      ":common",
-      ":common_operations",
-      ":generated_test_harness",
-      ":nn_testrunner",
-      ":runtime",
-      ":sample_driver",
-      "runtime/test/generated:all",
-    ]
-    libs = [
-      "rt",              # For shm_*
-      "textclassifier",  # For Farmhash.
-      "tensorflowlite",
-    ]
-    sources = [
-      "chromeos/tests/runtime/generated_test_loader_V1_0.cc",
-      "chromeos/tests/runtime/generated_test_loader_V1_1.cc",
-      "chromeos/tests/runtime/generated_test_loader_V1_2.cc",
-      "chromeos/tests/runtime/generated_test_loader_V1_3.cc",
-      "chromeos/tests/runtime/generated_test_loader_V1_3_cts.cc",
-      "runtime/test/GeneratedTestUtils.cpp",
-      "runtime/test/TestNeuralNetworksWrapper.cpp",
-      "runtime/test/TestGenerated.cpp",
-    ]
-  }
-}
-
-static_library("common_operations") {
+static_library("common") {
   configs += [
     ":common_defaults",
     "//common-mk:pic",
-  ]
-  deps = [
-    ":common_random",
   ]
   cflags_cc = [
     # Many functions ignore some parameters
@@ -289,6 +145,20 @@ static_library("common_operations") {
     "${sysroot}/usr/include/libtextclassifier",
   ]
   sources = [
+    "common/BufferTracker.cpp",
+    "common/CpuExecutor.cpp",
+    "common/ExecutionBurstController.cpp",
+    "common/ExecutionBurstServer.cpp",
+    "common/GraphDump.cpp",
+    "common/IndexedShapeWrapper.cpp",
+    "common/MemoryUtils.cpp",
+    "common/MetaModel.cpp",
+    "common/OperationResolver.cpp",
+    "common/OperationsUtils.cpp",
+    "common/QuantUtils.cpp",
+    "common/TokenHasher.cpp",
+    "common/Utils.cpp",
+    "common/ValidateHal.cpp",
     "common/operations/Activation.cpp",
     "common/operations/ArgMinMax.cpp",
     "common/operations/BidirectionalSequenceLSTM.cpp",
@@ -350,129 +220,10 @@ static_library("common_operations") {
     "common/operations/Transpose.cpp",
     "common/operations/UnidirectionalSequenceLSTM.cpp",
     "common/operations/UnidirectionalSequenceRNN.cpp",
+    "common/random/guarded_philox_random.cc",
+    "common/random/random.cc",
+    "common/random/simple_philox.cc",
   ]
-}
-
-if (use.test) {
-  executable("common_operations_testrunner") {
-    include_dirs = [
-      "runtime/include",
-    ]
-    configs += [
-      ":common_defaults",
-    ]
-    cflags_cc = [
-      # Eigen functions have unused parameters in release builds.
-      "-Wno-unused-parameter",
-    ]
-    deps = [
-      ":common",
-      ":common_operations",
-      ":nn_testrunner",
-      ":runtime",
-      ":sample_driver",
-    ]
-    libs = [
-      "rt",
-      "tensorflowlite",
-      "textclassifier",  # For Farmhash.
-    ]
-    sources = [
-      "common/operations/EmbeddingLookupTest.cpp",
-      "common/operations/HashtableLookupTest.cpp",
-      "common/operations/LayerNormLSTMTest.cpp",
-      "common/operations/LSHProjectionTest.cpp",
-      "common/operations/LSTMTest.cpp",
-      "common/operations/MultinomialTest.cpp",
-      "common/operations/QuantizedLSTMTest.cpp",
-      "common/operations/RNNTest.cpp",
-      "common/operations/SVDFTest.cpp",
-    ]
-  }
-}
-
-static_library("common") {
-  configs += [
-    ":common_defaults",
-    "//common-mk:pic",
-  ]
-  deps = [
-  ]
-  cflags_cc = [
-    # Utils.cpp has unused parameters
-    "-Wno-unused-parameter",
-  ]
-  include_dirs = [
-    "runtime/include",
-  ]
-  sources = [
-    "common/BufferTracker.cpp",
-    "common/CpuExecutor.cpp",
-    "common/ExecutionBurstController.cpp",
-    "common/ExecutionBurstServer.cpp",
-    "common/GraphDump.cpp",
-    "common/IndexedShapeWrapper.cpp",
-    "common/MemoryUtils.cpp",
-    "common/MetaModel.cpp",
-    "common/OperationResolver.cpp",
-    "common/OperationsUtils.cpp",
-    "common/QuantUtils.cpp",
-    "common/TokenHasher.cpp",
-    "common/Utils.cpp",
-    "common/ValidateHal.cpp",
-  ]
-}
-
-
-if (use.test) {
-  executable("common_testrunner") {
-    include_dirs = [
-      "runtime/include",
-    ]
-    configs += [
-      ":common_defaults",
-      "//common-mk:test",
-    ]
-    deps = [
-      ":common",
-      ":nn_testrunner",
-    ]
-    cflags_cc = [
-      # UtilsTest.cpp transitively incl lite/experimental/ruy/check_macros.h:30
-      "-Wno-unused-parameter",
-    ]
-    sources = [
-      "common/LogTagTest.cpp",
-      "common/LogTagTestExtra.cpp",
-      "common/UtilsTest.cpp",
-    ]
-  }
-}
-
-
-if (use.test) {
-  executable("chromeos_testrunner") {
-    include_dirs = [
-      "common/random",
-    ]
-    configs += [
-      ":common_defaults",
-      "//common-mk:test",
-    ]
-    cflags_cc = [
-      # Eigen functions have unused parameters in release builds.
-      "-Wno-unused-parameter",
-    ]
-    deps = [
-      ":common",
-      ":common_random",
-      ":nn_testrunner",
-    ]
-    sources = [
-      "chromeos/tests/common/includes_test.cc",
-      "chromeos/tests/common/random_test.cc",
-    ]
-  }
 }
 
 static_library("driver_cache") {
@@ -488,27 +239,6 @@ static_library("driver_cache") {
     "driver/cache/BlobCache/BlobCache.cpp",
     "driver/cache/nnCache/nnCache.cpp",
   ]
-}
-
-if (use.test) {
-  executable("driver_cache_testrunner") {
-    include_dirs = [
-      "driver/cache/BlobCache",
-      "driver/cache/nNCache"
-    ]
-    configs += [
-      ":target_defaults",
-      "//common-mk:test",
-    ]
-    deps = [
-      ":driver_cache",
-      ":nn_testrunner",
-    ]
-    sources = [
-      "driver/cache/BlobCache/BlobCache_test.cpp",
-      "driver/cache/nnCache/nnCache_test.cpp",
-    ]
-  }
 }
 
 shared_library("vendor-nn-hal") {
@@ -534,7 +264,6 @@ static_library("sample_driver") {
   ]
   deps = [
     ":common",
-    ":common_operations",
   ]
   include_dirs = [
     "driver/sample",
@@ -549,3 +278,204 @@ static_library("sample_driver") {
     "driver/sample/SampleDriverUtils.cpp",
   ]
 }
+
+if (use.test) {
+  static_library("generated_test_harness") {
+    include_dirs = [
+      "tools/test_generator/test_harness/include",
+    ]
+    configs += [
+      ":target_defaults",
+      "//common-mk:test",
+    ]
+    sources = [
+      "tools/test_generator/test_harness/TestHarness.cpp",
+    ]
+  }
+
+  static_library("nn_testrunner") {
+    configs += [
+      "//common-mk:test",
+      ":target_defaults",
+    ]
+    deps = []
+    sources = [ "chromeos/testrunner.cpp" ]
+  }
+
+  executable("runtime_testrunner") {
+    include_dirs = [
+      "driver/sample",
+      "runtime",
+      "runtime/include",
+      "tools/test_generator/test_harness/include",
+    ]
+    configs += [
+      ":target_defaults",
+      ":common_defaults",
+      "//common-mk:test",
+    ]
+    deps = [
+      ":common",
+      ":generated_test_harness",
+      ":nn_testrunner",
+      ":runtime",
+      ":sample_driver",
+      "runtime/test/generated:all",
+    ]
+    libs = [
+      "rt",              # For shm_*
+      "textclassifier",  # For Farmhash.
+      "tensorflowlite",
+    ]
+    sources = [
+      "chromeos/tests/runtime/sampledriver_test.cc",
+      "runtime/test/Bridge.cpp",
+      "runtime/test/GeneratedTestUtils.cpp",
+      "runtime/test/RequireDebug.cpp",
+      "runtime/test/TestAssertions.cpp",
+      "runtime/test/TestCompilationCaching.cpp",
+      "runtime/test/TestCompliance.cpp",
+      "runtime/test/TestControlFlow.cpp",
+      "runtime/test/TestExecution.cpp",
+      "runtime/test/TestExtensions.cpp",
+      "runtime/test/TestFailingDriver.cpp",
+      "runtime/test/TestFree.cpp",
+      "runtime/test/TestIntrospectionControl.cpp",
+      "runtime/test/TestMemory.cpp",
+      "runtime/test/TestMemoryDomain.cpp",
+      "runtime/test/TestMemoryInternal.cpp",
+      "runtime/test/TestNeuralNetworksWrapper.cpp",
+      # "runtime/test/TestOpenmpSettings.cpp",          # not needed
+      "runtime/test/TestOperandExtraParams.cpp",
+      "runtime/test/TestPartitioning.cpp",
+      "runtime/test/TestPartitioningRandom.cpp",
+      "runtime/test/TestRemoveDefaultArguments.cpp",
+      "runtime/test/TestTrivialModel.cpp",
+      "runtime/test/TestUnknownDimensions.cpp",
+      "runtime/test/TestUnspecifiedDimensions.cpp",
+      "runtime/test/TestValidateModel.cpp",
+      "runtime/test/TestValidateOperations.cpp",
+      "runtime/test/TestValidation.cpp",
+      "runtime/test/TestVersionedInterfaces.cpp",
+      "runtime/test/TestWrapper.cpp",
+    ]
+  }
+
+  executable("runtime_generated_testrunner") {
+    include_dirs = [
+      "driver/sample",
+      "runtime",
+      "runtime/include",
+      "tools/test_generator/test_harness/include",
+    ]
+    configs += [
+      ":target_defaults",
+      ":common_defaults",
+      "//common-mk:test",
+    ]
+    deps = [
+      ":common",
+      ":generated_test_harness",
+      ":nn_testrunner",
+      ":runtime",
+      ":sample_driver",
+      "runtime/test/generated:all",
+    ]
+    libs = [
+      "rt",              # For shm_*
+      "textclassifier",  # For Farmhash.
+      "tensorflowlite",
+    ]
+    sources = [
+      "chromeos/tests/runtime/generated_test_loader_V1_0.cc",
+      "chromeos/tests/runtime/generated_test_loader_V1_1.cc",
+      "chromeos/tests/runtime/generated_test_loader_V1_2.cc",
+      "chromeos/tests/runtime/generated_test_loader_V1_3.cc",
+      "chromeos/tests/runtime/generated_test_loader_V1_3_cts.cc",
+      "runtime/test/GeneratedTestUtils.cpp",
+      "runtime/test/TestNeuralNetworksWrapper.cpp",
+      "runtime/test/TestGenerated.cpp",
+    ]
+  }
+
+  executable("chromeos_testrunner") {
+    include_dirs = [
+      "common/random",
+    ]
+    configs += [
+      ":common_defaults",
+      "//common-mk:test",
+    ]
+    cflags_cc = [
+      # Eigen functions have unused parameters in release builds.
+      "-Wno-unused-parameter",
+    ]
+    deps = [
+      ":common",
+      ":nn_testrunner",
+    ]
+    sources = [
+      "chromeos/tests/common/includes_test.cc",
+      "chromeos/tests/common/random_test.cc",
+    ]
+  }
+
+  executable("common_testrunner") {
+    include_dirs = [
+      "runtime/include",
+    ]
+    configs += [
+      ":common_defaults",
+      "//common-mk:test",
+    ]
+    deps = [
+      ":common",
+      ":nn_testrunner",
+      ":runtime",
+      ":sample_driver",
+    ]
+    libs = [
+      "rt",
+      "tensorflowlite",
+      "textclassifier",  # For Farmhash.
+    ]
+    cflags_cc = [
+      # UtilsTest.cpp transitively incl lite/experimental/ruy/check_macros.h:30
+      "-Wno-unused-parameter",
+    ]
+    sources = [
+      "common/LogTagTest.cpp",
+      "common/LogTagTestExtra.cpp",
+      "common/UtilsTest.cpp",
+      "common/operations/EmbeddingLookupTest.cpp",
+      "common/operations/HashtableLookupTest.cpp",
+      "common/operations/LayerNormLSTMTest.cpp",
+      "common/operations/LSHProjectionTest.cpp",
+      "common/operations/LSTMTest.cpp",
+      "common/operations/MultinomialTest.cpp",
+      "common/operations/QuantizedLSTMTest.cpp",
+      "common/operations/RNNTest.cpp",
+      "common/operations/SVDFTest.cpp",
+    ]
+  }
+
+  executable("driver_cache_testrunner") {
+    include_dirs = [
+      "driver/cache/BlobCache",
+      "driver/cache/nNCache"
+    ]
+    configs += [
+      ":target_defaults",
+      "//common-mk:test",
+    ]
+    deps = [
+      ":driver_cache",
+      ":nn_testrunner",
+    ]
+    sources = [
+      "driver/cache/BlobCache/BlobCache_test.cpp",
+      "driver/cache/nnCache/nnCache_test.cpp",
+    ]
+  }
+}
+
