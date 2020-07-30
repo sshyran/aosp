@@ -64,6 +64,7 @@ pkg_config("target_defaults") {
     "__ANDROID_API_P__=28",
     "__ANDROID_API_Q__=29",
     "__ANDROID_API_R__=30",
+    "__ANDROID_API_FUTURE__=10000",
     "NNAPI_CHROMEOS",
   ]
   if (use.test) {

@@ -204,7 +204,6 @@ executable("cros_nnapi_cts") {
     "//common-mk:test",
   ]
   defines = [
-    "__ANDROID_API_FUTURE__=10000",
     "NNTEST_CTS",
     "NNTEST_ONLY_PUBLIC_API",
   ]
