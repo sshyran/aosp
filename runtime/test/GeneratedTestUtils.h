@@ -20,6 +20,7 @@
 #include <gtest/gtest.h>
 
 #include <memory>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -31,6 +32,7 @@ namespace android::nn::generated_tests {
 class GeneratedTestBase
     : public ::testing::TestWithParam<test_helper::TestModelManager::TestParam> {
    protected:
+    const std::string& kTestName = GetParam().first;
     const test_helper::TestModel& testModel = *GetParam().second;
 };
 
