@@ -114,7 +114,7 @@ class TestDriver : public SampleDriverPartial {
     TestDriver() : SampleDriverPartial(kTestDriverName) {}
 
     Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
-        cb(V1_3::ErrorStatus::NONE, {/* Dummy zero-filled capabilities. */});
+        cb(V1_3::ErrorStatus::NONE, {/* Placeholder zero-filled capabilities. */});
         return Void();
     }
 

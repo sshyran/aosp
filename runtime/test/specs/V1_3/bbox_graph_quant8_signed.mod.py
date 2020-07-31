@@ -83,7 +83,7 @@ Example({
     image: [32, 32],
     feature: [1],
 
-    # Dummy outputs
+    # Placeholder outputs
     scoresOut_1: [],
     scoresOut_6: [],
     roiOut_6: [],
