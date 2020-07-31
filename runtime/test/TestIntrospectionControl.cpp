@@ -411,7 +411,7 @@ std::pair<Timing, Timing> getExpectedTiming(Success s, bool fencedExecution) {
 }
 
 // For these tests we don't care about actually running an inference -- we
-// just want to dummy up execution status and timing results, and control
+// just want to placeholder up execution status and timing results, and control
 // when the execution finishes.
 class TestPreparedModelLatest : public SamplePreparedModel {
    public:
@@ -478,7 +478,7 @@ class TestPreparedModelLatest : public SamplePreparedModel {
     Return<V1_3::ErrorStatus> execute_1_3(const V1_3::Request&, MeasureTiming measure,
                                           const OptionalTimePoint&, const OptionalTimeoutDuration&,
                                           const sp<V1_3::IExecutionCallback>& callback) override {
-        // Use a dummy V1_0::Request because execute_1_2 ignores request entirely.
+        // Use a placeholder V1_0::Request because execute_1_2 ignores request entirely.
         const V1_0::ErrorStatus status = execute_1_2(V1_0::Request{}, measure, callback);
         return convertToV1_3(status);
     }
@@ -518,7 +518,7 @@ class TestPreparedModelLatest : public SamplePreparedModel {
                                      const hidl_vec<OutputShape>& outputShapes, Timing timing) {
             cb(convertToV1_3(status), outputShapes, timing);
         };
-        // Use a dummy V1_0::Request because executeSynchronously ignores request entirely.
+        // Use a placeholder V1_0::Request because executeSynchronously ignores request entirely.
         return executeSynchronously(V1_0::Request{}, measure, wrappedCb);
     }
 

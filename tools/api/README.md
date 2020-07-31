@@ -199,7 +199,7 @@ Permitted in regions: null, section
 
 This directive has two purposes:
 
-* Sanity-checking. If the "kind" is not on the space-delimited *list* of tokens,
+* Validity-checking. If the "kind" is not on the space-delimited *list* of tokens,
   `generate_api.py` terminates with an error.
 * Ordering the possible kinds for the *lowest version pattern* (see the section
   above for the explanation of the pattern).

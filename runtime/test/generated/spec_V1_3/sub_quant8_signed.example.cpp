@@ -130,7 +130,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy
+                        }, { // placeholder
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -160,7 +160,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy1
+                        }, { // placeholder1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -332,7 +332,7 @@ const TestModel& get_test_model_all_inputs_as_internal_2() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy2
+                        }, { // placeholder2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -362,7 +362,7 @@ const TestModel& get_test_model_all_inputs_as_internal_2() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy3
+                        }, { // placeholder3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -534,7 +534,7 @@ const TestModel& get_test_model_all_inputs_as_internal_3() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy4
+                        }, { // placeholder4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -564,7 +564,7 @@ const TestModel& get_test_model_all_inputs_as_internal_3() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy5
+                        }, { // placeholder5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -736,7 +736,7 @@ const TestModel& get_test_model_all_inputs_as_internal_4() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy6
+                        }, { // placeholder6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -766,7 +766,7 @@ const TestModel& get_test_model_all_inputs_as_internal_4() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy7
+                        }, { // placeholder7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -938,7 +938,7 @@ const TestModel& get_test_model_all_inputs_as_internal_5() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy8
+                        }, { // placeholder8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -968,7 +968,7 @@ const TestModel& get_test_model_all_inputs_as_internal_5() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy9
+                        }, { // placeholder9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -1140,7 +1140,7 @@ const TestModel& get_test_model_all_inputs_as_internal_6() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy10
+                        }, { // placeholder10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -1170,7 +1170,7 @@ const TestModel& get_test_model_all_inputs_as_internal_6() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy11
+                        }, { // placeholder11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -1342,7 +1342,7 @@ const TestModel& get_test_model_all_inputs_as_internal_7() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy12
+                        }, { // placeholder12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -1372,7 +1372,7 @@ const TestModel& get_test_model_all_inputs_as_internal_7() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy13
+                        }, { // placeholder13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -1544,7 +1544,7 @@ const TestModel& get_test_model_all_inputs_as_internal_8() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy14
+                        }, { // placeholder14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -1574,7 +1574,7 @@ const TestModel& get_test_model_all_inputs_as_internal_8() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy15
+                        }, { // placeholder15
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -1746,7 +1746,7 @@ const TestModel& get_test_model_all_inputs_as_internal_9() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy16
+                        }, { // placeholder16
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -1776,7 +1776,7 @@ const TestModel& get_test_model_all_inputs_as_internal_9() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy17
+                        }, { // placeholder17
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -1948,7 +1948,7 @@ const TestModel& get_test_model_all_inputs_as_internal_10() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy18
+                        }, { // placeholder18
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -1978,7 +1978,7 @@ const TestModel& get_test_model_all_inputs_as_internal_10() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy19
+                        }, { // placeholder19
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -2150,7 +2150,7 @@ const TestModel& get_test_model_all_inputs_as_internal_11() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy20
+                        }, { // placeholder20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -2180,7 +2180,7 @@ const TestModel& get_test_model_all_inputs_as_internal_11() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy21
+                        }, { // placeholder21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -2352,7 +2352,7 @@ const TestModel& get_test_model_all_inputs_as_internal_12() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy22
+                        }, { // placeholder22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -2382,7 +2382,7 @@ const TestModel& get_test_model_all_inputs_as_internal_12() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy23
+                        }, { // placeholder23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -2554,7 +2554,7 @@ const TestModel& get_test_model_all_inputs_as_internal_13() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy24
+                        }, { // placeholder24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -2584,7 +2584,7 @@ const TestModel& get_test_model_all_inputs_as_internal_13() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy25
+                        }, { // placeholder25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -2756,7 +2756,7 @@ const TestModel& get_test_model_all_inputs_as_internal_14() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy26
+                        }, { // placeholder26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -2786,7 +2786,7 @@ const TestModel& get_test_model_all_inputs_as_internal_14() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy27
+                        }, { // placeholder27
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -2958,7 +2958,7 @@ const TestModel& get_test_model_all_inputs_as_internal_15() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy28
+                        }, { // placeholder28
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -2988,7 +2988,7 @@ const TestModel& get_test_model_all_inputs_as_internal_15() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy29
+                        }, { // placeholder29
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -3160,7 +3160,7 @@ const TestModel& get_test_model_all_inputs_as_internal_16() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy30
+                        }, { // placeholder30
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -3190,7 +3190,7 @@ const TestModel& get_test_model_all_inputs_as_internal_16() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy31
+                        }, { // placeholder31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -3362,7 +3362,7 @@ const TestModel& get_test_model_all_inputs_as_internal_17() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy32
+                        }, { // placeholder32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -3392,7 +3392,7 @@ const TestModel& get_test_model_all_inputs_as_internal_17() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy33
+                        }, { // placeholder33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -3564,7 +3564,7 @@ const TestModel& get_test_model_all_inputs_as_internal_18() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy34
+                        }, { // placeholder34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -3594,7 +3594,7 @@ const TestModel& get_test_model_all_inputs_as_internal_18() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy35
+                        }, { // placeholder35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -3766,7 +3766,7 @@ const TestModel& get_test_model_all_inputs_as_internal_19() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy36
+                        }, { // placeholder36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -3796,7 +3796,7 @@ const TestModel& get_test_model_all_inputs_as_internal_19() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy37
+                        }, { // placeholder37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -3968,7 +3968,7 @@ const TestModel& get_test_model_all_inputs_as_internal_20() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy38
+                        }, { // placeholder38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -3998,7 +3998,7 @@ const TestModel& get_test_model_all_inputs_as_internal_20() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy39
+                        }, { // placeholder39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -4170,7 +4170,7 @@ const TestModel& get_test_model_all_inputs_as_internal_21() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy40
+                        }, { // placeholder40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -4200,7 +4200,7 @@ const TestModel& get_test_model_all_inputs_as_internal_21() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy41
+                        }, { // placeholder41
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -4372,7 +4372,7 @@ const TestModel& get_test_model_all_inputs_as_internal_22() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy42
+                        }, { // placeholder42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -4402,7 +4402,7 @@ const TestModel& get_test_model_all_inputs_as_internal_22() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy43
+                        }, { // placeholder43
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -4574,7 +4574,7 @@ const TestModel& get_test_model_all_inputs_as_internal_23() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy44
+                        }, { // placeholder44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -4604,7 +4604,7 @@ const TestModel& get_test_model_all_inputs_as_internal_23() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy45
+                        }, { // placeholder45
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -4776,7 +4776,7 @@ const TestModel& get_test_model_all_inputs_as_internal_24() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy46
+                        }, { // placeholder46
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -4806,7 +4806,7 @@ const TestModel& get_test_model_all_inputs_as_internal_24() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy47
+                        }, { // placeholder47
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -4978,7 +4978,7 @@ const TestModel& get_test_model_all_inputs_as_internal_25() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy48
+                        }, { // placeholder48
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -5008,7 +5008,7 @@ const TestModel& get_test_model_all_inputs_as_internal_25() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy49
+                        }, { // placeholder49
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -5180,7 +5180,7 @@ const TestModel& get_test_model_all_inputs_as_internal_26() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy50
+                        }, { // placeholder50
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -5210,7 +5210,7 @@ const TestModel& get_test_model_all_inputs_as_internal_26() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy51
+                        }, { // placeholder51
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -5382,7 +5382,7 @@ const TestModel& get_test_model_all_inputs_as_internal_27() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy52
+                        }, { // placeholder52
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -5412,7 +5412,7 @@ const TestModel& get_test_model_all_inputs_as_internal_27() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy53
+                        }, { // placeholder53
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -5584,7 +5584,7 @@ const TestModel& get_test_model_all_inputs_as_internal_28() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy54
+                        }, { // placeholder54
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -5614,7 +5614,7 @@ const TestModel& get_test_model_all_inputs_as_internal_28() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy55
+                        }, { // placeholder55
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -5786,7 +5786,7 @@ const TestModel& get_test_model_all_inputs_as_internal_29() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy56
+                        }, { // placeholder56
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -5816,7 +5816,7 @@ const TestModel& get_test_model_all_inputs_as_internal_29() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy57
+                        }, { // placeholder57
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -5988,7 +5988,7 @@ const TestModel& get_test_model_all_inputs_as_internal_30() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy58
+                        }, { // placeholder58
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -6018,7 +6018,7 @@ const TestModel& get_test_model_all_inputs_as_internal_30() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy59
+                        }, { // placeholder59
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -6190,7 +6190,7 @@ const TestModel& get_test_model_all_inputs_as_internal_31() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy60
+                        }, { // placeholder60
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -6220,7 +6220,7 @@ const TestModel& get_test_model_all_inputs_as_internal_31() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy61
+                        }, { // placeholder61
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -6392,7 +6392,7 @@ const TestModel& get_test_model_all_inputs_as_internal_32() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy62
+                        }, { // placeholder62
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -6422,7 +6422,7 @@ const TestModel& get_test_model_all_inputs_as_internal_32() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy63
+                        }, { // placeholder63
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -6594,7 +6594,7 @@ const TestModel& get_test_model_all_inputs_as_internal_33() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy64
+                        }, { // placeholder64
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -6624,7 +6624,7 @@ const TestModel& get_test_model_all_inputs_as_internal_33() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy65
+                        }, { // placeholder65
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -6796,7 +6796,7 @@ const TestModel& get_test_model_all_inputs_as_internal_34() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy66
+                        }, { // placeholder66
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -6826,7 +6826,7 @@ const TestModel& get_test_model_all_inputs_as_internal_34() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy67
+                        }, { // placeholder67
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -6998,7 +6998,7 @@ const TestModel& get_test_model_all_inputs_as_internal_35() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy68
+                        }, { // placeholder68
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -7028,7 +7028,7 @@ const TestModel& get_test_model_all_inputs_as_internal_35() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy69
+                        }, { // placeholder69
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -7200,7 +7200,7 @@ const TestModel& get_test_model_all_inputs_as_internal_36() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy70
+                        }, { // placeholder70
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -7230,7 +7230,7 @@ const TestModel& get_test_model_all_inputs_as_internal_36() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy71
+                        }, { // placeholder71
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -7402,7 +7402,7 @@ const TestModel& get_test_model_all_inputs_as_internal_37() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy72
+                        }, { // placeholder72
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -7432,7 +7432,7 @@ const TestModel& get_test_model_all_inputs_as_internal_37() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy73
+                        }, { // placeholder73
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -7604,7 +7604,7 @@ const TestModel& get_test_model_all_inputs_as_internal_38() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy74
+                        }, { // placeholder74
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -7634,7 +7634,7 @@ const TestModel& get_test_model_all_inputs_as_internal_38() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy75
+                        }, { // placeholder75
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -7806,7 +7806,7 @@ const TestModel& get_test_model_all_inputs_as_internal_39() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy76
+                        }, { // placeholder76
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -7836,7 +7836,7 @@ const TestModel& get_test_model_all_inputs_as_internal_39() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy77
+                        }, { // placeholder77
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -8008,7 +8008,7 @@ const TestModel& get_test_model_all_inputs_as_internal_40() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy78
+                        }, { // placeholder78
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -8038,7 +8038,7 @@ const TestModel& get_test_model_all_inputs_as_internal_40() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy79
+                        }, { // placeholder79
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -8210,7 +8210,7 @@ const TestModel& get_test_model_all_inputs_as_internal_41() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy80
+                        }, { // placeholder80
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -8240,7 +8240,7 @@ const TestModel& get_test_model_all_inputs_as_internal_41() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy81
+                        }, { // placeholder81
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -8412,7 +8412,7 @@ const TestModel& get_test_model_all_inputs_as_internal_42() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy82
+                        }, { // placeholder82
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -8442,7 +8442,7 @@ const TestModel& get_test_model_all_inputs_as_internal_42() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy83
+                        }, { // placeholder83
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -8614,7 +8614,7 @@ const TestModel& get_test_model_all_inputs_as_internal_43() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy84
+                        }, { // placeholder84
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -8644,7 +8644,7 @@ const TestModel& get_test_model_all_inputs_as_internal_43() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy85
+                        }, { // placeholder85
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -8816,7 +8816,7 @@ const TestModel& get_test_model_all_inputs_as_internal_44() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy86
+                        }, { // placeholder86
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -8846,7 +8846,7 @@ const TestModel& get_test_model_all_inputs_as_internal_44() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy87
+                        }, { // placeholder87
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -9018,7 +9018,7 @@ const TestModel& get_test_model_all_inputs_as_internal_45() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy88
+                        }, { // placeholder88
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -9048,7 +9048,7 @@ const TestModel& get_test_model_all_inputs_as_internal_45() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy89
+                        }, { // placeholder89
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -9220,7 +9220,7 @@ const TestModel& get_test_model_all_inputs_as_internal_46() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy90
+                        }, { // placeholder90
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -9250,7 +9250,7 @@ const TestModel& get_test_model_all_inputs_as_internal_46() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy91
+                        }, { // placeholder91
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -9422,7 +9422,7 @@ const TestModel& get_test_model_all_inputs_as_internal_47() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy92
+                        }, { // placeholder92
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -9452,7 +9452,7 @@ const TestModel& get_test_model_all_inputs_as_internal_47() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy93
+                        }, { // placeholder93
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -9624,7 +9624,7 @@ const TestModel& get_test_model_all_inputs_as_internal_48() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy94
+                        }, { // placeholder94
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -9654,7 +9654,7 @@ const TestModel& get_test_model_all_inputs_as_internal_48() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy95
+                        }, { // placeholder95
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -9826,7 +9826,7 @@ const TestModel& get_test_model_all_inputs_as_internal_49() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy96
+                        }, { // placeholder96
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -9856,7 +9856,7 @@ const TestModel& get_test_model_all_inputs_as_internal_49() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy97
+                        }, { // placeholder97
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -10028,7 +10028,7 @@ const TestModel& get_test_model_all_inputs_as_internal_50() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy98
+                        }, { // placeholder98
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -10058,7 +10058,7 @@ const TestModel& get_test_model_all_inputs_as_internal_50() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy99
+                        }, { // placeholder99
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -10230,7 +10230,7 @@ const TestModel& get_test_model_all_inputs_as_internal_51() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy100
+                        }, { // placeholder100
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -10260,7 +10260,7 @@ const TestModel& get_test_model_all_inputs_as_internal_51() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy101
+                        }, { // placeholder101
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -10432,7 +10432,7 @@ const TestModel& get_test_model_all_inputs_as_internal_52() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy102
+                        }, { // placeholder102
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -10462,7 +10462,7 @@ const TestModel& get_test_model_all_inputs_as_internal_52() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy103
+                        }, { // placeholder103
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -10634,7 +10634,7 @@ const TestModel& get_test_model_all_inputs_as_internal_53() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy104
+                        }, { // placeholder104
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -10664,7 +10664,7 @@ const TestModel& get_test_model_all_inputs_as_internal_53() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy105
+                        }, { // placeholder105
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -10836,7 +10836,7 @@ const TestModel& get_test_model_all_inputs_as_internal_54() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy106
+                        }, { // placeholder106
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -10866,7 +10866,7 @@ const TestModel& get_test_model_all_inputs_as_internal_54() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy107
+                        }, { // placeholder107
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -11038,7 +11038,7 @@ const TestModel& get_test_model_all_inputs_as_internal_55() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy108
+                        }, { // placeholder108
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -11068,7 +11068,7 @@ const TestModel& get_test_model_all_inputs_as_internal_55() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy109
+                        }, { // placeholder109
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -11240,7 +11240,7 @@ const TestModel& get_test_model_all_inputs_as_internal_56() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy110
+                        }, { // placeholder110
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -11270,7 +11270,7 @@ const TestModel& get_test_model_all_inputs_as_internal_56() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -127
-                        }, { // dummy111
+                        }, { // placeholder111
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-127}),
                             .dimensions = {1},
@@ -11442,7 +11442,7 @@ const TestModel& get_test_model_all_inputs_as_internal_57() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy112
+                        }, { // placeholder112
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -11472,7 +11472,7 @@ const TestModel& get_test_model_all_inputs_as_internal_57() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy113
+                        }, { // placeholder113
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -11644,7 +11644,7 @@ const TestModel& get_test_model_all_inputs_as_internal_58() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy114
+                        }, { // placeholder114
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -11674,7 +11674,7 @@ const TestModel& get_test_model_all_inputs_as_internal_58() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy115
+                        }, { // placeholder115
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -11846,7 +11846,7 @@ const TestModel& get_test_model_all_inputs_as_internal_59() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy116
+                        }, { // placeholder116
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -11876,7 +11876,7 @@ const TestModel& get_test_model_all_inputs_as_internal_59() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy117
+                        }, { // placeholder117
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -12048,7 +12048,7 @@ const TestModel& get_test_model_all_inputs_as_internal_60() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy118
+                        }, { // placeholder118
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -12078,7 +12078,7 @@ const TestModel& get_test_model_all_inputs_as_internal_60() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy119
+                        }, { // placeholder119
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -12250,7 +12250,7 @@ const TestModel& get_test_model_all_inputs_as_internal_61() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy120
+                        }, { // placeholder120
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -12280,7 +12280,7 @@ const TestModel& get_test_model_all_inputs_as_internal_61() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy121
+                        }, { // placeholder121
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -12452,7 +12452,7 @@ const TestModel& get_test_model_all_inputs_as_internal_62() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy122
+                        }, { // placeholder122
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -12482,7 +12482,7 @@ const TestModel& get_test_model_all_inputs_as_internal_62() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy123
+                        }, { // placeholder123
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -12654,7 +12654,7 @@ const TestModel& get_test_model_all_inputs_as_internal_63() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy124
+                        }, { // placeholder124
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -12684,7 +12684,7 @@ const TestModel& get_test_model_all_inputs_as_internal_63() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy125
+                        }, { // placeholder125
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -12856,7 +12856,7 @@ const TestModel& get_test_model_all_inputs_as_internal_64() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy126
+                        }, { // placeholder126
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -12886,7 +12886,7 @@ const TestModel& get_test_model_all_inputs_as_internal_64() {
                             .scale = 10.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -8
-                        }, { // dummy127
+                        }, { // placeholder127
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-8}),
                             .dimensions = {1},
@@ -13058,7 +13058,7 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy128
+                        }, { // placeholder128
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -13088,7 +13088,7 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy129
+                        }, { // placeholder129
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -13260,7 +13260,7 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal_2() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy130
+                        }, { // placeholder130
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},
@@ -13290,7 +13290,7 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal_2() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -128
-                        }, { // dummy131
+                        }, { // placeholder131
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-128}),
                             .dimensions = {1},

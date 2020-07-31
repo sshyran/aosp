@@ -334,8 +334,8 @@ int ModelBuilder::setOperandValueFromMemory(uint32_t index, const Memory* memory
         return ANEURALNETWORKS_BAD_DATA;
     }
     // Set compilation = nullptr to indicate that the memory is used for a model constant.
-    // In this case, IOType::INPUT is a dummy value that is ignored by the validator.
-    if (!memory->getValidator().validate(/*compilation=*/nullptr, /*dummy*/ IOType::INPUT, index,
+    // In this case, IOType::INPUT is a placeholder value that is ignored by the validator.
+    if (!memory->getValidator().validate(/*compilation=*/nullptr, /*placeholder*/ IOType::INPUT, index,
                                          nullptr, offset, length)) {
         return ANEURALNETWORKS_BAD_DATA;
     }
