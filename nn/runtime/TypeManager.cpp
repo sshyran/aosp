@@ -92,7 +92,7 @@ std::vector<std::string> getVendorExtensionAllowlistedApps() {
     std::istringstream streamData(data);
     std::string line;
     while (std::getline(streamData, line)) {
-        // Do some basic sanity check on entry, it's either
+        // Do some basic validity check on entry, it's either
         // fs path or package name.
         if (StartsWith(line, "/") || line.find('.') != std::string::npos) {
             allowlist.push_back(line);

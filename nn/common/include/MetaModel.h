@@ -94,7 +94,7 @@ class MetaModel {
    private:
     hal::Model mHidlModel;
 
-    // mStrictSlicing controls sanity checking.  If the slicing algorithm
+    // mStrictSlicing controls validity checking.  If the slicing algorithm
     // produces an invalid model (because something has gone wrong with the
     // algorithm or with a utility function it depends on), getSlice*() can
     // return an std::optional<> for which has_value() returns false, signifying
