@@ -1007,9 +1007,10 @@ class AllInputsAsInternalCoverter(ModelVariation):
         # Make every input an output of a placeholder operation: input_new ADD placeholder = input.
         for op in modelInputs:
             newInput = op.ConvertTo(Input, name=op.name + "_new")
-            dummyParam = Parameter("dummy", (op.type.type, [1], op.type.scale, op.type.zeroPoint),
-                                   [op.type.zeroPoint])
-            model.Operation("ADD", newInput, dummyParam, 0).To(op)
+            placeholderParam = Parameter("placeholder",
+                                         (op.type.type, [1], op.type.scale, op.type.zeroPoint),
+                                         [op.type.zeroPoint])
+            model.Operation("ADD", newInput, placeholderParam, 0).To(op)
 
         # Convert to internal operands.
         model.UpdateEquivalentOperands([op.ConvertTo(Internal) for op in modelInputs])
@@ -1038,9 +1039,10 @@ class AllOutputsAsInternalCoverter(ModelVariation):
         # Make every output an input of a placeholder operation: output ADD placeholder = output_new.
         for op in modelOutputs:
             newOutput = op.ConvertTo(Output, name=op.name + "_new")
-            dummyParam = Parameter("dummy", (op.type.type, [1], op.type.scale, op.type.zeroPoint),
-                                   [op.type.zeroPoint])
-            model.Operation("ADD", op, dummyParam, 0).To(newOutput)
+            placeholderParam = Parameter("placeholder",
+                                         (op.type.type, [1], op.type.scale, op.type.zeroPoint),
+                                         [op.type.zeroPoint])
+            model.Operation("ADD", op, placeholderParam, 0).To(newOutput)
 
         # Convert to internal operands.
         model.UpdateEquivalentOperands([op.ConvertTo(Internal) for op in modelOutputs])
