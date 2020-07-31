@@ -984,7 +984,7 @@ def CompatibleWithADD(op):
             op.type.type in ["TENSOR_FLOAT32", "TENSOR_QUANT8_ASYMM",
                              "TENSOR_FLOAT16", "TENSOR_QUANT8_ASYMM_SIGNED"])
 
-# Add a dummy ADD operation before each model input to make it as an internal operand.
+# Add a placeholder ADD operation before each model input to make it as an internal operand.
 class AllInputsAsInternalCoverter(ModelVariation):
     supportsSubgraphs = True
 
@@ -1004,7 +1004,7 @@ class AllInputsAsInternalCoverter(ModelVariation):
         if not modelInputs:
             raise SkipVariation
 
-        # Make every input an output of a dummy operation: input_new ADD dummy = input.
+        # Make every input an output of a placeholder operation: input_new ADD placeholder = input.
         for op in modelInputs:
             newInput = op.ConvertTo(Input, name=op.name + "_new")
             dummyParam = Parameter("dummy", (op.type.type, [1], op.type.scale, op.type.zeroPoint),
@@ -1015,7 +1015,7 @@ class AllInputsAsInternalCoverter(ModelVariation):
         model.UpdateEquivalentOperands([op.ConvertTo(Internal) for op in modelInputs])
         return model
 
-# Add a dummy ADD operation after each model output to make it as an internal operand.
+# Add a placeholder ADD operation after each model output to make it as an internal operand.
 class AllOutputsAsInternalCoverter(ModelVariation):
     supportsSubgraphs = True
 
@@ -1035,7 +1035,7 @@ class AllOutputsAsInternalCoverter(ModelVariation):
         if not modelOutputs:
             raise SkipVariation
 
-        # Make every output an input of a dummy operation: output ADD dummy = output_new.
+        # Make every output an input of a placeholder operation: output ADD placeholder = output_new.
         for op in modelOutputs:
             newOutput = op.ConvertTo(Output, name=op.name + "_new")
             dummyParam = Parameter("dummy", (op.type.type, [1], op.type.scale, op.type.zeroPoint),
