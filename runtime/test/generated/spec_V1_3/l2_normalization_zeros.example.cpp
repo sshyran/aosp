@@ -110,7 +110,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // dummy
+                        }, { // placeholder
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -258,7 +258,7 @@ const TestModel& get_test_model_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // dummy1
+                        }, { // placeholder1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -406,7 +406,7 @@ const TestModel& get_test_model_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, { // dummy2
+                        }, { // placeholder2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -554,7 +554,7 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal() {
                             .scale = 0.1f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 32
-                        }, { // dummy3
+                        }, { // placeholder3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({32}),
                             .dimensions = {1},
@@ -702,7 +702,7 @@ const TestModel& get_test_model_quant8_signed_all_inputs_as_internal() {
                             .scale = 0.1f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = -96
-                        }, { // dummy4
+                        }, { // placeholder4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({-96}),
                             .dimensions = {1},

@@ -98,7 +98,7 @@ class Tracker(object):
       if switch:
         # End previous item
         self.handle_mark(time, "E")
-        # Push a dummy item that will get popped by the 'real' end of the
+        # Push a placeholder item that will get popped by the 'real' end of the
         # previous item.
         self.mytree.push_dummy(time)
       m = self.matcher.search(mark)
@@ -122,7 +122,7 @@ class Tracker(object):
     elif mark[0] == "E":
       try:
         node = self.mytree.pop(time)
-        if node.is_dummy():  # Dummy item
+        if node.is_dummy():  # Placeholder item
           pass
         else:
           if node.layer == LAYER_APPLICATION and node.phase in [PHASE_WARMUP, PHASE_BENCHMARK]:
