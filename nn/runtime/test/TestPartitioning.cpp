@@ -310,7 +310,7 @@ void dump(const char* name, const ModelBuilder* model) {
 // represented by a set of OperationType.
 class PartitioningDriver : public SampleDriver {
    private:
-    // Dummy class -- a prepared model must not be nullptr.
+    // Placeholder class -- a prepared model must not be nullptr.
     class PartitioningPreparedModel : public IPreparedModel {
        public:
         Return<V1_0::ErrorStatus> execute(const V1_0::Request&,
@@ -1158,7 +1158,7 @@ class PartitioningTest : public ::testing::Test {
                     break;
             }
         }
-        // sanity check
+        // validity check
         ASSERT_EQ(model->operandCount(), defMap->size());
     }
 
@@ -1354,7 +1354,7 @@ class PartitioningTest : public ::testing::Test {
             }
         }
 
-        // Sanity check
+        // Validity check
         if (modelA->operandCount() != defsA.size() || modelA->operandCount() != defsB.size() ||
             modelA->operandCount() != equivalentOperandsAToB.size() ||
             modelA->operationCount() + pseudoDefinitionCount != equivalentOperationsAToB.size()) {

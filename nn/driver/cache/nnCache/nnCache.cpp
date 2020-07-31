@@ -244,7 +244,7 @@ void NNCache::loadBlobCacheLocked() {
             return;
         }
 
-        // Sanity check the size before trying to mmap it.
+        // Validity check the size before trying to mmap it.
         size_t fileSize = statBuf.st_size;
         if (fileSize > mMaxTotalSize * 2) {
             ALOGE("cache file is too large: %#" PRIx64, static_cast<off64_t>(statBuf.st_size));

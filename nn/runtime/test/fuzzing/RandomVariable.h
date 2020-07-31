@@ -135,7 +135,7 @@ using RandomVariableNode = std::shared_ptr<RandomVariableBase>;
 // provides useful methods and operator overloading to build the random variable network.
 class RandomVariable {
    public:
-    // Construct a dummy RandomVariable with nullptr.
+    // Construct a placeholder RandomVariable with nullptr.
     RandomVariable() : mVar(nullptr) {}
 
     // Construct a CONST RandomVariable with specified value.

@@ -428,7 +428,7 @@ class TestModelManager {
         return instance;
     }
 
-    // Registers a TestModel to the manager. Returns a dummy integer for global variable
+    // Registers a TestModel to the manager. Returns a placeholder integer for global variable
     // initialization.
     int add(std::string name, const TestModel& testModel) {
         mTestModels.emplace(std::move(name), &testModel);
