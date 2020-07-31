@@ -196,7 +196,7 @@ converter = ActivationConverter(name="variation_name").Identify(
 
 #### AllOutputsAsInternalCoverter
 
-Add a dummy ADD operation after each model output to make it as an internal operand. Will skip if the model does not have any output tensor that is compatible with the ADD operation or if the model has more than one operation.
+Add a placeholder ADD operation after each model output to make it as an internal operand. Will skip if the model does not have any output tensor that is compatible with the ADD operation or if the model has more than one operation.
 
 #### Add variation to example
 
@@ -230,7 +230,7 @@ By default, the test generator will apply the following variations automatically
 
 - **AllTensorsAsInputsConverter:** Convert all constant tensors in the model to model inputs. Will skip if the model does not have any constant tensor, or if the model has more than one operations. If not explicitly disabled, this variation will be automatically applied to all tests.
 
-- **AllInputsAsInternalCoverter:** Add a dummy ADD operation before each model input to make it as an internal operand. Will skip if the model does not have any input tensor that is compatible to the ADD operation, or if the model has more than one operations. If not explicitly disabled, this variation will be automatically applied to all tests.
+- **AllInputsAsInternalCoverter:** Add a placeholder ADD operation before each model input to make it as an internal operand. Will skip if the model does not have any input tensor that is compatible to the ADD operation, or if the model has more than one operations. If not explicitly disabled, this variation will be automatically applied to all tests.
 
 You can opt-out by invoking the corresponding methods on examples.
 
