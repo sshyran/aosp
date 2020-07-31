@@ -308,7 +308,7 @@ class TestMemories {
     // region offset within memory, region length.
     std::vector<std::tuple<unsigned, uint32_t, uint32_t>> mRegions;
 
-    // For sanity checking.
+    // For validity checking.
     bool mLayoutDone = false;
 };
 
