@@ -320,7 +320,7 @@ if (use.test) {
       ":nn_testrunner",
       ":runtime",
       ":sample_driver",
-      "runtime/test/generated:all",
+      "chromeos/tests/runtime/generated:all",
     ]
     libs = [
       "rt",              # For shm_*
@@ -379,7 +379,7 @@ if (use.test) {
       ":nn_testrunner",
       ":runtime",
       ":sample_driver",
-      "runtime/test/generated:all",
+      "chromeos/tests/runtime/generated:all",
     ]
     libs = [
       "rt",              # For shm_*
