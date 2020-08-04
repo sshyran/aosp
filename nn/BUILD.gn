@@ -26,7 +26,7 @@ shared_library("libneuralnetworks") {
     ":target_defaults",
   ]
   deps = [
-    ":common",
+    ":nn-common",
     ":runtime",
     ":vendor-nn-hal",
   ]
@@ -35,9 +35,6 @@ shared_library("libneuralnetworks") {
   ]
   libs = [
     "pthread",
-    "rt",
-    "tensorflowlite",
-    "textclassifier",  # For Farmhash.
   ]
 }
 
@@ -127,10 +124,10 @@ static_library("runtime") {
   ]
 }
 
-static_library("common") {
+shared_library("nn-common") {
   configs += [
     ":common_defaults",
-    "//common-mk:pic",
+    "//common-mk:visibility_default",
   ]
   cflags_cc = [
     # Many functions ignore some parameters
@@ -143,6 +140,12 @@ static_library("common") {
   include_dirs = [
     "runtime/include",
     "${sysroot}/usr/include/libtextclassifier",
+  ]
+  libs = [
+    "pthread",
+    "rt",
+    "tensorflowlite",
+    "textclassifier",  # For Farmhash.
   ]
   sources = [
     "common/BufferTracker.cpp",
@@ -263,7 +266,7 @@ static_library("sample_driver") {
     "//common-mk:visibility_default",
   ]
   deps = [
-    ":common",
+    ":nn-common",
   ]
   include_dirs = [
     "driver/sample",
@@ -315,7 +318,7 @@ if (use.test) {
       "//common-mk:test",
     ]
     deps = [
-      ":common",
+      ":nn-common",
       ":generated_test_harness",
       ":nn_testrunner",
       ":runtime",
@@ -374,7 +377,7 @@ if (use.test) {
       "//common-mk:test",
     ]
     deps = [
-      ":common",
+      ":nn-common",
       ":generated_test_harness",
       ":nn_testrunner",
       ":runtime",
@@ -411,7 +414,7 @@ if (use.test) {
       "-Wno-unused-parameter",
     ]
     deps = [
-      ":common",
+      ":nn-common",
       ":nn_testrunner",
     ]
     sources = [
@@ -429,7 +432,7 @@ if (use.test) {
       "//common-mk:test",
     ]
     deps = [
-      ":common",
+      ":nn-common",
       ":nn_testrunner",
       ":runtime",
       ":sample_driver",
