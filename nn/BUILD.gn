@@ -10,6 +10,7 @@ group("all") {
     ":driver_cache",
     ":vendor-nn-hal",
     "chromeos/tests:vts",
+    "chromeos/tests:cts",
   ]
   if (use.test) {
     deps += [

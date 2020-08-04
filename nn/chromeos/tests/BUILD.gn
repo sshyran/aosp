@@ -22,6 +22,12 @@ group("vts") {
   ]
 }
 
+group("cts") {
+  deps = [
+    ":cros_nnapi_cts",
+  ]
+}
+
 pkg_config("vts_defaults") {
   include_dirs = [
     "${vts_src}/1.0/vts/functional/include",
@@ -173,5 +179,87 @@ executable("cros_nnapi_vts_1_3") {
     "${nn_src}/chromeos/tests/runtime/generated_test_loader_V1_1.cc",
     "${nn_src}/chromeos/tests/runtime/generated_test_loader_V1_2.cc",
     "${nn_src}/chromeos/tests/runtime/generated_test_loader_V1_3.cc",
+  ]
+}
+
+pkg_config("cts_defaults") {
+  configs = [
+    ":target_defaults",
+  ]
+  include_dirs = [
+    "chromeos/includes",
+    "common",
+    "common/include",
+    "${sysroot}/usr/include/tensorflow",
+    "${sysroot}/usr/include/tensorflow/nnapi/include",
+    "${sysroot}/usr/include/tensorflow/nnapi/include/external/gemmlowp",
+    "common/random",
+  ]
+  pkg_deps = [ "libnnapi-support" ]
+}
+
+executable("cros_nnapi_cts") {
+  configs += [
+    "//aosp/frameworks/ml/nn:target_defaults",
+    "//common-mk:test",
+  ]
+  defines = [
+    "__ANDROID_API_FUTURE__=10000",
+    "NNTEST_CTS",
+    "NNTEST_ONLY_PUBLIC_API",
+  ]
+  deps = [
+    "${nn_src}:libneuralnetworks",
+    "${nn_src}/chromeos/tests/runtime/generated:generated_spec_v1_0",
+    "${nn_src}/chromeos/tests/runtime/generated:generated_spec_v1_1",
+    "${nn_src}/chromeos/tests/runtime/generated:generated_spec_v1_2",
+    "${nn_src}/chromeos/tests/runtime/generated:generated_spec_v1_3",
+  ]
+  include_dirs = [
+    "${nn_src}/common",
+    "${nn_src}/common/include",
+    "${nn_src}/runtime/include",
+    "${nn_src}/runtime/test",
+    "${nn_src}/tools/test_generator/test_harness/include",
+    "${sysroot}/usr/include/aosp",
+  ]
+  sources = [
+    "${nn_src}/chromeos/testrunner.cpp",
+    "${nn_src}/runtime/test/GeneratedTestUtils.cpp",
+    "${nn_src}/runtime/test/RequireDebug.cpp",
+    "${nn_src}/runtime/test/TestControlFlow.cpp",
+    "${nn_src}/runtime/test/TestFree.cpp",
+    "${nn_src}/runtime/test/TestGenerated.cpp",
+    "${nn_src}/runtime/test/TestMemory.cpp",
+    "${nn_src}/runtime/test/TestNeuralNetworksWrapper.cpp",
+    "${nn_src}/runtime/test/TestTrivialModel.cpp",
+    "${nn_src}/runtime/test/TestUnknownDimensions.cpp",
+    "${nn_src}/runtime/test/TestValidateModel.cpp",
+    "${nn_src}/runtime/test/TestValidateOperations.cpp",
+    "${nn_src}/runtime/test/TestValidation.cpp",
+    "${nn_src}/runtime/test/TestWrapper.cpp",
+    "${nn_src}/runtime/test/fuzzing/OperationManager.cpp",
+    "${nn_src}/runtime/test/fuzzing/RandomGraphGenerator.cpp",
+    "${nn_src}/runtime/test/fuzzing/RandomGraphGeneratorUtils.cpp",
+    "${nn_src}/runtime/test/fuzzing/RandomVariable.cpp",
+    "${nn_src}/runtime/test/fuzzing/TestRandomGraph.cpp",
+    "${nn_src}/runtime/test/fuzzing/operation_signatures/BoundingBox.cpp",
+    "${nn_src}/runtime/test/fuzzing/operation_signatures/Broadcast.cpp",
+    "${nn_src}/runtime/test/fuzzing/operation_signatures/ConcatSplit.cpp",
+    "${nn_src}/runtime/test/fuzzing/operation_signatures/Convolutions.cpp",
+    "${nn_src}/runtime/test/fuzzing/operation_signatures/Elementwise.cpp",
+    "${nn_src}/runtime/test/fuzzing/operation_signatures/FullyConnected.cpp",
+    "${nn_src}/runtime/test/fuzzing/operation_signatures/Normalization.cpp",
+    "${nn_src}/runtime/test/fuzzing/operation_signatures/Poolings.cpp",
+    "${nn_src}/runtime/test/fuzzing/operation_signatures/Reduce.cpp",
+    "${nn_src}/runtime/test/fuzzing/operation_signatures/Reshape.cpp",
+    "${nn_src}/runtime/test/fuzzing/operation_signatures/Resize.cpp",
+    "${nn_src}/runtime/test/fuzzing/operation_signatures/Selection.cpp",
+    "${nn_src}/chromeos/tests/runtime/generated_test_loader_V1_0.cc",
+    "${nn_src}/chromeos/tests/runtime/generated_test_loader_V1_1.cc",
+    "${nn_src}/chromeos/tests/runtime/generated_test_loader_V1_2.cc",
+    "${nn_src}/chromeos/tests/runtime/generated_test_loader_V1_3.cc",
+    "${nn_src}/chromeos/tests/runtime/generated_test_loader_V1_3_cts.cc",
+    "${nn_src}/tools/test_generator/test_harness/TestHarness.cpp",
   ]
 }
