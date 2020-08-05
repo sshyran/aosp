@@ -77,7 +77,7 @@ Sum: 5
 
 ## Authoring an NN HAL
 
-The basics of authoring a vendor HAL require 3 things.
+The basics of authoring a vendor HAL require 4 things.
 
 1. Disable the in built sample CPU HAL, by specifying the USE flag
 `vendor-nnhal`.
@@ -89,8 +89,48 @@ to load a shared library with this name.
 1. The entry point for the vendor NN HAL will be the symbol
 [android::hardware::neuralnetworks::V1_0::IDevice::getService](https://chromium.googlesource.com/aosp/platform/frameworks/ml/+/refs/heads/master/nn/chromeos/sampledriver.cpp#14), which will be called to register the HAL.
 
+1. Successful execution of the supplied test suites (See [Testing an NN HAL](#testing-an-nn-hal)).
+
 Remember that the HAL will be loaded into the same process as NNAPI, so there will be no use of HardwareBuffers or Android IPC.
 
+### Testing an NN HAL
+
+We provide a set of tools to verify the correct functioning of a vendor HAL. To
+use them, follow these steps.
+
+1. Enable the testing tools by specifying the USE flag `nnapi_driver_tests`.
+
+1. Rebuild the image or use `cros deploy` to update the `aosp-frameworks-ml-nn`
+   package to get the tools onto your DUT.
+
+1. Check that the following executables are now available on your DUT:
+   * Vendor Test Suites. These test the HAL directly through the IDevice
+     interface.
+     * `/usr/bin/cros_nnapi_vts_1_0`
+     * `/usr/bin/cros_nnapi_vts_1_1`
+     * `/usr/bin/cros_nnapi_vts_1_2`
+     * `/usr/bin/cros_nnapi_vts_1_3`
+   * Compatability Test Suite. This tests the HAL via the NNAPI public interface
+     (`ANeuralNetworks_*`)
+     * `/usr/bin/cros_nnapi_cts`
+
+2. These are GTest based executables. Run them, and all the tests should pass.
+   ```bash
+   $ ssh <DUT IP>
+   (DUT) $ export ANDROID_LOG_TAGS="*:f" # This will suppress excess logging
+   (DUT) $ cros_nnapi_cts
+   [==========] Running 32124 tests from 33 test suites.
+   [----------] Global test environment set-up.
+   [----------] 2 tests from ControlFlowTest
+   [ RUN      ] ControlFlowTest.InfiniteLoop
+   <snip>
+   [       OK ] TestRandomGraph/RandomGraphTest.LargeGraph_TENSOR_BOOL8_Rank1/49 (12 ms)
+   [----------] 1600 tests from TestRandomGraph/RandomGraphTest (52604 ms total)
+   [----------] Global test environment tear-down
+   [==========] 32124 tests from 33 test suites ran. (265834 ms total)
+   [  PASSED  ] 32124 tests.
+   YOU HAVE 2 DISABLED TESTS  # This is normal.
+   ```
 
 ## Debugging
 
@@ -127,8 +167,8 @@ Building for board named 'betty':
     Loaded model ./mobilenet_quant_v1_224.tflite
     resolved reporter
     INFO: Initialized TensorFlow Lite runtime.
-    invoked 
-    average time: 178.725 ms 
+    invoked
+    average time: 178.725 ms
     0.780392: 653 military uniform
     0.105882: 907 windsor tie
     0.0156863: 458 bow tie
@@ -146,8 +186,8 @@ Building for board named 'betty':
     resolved reporter
     INFO: Initialized TensorFlow Lite runtime.
     INFO: Created TensorFlow Lite delegate for NNAPI.
-    Applied NNAPI delegate.invoked 
-    average time: 447.802 ms 
+    Applied NNAPI delegate.invoked
+    average time: 447.802 ms
     0.780392: 653 military uniform
     0.105882: 907 windsor tie
     0.0156863: 458 bow tie
