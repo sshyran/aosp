@@ -17,8 +17,10 @@
 #include <gtest/gtest.h>
 
 #include <limits>
+#include <utility>
 #include <vector>
 
+#include "MemoryUtils.h"
 #include "OperationsUtils.cpp"
 #include "QuantUtils.h"
 
@@ -27,6 +29,7 @@ namespace nn {
 namespace wrapper {
 
 namespace {
+using namespace hal;
 using ::testing::ElementsAreArray;
 }  // namespace
 
@@ -122,6 +125,92 @@ TEST(ValidateOperandTypeTest, TensorSizeDimensionProductOverflow) {
     };
     EXPECT_EQ(validateOperandType(type, nullptr, /*tag=*/"test", /*allowPartial=*/true),
               ANEURALNETWORKS_BAD_DATA);
+}
+
+TEST(ValidateRequestTest, UnknownOutputRank) {
+    Request::MemoryPool pool;
+    pool.hidlMemory(allocateSharedMemory(2 * sizeof(float)));
+    ASSERT_TRUE(pool.hidlMemory().valid());
+    const V1_3::Model model = {
+            .main =
+                    {
+                            .operands = {{
+                                                 .type = V1_3::OperandType::TENSOR_FLOAT32,
+                                                 .dimensions = {1},
+                                                 .numberOfConsumers = 1,
+                                                 .lifetime = V1_3::OperandLifeTime::SUBGRAPH_INPUT,
+                                         },
+                                         {
+                                                 .type = V1_3::OperandType::TENSOR_FLOAT32,
+                                                 .dimensions = {},  // unknown output rank
+                                                 .numberOfConsumers = 0,
+                                                 .lifetime = V1_3::OperandLifeTime::SUBGRAPH_OUTPUT,
+                                         }},
+                            .operations = {{
+                                    .type = V1_3::OperationType::ABS,
+                                    .inputs = {0},
+                                    .outputs = {1},
+                            }},
+                            .inputIndexes = {0},
+                            .outputIndexes = {1},
+                    },
+    };
+    const V1_3::Request request = {
+            .inputs = {{
+                    .location = {.poolIndex = 0, .offset = 0, .length = sizeof(float)},
+                    .dimensions = {},
+            }},
+            .outputs = {{
+                    .location = {.poolIndex = 0, .offset = sizeof(float), .length = sizeof(float)},
+                    .dimensions = {},
+            }},
+            .pools = {std::move(pool)},
+    };
+    EXPECT_FALSE(validateRequest(request, model, /*allowUnspecifiedOutput=*/false));
+}
+
+TEST(ValidateRequestTest, ScalarOutput) {
+    Request::MemoryPool pool;
+    pool.hidlMemory(allocateSharedMemory(sizeof(float) + sizeof(int32_t)));
+    ASSERT_TRUE(pool.hidlMemory().valid());
+    const V1_3::Model model = {
+            .main =
+                    {
+                            .operands = {{
+                                                 .type = V1_3::OperandType::TENSOR_FLOAT32,
+                                                 .dimensions = {1},
+                                                 .numberOfConsumers = 1,
+                                                 .lifetime = V1_3::OperandLifeTime::SUBGRAPH_INPUT,
+                                         },
+                                         {
+                                                 .type = V1_3::OperandType::INT32,
+                                                 .dimensions = {},
+                                                 .numberOfConsumers = 0,
+                                                 .lifetime = V1_3::OperandLifeTime::SUBGRAPH_OUTPUT,
+                                         }},
+                            .operations = {{
+                                    .type = V1_3::OperationType::RANK,
+                                    .inputs = {0},
+                                    .outputs = {1},
+                            }},
+                            .inputIndexes = {0},
+                            .outputIndexes = {1},
+                    },
+    };
+    const V1_3::Request request = {
+            .inputs = {{
+                    .location = {.poolIndex = 0, .offset = 0, .length = sizeof(float)},
+                    .dimensions = {},
+            }},
+            .outputs = {{
+                    .location = {.poolIndex = 0,
+                                 .offset = sizeof(float),
+                                 .length = sizeof(int32_t)},
+                    .dimensions = {},
+            }},
+            .pools = {std::move(pool)},
+    };
+    EXPECT_TRUE(validateRequest(request, model, /*allowUnspecifiedOutput=*/false));
 }
 
 class CombineDimensionsTest : public ::testing::Test {
