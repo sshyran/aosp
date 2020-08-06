@@ -778,11 +778,19 @@ static bool validateRequestArguments(const hidl_vec<RequestArgument>& requestArg
             uint32_t requestRank = requestArgument.dimensions.size();
             if (requestRank == 0) {
                 if (!allowUnspecified) {
+                    // NOTE: validateRequestArguments cannot validate unknown tensor rank with
+                    // extension operand type.
+                    if (!isExtensionOperandType(operand.type) &&
+                        !nonExtensionOperandTypeIsScalar(static_cast<int>(operand.type))) {
+                        NN_RET_CHECK_GT(modelRank, 0) << "Model has unknown rank but the request "
+                                                         "does not specify the dimension.";
+                    }
                     // Validate that all the dimensions are specified in the model.
                     for (size_t i = 0; i < modelRank; i++) {
                         if (operand.dimensions[i] == 0) {
-                            LOG(ERROR) << "Model has dimension " << i
-                                       << " set to 0 but the request does specify the dimension.";
+                            LOG(ERROR)
+                                    << "Model has dimension " << i
+                                    << " set to 0 but the request does not specify the dimension.";
                             return false;
                         }
                     }
