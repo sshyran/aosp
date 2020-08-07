@@ -17,6 +17,7 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_NNAPI_TYPES_H
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_NNAPI_TYPES_H
 
+#include <android-base/expected.h>
 #include <utils/NativeHandle.h>
 #include <utils/StrongPointer.h>
 
@@ -57,7 +58,7 @@ constexpr uint8_t kExtensionPrefixBits = 16;
 using AlignedData = std::max_align_t;
 using SharedBuffer = std::shared_ptr<const IBuffer>;
 using SharedDevice = std::shared_ptr<const IDevice>;
-using PreparedModel = std::shared_ptr<const IPreparedModel>;
+using SharedPreparedModel = std::shared_ptr<const IPreparedModel>;
 
 // Canonical types
 
@@ -116,6 +117,14 @@ enum class ErrorStatus {
     DEAD_OBJECT = 10000,
 };
 
+struct GeneralError {
+    std::string message;
+    ErrorStatus code = ErrorStatus::GENERAL_FAILURE;
+};
+
+template <typename Type>
+using GeneralResult = base::expected<Type, GeneralError>;
+
 enum class FusedActivationFunc : int32_t {
     NONE = 0,
     RELU = 1,
@@ -132,6 +141,16 @@ struct OutputShape {
     std::vector<uint32_t> dimensions;
     bool isSufficient = false;
 };
+
+struct ExecutionError {
+    std::string message;
+    ErrorStatus code = ErrorStatus::GENERAL_FAILURE;
+    // OutputShapes for code == OUTPUT_INSUFFICIENT_SIZE
+    std::vector<OutputShape> outputShapes = {};
+};
+
+template <typename Type>
+using ExecutionResult = base::expected<Type, ExecutionError>;
 
 struct Timing {
     uint64_t timeOnDevice = kNoTiming;
@@ -288,6 +307,34 @@ struct Request {
     std::vector<Argument> inputs;
     std::vector<Argument> outputs;
     std::vector<MemoryPool> pools;
+};
+
+// Representation of sync_fence.
+class SyncFence {
+   public:
+    static SyncFence createAsSignaled();
+    static Result<SyncFence> create(NativeHandle syncFence);
+
+    // The function syncWait() has the same semantics as the system function
+    // ::sync_wait(), except that the syncWait() return value is semantically
+    // richer.
+    enum class FenceState {
+        ACTIVE,    // fence has not been signaled
+        SIGNALED,  // fence has been signaled
+        ERROR,     // fence has been placed in the error state
+        UNKNOWN,   // either bad argument passed to syncWait(), or internal error
+    };
+    using Timeout = std::chrono::duration<int, std::milli>;
+    using OptionalTimeout = std::optional<Timeout>;
+
+    FenceState syncWait(OptionalTimeout optionalTimeout) const;
+
+    NativeHandle getHandle() const;
+
+   private:
+    explicit SyncFence(NativeHandle syncFence);
+
+    NativeHandle mSyncFence;
 };
 
 using Clock = std::chrono::steady_clock;

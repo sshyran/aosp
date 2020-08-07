@@ -67,7 +67,7 @@ bool MutableMemoryBuilder::empty() const {
     return mSize == 0;
 }
 
-Result<Memory> MutableMemoryBuilder::finish() {
+GeneralResult<Memory> MutableMemoryBuilder::finish() {
     return createSharedMemory(mSize);
 }
 
@@ -84,7 +84,7 @@ bool ConstantMemoryBuilder::empty() const {
     return mBuilder.empty();
 }
 
-Result<Memory> ConstantMemoryBuilder::finish() {
+GeneralResult<Memory> ConstantMemoryBuilder::finish() {
     // Allocate the memory.
     auto memory = NN_TRY(mBuilder.finish());
 
@@ -92,10 +92,6 @@ Result<Memory> ConstantMemoryBuilder::finish() {
     const auto [pointer, size, context] = NN_TRY(map(memory););
 
     // Get mutable pointer.
-    if (!std::holds_alternative<void*>(pointer)) {
-        return NN_ERROR()
-               << "MemoryBuilder::finish failed because the mapped pointer is not mutable";
-    }
     uint8_t* mutablePointer = static_cast<uint8_t*>(std::get<void*>(pointer));
 
     // Copy data to the memory pool.
