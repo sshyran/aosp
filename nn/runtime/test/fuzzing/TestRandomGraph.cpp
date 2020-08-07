@@ -817,8 +817,8 @@ TEST_RANDOM_GRAPH_WITH_DATA_TYPE_AND_RANK(TENSOR_BOOL8, 3);
 TEST_RANDOM_GRAPH_WITH_DATA_TYPE_AND_RANK(TENSOR_BOOL8, 2);
 TEST_RANDOM_GRAPH_WITH_DATA_TYPE_AND_RANK(TENSOR_BOOL8, 1);
 
-INSTANTIATE_TEST_CASE_P(TestRandomGraph, SingleOperationTest, ::testing::Range(0u, 50u));
-INSTANTIATE_TEST_CASE_P(TestRandomGraph, RandomGraphTest, ::testing::Range(0u, 50u));
+INSTANTIATE_TEST_SUITE_P(TestRandomGraph, SingleOperationTest, ::testing::Range(0u, 50u));
+INSTANTIATE_TEST_SUITE_P(TestRandomGraph, RandomGraphTest, ::testing::Range(0u, 50u));
 
 }  // namespace fuzzing_test
 }  // namespace nn

@@ -834,27 +834,27 @@ class ExecutionTest13 : public ExecutionTestTemplate<TestDriver13> {};
 TEST_P(ExecutionTest13, Wait) {
     TestWait();
 }
-INSTANTIATE_TEST_CASE_P(Flavor, ExecutionTest13, kTestValues);
+INSTANTIATE_TEST_SUITE_P(Flavor, ExecutionTest13, kTestValues);
 
 class ExecutionTest12 : public ExecutionTestTemplate<TestDriver12> {};
 TEST_P(ExecutionTest12, Wait) {
     TestWait();
 }
-INSTANTIATE_TEST_CASE_P(Flavor, ExecutionTest12, kTestValues);
+INSTANTIATE_TEST_SUITE_P(Flavor, ExecutionTest12, kTestValues);
 
 class ExecutionTest11 : public ExecutionTestTemplate<TestDriver11> {};
 TEST_P(ExecutionTest11, Wait) {
     if (kForceErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) return;
     TestWait();
 }
-INSTANTIATE_TEST_CASE_P(Flavor, ExecutionTest11, kTestValues);
+INSTANTIATE_TEST_SUITE_P(Flavor, ExecutionTest11, kTestValues);
 
 class ExecutionTest10 : public ExecutionTestTemplate<TestDriver10> {};
 TEST_P(ExecutionTest10, Wait) {
     if (kForceErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) return;
     TestWait();
 }
-INSTANTIATE_TEST_CASE_P(Flavor, ExecutionTest10, kTestValues);
+INSTANTIATE_TEST_SUITE_P(Flavor, ExecutionTest10, kTestValues);
 
 auto kIntrospectionTestValues = ::testing::Values(
         std::make_tuple(ErrorStatus::NONE, Result::NO_ERROR, /* kUseIntrospectionAPI */ true),
@@ -867,7 +867,7 @@ auto kIntrospectionTestValues = ::testing::Values(
         std::make_tuple(ErrorStatus::INVALID_ARGUMENT, Result::BAD_DATA,
                         /* kUseIntrospectionAPI */ true));
 
-INSTANTIATE_TEST_CASE_P(IntrospectionFlavor, ExecutionTest13, kIntrospectionTestValues);
+INSTANTIATE_TEST_SUITE_P(IntrospectionFlavor, ExecutionTest13, kIntrospectionTestValues);
 
 }  // namespace
 }  // namespace android

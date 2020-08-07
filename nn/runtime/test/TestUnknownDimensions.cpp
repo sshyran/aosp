@@ -343,6 +343,6 @@ TEST_P(UnknownDimensionsTest, Float16) {
     TestAll<_Float16, Type::TENSOR_FLOAT16>();
 }
 
-INSTANTIATE_TEST_CASE_P(UnknownCombinationsTest, UnknownDimensionsTest,
-                        ::testing::ValuesIn(ioValues));
+INSTANTIATE_TEST_SUITE_P(UnknownCombinationsTest, UnknownDimensionsTest,
+                         ::testing::ValuesIn(ioValues));
 }  // end namespace
