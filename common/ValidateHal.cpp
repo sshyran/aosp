@@ -783,7 +783,7 @@ static bool validateRequestArguments(const hidl_vec<RequestArgument>& requestArg
                     if (!isExtensionOperandType(operand.type) &&
                         !nonExtensionOperandTypeIsScalar(static_cast<int>(operand.type))) {
                         NN_RET_CHECK_GT(modelRank, 0) << "Model has unknown rank but the request "
-                                                         "does not specify the dimension.";
+                                                         "does not specify the rank.";
                     }
                     // Validate that all the dimensions are specified in the model.
                     for (size_t i = 0; i < modelRank; i++) {
