@@ -19,6 +19,8 @@
 %define APILevel30 API level 30
 %define BeforeAPILevel29For Before API level 29, for
 %define or_1.2 or {@link ANEURALNETWORKS_%{1}}
+%define NDK_if_specified  (if specified)
+%define otherOperandParameters other operand parameters
 %define-lines AVAIL27
      *
      * Available since API level 27.
@@ -62,6 +64,8 @@
 %define MODEL_or_SUBGRAPH SUBGRAPH
 %define APILevel29 HAL version 1.2
 %define APILevel30 HAL version 1.3
+%define NDK_if_specified
+%define otherOperandParameters extraParams
 %define-lines AVAIL27
 %/define-lines
 %define-lines AVAIL27Short
@@ -6176,12 +6180,17 @@
      * The inputs and outputs of the two referenced %{model_or_subgraph}s must agree with the
      * signature of this operation. That is, if the operation has (3 + n) inputs
      * and m outputs, both %{model_or_subgraph}s must have n inputs and m outputs with the same
-     * types, ranks (if specified), and dimensions (if specified) as the
-     * corresponding operation inputs and outputs.
+     * types, ranks%{NDK_if_specified}, dimensions%{NDK_if_specified}, scales,
+     * zeroPoints, and %{otherOperandParameters} as the corresponding operation
+     * inputs and outputs.
+%kind hal*
+     * All of the operands mentioned must have fully specified dimensions.
+%/kind
      *
      * Inputs:
      * * 0: A value of type {@link %{OperandTypeLinkPfx}TENSOR_BOOL8} and shape [1]
      *      that determines which of the two referenced %{model_or_subgraph}s to execute.
+     *      The operand must have fully specified dimensions.
      * * 1: A {@link %{OperandTypeLinkPfx}%{MODEL_or_SUBGRAPH}} reference to the %{model_or_subgraph} to be
      *      executed if the condition is true.
      * * 2: A {@link %{OperandTypeLinkPfx}%{MODEL_or_SUBGRAPH}} reference to the %{model_or_subgraph} to be
@@ -6247,13 +6256,24 @@
      * Inputs:
      * * 0: A {@link %{OperandTypeLinkPfx}%{MODEL_or_SUBGRAPH}} reference to the condition
      *      %{model_or_subgraph}. The %{model_or_subgraph} must have (m + k + n) inputs with
-     *      the same types, ranks (if specified), and dimensions (if specified)
-     *      as the corresponding inputs of the WHILE operation and exactly one
-     *      output of {@link %{OperandTypeLinkPfx}TENSOR_BOOL8} and shape [1].
+     *      the same types, ranks%{NDK_if_specified}, dimensions%{NDK_if_specified},
+     *      scales, zeroPoints, and %{otherOperandParameters} as the
+     *      corresponding inputs of the WHILE operation and exactly one output
+     *      of {@link %{OperandTypeLinkPfx}TENSOR_BOOL8} and shape [1].
+%kind ndk
+     *      The output operand must have fully specified dimensions.
+%/kind
+%kind hal*
+     *      All of the operands mentioned must have fully specified dimensions.
+%/kind
      * * 1: A {@link %{OperandTypeLinkPfx}%{MODEL_or_SUBGRAPH}} reference to the body %{model_or_subgraph}.
      *      The %{model_or_subgraph} must have (m + k + n) inputs and (m + k) outputs with
-     *      the same types, ranks (if specified), and dimensions (if specified)
-     *      as the corresponding inputs and outputs of the WHILE operation.
+     *      the same types, ranks%{NDK_if_specified}, dimensions%{NDK_if_specified},
+     *      scales, zeroPoints, and %{otherOperandParameters} as the
+     *      corresponding inputs and outputs of the WHILE operation.
+%kind hal*
+     *      All of the operands mentioned must have fully specified dimensions.
+%/kind
      * * (m inputs): Initial values for input-output operands.
      * * (k inputs): Initial values for state-only operands.
      * * (n inputs): Values for input-only operands.

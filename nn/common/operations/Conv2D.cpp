@@ -174,8 +174,7 @@ struct Conv2dParam {
         im2colGuard.reset(im2colData);                                            \
     }
 
-bool needim2colData(const Shape& filterShape,
-                    int32_t stride_width, int32_t stride_height,
+bool needim2colData(const Shape& filterShape, int32_t stride_width, int32_t stride_height,
                     int32_t dilation_width_factor, int32_t dilation_height_factor) {
     // Within tflite::optimized_ops::Conv, the following tests are performed,
     // and in the case (!need_dilated_im2col && !need_im2col), then the
@@ -185,10 +184,9 @@ bool needim2colData(const Shape& filterShape,
     // tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h:2655
     const int filter_width = getSizeOfDimension(filterShape, 2);
     const int filter_height = getSizeOfDimension(filterShape, 1);
-    const bool need_dilated_im2col =
-        dilation_width_factor != 1 || dilation_height_factor != 1;
-    const bool need_im2col = stride_width != 1 || stride_height != 1 ||
-                            filter_width != 1 || filter_height != 1;
+    const bool need_dilated_im2col = dilation_width_factor != 1 || dilation_height_factor != 1;
+    const bool need_im2col =
+            stride_width != 1 || stride_height != 1 || filter_width != 1 || filter_height != 1;
     return need_dilated_im2col || need_im2col;
 }
 
@@ -209,19 +207,15 @@ bool convNhwc(const float* inputData, const Shape& inputShape, const float* filt
     std::unique_lock<std::mutex> lock(executionMutex);
     NNTRACE_COMP_SWITCH("optimized_ops::Conv");
 
-    const bool need_im2colData = needim2colData(filterShape,
-                                                stride_width, stride_height,
-                                                dilation_width_factor,
-                                                dilation_height_factor);
+    const bool need_im2colData = needim2colData(filterShape, stride_width, stride_height,
+                                                dilation_width_factor, dilation_height_factor);
 
-    tflite::optimized_ops::Conv(inputData, convertShapeToDims(inputShape), filterData,
-                                convertShapeToDims(filterShape), biasData,
-                                convertShapeToDims(biasShape), stride_width, stride_height,
-                                dilation_width_factor, dilation_height_factor, paddingWidth,
-                                paddingHeight, output_activation_min, output_activation_max,
-                                outputData, convertShapeToDims(outputShape),
-                                need_im2colData ? im2colData : nullptr,
-                                im2colDim);
+    tflite::optimized_ops::Conv(
+            inputData, convertShapeToDims(inputShape), filterData, convertShapeToDims(filterShape),
+            biasData, convertShapeToDims(biasShape), stride_width, stride_height,
+            dilation_width_factor, dilation_height_factor, paddingWidth, paddingHeight,
+            output_activation_min, output_activation_max, outputData,
+            convertShapeToDims(outputShape), need_im2colData ? im2colData : nullptr, im2colDim);
     return true;
 }
 
@@ -263,20 +257,17 @@ bool convNhwc(const uint8_t* inputData, const Shape& inputShape, const uint8_t* 
 
     NNTRACE_COMP_SWITCH("optimized_ops::Conv");
 
-    const bool need_im2colData = needim2colData(filterShape,
-                                                stride_width, stride_height,
-                                                dilation_width_factor,
-                                                dilation_height_factor);
+    const bool need_im2colData = needim2colData(filterShape, stride_width, stride_height,
+                                                dilation_width_factor, dilation_height_factor);
 
-    tflite::optimized_ops::Conv(
-            inputData, convertShapeToDims(inputShape), inputOffset, filterData,
-            convertShapeToDims(filterShape), filterOffset, biasData, convertShapeToDims(biasShape),
-            stride_width, stride_height, dilation_width_factor, dilation_height_factor,
-            paddingWidth, paddingHeight, outputOffset, output_multiplier, output_shift,
-            output_activation_min, output_activation_max, outputData,
-            convertShapeToDims(outputShape),
-            need_im2colData ? im2colData : nullptr,
-            im2colDim, &gemm_context);
+    tflite::optimized_ops::Conv(inputData, convertShapeToDims(inputShape), inputOffset, filterData,
+                                convertShapeToDims(filterShape), filterOffset, biasData,
+                                convertShapeToDims(biasShape), stride_width, stride_height,
+                                dilation_width_factor, dilation_height_factor, paddingWidth,
+                                paddingHeight, outputOffset, output_multiplier, output_shift,
+                                output_activation_min, output_activation_max, outputData,
+                                convertShapeToDims(outputShape),
+                                need_im2colData ? im2colData : nullptr, im2colDim, &gemm_context);
     return true;
 }
 

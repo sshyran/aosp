@@ -208,7 +208,8 @@ class TensorRankConstraint {
 
    private:
     std::vector<OperandTypeWithExtraParams> ModifyForRank(
-            const std::vector<OperandTypeWithExtraParams>& operandsTypeWithParams, uint32_t newRank) {
+            const std::vector<OperandTypeWithExtraParams>& operandsTypeWithParams,
+            uint32_t newRank) {
         std::vector<OperandTypeWithExtraParams> result;
         std::transform(operandsTypeWithParams.cbegin(), operandsTypeWithParams.cend(),
                        std::back_inserter(result),
