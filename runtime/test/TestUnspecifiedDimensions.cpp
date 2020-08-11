@@ -572,31 +572,31 @@ static const auto kAllSpecificationLevelsExecution =
                         SpecificationLevel::UNSPECIFIED_RANK, SpecificationLevel::UNSPECIFIED_TYPE);
 static const auto kFullySpecified = testing::Values(SpecificationLevel::FULLY_SPECIFIED);
 
-INSTANTIATE_TEST_CASE_P(ModelInputTest, UnspecifiedDimensionsTest,
-                        testing::Combine(testing::Values(UnspecifiedOperand::INPUT_MANDATORY),
-                                         kAllSpecificationLevelsModel,
-                                         kAllSpecificationLevelsExecution));
+INSTANTIATE_TEST_SUITE_P(ModelInputTest, UnspecifiedDimensionsTest,
+                         testing::Combine(testing::Values(UnspecifiedOperand::INPUT_MANDATORY),
+                                          kAllSpecificationLevelsModel,
+                                          kAllSpecificationLevelsExecution));
 
-INSTANTIATE_TEST_CASE_P(ConstantParameterTest, UnspecifiedDimensionsTest,
-                        testing::Combine(testing::Values(UnspecifiedOperand::CONST_MANDATORY),
-                                         kAllSpecificationLevelsModel, kFullySpecified));
+INSTANTIATE_TEST_SUITE_P(ConstantParameterTest, UnspecifiedDimensionsTest,
+                         testing::Combine(testing::Values(UnspecifiedOperand::CONST_MANDATORY),
+                                          kAllSpecificationLevelsModel, kFullySpecified));
 
-INSTANTIATE_TEST_CASE_P(TemporaryVariableTest, UnspecifiedDimensionsTest,
-                        testing::Combine(testing::Values(UnspecifiedOperand::TEMPORARY_VARIABLE),
-                                         kAllSpecificationLevelsModel, kFullySpecified));
+INSTANTIATE_TEST_SUITE_P(TemporaryVariableTest, UnspecifiedDimensionsTest,
+                         testing::Combine(testing::Values(UnspecifiedOperand::TEMPORARY_VARIABLE),
+                                          kAllSpecificationLevelsModel, kFullySpecified));
 
-INSTANTIATE_TEST_CASE_P(OptionalConstantTest, UnspecifiedDimensionsTest,
-                        testing::Combine(testing::Values(UnspecifiedOperand::CONST_OPTIONAL),
-                                         kAllSpecificationLevelsModel, kFullySpecified));
+INSTANTIATE_TEST_SUITE_P(OptionalConstantTest, UnspecifiedDimensionsTest,
+                         testing::Combine(testing::Values(UnspecifiedOperand::CONST_OPTIONAL),
+                                          kAllSpecificationLevelsModel, kFullySpecified));
 
-INSTANTIATE_TEST_CASE_P(OptionalInputTest, UnspecifiedDimensionsTest,
-                        testing::Combine(testing::Values(UnspecifiedOperand::INPUT_OPTIONAL),
-                                         kAllSpecificationLevelsModel,
-                                         kAllSpecificationLevelsExecution));
+INSTANTIATE_TEST_SUITE_P(OptionalInputTest, UnspecifiedDimensionsTest,
+                         testing::Combine(testing::Values(UnspecifiedOperand::INPUT_OPTIONAL),
+                                          kAllSpecificationLevelsModel,
+                                          kAllSpecificationLevelsExecution));
 
-INSTANTIATE_TEST_CASE_P(ModelOutputTest, UnspecifiedDimensionsTest,
-                        testing::Combine(testing::Values(UnspecifiedOperand::OUTPUT),
-                                         kAllSpecificationLevelsModel,
-                                         kAllSpecificationLevelsExecution));
+INSTANTIATE_TEST_SUITE_P(ModelOutputTest, UnspecifiedDimensionsTest,
+                         testing::Combine(testing::Values(UnspecifiedOperand::OUTPUT),
+                                          kAllSpecificationLevelsModel,
+                                          kAllSpecificationLevelsExecution));
 
 }  // end namespace
