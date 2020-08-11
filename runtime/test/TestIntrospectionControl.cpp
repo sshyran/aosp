@@ -1104,8 +1104,8 @@ auto kTimingTestFencedValues = ::testing::Values(
 
         std::make_tuple(DriverKind::NEW, Success::FAIL_LAUNCH, Compute::FENCED));
 
-INSTANTIATE_TEST_CASE_P(Unfenced, TimingTest, kTimingTestUnfencedValues);
-INSTANTIATE_TEST_CASE_P(Fenced, TimingTest, kTimingTestFencedValues);
+INSTANTIATE_TEST_SUITE_P(Unfenced, TimingTest, kTimingTestUnfencedValues);
+INSTANTIATE_TEST_SUITE_P(Fenced, TimingTest, kTimingTestFencedValues);
 
 }  // namespace timing_tests
 

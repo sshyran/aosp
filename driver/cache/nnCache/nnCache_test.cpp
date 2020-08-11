@@ -47,7 +47,7 @@ class NNCacheTest : public ::testing::TestWithParam<NNCache::Policy> {
     NNCache* mCache;
 };
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
         Policy, NNCacheTest,
         ::testing::Values(NNCache::Policy(NNCache::Select::RANDOM, NNCache::Capacity::HALVE),
                           NNCache::Policy(NNCache::Select::LRU, NNCache::Capacity::HALVE),

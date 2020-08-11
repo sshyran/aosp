@@ -422,12 +422,12 @@ static const auto kAllocateReturnChoices =
         testing::Values(AllocateReturn::OK, AllocateReturn::BAD_TOKEN, AllocateReturn::BAD_IBUFFER,
                         AllocateReturn::BAD_STATUS, AllocateReturn::NOT_SUPPORTED);
 
-INSTANTIATE_TEST_CASE_P(DeviceVersionLatest, MemoryDomainTest,
-                        testing::Combine(testing::Values(false), testing::Bool(),
-                                         kAllocateReturnChoices));
-INSTANTIATE_TEST_CASE_P(DeviceVersionV1_2, MemoryDomainTest,
-                        testing::Combine(testing::Values(true), testing::Bool(),
-                                         testing::Values(AllocateReturn::NOT_SUPPORTED)));
+INSTANTIATE_TEST_SUITE_P(DeviceVersionLatest, MemoryDomainTest,
+                         testing::Combine(testing::Values(false), testing::Bool(),
+                                          kAllocateReturnChoices));
+INSTANTIATE_TEST_SUITE_P(DeviceVersionV1_2, MemoryDomainTest,
+                         testing::Combine(testing::Values(true), testing::Bool(),
+                                          testing::Values(AllocateReturn::NOT_SUPPORTED)));
 
 class MemoryDomainCopyTest : public MemoryDomainTestBase {};
 
