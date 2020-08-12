@@ -189,7 +189,7 @@ void SVDF::EvalFloat32(const float* inputData, const float* inputStateData, cons
     std::fill_n(scratch, batch_size * num_filters, 0.0f);
     tflite::tensor_utils::MatrixBatchVectorMultiplyAccumulate(weightsFeatureData, num_filters,
                                                               input_size, inputData, batch_size,
-                                                              scratch, /*result_stride=*/1);
+                                                              scratch);
 
     // Copy the latest activation from scratch into activation_state:
     // The last, i.e. (memory_size-1)th entry for each batch, and filter.
