@@ -37,19 +37,19 @@ class SampleDriverPartial : public SampleDriver {
     SampleDriverPartial(const char* name, const IOperationResolver* operationResolver =
                                                   BuiltinOperationResolver::get())
         : SampleDriver(name, operationResolver) {}
-    hal::Return<void> getSupportedOperations_1_3(const hal::V1_3::Model& model,
-                                                 getSupportedOperations_1_3_cb cb) override;
-    hal::Return<hal::ErrorStatus> prepareModel_1_3(
-            const hal::V1_3::Model& model, hal::ExecutionPreference preference,
-            hal::Priority priority, const hal::OptionalTimePoint& deadline,
-            const hal::hidl_vec<hal::hidl_handle>& modelCache,
-            const hal::hidl_vec<hal::hidl_handle>& dataCache, const hal::CacheToken& token,
-            const sp<hal::V1_3::IPreparedModelCallback>& callback) override;
+    hardware::Return<void> getSupportedOperations_1_3(const V1_3::Model& model,
+                                                      getSupportedOperations_1_3_cb cb) override;
+    hardware::Return<V1_3::ErrorStatus> prepareModel_1_3(
+            const V1_3::Model& model, V1_1::ExecutionPreference preference, V1_3::Priority priority,
+            const V1_3::OptionalTimePoint& deadline,
+            const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+            const hardware::hidl_vec<hardware::hidl_handle>& dataCache, const HalCacheToken& token,
+            const sp<V1_3::IPreparedModelCallback>& callback) override;
 
    protected:
     // Given a valid NNAPI Model returns a boolean vector that indicates which
     // ops in the model are supported by a driver.
-    virtual std::vector<bool> getSupportedOperationsImpl(const hal::V1_3::Model& model) const = 0;
+    virtual std::vector<bool> getSupportedOperationsImpl(const V1_3::Model& model) const = 0;
 };
 
 }  // namespace sample_driver

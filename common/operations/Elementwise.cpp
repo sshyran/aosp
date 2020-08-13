@@ -18,7 +18,6 @@
 
 #include <cmath>
 
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
@@ -34,8 +33,6 @@ constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
 namespace {
-
-using namespace hal;
 
 template <typename IntermediateType, typename T>
 inline bool compute(IntermediateType func(IntermediateType), const T* input, const Shape& shape,

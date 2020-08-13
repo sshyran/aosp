@@ -95,11 +95,15 @@
 
 namespace android {
 
-using namespace nn::hal;
+namespace V1_0 = ::android::hardware::neuralnetworks::V1_0;
+namespace V1_1 = ::android::hardware::neuralnetworks::V1_1;
+namespace V1_2 = ::android::hardware::neuralnetworks::V1_2;
+namespace V1_3 = ::android::hardware::neuralnetworks::V1_3;
 using CompilationBuilder = nn::CompilationBuilder;
-using Device = nn::Device;
 using DeviceManager = nn::DeviceManager;
+using Device = nn::Device;
 using ExecutionPlan = nn::ExecutionPlan;
+using HalCacheToken = nn::HalCacheToken;
 using HalVersion = nn::HalVersion;
 using HidlModel = V1_3::Model;
 using ModelBuilder = nn::ModelBuilder;
@@ -335,7 +339,7 @@ class RandomPartitioningTest : public ::testing::TestWithParam<unsigned> {
    public:
     RandomPartitioningTest() : mRandNumEng(GetParam() /* seed */), mRandNumUnitDist(0.0, 1.0) {}
 
-    static Signature getSignature(const HidlModel& model, const Operation& operation);
+    static Signature getSignature(const HidlModel& model, const V1_3::Operation& operation);
 
    protected:
     static V1_0::IDevice* makeTestDriver(HalVersion version, const char* name,
@@ -500,7 +504,8 @@ HalVersion RandomPartitioningTest::getMinHalVersion(ANeuralNetworksOperationType
     return kOperationToVersion.at(type);
 }
 
-Signature RandomPartitioningTest::getSignature(const HidlModel& model, const Operation& operation) {
+Signature RandomPartitioningTest::getSignature(const HidlModel& model,
+                                               const V1_3::Operation& operation) {
     static const auto kOperationToActivation = [] {
         std::map<ANeuralNetworksOperationType, int> result;
         for (const auto& pattern : kOperationPatterns) {
@@ -516,9 +521,10 @@ Signature RandomPartitioningTest::getSignature(const HidlModel& model, const Ope
         return Signature(operationType, -1);
     }
 
-    const Operand& operand = model.main.operands[operation.inputs[activationFunctionInputIndex]];
-    CHECK(operand.lifetime == OperandLifeTime::CONSTANT_COPY);
-    CHECK(operand.type == OperandType::INT32);
+    const V1_3::Operand& operand =
+            model.main.operands[operation.inputs[activationFunctionInputIndex]];
+    CHECK(operand.lifetime == V1_3::OperandLifeTime::CONSTANT_COPY);
+    CHECK(operand.type == V1_3::OperandType::INT32);
     int32_t value;
     memcpy(&value, &model.operandValues[operand.location.offset], operand.location.length);
     return Signature(operationType, value);
@@ -546,21 +552,21 @@ class TestDriver : public SampleDriver {
     TestDriver(const char* name, std::set<Signature> signatures)
         : SampleDriver(name), mSignatures(std::move(signatures)) {}
 
-    Return<void> getCapabilities_1_3(getCapabilities_1_3_cb _hidl_cb) override {
+    hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb _hidl_cb) override {
         android::nn::initVLogMask();
-        const PerformanceInfo kPerf = {.execTime = 0.75f, .powerUsage = 0.75f};
-        Capabilities capabilities = {
+        const V1_0::PerformanceInfo kPerf = {.execTime = 0.75f, .powerUsage = 0.75f};
+        V1_3::Capabilities capabilities = {
                 .relaxedFloat32toFloat16PerformanceScalar = kPerf,
                 .relaxedFloat32toFloat16PerformanceTensor = kPerf,
                 .operandPerformance = nn::nonExtensionOperandPerformance<HalVersion::V1_3>(kPerf),
                 .ifPerformance = kPerf,
                 .whilePerformance = kPerf};
         _hidl_cb(V1_3::ErrorStatus::NONE, capabilities);
-        return Void();
+        return hardware::Void();
     }
 
-    Return<void> getSupportedOperations_1_3(const HidlModel& model,
-                                            getSupportedOperations_1_3_cb cb) override {
+    hardware::Return<void> getSupportedOperations_1_3(const HidlModel& model,
+                                                      getSupportedOperations_1_3_cb cb) override {
         if (nn::validateModel(model)) {
             const size_t count = model.main.operations.size();
             std::vector<bool> supported(count);
@@ -572,19 +578,20 @@ class TestDriver : public SampleDriver {
         } else {
             cb(V1_3::ErrorStatus::INVALID_ARGUMENT, {});
         }
-        return Void();
+        return hardware::Void();
     }
 
-    Return<V1_3::ErrorStatus> prepareModel_1_3(
-            const HidlModel& model, ExecutionPreference preference, Priority priority,
-            const OptionalTimePoint& deadline, const hidl_vec<hidl_handle>& modelCache,
-            const hidl_vec<hidl_handle>& dataCache, const CacheToken& token,
+    hardware::Return<V1_3::ErrorStatus> prepareModel_1_3(
+            const HidlModel& model, V1_1::ExecutionPreference preference, V1_3::Priority priority,
+            const V1_3::OptionalTimePoint& deadline,
+            const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+            const hardware::hidl_vec<hardware::hidl_handle>& dataCache, const HalCacheToken& token,
             const sp<V1_3::IPreparedModelCallback>& callback) override {
         // NOTE: We verify that all operations in the model are supported.
         V1_3::ErrorStatus outStatus = V1_3::ErrorStatus::INVALID_ARGUMENT;
         auto ret = getSupportedOperations_1_3(
                 model, [&outStatus](V1_3::ErrorStatus inStatus,
-                                    const hidl_vec<bool>& supportedOperations) {
+                                    const hardware::hidl_vec<bool>& supportedOperations) {
                     if (inStatus == V1_3::ErrorStatus::NONE) {
                         if (std::all_of(supportedOperations.begin(), supportedOperations.end(),
                                         [](bool v) { return v; })) {
@@ -610,57 +617,60 @@ class TestDriverV1_2 : public V1_2::IDevice {
    public:
     TestDriverV1_2(const char* name, std::set<Signature> signatures)
         : mLatestDriver(new TestDriver(name, std::move(signatures))) {}
-    Return<void> getCapabilities_1_2(getCapabilities_1_2_cb _hidl_cb) override {
+    hardware::Return<void> getCapabilities_1_2(getCapabilities_1_2_cb _hidl_cb) override {
         return mLatestDriver->getCapabilities_1_2(_hidl_cb);
     }
-    Return<void> getSupportedOperations_1_2(const V1_2::Model& model,
-                                            getSupportedOperations_1_2_cb _hidl_cb) override {
+    hardware::Return<void> getSupportedOperations_1_2(
+            const V1_2::Model& model, getSupportedOperations_1_2_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations_1_2(model, _hidl_cb);
     }
-    Return<V1_0::ErrorStatus> prepareModel_1_2(
-            const V1_2::Model& model, ExecutionPreference preference,
-            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const CacheToken& token,
+    hardware::Return<V1_0::ErrorStatus> prepareModel_1_2(
+            const V1_2::Model& model, V1_1::ExecutionPreference preference,
+            const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+            const hardware::hidl_vec<hardware::hidl_handle>& dataCache, const HalCacheToken& token,
             const sp<V1_2::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel_1_2(model, preference, modelCache, dataCache, token,
                                                actualCallback);
     }
-    Return<void> getVersionString(getVersionString_cb _hidl_cb) override {
+    hardware::Return<void> getVersionString(getVersionString_cb _hidl_cb) override {
         return mLatestDriver->getVersionString(_hidl_cb);
     }
-    Return<void> getType(getType_cb _hidl_cb) override { return mLatestDriver->getType(_hidl_cb); }
-    Return<void> getSupportedExtensions(getSupportedExtensions_cb _hidl_cb) {
+    hardware::Return<void> getType(getType_cb _hidl_cb) override {
+        return mLatestDriver->getType(_hidl_cb);
+    }
+    hardware::Return<void> getSupportedExtensions(getSupportedExtensions_cb _hidl_cb) {
         return mLatestDriver->getSupportedExtensions(_hidl_cb);
     }
-    Return<void> getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb _hidl_cb) {
+    hardware::Return<void> getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb _hidl_cb) {
         return mLatestDriver->getNumberOfCacheFilesNeeded(_hidl_cb);
     }
-    Return<V1_0::ErrorStatus> prepareModelFromCache(
-            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const CacheToken& token, const sp<V1_2::IPreparedModelCallback>& callback) {
+    hardware::Return<V1_0::ErrorStatus> prepareModelFromCache(
+            const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+            const hardware::hidl_vec<hardware::hidl_handle>& dataCache, const HalCacheToken& token,
+            const sp<V1_2::IPreparedModelCallback>& callback) {
         return mLatestDriver->prepareModelFromCache(modelCache, dataCache, token, callback);
     }
-    Return<void> getCapabilities_1_1(getCapabilities_1_1_cb _hidl_cb) override {
+    hardware::Return<void> getCapabilities_1_1(getCapabilities_1_1_cb _hidl_cb) override {
         return mLatestDriver->getCapabilities_1_1(_hidl_cb);
     }
-    Return<void> getSupportedOperations_1_1(const V1_1::Model& model,
-                                            getSupportedOperations_1_1_cb _hidl_cb) override {
+    hardware::Return<void> getSupportedOperations_1_1(
+            const V1_1::Model& model, getSupportedOperations_1_1_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations_1_1(model, _hidl_cb);
     }
-    Return<V1_0::ErrorStatus> prepareModel_1_1(
-            const V1_1::Model& model, ExecutionPreference preference,
+    hardware::Return<V1_0::ErrorStatus> prepareModel_1_1(
+            const V1_1::Model& model, V1_1::ExecutionPreference preference,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel_1_1(model, preference, actualCallback);
     }
-    Return<DeviceStatus> getStatus() override { return mLatestDriver->getStatus(); }
-    Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
+    hardware::Return<V1_0::DeviceStatus> getStatus() override { return mLatestDriver->getStatus(); }
+    hardware::Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
         return mLatestDriver->getCapabilities(_hidl_cb);
     }
-    Return<void> getSupportedOperations(const V1_0::Model& model,
-                                        getSupportedOperations_cb _hidl_cb) override {
+    hardware::Return<void> getSupportedOperations(const V1_0::Model& model,
+                                                  getSupportedOperations_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations(model, _hidl_cb);
     }
-    Return<V1_0::ErrorStatus> prepareModel(
+    hardware::Return<V1_0::ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel(model, actualCallback);
@@ -675,27 +685,27 @@ class TestDriverV1_1 : public V1_1::IDevice {
    public:
     TestDriverV1_1(const char* name, std::set<Signature> signatures)
         : mLatestDriver(new TestDriver(name, std::move(signatures))) {}
-    Return<void> getCapabilities_1_1(getCapabilities_1_1_cb _hidl_cb) override {
+    hardware::Return<void> getCapabilities_1_1(getCapabilities_1_1_cb _hidl_cb) override {
         return mLatestDriver->getCapabilities_1_1(_hidl_cb);
     }
-    Return<void> getSupportedOperations_1_1(const V1_1::Model& model,
-                                            getSupportedOperations_1_1_cb _hidl_cb) override {
+    hardware::Return<void> getSupportedOperations_1_1(
+            const V1_1::Model& model, getSupportedOperations_1_1_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations_1_1(model, _hidl_cb);
     }
-    Return<V1_0::ErrorStatus> prepareModel_1_1(
-            const V1_1::Model& model, ExecutionPreference preference,
+    hardware::Return<V1_0::ErrorStatus> prepareModel_1_1(
+            const V1_1::Model& model, V1_1::ExecutionPreference preference,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel_1_1(model, preference, actualCallback);
     }
-    Return<DeviceStatus> getStatus() override { return mLatestDriver->getStatus(); }
-    Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
+    hardware::Return<V1_0::DeviceStatus> getStatus() override { return mLatestDriver->getStatus(); }
+    hardware::Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
         return mLatestDriver->getCapabilities(_hidl_cb);
     }
-    Return<void> getSupportedOperations(const V1_0::Model& model,
-                                        getSupportedOperations_cb _hidl_cb) override {
+    hardware::Return<void> getSupportedOperations(const V1_0::Model& model,
+                                                  getSupportedOperations_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations(model, _hidl_cb);
     }
-    Return<V1_0::ErrorStatus> prepareModel(
+    hardware::Return<V1_0::ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel(model, actualCallback);
@@ -710,19 +720,19 @@ class TestDriverV1_0 : public V1_0::IDevice {
    public:
     TestDriverV1_0(const char* name, std::set<Signature> signatures)
         : mLatestDriver(new TestDriver(name, std::move(signatures))) {}
-    Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
+    hardware::Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
         return mLatestDriver->getCapabilities(_hidl_cb);
     }
-    Return<void> getSupportedOperations(const V1_0::Model& model,
-                                        getSupportedOperations_cb _hidl_cb) override {
+    hardware::Return<void> getSupportedOperations(const V1_0::Model& model,
+                                                  getSupportedOperations_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations(model, _hidl_cb);
     }
-    Return<V1_0::ErrorStatus> prepareModel(
+    hardware::Return<V1_0::ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel(model, actualCallback);
     }
-    Return<DeviceStatus> getStatus() override { return mLatestDriver->getStatus(); }
+    hardware::Return<V1_0::DeviceStatus> getStatus() override { return mLatestDriver->getStatus(); }
 
    private:
     const sp<V1_3::IDevice> mLatestDriver;

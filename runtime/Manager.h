@@ -43,39 +43,41 @@ class ModelArgumentInfo;
 class VersionedIPreparedModel;
 
 // A unified interface for actual driver prepared model as well as the CPU.
-class PreparedModel {
-    DISALLOW_COPY_AND_ASSIGN(PreparedModel);
+class RuntimePreparedModel {
+    DISALLOW_COPY_AND_ASSIGN(RuntimePreparedModel);
 
    public:
-    PreparedModel() = default;
-    virtual ~PreparedModel() = default;
+    RuntimePreparedModel() = default;
+    virtual ~RuntimePreparedModel() = default;
 
     virtual const Device* getDevice() const = 0;
     virtual std::shared_ptr<VersionedIPreparedModel> getInterface() const = 0;
 
     // Perform computation with given input/output argument info and memory pools.
-    virtual std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> execute(
+    virtual std::tuple<int, std::vector<OutputShape>, Timing> execute(
             const std::vector<ModelArgumentInfo>& inputs,
             const std::vector<ModelArgumentInfo>& outputs,
-            const std::vector<const Memory*>& memories,
-            const std::shared_ptr<ExecutionBurstController>& burstController,
-            hal::MeasureTiming measure, const std::optional<Deadline>& deadline,
-            const hal::OptionalTimeoutDuration& loopTimeoutDuration) const = 0;
+            const std::vector<const RuntimeMemory*>& memories,
+            const std::shared_ptr<ExecutionBurstController>& burstController, MeasureTiming measure,
+            const std::optional<Deadline>& deadline,
+            const OptionalTimeoutDuration& loopTimeoutDuration) const = 0;
 
     // Perform fenced computation with given input/output argument info and memory pools.
     // The returned timing information is only valid if the callback is nullptr.
     // Returns error_code, sync_fence, callback and timing.
-    virtual std::tuple<int, int, sp<hal::IFencedExecutionCallback>, hal::Timing> executeFenced(
+    virtual std::tuple<int, int, sp<V1_3::IFencedExecutionCallback>, Timing> executeFenced(
             const std::vector<ModelArgumentInfo>& inputs,
             const std::vector<ModelArgumentInfo>& outputs,
-            const std::vector<const Memory*>& memories, const std::vector<int>& waitFor,
-            hal::MeasureTiming measure, const std::optional<Deadline>& deadline,
-            const hal::OptionalTimeoutDuration& loopTimeoutDuration,
-            const hal::OptionalTimeoutDuration& timeoutDurationAfterFence) const = 0;
+            const std::vector<const RuntimeMemory*>& memories, const std::vector<int>& waitFor,
+            MeasureTiming measure, const std::optional<Deadline>& deadline,
+            const OptionalTimeoutDuration& loopTimeoutDuration,
+            const OptionalTimeoutDuration& timeoutDurationAfterFence) const = 0;
 
     virtual std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
             bool preferPowerOverLatency) const = 0;
 };
+
+using ModelFactory = std::function<Model()>;
 
 // A unified interface for actual driver devices as well as the CPU
 class Device {
@@ -90,29 +92,28 @@ class Device {
     virtual const std::string& getVersionString() const = 0;
     virtual int64_t getFeatureLevel() const = 0;
     virtual int32_t getType() const = 0;
-    virtual const std::vector<hal::Extension>& getSupportedExtensions() const = 0;
+    virtual const std::vector<Extension>& getSupportedExtensions() const = 0;
 
     // See the MetaModel class in MetaModel.h for more details.
     virtual std::vector<bool> getSupportedOperations(const MetaModel& metaModel) const = 0;
 
-    virtual hal::PerformanceInfo getPerformance(hal::OperandType type) const = 0;
-    virtual hal::PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const = 0;
-    virtual hal::PerformanceInfo getRelaxedFloat32toFloat16PerformanceTensor() const = 0;
-    virtual hal::PerformanceInfo getIfPerformance() const = 0;
-    virtual hal::PerformanceInfo getWhilePerformance() const = 0;
+    virtual Capabilities::PerformanceInfo getPerformance(OperandType type) const = 0;
+    virtual Capabilities::PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const = 0;
+    virtual Capabilities::PerformanceInfo getRelaxedFloat32toFloat16PerformanceTensor() const = 0;
+    virtual Capabilities::PerformanceInfo getIfPerformance() const = 0;
+    virtual Capabilities::PerformanceInfo getWhilePerformance() const = 0;
     virtual bool isCachingSupported() const = 0;
     virtual int wait() const = 0;
 
-    virtual std::pair<int, std::shared_ptr<PreparedModel>> prepareModel(
-            const hal::ModelFactory& makeModel, hal::ExecutionPreference preference,
-            hal::Priority priority, const std::optional<Deadline>& deadline,
-            const std::string& cacheDir,
-            const std::optional<hal::CacheToken>& maybeToken) const = 0;
+    virtual std::pair<int, std::shared_ptr<RuntimePreparedModel>> prepareModel(
+            const ModelFactory& makeModel, ExecutionPreference preference, Priority priority,
+            const std::optional<Deadline>& deadline, const std::string& cacheDir,
+            const std::optional<CacheToken>& maybeToken) const = 0;
 
-    // The caller is responsible for making sure the MemoryDescriptor only contains PreparedModels
-    // from the same Device.
-    virtual std::pair<int, std::unique_ptr<Memory>> allocate(const MemoryDescriptor& desc,
-                                                             hal::OperandType type) const = 0;
+    // The caller is responsible for making sure the MemoryDescriptor only contains
+    // PreparedModels from the same Device.
+    virtual std::pair<int, std::unique_ptr<RuntimeMemory>> allocate(const MemoryDescriptor& desc,
+                                                                    OperandType type) const = 0;
 };
 
 // Manages the NN HAL devices.  Only one instance of this class will exist.
@@ -168,8 +169,8 @@ class DeviceManager {
     }
 
     // Register a test device.
-    void forTest_registerDevice(const std::string& name, const sp<hal::V1_0::IDevice>& device) {
-        const hal::DeviceFactory makeDevice = [device](bool /*blocking*/) { return device; };
+    void forTest_registerDevice(const std::string& name, const sp<V1_0::IDevice>& device) {
+        const HalDeviceFactory makeDevice = [device](bool /*blocking*/) { return device; };
         registerDevice(name, makeDevice);
     }
 
@@ -182,7 +183,7 @@ class DeviceManager {
 
     // Make a test device
     static std::shared_ptr<Device> forTest_makeDriverDevice(const std::string& name,
-                                                            const sp<hal::V1_0::IDevice>& device);
+                                                            const sp<V1_0::IDevice>& device);
 
     bool forTest_isCpuDevice(const ANeuralNetworksDevice* device) const {
         return reinterpret_cast<const Device*>(device) == getCpuDevice().get();
@@ -193,7 +194,7 @@ class DeviceManager {
     DeviceManager();
 
     // Adds a device for the manager to use.
-    void registerDevice(const std::string& name, const hal::DeviceFactory& makeDevice);
+    void registerDevice(const std::string& name, const HalDeviceFactory& makeDevice);
 
     void findAvailableDevices();
 

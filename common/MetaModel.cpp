@@ -24,6 +24,7 @@
 #include <sstream>
 #include <type_traits>
 #include <utility>
+#include <vector>
 
 #include "GraphDump.h"
 #include "HalInterfaces.h"
@@ -31,14 +32,12 @@
 
 namespace android::nn {
 
-using namespace hal;
-
 namespace {
 
 // Add an element to the end of the vector and return a pair consisting of the
 // index of the new element and a pointer to the new element.
 template <class T>
-std::pair<uint32_t, T*> extend(hidl_vec<T>* vec) {
+std::pair<uint32_t, T*> extend(hardware::hidl_vec<T>* vec) {
     size_t nextIndex = vec->size();
     vec->resize(nextIndex + 1);
     return {nextIndex, &(*vec)[nextIndex]};
@@ -48,14 +47,14 @@ std::pair<uint32_t, T*> extend(hidl_vec<T>* vec) {
 // return a pair consisting of the index of the new element and a pointer to the
 // new element.
 template <class T>
-std::pair<uint32_t, T*> extend(hidl_vec<T>* vec, const T& val) {
+std::pair<uint32_t, T*> extend(hardware::hidl_vec<T>* vec, const T& val) {
     auto extended = extend(vec);
     *extended.second = val;
     return extended;
 }
 
 template <typename T>
-bool operator<(const hidl_vec<T>& a, const hidl_vec<T>& b) {
+bool operator<(const hardware::hidl_vec<T>& a, const hardware::hidl_vec<T>& b) {
     return std::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
 }
 
@@ -63,19 +62,19 @@ bool operator<(const hidl_vec<T>& a, const hidl_vec<T>& b) {
 template <class T_Model>
 struct ModelVersion;
 template <>
-struct ModelVersion<hal::V1_0::Model> {
+struct ModelVersion<V1_0::Model> {
     static constexpr char name[] = "V1_0";
 };
 template <>
-struct ModelVersion<hal::V1_1::Model> {
+struct ModelVersion<V1_1::Model> {
     static constexpr char name[] = "V1_1";
 };
 template <>
-struct ModelVersion<hal::V1_2::Model> {
+struct ModelVersion<V1_2::Model> {
     static constexpr char name[] = "V1_2";
 };
 template <>
-struct ModelVersion<hal::V1_3::Model> {
+struct ModelVersion<V1_3::Model> {
     static constexpr char name[] = "V1_3";
 };
 
@@ -84,16 +83,16 @@ struct ModelVersion<hal::V1_3::Model> {
 template <typename T_ReturnType>
 T_ReturnType uncheckedConvertTo(OperationType type);
 template <>
-hal::V1_0::OperationType uncheckedConvertTo<hal::V1_0::OperationType>(OperationType type) {
-    return uncheckedConvertToV1_0(type);
+V1_0::OperationType uncheckedConvertTo<V1_0::OperationType>(OperationType type) {
+    return uncheckedConvertToV1_0(convertToV1_3(type));
 }
 template <>
-hal::V1_1::OperationType uncheckedConvertTo<hal::V1_1::OperationType>(OperationType type) {
-    return uncheckedConvertToV1_1(type);
+V1_1::OperationType uncheckedConvertTo<V1_1::OperationType>(OperationType type) {
+    return uncheckedConvertToV1_1(convertToV1_3(type));
 }
 template <>
-hal::V1_2::OperationType uncheckedConvertTo<hal::V1_2::OperationType>(OperationType type) {
-    return uncheckedConvertToV1_2(type);
+V1_2::OperationType uncheckedConvertTo<V1_2::OperationType>(OperationType type) {
+    return uncheckedConvertToV1_2(convertToV1_3(type));
 }
 
 // Dispatcher mechanism for calling an appropriate convertToV1_* given the
@@ -101,45 +100,41 @@ hal::V1_2::OperationType uncheckedConvertTo<hal::V1_2::OperationType>(OperationT
 template <typename T_ReturnType>
 T_ReturnType convertTo(Operand operand);
 template <>
-hal::V1_0::Operand convertTo<hal::V1_0::Operand>(Operand operand) {
-    return convertToV1_0(operand);
+V1_0::Operand convertTo<V1_0::Operand>(Operand operand) {
+    return convertToV1_0(convertToV1_3(operand));
 }
 template <>
-hal::V1_2::Operand convertTo<hal::V1_2::Operand>(Operand operand) {
-    return convertToV1_2(operand);
+V1_2::Operand convertTo<V1_2::Operand>(Operand operand) {
+    return convertToV1_2(convertToV1_3(operand));
 }
 
 // Dispatcher mechanism for calling an appropriate convertToV1_* given the
-// desired return type.  Note that there are no V1_[12]::OperandLifeTime types.
+// desired return type.  Note that there are no V1_[12]::Operand::LifeTime types.
 template <typename T_ReturnType>
-T_ReturnType convertTo(OperandLifeTime lifetime);
+T_ReturnType convertTo(V1_3::OperandLifeTime lifetime);
 template <>
-hal::V1_0::OperandLifeTime convertTo<hal::V1_0::OperandLifeTime>(OperandLifeTime lifetime) {
+V1_0::OperandLifeTime convertTo<V1_0::OperandLifeTime>(V1_3::OperandLifeTime lifetime) {
     return convertToV1_0(lifetime);
-}
-template <>
-hal::V1_3::OperandLifeTime convertTo<hal::V1_3::OperandLifeTime>(OperandLifeTime lifetime) {
-    return lifetime;
 }
 
 // Dispatcher mechanism for calling an appropriate compliantWithV1_* given the
 // desired target model type.
 template <typename T_SlicedModel>
-void getNoncompliantOperations(const hal::V1_3::Model& model,
+void getNoncompliantOperations(const V1_3::Model& model,
                                std::set<uint32_t>* noncompliantOperations);
 template <>
-void getNoncompliantOperations<hal::V1_0::Model>(const hal::V1_3::Model& model,
-                                                 std::set<uint32_t>* noncompliantOperations) {
+void getNoncompliantOperations<V1_0::Model>(const V1_3::Model& model,
+                                            std::set<uint32_t>* noncompliantOperations) {
     compliantWithV1_0(model, noncompliantOperations);
 }
 template <>
-void getNoncompliantOperations<hal::V1_1::Model>(const hal::V1_3::Model& model,
-                                                 std::set<uint32_t>* noncompliantOperations) {
+void getNoncompliantOperations<V1_1::Model>(const V1_3::Model& model,
+                                            std::set<uint32_t>* noncompliantOperations) {
     compliantWithV1_1(model, noncompliantOperations);
 }
 template <>
-void getNoncompliantOperations<hal::V1_2::Model>(const hal::V1_3::Model& model,
-                                                 std::set<uint32_t>* noncompliantOperations) {
+void getNoncompliantOperations<V1_2::Model>(const V1_3::Model& model,
+                                            std::set<uint32_t>* noncompliantOperations) {
     compliantWithV1_2(model, noncompliantOperations);
 }
 
@@ -191,18 +186,25 @@ MetaModel::ReturnedSlice<T_SlicedModel> MetaModel::getSlice(Slice<T_SlicedModel>
                 return slice->mSlicedOperationIndexToOrigIndex.at(slicedOperationIndex);
             })));
 }
-template MetaModel::ReturnedSlice<hal::V1_0::Model> MetaModel::getSlice(
-        Slice<hal::V1_0::Model>* slice) const;
-template MetaModel::ReturnedSlice<hal::V1_1::Model> MetaModel::getSlice(
-        Slice<hal::V1_1::Model>* slice) const;
-template MetaModel::ReturnedSlice<hal::V1_2::Model> MetaModel::getSlice(
-        Slice<hal::V1_2::Model>* slice) const;
-// When adding HAL version 1.4, make sure to handle control flow and referenced
-// subgraphs here properly. A V1_3 sliced model should contain an IF/WHILE and
-// its referenced subgraphs only if there are no V1_4+ operations in those
-// subgraphs.
-// template MetaModel::ReturnedSlice<hal::V1_3::Model> MetaModel::getSlice(
-//         Slice<hal::V1_3::Model>* slice) const;
+template MetaModel::ReturnedSlice<V1_0::Model> MetaModel::getSlice(Slice<V1_0::Model>* slice) const;
+template MetaModel::ReturnedSlice<V1_1::Model> MetaModel::getSlice(Slice<V1_1::Model>* slice) const;
+template MetaModel::ReturnedSlice<V1_2::Model> MetaModel::getSlice(Slice<V1_2::Model>* slice) const;
+template <>
+MetaModel::ReturnedSlice<V1_3::Model> MetaModel::getSlice(Slice<V1_3::Model>* slice) const {
+    CHECK(slice != nullptr);
+    if (slice->mState == SliceState::UNINITIALIZED) {
+        // When adding HAL version 1.4, make sure to handle control flow and referenced
+        // subgraphs here properly. A V1_3 sliced model should contain an IF/WHILE and
+        // its referenced subgraphs only if there are no V1_4+ operations in those
+        // subgraphs.
+        *slice = {
+                .mState = SliceState::NORMAL,
+                .mHidlModel = convertToV1_3(mModel),
+        };
+    }
+    Mapper trivialMapper = [](uint32_t i) { return i; };
+    return std::make_pair(slice->mHidlModel, trivialMapper);
+}
 
 // Utility class for makeSlice().
 //
@@ -234,8 +236,8 @@ template MetaModel::ReturnedSlice<hal::V1_2::Model> MetaModel::getSlice(
 template <typename T_SlicedOperand>
 class MetaModel::OrigOperandToSlicedInputOperandIndex {
    public:
-    OrigOperandToSlicedInputOperandIndex(hidl_vec<T_SlicedOperand>* slicedOperands,
-                                         hidl_vec<uint32_t>* slicedInputIndexes)
+    OrigOperandToSlicedInputOperandIndex(hardware::hidl_vec<T_SlicedOperand>* slicedOperands,
+                                         hardware::hidl_vec<uint32_t>* slicedInputIndexes)
         : mSlicedOperands(*slicedOperands), mSlicedInputIndexes(*slicedInputIndexes) {}
 
     // Given an operand from the original model, return the index of the
@@ -246,21 +248,19 @@ class MetaModel::OrigOperandToSlicedInputOperandIndex {
         auto it = mMap.find(operand);
         if (it != mMap.end()) {
             VLOG(COMPILATION) << "OrigOperandToSlicedInputOperandIndex::getIndex looked for "
-                              << toString(operand) << " and found " << it->second << ": "
-                              << toString(it->first);
+                              << operand << " and found " << it->second << ": " << it->first;
             return it->second;
         }
 
         // Create
-        operand.numberOfConsumers = 0;
-        operand.lifetime = convertTo<decltype(operand.lifetime)>(OperandLifeTime::SUBGRAPH_INPUT);
+        operand.lifetime = Operand::LifeTime::SUBGRAPH_INPUT;
         operand.location = {};
         uint32_t slicedOperandIndex =
                 extend(&mSlicedOperands, convertTo<T_SlicedOperand>(operand)).first;
         mMap[operand] = slicedOperandIndex;
         extend(&mSlicedInputIndexes, slicedOperandIndex);
         VLOG(COMPILATION) << "OrigOperandToSlicedInputOperandIndex::getIndex created "
-                          << slicedOperandIndex << ": " << toString(operand);
+                          << slicedOperandIndex << ": " << operand;
         return slicedOperandIndex;
     }
 
@@ -284,38 +284,36 @@ class MetaModel::OrigOperandToSlicedInputOperandIndex {
         }
 
        private:
-        static bool compare(const SymmPerChannelQuantParams& a,
-                            const SymmPerChannelQuantParams& b) {
+        static bool compare(const Operand::SymmPerChannelQuantParams& a,
+                            const Operand::SymmPerChannelQuantParams& b) {
             if (a.scales != b.scales) {
                 return a.scales < b.scales;
             }
             return a.channelDim < b.channelDim;
         }
 
-        static bool compare(const OperandExtraParams& a, const OperandExtraParams& b) {
-            if (a.getDiscriminator() != b.getDiscriminator()) {
-                return a.getDiscriminator() < b.getDiscriminator();
+        static bool compare(const Operand::ExtraParams& a, const Operand::ExtraParams& b) {
+            if (a.index() != b.index()) {
+                return a.index() < b.index();
             }
-
-            switch (a.getDiscriminator()) {
-                case OperandExtraParams::hidl_discriminator::channelQuant:
-                    return compare(a.channelQuant(), b.channelQuant());
-
-                case OperandExtraParams::hidl_discriminator::extension:
-                    return a.extension() < b.extension();
-
-                case OperandExtraParams::hidl_discriminator::none:
-                    return false;
-
-                default:
-                    CHECK(false) << "Unexpected";
-                    return false;
+            if (std::holds_alternative<Operand::SymmPerChannelQuantParams>(a)) {
+                return compare(std::get<Operand::SymmPerChannelQuantParams>(a),
+                               std::get<Operand::SymmPerChannelQuantParams>(b));
             }
+            if (std::holds_alternative<Operand::ExtensionParams>(a)) {
+                return compare(std::get<Operand::ExtensionParams>(a),
+                               std::get<Operand::ExtensionParams>(b));
+            }
+            if (std::holds_alternative<Operand::NoParams>(a)) {
+                return false;
+            }
+            CHECK(false) << "Unexpected";
+            return false;
         }
     };
     std::map<Operand, uint32_t, Compare> mMap;
-    hidl_vec<T_SlicedOperand>& mSlicedOperands;
-    hidl_vec<uint32_t>& mSlicedInputIndexes;
+    hardware::hidl_vec<T_SlicedOperand>& mSlicedOperands;
+    hardware::hidl_vec<uint32_t>& mSlicedInputIndexes;
 };
 
 template <class T_SlicedModel>
@@ -329,10 +327,13 @@ void MetaModel::processOperations(
     using SlicedOperation = typename Slice<T_SlicedModel>::Operation;
     using SlicedOperationType = typename Slice<T_SlicedModel>::OperationType;
 
-    const auto& origOperands = mHidlModel.main.operands;
-    const auto& origOperations = mHidlModel.main.operations;
+    const auto& origOperands = mModel.main.operands;
+    const auto& origOperations = mModel.main.operations;
     auto& slicedOperands = slice->mHidlModel.operands;
     auto& slicedOperations = slice->mHidlModel.operations;
+
+    std::vector<uint32_t> origOperandNumberOfConsumers =
+            countNumberOfConsumers(origOperands.size(), origOperations);
 
     for (uint32_t origOperationIndex = 0; origOperationIndex < origOperations.size();
          ++origOperationIndex) {
@@ -401,9 +402,9 @@ void MetaModel::processOperations(
                 slicedOperation.outputs[outputNum] = slicedOperandIndex;
 
                 const auto subgraphOutputLifetime = convertTo<decltype(slicedOperand.lifetime)>(
-                        OperandLifeTime::SUBGRAPH_OUTPUT);
+                        V1_3::OperandLifeTime::SUBGRAPH_OUTPUT);
                 if (!inputOperandIndexesOfCompliantOperations.count(origOperandIndex) &&
-                    origOperand.numberOfConsumers) {
+                    origOperandNumberOfConsumers[origOperandIndex] != 0) {
                     // Was consumed only by noncompliant operations; convert to
                     // an output of the sliced model.
                     slicedOperand.lifetime = subgraphOutputLifetime;
@@ -427,24 +428,24 @@ MetaModel::Slice<T_SlicedModel> MetaModel::makeSlice() const {
 
     Slice<T_SlicedModel> slice;
 
-    const auto& origOperands = mHidlModel.main.operands;
-    const auto& origOperations = mHidlModel.main.operations;
+    const auto& origOperands = mModel.main.operands;
+    const auto& origOperations = mModel.main.operations;
     auto& slicedOperands = slice.mHidlModel.operands;
 
     // Indexes of elements of noncompliant origOperations
     std::set<uint32_t> noncompliantOperations;
-    getNoncompliantOperations<T_SlicedModel>(mHidlModel, &noncompliantOperations);
+    getNoncompliantOperations<T_SlicedModel>(convertToV1_3(mModel), &noncompliantOperations);
 
     // Map from an operand index in origOperands to the corresponding operand index in
     // slicedOperands
     std::map<uint32_t, uint32_t> origOperandIndexToSlicedIndex;
 
     // Collect the operand indexes of every operand that is an input to a
-    // compliant operation.  If the operand is a CONSTANT_* or a NO_VALUE, copy
-    // it to the sliced model and update origOperandIndexToSlicedIndex
-    // accordingly.  Otherwise, we'll deal with the operand in the subsequent
-    // "Main loop", where we process operation outputs (intermediates and model
-    // outputs).
+    // compliant operation.  If the operand is a CONSTANT_*, POINTER, or a
+    // NO_VALUE, copy it to the sliced model and update
+    // origOperandIndexToSlicedIndex accordingly.  Otherwise, we'll deal with
+    // the operand in the subsequent "Main loop", where we process operation
+    // outputs (intermediates and model outputs).
     std::set<uint32_t> inputOperandIndexesOfCompliantOperations;
     for (uint32_t origOperationIndex = 0; origOperationIndex < origOperations.size();
          ++origOperationIndex) {
@@ -455,9 +456,10 @@ MetaModel::Slice<T_SlicedModel> MetaModel::makeSlice() const {
             if (inputOperandIndexesOfCompliantOperations.insert(input).second) {
                 const Operand& origOperand = origOperands[input];
                 switch (origOperand.lifetime) {
-                    case OperandLifeTime::CONSTANT_COPY:
-                    case OperandLifeTime::CONSTANT_REFERENCE:
-                    case OperandLifeTime::NO_VALUE: {
+                    case Operand::LifeTime::CONSTANT_COPY:
+                    case Operand::LifeTime::CONSTANT_REFERENCE:
+                    case Operand::LifeTime::POINTER:
+                    case Operand::LifeTime::NO_VALUE: {
                         const uint32_t slicedOperandIndex =
                                 extend(&slicedOperands, convertTo<SlicedOperand>(origOperand))
                                         .first;
@@ -482,7 +484,7 @@ MetaModel::Slice<T_SlicedModel> MetaModel::makeSlice() const {
     // only if it is consumed by at least one compliant operation.  Note that in
     // the sliced model we share all model inputs of the same "type"; and that
     // we may later add model inputs to the sliced model.
-    for (uint32_t origInputIndex : mHidlModel.main.inputIndexes) {
+    for (uint32_t origInputIndex : mModel.main.inputIndexes) {
         if (inputOperandIndexesOfCompliantOperations.count(origInputIndex)) {
             const uint32_t slicedIndex =
                     origOperandToSlicedInputOperandIndex.getIndex(origOperands[origInputIndex]);
@@ -502,19 +504,19 @@ MetaModel::Slice<T_SlicedModel> MetaModel::makeSlice() const {
     // This would be more complex and probably take more computation time, but
     // it would reduce the size of the sliced model, and hence the time spent
     // copying it around and passing it across the HAL interface.
-    slice.mHidlModel.operandValues = mHidlModel.operandValues;
-    slice.mHidlModel.pools = mHidlModel.pools;
+    slice.mHidlModel.operandValues = convertToV1_0(mModel.operandValues);
+    slice.mHidlModel.pools = convertToV1_0(mModel.pools);
 
     if (VLOG_IS_ON(COMPILATION)) {
         {
             std::ostringstream fromName;
-            fromName << "Slice: From " << ModelVersion<decltype(mHidlModel)>::name;
-            graphDump(fromName.str().c_str(), mHidlModel);
+            fromName << "Slice: From canonical";
+            graphDump(fromName.str().c_str(), mModel);
         }
         {
             std::ostringstream toName;
             toName << "Slice: To " << ModelVersion<decltype(slice.mHidlModel)>::name;
-            graphDump(toName.str().c_str(), convertToV1_3(slice.mHidlModel));
+            graphDump(toName.str().c_str(), uncheckedConvert(convertToV1_3(slice.mHidlModel)));
         }
     }
 

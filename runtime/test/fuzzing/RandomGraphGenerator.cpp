@@ -44,7 +44,7 @@ using namespace test_helper;
 RandomOperand::RandomOperand(const OperandSignature& operand, TestOperandType dataType,
                              uint32_t rank)
     : type(operand.type), finalizer(operand.finalizer) {
-    NN_FUZZER_LOG << "Operand: " << toString(type);
+    NN_FUZZER_LOG << "Operand: " << type;
     if (operand.constructor) operand.constructor(dataType, rank, this);
 }
 
@@ -81,7 +81,7 @@ size_t RandomOperand::getBufferSize() const {
 // Construct a RandomOperation from OperationSignature.
 RandomOperation::RandomOperation(const OperationSignature& operation)
     : opType(operation.opType), finalizer(operation.finalizer) {
-    NN_FUZZER_LOG << "Operation: " << toString(opType);
+    NN_FUZZER_LOG << "Operation: " << opType;
 
     // Determine the data type and rank of the operation and invoke the constructor.
     TestOperandType dataType = getRandomChoice(operation.supportedDataTypes);
@@ -294,14 +294,14 @@ TestModel RandomGraph::createTestModel() {
 
     // Set model operations.
     for (auto& operation : mOperations) {
-        NN_FUZZER_LOG << "Operation: " << toString(operation.opType);
+        NN_FUZZER_LOG << "Operation: " << operation.opType;
         TestOperation testOperation = {.type = static_cast<TestOperationType>(operation.opType)};
         for (auto& op : operation.inputs) {
-            NN_FUZZER_LOG << toString(*op);
+            NN_FUZZER_LOG << *op;
             testOperation.inputs.push_back(op->opIndex);
         }
         for (auto& op : operation.outputs) {
-            NN_FUZZER_LOG << toString(*op);
+            NN_FUZZER_LOG << *op;
             testOperation.outputs.push_back(op->opIndex);
         }
         testModel.main.operations.push_back(std::move(testOperation));

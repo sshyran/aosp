@@ -29,11 +29,10 @@
 #include "OperationsUtils.h"
 #include "Tracing.h"
 #include "Utils.h"
+#include "nnapi/TypeUtils.h"
 
 namespace android {
 namespace nn {
-
-using namespace hal;
 
 template <class T_Model>
 struct ModelToHalVersion;
@@ -56,27 +55,27 @@ struct ModelToHalVersion<V1_3::Model> {
 
 class MemoryAccessVerifier {
    public:
-    MemoryAccessVerifier(const hidl_vec<hidl_memory>& pools)
+    MemoryAccessVerifier(const hardware::hidl_vec<hardware::hidl_memory>& pools)
         : mPoolCount(pools.size()), mPoolSizes(mPoolCount) {
         for (size_t i = 0; i < mPoolCount; i++) {
             mPoolSizes[i] = pools[i].size();
         }
     }
-    MemoryAccessVerifier(const hidl_vec<V1_3::Request::MemoryPool>& pools)
+    MemoryAccessVerifier(const hardware::hidl_vec<V1_3::Request::MemoryPool>& pools)
         : mPoolCount(pools.size()), mPoolSizes(mPoolCount) {
         for (size_t i = 0; i < mPoolCount; i++) {
             switch (pools[i].getDiscriminator()) {
-                case Request::MemoryPool::hidl_discriminator::hidlMemory:
+                case V1_3::Request::MemoryPool::hidl_discriminator::hidlMemory:
                     mPoolSizes[i] = pools[i].hidlMemory().size();
                     break;
-                case Request::MemoryPool::hidl_discriminator::token:
+                case V1_3::Request::MemoryPool::hidl_discriminator::token:
                     // Set size to 0 to enforce length == 0 && offset == 0.
                     mPoolSizes[i] = 0;
                     break;
             }
         }
     }
-    bool validate(const DataLocation& location) const {
+    bool validate(const V1_0::DataLocation& location) const {
         if (location.poolIndex >= mPoolCount) {
             LOG(ERROR) << "Invalid poolIndex " << location.poolIndex << "/" << mPoolCount;
             return false;
@@ -99,29 +98,29 @@ class MemoryAccessVerifier {
 
 static bool validateOperandExtraParams(const V1_3::Operand& operand, uint32_t index) {
     switch (operand.type) {
-        case OperandType::FLOAT32:
-        case OperandType::INT32:
-        case OperandType::UINT32:
-        case OperandType::BOOL:
-        case OperandType::SUBGRAPH:
-        case OperandType::TENSOR_FLOAT32:
-        case OperandType::TENSOR_FLOAT16:
-        case OperandType::TENSOR_INT32:
-        case OperandType::TENSOR_QUANT8_ASYMM:
-        case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
-        case OperandType::TENSOR_QUANT8_SYMM:
-        case OperandType::TENSOR_QUANT16_ASYMM:
-        case OperandType::TENSOR_QUANT16_SYMM:
-        case OperandType::TENSOR_BOOL8: {
+        case V1_3::OperandType::FLOAT32:
+        case V1_3::OperandType::INT32:
+        case V1_3::OperandType::UINT32:
+        case V1_3::OperandType::BOOL:
+        case V1_3::OperandType::SUBGRAPH:
+        case V1_3::OperandType::TENSOR_FLOAT32:
+        case V1_3::OperandType::TENSOR_FLOAT16:
+        case V1_3::OperandType::TENSOR_INT32:
+        case V1_3::OperandType::TENSOR_QUANT8_ASYMM:
+        case V1_3::OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+        case V1_3::OperandType::TENSOR_QUANT8_SYMM:
+        case V1_3::OperandType::TENSOR_QUANT16_ASYMM:
+        case V1_3::OperandType::TENSOR_QUANT16_SYMM:
+        case V1_3::OperandType::TENSOR_BOOL8: {
             NN_RET_CHECK(operand.extraParams.getDiscriminator() ==
-                         OperandExtraParams::hidl_discriminator::none)
+                         V1_2::Operand::ExtraParams::hidl_discriminator::none)
                     << "Operand " << index << ": Operand of type "
                     << getOperandTypeName(operand.type)
                     << " has incorrect extraParams: " << toString(operand.extraParams);
         } break;
-        case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL: {
+        case V1_3::OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL: {
             NN_RET_CHECK(operand.extraParams.getDiscriminator() ==
-                         OperandExtraParams::hidl_discriminator::channelQuant)
+                         V1_2::Operand::ExtraParams::hidl_discriminator::channelQuant)
                     << "Operand " << index << ": Operand of type "
                     << getOperandTypeName(operand.type) << " without a Channel Quantization params";
             auto& channelQuant = operand.extraParams.channelQuant();
@@ -151,9 +150,9 @@ static bool validateOperandExtraParams(const V1_3::Operand& operand, uint32_t in
         default: {
             if (isExtensionOperandType(operand.type)) {
                 NN_RET_CHECK(operand.extraParams.getDiscriminator() ==
-                                     OperandExtraParams::hidl_discriminator::extension ||
+                                     V1_2::Operand::ExtraParams::hidl_discriminator::extension ||
                              operand.extraParams.getDiscriminator() ==
-                                     OperandExtraParams::hidl_discriminator::none)
+                                     V1_2::Operand::ExtraParams::hidl_discriminator::none)
                         << "Operand " << index << ": Extension operand of type "
                         << getOperandTypeName(operand.type)
                         << " has incorrect extraParams: " << toString(operand.extraParams);
@@ -165,10 +164,11 @@ static bool validateOperandExtraParams(const V1_3::Operand& operand, uint32_t in
 }
 
 template <typename VersionedOperand>
-static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
-                             const hidl_vec<uint8_t>& operandValues,
-                             const hidl_vec<hidl_memory>& pools,
-                             const hidl_vec<Subgraph>& subgraphs, bool allowUnspecifiedRank) {
+static bool validateOperands(const hardware::hidl_vec<VersionedOperand>& operands,
+                             const hardware::hidl_vec<uint8_t>& operandValues,
+                             const hardware::hidl_vec<hardware::hidl_memory>& pools,
+                             const hardware::hidl_vec<V1_3::Subgraph>& subgraphs,
+                             bool allowUnspecifiedRank) {
     uint32_t index = 0;
     MemoryAccessVerifier poolVerifier(pools);
     for (auto& versionedOperand : operands) {
@@ -182,13 +182,13 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
         V1_3::Operand operand = convertToV1_3(versionedOperand);
         // Validate type and dimensions.
         switch (operand.type) {
-            case OperandType::FLOAT16:
-            case OperandType::FLOAT32:
-            case OperandType::INT32:
-            case OperandType::UINT32:
-            case OperandType::BOOL:
-            case OperandType::SUBGRAPH:
-            case OperandType::OEM: {
+            case V1_3::OperandType::FLOAT16:
+            case V1_3::OperandType::FLOAT32:
+            case V1_3::OperandType::INT32:
+            case V1_3::OperandType::UINT32:
+            case V1_3::OperandType::BOOL:
+            case V1_3::OperandType::SUBGRAPH:
+            case V1_3::OperandType::OEM: {
                 size_t count = operand.dimensions.size();
                 if (count != 0) {
                     LOG(ERROR) << "Operand " << index << ": Scalar data has dimensions of rank "
@@ -197,19 +197,20 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                 }
                 break;
             }
-            case OperandType::TENSOR_FLOAT16:
-            case OperandType::TENSOR_FLOAT32:
-            case OperandType::TENSOR_INT32:
-            case OperandType::TENSOR_QUANT8_ASYMM:
-            case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
-            case OperandType::TENSOR_QUANT8_SYMM:
-            case OperandType::TENSOR_QUANT16_ASYMM:
-            case OperandType::TENSOR_QUANT16_SYMM:
-            case OperandType::TENSOR_BOOL8:
-            case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:
-            case OperandType::TENSOR_OEM_BYTE: {
-                if ((!allowUnspecifiedRank || operand.lifetime == OperandLifeTime::CONSTANT_COPY ||
-                     operand.lifetime == OperandLifeTime::CONSTANT_REFERENCE) &&
+            case V1_3::OperandType::TENSOR_FLOAT16:
+            case V1_3::OperandType::TENSOR_FLOAT32:
+            case V1_3::OperandType::TENSOR_INT32:
+            case V1_3::OperandType::TENSOR_QUANT8_ASYMM:
+            case V1_3::OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+            case V1_3::OperandType::TENSOR_QUANT8_SYMM:
+            case V1_3::OperandType::TENSOR_QUANT16_ASYMM:
+            case V1_3::OperandType::TENSOR_QUANT16_SYMM:
+            case V1_3::OperandType::TENSOR_BOOL8:
+            case V1_3::OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:
+            case V1_3::OperandType::TENSOR_OEM_BYTE: {
+                if ((!allowUnspecifiedRank ||
+                     operand.lifetime == V1_3::OperandLifeTime::CONSTANT_COPY ||
+                     operand.lifetime == V1_3::OperandLifeTime::CONSTANT_REFERENCE) &&
                     operand.dimensions.size() == 0) {
                     LOG(ERROR) << "Operand " << index << ": Tensor has dimensions of rank 0";
                     return false;
@@ -227,16 +228,16 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
 
         // Validate the scale.
         switch (operand.type) {
-            case OperandType::FLOAT16:
-            case OperandType::FLOAT32:
-            case OperandType::INT32:
-            case OperandType::UINT32:
-            case OperandType::BOOL:
-            case OperandType::SUBGRAPH:
-            case OperandType::TENSOR_FLOAT16:
-            case OperandType::TENSOR_FLOAT32:
-            case OperandType::TENSOR_BOOL8:
-            case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:
+            case V1_3::OperandType::FLOAT16:
+            case V1_3::OperandType::FLOAT32:
+            case V1_3::OperandType::INT32:
+            case V1_3::OperandType::UINT32:
+            case V1_3::OperandType::BOOL:
+            case V1_3::OperandType::SUBGRAPH:
+            case V1_3::OperandType::TENSOR_FLOAT16:
+            case V1_3::OperandType::TENSOR_FLOAT32:
+            case V1_3::OperandType::TENSOR_BOOL8:
+            case V1_3::OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:
                 if (operand.scale != 0.f) {
                     LOG(ERROR) << "Operand " << index << ": Operand of type "
                                << getOperandTypeName(operand.type) << " with a non-zero scale ("
@@ -244,7 +245,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                     return false;
                 }
                 break;
-            case OperandType::TENSOR_INT32:
+            case V1_3::OperandType::TENSOR_INT32:
                 // TENSOR_INT32 may be used with or without scale, depending on the operation.
                 if (operand.scale < 0.f) {
                     LOG(ERROR) << "Operand " << index << ": Operand of type "
@@ -252,11 +253,11 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                     return false;
                 }
                 break;
-            case OperandType::TENSOR_QUANT8_ASYMM:
-            case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
-            case OperandType::TENSOR_QUANT8_SYMM:
-            case OperandType::TENSOR_QUANT16_ASYMM:
-            case OperandType::TENSOR_QUANT16_SYMM:
+            case V1_3::OperandType::TENSOR_QUANT8_ASYMM:
+            case V1_3::OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+            case V1_3::OperandType::TENSOR_QUANT8_SYMM:
+            case V1_3::OperandType::TENSOR_QUANT16_ASYMM:
+            case V1_3::OperandType::TENSOR_QUANT16_SYMM:
                 if (operand.scale <= 0.f) {
                     LOG(ERROR) << "Operand " << index << ": Operand of type "
                                << getOperandTypeName(operand.type) << " with a non-positive scale";
@@ -277,18 +278,18 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
 
         // Validate the zeroPoint.
         switch (operand.type) {
-            case OperandType::FLOAT16:
-            case OperandType::FLOAT32:
-            case OperandType::INT32:
-            case OperandType::UINT32:
-            case OperandType::BOOL:
-            case OperandType::SUBGRAPH:
-            case OperandType::TENSOR_FLOAT16:
-            case OperandType::TENSOR_FLOAT32:
-            case OperandType::TENSOR_INT32:
-            case OperandType::TENSOR_BOOL8:
-            case OperandType::TENSOR_QUANT8_SYMM:
-            case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:
+            case V1_3::OperandType::FLOAT16:
+            case V1_3::OperandType::FLOAT32:
+            case V1_3::OperandType::INT32:
+            case V1_3::OperandType::UINT32:
+            case V1_3::OperandType::BOOL:
+            case V1_3::OperandType::SUBGRAPH:
+            case V1_3::OperandType::TENSOR_FLOAT16:
+            case V1_3::OperandType::TENSOR_FLOAT32:
+            case V1_3::OperandType::TENSOR_INT32:
+            case V1_3::OperandType::TENSOR_BOOL8:
+            case V1_3::OperandType::TENSOR_QUANT8_SYMM:
+            case V1_3::OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:
                 if (operand.zeroPoint != 0) {
                     LOG(ERROR) << "Operand " << index << ": Operand of type "
                                << getOperandTypeName(operand.type) << " with a non-zero zeroPoint "
@@ -296,7 +297,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                     return false;
                 }
                 break;
-            case OperandType::TENSOR_QUANT8_ASYMM:
+            case V1_3::OperandType::TENSOR_QUANT8_ASYMM:
                 if (operand.zeroPoint < 0 || operand.zeroPoint > 255) {
                     LOG(ERROR) << "Operand " << index << ": Operand of type "
                                << getOperandTypeName(operand.type) << " with an invalid zeroPoint "
@@ -304,7 +305,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                     return false;
                 }
                 break;
-            case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+            case V1_3::OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
                 if (operand.zeroPoint < -128 || operand.zeroPoint > 127) {
                     LOG(ERROR) << "Operand " << index << ": Operand of type "
                                << getOperandTypeName(operand.type) << " with an invalid zeroPoint "
@@ -312,7 +313,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                     return false;
                 }
                 break;
-            case OperandType::TENSOR_QUANT16_ASYMM:
+            case V1_3::OperandType::TENSOR_QUANT16_ASYMM:
                 if (operand.zeroPoint < 0 || operand.zeroPoint > 65535) {
                     LOG(ERROR) << "Operand " << index << ": Operand of type "
                                << getOperandTypeName(operand.type) << " with an invalid zeroPoint "
@@ -320,7 +321,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                     return false;
                 }
                 break;
-            case OperandType::TENSOR_QUANT16_SYMM:
+            case V1_3::OperandType::TENSOR_QUANT16_SYMM:
                 if (operand.zeroPoint != 0) {
                     LOG(ERROR) << "Operand " << index << ": Operand of type "
                                << getOperandTypeName(operand.type) << " with a non-zero zeroPoint "
@@ -342,9 +343,9 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
         NN_RET_CHECK(validateOperandExtraParams(operand, index));
 
         // Validate the lifetime and the location.
-        const DataLocation& location = operand.location;
+        const V1_0::DataLocation& location = operand.location;
         switch (operand.lifetime) {
-            case OperandLifeTime::CONSTANT_COPY:
+            case V1_3::OperandLifeTime::CONSTANT_COPY:
                 if (location.poolIndex != 0) {
                     LOG(ERROR) << "Operand " << index
                                << ": CONSTANT_COPY with a non-zero poolIndex "
@@ -360,15 +361,15 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                     return false;
                 }
                 break;
-            case OperandLifeTime::CONSTANT_REFERENCE:
+            case V1_3::OperandLifeTime::CONSTANT_REFERENCE:
                 if (!poolVerifier.validate(location)) {
                     return false;
                 }
                 break;
-            case OperandLifeTime::TEMPORARY_VARIABLE:
-            case OperandLifeTime::SUBGRAPH_INPUT:
-            case OperandLifeTime::SUBGRAPH_OUTPUT:
-            case OperandLifeTime::NO_VALUE:
+            case V1_3::OperandLifeTime::TEMPORARY_VARIABLE:
+            case V1_3::OperandLifeTime::SUBGRAPH_INPUT:
+            case V1_3::OperandLifeTime::SUBGRAPH_OUTPUT:
+            case V1_3::OperandLifeTime::NO_VALUE:
                 if (location.poolIndex != 0 || location.offset != 0 || location.length != 0) {
                     LOG(ERROR) << "Operand " << index << ": Unexpected poolIndex "
                                << location.poolIndex << ", offset " << location.offset
@@ -377,14 +378,14 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                     return false;
                 }
                 break;
-            case OperandLifeTime::SUBGRAPH: {
+            case V1_3::OperandLifeTime::SUBGRAPH: {
                 if (location.poolIndex != 0) {
                     LOG(ERROR) << "Operand " << index << ": SUBGRAPH with a non-zero poolIndex "
                                << location.poolIndex;
                     return false;
                 }
                 if (location.offset >= subgraphs.size()) {
-                    LOG(ERROR) << "Subgraph index out of range: " << location.offset
+                    LOG(ERROR) << "Model::Subgraph index out of range: " << location.offset
                                << " >= " << subgraphs.size();
                     return false;
                 }
@@ -401,8 +402,8 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
         }
 
         // Make sure SUBGRAPH operand type and lifetime always go together.
-        if ((operand.type == OperandType::SUBGRAPH) !=
-            (operand.lifetime == OperandLifeTime::SUBGRAPH)) {
+        if ((operand.type == V1_3::OperandType::SUBGRAPH) !=
+            (operand.lifetime == V1_3::OperandLifeTime::SUBGRAPH)) {
             LOG(ERROR) << "Operand " << index << ": Operand of type " << toString(operand.type)
                        << " cannot have lifetime " << toString(operand.lifetime);
             return false;
@@ -410,10 +411,10 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
 
         // For constants, validate that the length is as expected. The other lifetimes
         // expect the length to be 0. Don't validate for OEM types.
-        if (operand.lifetime == OperandLifeTime::CONSTANT_REFERENCE ||
-            operand.lifetime == OperandLifeTime::CONSTANT_COPY) {
-            if (!isExtensionOperandType(operand.type) && operand.type != OperandType::OEM &&
-                operand.type != OperandType::TENSOR_OEM_BYTE) {
+        if (operand.lifetime == V1_3::OperandLifeTime::CONSTANT_REFERENCE ||
+            operand.lifetime == V1_3::OperandLifeTime::CONSTANT_COPY) {
+            if (!isExtensionOperandType(operand.type) && operand.type != V1_3::OperandType::OEM &&
+                operand.type != V1_3::OperandType::TENSOR_OEM_BYTE) {
                 uint32_t expectedLength = nonExtensionOperandSizeOfData(operand);
                 if (location.length != expectedLength) {
                     LOG(ERROR) << "Operand " << index << ": For operand " << toString(operand)
@@ -446,19 +447,22 @@ static HalVersion getHalVersion(const V1_3::Operation&) {
 }
 
 template <typename VersionedOperation>
-static bool validateOperations(const hidl_vec<VersionedOperation>& operations,
-                               const hidl_vec<Operand>& operands,
-                               const hidl_vec<Subgraph>& subgraphs, ValidationMode mode) {
-    auto isValidSubgraphReference = [&subgraphs](const Operand& modelOperand) -> bool {
+static bool validateOperations(const hardware::hidl_vec<VersionedOperation>& operations,
+                               const hardware::hidl_vec<V1_3::Operand>& operands,
+                               const hardware::hidl_vec<V1_3::Subgraph>& subgraphs,
+                               ValidationMode mode) {
+    auto canonicalSubgraphs = uncheckedConvert(subgraphs);
+    auto isValidSubgraphReference = [&canonicalSubgraphs](const Operand& modelOperand) -> bool {
         NN_RET_CHECK(modelOperand.type == OperandType::SUBGRAPH)
-                << "Unexpected operand type: " << toString(modelOperand.type);
-        NN_RET_CHECK_LT(modelOperand.location.offset, subgraphs.size())
+                << "Unexpected operand type: " << modelOperand.type;
+        NN_RET_CHECK_LT(modelOperand.location.offset, canonicalSubgraphs.size())
                 << "Invalid subgraph reference";
         return true;
     };
-    auto getSubgraph = [&subgraphs](const Operand& modelOperand) -> const Subgraph* {
-        CHECK_LT(modelOperand.location.offset, subgraphs.size());
-        return &subgraphs[modelOperand.location.offset];
+    auto getSubgraph =
+            [&canonicalSubgraphs](const Operand& modelOperand) -> const Model::Subgraph* {
+        CHECK_LT(modelOperand.location.offset, canonicalSubgraphs.size());
+        return &canonicalSubgraphs[modelOperand.location.offset];
     };
     auto getInputCount = [&getSubgraph](const Operand& modelOperand) -> uint32_t {
         return getSubgraph(modelOperand)->inputIndexes.size();
@@ -468,32 +472,33 @@ static bool validateOperations(const hidl_vec<VersionedOperation>& operations,
     };
     auto getInputOperand = [&getSubgraph](const Operand& modelOperand,
                                           uint32_t index) -> const Operand* {
-        const Subgraph& subgraph = *getSubgraph(modelOperand);
+        const Model::Subgraph& subgraph = *getSubgraph(modelOperand);
         CHECK_LT(subgraph.inputIndexes[index], subgraph.operands.size());
         return &subgraph.operands[subgraph.inputIndexes[index]];
     };
     auto getOutputOperand = [&getSubgraph](const Operand& modelOperand,
                                            uint32_t index) -> const Operand* {
-        const Subgraph& subgraph = *getSubgraph(modelOperand);
+        const Model::Subgraph& subgraph = *getSubgraph(modelOperand);
         CHECK_LT(subgraph.outputIndexes[index], subgraph.operands.size());
         return &subgraph.operands[subgraph.outputIndexes[index]];
     };
     for (auto& op : operations) {
         // TODO Validate the shapes and any known values. This is currently
         // done in CpuExecutor but should be done here for all drivers.
-        int error = validateOperation(
-                static_cast<int32_t>(op.type), op.inputs.size(),
-                op.inputs.size() > 0 ? op.inputs.data() : nullptr, op.outputs.size(),
-                op.outputs.size() > 0 ? op.outputs.data() : nullptr, operands, getHalVersion(op),
-                {.isValidSubgraphReference = isValidSubgraphReference,
-                 .getSubgraphInputCount = getInputCount,
-                 .getSubgraphOutputCount = getOutputCount,
-                 .getSubgraphInputOperand = getInputOperand,
-                 .getSubgraphOutputOperand = getOutputOperand,
-                 // 1.3 HAL does not support CF operations with operands of
-                 // unknown size. See http://b/132458982#comment63.
-                 .allowControlFlowOperationWithOperandOfUnknownSize =
-                         mode == ValidationMode::RUNTIME});
+        int error = validateOperation(static_cast<int32_t>(op.type), op.inputs.size(),
+                                      op.inputs.size() > 0 ? op.inputs.data() : nullptr,
+                                      op.outputs.size(),
+                                      op.outputs.size() > 0 ? op.outputs.data() : nullptr,
+                                      uncheckedConvert(operands), getHalVersion(op),
+                                      {.isValidSubgraphReference = isValidSubgraphReference,
+                                       .getSubgraphInputCount = getInputCount,
+                                       .getSubgraphOutputCount = getOutputCount,
+                                       .getSubgraphInputOperand = getInputOperand,
+                                       .getSubgraphOutputOperand = getOutputOperand,
+                                       // 1.3 HAL does not support CF operations with operands of
+                                       // unknown size. See http://b/132458982#comment63.
+                                       .allowControlFlowOperationWithOperandOfUnknownSize =
+                                               mode == ValidationMode::RUNTIME});
         if (error != ANEURALNETWORKS_NO_ERROR) {
             LOG(ERROR) << "Invalid operation " << toString(op.type);
             return false;
@@ -503,9 +508,9 @@ static bool validateOperations(const hidl_vec<VersionedOperation>& operations,
         // but it is retained here in order to emit more informative
         // error messages.
         for (uint32_t i : op.outputs) {
-            const Operand& operand = operands[i];
-            if (operand.lifetime != OperandLifeTime::TEMPORARY_VARIABLE &&
-                operand.lifetime != OperandLifeTime::SUBGRAPH_OUTPUT) {
+            const V1_3::Operand& operand = operands[i];
+            if (operand.lifetime != V1_3::OperandLifeTime::TEMPORARY_VARIABLE &&
+                operand.lifetime != V1_3::OperandLifeTime::SUBGRAPH_OUTPUT) {
                 LOG(ERROR) << "Writing to operand " << i << " with incompatible lifetime "
                            << toString(operand.lifetime);
                 return false;
@@ -515,7 +520,7 @@ static bool validateOperations(const hidl_vec<VersionedOperation>& operations,
     return true;
 }
 
-bool validatePool(const hidl_memory& pool, HalVersion ver) {
+bool validatePool(const hardware::hidl_memory& pool, HalVersion ver) {
     const auto& name = pool.name();
     if (name != "ashmem" && name != "mmap_fd" &&
         ((ver < HalVersion::V1_2) ||
@@ -532,9 +537,9 @@ bool validatePool(const hidl_memory& pool, HalVersion ver) {
 
 bool validatePool(const V1_3::Request::MemoryPool& pool, HalVersion ver) {
     switch (pool.getDiscriminator()) {
-        case Request::MemoryPool::hidl_discriminator::hidlMemory:
+        case V1_3::Request::MemoryPool::hidl_discriminator::hidlMemory:
             return validatePool(pool.hidlMemory(), ver);
-        case Request::MemoryPool::hidl_discriminator::token:
+        case V1_3::Request::MemoryPool::hidl_discriminator::token:
             return pool.token() > 0;
     }
     LOG(FATAL) << "unknown MemoryPool discriminator";
@@ -542,20 +547,21 @@ bool validatePool(const V1_3::Request::MemoryPool& pool, HalVersion ver) {
 }
 
 template <class T_MemoryPool>
-static bool validatePools(const hidl_vec<T_MemoryPool>& pools, HalVersion ver) {
+static bool validatePools(const hardware::hidl_vec<T_MemoryPool>& pools, HalVersion ver) {
     return std::all_of(pools.begin(), pools.end(),
                        [ver](const auto& pool) { return validatePool(pool, ver); });
 }
 
-static bool validateModelInputOutputs(const hidl_vec<uint32_t> indexes,
-                                      const hidl_vec<Operand>& operands, OperandLifeTime lifetime) {
+static bool validateModelInputOutputs(const hardware::hidl_vec<uint32_t> indexes,
+                                      const hardware::hidl_vec<V1_3::Operand>& operands,
+                                      V1_3::OperandLifeTime lifetime) {
     const size_t operandCount = operands.size();
     for (uint32_t i : indexes) {
         if (i >= operandCount) {
             LOG(ERROR) << "Model input or output index out of range: " << i << "/" << operandCount;
             return false;
         }
-        const Operand& operand = operands[i];
+        const V1_3::Operand& operand = operands[i];
         if (operand.lifetime != lifetime) {
             LOG(ERROR) << "Model input or output operand " << i << " has lifetime of "
                        << toString(operand.lifetime) << " instead of the expected "
@@ -596,12 +602,12 @@ static bool validateGraph(const VersionedModelOrSubgraph& model) {
     // mark known operands
     for (size_t i = 0; i < model.operands.size(); ++i) {
         const auto& operand = model.operands[i];
-        const OperandLifeTime lifetime = convertToV1_3(operand.lifetime);
-        operandValueKnown[i] = lifetime == OperandLifeTime::SUBGRAPH_INPUT ||
-                               lifetime == OperandLifeTime::CONSTANT_COPY ||
-                               lifetime == OperandLifeTime::CONSTANT_REFERENCE ||
-                               lifetime == OperandLifeTime::NO_VALUE ||
-                               lifetime == OperandLifeTime::SUBGRAPH;
+        const V1_3::OperandLifeTime lifetime = convertToV1_3(operand.lifetime);
+        operandValueKnown[i] = lifetime == V1_3::OperandLifeTime::SUBGRAPH_INPUT ||
+                               lifetime == V1_3::OperandLifeTime::CONSTANT_COPY ||
+                               lifetime == V1_3::OperandLifeTime::CONSTANT_REFERENCE ||
+                               lifetime == V1_3::OperandLifeTime::NO_VALUE ||
+                               lifetime == V1_3::OperandLifeTime::SUBGRAPH;
     }
 
     // Validate that operations are sorted into execution order.
@@ -672,8 +678,8 @@ static bool checkNoReferenceCycles(const V1_3::Model& model, const V1_3::Subgrap
         LOG(ERROR) << "Model contains a circular subgraph reference";
         return false;
     }
-    for (const Operand& operand : subgraph.operands) {
-        if (operand.lifetime == OperandLifeTime::SUBGRAPH) {
+    for (const V1_3::Operand& operand : subgraph.operands) {
+        if (operand.lifetime == V1_3::OperandLifeTime::SUBGRAPH) {
             uint32_t refSubgraphIndex = operand.location.offset;
             if (!checkNoReferenceCycles(model, model.referenced[refSubgraphIndex], path)) {
                 return false;
@@ -699,14 +705,14 @@ bool validateModel(const T_Model& model, ValidationMode mode) {
     }
     // We only need versioned operands for their validation. For all the other
     // validations we can use operands upcasted to the latest version.
-    const hidl_vec<Operand> latestVersionOperands = convertToV1_3(model.operands);
+    const hardware::hidl_vec<V1_3::Operand> latestVersionOperands = convertToV1_3(model.operands);
     return (validateOperands(model.operands, model.operandValues, model.pools, /*subgraphs=*/{},
                              /*allowUnspecifiedRank=*/version >= HalVersion::V1_2) &&
             validateOperations(model.operations, latestVersionOperands, /*subgraphs=*/{}, mode) &&
             validateModelInputOutputs(model.inputIndexes, latestVersionOperands,
-                                      OperandLifeTime::SUBGRAPH_INPUT) &&
+                                      V1_3::OperandLifeTime::SUBGRAPH_INPUT) &&
             validateModelInputOutputs(model.outputIndexes, latestVersionOperands,
-                                      OperandLifeTime::SUBGRAPH_OUTPUT) &&
+                                      V1_3::OperandLifeTime::SUBGRAPH_OUTPUT) &&
             validatePools(model.pools, version) && validateGraph(model));
 }
 
@@ -721,15 +727,15 @@ bool validateModel(const V1_3::Model& model, ValidationMode mode) {
         LOG(ERROR) << "Invalid empty model.";
         return false;
     }
-    auto validateSubgraph = [&model, mode](const Subgraph& subgraph) -> bool {
+    auto validateSubgraph = [&model, mode](const V1_3::Subgraph& subgraph) -> bool {
         return (validateOperands(subgraph.operands, model.operandValues, model.pools,
                                  model.referenced, /*allowUnspecifiedRank=*/true) &&
                 validateOperations(subgraph.operations, subgraph.operands, model.referenced,
                                    mode) &&
                 validateModelInputOutputs(subgraph.inputIndexes, subgraph.operands,
-                                          OperandLifeTime::SUBGRAPH_INPUT) &&
+                                          V1_3::OperandLifeTime::SUBGRAPH_INPUT) &&
                 validateModelInputOutputs(subgraph.outputIndexes, subgraph.operands,
-                                          OperandLifeTime::SUBGRAPH_OUTPUT) &&
+                                          V1_3::OperandLifeTime::SUBGRAPH_OUTPUT) &&
                 validateGraph(subgraph));
     };
     return (validateSubgraph(model.main) &&
@@ -740,11 +746,11 @@ bool validateModel(const V1_3::Model& model, ValidationMode mode) {
 // Validates the arguments of a request. type is either "input" or "output" and is used
 // for printing error messages. The operandIndexes is the appropriate array of input
 // or output operand indexes that was passed to the ANeuralNetworksModel_identifyInputsAndOutputs.
-static bool validateRequestArguments(const hidl_vec<RequestArgument>& requestArguments,
-                                     const hidl_vec<uint32_t>& operandIndexes,
-                                     const hidl_vec<Operand>& operands,
-                                     const MemoryAccessVerifier& poolVerifier,
-                                     bool allowUnspecified, const char* type) {
+static bool validateRequestArguments(
+        const hardware::hidl_vec<V1_0::RequestArgument>& requestArguments,
+        const hardware::hidl_vec<uint32_t>& operandIndexes,
+        const hardware::hidl_vec<V1_3::Operand>& operands, const MemoryAccessVerifier& poolVerifier,
+        bool allowUnspecified, const char* type) {
     // The request should specify as many arguments as were described in the model.
     const size_t requestArgumentCount = requestArguments.size();
     if (requestArgumentCount != operandIndexes.size()) {
@@ -754,13 +760,13 @@ static bool validateRequestArguments(const hidl_vec<RequestArgument>& requestArg
     }
     for (size_t requestArgumentIndex = 0; requestArgumentIndex < requestArgumentCount;
          requestArgumentIndex++) {
-        const RequestArgument& requestArgument = requestArguments[requestArgumentIndex];
-        const DataLocation& location = requestArgument.location;
+        const V1_0::RequestArgument& requestArgument = requestArguments[requestArgumentIndex];
+        const V1_0::DataLocation& location = requestArgument.location;
         // Get the operand index for this argument. We extract it from the list
         // that was provided in the call to ANeuralNetworksModel_identifyInputsAndOutputs.
         // We assume in this function that the model has been validated already.
         const uint32_t operandIndex = operandIndexes[requestArgumentIndex];
-        const Operand& operand = operands[operandIndex];
+        const V1_3::Operand& operand = operands[operandIndex];
         if (requestArgument.hasNoValue) {
             if (location.poolIndex != 0 || location.offset != 0 || location.length != 0 ||
                 requestArgument.dimensions.size() != 0) {
@@ -861,9 +867,9 @@ bool validateRequest(const V1_3::Request& request, const V1_3::Model& model,
 }
 
 bool validateMemoryDesc(const V1_3::BufferDesc& desc,
-                        const hidl_vec<sp<V1_3::IPreparedModel>>& preparedModels,
-                        const hidl_vec<V1_3::BufferRole>& inputRoles,
-                        const hidl_vec<V1_3::BufferRole>& outputRoles,
+                        const hardware::hidl_vec<sp<V1_3::IPreparedModel>>& preparedModels,
+                        const hardware::hidl_vec<V1_3::BufferRole>& inputRoles,
+                        const hardware::hidl_vec<V1_3::BufferRole>& outputRoles,
                         std::function<const V1_3::Model*(const sp<V1_3::IPreparedModel>&)> getModel,
                         std::set<PreparedModelRole>* preparedModelRoles,
                         V1_3::Operand* combinedOperand) {
@@ -939,14 +945,15 @@ bool validateMemoryDesc(const V1_3::BufferDesc& desc,
     return true;
 }
 
-bool validateExecutionPreference(ExecutionPreference preference) {
-    return preference == ExecutionPreference::LOW_POWER ||
-           preference == ExecutionPreference::FAST_SINGLE_ANSWER ||
-           preference == ExecutionPreference::SUSTAINED_SPEED;
+bool validateExecutionPreference(V1_1::ExecutionPreference preference) {
+    return preference == V1_1::ExecutionPreference::LOW_POWER ||
+           preference == V1_1::ExecutionPreference::FAST_SINGLE_ANSWER ||
+           preference == V1_1::ExecutionPreference::SUSTAINED_SPEED;
 }
 
-bool validatePriority(Priority priority) {
-    return priority == Priority::LOW || priority == Priority::MEDIUM || priority == Priority::HIGH;
+bool validatePriority(V1_3::Priority priority) {
+    return priority == V1_3::Priority::LOW || priority == V1_3::Priority::MEDIUM ||
+           priority == V1_3::Priority::HIGH;
 }
 
 bool validOperandType(V1_0::OperandType operandType) {

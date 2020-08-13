@@ -20,7 +20,6 @@
 
 #include "CpuExecutor.h"
 #include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
 
 #include <algorithm>
 #include <vector>
@@ -28,8 +27,6 @@
 
 namespace android {
 namespace nn {
-
-using namespace hal;
 
 SVDF::SVDF(const Operation& operation, RunTimeOperandInfo* operands) {
     NNTRACE_TRANS("SVDF::SVDF");

@@ -20,7 +20,6 @@
 #include <vector>
 
 #include "MaximumMinimum.h"
-#include "HalInterfaces.h"
 #include "IndexedShapeWrapper.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
@@ -30,8 +29,6 @@ namespace nn {
 namespace maximum_minimum {
 
 namespace {
-
-using namespace hal;
 
 template <typename T>
 bool evalGeneric(const T* aData, const Shape& aShape, const T* bData, const Shape& bShape,
@@ -124,7 +121,7 @@ bool eval(const void* in1, const Shape& shape1, const void* in2, const Shape& sh
                               reinterpret_cast<int8_t*>(output), outputShape);
         }
         default: {
-            LOG(ERROR) << "Unsupported data type: " << toString(shape1.type);
+            LOG(ERROR) << "Unsupported data type: " << shape1.type;
             return false;
         }
     }

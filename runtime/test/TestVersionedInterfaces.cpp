@@ -22,6 +22,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <hidl/Status.h>
+#include <nnapi/TypeUtils.h>
 #include <utils/Errors.h>
 
 #include <limits>
@@ -37,7 +38,6 @@
 namespace android::nn {
 namespace {
 
-using namespace hal;
 using testing::_;
 using testing::Invoke;
 using testing::InvokeWithoutArgs;
@@ -45,40 +45,59 @@ using testing::MockFunction;
 using MockDeviceFactory = MockFunction<sp<V1_0::IDevice>(bool blocking)>;
 
 constexpr uint32_t kNoCacheFilesNeeded = 0;
-constexpr uint32_t kMaxNumberOfCacheFiles =
-        static_cast<uint32_t>(Constant::MAX_NUMBER_OF_CACHE_FILES);
-constexpr Timing kNoTiming = {.timeOnDevice = std::numeric_limits<uint64_t>::max(),
-                              .timeInDriver = std::numeric_limits<uint64_t>::max()};
+constexpr V1_2::Timing kNoTiming12 = {.timeOnDevice = std::numeric_limits<uint64_t>::max(),
+                                      .timeInDriver = std::numeric_limits<uint64_t>::max()};
+constexpr V1_0::PerformanceInfo kNoPerformanceInfo = {.execTime = FLT_MAX, .powerUsage = FLT_MAX};
+constexpr Timing kNoTiming = {};
 
 template <typename... Args>
 auto makeCallbackReturn(Args&&... args) {
     return [argPack = std::make_tuple(std::forward<Args>(args)...)](const auto& cb) {
         std::apply(cb, argPack);
-        return Void();
+        return hardware::Void();
     };
 };
 
-class MockDevice : public IDevice {
+class MockDevice : public V1_3::IDevice {
    public:
     static sp<MockDevice> create() {
         const sp<MockDevice> mockDevice = new MockDevice();
 
-        const auto linkToDeathRet_ret = []() -> Return<bool> { return true; };
-        const auto getCapabilities_ret =
-                makeCallbackReturn(V1_0::ErrorStatus::NONE, V1_0::Capabilities{});
+        const auto linkToDeathRet_ret = []() -> hardware::Return<bool> { return true; };
+        const auto getCapabilities_ret = makeCallbackReturn(
+                V1_0::ErrorStatus::NONE, V1_0::Capabilities{
+                                                 .float32Performance = kNoPerformanceInfo,
+                                                 .quantized8Performance = kNoPerformanceInfo,
+                                         });
         const auto getCapabilities_1_1_ret =
-                makeCallbackReturn(V1_0::ErrorStatus::NONE, V1_1::Capabilities{});
+                makeCallbackReturn(V1_0::ErrorStatus::NONE,
+                                   V1_1::Capabilities{
+                                           .float32Performance = kNoPerformanceInfo,
+                                           .quantized8Performance = kNoPerformanceInfo,
+                                           .relaxedFloat32toFloat16Performance = kNoPerformanceInfo,
+                                   });
         const auto getVersionString_ret =
                 makeCallbackReturn(V1_0::ErrorStatus::NONE, "Google-MockV1");
-        const auto getType_ret = makeCallbackReturn(V1_0::ErrorStatus::NONE, DeviceType::OTHER);
-        const auto getCapabilities_1_2_ret =
-                makeCallbackReturn(V1_0::ErrorStatus::NONE, V1_2::Capabilities{});
+        const auto getType_ret =
+                makeCallbackReturn(V1_0::ErrorStatus::NONE, V1_2::DeviceType::OTHER);
+        const auto getCapabilities_1_2_ret = makeCallbackReturn(
+                V1_0::ErrorStatus::NONE,
+                V1_2::Capabilities{
+                        .relaxedFloat32toFloat16PerformanceScalar = kNoPerformanceInfo,
+                        .relaxedFloat32toFloat16PerformanceTensor = kNoPerformanceInfo,
+                });
         const auto getSupportedExtensions_ret =
-                makeCallbackReturn(V1_0::ErrorStatus::NONE, hidl_vec<Extension>{});
+                makeCallbackReturn(V1_0::ErrorStatus::NONE, hardware::hidl_vec<V1_2::Extension>{});
         const auto getNumberOfCacheFilesNeeded_ret = makeCallbackReturn(
                 V1_0::ErrorStatus::NONE, kMaxNumberOfCacheFiles, kMaxNumberOfCacheFiles);
-        const auto getCapabilities_1_3_ret =
-                makeCallbackReturn(V1_3::ErrorStatus::NONE, V1_3::Capabilities{});
+        const auto getCapabilities_1_3_ret = makeCallbackReturn(
+                V1_3::ErrorStatus::NONE,
+                V1_3::Capabilities{
+                        .relaxedFloat32toFloat16PerformanceScalar = kNoPerformanceInfo,
+                        .relaxedFloat32toFloat16PerformanceTensor = kNoPerformanceInfo,
+                        .ifPerformance = kNoPerformanceInfo,
+                        .whilePerformance = kNoPerformanceInfo,
+                });
 
         ON_CALL(*mockDevice, linkToDeathRet()).WillByDefault(Invoke(linkToDeathRet_ret));
         ON_CALL(*mockDevice, getCapabilities(_)).WillByDefault(Invoke(getCapabilities_ret));
@@ -108,73 +127,82 @@ class MockDevice : public IDevice {
     }
 
     // IBase methods below.
-    Return<bool> linkToDeath(const sp<hidl_death_recipient>& recipient,
-                             uint64_t /*cookie*/) override {
+    hardware::Return<bool> linkToDeath(const sp<hardware::hidl_death_recipient>& recipient,
+                                       uint64_t /*cookie*/) override {
         mDeathRecipient = recipient;
         return linkToDeathRet();
     }
-    MOCK_METHOD(Return<void>, ping, (), (override));
+    MOCK_METHOD(hardware::Return<void>, ping, (), (override));
 
     // V1_0 methods below.
-    MOCK_METHOD(Return<void>, getCapabilities, (getCapabilities_cb cb), (override));
-    MOCK_METHOD(Return<void>, getSupportedOperations,
+    MOCK_METHOD(hardware::Return<void>, getCapabilities, (getCapabilities_cb cb), (override));
+    MOCK_METHOD(hardware::Return<void>, getSupportedOperations,
                 (const V1_0::Model& model, getSupportedOperations_cb cb), (override));
-    MOCK_METHOD(Return<V1_0::ErrorStatus>, prepareModel,
+    MOCK_METHOD(hardware::Return<V1_0::ErrorStatus>, prepareModel,
                 (const V1_0::Model& model, const sp<V1_0::IPreparedModelCallback>& callback),
                 (override));
-    MOCK_METHOD(Return<DeviceStatus>, getStatus, (), (override));
+    MOCK_METHOD(hardware::Return<V1_0::DeviceStatus>, getStatus, (), (override));
 
     // V1_1 methods below.
-    MOCK_METHOD(Return<void>, getCapabilities_1_1, (getCapabilities_1_1_cb cb), (override));
-    MOCK_METHOD(Return<void>, getSupportedOperations_1_1,
+    MOCK_METHOD(hardware::Return<void>, getCapabilities_1_1, (getCapabilities_1_1_cb cb),
+                (override));
+    MOCK_METHOD(hardware::Return<void>, getSupportedOperations_1_1,
                 (const V1_1::Model& model, getSupportedOperations_1_1_cb cb), (override));
-    MOCK_METHOD(Return<V1_0::ErrorStatus>, prepareModel_1_1,
-                (const V1_1::Model& model, ExecutionPreference preference,
+    MOCK_METHOD(hardware::Return<V1_0::ErrorStatus>, prepareModel_1_1,
+                (const V1_1::Model& model, V1_1::ExecutionPreference preference,
                  const sp<V1_0::IPreparedModelCallback>& callback),
                 (override));
 
     // V1_2 methods below.
-    MOCK_METHOD(Return<void>, getVersionString, (getVersionString_cb cb), (override));
-    MOCK_METHOD(Return<void>, getType, (getType_cb cb), (override));
-    MOCK_METHOD(Return<void>, getCapabilities_1_2, (getCapabilities_1_2_cb cb), (override));
-    MOCK_METHOD(Return<void>, getSupportedExtensions, (getSupportedExtensions_cb cb), (override));
-    MOCK_METHOD(Return<void>, getSupportedOperations_1_2,
+    MOCK_METHOD(hardware::Return<void>, getVersionString, (getVersionString_cb cb), (override));
+    MOCK_METHOD(hardware::Return<void>, getType, (getType_cb cb), (override));
+    MOCK_METHOD(hardware::Return<void>, getCapabilities_1_2, (getCapabilities_1_2_cb cb),
+                (override));
+    MOCK_METHOD(hardware::Return<void>, getSupportedExtensions, (getSupportedExtensions_cb cb),
+                (override));
+    MOCK_METHOD(hardware::Return<void>, getSupportedOperations_1_2,
                 (const V1_2::Model& model, getSupportedOperations_1_2_cb cb), (override));
-    MOCK_METHOD(Return<void>, getNumberOfCacheFilesNeeded, (getNumberOfCacheFilesNeeded_cb cb),
+    MOCK_METHOD(hardware::Return<void>, getNumberOfCacheFilesNeeded,
+                (getNumberOfCacheFilesNeeded_cb cb), (override));
+    MOCK_METHOD(hardware::Return<V1_0::ErrorStatus>, prepareModel_1_2,
+                (const V1_2::Model& model, V1_1::ExecutionPreference preference,
+                 const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+                 const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
+                 const HalCacheToken& token, const sp<V1_2::IPreparedModelCallback>& callback),
                 (override));
-    MOCK_METHOD(Return<V1_0::ErrorStatus>, prepareModel_1_2,
-                (const V1_2::Model& model, ExecutionPreference preference,
-                 const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-                 const CacheToken& token, const sp<V1_2::IPreparedModelCallback>& callback),
-                (override));
-    MOCK_METHOD(Return<V1_0::ErrorStatus>, prepareModelFromCache,
-                (const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-                 const CacheToken& token, const sp<V1_2::IPreparedModelCallback>& callback),
+    MOCK_METHOD(hardware::Return<V1_0::ErrorStatus>, prepareModelFromCache,
+                (const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+                 const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
+                 const HalCacheToken& token, const sp<V1_2::IPreparedModelCallback>& callback),
                 (override));
 
     // V1_3 methods below.
-    MOCK_METHOD(Return<void>, getCapabilities_1_3, (getCapabilities_1_3_cb cb), (override));
-    MOCK_METHOD(Return<void>, getSupportedOperations_1_3,
+    MOCK_METHOD(hardware::Return<void>, getCapabilities_1_3, (getCapabilities_1_3_cb cb),
+                (override));
+    MOCK_METHOD(hardware::Return<void>, getSupportedOperations_1_3,
                 (const V1_3::Model& model, getSupportedOperations_1_3_cb cb), (override));
-    MOCK_METHOD(Return<V1_3::ErrorStatus>, prepareModel_1_3,
-                (const V1_3::Model& model, ExecutionPreference preference, Priority priority,
-                 const OptionalTimePoint& deadline, const hidl_vec<hidl_handle>& modelCache,
-                 const hidl_vec<hidl_handle>& dataCache, const CacheToken& token,
-                 const sp<V1_3::IPreparedModelCallback>& callback),
+    MOCK_METHOD(hardware::Return<V1_3::ErrorStatus>, prepareModel_1_3,
+                (const V1_3::Model& model, V1_1::ExecutionPreference preference,
+                 V1_3::Priority priority, const V1_3::OptionalTimePoint& deadline,
+                 const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+                 const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
+                 const HalCacheToken& token, const sp<V1_3::IPreparedModelCallback>& callback),
                 (override));
-    MOCK_METHOD(Return<V1_3::ErrorStatus>, prepareModelFromCache_1_3,
-                (const OptionalTimePoint& deadline, const hidl_vec<hidl_handle>& modelCache,
-                 const hidl_vec<hidl_handle>& dataCache, const CacheToken& token,
-                 const sp<V1_3::IPreparedModelCallback>& callback),
+    MOCK_METHOD(hardware::Return<V1_3::ErrorStatus>, prepareModelFromCache_1_3,
+                (const V1_3::OptionalTimePoint& deadline,
+                 const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+                 const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
+                 const HalCacheToken& token, const sp<V1_3::IPreparedModelCallback>& callback),
                 (override));
-    MOCK_METHOD(Return<void>, allocate,
-                (const BufferDesc& desc, const hidl_vec<sp<V1_3::IPreparedModel>>& preparedModels,
-                 const hidl_vec<BufferRole>& inputRoles, const hidl_vec<BufferRole>& outputRoles,
-                 allocate_cb cb),
+    MOCK_METHOD(hardware::Return<void>, allocate,
+                (const V1_3::BufferDesc& desc,
+                 const hardware::hidl_vec<sp<V1_3::IPreparedModel>>& preparedModels,
+                 const hardware::hidl_vec<V1_3::BufferRole>& inputRoles,
+                 const hardware::hidl_vec<V1_3::BufferRole>& outputRoles, allocate_cb cb),
                 (override));
 
     // Helper methods.
-    MOCK_METHOD(Return<bool>, linkToDeathRet, ());
+    MOCK_METHOD(hardware::Return<bool>, linkToDeathRet, ());
     void simulateCrash() {
         ASSERT_NE(nullptr, mDeathRecipient.get());
 
@@ -189,15 +217,15 @@ class MockDevice : public IDevice {
 
    private:
     // Members.
-    sp<hidl_death_recipient> mDeathRecipient;
+    sp<hardware::hidl_death_recipient> mDeathRecipient;
 };
 
-class MockPreparedModel : public IPreparedModel {
+class MockPreparedModel : public V1_3::IPreparedModel {
    public:
     static sp<MockPreparedModel> create() {
         const sp<MockPreparedModel> mockPreparedModel = new MockPreparedModel();
 
-        const auto linkToDeathRet_ret = []() -> Return<bool> { return true; };
+        const auto linkToDeathRet_ret = []() -> hardware::Return<bool> { return true; };
         ON_CALL(*mockPreparedModel, linkToDeathRet()).WillByDefault(Invoke(linkToDeathRet_ret));
 
         // This EXPECT_CALL(...).Times(testing::AnyNumber()) calls are to
@@ -208,27 +236,28 @@ class MockPreparedModel : public IPreparedModel {
     }
 
     // IBase methods below.
-    Return<bool> linkToDeath(const sp<hidl_death_recipient>& recipient,
-                             uint64_t /*cookie*/) override {
+    hardware::Return<bool> linkToDeath(const sp<hardware::hidl_death_recipient>& recipient,
+                                       uint64_t /*cookie*/) override {
         mDeathRecipient = recipient;
         return linkToDeathRet();
     }
-    MOCK_METHOD(Return<void>, ping, (), (override));
+    MOCK_METHOD(hardware::Return<void>, ping, (), (override));
 
     // V1_0 methods below.
-    MOCK_METHOD(Return<V1_0::ErrorStatus>, execute,
+    MOCK_METHOD(hardware::Return<V1_0::ErrorStatus>, execute,
                 (const V1_0::Request& request, const sp<V1_0::IExecutionCallback>& callback),
                 (override));
 
     // V1_2 methods below.
-    MOCK_METHOD(Return<V1_0::ErrorStatus>, execute_1_2,
-                (const V1_0::Request& request, MeasureTiming measure,
+    MOCK_METHOD(hardware::Return<V1_0::ErrorStatus>, execute_1_2,
+                (const V1_0::Request& request, V1_2::MeasureTiming measure,
                  const sp<V1_2::IExecutionCallback>& callback),
                 (override));
-    MOCK_METHOD(Return<void>, executeSynchronously,
-                (const V1_0::Request& request, MeasureTiming measure, executeSynchronously_cb cb),
+    MOCK_METHOD(hardware::Return<void>, executeSynchronously,
+                (const V1_0::Request& request, V1_2::MeasureTiming measure,
+                 executeSynchronously_cb cb),
                 (override));
-    MOCK_METHOD(Return<void>, configureExecutionBurst,
+    MOCK_METHOD(hardware::Return<void>, configureExecutionBurst,
                 (const sp<V1_2::IBurstCallback>& callback,
                  const hardware::MQDescriptorSync<V1_2::FmqRequestDatum>& requestChannel,
                  const hardware::MQDescriptorSync<V1_2::FmqResultDatum>& resultChannel,
@@ -236,27 +265,28 @@ class MockPreparedModel : public IPreparedModel {
                 (override));
 
     // V1_3 methods below.
-    MOCK_METHOD(Return<ErrorStatus>, execute_1_3,
-                (const V1_3::Request& request, MeasureTiming measure,
-                 const OptionalTimePoint& deadline,
-                 const OptionalTimeoutDuration& loopTimeoutDuration,
-                 const sp<IExecutionCallback>& callback),
+    MOCK_METHOD(hardware::Return<V1_3::ErrorStatus>, execute_1_3,
+                (const V1_3::Request& request, V1_2::MeasureTiming measure,
+                 const V1_3::OptionalTimePoint& deadline,
+                 const V1_3::OptionalTimeoutDuration& loopTimeoutDuration,
+                 const sp<V1_3::IExecutionCallback>& callback),
                 (override));
-    MOCK_METHOD(Return<void>, executeSynchronously_1_3,
-                (const V1_3::Request& request, MeasureTiming measure,
-                 const OptionalTimePoint& deadline,
-                 const OptionalTimeoutDuration& loopTimeoutDuration,
+    MOCK_METHOD(hardware::Return<void>, executeSynchronously_1_3,
+                (const V1_3::Request& request, V1_2::MeasureTiming measure,
+                 const V1_3::OptionalTimePoint& deadline,
+                 const V1_3::OptionalTimeoutDuration& loopTimeoutDuration,
                  executeSynchronously_1_3_cb cb),
                 (override));
-    MOCK_METHOD(Return<void>, executeFenced,
-                (const V1_3::Request& request, const hidl_vec<hidl_handle>& waitFor,
-                 MeasureTiming measure, const OptionalTimePoint& deadline,
-                 const OptionalTimeoutDuration& loopTimeoutDuration,
-                 const OptionalTimeoutDuration& duration, executeFenced_cb cb),
+    MOCK_METHOD(hardware::Return<void>, executeFenced,
+                (const V1_3::Request& request,
+                 const hardware::hidl_vec<hardware::hidl_handle>& waitFor,
+                 V1_2::MeasureTiming measure, const V1_3::OptionalTimePoint& deadline,
+                 const V1_3::OptionalTimeoutDuration& loopTimeoutDuration,
+                 const V1_3::OptionalTimeoutDuration& duration, executeFenced_cb cb),
                 (override));
 
     // Helper methods.
-    MOCK_METHOD(Return<bool>, linkToDeathRet, ());
+    MOCK_METHOD(hardware::Return<bool>, linkToDeathRet, ());
     void simulateCrash() {
         ASSERT_NE(nullptr, mDeathRecipient.get());
 
@@ -271,27 +301,29 @@ class MockPreparedModel : public IPreparedModel {
 
    private:
     // Members.
-    sp<hidl_death_recipient> mDeathRecipient;
+    sp<hardware::hidl_death_recipient> mDeathRecipient;
 };
 
 class MockBurstContext : public V1_2::IBurstContext {
    public:
     // V1_2 methods below.
-    MOCK_METHOD(Return<void>, freeMemory, (int32_t slot), (override));
+    MOCK_METHOD(hardware::Return<void>, freeMemory, (int32_t slot), (override));
 };
 
-class MockFencedExecutionCallback : public IFencedExecutionCallback {
+class MockFencedExecutionCallback : public V1_3::IFencedExecutionCallback {
    public:
     // V1_3 methods below.
-    MOCK_METHOD(Return<void>, getExecutionInfo, (getExecutionInfo_cb cb), (override));
+    MOCK_METHOD(hardware::Return<void>, getExecutionInfo, (getExecutionInfo_cb cb), (override));
 };
 
-class MockBuffer : public IBuffer {
+class MockBuffer : public V1_3::IBuffer {
    public:
     // V1_3 methods below.
-    MOCK_METHOD(Return<ErrorStatus>, copyTo, (const hidl_memory& dst), (override));
-    MOCK_METHOD(Return<ErrorStatus>, copyFrom,
-                (const hidl_memory& src, const hidl_vec<uint32_t>& dimensions), (override));
+    MOCK_METHOD(hardware::Return<V1_3::ErrorStatus>, copyTo, (const hardware::hidl_memory& dst),
+                (override));
+    MOCK_METHOD(hardware::Return<V1_3::ErrorStatus>, copyFrom,
+                (const hardware::hidl_memory& src, const hardware::hidl_vec<uint32_t>& dimensions),
+                (override));
 };
 
 enum class Version { V1_0, V1_1, V1_2, V1_3, MOCK };
@@ -315,18 +347,19 @@ sp<V1_0::IDevice> adaptAs(const sp<MockDevice>& mockDevice, Version version) {
 
 auto makePreparedModelReturn(V1_0::ErrorStatus launchStatus, V1_0::ErrorStatus returnStatus,
                              const sp<MockPreparedModel>& preparedModel) {
-    return [launchStatus, returnStatus, preparedModel](
-                   const V1_0::Model& /*model*/,
-                   const sp<V1_0::IPreparedModelCallback>& cb) -> Return<V1_0::ErrorStatus> {
+    return [launchStatus, returnStatus, preparedModel](const V1_0::Model& /*model*/,
+                                                       const sp<V1_0::IPreparedModelCallback>& cb)
+                   -> hardware::Return<V1_0::ErrorStatus> {
         cb->notify(returnStatus, preparedModel).isOk();
         return launchStatus;
     };
 }
 auto makePreparedModel_1_1Return(V1_0::ErrorStatus launchStatus, V1_0::ErrorStatus returnStatus,
                                  const sp<MockPreparedModel>& preparedModel) {
-    return [launchStatus, returnStatus, preparedModel](
-                   const V1_1::Model& /*model*/, ExecutionPreference /*preference*/,
-                   const sp<V1_0::IPreparedModelCallback>& cb) -> Return<V1_0::ErrorStatus> {
+    return [launchStatus, returnStatus, preparedModel](const V1_1::Model& /*model*/,
+                                                       V1_1::ExecutionPreference /*preference*/,
+                                                       const sp<V1_0::IPreparedModelCallback>& cb)
+                   -> hardware::Return<V1_0::ErrorStatus> {
         cb->notify(returnStatus, preparedModel).isOk();
         return launchStatus;
     };
@@ -334,9 +367,10 @@ auto makePreparedModel_1_1Return(V1_0::ErrorStatus launchStatus, V1_0::ErrorStat
 auto makePreparedModel_1_2Return(V1_0::ErrorStatus launchStatus, V1_0::ErrorStatus returnStatus,
                                  const sp<MockPreparedModel>& preparedModel) {
     return [launchStatus, returnStatus, preparedModel](
-                   const V1_2::Model& /*model*/, ExecutionPreference /*preference*/,
+                   const V1_2::Model& /*model*/, V1_1::ExecutionPreference /*preference*/,
                    const auto& /*modelCache*/, const auto& /*dataCache*/, const auto& /*token*/,
-                   const sp<V1_2::IPreparedModelCallback>& cb) -> Return<V1_0::ErrorStatus> {
+                   const sp<V1_2::IPreparedModelCallback>& cb)
+                   -> hardware::Return<V1_0::ErrorStatus> {
         cb->notify_1_2(returnStatus, preparedModel).isOk();
         return launchStatus;
     };
@@ -344,11 +378,12 @@ auto makePreparedModel_1_2Return(V1_0::ErrorStatus launchStatus, V1_0::ErrorStat
 auto makePreparedModel_1_3Return(V1_3::ErrorStatus launchStatus, V1_3::ErrorStatus returnStatus,
                                  const sp<MockPreparedModel>& preparedModel) {
     return [launchStatus, returnStatus, preparedModel](
-                   const V1_3::Model& /*model*/, ExecutionPreference /*preference*/,
-                   Priority /*priority*/, const OptionalTimePoint& /*deadline*/,
-                   const hidl_vec<hidl_handle>& /*modelCache*/,
-                   const hidl_vec<hidl_handle>& /*dataCache*/, const CacheToken& /*token*/,
-                   const sp<V1_3::IPreparedModelCallback>& cb) -> Return<V1_3::ErrorStatus> {
+                   const V1_3::Model& /*model*/, V1_1::ExecutionPreference /*preference*/,
+                   V1_3::Priority /*priority*/, const V1_3::OptionalTimePoint& /*deadline*/,
+                   const hardware::hidl_vec<hardware::hidl_handle>& /*modelCache*/,
+                   const hardware::hidl_vec<hardware::hidl_handle>& /*dataCache*/,
+                   const HalCacheToken& /*token*/, const sp<V1_3::IPreparedModelCallback>& cb)
+                   -> hardware::Return<V1_3::ErrorStatus> {
         cb->notify_1_3(returnStatus, preparedModel).isOk();
         return launchStatus;
     };
@@ -357,51 +392,53 @@ auto makePreparedModel_1_3Return(V1_3::ErrorStatus launchStatus, V1_3::ErrorStat
 auto makeExecuteReturn(V1_0::ErrorStatus launchStatus, V1_0::ErrorStatus returnStatus) {
     return [launchStatus, returnStatus](
                    const V1_0::Request& /*request*/,
-                   const sp<V1_0::IExecutionCallback>& cb) -> Return<V1_0::ErrorStatus> {
+                   const sp<V1_0::IExecutionCallback>& cb) -> hardware::Return<V1_0::ErrorStatus> {
         cb->notify(returnStatus);
         return launchStatus;
     };
 }
 auto makeExecute_1_2Return(V1_0::ErrorStatus launchStatus, V1_0::ErrorStatus returnStatus,
-                           const std::vector<OutputShape>& outputShapes, const Timing& timing) {
+                           const std::vector<V1_2::OutputShape>& outputShapes,
+                           const V1_2::Timing& timing) {
     return [launchStatus, returnStatus, outputShapes, timing](
-                   const V1_0::Request& /*request*/, MeasureTiming /*measureTiming*/,
-                   const sp<V1_2::IExecutionCallback>& cb) -> Return<V1_0::ErrorStatus> {
+                   const V1_0::Request& /*request*/, V1_2::MeasureTiming /*measureTiming*/,
+                   const sp<V1_2::IExecutionCallback>& cb) -> hardware::Return<V1_0::ErrorStatus> {
         cb->notify_1_2(returnStatus, outputShapes, timing);
         return launchStatus;
     };
 }
 auto makeExecute_1_3Return(V1_3::ErrorStatus launchStatus, V1_3::ErrorStatus returnStatus,
-                           const std::vector<OutputShape>& outputShapes, const Timing& timing) {
+                           const std::vector<V1_2::OutputShape>& outputShapes,
+                           const V1_2::Timing& timing) {
     return [launchStatus, returnStatus, outputShapes, timing](
-                   const V1_3::Request& /*request*/, MeasureTiming /*measureTiming*/,
-                   const OptionalTimePoint& /*deadline*/,
-                   const OptionalTimeoutDuration& /*loopTimeoutDuration*/,
-                   const sp<V1_3::IExecutionCallback>& cb) -> Return<V1_3::ErrorStatus> {
+                   const V1_3::Request& /*request*/, V1_2::MeasureTiming /*measureTiming*/,
+                   const V1_3::OptionalTimePoint& /*deadline*/,
+                   const V1_3::OptionalTimeoutDuration& /*loopTimeoutDuration*/,
+                   const sp<V1_3::IExecutionCallback>& cb) -> hardware::Return<V1_3::ErrorStatus> {
         cb->notify_1_3(returnStatus, outputShapes, timing);
         return launchStatus;
     };
 }
 auto makeExecuteSynchronouslyReturn(V1_0::ErrorStatus status,
-                                    const std::vector<OutputShape>& outputShapes,
-                                    const Timing& timing) {
+                                    const std::vector<V1_2::OutputShape>& outputShapes,
+                                    const V1_2::Timing& timing) {
     return [status, outputShapes, timing](const V1_0::Request& /*request*/,
-                                          MeasureTiming /*measureTiming*/,
+                                          V1_2::MeasureTiming /*measureTiming*/,
                                           const V1_2::IPreparedModel::executeSynchronously_cb& cb) {
         cb(status, outputShapes, timing);
-        return Void();
+        return hardware::Void();
     };
 }
 auto makeExecuteSynchronously_1_3Return(V1_3::ErrorStatus status,
-                                        const std::vector<OutputShape>& outputShapes,
-                                        const Timing& timing) {
+                                        const std::vector<V1_2::OutputShape>& outputShapes,
+                                        const V1_2::Timing& timing) {
     return [status, outputShapes, timing](
-                   const V1_3::Request& /*request*/, MeasureTiming /*measureTiming*/,
-                   const OptionalTimePoint& /*deadline*/,
-                   const OptionalTimeoutDuration& /*loopTimeoutDuration*/,
+                   const V1_3::Request& /*request*/, V1_2::MeasureTiming /*measureTiming*/,
+                   const V1_3::OptionalTimePoint& /*deadline*/,
+                   const V1_3::OptionalTimeoutDuration& /*loopTimeoutDuration*/,
                    const V1_3::IPreparedModel::executeSynchronously_1_3_cb& cb) {
         cb(status, outputShapes, timing);
-        return Void();
+        return hardware::Void();
     };
 }
 auto makeConfigureExecutionBurst(V1_0::ErrorStatus status,
@@ -412,19 +449,20 @@ auto makeConfigureExecutionBurst(V1_0::ErrorStatus status,
                    const hardware::MQDescriptorSync<V1_2::FmqResultDatum>& /*resultChannel*/,
                    V1_2::IPreparedModel::configureExecutionBurst_cb cb) {
         cb(status, burstContext);
-        return Void();
+        return hardware::Void();
     };
 }
-auto makeExecuteFencedReturn(V1_3::ErrorStatus status, const hidl_handle& syncFence,
-                             const sp<IFencedExecutionCallback>& dispatchCallback) {
+auto makeExecuteFencedReturn(V1_3::ErrorStatus status, const hardware::hidl_handle& syncFence,
+                             const sp<V1_3::IFencedExecutionCallback>& dispatchCallback) {
     return [status, syncFence, dispatchCallback](
-                   const V1_3::Request& /*request*/, const hidl_vec<hidl_handle>& /*waitFor*/,
-                   MeasureTiming /*measure*/, const OptionalTimePoint& /*deadline*/,
-                   const OptionalTimeoutDuration& /*loopTimeoutDuration*/,
-                   const OptionalTimeoutDuration& /*duration*/,
+                   const V1_3::Request& /*request*/,
+                   const hardware::hidl_vec<hardware::hidl_handle>& /*waitFor*/,
+                   V1_2::MeasureTiming /*measure*/, const V1_3::OptionalTimePoint& /*deadline*/,
+                   const V1_3::OptionalTimeoutDuration& /*loopTimeoutDuration*/,
+                   const V1_3::OptionalTimeoutDuration& /*duration*/,
                    V1_3::IPreparedModel::executeFenced_cb cb) {
         cb(status, syncFence, dispatchCallback);
-        return Void();
+        return hardware::Void();
     };
 }
 
@@ -516,7 +554,7 @@ std::shared_ptr<VersionedIDevice> makeVersionedIDeviceFrom(const sp<MockDevice>&
     const auto device = adaptAs(mockDevice, version);
     ON_CALL(*mockDeviceFactory, Call(_)).WillByDefault(testing::Return(device));
     EXPECT_CALL(*mockDeviceFactory, Call(/*blocking=*/true)).Times(testing::AtLeast(1));
-    const DeviceFactory makeDevice = mockDeviceFactory->AsStdFunction();
+    const HalDeviceFactory makeDevice = mockDeviceFactory->AsStdFunction();
     return VersionedIDevice::create("MockDevice", makeDevice);
 }
 
@@ -566,7 +604,7 @@ class VersionedIDeviceMockTest : public VersionedIDeviceInitializedTest<Version:
 TEST_F(VersionedIDeviceInitializationTest, creationFailure) {
     // setup failure
     EXPECT_CALL(*kMockMakeDevice, Call(_)).Times(1).WillOnce(testing::Return(nullptr));
-    const DeviceFactory makeDevice = kMockMakeDevice->AsStdFunction();
+    const HalDeviceFactory makeDevice = kMockMakeDevice->AsStdFunction();
 
     // run test
     const auto device = VersionedIDevice::create("MockDevice", makeDevice);
@@ -581,7 +619,7 @@ TEST_F(VersionedIDeviceInitializationTest, linkToDeathTransportFailure) {
             .Times(1)
             .WillOnce(InvokeWithoutArgs(makeGeneralTransportFailure));
     EXPECT_CALL(*kMockMakeDevice, Call(_)).Times(1).WillOnce(testing::Return(kMockDevice));
-    const DeviceFactory makeDevice = kMockMakeDevice->AsStdFunction();
+    const HalDeviceFactory makeDevice = kMockMakeDevice->AsStdFunction();
 
     // run test
     const auto device = VersionedIDevice::create("MockDevice", makeDevice);
@@ -592,10 +630,10 @@ TEST_F(VersionedIDeviceInitializationTest, linkToDeathTransportFailure) {
 
 TEST_F(VersionedIDeviceInitializationTest, linkToDeathReturnError) {
     // setup failure
-    const auto ret = []() -> Return<bool> { return false; };
+    const auto ret = []() -> hardware::Return<bool> { return false; };
     EXPECT_CALL(*kMockMakeDevice, Call(_)).Times(1).WillOnce(testing::Return(kMockDevice));
     EXPECT_CALL(*kMockDevice, linkToDeathRet()).Times(1).WillOnce(InvokeWithoutArgs(ret));
-    const DeviceFactory makeDevice = kMockMakeDevice->AsStdFunction();
+    const HalDeviceFactory makeDevice = kMockMakeDevice->AsStdFunction();
 
     // run test
     const auto device = VersionedIDevice::create("MockDevice", makeDevice);
@@ -666,7 +704,8 @@ TEST_F(VersionedIDeviceInitializationTest, getVersionStringFailure) {
 
 TEST_F(VersionedIDeviceInitializationTest, getTypeFailure) {
     // setup failure
-    const auto ret = makeCallbackReturn(V1_0::ErrorStatus::GENERAL_FAILURE, DeviceType::OTHER);
+    const auto ret =
+            makeCallbackReturn(V1_0::ErrorStatus::GENERAL_FAILURE, V1_2::DeviceType::OTHER);
     EXPECT_CALL(*kMockDevice, getType(_)).Times(1).WillOnce(Invoke(ret));
 
     // run test
@@ -678,7 +717,8 @@ TEST_F(VersionedIDeviceInitializationTest, getTypeFailure) {
 
 TEST_F(VersionedIDeviceInitializationTest, getSupportedExtensionsFailure) {
     // setup failure
-    const auto ret = makeCallbackReturn(V1_0::ErrorStatus::GENERAL_FAILURE, hidl_vec<Extension>{});
+    const auto ret = makeCallbackReturn(V1_0::ErrorStatus::GENERAL_FAILURE,
+                                        hardware::hidl_vec<V1_2::Extension>{});
     EXPECT_CALL(*kMockDevice, getSupportedExtensions(_)).Times(1).WillOnce(Invoke(ret));
 
     // run test
@@ -839,9 +879,11 @@ TEST_F(VersionedIDeviceV1_0Test, getCapabilities) {
     const auto cached = kDevice->getCapabilities();
 
     // verify success
-    EXPECT_EQ(PerformanceInfo{}, capabilities.relaxedFloat32toFloat16PerformanceScalar);
-    EXPECT_EQ(PerformanceInfo{}, capabilities.relaxedFloat32toFloat16PerformanceTensor);
-    EXPECT_LT(0u, capabilities.operandPerformance.size());
+    EXPECT_EQ(Capabilities::PerformanceInfo{},
+              capabilities.relaxedFloat32toFloat16PerformanceScalar);
+    EXPECT_EQ(Capabilities::PerformanceInfo{},
+              capabilities.relaxedFloat32toFloat16PerformanceTensor);
+    EXPECT_LT(0u, capabilities.operandPerformance.asVector().size());
     EXPECT_EQ(cached, capabilities);
 }
 
@@ -851,9 +893,11 @@ TEST_F(VersionedIDeviceV1_1Test, getCapabilities) {
     const auto cached = kDevice->getCapabilities();
 
     // verify success
-    EXPECT_EQ(PerformanceInfo{}, capabilities.relaxedFloat32toFloat16PerformanceScalar);
-    EXPECT_EQ(PerformanceInfo{}, capabilities.relaxedFloat32toFloat16PerformanceTensor);
-    EXPECT_LT(0u, capabilities.operandPerformance.size());
+    EXPECT_EQ(Capabilities::PerformanceInfo{},
+              capabilities.relaxedFloat32toFloat16PerformanceScalar);
+    EXPECT_EQ(Capabilities::PerformanceInfo{},
+              capabilities.relaxedFloat32toFloat16PerformanceTensor);
+    EXPECT_LT(0u, capabilities.operandPerformance.asVector().size());
     EXPECT_EQ(cached, capabilities);
 }
 
@@ -863,9 +907,11 @@ TEST_F(VersionedIDeviceV1_2Test, getCapabilities) {
     const auto cached = kDevice->getCapabilities();
 
     // verify success
-    EXPECT_EQ(PerformanceInfo{}, capabilities.relaxedFloat32toFloat16PerformanceScalar);
-    EXPECT_EQ(PerformanceInfo{}, capabilities.relaxedFloat32toFloat16PerformanceTensor);
-    EXPECT_EQ(0u, capabilities.operandPerformance.size());
+    EXPECT_EQ(Capabilities::PerformanceInfo{},
+              capabilities.relaxedFloat32toFloat16PerformanceScalar);
+    EXPECT_EQ(Capabilities::PerformanceInfo{},
+              capabilities.relaxedFloat32toFloat16PerformanceTensor);
+    EXPECT_EQ(0u, capabilities.operandPerformance.asVector().size());
     EXPECT_EQ(cached, capabilities);
 }
 
@@ -875,9 +921,11 @@ TEST_F(VersionedIDeviceV1_3Test, getCapabilities) {
     const auto cached = kDevice->getCapabilities();
 
     // verify success
-    EXPECT_EQ(PerformanceInfo{}, capabilities.relaxedFloat32toFloat16PerformanceScalar);
-    EXPECT_EQ(PerformanceInfo{}, capabilities.relaxedFloat32toFloat16PerformanceTensor);
-    EXPECT_EQ(0u, capabilities.operandPerformance.size());
+    EXPECT_EQ(Capabilities::PerformanceInfo{},
+              capabilities.relaxedFloat32toFloat16PerformanceScalar);
+    EXPECT_EQ(Capabilities::PerformanceInfo{},
+              capabilities.relaxedFloat32toFloat16PerformanceTensor);
+    EXPECT_EQ(0u, capabilities.operandPerformance.asVector().size());
     EXPECT_EQ(cached, capabilities);
 }
 
@@ -1107,16 +1155,16 @@ TEST_F(VersionedIDeviceV1_0Test, getSupportedOperations) {
     // setup call
     const auto ret = [](const auto& /*model*/, const auto cb) {
         cb(V1_0::ErrorStatus::NONE, {});
-        return Void();
+        return hardware::Void();
     };
     EXPECT_CALL(*kMockDevice, getSupportedOperations(_, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
-    const auto metaModel = MetaModel({}, /*strictSlicing=*/true);
+    const auto metaModel = MetaModel(Model{}, /*strictSlicing=*/true);
     const auto [resultCode, supportedOperations] = kDevice->getSupportedOperations(metaModel);
 
     // verify success
-    EXPECT_EQ(V1_3::ErrorStatus::NONE, resultCode);
+    EXPECT_EQ(ErrorStatus::NONE, resultCode);
     EXPECT_EQ(0u, supportedOperations.size());
 }
 
@@ -1124,16 +1172,16 @@ TEST_F(VersionedIDeviceV1_1Test, getSupportedOperations) {
     // setup call
     const auto ret = [](const auto& /*model*/, const auto cb) {
         cb(V1_0::ErrorStatus::NONE, {});
-        return Void();
+        return hardware::Void();
     };
     EXPECT_CALL(*kMockDevice, getSupportedOperations_1_1(_, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
-    const auto metaModel = MetaModel({}, /*strictSlicing=*/true);
+    const auto metaModel = MetaModel(Model{}, /*strictSlicing=*/true);
     const auto [resultCode, supportedOperations] = kDevice->getSupportedOperations(metaModel);
 
     // verify success
-    EXPECT_EQ(V1_3::ErrorStatus::NONE, resultCode);
+    EXPECT_EQ(ErrorStatus::NONE, resultCode);
     EXPECT_EQ(0u, supportedOperations.size());
 }
 
@@ -1141,16 +1189,16 @@ TEST_F(VersionedIDeviceV1_2Test, getSupportedOperations) {
     // setup call
     const auto ret = [](const auto& /*model*/, const auto cb) {
         cb(V1_0::ErrorStatus::NONE, {});
-        return Void();
+        return hardware::Void();
     };
     EXPECT_CALL(*kMockDevice, getSupportedOperations_1_2(_, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
-    const auto metaModel = MetaModel({}, /*strictSlicing=*/true);
+    const auto metaModel = MetaModel(Model{}, /*strictSlicing=*/true);
     const auto [resultCode, supportedOperations] = kDevice->getSupportedOperations(metaModel);
 
     // verify success
-    EXPECT_EQ(V1_3::ErrorStatus::NONE, resultCode);
+    EXPECT_EQ(ErrorStatus::NONE, resultCode);
     EXPECT_EQ(0u, supportedOperations.size());
 }
 
@@ -1158,16 +1206,16 @@ TEST_F(VersionedIDeviceV1_3Test, getSupportedOperations) {
     // setup call
     const auto ret = [](const auto& /*model*/, const auto cb) {
         cb(V1_3::ErrorStatus::NONE, {});
-        return Void();
+        return hardware::Void();
     };
     EXPECT_CALL(*kMockDevice, getSupportedOperations_1_3(_, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
-    const auto metaModel = MetaModel({}, /*strictSlicing=*/true);
+    const auto metaModel = MetaModel(Model{}, /*strictSlicing=*/true);
     const auto [resultCode, supportedOperations] = kDevice->getSupportedOperations(metaModel);
 
     // verify success
-    EXPECT_EQ(V1_3::ErrorStatus::NONE, resultCode);
+    EXPECT_EQ(ErrorStatus::NONE, resultCode);
     EXPECT_EQ(0u, supportedOperations.size());
 }
 
@@ -1179,7 +1227,7 @@ TEST_F(VersionedIDeviceV1_0Test, prepareModel) {
     EXPECT_CALL(*kMockDevice, prepareModel(_, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify success
@@ -1195,7 +1243,7 @@ TEST_F(VersionedIDeviceV1_1Test, prepareModel) {
     EXPECT_CALL(*kMockDevice, prepareModel_1_1(_, _, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify success
@@ -1211,7 +1259,7 @@ TEST_F(VersionedIDeviceV1_2Test, prepareModel) {
     EXPECT_CALL(*kMockDevice, prepareModel_1_2(_, _, _, _, _, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify success
@@ -1229,7 +1277,7 @@ TEST_F(VersionedIDeviceV1_3Test, prepareModel) {
             .WillOnce(Invoke(ret));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify success
@@ -1271,13 +1319,14 @@ TEST_F(VersionedIDeviceV1_3Test, allocate) {
     // setup call
     const sp<MockBuffer> mockBuffer = new MockBuffer();
     constexpr uint32_t mockToken = 1;
-    const auto ret = [mockBuffer](const BufferDesc& /*desc*/,
-                                  const hidl_vec<sp<V1_3::IPreparedModel>>& /*preparedModels*/,
-                                  const hidl_vec<BufferRole>& /*inputRoles*/,
-                                  const hidl_vec<BufferRole>& /*outputRoles*/,
-                                  V1_3::IDevice::allocate_cb cb) -> Return<void> {
+    const auto ret = [mockBuffer](
+                             const V1_3::BufferDesc& /*desc*/,
+                             const hardware::hidl_vec<sp<V1_3::IPreparedModel>>& /*preparedModels*/,
+                             const hardware::hidl_vec<V1_3::BufferRole>& /*inputRoles*/,
+                             const hardware::hidl_vec<V1_3::BufferRole>& /*outputRoles*/,
+                             V1_3::IDevice::allocate_cb cb) -> hardware::Return<void> {
         cb(V1_3::ErrorStatus::NONE, mockBuffer, mockToken);
-        return Void();
+        return hardware::Void();
     };
     EXPECT_CALL(*kMockDevice, allocate(_, _, _, _, _)).Times(1).WillOnce(Invoke(ret));
 
@@ -1292,7 +1341,7 @@ TEST_F(VersionedIDeviceV1_3Test, allocate) {
 
 TEST_F(VersionedIDeviceMockTest, wait) {
     // setup call
-    const auto ret = []() -> Return<void> { return {}; };
+    const auto ret = []() -> hardware::Return<void> { return {}; };
     EXPECT_CALL(*kMockDevice, ping()).Times(1).WillOnce(Invoke(ret));
 
     // run test
@@ -1308,16 +1357,16 @@ TEST_F(VersionedIDeviceV1_0Test, getSupportedOperationsFailure) {
     // setup failure
     const auto ret = [](const auto& /*model*/, const auto cb) {
         cb(V1_0::ErrorStatus::GENERAL_FAILURE, {});
-        return Void();
+        return hardware::Void();
     };
     EXPECT_CALL(*kMockDevice, getSupportedOperations(_, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
-    const auto metaModel = MetaModel({}, /*strictSlicing=*/true);
+    const auto metaModel = MetaModel(Model{}, /*strictSlicing=*/true);
     const auto [resultCode, supportedOperations] = kDevice->getSupportedOperations(metaModel);
 
     // verify failure
-    EXPECT_EQ(V1_3::ErrorStatus::GENERAL_FAILURE, resultCode);
+    EXPECT_EQ(ErrorStatus::GENERAL_FAILURE, resultCode);
     EXPECT_EQ(0u, supportedOperations.size());
 }
 
@@ -1325,16 +1374,16 @@ TEST_F(VersionedIDeviceV1_1Test, getSupportedOperationsFailure) {
     // setup failure
     const auto ret = [](const auto& /*model*/, const auto cb) {
         cb(V1_0::ErrorStatus::GENERAL_FAILURE, {});
-        return Void();
+        return hardware::Void();
     };
     EXPECT_CALL(*kMockDevice, getSupportedOperations_1_1(_, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
-    const auto metaModel = MetaModel({}, /*strictSlicing=*/true);
+    const auto metaModel = MetaModel(Model{}, /*strictSlicing=*/true);
     const auto [resultCode, supportedOperations] = kDevice->getSupportedOperations(metaModel);
 
     // verify failure
-    EXPECT_EQ(V1_3::ErrorStatus::GENERAL_FAILURE, resultCode);
+    EXPECT_EQ(ErrorStatus::GENERAL_FAILURE, resultCode);
     EXPECT_EQ(0u, supportedOperations.size());
 }
 
@@ -1342,16 +1391,16 @@ TEST_F(VersionedIDeviceV1_2Test, getSupportedOperationsFailure) {
     // setup failure
     const auto ret = [](const auto& /*model*/, const auto cb) {
         cb(V1_0::ErrorStatus::GENERAL_FAILURE, {});
-        return Void();
+        return hardware::Void();
     };
     EXPECT_CALL(*kMockDevice, getSupportedOperations_1_2(_, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
-    const auto metaModel = MetaModel({}, /*strictSlicing=*/true);
+    const auto metaModel = MetaModel(Model{}, /*strictSlicing=*/true);
     const auto [resultCode, supportedOperations] = kDevice->getSupportedOperations(metaModel);
 
     // verify failure
-    EXPECT_EQ(V1_3::ErrorStatus::GENERAL_FAILURE, resultCode);
+    EXPECT_EQ(ErrorStatus::GENERAL_FAILURE, resultCode);
     EXPECT_EQ(0u, supportedOperations.size());
 }
 
@@ -1359,16 +1408,16 @@ TEST_F(VersionedIDeviceV1_3Test, getSupportedOperationsFailure) {
     // setup failure
     const auto ret = [](const auto& /*model*/, const auto cb) {
         cb(V1_3::ErrorStatus::GENERAL_FAILURE, {});
-        return Void();
+        return hardware::Void();
     };
     EXPECT_CALL(*kMockDevice, getSupportedOperations_1_3(_, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
-    const auto metaModel = MetaModel({}, /*strictSlicing=*/true);
+    const auto metaModel = MetaModel(Model{}, /*strictSlicing=*/true);
     const auto [resultCode, supportedOperations] = kDevice->getSupportedOperations(metaModel);
 
     // verify failure
-    EXPECT_EQ(V1_3::ErrorStatus::GENERAL_FAILURE, resultCode);
+    EXPECT_EQ(ErrorStatus::GENERAL_FAILURE, resultCode);
     EXPECT_EQ(0u, supportedOperations.size());
 }
 
@@ -1380,7 +1429,7 @@ TEST_F(VersionedIDeviceV1_0Test, prepareModelLaunchFailure) {
     EXPECT_CALL(*kMockDevice, prepareModel(_, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify failure
@@ -1396,7 +1445,7 @@ TEST_F(VersionedIDeviceV1_1Test, prepareModelLaunchFailure) {
     EXPECT_CALL(*kMockDevice, prepareModel_1_1(_, _, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify failure
@@ -1412,7 +1461,7 @@ TEST_F(VersionedIDeviceV1_2Test, prepareModelLaunchFailure) {
     EXPECT_CALL(*kMockDevice, prepareModel_1_2(_, _, _, _, _, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify failure
@@ -1430,7 +1479,7 @@ TEST_F(VersionedIDeviceV1_3Test, prepareModelLaunchFailure) {
             .WillOnce(Invoke(ret));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify failure
@@ -1446,7 +1495,7 @@ TEST_F(VersionedIDeviceV1_0Test, prepareModelReturnFailure) {
     EXPECT_CALL(*kMockDevice, prepareModel(_, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify failure
@@ -1462,7 +1511,7 @@ TEST_F(VersionedIDeviceV1_1Test, prepareModelReturnFailure) {
     EXPECT_CALL(*kMockDevice, prepareModel_1_1(_, _, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify failure
@@ -1478,7 +1527,7 @@ TEST_F(VersionedIDeviceV1_2Test, prepareModelReturnFailure) {
     EXPECT_CALL(*kMockDevice, prepareModel_1_2(_, _, _, _, _, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify failure
@@ -1496,7 +1545,7 @@ TEST_F(VersionedIDeviceV1_3Test, prepareModelReturnFailure) {
             .WillOnce(Invoke(ret));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify failure
@@ -1512,7 +1561,7 @@ TEST_F(VersionedIDeviceV1_0Test, prepareModelNullptrError) {
     EXPECT_CALL(*kMockDevice, prepareModel(_, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify failure
@@ -1528,7 +1577,7 @@ TEST_F(VersionedIDeviceV1_1Test, prepareModelNullptrError) {
     EXPECT_CALL(*kMockDevice, prepareModel_1_1(_, _, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify failure
@@ -1544,7 +1593,7 @@ TEST_F(VersionedIDeviceV1_2Test, prepareModelNullptrError) {
     EXPECT_CALL(*kMockDevice, prepareModel_1_2(_, _, _, _, _, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify failure
@@ -1562,7 +1611,7 @@ TEST_F(VersionedIDeviceV1_3Test, prepareModelNullptrError) {
             .WillOnce(Invoke(ret));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify failure
@@ -1572,13 +1621,13 @@ TEST_F(VersionedIDeviceV1_3Test, prepareModelNullptrError) {
 
 TEST_F(VersionedIDeviceV1_3Test, allocateFailure) {
     // setup failure
-    const auto ret = [](const BufferDesc& /*desc*/,
-                        const hidl_vec<sp<V1_3::IPreparedModel>>& /*preparedModels*/,
-                        const hidl_vec<BufferRole>& /*inputRoles*/,
-                        const hidl_vec<BufferRole>& /*outputRoles*/,
-                        V1_3::IDevice::allocate_cb cb) -> Return<void> {
+    const auto ret = [](const V1_3::BufferDesc& /*desc*/,
+                        const hardware::hidl_vec<sp<V1_3::IPreparedModel>>& /*preparedModels*/,
+                        const hardware::hidl_vec<V1_3::BufferRole>& /*inputRoles*/,
+                        const hardware::hidl_vec<V1_3::BufferRole>& /*outputRoles*/,
+                        V1_3::IDevice::allocate_cb cb) -> hardware::Return<void> {
         cb(V1_3::ErrorStatus::GENERAL_FAILURE, nullptr, 0);
-        return Void();
+        return hardware::Void();
     };
     EXPECT_CALL(*kMockDevice, allocate(_, _, _, _, _)).Times(1).WillOnce(Invoke(ret));
 
@@ -1600,11 +1649,11 @@ TEST_F(VersionedIDeviceV1_0Test, getSupportedOperationsTransportFailure) {
             .WillOnce(InvokeWithoutArgs(makeGeneralTransportFailure));
 
     // run test
-    const auto metaModel = MetaModel({}, /*strictSlicing=*/true);
+    const auto metaModel = MetaModel(Model{}, /*strictSlicing=*/true);
     const auto [resultCode, supportedOperations] = kDevice->getSupportedOperations(metaModel);
 
     // verify failure
-    EXPECT_EQ(V1_3::ErrorStatus::GENERAL_FAILURE, resultCode);
+    EXPECT_EQ(ErrorStatus::GENERAL_FAILURE, resultCode);
     EXPECT_EQ(0u, supportedOperations.size());
 }
 
@@ -1615,11 +1664,11 @@ TEST_F(VersionedIDeviceV1_1Test, getSupportedOperationsTransportFailure) {
             .WillOnce(InvokeWithoutArgs(makeGeneralTransportFailure));
 
     // run test
-    const auto metaModel = MetaModel({}, /*strictSlicing=*/true);
+    const auto metaModel = MetaModel(Model{}, /*strictSlicing=*/true);
     const auto [resultCode, supportedOperations] = kDevice->getSupportedOperations(metaModel);
 
     // verify failure
-    EXPECT_EQ(V1_3::ErrorStatus::GENERAL_FAILURE, resultCode);
+    EXPECT_EQ(ErrorStatus::GENERAL_FAILURE, resultCode);
     EXPECT_EQ(0u, supportedOperations.size());
 }
 
@@ -1630,11 +1679,11 @@ TEST_F(VersionedIDeviceV1_2Test, getSupportedOperationsTransportFailure) {
             .WillOnce(InvokeWithoutArgs(makeGeneralTransportFailure));
 
     // run test
-    const auto metaModel = MetaModel({}, /*strictSlicing=*/true);
+    const auto metaModel = MetaModel(Model{}, /*strictSlicing=*/true);
     const auto [resultCode, supportedOperations] = kDevice->getSupportedOperations(metaModel);
 
     // verify failure
-    EXPECT_EQ(V1_3::ErrorStatus::GENERAL_FAILURE, resultCode);
+    EXPECT_EQ(ErrorStatus::GENERAL_FAILURE, resultCode);
     EXPECT_EQ(0u, supportedOperations.size());
 }
 
@@ -1645,11 +1694,11 @@ TEST_F(VersionedIDeviceV1_3Test, getSupportedOperationsTransportFailure) {
             .WillOnce(InvokeWithoutArgs(makeGeneralTransportFailure));
 
     // run test
-    const auto metaModel = MetaModel({}, /*strictSlicing=*/true);
+    const auto metaModel = MetaModel(Model{}, /*strictSlicing=*/true);
     const auto [resultCode, supportedOperations] = kDevice->getSupportedOperations(metaModel);
 
     // verify failure
-    EXPECT_EQ(V1_3::ErrorStatus::GENERAL_FAILURE, resultCode);
+    EXPECT_EQ(ErrorStatus::GENERAL_FAILURE, resultCode);
     EXPECT_EQ(0u, supportedOperations.size());
 }
 
@@ -1660,7 +1709,7 @@ TEST_F(VersionedIDeviceV1_0Test, prepareModelTransportFailure) {
             .WillOnce(InvokeWithoutArgs(makeGeneralTransportFailure));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify failure
@@ -1675,7 +1724,7 @@ TEST_F(VersionedIDeviceV1_1Test, prepareModelTransportFailure) {
             .WillOnce(InvokeWithoutArgs(makeGeneralTransportFailure));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify failure
@@ -1690,7 +1739,7 @@ TEST_F(VersionedIDeviceV1_2Test, prepareModelTransportFailure) {
             .WillOnce(InvokeWithoutArgs(makeGeneralTransportFailure));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify failure
@@ -1705,7 +1754,7 @@ TEST_F(VersionedIDeviceV1_3Test, prepareModelTransportFailure) {
             .WillOnce(InvokeWithoutArgs(makeGeneralTransportFailure));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify failure
@@ -1767,7 +1816,7 @@ TEST_F(VersionedIDeviceMockTest, DISABLED_prepareModelRecoverCrash) {
             .WillOnce(Invoke(ret));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify success
@@ -1788,7 +1837,7 @@ TEST_F(VersionedIDeviceMockTest, prepareModelFullCrash) {
             .WillOnce(testing::Return(nullptr));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify failure
@@ -1798,7 +1847,7 @@ TEST_F(VersionedIDeviceMockTest, prepareModelFullCrash) {
 
 TEST_F(VersionedIDeviceMockTest, prepareModelAsyncCrash) {
     // setup failure
-    const auto ret = [this]() -> Return<V1_3::ErrorStatus> {
+    const auto ret = [this]() -> hardware::Return<V1_3::ErrorStatus> {
         kMockDevice->simulateCrash();
         return V1_3::ErrorStatus::NONE;
     };
@@ -1807,7 +1856,7 @@ TEST_F(VersionedIDeviceMockTest, prepareModelAsyncCrash) {
             .WillOnce(InvokeWithoutArgs(ret));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify failure
@@ -1842,7 +1891,7 @@ TEST_F(VersionedIDeviceMockTest, waitRecoverCrash) {
             .WillOnce(testing::Return(mockRecoveredDevice));
 
     // setup recovered device calls
-    const auto ret = []() -> Return<bool> { return true; };
+    const auto ret = []() -> hardware::Return<bool> { return true; };
     EXPECT_CALL(*mockRecoveredDevice, linkToDeathRet()).Times(1).WillOnce(Invoke(ret));
 
     // run test
@@ -1903,7 +1952,7 @@ std::shared_ptr<VersionedIPreparedModel> makeVersionedIPreparedModelSuccessfulIn
     EXPECT_CALL(*mockDevice, prepareModel_1_2(_, _, _, _, _, _)).Times(testing::AnyNumber());
     EXPECT_CALL(*mockDevice, prepareModel_1_3(_, _, _, _, _, _, _, _)).Times(testing::AnyNumber());
 
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = device.prepareModel(makeModel, {}, {}, {}, {}, {});
 
     CHECK_EQ(ANEURALNETWORKS_NO_ERROR, resultCode);
@@ -1948,7 +1997,7 @@ TEST_F(VersionedIPreparedModelInitializationTest, linkToDeathTransportFailure) {
             .WillOnce(Invoke(ret));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify failure
@@ -1968,7 +2017,7 @@ TEST_F(VersionedIPreparedModelInitializationTest, linkToDeathDeadObject) {
             .WillOnce(Invoke(ret));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify failure
@@ -1980,7 +2029,7 @@ TEST_F(VersionedIPreparedModelInitializationTest, linkToDeathReturnError) {
     // setup failure
     EXPECT_CALL(*kMockPreparedModel, linkToDeathRet())
             .Times(1)
-            .WillOnce(InvokeWithoutArgs([]() -> Return<bool> { return false; }));
+            .WillOnce(InvokeWithoutArgs([]() -> hardware::Return<bool> { return false; }));
     const auto ret = makePreparedModel_1_3Return(V1_3::ErrorStatus::NONE, V1_3::ErrorStatus::NONE,
                                                  kMockPreparedModel);
     EXPECT_CALL(*kMockDevice, prepareModel_1_3(_, _, _, _, _, _, _, _))
@@ -1988,7 +2037,7 @@ TEST_F(VersionedIPreparedModelInitializationTest, linkToDeathReturnError) {
             .WillOnce(Invoke(ret));
 
     // run test
-    const ModelFactory makeModel = [] { return V1_3::Model{}; };
+    const ModelFactory makeModel = [] { return Model{}; };
     const auto [resultCode, preparedModel] = kDevice->prepareModel(makeModel, {}, {}, {}, {}, {});
 
     // verify failure
@@ -2030,8 +2079,8 @@ TEST_F(VersionedIPreparedModelV1_1Test, executeAsync) {
 
 TEST_F(VersionedIPreparedModelV1_2Test, executeAsync) {
     // setup call
-    const auto ret =
-            makeExecute_1_2Return(V1_0::ErrorStatus::NONE, V1_0::ErrorStatus::NONE, {}, kNoTiming);
+    const auto ret = makeExecute_1_2Return(V1_0::ErrorStatus::NONE, V1_0::ErrorStatus::NONE, {},
+                                           kNoTiming12);
     EXPECT_CALL(*kMockPreparedModel, execute_1_2(_, _, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
@@ -2046,8 +2095,8 @@ TEST_F(VersionedIPreparedModelV1_2Test, executeAsync) {
 
 TEST_F(VersionedIPreparedModelV1_3Test, executeAsync) {
     // setup call
-    const auto ret =
-            makeExecute_1_3Return(V1_3::ErrorStatus::NONE, V1_3::ErrorStatus::NONE, {}, kNoTiming);
+    const auto ret = makeExecute_1_3Return(V1_3::ErrorStatus::NONE, V1_3::ErrorStatus::NONE, {},
+                                           kNoTiming12);
     EXPECT_CALL(*kMockPreparedModel, execute_1_3(_, _, _, _, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
@@ -2092,7 +2141,7 @@ TEST_F(VersionedIPreparedModelV1_1Test, executePreferSync) {
 
 TEST_F(VersionedIPreparedModelV1_2Test, executePreferSync) {
     // setup call
-    const auto ret = makeExecuteSynchronouslyReturn(V1_0::ErrorStatus::NONE, {}, kNoTiming);
+    const auto ret = makeExecuteSynchronouslyReturn(V1_0::ErrorStatus::NONE, {}, kNoTiming12);
     EXPECT_CALL(*kMockPreparedModel, executeSynchronously(_, _, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
@@ -2107,7 +2156,7 @@ TEST_F(VersionedIPreparedModelV1_2Test, executePreferSync) {
 
 TEST_F(VersionedIPreparedModelV1_3Test, executePreferSync) {
     // setup call
-    const auto ret = makeExecuteSynchronously_1_3Return(V1_3::ErrorStatus::NONE, {}, kNoTiming);
+    const auto ret = makeExecuteSynchronously_1_3Return(V1_3::ErrorStatus::NONE, {}, kNoTiming12);
     EXPECT_CALL(*kMockPreparedModel, executeSynchronously_1_3(_, _, _, _, _))
             .Times(1)
             .WillOnce(Invoke(ret));
@@ -2156,7 +2205,7 @@ TEST_F(VersionedIPreparedModelV1_1Test, executeFenced) {
 
 TEST_F(VersionedIPreparedModelV1_2Test, executeFenced) {
     // setup call
-    const auto ret = makeExecuteSynchronouslyReturn(V1_0::ErrorStatus::NONE, {}, kNoTiming);
+    const auto ret = makeExecuteSynchronouslyReturn(V1_0::ErrorStatus::NONE, {}, kNoTiming12);
     EXPECT_CALL(*kMockPreparedModel, executeSynchronously(_, _, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
@@ -2173,8 +2222,8 @@ TEST_F(VersionedIPreparedModelV1_2Test, executeFenced) {
 TEST_F(VersionedIPreparedModelV1_3Test, executeFenced) {
     // setup call
     auto memory = allocateSharedMemory(4);
-    hidl_handle fakeSyncFence(memory.handle());
-    const sp<IFencedExecutionCallback> callback = new MockFencedExecutionCallback();
+    hardware::hidl_handle fakeSyncFence(memory.handle());
+    const sp<V1_3::IFencedExecutionCallback> callback = new MockFencedExecutionCallback();
     const auto ret = makeExecuteFencedReturn(V1_3::ErrorStatus::NONE, fakeSyncFence, callback);
     EXPECT_CALL(*kMockPreparedModel, executeFenced(_, _, _, _, _, _, _))
             .Times(1)
@@ -2276,7 +2325,7 @@ TEST_F(VersionedIPreparedModelV1_1Test, executeAsyncLaunchFailure) {
 TEST_F(VersionedIPreparedModelV1_2Test, executeAsyncLaunchFailure) {
     // setup failure
     const auto ret = makeExecute_1_2Return(V1_0::ErrorStatus::GENERAL_FAILURE,
-                                           V1_0::ErrorStatus::NONE, {}, kNoTiming);
+                                           V1_0::ErrorStatus::NONE, {}, kNoTiming12);
     EXPECT_CALL(*kMockPreparedModel, execute_1_2(_, _, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
@@ -2292,7 +2341,7 @@ TEST_F(VersionedIPreparedModelV1_2Test, executeAsyncLaunchFailure) {
 TEST_F(VersionedIPreparedModelV1_3Test, executeAsyncLaunchFailure) {
     // setup failure
     const auto ret = makeExecute_1_3Return(V1_3::ErrorStatus::GENERAL_FAILURE,
-                                           V1_3::ErrorStatus::NONE, {}, kNoTiming);
+                                           V1_3::ErrorStatus::NONE, {}, kNoTiming12);
     EXPECT_CALL(*kMockPreparedModel, execute_1_3(_, _, _, _, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
@@ -2338,7 +2387,7 @@ TEST_F(VersionedIPreparedModelV1_1Test, executeAsyncReturnFailure) {
 TEST_F(VersionedIPreparedModelV1_2Test, executeAsyncReturnFailure) {
     // setup failure
     const auto ret = makeExecute_1_2Return(V1_0::ErrorStatus::NONE,
-                                           V1_0::ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
+                                           V1_0::ErrorStatus::GENERAL_FAILURE, {}, kNoTiming12);
     EXPECT_CALL(*kMockPreparedModel, execute_1_2(_, _, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
@@ -2354,7 +2403,7 @@ TEST_F(VersionedIPreparedModelV1_2Test, executeAsyncReturnFailure) {
 TEST_F(VersionedIPreparedModelV1_3Test, executeAsyncReturnFailure) {
     // setup failure
     const auto ret = makeExecute_1_3Return(V1_3::ErrorStatus::NONE,
-                                           V1_3::ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
+                                           V1_3::ErrorStatus::GENERAL_FAILURE, {}, kNoTiming12);
     EXPECT_CALL(*kMockPreparedModel, execute_1_3(_, _, _, _, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
@@ -2402,7 +2451,7 @@ TEST_F(VersionedIPreparedModelV1_1Test, executePreferSyncFailure) {
 TEST_F(VersionedIPreparedModelV1_2Test, executePreferSyncFailure) {
     // setup failure
     const auto ret =
-            makeExecuteSynchronouslyReturn(V1_0::ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
+            makeExecuteSynchronouslyReturn(V1_0::ErrorStatus::GENERAL_FAILURE, {}, kNoTiming12);
     EXPECT_CALL(*kMockPreparedModel, executeSynchronously(_, _, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
@@ -2418,7 +2467,7 @@ TEST_F(VersionedIPreparedModelV1_2Test, executePreferSyncFailure) {
 TEST_F(VersionedIPreparedModelV1_3Test, executePreferSyncFailure) {
     // setup failure
     const auto ret =
-            makeExecuteSynchronously_1_3Return(V1_3::ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
+            makeExecuteSynchronously_1_3Return(V1_3::ErrorStatus::GENERAL_FAILURE, {}, kNoTiming12);
     EXPECT_CALL(*kMockPreparedModel, executeSynchronously_1_3(_, _, _, _, _))
             .Times(1)
             .WillOnce(Invoke(ret));
@@ -2470,7 +2519,7 @@ TEST_F(VersionedIPreparedModelV1_1Test, executeFencedFailure) {
 TEST_F(VersionedIPreparedModelV1_2Test, executeFencedFailure) {
     // setup failure
     const auto ret =
-            makeExecuteSynchronouslyReturn(V1_0::ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
+            makeExecuteSynchronouslyReturn(V1_0::ErrorStatus::GENERAL_FAILURE, {}, kNoTiming12);
     EXPECT_CALL(*kMockPreparedModel, executeSynchronously(_, _, _)).Times(1).WillOnce(Invoke(ret));
 
     // run test
@@ -2487,8 +2536,8 @@ TEST_F(VersionedIPreparedModelV1_2Test, executeFencedFailure) {
 TEST_F(VersionedIPreparedModelV1_3Test, executeFencedFailure) {
     // setup failure
     auto memory = allocateSharedMemory(4);
-    hidl_handle fakeSyncFence(memory.handle());
-    const sp<IFencedExecutionCallback> callback = new MockFencedExecutionCallback();
+    hardware::hidl_handle fakeSyncFence(memory.handle());
+    const sp<V1_3::IFencedExecutionCallback> callback = new MockFencedExecutionCallback();
     const auto ret =
             makeExecuteFencedReturn(V1_3::ErrorStatus::GENERAL_FAILURE, fakeSyncFence, callback);
     EXPECT_CALL(*kMockPreparedModel, executeFenced(_, _, _, _, _, _, _))
@@ -2894,7 +2943,7 @@ TEST_F(VersionedIPreparedModelV1_3Test, executePreferSyncCrash) {
 
 TEST_F(VersionedIPreparedModelMockTest, executeAsyncReturnCrash) {
     // setup failure
-    const auto ret = [this]() -> Return<V1_3::ErrorStatus> {
+    const auto ret = [this]() -> hardware::Return<V1_3::ErrorStatus> {
         kMockPreparedModel->simulateCrash();
         return V1_3::ErrorStatus::NONE;
     };

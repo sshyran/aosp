@@ -35,7 +35,7 @@ enum class HalVersion : int32_t {
 };
 
 enum class IOType { INPUT, OUTPUT };
-using PreparedModelRole = std::tuple<const hal::IPreparedModel*, IOType, uint32_t>;
+using PreparedModelRole = std::tuple<const V1_3::IPreparedModel*, IOType, uint32_t>;
 
 // 1.3 HAL does not support control flow operations with operands of unknown size.
 // See http://b/132458982#comment63.
@@ -62,35 +62,35 @@ bool validateRequest(const T_Request& request, const T_Model& model,
                      bool allowUnspecifiedOutput = true);
 
 // Verifies that the execution preference is valid.
-bool validateExecutionPreference(hal::ExecutionPreference preference);
+bool validateExecutionPreference(V1_1::ExecutionPreference preference);
 
 // Verifies that the priority is valid.
-bool validatePriority(hal::Priority priority);
+bool validatePriority(V1_3::Priority priority);
 
-bool validOperationType(hal::V1_0::OperationType operation);
-bool validOperationType(hal::V1_1::OperationType operation);
-bool validOperationType(hal::V1_2::OperationType operation);
+bool validOperationType(V1_0::OperationType operation);
+bool validOperationType(V1_1::OperationType operation);
+bool validOperationType(V1_2::OperationType operation);
 
-bool validOperandType(hal::V1_0::OperandType operand);
-bool validOperandType(hal::V1_2::OperandType operand);
-bool validOperandType(hal::V1_3::OperandType operand);
+bool validOperandType(V1_0::OperandType operand);
+bool validOperandType(V1_2::OperandType operand);
+bool validOperandType(V1_3::OperandType operand);
 
 // Verifies that the memory pool is valid in the specified HAL version.
-bool validatePool(const hal::hidl_memory& pool, HalVersion ver = HalVersion::LATEST);
-bool validatePool(const hal::V1_3::Request::MemoryPool& pool, HalVersion ver = HalVersion::LATEST);
+bool validatePool(const hardware::hidl_memory& pool, HalVersion ver = HalVersion::LATEST);
+bool validatePool(const V1_3::Request::MemoryPool& pool, HalVersion ver = HalVersion::LATEST);
 
 // Verifies that the input arguments to IDevice::allocate are valid.
 // Optionally, this function can return a flattened prepared model roles and a combined operand.
 // Pass nullptr if either value is not needed.
 // IMPORTANT: This function cannot validate dimensions and extraParams with extension operand type.
 // Each driver should do their own validation of extension type dimensions and extraParams.
-bool validateMemoryDesc(
-        const hal::V1_3::BufferDesc& desc,
-        const hal::hidl_vec<sp<hal::V1_3::IPreparedModel>>& preparedModels,
-        const hal::hidl_vec<hal::V1_3::BufferRole>& inputRoles,
-        const hal::hidl_vec<hal::V1_3::BufferRole>& outputRoles,
-        std::function<const hal::V1_3::Model*(const sp<hal::V1_3::IPreparedModel>&)> getModel,
-        std::set<PreparedModelRole>* preparedModelRoles, hal::V1_3::Operand* combinedOperand);
+bool validateMemoryDesc(const V1_3::BufferDesc& desc,
+                        const hardware::hidl_vec<sp<V1_3::IPreparedModel>>& preparedModels,
+                        const hardware::hidl_vec<V1_3::BufferRole>& inputRoles,
+                        const hardware::hidl_vec<V1_3::BufferRole>& outputRoles,
+                        std::function<const V1_3::Model*(const sp<V1_3::IPreparedModel>&)> getModel,
+                        std::set<PreparedModelRole>* preparedModelRoles,
+                        V1_3::Operand* combinedOperand);
 
 }  // namespace nn
 }  // namespace android

@@ -23,7 +23,6 @@
 #include <vector>
 
 #include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "Operations.h"
 #include "Tracing.h"
@@ -45,8 +44,6 @@ constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
 namespace {
-
-using namespace hal;
 
 template <typename T>
 bool compute(const T* inputData, const Shape& inputShape, const int32_t* beginData,
@@ -107,7 +104,7 @@ bool validate(const IOperationValidationContext* context) {
                  inputType == OperandType::TENSOR_FLOAT32 ||
                  inputType == OperandType::TENSOR_QUANT8_ASYMM ||
                  inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
-            << "Unsupported input operand type for STRIDED_SLICE op: " << toString(inputType);
+            << "Unsupported input operand type for STRIDED_SLICE op: " << inputType;
 
     HalVersion minSupportedHalVersion;
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {

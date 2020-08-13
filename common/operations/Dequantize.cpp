@@ -17,7 +17,6 @@
 #include "OperationsUtils.h"
 #define LOG_TAG "Operations"
 
-#include "HalInterfaces.h"
 #include "IndexedShapeWrapper.h"
 #include "OperationResolver.h"
 
@@ -32,8 +31,6 @@ constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
 namespace {
-
-using namespace hal;
 
 template <typename InputType, typename OutputType>
 bool compute(const InputType* inputData, const Shape& inputShape, OutputType* outputData) {
@@ -52,7 +49,8 @@ bool computePerChannel(const int8_t* inputData, const Shape& inputShape, OutputT
     // First we calculate a stride which is the number of elements we need to
     // skip to change an index along a dimension with different quantization
     // scales.
-    const int channelDim = inputShape.extraParams.channelQuant().channelDim;
+    const int channelDim =
+            std::get<Operand::SymmPerChannelQuantParams>(inputShape.extraParams).channelDim;
     int stride = 1;
     for (int i = getNumberOfDimensions(inputShape) - 1; i > channelDim; --i) {
         stride *= getSizeOfDimension(inputShape, i);
@@ -67,7 +65,8 @@ bool computePerChannel(const int8_t* inputData, const Shape& inputShape, OutputT
         // size of the dimension (so that we don't have an overflow if the
         // channelDim is not 0).
         const int scaleIndex = (i / stride) % getSizeOfDimension(inputShape, channelDim);
-        const float scale = inputShape.extraParams.channelQuant().scales[scaleIndex];
+        const float scale = std::get<Operand::SymmPerChannelQuantParams>(inputShape.extraParams)
+                                    .scales[scaleIndex];
         const int32_t value = inputData[i];
         outputData[i] = static_cast<OutputType>(scale * (value - zeroPoint));
     }
@@ -97,10 +96,10 @@ bool validate(const IOperationValidationContext* context) {
                  inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED ||
                  inputType == OperandType::TENSOR_QUANT8_SYMM ||
                  inputType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL)
-            << "Unsupported input operand type for DEQUANTIZE op: " << toString(inputType);
+            << "Unsupported input operand type for DEQUANTIZE op: " << inputType;
     NN_RET_CHECK(outputType == OperandType::TENSOR_FLOAT16 ||
                  outputType == OperandType::TENSOR_FLOAT32)
-            << "Unsupported output operand type for DEQUANTIZE op: " << toString(outputType);
+            << "Unsupported output operand type for DEQUANTIZE op: " << outputType;
     return validateHalVersion(context, HalVersion::V1_2);
 }
 
@@ -155,7 +154,7 @@ bool execute(IOperationExecutionContext* context) {
         }
     }
     NN_RET_CHECK_FAIL() << "Unsupported tensor types combination for dequantize op. (input type: "
-                        << toString(inputType) << " output type: " << toString(outputType) << ")";
+                        << inputType << " output type: " << outputType << ")";
 }
 
 }  // namespace dequantize

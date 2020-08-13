@@ -30,8 +30,6 @@
 namespace android {
 namespace nn {
 
-using namespace hal;
-
 static const std::pair<int, ModelArgumentInfo> kBadDataModelArgumentInfo{ANEURALNETWORKS_BAD_DATA,
                                                                          {}};
 
@@ -98,33 +96,33 @@ int ModelArgumentInfo::updateDimensionInfo(const Operand& operand,
         mDimensions = operand.dimensions;
     } else {
         const uint32_t count = newType->dimensionCount;
-        mDimensions = hidl_vec<uint32_t>(count);
+        mDimensions = std::vector<uint32_t>(count);
         std::copy(&newType->dimensions[0], &newType->dimensions[count], mDimensions.begin());
     }
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-hidl_vec<RequestArgument> createRequestArguments(
+std::vector<Request::Argument> createRequestArguments(
         const std::vector<ModelArgumentInfo>& argumentInfos,
         const std::vector<DataLocation>& ptrArgsLocations) {
     const size_t count = argumentInfos.size();
-    hidl_vec<RequestArgument> ioInfos(count);
+    std::vector<Request::Argument> ioInfos(count);
     uint32_t ptrArgsIndex = 0;
     for (size_t i = 0; i < count; i++) {
         const auto& info = argumentInfos[i];
         switch (info.state()) {
             case ModelArgumentInfo::POINTER:
-                ioInfos[i] = {.hasNoValue = false,
+                ioInfos[i] = {.lifetime = Request::Argument::LifeTime::POOL,
                               .location = ptrArgsLocations[ptrArgsIndex++],
                               .dimensions = info.dimensions()};
                 break;
             case ModelArgumentInfo::MEMORY:
-                ioInfos[i] = {.hasNoValue = false,
+                ioInfos[i] = {.lifetime = Request::Argument::LifeTime::POOL,
                               .location = info.locationAndLength(),
                               .dimensions = info.dimensions()};
                 break;
             case ModelArgumentInfo::HAS_NO_VALUE:
-                ioInfos[i] = {.hasNoValue = true};
+                ioInfos[i] = {.lifetime = Request::Argument::LifeTime::NO_VALUE};
                 break;
             default:
                 CHECK(false);

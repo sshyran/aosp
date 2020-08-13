@@ -36,8 +36,6 @@
 namespace android {
 namespace nn {
 
-using namespace hal;
-
 CompilationBuilder::CompilationBuilder(const ModelBuilder* model,
                                        const std::vector<std::shared_ptr<Device>>& devices,
                                        bool explicitDeviceList)

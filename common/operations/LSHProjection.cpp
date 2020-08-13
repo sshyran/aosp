@@ -18,18 +18,17 @@
 
 #include "LSHProjection.h"
 
+#include <utils/hash/farmhash.h>
+
+#include <memory>
+
 #include "CpuExecutor.h"
-#include "HalInterfaces.h"
 #include "Tracing.h"
 #include "Utils.h"
-
-#include <utils/hash/farmhash.h>
-#include <memory>
+#include "nnapi/Types.h"
 
 namespace android {
 namespace nn {
-
-using namespace hal;
 
 LSHProjection::LSHProjection(const Operation& operation, RunTimeOperandInfo* operands) {
     input_ = GetInput(operation, operands, kInputTensor);
@@ -112,7 +111,7 @@ int runningSignBit(const RunTimeOperandInfo* input, const RunTimeOperandInfo* we
         int64_t hash_signature = farmhash::Fingerprint64(key.get(), key_bytes);
         double running_value = static_cast<double>(hash_signature);
         input_ptr += input_item_bytes;
-        if (weight->lifetime == OperandLifeTime::NO_VALUE) {
+        if (weight->lifetime == Operand::LifeTime::NO_VALUE) {
             score += running_value;
         } else {
             score += static_cast<double>(reinterpret_cast<T*>(weight->buffer)[i]) * running_value;

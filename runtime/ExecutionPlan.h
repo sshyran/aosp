@@ -20,6 +20,7 @@
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_EXECUTION_PLAN_H
 
 #include <android-base/logging.h>
+#include <nnapi/Types.h>
 #include <openssl/sha.h>
 
 #include <algorithm>
@@ -35,7 +36,6 @@
 #include <variant>
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "Memory.h"
 #include "ModelArgumentInfo.h"
 #include "ModelBuilder.h"
@@ -52,8 +52,8 @@ class Device;
 class ExecutionBuilder;
 class ExecutionBurstController;
 class ExecutionPlan;
-class Memory;
-class PreparedModel;
+class RuntimeMemory;
+class RuntimePreparedModel;
 class StepExecutor;
 
 struct ConstantReferenceLocation;
@@ -142,7 +142,7 @@ class DynamicTemporaries {
     // operand).  initialDimensions and initialLength indicate what we know or
     // (in the case of length) guess about those properties.
     void declare(SourceOperandIndex sourceOperandIndex, uint32_t stepIndex,
-                 const hal::hidl_vec<uint32_t>& initialDimensions, uint32_t initialLength);
+                 const Dimensions& initialDimensions, uint32_t initialLength);
 
     // Indicate that we've finished declaring all dynamic temporaries.
     void endDeclarations() {
@@ -153,8 +153,8 @@ class DynamicTemporaries {
     // Redeclare a dynamic temporary, indicating what we've learned about it.
     // This may invalidate the location of temporaries defined by its step.
     // Returns true if dimensions or length changed, false otherwise.
-    bool redeclare(SourceOperandIndex sourceOperandIndex,
-                   const hal::hidl_vec<uint32_t>& newDimensions, uint32_t newLength);
+    bool redeclare(SourceOperandIndex sourceOperandIndex, const Dimensions& newDimensions,
+                   uint32_t newLength);
 
     // Ensure that all dynamic temporaries defined by the specified step have
     // locations.  The return value is a ResultCode (e.g.,
@@ -180,9 +180,9 @@ class DynamicTemporaries {
     //  - If mustBeAllocated == true, then trigger a failed CHECK().
     //  - If mustBeAllocated == false, then memory == nullptr and offset == ~0.
     struct LocationAndShape {
-        const Memory* memory;
+        const RuntimeMemory* memory;
         uint32_t offset;
-        const hal::hidl_vec<uint32_t>* dimensions;
+        const Dimensions* dimensions;
         uint32_t length;
     };
     std::optional<LocationAndShape> lookup(SourceOperandIndex sourceOperandIndex,
@@ -197,7 +197,7 @@ class DynamicTemporaries {
     struct InternalLocationAndShape {
         uint32_t stepIndex;
         uint32_t offset;
-        hal::hidl_vec<uint32_t> dimensions;
+        Dimensions dimensions;
         uint32_t length;
     };
     std::map<SourceOperandIndex, InternalLocationAndShape> mSourceOperandToTemporary;
@@ -267,7 +267,9 @@ class ExecutionStep {
     std::shared_ptr<Device> getDevice() const { return mDevice; }
 
     // only available after calling finishStepModel()
-    std::shared_ptr<PreparedModel> getPreparedStepModel() const { return mPreparedStepModel; }
+    std::shared_ptr<RuntimePreparedModel> getPreparedStepModel() const {
+        return mPreparedStepModel;
+    }
 
     // Map inputs and outputs from ExecutionBuilder to StepExecutor.
     //
@@ -278,8 +280,8 @@ class ExecutionStep {
     //     inputs of this step are of fully specified shape.
     void mapInputsAndOutputs(
             std::shared_ptr<StepExecutor> stepExecutor,
-            const std::vector<hal::OutputShape>* mainModelOutputShapes,
-            const Memory* temporaryMemory,  // for static temporaries
+            const std::vector<OutputShape>* mainModelOutputShapes,
+            const RuntimeMemory* temporaryMemory,  // for static temporaries
             const std::map<SourceOperandIndex, uint32_t>&
                     sourceOperandToOffsetOfTemporary,  // for static temporaries
             const DynamicTemporaries& dynamicTemporaries,
@@ -306,7 +308,7 @@ class ExecutionStep {
     uint32_t mSourceModelIndex;
     ModelBuilder mStepModel;  // An excerpt of a source model to be run by one device.
     std::shared_ptr<Device> mDevice;
-    std::shared_ptr<PreparedModel> mPreparedStepModel;
+    std::shared_ptr<RuntimePreparedModel> mPreparedStepModel;
 
     // All inputs of this step model:
     //     (source model operand index, step model operand index)
@@ -510,9 +512,9 @@ class LogicalStep {
     std::variant<ExecutionStep, IfStep, WhileStep, GotoStep> mStep;
 };
 
-std::string toString(const IfStep& step);
-std::string toString(const WhileStep& step);
-std::string toString(const GotoStep& step);
+std::ostream& operator<<(std::ostream& os, const IfStep& step);
+std::ostream& operator<<(std::ostream& os, const WhileStep& step);
+std::ostream& operator<<(std::ostream& os, const GotoStep& step);
 
 // Describes the state of WhileStep.
 struct WhileState {
@@ -533,7 +535,7 @@ struct ConstantCopyLocation {
 };
 
 struct ConstantReferenceLocation {
-    const Memory* memory;
+    const RuntimeMemory* memory;
     uint32_t offset;
     uint32_t length;
 };
@@ -660,13 +662,13 @@ class ExecutionPlan {
     // syncFdOfLastStep is the sync fence fd generated by the most recently processed step.
     int next(std::shared_ptr<Controller> controller, std::shared_ptr<StepExecutor>* executor,
              std::shared_ptr<ExecutionBurstController>* burstController,
-             const std::vector<hal::OutputShape>* mainModelOutputShapes,
+             const std::vector<OutputShape>* mainModelOutputShapes,
              int syncFdOfLastStep = -1) const;
 
     // Create the same executor as the last one created by next().
     int fallback(std::shared_ptr<Controller> controller, std::shared_ptr<StepExecutor>* executor,
                  std::shared_ptr<ExecutionBurstController>* burstController,
-                 const std::vector<hal::OutputShape>* mainModelOutputShapes) const;
+                 const std::vector<OutputShape>* mainModelOutputShapes) const;
 
     ExecutionStep* createNewExecutionStep(uint32_t sourceModelIndex,
                                           const std::shared_ptr<Device> device);
@@ -737,8 +739,7 @@ class ExecutionPlan {
     // Illegal to call for when mState == SIMPLE.
     void becomeCompoundIfEmpty();
 
-    const hal::Operand& getSourceOperand(
-            const std::pair<uint32_t, uint32_t>& sourceOperandIndex) const {
+    const Operand& getSourceOperand(const std::pair<uint32_t, uint32_t>& sourceOperandIndex) const {
         return getSourceModels()
                 .getModel(sourceOperandIndex.first)
                 ->getOperand(sourceOperandIndex.second);
@@ -770,23 +771,23 @@ class ExecutionPlan {
     int nextCompound(std::shared_ptr<Controller> controller,
                      std::shared_ptr<StepExecutor>* executor,
                      std::shared_ptr<ExecutionBurstController>* burstController,
-                     const std::vector<hal::OutputShape>* mainModelOutputShapes) const;
+                     const std::vector<OutputShape>* mainModelOutputShapes) const;
     int nextCompound(const ExecutionStep* step, std::shared_ptr<Controller> controller,
                      std::shared_ptr<StepExecutor>* executor,
                      std::shared_ptr<ExecutionBurstController>* burstController,
-                     const std::vector<hal::OutputShape>* mainModelOutputShapes) const;
+                     const std::vector<OutputShape>* mainModelOutputShapes) const;
     int nextCompound(const IfStep* step, std::shared_ptr<Controller> controller,
                      std::shared_ptr<StepExecutor>* executor,
                      std::shared_ptr<ExecutionBurstController>* burstController,
-                     const std::vector<hal::OutputShape>* mainModelOutputShapes) const;
+                     const std::vector<OutputShape>* mainModelOutputShapes) const;
     int nextCompound(const WhileStep* step, std::shared_ptr<Controller> controller,
                      std::shared_ptr<StepExecutor>* executor,
                      std::shared_ptr<ExecutionBurstController>* burstController,
-                     const std::vector<hal::OutputShape>* mainModelOutputShapes) const;
+                     const std::vector<OutputShape>* mainModelOutputShapes) const;
     int nextCompound(const GotoStep* step, std::shared_ptr<Controller> controller,
                      std::shared_ptr<StepExecutor>* executor,
                      std::shared_ptr<ExecutionBurstController>* burstController,
-                     const std::vector<hal::OutputShape>* mainModelOutputShapes) const;
+                     const std::vector<OutputShape>* mainModelOutputShapes) const;
 
     struct Body {
         virtual ~Body() {}
@@ -818,7 +819,7 @@ class ExecutionPlan {
 
         std::shared_ptr<Device> mDevice;
         const ModelBuilder* mModel;
-        std::shared_ptr<PreparedModel> mPreparedModel;
+        std::shared_ptr<RuntimePreparedModel> mPreparedModel;
 
         const std::string* mCacheDir;
         TokenHasher mToken;
@@ -862,7 +863,8 @@ class ExecutionPlan {
         // to initialize ExecutionPlan::Controller::mSourceOperandToOutputIndex;
         std::map<SourceOperandIndex, uint32_t> mSourceOperandToOutputIndex;
 
-        // Map from source operand index to location of a CONSTANT_COPY operand.
+        // Map from source operand index to location of a CONSTANT_COPY or
+        // POINTER operand.
         // This map only contains constant partition boundary IF and WHILE
         // operands and is used to create a ExecutionPlan::Controller.
         std::map<SourceOperandIndex, ConstantCopyLocation> mSourceOperandToBoundaryConstantCopy;
@@ -887,9 +889,9 @@ class ExecutionPlan {
         // values with the corresponding SUBGRAPH_INPUT operands in a referenced
         // model.
         //
-        // For CONSTANT_COPY boundary operands, we copy those to temporary
-        // memory and treat them similarly to TEMPORARY_VARIABLE operands in
-        // Controller.
+        // For CONSTANT_COPY and POINTER boundary operands, we copy those to
+        // temporary memory and treat them similarly to TEMPORARY_VARIABLE
+        // operands in Controller.
         //
         // For CONSTANT_REFERENCE boundary operands, we keep track of them in
         // ExecutionPlan::Controller::mSourceOperandToConstantReference.
@@ -923,7 +925,7 @@ class ExecutionPlan {
         return static_cast<const CompoundBody*>(mBody);
     }
 
-    void forEachDynamicTemporary(const std::function<void(SourceOperandIndex, const hal::Operand&,
+    void forEachDynamicTemporary(const std::function<void(SourceOperandIndex, const Operand&,
                                                           uint32_t definingStepIndex)>&) const;
 
     // Pointers to compilation caching information in CompilationBuilder.

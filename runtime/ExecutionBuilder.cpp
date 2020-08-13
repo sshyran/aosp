@@ -45,12 +45,10 @@
 namespace android {
 namespace nn {
 
-using namespace hal;
-
 // Partial validation of output shapes returned from driver, to ensure they
 // conform to a very specific set of rules.
 static bool validateOutputShapesFromDriver(ErrorStatus executionStatus, const ModelBuilder* model,
-                                           const std::vector<hal::OutputShape>& shapes) {
+                                           const std::vector<OutputShape>& shapes) {
     // Enforces the following rules (some of which are from b/154054474):
     // - shapes vector is empty except in the case of NONE or OUTPUT_INSUFFICIENT_SIZE.
     //   If the vector is not empty, it must have as many entries as the step model has outputs.
@@ -61,21 +59,21 @@ static bool validateOutputShapesFromDriver(ErrorStatus executionStatus, const Mo
     switch (executionStatus) {
         case ErrorStatus::NONE: {
             NN_RET_CHECK(shapes.size() == 0 || shapes.size() == model->outputCount())
-                    << "With execution ErrorStatus " << toString(executionStatus)
+                    << "With execution ErrorStatus " << executionStatus
                     << " output shapes vector must be empty or of length " << model->outputCount()
                     << " but has length " << shapes.size();
             NN_RET_CHECK(std::all_of(shapes.begin(), shapes.end(),
                                      [](const OutputShape& shape) { return shape.isSufficient; }))
-                    << "With execution ErrorStatus " << toString(executionStatus)
+                    << "With execution ErrorStatus " << executionStatus
                     << " at least one output shape is unexpectedly marked !isSufficient";
 
             const TypeManager* tm = TypeManager::get();
             for (uint32_t outputIndex = 0, outputCount = shapes.size(); outputIndex < outputCount;
                  ++outputIndex) {
-                const hal::Operand& outputOperand = model->getOutputOperand(outputIndex);
+                const Operand& outputOperand = model->getOutputOperand(outputIndex);
                 NN_RET_CHECK(!tm->isTensorType(outputOperand.type) ||
                              (shapes[outputIndex].dimensions.size() != 0))
-                        << "With execution ErrorStatus " << toString(executionStatus) << " output#"
+                        << "With execution ErrorStatus " << executionStatus << " output#"
                         << outputIndex << " shape unexpectedly has zero rank";
             }
 
@@ -83,18 +81,18 @@ static bool validateOutputShapesFromDriver(ErrorStatus executionStatus, const Mo
         }
         case ErrorStatus::OUTPUT_INSUFFICIENT_SIZE: {
             NN_RET_CHECK(shapes.size() == model->outputCount())
-                    << "With execution ErrorStatus " << toString(executionStatus)
+                    << "With execution ErrorStatus " << executionStatus
                     << " output shapes vector must be of length " << model->outputCount()
                     << " but has length " << shapes.size();
             NN_RET_CHECK(std::any_of(shapes.begin(), shapes.end(),
                                      [](const OutputShape& shape) { return !shape.isSufficient; }))
-                    << "With execution ErrorStatus " << toString(executionStatus)
+                    << "With execution ErrorStatus " << executionStatus
                     << " at least one output shape must have been marked !isSufficient";
             break;
         }
         default: {
             NN_RET_CHECK(shapes.size() == 0)
-                    << "With execution ErrorStatus " << toString(executionStatus)
+                    << "With execution ErrorStatus " << executionStatus
                     << " output shapes vector must be empty but has length " << shapes.size();
             break;
         }
@@ -102,12 +100,10 @@ static bool validateOutputShapesFromDriver(ErrorStatus executionStatus, const Mo
     return true;
 }
 static bool validateOutputShapesFromDriver(int executionResultCode, const ModelBuilder* model,
-                                           const std::vector<hal::OutputShape>& shapes) {
+                                           const std::vector<OutputShape>& shapes) {
     return validateOutputShapesFromDriver(convertResultCodeToErrorStatus(executionResultCode),
                                           model, shapes);
 }
-
-const Timing kNoTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
 
 static MeasureTiming measureTiming(const ExecutionBuilder* execution) {
     return execution->measureTiming() ? MeasureTiming::YES : MeasureTiming::NO;
@@ -117,7 +113,7 @@ static bool checkDimensionInfo(const Operand& operand, const ANeuralNetworksOper
                                const char* tag, bool allowUnspecified) {
     if (newType != nullptr) {
         const Extension::OperandTypeInformation* info = nullptr;
-        if (isExtensionOperandType(operand.type)) {
+        if (isExtension(operand.type)) {
             NN_RET_CHECK(TypeManager::get()->getExtensionOperandTypeInfo(operand.type, &info));
         }
         if (validateOperandType(*newType, info, tag, allowUnspecified) !=
@@ -220,7 +216,8 @@ int ExecutionBuilder::setInput(uint32_t index, const ANeuralNetworksOperandType*
 }
 
 int ExecutionBuilder::setInputFromMemory(uint32_t index, const ANeuralNetworksOperandType* type,
-                                         const Memory* memory, size_t offset, size_t length) {
+                                         const RuntimeMemory* memory, size_t offset,
+                                         size_t length) {
     // Should be similar to StepExecutor::setInputOrOutputFromMemory()
 
     if (mStarted) {
@@ -297,7 +294,8 @@ int ExecutionBuilder::setOutput(uint32_t index, const ANeuralNetworksOperandType
 }
 
 int ExecutionBuilder::setOutputFromMemory(uint32_t index, const ANeuralNetworksOperandType* type,
-                                          const Memory* memory, size_t offset, size_t length) {
+                                          const RuntimeMemory* memory, size_t offset,
+                                          size_t length) {
     // Should be similar to StepExecutor::setInputOrOutputFromMemory()
 
     if (mStarted) {
@@ -383,12 +381,12 @@ int ExecutionBuilder::getDuration(int32_t durationCode, uint64_t* duration) cons
     Timing timingFenced = timingLaunched;
     if (mFencedExecutionCallback != nullptr) {
         ErrorStatus status;
-        const Return<void> ret = mFencedExecutionCallback->getExecutionInfo(
-                [&status, &timingLaunched, &timingFenced](ErrorStatus error, Timing tLaunched,
-                                                          Timing tFenced) {
-                    status = error;
-                    timingLaunched = tLaunched;
-                    timingFenced = tFenced;
+        const hardware::Return<void> ret = mFencedExecutionCallback->getExecutionInfo(
+                [&status, &timingLaunched, &timingFenced](
+                        V1_3::ErrorStatus error, V1_2::Timing tLaunched, V1_2::Timing tFenced) {
+                    status = uncheckedConvert(error);
+                    timingLaunched = uncheckedConvert(tLaunched);
+                    timingFenced = uncheckedConvert(tFenced);
                 });
         if (!ret.isOk()) {
             *duration = UINT64_MAX;
@@ -546,7 +544,7 @@ cpuFallbackPartial(const ExecutionPlan& plan,
     std::shared_ptr<StepExecutor> executor;
     int n1 = plan.fallback(controller, &executor, nullptr, nullptr);
     if (n1 != ANEURALNETWORKS_NO_ERROR) {
-        return {n1, {}, kNoTiming, nullptr};
+        return {n1, {}, {}, nullptr};
     }
     CHECK(executor != nullptr);
 
@@ -565,7 +563,7 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
     VLOG(EXECUTION) << "ExecutionBuilder::compute (from plan, iteratively)";
 
     std::vector<OutputShape> outputShapes = executionBuilder->getInitialOutputShapes();
-    Timing timing = kNoTiming;
+    Timing timing;
     // Disallow CPU fallback when the ExecutionPlan is simple on CPU.
     allowCpuFallback &= !plan.isSimpleCpu();
 
@@ -589,7 +587,7 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
             bool missedDeadline = n == ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT ||
                                   n == ANEURALNETWORKS_MISSED_DEADLINE_PERSISTENT;
             if (allowCpuFallback && !missedDeadline) break;
-            executionCallback->notify(convertResultCodeToErrorStatus(n), {}, kNoTiming);
+            executionCallback->notify(convertResultCodeToErrorStatus(n), {}, {});
             return;
         }
 
@@ -636,7 +634,7 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
                 // - we didn't learn anything new about dynamic temporaries.
                 // Neither of these is recoverable, so end execution.
                 const ErrorStatus stepStatus = convertResultCodeToErrorStatus(stepN);
-                executionCallback->notify(stepStatus, outputShapes, kNoTiming);
+                executionCallback->notify(stepStatus, outputShapes, {});
                 return;
             }
             // Every main model output is of sufficient size.  This implies that
@@ -649,7 +647,7 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
         // If CPU fallback is not allowed and there was an error, end execution.
         if (!allowCpuFallback) {
             const ErrorStatus stepStatus = convertResultCodeToErrorStatus(stepN);
-            executionCallback->notify(stepStatus, {}, kNoTiming);
+            executionCallback->notify(stepStatus, {}, {});
             return;
         }
 
@@ -658,7 +656,7 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
         // (2) return from the function with an error
         if (executorIsCpu) {
             if (!plan.isSimple()) break;
-            executionCallback->notify(convertResultCodeToErrorStatus(stepN), {}, kNoTiming);
+            executionCallback->notify(convertResultCodeToErrorStatus(stepN), {}, {});
             return;
         }
 
@@ -706,7 +704,7 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
                     // - we didn't learn anything new about dynamic temporaries.
                     // Neither of these is recoverable, so end execution.
                     const ErrorStatus fallbackStatus = convertResultCodeToErrorStatus(fallbackN);
-                    executionCallback->notify(fallbackStatus, outputShapes, kNoTiming);
+                    executionCallback->notify(fallbackStatus, outputShapes, {});
                     return;
                 }
                 // Every main model output is of sufficient size.  This implies
@@ -718,7 +716,7 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
             // Do not fallback twice if the ExecutionPlan is simple.
             if (plan.isSimple()) {
                 const ErrorStatus fallbackStatus = convertResultCodeToErrorStatus(fallbackN);
-                executionCallback->notify(fallbackStatus, {}, kNoTiming);
+                executionCallback->notify(fallbackStatus, {}, {});
                 return;
             }
 
@@ -748,7 +746,7 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
 // fence and the fenced compute callback returned from the last partition.
 // Any failed partition will result in the whole execution fallback to CPU if
 // allowCpuFallback is set to true.
-static std::tuple<int, int, sp<hal::IFencedExecutionCallback>> startComputeFenced(
+static std::tuple<int, int, sp<V1_3::IFencedExecutionCallback>> startComputeFenced(
         ExecutionBuilder* executionBuilder, const ExecutionPlan& plan,
         std::shared_ptr<ExecutionPlan::Controller> controller, const std::vector<int>& waitFor,
         uint64_t timeoutDurationAfterFence, const std::optional<Deadline>& deadline,
@@ -773,7 +771,7 @@ static std::tuple<int, int, sp<hal::IFencedExecutionCallback>> startComputeFence
     // Initiate waitForFds, syncFence for the first step.
     std::vector<int> waitForFds = waitFor;
     int syncFence = -1;
-    sp<hal::IFencedExecutionCallback> computeFencedCallback;
+    sp<V1_3::IFencedExecutionCallback> computeFencedCallback;
 
     while (true) {
         VLOG(EXECUTION) << "looking for next StepExecutor";
@@ -942,7 +940,7 @@ int ExecutionBuilder::compute(sp<ExecutionCallback>* synchronizationCallback,
             LOG(ERROR) << "ANeuralNetworksExecution_" << name() << " not all inputs specified";
             return ANEURALNETWORKS_BAD_DATA;
         } else if (p.state() == ModelArgumentInfo::MEMORY) {
-            const Memory* memory = mMemories[p.locationAndLength().poolIndex];
+            const RuntimeMemory* memory = mMemories[p.locationAndLength().poolIndex];
             if (!memory->getValidator().validateInputDimensions(p.dimensions())) {
                 return ANEURALNETWORKS_OP_FAILED;
             }
@@ -1015,7 +1013,7 @@ std::vector<OutputShape> ExecutionBuilder::getInitialOutputShapes() const {
     std::vector<OutputShape> outputShapes(mOutputs.size());
     std::transform(mOutputs.begin(), mOutputs.end(), outputShapes.begin(),
                    [](const auto& x) -> OutputShape {
-                       hidl_vec<uint32_t> dimensions;
+                       std::vector<uint32_t> dimensions;
                        if (x.state() != ModelArgumentInfo::HAS_NO_VALUE) {
                            dimensions = x.dimensions();
                        }
@@ -1067,7 +1065,7 @@ bool ExecutionBuilder::updateOutputShapes(ErrorStatus status,
 bool ExecutionBuilder::updateMemories() {
     for (const auto& output : mOutputs) {
         if (output.state() != ModelArgumentInfo::MEMORY) continue;
-        const Memory* memory = mMemories[output.locationAndLength().poolIndex];
+        const RuntimeMemory* memory = mMemories[output.locationAndLength().poolIndex];
         NN_RET_CHECK(memory->getValidator().updateMetadata({.dimensions = output.dimensions()}));
     }
     return true;
@@ -1084,7 +1082,7 @@ ErrorStatus ExecutionBuilder::finishWithoutSyncFence(ErrorStatus status,
     bool success = status == ErrorStatus::NONE;
     for (const auto& output : mOutputs) {
         if (output.state() != ModelArgumentInfo::MEMORY) continue;
-        const Memory* memory = mMemories[output.locationAndLength().poolIndex];
+        const RuntimeMemory* memory = mMemories[output.locationAndLength().poolIndex];
         memory->getValidator().setInitialized(success);
     }
     switch (convertErrorStatusToResultCode(status)) {
@@ -1124,7 +1122,7 @@ bool StepExecutor::updateOutputShapes(int executionResultCode, const std::vector
 
     if (VLOG_IS_ON(EXECUTION)) {
         for (const auto& shape : from) {
-            VLOG(EXECUTION) << "updateOutputShapes: " << toString(shape);
+            VLOG(EXECUTION) << "updateOutputShapes: " << shape;
         }
     }
 
@@ -1233,8 +1231,8 @@ bool StepExecutor::updateOutputShapes(int executionResultCode, const std::vector
 
 StepExecutor::StepExecutor(ExecutionBuilder* executionBuilder, const ModelBuilder* model,
                            std::shared_ptr<Device> device,
-                           std::shared_ptr<PreparedModel> preparedModel, const ExecutionStep* step,
-                           DynamicTemporaries* dynamicTemporaries)
+                           std::shared_ptr<RuntimePreparedModel> preparedModel,
+                           const ExecutionStep* step, DynamicTemporaries* dynamicTemporaries)
     : mExecutionBuilder(executionBuilder),
       mExecutionStep(step),
       mDynamicTemporaries(dynamicTemporaries),
@@ -1261,7 +1259,7 @@ void StepExecutor::mapInputsAndOutputsTrivially() {
 
 void StepExecutor::mapInputOrOutput(const ModelArgumentInfo& builderInputOrOutput,
                                     ModelArgumentInfo* executorInputOrOutput,
-                                    const hidl_vec<uint32_t>* builderDimensions) {
+                                    const Dimensions* builderDimensions) {
     auto updateDimensions = [executorInputOrOutput, builderDimensions] {
         if (!builderDimensions) {
             return;
@@ -1283,7 +1281,7 @@ void StepExecutor::mapInputOrOutput(const ModelArgumentInfo& builderInputOrOutpu
         case ModelArgumentInfo::MEMORY: {
             updateDimensions();
             const uint32_t builderPoolIndex = builderInputOrOutput.locationAndLength().poolIndex;
-            const Memory* memory = mExecutionBuilder->mMemories[builderPoolIndex];
+            const RuntimeMemory* memory = mExecutionBuilder->mMemories[builderPoolIndex];
             const uint32_t executorPoolIndex = mMemories.add(memory);
             executorInputOrOutput->locationAndLength().poolIndex = executorPoolIndex;
             break;
@@ -1292,8 +1290,8 @@ void StepExecutor::mapInputOrOutput(const ModelArgumentInfo& builderInputOrOutpu
 }
 
 int StepExecutor::setInputOrOutputFromMemory(const Operand& inputOrOutputOperand,
-                                             const Memory* memory, uint32_t offset,
-                                             const hal::hidl_vec<uint32_t>& dimensions,
+                                             const RuntimeMemory* memory, uint32_t offset,
+                                             const Dimensions& dimensions,
                                              std::optional<uint32_t> length,
                                              ModelArgumentInfo* inputOrOutputInfo) {
     // Should be similar to
@@ -1361,12 +1359,6 @@ bool StepExecutor::isCpu() const {
     return mDevice == DeviceManager::getCpuDevice();
 }
 
-static OptionalTimeoutDuration makeTimeoutDuration(uint64_t nanoseconds) {
-    OptionalTimeoutDuration otd;
-    otd.nanoseconds(nanoseconds);
-    return otd;
-}
-
 std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::compute(
         const std::optional<Deadline>& deadline,
         const std::shared_ptr<ExecutionBurstController>& burstController) {
@@ -1374,7 +1366,7 @@ std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::compute(
 }
 
 std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::computeWithMemories(
-        const std::optional<Deadline>& deadline, const std::vector<const Memory*>& memories,
+        const std::optional<Deadline>& deadline, const std::vector<const RuntimeMemory*>& memories,
         const std::shared_ptr<ExecutionBurstController>& burstController) {
     CHECK(mPreparedModel != nullptr);
 
@@ -1393,7 +1385,7 @@ std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::computeWithMemor
     return {n, std::move(outputShapes), timing};
 }
 
-std::tuple<int, int, sp<hal::IFencedExecutionCallback>> StepExecutor::computeFenced(
+std::tuple<int, int, sp<V1_3::IFencedExecutionCallback>> StepExecutor::computeFenced(
         const std::vector<int>& waitFor, uint64_t timeoutDurationAfterFence,
         const std::optional<Deadline>& deadline) {
     CHECK(mPreparedModel != nullptr);
@@ -1408,7 +1400,7 @@ std::tuple<int, int, sp<hal::IFencedExecutionCallback>> StepExecutor::computeFen
             makeTimeoutDuration(mExecutionBuilder->getLoopTimeoutDuration());
     OptionalTimeoutDuration optionalTimeoutDurationAfterFence;
     if (timeoutDurationAfterFence > 0) {
-        optionalTimeoutDurationAfterFence.nanoseconds(timeoutDurationAfterFence);
+        optionalTimeoutDurationAfterFence = makeTimeoutDuration(timeoutDurationAfterFence);
     }
     const auto [n, syncFence, computeFencedCallback, timing] = mPreparedModel->executeFenced(
             mInputs, mOutputs, mMemories.getObjects(), waitFor, measure, deadline,
@@ -1425,24 +1417,24 @@ std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::computeOnCpuFall
     VLOG(EXECUTION) << "Re-compile the model on CPU";
     mDevice = DeviceManager::getCpuDevice();
     mPreparedModel = nullptr;
-    const ModelFactory makeModel = [this] { return mModel->makeHidlModel(); };
+    const ModelFactory makeModel = [this] { return mModel->makeModel(); };
     // TODO: Propagate user preference and compilation priority to this point instead of using
     // default values of ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER and
     // ANEURALNETWORKS_PRIORITY_MEDIUM
     const ExecutionPreference preference =
             static_cast<ExecutionPreference>(ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER);
-    const Priority priority = convertToHalPriority(ANEURALNETWORKS_PRIORITY_DEFAULT);
+    const Priority priority = convertToCanonicalPriority(ANEURALNETWORKS_PRIORITY_DEFAULT);
     auto [n, preparedModel] = mDevice->prepareModel(makeModel, preference, priority, {}, {}, {});
     mPreparedModel = std::move(preparedModel);
     if (n != ANEURALNETWORKS_NO_ERROR) {
-        return {n, {}, kNoTiming};
+        return {n, {}, {}};
     }
 
     // Prepare device memories for CPU fallback.
-    std::vector<const Memory*> memories = mMemories.getObjects();
+    std::vector<const RuntimeMemory*> memories = mMemories.getObjects();
     std::vector<bool> isUsedAsInput(memories.size(), false);
     std::vector<bool> isUsedAsOutput(memories.size(), false);
-    std::vector<std::unique_ptr<Memory>> blobAhwbs;
+    std::vector<std::unique_ptr<RuntimeMemory>> blobAhwbs;
 
     // Mark the input and output usages.
     for (auto& input : mInputs) {
@@ -1458,7 +1450,7 @@ std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::computeOnCpuFall
             if (mMemories[poolIndex]->getValidator().createdWithUnknownShape()) {
                 LOG(ERROR) << "Cannot fallback to CPU because at least one of the output operands "
                               "has unknown shape.";
-                return {ANEURALNETWORKS_OP_FAILED, {}, kNoTiming};
+                return {ANEURALNETWORKS_OP_FAILED, {}, {}};
             }
             isUsedAsOutput[poolIndex] = true;
         }
@@ -1466,17 +1458,17 @@ std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::computeOnCpuFall
 
     // Allocate BLOB mode AHardwareBuffers and read the data from input device memories.
     for (uint32_t i = 0; i < memories.size(); i++) {
-        const Memory* memory = mMemories[i];
+        const RuntimeMemory* memory = mMemories[i];
         if (memory->getIBuffer() != nullptr) {
             const uint32_t size = memory->getValidator().getMetadata().logicalSize;
             auto [nAhwb, blobAhwb] = MemoryRuntimeAHWB::create(size);
             if (nAhwb != ANEURALNETWORKS_NO_ERROR) {
-                return {nAhwb, {}, kNoTiming};
+                return {nAhwb, {}, {}};
             }
             if (isUsedAsInput[i]) {
                 n = copyIBufferToHidlMemory(memory->getIBuffer(), blobAhwb->getHidlMemory());
                 if (n != ANEURALNETWORKS_NO_ERROR) {
-                    return {n, {}, kNoTiming};
+                    return {n, {}, {}};
                 }
             }
             memories[i] = blobAhwb.get();
@@ -1491,11 +1483,11 @@ std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::computeOnCpuFall
 
     // Write back to output device memories.
     for (uint32_t i = 0; i < memories.size(); i++) {
-        const Memory* memory = mMemories[i];
+        const RuntimeMemory* memory = mMemories[i];
         if (memory->getIBuffer() != nullptr && isUsedAsOutput[i]) {
             n = copyHidlMemoryToIBuffer(memories[i]->getHidlMemory(), memory->getIBuffer(), {});
             if (n != ANEURALNETWORKS_NO_ERROR) {
-                return {n, {}, kNoTiming};
+                return {n, {}, {}};
             }
         }
     }

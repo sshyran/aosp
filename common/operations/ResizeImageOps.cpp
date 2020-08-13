@@ -23,14 +23,11 @@
 #include <vector>
 
 #include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "Tracing.h"
 
 namespace android {
 namespace nn {
-
-using namespace hal;
 
 namespace resize_image {
 
@@ -178,7 +175,7 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
     } else if (opType == OperationType::RESIZE_NEAREST_NEIGHBOR) {
         NN_RET_CHECK(numInputs >= kNumInputs && numInputs <= kNumInputs + kNumOptionalInputs);
     } else {
-        NN_RET_CHECK_FAIL() << "Unsupported operation " << getOperationName(opType);
+        NN_RET_CHECK_FAIL() << "Unsupported operation " << opType;
     }
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     auto inputType = context->getInputType(kInputTensor);
@@ -188,7 +185,7 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
                  inputType == OperandType::TENSOR_FLOAT32 ||
                  inputType == OperandType::TENSOR_QUANT8_ASYMM ||
                  inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
-            << "Unsupported tensor type for operation " << getOperationName(opType);
+            << "Unsupported tensor type for operation " << opType;
     if (inputType == OperandType::TENSOR_FLOAT16 || inputType == OperandType::TENSOR_QUANT8_ASYMM) {
         NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
     }
@@ -258,7 +255,7 @@ bool prepare(OperationType opType, IOperationExecutionContext* context) {
                 static_cast<float>(inWidth) *
                 static_cast<float>(context->getInputValue<_Float16>(kOutputWidthParamScalar)));
     } else {
-        NN_RET_CHECK_FAIL() << "Unsupported scalar type for operation " << getOperationName(opType);
+        NN_RET_CHECK_FAIL() << "Unsupported scalar type for operation " << opType;
     }
     NN_RET_CHECK_GT(height, 0);
     NN_RET_CHECK_GT(width, 0);
@@ -304,8 +301,7 @@ bool execute(OperationType opType, IOperationExecutionContext* context) {
                                  context->getOutputShape(kOutputTensor));
 
         default:
-            NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation "
-                                << getOperationName(opType);
+            NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << opType;
     }
 }
 
