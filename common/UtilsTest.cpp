@@ -20,16 +20,18 @@
 #include <utility>
 #include <vector>
 
+#include "HalInterfaces.h"
 #include "MemoryUtils.h"
 #include "OperationsUtils.cpp"
 #include "QuantUtils.h"
+#include "nnapi/TypeUtils.h"
+#include "nnapi/Types.h"
 
 namespace android {
 namespace nn {
 namespace wrapper {
 
 namespace {
-using namespace hal;
 using ::testing::ElementsAreArray;
 }  // namespace
 
@@ -62,9 +64,8 @@ TEST(CalculateBroadcastedShapeTest, FailsOnIncompatible) {
 }
 
 static int32_t getExtensionType(uint16_t extensionPrefix, uint16_t typeWithinExtension) {
-    constexpr uint8_t kLowBitsType = static_cast<uint8_t>(ExtensionTypeEncoding::LOW_BITS_TYPE);
-    int32_t type = (extensionPrefix << kLowBitsType) | typeWithinExtension;
-    EXPECT_TRUE(isExtensionOperandType(static_cast<OperandType>(type)));
+    int32_t type = (extensionPrefix << kExtensionTypeBits) | typeWithinExtension;
+    EXPECT_TRUE(isExtensionOperandType(static_cast<V1_3::OperandType>(type)));
     return type;
 }
 
@@ -128,7 +129,7 @@ TEST(ValidateOperandTypeTest, TensorSizeDimensionProductOverflow) {
 }
 
 TEST(ValidateRequestTest, UnknownOutputRank) {
-    Request::MemoryPool pool;
+    V1_3::Request::MemoryPool pool;
     pool.hidlMemory(allocateSharedMemory(2 * sizeof(float)));
     ASSERT_TRUE(pool.hidlMemory().valid());
     const V1_3::Model model = {
@@ -170,7 +171,7 @@ TEST(ValidateRequestTest, UnknownOutputRank) {
 }
 
 TEST(ValidateRequestTest, ScalarOutput) {
-    Request::MemoryPool pool;
+    V1_3::Request::MemoryPool pool;
     pool.hidlMemory(allocateSharedMemory(sizeof(float) + sizeof(int32_t)));
     ASSERT_TRUE(pool.hidlMemory().valid());
     const V1_3::Model model = {

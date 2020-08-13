@@ -20,7 +20,6 @@
 #include <utility>
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 
@@ -37,8 +36,6 @@ constexpr uint32_t kOutputValuesTensor = 0;
 constexpr uint32_t kOutputIndicesTensor = 1;
 
 namespace {
-
-using namespace hal;
 
 template <typename T>
 bool evalGeneric(const T* inputData, const Shape& inputShape, const int32_t k, T* valuesData,
@@ -85,7 +82,7 @@ bool validate(const IOperationValidationContext* context) {
                  inputType == OperandType::TENSOR_INT32 ||
                  inputType == OperandType::TENSOR_QUANT8_ASYMM ||
                  inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
-            << "Unsupported input operand type for select op: " << toString(inputType);
+            << "Unsupported input operand type for select op: " << inputType;
     NN_RET_CHECK(validateInputTypes(context, {inputType, OperandType::INT32}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType, OperandType::TENSOR_INT32}));
     HalVersion minSupportedHalVersion = HalVersion::V1_2;
@@ -132,7 +129,7 @@ bool execute(IOperationExecutionContext* context) {
             return executeTyped<int8_t>(context);
         } break;
         default: {
-            LOG(ERROR) << "Unsupported data type: " << toString(inputShape.type);
+            LOG(ERROR) << "Unsupported data type: " << inputShape.type;
             return false;
         }
     }

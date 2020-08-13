@@ -27,37 +27,35 @@ namespace android {
 namespace nn {
 namespace sample_driver {
 
-using namespace hal;
-
-Return<void> SampleDriverFull::getCapabilities_1_3(getCapabilities_1_3_cb cb) {
+hardware::Return<void> SampleDriverFull::getCapabilities_1_3(getCapabilities_1_3_cb cb) {
     android::nn::initVLogMask();
     VLOG(DRIVER) << "getCapabilities_1_3()";
-    Capabilities capabilities = {
+    V1_3::Capabilities capabilities = {
             .relaxedFloat32toFloat16PerformanceScalar = mPerf,
             .relaxedFloat32toFloat16PerformanceTensor = mPerf,
             .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>(mPerf),
             .ifPerformance = mPerf,
             .whilePerformance = mPerf};
-    cb(ErrorStatus::NONE, capabilities);
-    return Void();
+    cb(V1_3::ErrorStatus::NONE, capabilities);
+    return hardware::Void();
 }
 
-Return<void> SampleDriverFull::getSupportedOperations_1_3(const V1_3::Model& model,
-                                                          getSupportedOperations_1_3_cb cb) {
+hardware::Return<void> SampleDriverFull::getSupportedOperations_1_3(
+        const V1_3::Model& model, getSupportedOperations_1_3_cb cb) {
     VLOG(DRIVER) << "getSupportedOperations_1_3()";
     if (validateModel(model)) {
         const size_t count = model.main.operations.size();
         std::vector<bool> supported(count, true);
         for (size_t i = 0; i < count; i++) {
-            const Operation& operation = model.main.operations[i];
+            const V1_3::Operation& operation = model.main.operations[i];
             supported[i] = !isExtensionOperationType(operation.type);
         }
-        cb(ErrorStatus::NONE, supported);
+        cb(V1_3::ErrorStatus::NONE, supported);
     } else {
         std::vector<bool> supported;
-        cb(ErrorStatus::INVALID_ARGUMENT, supported);
+        cb(V1_3::ErrorStatus::INVALID_ARGUMENT, supported);
     }
-    return Void();
+    return hardware::Void();
 }
 
 }  // namespace sample_driver

@@ -39,11 +39,13 @@
 namespace android {
 namespace nn {
 
+using ::android::hidl::memory::V1_0::IMemory;
+
 class CompilationBuilder;
 class Device;
 class ExecutionBurstController;
 class ModelBuilder;
-class PreparedModel;
+class RuntimePreparedModel;
 
 // A utility template class to accumulate multiple objects and assign each
 // a distinct index number, starting with 0.
@@ -93,12 +95,12 @@ class ObjectTracker {
 };
 
 using CompilationRole = std::tuple<const CompilationBuilder*, IOType, uint32_t>;
-using StepRoleCallback = std::function<void(const PreparedModel*, IOType, uint32_t)>;
+using StepRoleCallback = std::function<void(const RuntimePreparedModel*, IOType, uint32_t)>;
 
 struct MemoryDescriptor {
     std::vector<uint32_t> dimensions;
-    ObjectTracker<PreparedModel> preparedModels;
-    std::vector<hal::BufferRole> inputRoles, outputRoles;
+    ObjectTracker<RuntimePreparedModel> preparedModels;
+    std::vector<BufferRole> inputRoles, outputRoles;
 };
 
 class MemoryValidatorBase {
@@ -144,7 +146,7 @@ class MemoryValidatorBase {
         // The data type, scale, zero point, and extra parameters of the target operand.
         // Other fields will be ignored, including dimensions, lifetime, location, etc.
         // Set to std::nullopt if undefined.
-        std::optional<hal::Operand> operand;
+        std::optional<Operand> operand;
     };
     virtual Metadata getMetadata() const = 0;
 
@@ -158,24 +160,24 @@ class MemoryValidatorBase {
     virtual bool isInitialized() const { return true; }
 };
 
-int copyIBufferToHidlMemory(const sp<hal::IBuffer>& src, const hal::hidl_memory& dst);
+int copyIBufferToHidlMemory(const sp<V1_3::IBuffer>& src, const hardware::hidl_memory& dst);
 
-int copyHidlMemoryToIBuffer(const hal::hidl_memory& src, const sp<hal::IBuffer>& dst,
+int copyHidlMemoryToIBuffer(const hardware::hidl_memory& src, const sp<V1_3::IBuffer>& dst,
                             const std::vector<uint32_t>& dimensions);
 
 // Represents a memory region.
-class Memory {
+class RuntimeMemory {
     // Disallow copy and assign to prevent slicing
-    DISALLOW_COPY_AND_ASSIGN(Memory);
+    DISALLOW_COPY_AND_ASSIGN(RuntimeMemory);
 
    public:
     // Custom destructor to notify any ExecutionBurstControllers currently using
     // this memory that it is being freed.
-    virtual ~Memory();
+    virtual ~RuntimeMemory();
 
-    hal::Request::MemoryPool getMemoryPool() const;
-    const hal::hidl_memory& getHidlMemory() const { return kHidlMemory; }
-    const sp<hal::IBuffer>& getIBuffer() const { return kBuffer; }
+    V1_3::Request::MemoryPool getMemoryPool() const;
+    const hardware::hidl_memory& getHidlMemory() const { return kHidlMemory; }
+    const sp<V1_3::IBuffer>& getIBuffer() const { return kBuffer; }
     virtual uint32_t getSize() const { return getHidlMemory().size(); }
     virtual std::optional<RunTimePoolInfo> getRunTimePoolInfo() const;
 
@@ -196,24 +198,24 @@ class Memory {
     // the bursts' memory cache.
     void usedBy(const std::shared_ptr<ExecutionBurstController>& burst) const;
 
-    static int copy(const Memory& src, const Memory& dst);
+    static int copy(const RuntimeMemory& src, const RuntimeMemory& dst);
 
    protected:
-    Memory(hal::hidl_memory memory);
-    Memory(hal::hidl_memory memory, std::unique_ptr<MemoryValidatorBase> validator);
-    Memory(sp<hal::IBuffer> buffer, uint32_t token);
+    RuntimeMemory(hardware::hidl_memory memory);
+    RuntimeMemory(hardware::hidl_memory memory, std::unique_ptr<MemoryValidatorBase> validator);
+    RuntimeMemory(sp<V1_3::IBuffer> buffer, uint32_t token);
 
     // The HIDL representation for this memory.  We will use one of the following values
     // when communicating with the drivers.
-    const hal::hidl_memory kHidlMemory;
-    const sp<hal::IBuffer> kBuffer;
+    const hardware::hidl_memory kHidlMemory;
+    const sp<V1_3::IBuffer> kBuffer;
     const uint32_t kToken = 0;
 
     std::unique_ptr<MemoryValidatorBase> mValidator;
 
    private:
     mutable std::mutex mMutex;
-    // mUsedBy is essentially a set of burst objects which use this Memory
+    // mUsedBy is essentially a set of burst objects which use this RuntimeMemory
     // object. However, std::weak_ptr does not have comparison operations nor a
     // std::hash implementation. This is because it is either a valid pointer
     // (non-null) if the shared object is still alive, or it is null if the
@@ -238,7 +240,7 @@ class MemoryBuilder {
 
     int finish();
 
-    std::pair<int, std::unique_ptr<Memory>> allocate() const;
+    std::pair<int, std::unique_ptr<RuntimeMemory>> allocate() const;
 
    private:
     bool badState(const char* name) const;
@@ -253,7 +255,7 @@ class MemoryBuilder {
     // Keep track of the data type, scale, zero point, and extra parameters of the target operand.
     // Other fields will be ignored, including dimensions, lifetime, location, etc.
     // It is std::nullopt if no usage has been specified yet.
-    std::optional<hal::Operand> mOperand;
+    std::optional<Operand> mOperand;
 
     // Once the descriptor has been finished, we should not allow further modifications.
     bool mFinished = false;
@@ -271,7 +273,7 @@ class MemoryBuilder {
     bool mShouldFallback = true;
 };
 
-class MemoryAshmem : public Memory {
+class MemoryAshmem : public RuntimeMemory {
    public:
     // Creates a memory object containing a new android shared memory ("ashmem")
     // object of the size specified in bytes. Because this ashmem region can be
@@ -292,13 +294,13 @@ class MemoryAshmem : public Memory {
     }
 
     // prefer using MemoryAshmem::create
-    MemoryAshmem(sp<hal::IMemory> mapped, hal::hidl_memory memory);
+    MemoryAshmem(sp<IMemory> mapped, hardware::hidl_memory memory);
 
    private:
-    const sp<hal::IMemory> kMappedMemory;
+    const sp<IMemory> kMappedMemory;
 };
 
-class MemoryFd : public Memory {
+class MemoryFd : public RuntimeMemory {
    public:
     // Create a memory object based on input size, prot, and fd that can be sent
     // across HIDL. This function duplicates the provided fd, and owns the
@@ -310,10 +312,10 @@ class MemoryFd : public Memory {
                                                             size_t offset);
 
     // prefer using MemoryFd::create
-    MemoryFd(hal::hidl_memory memory);
+    MemoryFd(hardware::hidl_memory memory);
 };
 
-class MemoryAHWB : public Memory {
+class MemoryAHWB : public RuntimeMemory {
    public:
     // Create a memory object to keep track of (but not take ownership of) the
     // provided AHardwareBuffer handle.
@@ -323,11 +325,11 @@ class MemoryAHWB : public Memory {
     static std::pair<int, std::unique_ptr<MemoryAHWB>> create(const AHardwareBuffer& ahwb);
 
     // prefer using MemoryAHWB::create
-    MemoryAHWB(hal::hidl_memory memory, std::unique_ptr<MemoryValidatorBase> validator)
-        : Memory(std::move(memory), std::move(validator)) {}
+    MemoryAHWB(hardware::hidl_memory memory, std::unique_ptr<MemoryValidatorBase> validator)
+        : RuntimeMemory(std::move(memory), std::move(validator)) {}
 };
 
-class MemoryRuntimeAHWB : public Memory {
+class MemoryRuntimeAHWB : public RuntimeMemory {
    public:
     // Create a memory object containing a new BLOB-mode AHardwareBuffer memory
     // object of the size specified in bytes. The created memory is managed and
@@ -347,7 +349,7 @@ class MemoryRuntimeAHWB : public Memory {
     }
 
     // prefer using MemoryRuntimeAHWB::create
-    MemoryRuntimeAHWB(hal::hidl_memory memory, AHardwareBuffer* ahwb, uint8_t* buffer);
+    MemoryRuntimeAHWB(hardware::hidl_memory memory, AHardwareBuffer* ahwb, uint8_t* buffer);
     ~MemoryRuntimeAHWB();
 
    private:
@@ -355,21 +357,21 @@ class MemoryRuntimeAHWB : public Memory {
     uint8_t* const mBuffer;
 };
 
-class MemoryFromDevice : public Memory {
+class MemoryFromDevice : public RuntimeMemory {
    public:
     // Create a memory object to keep track of a driver-allocated device memory.
     // The memory is recognized by the driver via a token.
     //
     // On success, returns ANEURALNETWORKS_NO_ERROR and a memory object.
     // On error, returns the appropriate NNAPI error code and nullptr.
-    static std::pair<int, std::unique_ptr<MemoryFromDevice>> create(sp<hal::IBuffer> buffer,
+    static std::pair<int, std::unique_ptr<MemoryFromDevice>> create(sp<V1_3::IBuffer> buffer,
                                                                     uint32_t token);
 
     // prefer using MemoryFromDevice::create
-    MemoryFromDevice(sp<hal::IBuffer> buffer, uint32_t token);
+    MemoryFromDevice(sp<V1_3::IBuffer> buffer, uint32_t token);
 };
 
-using MemoryTracker = ObjectTracker<Memory>;
+using MemoryTracker = ObjectTracker<RuntimeMemory>;
 
 }  // namespace nn
 }  // namespace android

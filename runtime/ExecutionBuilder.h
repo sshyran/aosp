@@ -43,9 +43,9 @@ class DynamicTemporaries;
 class ExecutionBurstController;
 class ExecutionPlan;
 class ExecutionStep;
-class Memory;
 class ModelBuilder;
-class PreparedModel;
+class RuntimeMemory;
+class RuntimePreparedModel;
 class StepExecutor;
 
 class ExecutionBuilder {
@@ -57,11 +57,11 @@ class ExecutionBuilder {
     int setInput(uint32_t index, const ANeuralNetworksOperandType* type, const void* buffer,
                  size_t length);
     int setInputFromMemory(uint32_t index, const ANeuralNetworksOperandType* type,
-                           const Memory* memory, size_t offset, size_t length);
+                           const RuntimeMemory* memory, size_t offset, size_t length);
     int setOutput(uint32_t index, const ANeuralNetworksOperandType* type, void* buffer,
                   size_t length);
     int setOutputFromMemory(uint32_t index, const ANeuralNetworksOperandType* type,
-                            const Memory* memory, size_t offset, size_t length);
+                            const RuntimeMemory* memory, size_t offset, size_t length);
 
     int setMeasureTiming(bool measure);
 
@@ -86,30 +86,29 @@ class ExecutionBuilder {
     int burstCompute(BurstBuilder* burst) { return compute(nullptr, burst); }
 
     // Initialize output dimensional information from ModelArgumentInfo.
-    std::vector<hal::OutputShape> getInitialOutputShapes() const;
+    std::vector<OutputShape> getInitialOutputShapes() const;
 
     int getOutputOperandDimensions(uint32_t index, uint32_t* dimensions);
     int getOutputOperandRank(uint32_t index, uint32_t* rank);
 
     // Handshake with lower-level execution support
     bool measureTiming() const { return mMeasureTiming; }
-    void reportTimingWithoutFencedExecutionCallback(hal::Timing timing) {
+    void reportTimingWithoutFencedExecutionCallback(Timing timing) {
         mTimingWithoutFencedExecutionCallback = timing;
     }
 
     const CompilationBuilder* getCompilation() const { return mCompilation; }
     const ModelBuilder* getModel() const { return mModel; }
     const ModelBuilder* getSourceModel(uint32_t index) const;
-    const hal::Operand& getSourceOperand(
-            const std::pair<uint32_t, uint32_t>& sourceOperandIndex) const {
+    const Operand& getSourceOperand(const std::pair<uint32_t, uint32_t>& sourceOperandIndex) const {
         return getSourceModel(sourceOperandIndex.first)->getOperand(sourceOperandIndex.second);
     }
 
-    hal::ErrorStatus finishWithoutSyncFence(hal::ErrorStatus error,
-                                            const std::vector<hal::OutputShape>& outputShapes);
+    ErrorStatus finishWithoutSyncFence(ErrorStatus error,
+                                       const std::vector<OutputShape>& outputShapes);
 
     // Retrieve a reference to the IFencedExecutionCallback callback.
-    const sp<hal::IFencedExecutionCallback>& getFencedExecutionCallback() {
+    const sp<V1_3::IFencedExecutionCallback>& getFencedExecutionCallback() {
         return mFencedExecutionCallback;
     }
 
@@ -136,8 +135,7 @@ class ExecutionBuilder {
     const CompilationBuilder* mCompilation;
 
     // Update output dimensional information from OutputShape to ModelArgumentInfo.
-    bool updateOutputShapes(hal::ErrorStatus status,
-                            const std::vector<hal::OutputShape>& outputShapes);
+    bool updateOutputShapes(ErrorStatus status, const std::vector<OutputShape>& outputShapes);
 
     bool updateMemories();
 
@@ -153,7 +151,7 @@ class ExecutionBuilder {
     // The information we'll send to the driver about the inputs and outputs.
     // Note that we build this in two steps:
     // 1. As the arguments are specified, set the corresponding mInputs or mOutputs element.
-    //    If set from a pointer, don't set the location in the RequestArgument but store it
+    //    If set from a pointer, don't set the location in the Request::Argument but store it
     //    instead in mInputBuffers or mOutputBuffers.
     // 2. Once we have all the inputs and outputs, if needed, allocate shared memory for
     //    the m*Buffers entries.  Copy the input values into the shared memory.
@@ -169,7 +167,7 @@ class ExecutionBuilder {
 
     // Timing reported from the driver.  This field is only used if
     // mFencedExecutionCallback is nullptr.
-    hal::Timing mTimingWithoutFencedExecutionCallback = {};
+    Timing mTimingWithoutFencedExecutionCallback = {};
 
     // Amount of time to complete or abort the execution.
     std::optional<uint64_t> mTimeoutDuration;
@@ -207,7 +205,7 @@ class ExecutionBuilder {
     // doesn't support fenced execution (e.g., the driver is too old), or if the
     // launch of execution on the driver fails, then this callback will be
     // nullptr.
-    sp<hal::IFencedExecutionCallback> mFencedExecutionCallback;
+    sp<V1_3::IFencedExecutionCallback> mFencedExecutionCallback;
 };
 
 // class StepExecutor is used to execute a single "step" in a
@@ -236,7 +234,8 @@ class StepExecutor {
     //     of "step" models. Must be nullptr otherwise.
     //     (step == nullptr) == (dynamicTemporaries == nullptr)
     StepExecutor(ExecutionBuilder* executionBuilder, const ModelBuilder* model,
-                 std::shared_ptr<Device> device, std::shared_ptr<PreparedModel> preparedModel,
+                 std::shared_ptr<Device> device,
+                 std::shared_ptr<RuntimePreparedModel> preparedModel,
                  const ExecutionStep* step = nullptr,
                  DynamicTemporaries* dynamicTemporaries = nullptr);
 
@@ -255,8 +254,8 @@ class StepExecutor {
         bool zeroSizedInput;  // is at least one output of this execution step a zero-sized tensor
                               // that needs to be read by some other step of the same execution?
     };
-    bool updateOutputShapes(int executionResultCode, const std::vector<hal::OutputShape>& from,
-                            std::vector<hal::OutputShape>* to, UpdateOutputShapes* update);
+    bool updateOutputShapes(int executionResultCode, const std::vector<OutputShape>& from,
+                            std::vector<OutputShape>* to, UpdateOutputShapes* update);
 
     // Map inputs and outputs from ExecutionBuilder to StepExecutor,
     // one at a time.  Note that these are input/output indexes, not
@@ -271,7 +270,7 @@ class StepExecutor {
         mapInputOrOutput(mExecutionBuilder->mOutputs[builderIndex], &mOutputs[executorIndex]);
     }
     void mapOutputToInput(uint32_t builderIndex, uint32_t executorIndex,
-                          const hal::hidl_vec<uint32_t>* outputDimensions) {
+                          const Dimensions* outputDimensions) {
         mapInputOrOutput(mExecutionBuilder->mOutputs[builderIndex], &mInputs[executorIndex],
                          outputDimensions);
     }
@@ -282,33 +281,33 @@ class StepExecutor {
     // (i.e., either rank must match, or operand rank must be zero; and for each
     // individual dimension, either dimension must match, or operand dimension
     // must be zero).
-    int setInputFromMemory(uint32_t inputIndex, const Memory* memory, uint32_t offset,
-                           const hal::hidl_vec<uint32_t>& dimensions = {},
+    int setInputFromMemory(uint32_t inputIndex, const RuntimeMemory* memory, uint32_t offset,
+                           const Dimensions& dimensions = {},
                            std::optional<uint32_t> length = std::nullopt) {
         return setInputOrOutputFromMemory(mModel->getInputOperand(inputIndex), memory, offset,
                                           dimensions, length, &mInputs.at(inputIndex));
     }
-    int setOutputFromMemory(uint32_t outputIndex, const Memory* memory, uint32_t offset,
-                            const hal::hidl_vec<uint32_t>& dimensions = {},
+    int setOutputFromMemory(uint32_t outputIndex, const RuntimeMemory* memory, uint32_t offset,
+                            const Dimensions& dimensions = {},
                             std::optional<uint32_t> length = std::nullopt) {
         return setInputOrOutputFromMemory(mModel->getOutputOperand(outputIndex), memory, offset,
                                           dimensions, length, &mOutputs.at(outputIndex));
     }
 
     // Executes using the (driver, preparedModel) specified at construction time.
-    std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> compute(
+    std::tuple<int, std::vector<OutputShape>, Timing> compute(
             const std::optional<Deadline>& deadline,
             const std::shared_ptr<ExecutionBurstController>& burstController = nullptr);
 
     // Re-compiles and executes using the CPU, regardless of the (driver,
     // preparedModel) specified at construction time.
-    std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> computeOnCpuFallback();
+    std::tuple<int, std::vector<OutputShape>, Timing> computeOnCpuFallback();
 
     bool isCpu() const;
 
     // Perform fenced execution and return error_code, sync_fence_fd and a
     // callback.
-    std::tuple<int, int, sp<hal::IFencedExecutionCallback>> computeFenced(
+    std::tuple<int, int, sp<V1_3::IFencedExecutionCallback>> computeFenced(
             const std::vector<int>& wait_for, uint64_t timeoutDurationAfterFence,
             const std::optional<Deadline>& deadline);
 
@@ -321,7 +320,7 @@ class StepExecutor {
     // specified dimensions.
     void mapInputOrOutput(const ModelArgumentInfo& builderInputOrOutput,
                           ModelArgumentInfo* executorInputOrOutput,
-                          const hal::hidl_vec<uint32_t>* builderDimensions = nullptr);
+                          const Dimensions* builderDimensions = nullptr);
 
     // If no length is provided, the input or output is assumed to have the length
     // of the corresponding operand.  dimensions must either have zero rank or
@@ -329,13 +328,14 @@ class StepExecutor {
     // dimensions (i.e., either rank must match, or operand rank must be zero;
     // and for each individual dimension, either dimension must match, or
     // operand dimension must be zero).
-    int setInputOrOutputFromMemory(const hal::Operand& inputOrOutputOperand, const Memory* memory,
-                                   uint32_t offset, const hal::hidl_vec<uint32_t>& dimensions,
+    int setInputOrOutputFromMemory(const Operand& inputOrOutputOperand, const RuntimeMemory* memory,
+                                   uint32_t offset, const Dimensions& dimensions,
                                    std::optional<uint32_t> length,
                                    ModelArgumentInfo* inputOrOutputInfo);
 
-    std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> computeWithMemories(
-            const std::optional<Deadline>& deadline, const std::vector<const Memory*>& memories,
+    std::tuple<int, std::vector<OutputShape>, Timing> computeWithMemories(
+            const std::optional<Deadline>& deadline,
+            const std::vector<const RuntimeMemory*>& memories,
             const std::shared_ptr<ExecutionBurstController>& burstController = nullptr);
 
     // describes the full (possibly multiple-"step") execution
@@ -351,12 +351,12 @@ class StepExecutor {
     // compiled forms; and device on which to execute it
     const ModelBuilder* mModel;
     std::shared_ptr<Device> mDevice;
-    std::shared_ptr<PreparedModel> mPreparedModel;
+    std::shared_ptr<RuntimePreparedModel> mPreparedModel;
 
     // The information we'll send to the driver about the inputs and outputs.
     // Note that we build this in two steps:
     // 1. As the arguments are specified, set the corresponding mInputs or mOutputs element.
-    //    If set from a pointer, don't set the location in the RequestArgument but store it
+    //    If set from a pointer, don't set the location in the Request::Argument but store it
     //    instead in mInputBuffers or mOutputBuffers.
     // 2. Once we have all the inputs and outputs, if needed, allocate shared memory for
     //    the m*Buffers entries.  Copy the input values into the shared memory.

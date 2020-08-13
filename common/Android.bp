@@ -109,6 +109,12 @@ cc_library_static {
     ],
     whole_static_libs: [
         "libarect",
+        "neuralnetworks_types",
+        "neuralnetworks_utils_hal_1_0", // TODO(b/160669116): Remove VNDK dependencies.
+        "neuralnetworks_utils_hal_1_1",
+        "neuralnetworks_utils_hal_1_2",
+        "neuralnetworks_utils_hal_1_3",
+        "neuralnetworks_utils_hal_common",
     ],
     cflags: [
         "-DTF_LITE_DISABLE_X86_NEON",
@@ -204,6 +210,12 @@ cc_library_static {
     whole_static_libs: [
         "libarect",
         "libtflite_kernel_utils",
+        "neuralnetworks_types",
+        "neuralnetworks_utils_hal_1_0", // TODO(b/160669116): Remove VNDK dependencies.
+        "neuralnetworks_utils_hal_1_1",
+        "neuralnetworks_utils_hal_1_2",
+        "neuralnetworks_utils_hal_1_3",
+        "neuralnetworks_utils_hal_common",
         "philox_random",
     ],
     static_libs: [
@@ -232,6 +244,12 @@ cc_defaults {
     name: "neuralnetworks_utils_defaults",
     host_supported: true,
     vendor_available: true,
+    apex_available: [
+        "//apex_available:platform",
+        "com.android.neuralnetworks",
+        "test_com.android.neuralnetworks",
+    ],
+    min_sdk_version: "30",
     cflags: [
         "-Wall",
         "-Werror",

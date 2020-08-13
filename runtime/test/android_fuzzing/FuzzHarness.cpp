@@ -31,7 +31,7 @@ namespace {
 
 using ::android::nn::nonExtensionOperandSizeOfDataOverflowsUInt32;
 using ::android::nn::fuzz::convertToTestModel;
-using ::android::nn::hal::OperandType;
+using ::android::nn::V1_3::OperandType;
 using ::test_helper::TestModel;
 using ::test_helper::TestOperand;
 

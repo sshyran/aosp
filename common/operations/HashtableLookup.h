@@ -19,7 +19,7 @@
 
 #include <vector>
 
-#include "HalInterfaces.h"
+#include "nnapi/Types.h"
 
 namespace android {
 namespace nn {
@@ -28,7 +28,7 @@ struct RunTimeOperandInfo;
 
 class HashtableLookup {
    public:
-    HashtableLookup(const hal::Operation& operation, RunTimeOperandInfo* operands);
+    HashtableLookup(const Operation& operation, RunTimeOperandInfo* operands);
 
     bool Eval();
 

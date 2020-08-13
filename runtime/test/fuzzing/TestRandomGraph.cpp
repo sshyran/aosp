@@ -41,7 +41,6 @@
 #include "SampleDriverFull.h"
 
 using android::nn::sample_driver::SampleDriverFull;
-using namespace android::nn::hal;
 
 #endif
 
@@ -66,27 +65,27 @@ class TestDriverV1_1 : public V1_1::IDevice {
     TestDriverV1_1()
         : mDriverV1_2(new SampleDriverFull(name, {.execTime = 0.8f, .powerUsage = 0.8f})) {}
     static constexpr char name[] = "TestDriverV1_1";
-    Return<void> getCapabilities_1_1(getCapabilities_1_1_cb _hidl_cb) override {
+    hardware::Return<void> getCapabilities_1_1(getCapabilities_1_1_cb _hidl_cb) override {
         return mDriverV1_2->getCapabilities_1_1(_hidl_cb);
     }
-    Return<void> getSupportedOperations_1_1(const V1_1::Model& model,
-                                            getSupportedOperations_1_1_cb _hidl_cb) override {
+    hardware::Return<void> getSupportedOperations_1_1(
+            const V1_1::Model& model, getSupportedOperations_1_1_cb _hidl_cb) override {
         return mDriverV1_2->getSupportedOperations_1_1(model, _hidl_cb);
     }
-    Return<V1_0::ErrorStatus> prepareModel_1_1(
-            const V1_1::Model& model, ExecutionPreference preference,
+    hardware::Return<V1_0::ErrorStatus> prepareModel_1_1(
+            const V1_1::Model& model, V1_1::ExecutionPreference preference,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mDriverV1_2->prepareModel_1_1(model, preference, actualCallback);
     }
-    Return<DeviceStatus> getStatus() override { return mDriverV1_2->getStatus(); }
-    Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
+    hardware::Return<V1_0::DeviceStatus> getStatus() override { return mDriverV1_2->getStatus(); }
+    hardware::Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
         return mDriverV1_2->getCapabilities(_hidl_cb);
     }
-    Return<void> getSupportedOperations(const V1_0::Model& model,
-                                        getSupportedOperations_cb _hidl_cb) override {
+    hardware::Return<void> getSupportedOperations(const V1_0::Model& model,
+                                                  getSupportedOperations_cb _hidl_cb) override {
         return mDriverV1_2->getSupportedOperations(model, _hidl_cb);
     }
-    Return<V1_0::ErrorStatus> prepareModel(
+    hardware::Return<V1_0::ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mDriverV1_2->prepareModel(model, actualCallback);
@@ -102,19 +101,19 @@ class TestDriverV1_0 : public V1_0::IDevice {
     TestDriverV1_0()
         : mDriverV1_2(new SampleDriverFull(name, {.execTime = 0.7f, .powerUsage = 0.7f})) {}
     static constexpr char name[] = "TestDriverV1_0";
-    Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
+    hardware::Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
         return mDriverV1_2->getCapabilities(_hidl_cb);
     }
-    Return<void> getSupportedOperations(const V1_0::Model& model,
-                                        getSupportedOperations_cb _hidl_cb) override {
+    hardware::Return<void> getSupportedOperations(const V1_0::Model& model,
+                                                  getSupportedOperations_cb _hidl_cb) override {
         return mDriverV1_2->getSupportedOperations(model, _hidl_cb);
     }
-    Return<V1_0::ErrorStatus> prepareModel(
+    hardware::Return<V1_0::ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mDriverV1_2->prepareModel(model, actualCallback);
     }
-    Return<DeviceStatus> getStatus() override { return mDriverV1_2->getStatus(); }
+    hardware::Return<V1_0::DeviceStatus> getStatus() override { return mDriverV1_2->getStatus(); }
 
    private:
     const sp<V1_2::IDevice> mDriverV1_2;
