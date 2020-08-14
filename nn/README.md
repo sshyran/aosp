@@ -134,11 +134,28 @@ use them, follow these steps.
 
 ## Debugging
 
-TODO, provide instructions for
+### Logging
 
-1. Enabling logging.
-2. Debugging shared library loading issues.
-3. Running tast tests on a DUT.
+Currently there are two separate logging methods to assist in debugging.
+
+#### VLOG
+
+[NNAPI VLogging](https://source.android.com/devices/neural-networks#utility_functions) is available through the environment variable [DEBUG_NN_VLOG](https://source.corp.google.com/chromeos_internal/src/platform/nest-nn/nn/common/Utils.cpp;rcl=965c8c8c59271bc17dfd63a5a784cec9c609a6ad;l=66). This environment variable must be set before NNAPI loads, as it is only read on startup.
+
+The value of the environment variable must be one of the following:
+
+* An empty string, indicating that no logging is to be done.
+* The token 1 or all, indicating that all logging is to be done.
+* A list of tags, delimited by spaces, commas, or colons, indicating which logging is to be done. The tags are `compilation`, `cpuexe`, `driver`, `execution`, `manager`, and `model`.
+
+#### ANDROID_LOG_TAGS
+
+The `ANDROID_LOG_TAGS` environment variable can be set to emit logging from the underlying ported android libraries. See the [Android Filtering log output](https://developer.android.com/studio/command-line/logcat#filteringOutput) instructions for details on how to configure this environment variable for logging output.
+
+### TODO
+
+1. Debugging shared library loading issues.
+1. Running tast tests on a DUT.
 
 ## Testing
 
@@ -147,23 +164,22 @@ TODO, provide instructions for
 Building for board named 'betty':
 
 1.  Follow instructions above to build and deploy NNAPI
-1.  Then build tensorflow with USE=benchmark\_model and deploy it:
+1.  Then build tensorflow with USE="label_image benchmark\_model" and deploy it:
     ```
     $ USE="label_image benchmark_model" emerge-betty sci-libs/tensorflow
     $ cros deploy $DUP_IP sci-libs/tensorflow
     ```
-1.  Put model and labels file into betty's `/root` directory:
-    ````
-    $ git clone https://android.googlesource.com/platform/test/mlts/models
-    $ scp -P 9222 models/assets/mobilenet_v1_1.0_224_quant.tflite root@localhost:/root/mobilenet_quant_v1_224.tflite
-    $ scp -P 9222 models/assets/image_classification/labels.txt root@localhost:/root/labels.txt
-    $ wget https://coral.ai/static/docs/images/grace_hopper.bmp
-    $ scp grace_hopper.bmp root@localhost:/root/grace_hopper.bmp
+1.  Build and deploy ml test models. This will deploy various ML test models and data to the folder `/usr/share/ml-test-assets` on the DUT.
     ```
-1.  On a terminal inside betty run label\_image and benchmark\_model without
+    $ USE="label_image benchmark_model" emerge-betty chromeos-base/ml-test-assets
+    $ cros deploy ${DUT_IP} chromeos-base/ml-test-assets
+    ```
+
+1.  On a terminal inside DUT run label\_image and benchmark\_model without
     NNAPI:
     ```
-    localhost ~ # label_image
+    # cd /usr/share/ml-test-assets/label_image
+    # label_image
     Loaded model ./mobilenet_quant_v1_224.tflite
     resolved reporter
     INFO: Initialized TensorFlow Lite runtime.
@@ -175,13 +191,13 @@ Building for board named 'betty':
     0.0117647: 466 bulletproof vest
     0.00784314: 835 suit
 
-    localhost ~ # benchmark_model --graph=mobilenet_quant_v1_224.tflite
+    # benchmark_model --graph=mobilenet_quant_v1_224.tflite
     <...>
     count=50 first=128709 curr=128080 min=127952 max=130551 avg=128344 std=381
     ```
 1.  Then run with NNAPI:
     ```
-    localhost ~ # label_image --accelerated 1
+    # label_image --accelerated 1
     Loaded model ./mobilenet_quant_v1_224.tflite
     resolved reporter
     INFO: Initialized TensorFlow Lite runtime.
@@ -197,6 +213,17 @@ Building for board named 'betty':
     localhost ~ # benchmark_model --graph=mobilenet_quant_v1_224.tflite --use_nnapi=true
     <...>
     count=50 first=406697 curr=416490 min=324026 max=478962 avg=406625 std=29184
+    ```
+
+1.  Running with NNAPI and debug logging:
+    ```
+    # DEBUG_NN_VLOG="all" label_image --accelerated 1
+    Loaded model ./mobilenet_quant_v1_224.tflite
+    resolved reporter
+    INFO: Initialized TensorFlow Lite runtime.
+    INFO: Created TensorFlow Lite delegate for NNAPI.
+    <Loads of logging statements>
+    <...>
     ```
 ### TODO
 
