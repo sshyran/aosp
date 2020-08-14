@@ -265,6 +265,7 @@ void GeneratedTests::executeWithCompilation(const Compilation& compilation,
 
         // Check output dimensions.
         for (uint32_t i = 0; i < testModel.main.outputIndexes.size(); i++) {
+            SCOPED_TRACE("Output index: " + std::to_string(i));
             const auto& output = testModel.main.operands[testModel.main.outputIndexes[i]];
             if (output.isIgnored) continue;
             std::vector<uint32_t> actualDimensions;

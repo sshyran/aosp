@@ -888,7 +888,13 @@ class PartitioningCompilation : public WrapperCompilation {
     }
 
     Result setPartitioning(uint32_t partitioning) {
-        return static_cast<Result>(builder()->setPartitioning(partitioning));
+        return static_cast<Result>(builder()->forTest_setPartitioning(partitioning));
+    }
+
+    // Simulate recoverable partitioning failure.
+    Result failPartitioning() {
+        return static_cast<Result>(
+                builder()->forTest_failPartitioning(static_cast<int>(Result::OP_FAILED)));
     }
 
     using WrapperCompilation::finish;
@@ -1790,10 +1796,6 @@ TEST_F(PartitioningTest, SetPartitioning) {
     model.finish();
     ASSERT_TRUE(model.isValid());
 
-    // We expect that we cannot successfully partition, because we
-    // have an intermediate operand (opnd2) without dimensions, and
-    // this is not currently handled.
-
     // One device that can and should execute operation 0.
     const auto devices = makeDevices({{"hw", 0.5, (1 << 0)}});
 
@@ -1803,32 +1805,31 @@ TEST_F(PartitioningTest, SetPartitioning) {
     // didn't actually do any partitioning.
     PartitioningCompilation cPNo(&model, devices);
     ASSERT_EQ(cPNo.setPartitioning(DeviceManager::kPartitioningNo), Result::NO_ERROR);
+    ASSERT_EQ(cPNo.failPartitioning(), Result::NO_ERROR);
     ASSERT_EQ(cPNo.finish(), Result::NO_ERROR);
     ASSERT_EQ(cPNo.getExecutionPlan().forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
     ASSERT_EQ(cPNo.getExecutionPlan().forTest_simpleGetDevice(), DeviceManager::getCpuDevice());
 
-    // Test kPartitioningWithFallback.  We should attempt
-    // partitioning, reach the end of the partitioning process (so we
-    // have an unsuccessful execution plan), discover the dimensionless
-    // intermediate operand, then fallback to CPU with a SIMPLE plan, and
-    // finally return success.
-    // No need to compare the original model to the model from the plan -- we
-    // didn't actually do any partitioning.
+    // Test kPartitioningWithFallback.  We should attempt partitioning, simulate
+    // a recoverable failure, then fallback to CPU with a SIMPLE plan, and
+    // finally return success.  No need to compare the original model to the
+    // model from the plan -- we didn't actually do any partitioning.
     PartitioningCompilation cPWithFallback(&model, devices);
     ASSERT_EQ(cPWithFallback.setPartitioning(DeviceManager::kPartitioningWithFallback),
               Result::NO_ERROR);
+    ASSERT_EQ(cPWithFallback.failPartitioning(), Result::NO_ERROR);
     ASSERT_EQ(cPWithFallback.finish(), Result::NO_ERROR);
     ASSERT_EQ(cPWithFallback.getExecutionPlan().forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
     ASSERT_EQ(cPWithFallback.getExecutionPlan().forTest_simpleGetDevice(),
               DeviceManager::getCpuDevice());
 
-    // Test kPartitioningWithoutFallback.  We should attempt
-    // partitioning, and fail.
+    // Test kPartitioningWithoutFallback.  We should attempt partitioning,
+    // simulate a recoverable failure, and fail.
     PartitioningCompilation cPWithoutFallback(&model, devices);
     ASSERT_EQ(cPWithoutFallback.setPartitioning(DeviceManager::kPartitioningWithoutFallback),
               Result::NO_ERROR);
+    ASSERT_EQ(cPWithoutFallback.failPartitioning(), Result::NO_ERROR);
     ASSERT_EQ(cPWithoutFallback.finish(), Result::OP_FAILED);
-    ASSERT_TRUE(cPWithoutFallback.getExecutionPlan().forTest_hasStepModelOutputsOfUnknownSize());
     ASSERT_EQ(cPWithoutFallback.getExecutionPlan().forTest_getKind(), ExecutionPlan::Kind::ERROR);
 }
 
