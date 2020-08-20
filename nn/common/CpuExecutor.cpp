@@ -389,9 +389,6 @@ std::optional<RunTimePoolInfo> RunTimePoolInfo::createFromHidlMemory(
         const uint32_t layers = 1;  // layers is always 1 for BLOB mode AHardwareBuffer.
         const uint32_t stride = hidlMemory.size();
 
-        // Reordered field initialization to match definition in order to avoid
-        // compiler warning.
-        // TODO(avg): upstream this change
         AHardwareBuffer_Desc desc{
                 .width = width,
                 .height = height,
