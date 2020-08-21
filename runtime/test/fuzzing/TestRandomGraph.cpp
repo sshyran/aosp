@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+#include <android-base/properties.h>
 #include <gtest/gtest.h>
 
 #include <algorithm>
@@ -31,7 +32,6 @@
 #include "fuzzing/RandomGraphGeneratorUtils.h"
 
 #ifndef NNTEST_CTS
-#include <android-base/properties.h>
 #include <memunreachable/memunreachable.h>
 
 #include <vector>
@@ -152,6 +152,7 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
         mSyntheticDevices.push_back(makeTestDevice<TestDriverV1_1>());
         mSyntheticDevices.push_back(makeTestDevice<TestDriverV1_0>());
 #endif
+        mVndkVersion = ::android::base::GetIntProperty("ro.vndk.version", __ANDROID_API_FUTURE__);
 
         // Get all the devices and device names.
         mStandardDevicesFeatureLevel = __ANDROID_API_FUTURE__;
@@ -223,6 +224,11 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
                 mTestModel.main.operands[op.inputs[0]].type ==
                         TestOperandType::TENSOR_QUANT8_ASYMM &&
                 featureLevel <= __ANDROID_API_Q__) {
+                return true;
+            }
+            // Skip the following operations when the VNDK version is earlier than R.
+            if (mVndkVersion < __ANDROID_API_R__ &&
+                op.type == TestOperationType::HEATMAP_MAX_KEYPOINT) {
                 return true;
             }
         }
@@ -433,6 +439,7 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
     // A vector of {name, output_results}.
     std::vector<std::pair<std::string, std::vector<TestBuffer>>> mResults;
 
+    static int mVndkVersion;
     static int64_t mStandardDevicesFeatureLevel;  // minimum across all devices
 #ifndef NNTEST_CTS
     static std::vector<std::shared_ptr<Device>> mStandardDevices;
@@ -445,6 +452,7 @@ bool RandomGraphTest::mDumpSpec = false;
 bool RandomGraphTest::mDetectMemoryLeak = false;
 std::map<std::string, ANeuralNetworksDevice*> RandomGraphTest::mDevices;
 
+int RandomGraphTest::mVndkVersion = __ANDROID_API_FUTURE__;
 int64_t RandomGraphTest::mStandardDevicesFeatureLevel;
 #ifndef NNTEST_CTS
 std::vector<std::shared_ptr<Device>> RandomGraphTest::mStandardDevices;
