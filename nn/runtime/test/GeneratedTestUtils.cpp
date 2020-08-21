@@ -16,7 +16,6 @@
 
 #include "GeneratedTestUtils.h"
 
-#include <android/hardware_buffer.h>
 #include <android-base/logging.h>
 #include <gtest/gtest.h>
 

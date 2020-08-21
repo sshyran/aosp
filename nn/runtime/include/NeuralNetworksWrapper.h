@@ -29,10 +29,6 @@
 #include <utility>
 #include <vector>
 
-// Required for assert() macro
-// TODO(avg): upstream this change
-#include <cassert>
-
 namespace android {
 namespace nn {
 namespace wrapper {
