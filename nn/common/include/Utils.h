@@ -108,17 +108,8 @@ void initVLogMask();
 #define NN_RET_CHECK(condition) \
     while (UNLIKELY(!(condition))) NN_RET_CHECK_FAIL() << #condition << " "
 
-#define NN_RET_CHECK_OP(LHS, RHS, OP)                                                 \
-    for (auto _values = ::android::base::MakeEagerEvaluator(LHS, RHS);                \
-         UNLIKELY(!(_values.lhs OP _values.rhs));                                     \
-         /* empty */)                                                                 \
-    NN_RET_CHECK_FAIL() << #LHS << " " << #OP << " " << #RHS << " (" << #LHS << " = " \
-                        << _values.lhs << ", " << #RHS << " = " << _values.rhs << ") "
-
-
-// TODO(b/163468227) jmpollock: Uprev android::logging to use this new macro
 // Helper for NN_CHECK_xx(x, y) macros.
-#define NN_RET_CHECK_OP_NEEDS_LOGGING_UPREV(LHS, RHS, OP)                                   \
+#define NN_RET_CHECK_OP(LHS, RHS, OP)                                   \
     for (auto _values = ::android::base::MakeEagerEvaluator(LHS, RHS);                      \
          UNLIKELY(!(_values.lhs.v OP _values.rhs.v));                                       \
          /* empty */)                                                                       \
