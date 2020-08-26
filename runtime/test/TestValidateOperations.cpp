@@ -735,7 +735,7 @@ TEST(TensorRankConstraint, ExactlyWillFailIfValidInputHasInvalidSize) {
             .dimensions = opDimensions,
     }};
     EXPECT_DEATH(TensorRankConstraint::Exactly(3).MutationsWithValidRank({operand}),
-                 ".*assertion.+failed.*");
+                 ".*(A|a)ssertion.+failed.*");
 };
 
 TEST(TensorRankConstraint, ExactlyWillReturnTwoInvalidMutationsWithLowerAndHigherRank) {
