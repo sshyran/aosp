@@ -80,7 +80,7 @@ class TestPreparedModelLatest : public IPreparedModel {
     Return<V1_0::ErrorStatus> execute(const V1_0::Request& request,
                                       const sp<V1_0::IExecutionCallback>& callback) override {
         CHECK(mPreparedModelV1_0 != nullptr) << "V1_0 prepared model is nullptr.";
-        std::thread([this, &request, &callback] {
+        std::thread([this, request, callback] {
             dummyExecution();
             if (mErrorStatus == ErrorStatus::NONE) {
                 // Note that we lose the actual launch status.
@@ -95,7 +95,7 @@ class TestPreparedModelLatest : public IPreparedModel {
     Return<V1_0::ErrorStatus> execute_1_2(const V1_0::Request& request, MeasureTiming measure,
                                           const sp<V1_2::IExecutionCallback>& callback) override {
         CHECK(mPreparedModelV1_2 != nullptr) << "V1_2 prepared model is nullptr.";
-        std::thread([this, &request, measure, &callback] {
+        std::thread([this, request, measure, callback] {
             dummyExecution();
             if (mErrorStatus == ErrorStatus::NONE) {
                 // Note that we lose the actual launch status.
@@ -115,7 +115,7 @@ class TestPreparedModelLatest : public IPreparedModel {
                                           const OptionalTimeoutDuration& loopTimeoutDuration,
                                           const sp<V1_3::IExecutionCallback>& callback) override {
         CHECK(mPreparedModelV1_3 != nullptr) << "V1_3 prepared model is nullptr.";
-        std::thread([this, &request, measure, &deadline, &loopTimeoutDuration, &callback] {
+        std::thread([this, request, measure, deadline, loopTimeoutDuration, callback] {
             dummyExecution();
             if (mErrorStatus == ErrorStatus::NONE) {
                 // Note that we lose the actual launch status.
