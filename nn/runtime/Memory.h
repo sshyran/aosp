@@ -35,10 +35,6 @@
 #include "NeuralNetworks.h"
 #include "Utils.h"
 
-extern "C" {
-    typedef struct AHardwareBuffer AHardwareBuffer;
-}
-
 namespace android {
 namespace nn {
 

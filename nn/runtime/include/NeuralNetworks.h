@@ -50,10 +50,6 @@
 #include <stdint.h>
 #include <sys/cdefs.h>
 
-extern "C" {
-    typedef struct AHardwareBuffer AHardwareBuffer;
-}
-
 __BEGIN_DECLS
 
 /**
