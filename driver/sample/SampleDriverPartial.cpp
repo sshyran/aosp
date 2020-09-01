@@ -19,7 +19,6 @@
 #include "SampleDriverPartial.h"
 
 #include <android-base/logging.h>
-#include <hidl/LegacySupport.h>
 
 #include <thread>
 #include <vector>
