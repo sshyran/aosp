@@ -45,6 +45,7 @@ static int property_get(const char* key, char* value, const char* default_value)
 
 #include <algorithm>
 #include <chrono>
+#include <memory>
 
 namespace android {
 
@@ -213,16 +214,17 @@ size_t BlobCache::get(const void* key, size_t keySize, void** value,
     return valueBlobSize;
 }
 
-static inline size_t align4(size_t size) {
-    return (size + 3) & ~3;
+static inline size_t align_sizet(size_t size) {
+    constexpr size_t alignment = alignof(size_t) - 1;
+    return (size + alignment) & ~alignment;
 }
 
 size_t BlobCache::getFlattenedSize() const {
-    size_t size = align4(sizeof(Header) + PROPERTY_VALUE_MAX);
+    size_t size = align_sizet(sizeof(Header) + PROPERTY_VALUE_MAX);
     for (const CacheEntry& e : mCacheEntries) {
         std::shared_ptr<Blob> const& keyBlob = e.getKey();
         std::shared_ptr<Blob> const& valueBlob = e.getValue();
-        size += align4(sizeof(EntryHeader) + keyBlob->getSize() + valueBlob->getSize());
+        size += align_sizet(sizeof(EntryHeader) + keyBlob->getSize() + valueBlob->getSize());
     }
     return size;
 }
@@ -244,7 +246,7 @@ int BlobCache::flatten(void* buffer, size_t size) const {
 
     // Write cache entries
     uint8_t* byteBuffer = reinterpret_cast<uint8_t*>(buffer);
-    off_t byteOffset = align4(sizeof(Header) + header->mBuildIdLength);
+    off_t byteOffset = align_sizet(sizeof(Header) + header->mBuildIdLength);
     for (const CacheEntry& e : mCacheEntries) {
         std::shared_ptr<Blob> const& keyBlob = e.getKey();
         std::shared_ptr<Blob> const& valueBlob = e.getValue();
@@ -252,7 +254,7 @@ int BlobCache::flatten(void* buffer, size_t size) const {
         size_t valueSize = valueBlob->getSize();
 
         size_t entrySize = sizeof(EntryHeader) + keySize + valueSize;
-        size_t totalSize = align4(entrySize);
+        size_t totalSize = align_sizet(entrySize);
         if (byteOffset + totalSize > size) {
             ALOGE("flatten: not enough room for cache entries");
             return -EINVAL;
@@ -302,7 +304,7 @@ int BlobCache::unflatten(void const* buffer, size_t size) {
 
     // Read cache entries
     const uint8_t* byteBuffer = reinterpret_cast<const uint8_t*>(buffer);
-    off_t byteOffset = align4(sizeof(Header) + header->mBuildIdLength);
+    off_t byteOffset = align_sizet(sizeof(Header) + header->mBuildIdLength);
     size_t numEntries = header->mNumEntries;
     for (size_t i = 0; i < numEntries; i++) {
         if (byteOffset + sizeof(EntryHeader) > size) {
@@ -316,7 +318,7 @@ int BlobCache::unflatten(void const* buffer, size_t size) {
         size_t valueSize = eheader->mValueSize;
         size_t entrySize = sizeof(EntryHeader) + keySize + valueSize;
 
-        size_t totalSize = align4(entrySize);
+        size_t totalSize = align_sizet(entrySize);
         if (byteOffset + totalSize > size) {
             mCacheEntries.clear();
             ALOGE("unflatten: not enough room for cache entry");
