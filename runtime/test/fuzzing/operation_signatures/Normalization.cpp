@@ -24,7 +24,7 @@ static void softmaxConstructor(TestOperandType dataType, uint32_t rank, RandomOp
     sameDimensionOpConstructor(dataType, rank, op);
     // Generate value for "axis" parameter.
     if (op->inputs.size() > 2) {
-        op->inputs[2]->setScalarValue<int32_t>(getUniform<int32_t>(-rank, rank - 1));
+        op->inputs[2]->setScalarValue<int32_t>(getRandomAxis(rank));
     }
 }
 
@@ -92,7 +92,7 @@ static void l2normConstructor(TestOperandType dataType, uint32_t rank, RandomOpe
     sameDimensionOpConstructor(dataType, rank, op);
     // Generate value for "axis" parameter.
     if (op->inputs.size() > 1) {
-        op->inputs[1]->setScalarValue<int32_t>(getUniform<int32_t>(-rank, rank - 1));
+        op->inputs[1]->setScalarValue<int32_t>(getRandomAxis(rank));
     }
     // L2_NORMALIZATION may produce NaN output values with all zero inputs. We should not connect
     // the output tensor to the input of another operation.
@@ -160,7 +160,7 @@ static void localResponseNormConstructor(TestOperandType dataType, uint32_t rank
     sameDimensionOpConstructor(dataType, rank, op);
     // Generate value for "axis" parameter.
     if (op->inputs.size() > 5) {
-        op->inputs[5]->setScalarValue<int32_t>(getUniform<int32_t>(-rank, rank - 1));
+        op->inputs[5]->setScalarValue<int32_t>(getRandomAxis(rank));
     }
 }
 

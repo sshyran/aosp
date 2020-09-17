@@ -425,10 +425,10 @@ static void channelShuffleConstructor(TestOperandType dataType, uint32_t rank,
                                       RandomOperation* op) {
     sameShapeOpConstructor(dataType, rank, op);
     // The number of groups must be a divisor of the target axis size.
-    int32_t axis = getUniform<int32_t>(-rank, rank - 1);
+    int32_t axis = getRandomAxis(rank);
     op->inputs[2]->setScalarValue<int32_t>(axis);
     int32_t numGroups = op->inputs[1]->value<int32_t>();
-    if (axis < 0) axis += rank;
+    axis = toPositiveAxis(axis, rank);
     (op->inputs[0]->dimensions[axis] % numGroups).setEqual(0);
 }
 
@@ -519,9 +519,9 @@ DEFINE_SQUEEZE_SIGNATURE(V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
 
 static void expandDimsConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     // Generate values for the "axis" tensor.
-    int32_t axis = getUniform<int32_t>(-rank - 1, rank);
+    int32_t axis = getRandomAxis(rank + 1);
     op->inputs[1]->setScalarValue<int32_t>(axis);
-    if (axis < 0) axis += rank + 1;
+    if (axis < 0) axis += static_cast<int32_t>(rank + 1);
 
     setFreeDimensions(op->inputs[0], rank);
     for (uint32_t i = 0; i < rank; i++) {
