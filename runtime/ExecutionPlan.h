@@ -24,6 +24,7 @@
 
 #include <algorithm>
 #include <chrono>
+#include <functional>
 #include <map>
 #include <memory>
 #include <ostream>
@@ -717,6 +718,9 @@ class ExecutionPlan {
     Kind forTest_getKind() const;
     std::shared_ptr<const Device> forTest_simpleGetDevice() const;
     const std::vector<std::shared_ptr<LogicalStep>>& forTest_compoundGetSteps() const;
+    //     The "flat" in the name signifies that this method requires that the
+    //     model not contain any control flow operations.
+    std::set<uint32_t> forTest_flatGetDynamicTemporaries() const;
     const uint8_t* forTest_simpleGetCacheToken() const;
 
    private:
@@ -904,6 +908,9 @@ class ExecutionPlan {
         CHECK(mBody != nullptr);
         return static_cast<const CompoundBody*>(mBody);
     }
+
+    void forEachDynamicTemporary(const std::function<void(SourceOperandIndex, const hal::Operand&,
+                                                          uint32_t definingStepIndex)>&) const;
 
     // Pointers to compilation caching information in CompilationBuilder.
     const std::string* mCacheDir = nullptr;
