@@ -31,9 +31,9 @@ static void reduceOpConstructor(TestOperandType, uint32_t rank, RandomOperation*
     op->inputs[1]->dimensions = {numAxis};
     op->inputs[1]->resizeBuffer<int32_t>(numAxis);
     for (uint32_t i = 0; i < numAxis; i++) {
-        int32_t dim = getUniform<int32_t>(-rank, rank - 1);
+        int32_t dim = getRandomAxis(rank);
         op->inputs[1]->value<int32_t>(i) = dim;
-        reduce[dim < 0 ? dim + rank : dim] = true;
+        reduce[toPositiveAxis(dim, rank)] = true;
     }
 
     // This scalar may have two types: in MEAN it is INT32, in REDUCE_* it is BOOL
@@ -103,10 +103,10 @@ static void singleAxisReduceOpConstructor(TestOperandType, uint32_t rank, Random
     setFreeDimensions(op->inputs[0], rank);
     // "axis" must be in the range [-rank, rank).
     // Negative "axis" is used to specify axis from the end.
-    int32_t axis = getUniform<int32_t>(-rank, rank - 1);
+    int32_t axis = getRandomAxis(rank);
     op->inputs[1]->setScalarValue<int32_t>(axis);
     for (uint32_t i = 0; i < rank; i++) {
-        if (i != static_cast<uint32_t>(axis) && i != axis + rank) {
+        if (i != static_cast<uint32_t>(toPositiveAxis(axis, rank))) {
             op->outputs[0]->dimensions.emplace_back(op->inputs[0]->dimensions[i]);
         }
     }
