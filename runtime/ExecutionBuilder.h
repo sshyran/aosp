@@ -261,14 +261,19 @@ class StepExecutor {
     // Map inputs and outputs from ExecutionBuilder to StepExecutor,
     // one at a time.  Note that these are input/output indexes, not
     // operand indexes.
+    //
+    // For mapOutputToInput(), outputDimensions may be nullptr if the input
+    // operand has fully specified dimensions.
     void mapInput(uint32_t builderIndex, uint32_t executorIndex) {
         mapInputOrOutput(mExecutionBuilder->mInputs[builderIndex], &mInputs[executorIndex]);
     }
     void mapOutput(uint32_t builderIndex, uint32_t executorIndex) {
         mapInputOrOutput(mExecutionBuilder->mOutputs[builderIndex], &mOutputs[executorIndex]);
     }
-    void mapOutputToInput(uint32_t builderIndex, uint32_t executorIndex) {
-        mapInputOrOutput(mExecutionBuilder->mOutputs[builderIndex], &mInputs[executorIndex]);
+    void mapOutputToInput(uint32_t builderIndex, uint32_t executorIndex,
+                          const hal::hidl_vec<uint32_t>* outputDimensions) {
+        mapInputOrOutput(mExecutionBuilder->mOutputs[builderIndex], &mInputs[executorIndex],
+                         outputDimensions);
     }
 
     // If no length is provided, the input or output is assumed to have the length
@@ -312,8 +317,11 @@ class StepExecutor {
     bool areDynamicTemporariesAllocated() const;
 
    private:
+    // builderDimensions may be nullptr if executorInputOrOutput has fully
+    // specified dimensions.
     void mapInputOrOutput(const ModelArgumentInfo& builderInputOrOutput,
-                          ModelArgumentInfo* executorInputOrOutput);
+                          ModelArgumentInfo* executorInputOrOutput,
+                          const hal::hidl_vec<uint32_t>* builderDimensions = nullptr);
 
     // If no length is provided, the input or output is assumed to have the length
     // of the corresponding operand.  dimensions must either have zero rank or
