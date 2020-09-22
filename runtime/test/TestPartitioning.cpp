@@ -2265,8 +2265,6 @@ void DynamicTemporariesTest::executeCompilationAndCompareOutput(bool opnd2ModelO
     }
 }
 
-#if 0
-// TODO: enable this test once b/168657259 is fixed
 TEST_F(DynamicTemporariesTest, ModelOutputsSufficientSize) {
     // The purpose of this test is to confirm that the partitioner and the
     // runtime can handle a model output of unspecified dimensions but
@@ -2280,7 +2278,6 @@ TEST_F(DynamicTemporariesTest, ModelOutputsSufficientSize) {
     ASSERT_NO_FATAL_FAILURE(executeCompilationAndCompareOutput(true, true));
 }
 
-// TODO: enable this test once b/168657259 is fixed
 TEST_F(DynamicTemporariesTest, DynamicTemporariesUnspecifiedOutputs) {
     // The purpose of this test is to confirm that the partitioner can produce
     // dynamic temporaries and that the runtime can handle them properly.  Note
@@ -2290,7 +2287,6 @@ TEST_F(DynamicTemporariesTest, DynamicTemporariesUnspecifiedOutputs) {
     ASSERT_NO_FATAL_FAILURE(compileModelAndComparePlan());
     ASSERT_NO_FATAL_FAILURE(executeCompilationAndCompareOutput(true, true));
 }
-#endif
 
 TEST_F(DynamicTemporariesTest, DynamicTemporariesSpecifiedOutputs) {
     // The purpose of this test is to confirm that the partitioner can produce
@@ -2338,7 +2334,6 @@ TEST_F(DynamicTemporariesTest, ModelOutput2InsufficientSizeWithoutDynamicTempora
     ASSERT_NO_FATAL_FAILURE(executeCompilationAndCompareOutput(false, true));
 }
 
-#if 0
 // TODO: enable this test once b/168657259 is fixed
 TEST_F(DynamicTemporariesTest, ModelOutput4InsufficientSizeWithoutDynamicTemporary) {
     // The purpose of this test is to confirm that the runtime can detect a
@@ -2351,7 +2346,6 @@ TEST_F(DynamicTemporariesTest, ModelOutput4InsufficientSizeWithoutDynamicTempora
     ASSERT_NO_FATAL_FAILURE(compileModelAndComparePlan());
     ASSERT_NO_FATAL_FAILURE(executeCompilationAndCompareOutput(true, false));
 }
-#endif
 
 // Test token rehashing during the compilation step.
 class CacheTest : public PartitioningTest {
