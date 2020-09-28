@@ -407,6 +407,7 @@ std::optional<RunTimePoolInfo> RunTimePoolInfo::createFromHidlMemory(
         void* gBuffer = nullptr;
         status = AHardwareBuffer_lock(hardwareBuffer, usage, -1, nullptr, &gBuffer);
         if (status != NO_ERROR) {
+            AHardwareBuffer_release(hardwareBuffer);
             LOG(ERROR) << "RunTimePoolInfo Can't lock the AHardwareBuffer. Error: " << status;
             return std::nullopt;
         }
