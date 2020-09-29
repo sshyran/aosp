@@ -1191,24 +1191,16 @@ std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
     // TODO(b/157236079): Move some or all of this work to compilation time?
     DynamicTemporaries dynamicTemporaries;
     const TypeManager* typeManager = TypeManager::get();
-    for (const auto& logicalStep : compound()->mSteps) {
-        if (const ExecutionStep* step = logicalStep->tryExecutionStep()) {
-            const uint32_t stepIndex = step->getIndex();
-            const uint32_t sourceModelIndex = step->getSourceModelIndex();
-            for (const auto& entry : step->getTempsAsStepModelOutputs()) {
-                const auto sourceOperandIndex = SourceOperandIndex(sourceModelIndex, entry.first);
-                const auto& sourceOperand = getSourceOperand(sourceOperandIndex);
-                if (hasUnknownSize(sourceOperand)) {
-                    CHECK(typeManager->isTensorType(sourceOperand.type));
-                    // TODO: For now we guess an initial size equal to element
-                    // size, which is overly conservative.
-                    const uint32_t size = typeManager->getSizeOfData(sourceOperand.type, {1});
-                    dynamicTemporaries.declare(sourceOperandIndex, stepIndex,
-                                               sourceOperand.dimensions, size);
-                }
-            }
-        }
-    }
+    forEachDynamicTemporary([typeManager, &dynamicTemporaries](
+                                    SourceOperandIndex sourceOperandIndex,
+                                    const Operand& sourceOperand, uint32_t definingStepIndex) {
+        CHECK(typeManager->isTensorType(sourceOperand.type));
+        // TODO: For now we guess an initial size equal to element
+        // size, which is overly conservative.
+        const uint32_t size = typeManager->getSizeOfData(sourceOperand.type, {1});
+        dynamicTemporaries.declare(sourceOperandIndex, definingStepIndex, sourceOperand.dimensions,
+                                   size);
+    });
     dynamicTemporaries.endDeclarations();
     dynamicTemporaries.vlogDump("finished declarations");
 
@@ -1785,6 +1777,15 @@ const std::vector<std::shared_ptr<LogicalStep>>& ExecutionPlan::forTest_compound
     return compound()->mSteps;
 }
 
+std::set<uint32_t> ExecutionPlan::forTest_flatGetDynamicTemporaries() const {
+    CHECK_EQ(getSourceModels().size(), size_t(1));
+    std::set<uint32_t> ret;
+    forEachDynamicTemporary([&ret](SourceOperandIndex dynTemp, const Operand&, uint32_t) {
+        ret.insert(dynTemp.second);
+    });
+    return ret;
+}
+
 bool ExecutionPlan::hasDynamicTemporaries() const {
     return mBody->hasDynamicTemporaries();
 }
@@ -1855,6 +1856,28 @@ void ExecutionPlan::CompoundBody::forEachStepRoleOfOutput(uint32_t index,
             for (uint32_t i = 0; i < inputToOutputMapping.size(); i++) {
                 if (inputToOutputMapping[i] == index) {
                     callback(step->getPreparedStepModel().get(), IOType::INPUT, i);
+                }
+            }
+        }
+    }
+}
+
+void ExecutionPlan::forEachDynamicTemporary(
+        const std::function<void(SourceOperandIndex, const Operand&, uint32_t definingStepIndex)>&
+                fn) const {
+    if (mState != COMPOUND) {
+        return;
+    }
+
+    for (const auto& logicalStep : compound()->mSteps) {
+        if (const ExecutionStep* step = logicalStep->tryExecutionStep()) {
+            const uint32_t stepIndex = step->getIndex();
+            const uint32_t sourceModelIndex = step->getSourceModelIndex();
+            for (const auto& entry : step->getTempsAsStepModelOutputs()) {
+                const auto sourceOperandIndex = SourceOperandIndex(sourceModelIndex, entry.first);
+                const auto& sourceOperand = getSourceOperand(sourceOperandIndex);
+                if (hasUnknownSize(sourceOperand)) {
+                    fn(sourceOperandIndex, sourceOperand, stepIndex);
                 }
             }
         }
