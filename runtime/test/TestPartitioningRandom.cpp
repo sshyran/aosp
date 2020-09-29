@@ -220,7 +220,7 @@ class TestCompilation : public WrapperCompilation {
     using WrapperCompilation::finish;
 
     Result setPartitioning(uint32_t partitioning) {
-        return static_cast<Result>(builder()->setPartitioning(partitioning));
+        return static_cast<Result>(builder()->forTest_setPartitioning(partitioning));
     }
 
     const ExecutionPlan& getExecutionPlan() const { return builder()->forTest_getExecutionPlan(); }
@@ -751,7 +751,14 @@ TEST_P(RandomPartitioningTest, Test) {
 
     const unsigned problemSize = 1 + randUInt(kMaxProblemSize);
     const WrapperOperandType problemType(WrapperType::TENSOR_FLOAT32, {problemSize, problemSize});
-    const WrapperOperandType unknownDimensionsType(WrapperType::TENSOR_FLOAT32, {0, 0});
+    const WrapperOperandType unknownDimensionsTypes[] = {
+            {WrapperType::TENSOR_FLOAT32, {}},
+            {WrapperType::TENSOR_FLOAT32, {0, 0}},
+            {WrapperType::TENSOR_FLOAT32, {0, problemSize}},
+            {WrapperType::TENSOR_FLOAT32, {problemSize, 0}},
+    };
+    const unsigned kUnknownDimensionsTypesCount =
+            sizeof(unknownDimensionsTypes) / sizeof(unknownDimensionsTypes[0]);
 
     static const WrapperOperandType activationFunctionType(WrapperType::INT32, {});
 
@@ -802,11 +809,6 @@ TEST_P(RandomPartitioningTest, Test) {
     // operations (those that do not consume results produced by other
     // operations).
     unsigned rootOperationCount = 0;
-
-    // Track if we added operands with unknown dimensions. In this case,
-    // partitioned compilation will fail if such an operand is read in a
-    // different partition than it is written.
-    bool hasUnknownDimensions = false;
 
     // Generate operations.
     for (unsigned i = 0; i < numOperations; i++) {
@@ -995,19 +997,18 @@ TEST_P(RandomPartitioningTest, Test) {
         // OUTPUTS /////////////////////////////////////////////////////////////////////////////////
 
         std::vector<uint32_t> operationOutputs(operationPattern.mNumOutputs);
-        std::generate(operationOutputs.begin(), operationOutputs.end(),
-                      [&model, &problemType, &unknownDimensionsType, &hasUnknownDimensions,
-                       allowUnknownDimensions, this] {
-                          // 3% unknowns causes ~35% of partitionings to fail
-                          // (determined by commenting out the fallback code,
-                          // running tests and noting number of failures).
-                          if (allowUnknownDimensions && randFrac() < 0.03) {
-                              hasUnknownDimensions = true;
-                              return model.addOperand(&unknownDimensionsType);
-                          } else {
-                              return model.addOperand(&problemType);
-                          }
-                      });
+        std::generate(
+                operationOutputs.begin(), operationOutputs.end(),
+                [&model, &problemType, &unknownDimensionsTypes, allowUnknownDimensions, this] {
+                    // Before the fix for http://b/132458982, 3% unknowns
+                    // causes ~35% of partitionings to fail.
+                    if (allowUnknownDimensions && randFrac() < 0.03) {
+                        return model.addOperand(
+                                &unknownDimensionsTypes[randUInt(kUnknownDimensionsTypesCount)]);
+                    } else {
+                        return model.addOperand(&problemType);
+                    }
+                });
 
         // OPERATION ///////////////////////////////////////////////////////////////////////////////
 
@@ -1157,37 +1158,18 @@ TEST_P(RandomPartitioningTest, Test) {
     // CPU fallback device
     devices.push_back(DeviceManager::getCpuDevice());
 
-    // Partitioned compilation.
-    // For test cases without unknown intermediate operand sizes we require the
-    // partitioning to succeed without CPU fallback. With unknown sizes we
-    // retry with a fallback if the non-fallback partitioning fails and require
-    // the fallback to succeed.
-    TestCompilation cNoFallback(&model, devices);
-    TestCompilation cWithFallback(&model, devices);
-    TestCompilation* c2 = nullptr;
-    ASSERT_EQ(cNoFallback.setPartitioning(DeviceManager::kPartitioningWithoutFallback),
-              Result::NO_ERROR);
-    auto compilationResult = cNoFallback.finish();
-    if (hasUnknownDimensions && compilationResult == Result::OP_FAILED &&
-        cNoFallback.getExecutionPlan().forTest_hasStepModelOutputsOfUnknownSize()) {
-        ASSERT_EQ(cWithFallback.setPartitioning(DeviceManager::kPartitioningWithFallback),
-                  Result::NO_ERROR);
-        ASSERT_EQ(cWithFallback.finish(), Result::NO_ERROR);
-        ASSERT_EQ(cWithFallback.getExecutionPlan().forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
-        ASSERT_EQ(cWithFallback.getExecutionPlan().forTest_simpleGetDevice(),
-                  DeviceManager::getCpuDevice());
-        c2 = &cWithFallback;
-    } else {
-        ASSERT_EQ(compilationResult, Result::NO_ERROR);
-        c2 = &cNoFallback;
-    }
+    // Partitioned compilation.  We require the partitioning to succeed without
+    // CPU fallback.
+    TestCompilation c2(&model, devices);
+    ASSERT_EQ(c2.setPartitioning(DeviceManager::kPartitioningWithoutFallback), Result::NO_ERROR);
+    ASSERT_EQ(c2.finish(), Result::NO_ERROR);
 
 #ifdef VERBOSE
     {
         std::cout << "signatures = " << signatures.size() << ", devices = " << devices.size()
                   << std::endl;
         // TODO: When dumping steps, include non-ExecutionSteps.
-        const ExecutionPlan& plan = c2->getExecutionPlan();
+        const ExecutionPlan& plan = c2.getExecutionPlan();
         switch (plan.forTest_getKind()) {
             case ExecutionPlan::Kind::SIMPLE:
                 std::cout << "plan: simple" << std::endl;
@@ -1376,7 +1358,7 @@ TEST_P(RandomPartitioningTest, Test) {
     }
 
     // Partitioned execution.
-    WrapperExecution e2(c2);
+    WrapperExecution e2(&c2);
     ASSERT_NO_FATAL_FAILURE(prepareForExecution(&e2));
     ASSERT_EQ(e2.compute(), Result::NO_ERROR);
 

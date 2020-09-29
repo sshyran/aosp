@@ -126,9 +126,11 @@ class ModelBuilder {
         return getReferencedModel(operand.location.offset);
     }
 
+    // simulateFailureResultCode == ANEURALNETWORKS_NO_ERROR means behave normally.
     int partitionTheWork(const std::vector<std::shared_ptr<Device>>& devices, uint32_t preference,
                          uint32_t priority, const std::optional<Deadline>& deadline,
-                         ExecutionPlan* plan) const;
+                         ExecutionPlan* plan,
+                         int simulateFailureResultCode = ANEURALNETWORKS_NO_ERROR) const;
 
    private:
     // TODO(b/132322449): move partitionTheWork, findBestDeviceForEachOperation,
