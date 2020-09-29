@@ -190,6 +190,9 @@ cc_test {
     header_libs: [
         "libneuralnetworks_private_headers",
     ],
+    sanitize: {
+        integer_overflow: true,
+    },
 }
 
 cc_fuzz {
