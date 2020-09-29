@@ -544,7 +544,7 @@ cpuFallbackPartial(const ExecutionPlan& plan,
 
     // Get fallback executor.
     std::shared_ptr<StepExecutor> executor;
-    int n1 = plan.fallback(controller, &executor);
+    int n1 = plan.fallback(controller, &executor, nullptr, nullptr);
     if (n1 != ANEURALNETWORKS_NO_ERROR) {
         return {n1, {}, kNoTiming, nullptr};
     }
@@ -579,8 +579,9 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
         // Get the current step of the execution.
         std::shared_ptr<StepExecutor> executor;
         std::shared_ptr<ExecutionBurstController> burstController;
-        int n = doInsufficientSizeFallback ? plan.fallback(controller, &executor, &burstController)
-                                           : plan.next(controller, &executor, &burstController);
+        int n = doInsufficientSizeFallback
+                        ? plan.fallback(controller, &executor, &burstController, &outputShapes)
+                        : plan.next(controller, &executor, &burstController, &outputShapes);
         doInsufficientSizeFallback = false;
         if (n != ANEURALNETWORKS_NO_ERROR) {
             // During the interpreted execution of control flow, a loop timeout
@@ -779,7 +780,7 @@ static std::tuple<int, int, sp<hal::IFencedExecutionCallback>> startComputeFence
 
         // Get the current step of the execution.
         std::shared_ptr<StepExecutor> executor;
-        int n = plan.next(controller, &executor, nullptr, syncFence);
+        int n = plan.next(controller, &executor, nullptr, nullptr, syncFence);
         if (n != ANEURALNETWORKS_NO_ERROR) {
             // During the interpreted execution of control flow, a loop timeout
             // might occur in ExecutionPlan::next().
@@ -1259,17 +1260,28 @@ void StepExecutor::mapInputsAndOutputsTrivially() {
 }
 
 void StepExecutor::mapInputOrOutput(const ModelArgumentInfo& builderInputOrOutput,
-                                    ModelArgumentInfo* executorInputOrOutput) {
+                                    ModelArgumentInfo* executorInputOrOutput,
+                                    const hidl_vec<uint32_t>* builderDimensions) {
+    auto updateDimensions = [executorInputOrOutput, builderDimensions] {
+        if (!builderDimensions) {
+            return;
+        }
+        executorInputOrOutput->dimensions() = *builderDimensions;
+    };
+
     *executorInputOrOutput = builderInputOrOutput;
     switch (executorInputOrOutput->state()) {
         default:
             CHECK(false) << "unexpected ModelArgumentInfo::state";
             break;
         case ModelArgumentInfo::HAS_NO_VALUE:
-        case ModelArgumentInfo::POINTER:
         case ModelArgumentInfo::UNSPECIFIED:
             break;
+        case ModelArgumentInfo::POINTER:
+            updateDimensions();
+            break;
         case ModelArgumentInfo::MEMORY: {
+            updateDimensions();
             const uint32_t builderPoolIndex = builderInputOrOutput.locationAndLength().poolIndex;
             const Memory* memory = mExecutionBuilder->mMemories[builderPoolIndex];
             const uint32_t executorPoolIndex = mMemories.add(memory);
