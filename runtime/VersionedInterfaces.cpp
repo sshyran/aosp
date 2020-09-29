@@ -638,6 +638,7 @@ static std::optional<InitialData> initializeFunction(Device* device) {
         LOG(ERROR) << "IDevice::getVersionString returned the error " << toString(versionStatus);
         return std::nullopt;
     }
+    VLOG(MANAGER) << "Version " << versionString;
 
     const int32_t type = getTypeFunction(device);
     if (type == -1) {

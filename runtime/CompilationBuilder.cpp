@@ -63,7 +63,8 @@ int CompilationBuilder::finish() {
         mPlan.setCaching(&mCacheDir, mToken);
     }
     if (mPartitioning) {
-        int n = mModel->partitionTheWork(mDevices, mPreference, mPriority, deadline, &mPlan);
+        int n = mModel->partitionTheWork(mDevices, mPreference, mPriority, deadline, &mPlan,
+                                         mFailPartitioning);
         switch (n) {
             case ANEURALNETWORKS_NO_ERROR:
                 return n;
@@ -96,7 +97,7 @@ int CompilationBuilder::finish() {
     VLOG(COMPILATION) << "CompilationBuilder::finish with CPU fallback";
     mPlan.reset();
     mPlan.becomeSingleStep(DeviceManager::getCpuDevice(), mModel);
-    return mPlan.finish(mPreference, mPriority, deadline);
+    return mPlan.finish(mPreference, mPriority, deadline, ANEURALNETWORKS_NO_ERROR);
 }
 
 int CompilationBuilder::setPreference(int32_t preference) {
@@ -166,14 +167,25 @@ int CompilationBuilder::setTimeoutDuration(uint64_t duration) {
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-int CompilationBuilder::setPartitioning(uint32_t partitioning) {
+int CompilationBuilder::forTest_setPartitioning(uint32_t partitioning) {
     if (mFinished) {
-        LOG(ERROR) << "ANeuralNetworksCompilation_setPartitioning can't modify after compilation "
+        LOG(ERROR) << "CompilationBuilder::forTest_setPartitioning can't modify after compilation "
                       "finished";
         return ANEURALNETWORKS_BAD_STATE;
     }
 
     mPartitioning = partitioning;
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+int CompilationBuilder::forTest_failPartitioning(int fail) {
+    if (mFinished) {
+        LOG(ERROR) << "CompilationBuilder::forTest_failPartitioning can't modify after compilation "
+                      "finished";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+
+    mFailPartitioning = fail;
     return ANEURALNETWORKS_NO_ERROR;
 }
 

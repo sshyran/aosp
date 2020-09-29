@@ -20,6 +20,7 @@
 
 #include <algorithm>
 #include <limits>
+#include <map>
 #include <memory>
 #include <mutex>
 #include <optional>
@@ -45,6 +46,66 @@ namespace android {
 namespace nn {
 
 using namespace hal;
+
+// Partial validation of output shapes returned from driver, to ensure they
+// conform to a very specific set of rules.
+static bool validateOutputShapesFromDriver(ErrorStatus executionStatus, const ModelBuilder* model,
+                                           const std::vector<hal::OutputShape>& shapes) {
+    // Enforces the following rules (some of which are from b/154054474):
+    // - shapes vector is empty except in the case of NONE or OUTPUT_INSUFFICIENT_SIZE.
+    //   If the vector is not empty, it must have as many entries as the step model has outputs.
+    // - If NONE, then either shapes vector is empty, or every shape is
+    //   marked isSufficient and, if a tensor, has known rank.
+    // - If OUTPUT_INSUFFICIENT_SIZE, then the vector is not empty.  At least one entry
+    //   is marked !isSufficient.
+    switch (executionStatus) {
+        case ErrorStatus::NONE: {
+            NN_RET_CHECK(shapes.size() == 0 || shapes.size() == model->outputCount())
+                    << "With execution ErrorStatus " << toString(executionStatus)
+                    << " output shapes vector must be empty or of length " << model->outputCount()
+                    << " but has length " << shapes.size();
+            NN_RET_CHECK(std::all_of(shapes.begin(), shapes.end(),
+                                     [](const OutputShape& shape) { return shape.isSufficient; }))
+                    << "With execution ErrorStatus " << toString(executionStatus)
+                    << " at least one output shape is unexpectedly marked !isSufficient";
+
+            const TypeManager* tm = TypeManager::get();
+            for (uint32_t outputIndex = 0, outputCount = shapes.size(); outputIndex < outputCount;
+                 ++outputIndex) {
+                const hal::Operand& outputOperand = model->getOutputOperand(outputIndex);
+                NN_RET_CHECK(!tm->isTensorType(outputOperand.type) ||
+                             (shapes[outputIndex].dimensions.size() != 0))
+                        << "With execution ErrorStatus " << toString(executionStatus) << " output#"
+                        << outputIndex << " shape unexpectedly has zero rank";
+            }
+
+            break;
+        }
+        case ErrorStatus::OUTPUT_INSUFFICIENT_SIZE: {
+            NN_RET_CHECK(shapes.size() == model->outputCount())
+                    << "With execution ErrorStatus " << toString(executionStatus)
+                    << " output shapes vector must be of length " << model->outputCount()
+                    << " but has length " << shapes.size();
+            NN_RET_CHECK(std::any_of(shapes.begin(), shapes.end(),
+                                     [](const OutputShape& shape) { return !shape.isSufficient; }))
+                    << "With execution ErrorStatus " << toString(executionStatus)
+                    << " at least one output shape must have been marked !isSufficient";
+            break;
+        }
+        default: {
+            NN_RET_CHECK(shapes.size() == 0)
+                    << "With execution ErrorStatus " << toString(executionStatus)
+                    << " output shapes vector must be empty but has length " << shapes.size();
+            break;
+        }
+    }
+    return true;
+}
+static bool validateOutputShapesFromDriver(int executionResultCode, const ModelBuilder* model,
+                                           const std::vector<hal::OutputShape>& shapes) {
+    return validateOutputShapesFromDriver(convertResultCodeToErrorStatus(executionResultCode),
+                                          model, shapes);
+}
 
 const Timing kNoTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
 
@@ -497,7 +558,7 @@ cpuFallbackPartial(const ExecutionPlan& plan,
 static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
                                          const ExecutionPlan& plan,
                                          std::shared_ptr<ExecutionPlan::Controller> controller,
-                                         bool allowFallback,
+                                         bool allowCpuFallback,
                                          const std::optional<Deadline>& deadline,
                                          const sp<ExecutionCallback>& executionCallback) {
     CHECK(executionBuilder != nullptr);
@@ -505,8 +566,12 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
 
     std::vector<OutputShape> outputShapes = executionBuilder->getInitialOutputShapes();
     Timing timing = kNoTiming;
-    // Disallow fallback when the ExecutionPlan is simple on CPU.
-    allowFallback &= !plan.isSimpleCpu();
+    // Disallow CPU fallback when the ExecutionPlan is simple on CPU.
+    allowCpuFallback &= !plan.isSimpleCpu();
+
+    // On this iteration, do I need to repeat the previous step because it
+    // reported insufficient size?
+    bool doInsufficientSizeFallback = false;
 
     while (true) {
         VLOG(EXECUTION) << "looking for next StepExecutor";
@@ -514,13 +579,15 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
         // Get the current step of the execution.
         std::shared_ptr<StepExecutor> executor;
         std::shared_ptr<ExecutionBurstController> burstController;
-        int n = plan.next(controller, &executor, &burstController);
+        int n = doInsufficientSizeFallback ? plan.fallback(controller, &executor, &burstController)
+                                           : plan.next(controller, &executor, &burstController);
+        doInsufficientSizeFallback = false;
         if (n != ANEURALNETWORKS_NO_ERROR) {
             // During the interpreted execution of control flow, a loop timeout
             // might occur in ExecutionPlan::next().
             bool missedDeadline = n == ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT ||
                                   n == ANEURALNETWORKS_MISSED_DEADLINE_PERSISTENT;
-            if (allowFallback && !missedDeadline) break;
+            if (allowCpuFallback && !missedDeadline) break;
             executionCallback->notify(convertResultCodeToErrorStatus(n), {}, kNoTiming);
             return;
         }
@@ -536,36 +603,57 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
         // Attempt to execute a single step of the execution.
         auto [stepN, stepOutputShapes, stepTiming] = executor->compute(deadline, burstController);
 
-        // Update global outputs.
-        if (!executor->updateOutputShapes(stepOutputShapes, &outputShapes)) {
+        // Update global outputs and dynamic temporaries.
+        StepExecutor::UpdateOutputShapes updateOutputShapes = {};
+        if (!executor->updateOutputShapes(stepN, stepOutputShapes, &outputShapes,
+                                          &updateOutputShapes)) {
             stepN = ANEURALNETWORKS_OP_FAILED;
         }
 
         // If execution was successful, continue to next step.
         if (stepN == ANEURALNETWORKS_NO_ERROR) {
-            // We only support collection of timing information in the case of a
-            // single step, so it's safe to just keep track of the last step's
-            // timing information.
-            timing = stepTiming;
+            if (updateOutputShapes.zeroSizedInput) {
+                // We'll need to do full model CPU fallback
+                VLOG(EXECUTION) << "updateOutputShapes.zeroSizedInput";
+                stepN = ANEURALNETWORKS_OP_FAILED;
+            } else {
+                CHECK(executor->areDynamicTemporariesAllocated());
+                // We only support collection of timing information in the case
+                // of a single step, so it's safe to just keep track of the last
+                // step's timing information.
+                timing = stepTiming;
+                continue;
+            }
+        }
+
+        if (stepN == ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE) {
+            VLOG(EXECUTION) << "OUTPUT_INSUFFICIENT_SIZE: " << toString(updateOutputShapes);
+            if (updateOutputShapes.mainOutputInsufficient ||
+                !updateOutputShapes.updatedDynamicTemporary) {
+                // Either:
+                // - At least one main model output is not of sufficient size; or
+                // - we didn't learn anything new about dynamic temporaries.
+                // Neither of these is recoverable, so end execution.
+                const ErrorStatus stepStatus = convertResultCodeToErrorStatus(stepN);
+                executionCallback->notify(stepStatus, outputShapes, kNoTiming);
+                return;
+            }
+            // Every main model output is of sufficient size.  This implies that
+            // at least one dynamic temporary is not of sufficient size.  This
+            // is recoverable.
+            doInsufficientSizeFallback = true;
             continue;
         }
 
-        // OUTPUT_INSUFFICIENT_SIZE is not recoverable, so end execution.
-        if (stepN == ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE) {
-            const ErrorStatus stepStatus = convertResultCodeToErrorStatus(stepN);
-            executionCallback->notify(stepStatus, outputShapes, kNoTiming);
-            return;
-        }
-
-        // If fallback is not allowed and there was an error, end execution.
-        if (!allowFallback) {
+        // If CPU fallback is not allowed and there was an error, end execution.
+        if (!allowCpuFallback) {
             const ErrorStatus stepStatus = convertResultCodeToErrorStatus(stepN);
             executionCallback->notify(stepStatus, {}, kNoTiming);
             return;
         }
 
         // If CPU execution was already attempted, either:
-        // (1) perform a full fallback if the plan is not simple, or
+        // (1) perform a full CPU fallback if the plan is not simple, or
         // (2) return from the function with an error
         if (executorIsCpu) {
             if (!plan.isSimple()) break;
@@ -574,42 +662,77 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
         }
 
         // If the code reaches this point, attempt a partial fallback to CPU.
-        CHECK(allowFallback);
-        auto [fallbackN, fallbackOutputShapes, fallbackTiming, fallbackExecutor] =
-                cpuFallbackPartial(plan, controller);
-
-        // Update global outputs.
-        if (fallbackExecutor != nullptr &&
-            !fallbackExecutor->updateOutputShapes(fallbackOutputShapes, &outputShapes)) {
-            fallbackN = ANEURALNETWORKS_OP_FAILED;
+        CHECK(allowCpuFallback);
+        if (updateOutputShapes.zeroSizedInput) {
+            // Do not attempt a partial fallback.
+            break;
         }
+        while (true) {
+            auto [fallbackN, fallbackOutputShapes, fallbackTiming, fallbackExecutor] =
+                    cpuFallbackPartial(plan, controller);
 
-        // If execution was successful, continue to next step.
-        if (fallbackN == ANEURALNETWORKS_NO_ERROR) {
-            // We only support collection of timing information in the case of a
-            // single step, so it's safe to just keep track of the last step's
-            // timing information.
-            timing = fallbackTiming;
-            continue;
-        }
+            // Update global outputs and dynamic temporaries.
+            StepExecutor::UpdateOutputShapes fallbackUpdateOutputShapes = {};
+            if (fallbackExecutor != nullptr &&
+                !fallbackExecutor->updateOutputShapes(fallbackN, fallbackOutputShapes,
+                                                      &outputShapes, &fallbackUpdateOutputShapes)) {
+                fallbackN = ANEURALNETWORKS_OP_FAILED;
+            }
 
-        // OUTPUT_INSUFFICIENT_SIZE is not recoverable, so end execution.
-        if (fallbackN == ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE) {
-            const ErrorStatus fallbackStatus = convertResultCodeToErrorStatus(fallbackN);
-            executionCallback->notify(fallbackStatus, outputShapes, kNoTiming);
-            return;
-        }
+            // If execution was successful, continue to next step.
+            if (fallbackN == ANEURALNETWORKS_NO_ERROR) {
+                if (fallbackUpdateOutputShapes.zeroSizedInput) {
+                    // We'll need to do full model CPU fallback
+                    VLOG(EXECUTION) << "fallbackUpdateOutputShapes.zeroSizedInput";
+                    fallbackN = ANEURALNETWORKS_OP_FAILED;
+                    break;
+                }
+                CHECK(fallbackExecutor->areDynamicTemporariesAllocated());
+                // We only support collection of timing information in the case of a
+                // single step, so it's safe to just keep track of the last step's
+                // timing information.
+                timing = fallbackTiming;
+                goto nextStep;
+            }
 
-        // Do not fallback twice if the ExecutionPlan is simple.
-        if (plan.isSimple()) {
-            const ErrorStatus fallbackStatus = convertResultCodeToErrorStatus(fallbackN);
-            executionCallback->notify(fallbackStatus, {}, kNoTiming);
-            return;
+            if (fallbackN == ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE) {
+                VLOG(EXECUTION) << "OUTPUT_INSUFFICIENT_SIZE: "
+                                << toString(fallbackUpdateOutputShapes);
+                if (fallbackUpdateOutputShapes.mainOutputInsufficient ||
+                    !fallbackUpdateOutputShapes.updatedDynamicTemporary) {
+                    // Either:
+                    // - At least one main model output is not of sufficient size; or
+                    // - we didn't learn anything new about dynamic temporaries.
+                    // Neither of these is recoverable, so end execution.
+                    const ErrorStatus fallbackStatus = convertResultCodeToErrorStatus(fallbackN);
+                    executionCallback->notify(fallbackStatus, outputShapes, kNoTiming);
+                    return;
+                }
+                // Every main model output is of sufficient size.  This implies
+                // that at least one dynamic temporary is not of sufficient
+                // size.  This is recoverable.
+                continue;
+            }
+
+            // Do not fallback twice if the ExecutionPlan is simple.
+            if (plan.isSimple()) {
+                const ErrorStatus fallbackStatus = convertResultCodeToErrorStatus(fallbackN);
+                executionCallback->notify(fallbackStatus, {}, kNoTiming);
+                return;
+            }
+
+            // If the code reaches this point, then there was an error with the
+            // fallback. In this case, attempt full fallback.
+            break;
         }
 
         // If the code reaches this point, then there was an error with the
         // fallback. In this case, attempt full fallback.
         break;
+
+    nextStep:
+        // Bottom of the outer loop
+        continue;
     }
 
     // If the code has reached this point, a potentially recoverable error
@@ -623,16 +746,28 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
 // In case of partitioned execution, startComputeFenced call will return the sync
 // fence and the fenced compute callback returned from the last partition.
 // Any failed partition will result in the whole execution fallback to CPU if
-// allowFallback is set to true.
+// allowCpuFallback is set to true.
 static std::tuple<int, int, sp<hal::IFencedExecutionCallback>> startComputeFenced(
         ExecutionBuilder* executionBuilder, const ExecutionPlan& plan,
         std::shared_ptr<ExecutionPlan::Controller> controller, const std::vector<int>& waitFor,
         uint64_t timeoutDurationAfterFence, const std::optional<Deadline>& deadline,
-        bool allowFallback) {
+        bool allowCpuFallback) {
+    // We should have detected this earlier in the call chain and fallen back to
+    // non-fenced execution.  This is an implementation limitation: In order to
+    // support dynamic temporarires in this code, we'd need to implement
+    // something like the following:
+    // - If a partition has outputs of unknown size, execute that partition in a
+    //   non fenced fashion, just as if it were scheduled on a driver that does
+    //   not support fenced execution.
+    // - Implement something similar to the code in asyncStartComputePartitioned()
+    //   that handles a step execution that fails with
+    //   ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE.
+    CHECK(!executionBuilder->getCompilation()->hasDynamicTemporaries());
+
     CHECK(executionBuilder != nullptr);
     VLOG(EXECUTION) << "ExecutionBuilder::computeFenced (from plan, iteratively)";
     // Disallow fallback when the ExecutionPlan is simple on CPU.
-    allowFallback &= !plan.isSimpleCpu();
+    allowCpuFallback &= !plan.isSimpleCpu();
 
     // Initiate waitForFds, syncFence for the first step.
     std::vector<int> waitForFds = waitFor;
@@ -650,7 +785,7 @@ static std::tuple<int, int, sp<hal::IFencedExecutionCallback>> startComputeFence
             // might occur in ExecutionPlan::next().
             bool missedDeadline = n == ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT ||
                                   n == ANEURALNETWORKS_MISSED_DEADLINE_PERSISTENT;
-            if (allowFallback && !missedDeadline) break;
+            if (allowCpuFallback && !missedDeadline) break;
             // Return -1 for the sync fence fd, and nullptr for the callback.
             return std::make_tuple(n, -1, nullptr);
         }
@@ -686,8 +821,8 @@ static std::tuple<int, int, sp<hal::IFencedExecutionCallback>> startComputeFence
         if (stepN == ANEURALNETWORKS_NO_ERROR) {
             continue;
         }
-        // If fallback is not allowed and there was an error, end execution.
-        if (!allowFallback) {
+        // If CPU fallback is not allowed and there was an error, end execution.
+        if (!allowCpuFallback) {
             return std::make_tuple(stepN, -1, nullptr);
         }
 
@@ -767,12 +902,13 @@ int ExecutionBuilder::computeFenced(const std::vector<int>& waitFor,
         }
     }
     mStarted = true;
-    const bool allowFallback = DeviceManager::partitioningAllowsFallback(mPartitioning);
+    const bool allowCpuFallback = DeviceManager::partitioningAllowsFallback(mPartitioning);
     std::shared_ptr<ExecutionPlan::Controller> controller = mPlan->makeController(this, nullptr);
     VLOG(EXECUTION) << "ExecutionBuilder::computeFenced";
     int result;
-    std::tie(result, mSyncFenceFd, mFencedExecutionCallback) = startComputeFenced(
-            this, *mPlan, controller, waitFor, timeoutDurationAfterFence, deadline, allowFallback);
+    std::tie(result, mSyncFenceFd, mFencedExecutionCallback) =
+            startComputeFenced(this, *mPlan, controller, waitFor, timeoutDurationAfterFence,
+                               deadline, allowCpuFallback);
     *syncFence = mSyncFenceFd;
     return result;
 }
@@ -826,14 +962,14 @@ int ExecutionBuilder::compute(sp<ExecutionCallback>* synchronizationCallback,
     // asynchronous thread -- take the asynchronous thread logic out of
     // CpuPreparedModel::execute() and use it to wrap the plan-based-path.
     mStarted = true;
-    const bool allowFallback = DeviceManager::partitioningAllowsFallback(mPartitioning);
+    const bool allowCpuFallback = DeviceManager::partitioningAllowsFallback(mPartitioning);
     std::shared_ptr<ExecutionPlan::Controller> controller =
             mPlan->makeController(this, burstBuilder);
     if (synchronous) {
         VLOG(EXECUTION) << "ExecutionBuilder::compute (synchronous API)";
         sp<ExecutionCallback> localSynchronizationCallback = new ExecutionCallback();
         localSynchronizationCallback->setOnFinish(wrappedFinish);
-        asyncStartComputePartitioned(this, *mPlan, controller, allowFallback, deadline,
+        asyncStartComputePartitioned(this, *mPlan, controller, allowCpuFallback, deadline,
                                      localSynchronizationCallback);
         localSynchronizationCallback->wait();
         if (mMeasureTiming) {
@@ -854,13 +990,13 @@ int ExecutionBuilder::compute(sp<ExecutionCallback>* synchronizationCallback,
         executionCallback->setOnFinish(wrappedFinish);
         if (DeviceManager::get()->syncExecRuntime()) {
             VLOG(EXECUTION) << "ExecutionBuilder::compute (asynchronous API, non-threaded)";
-            asyncStartComputePartitioned(this, *mPlan, controller, allowFallback, deadline,
+            asyncStartComputePartitioned(this, *mPlan, controller, allowCpuFallback, deadline,
                                          executionCallback);
         } else {
             VLOG(EXECUTION) << "ExecutionBuilder::compute (asynchronous API)";
             std::thread asyncExecution(
-                    [this, controller, allowFallback, deadline, executionCallback] {
-                        asyncStartComputePartitioned(this, *mPlan, controller, allowFallback,
+                    [this, controller, allowCpuFallback, deadline, executionCallback] {
+                        asyncStartComputePartitioned(this, *mPlan, controller, allowCpuFallback,
                                                      deadline, executionCallback);
                     });
             executionCallback->bindThread(std::move(asyncExecution));
@@ -884,7 +1020,7 @@ std::vector<OutputShape> ExecutionBuilder::getInitialOutputShapes() const {
 }
 
 // Check if the dimensions "to" is updatable by dimensions "from", where "from" must
-// have a higher specification level.
+// have no lower a specification level.
 static bool isUpdatable(const std::vector<uint32_t>& to, const std::vector<uint32_t>& from) {
     if (to.size() == 0) return true;
     NN_RET_CHECK_EQ(to.size(), from.size());
@@ -894,7 +1030,17 @@ static bool isUpdatable(const std::vector<uint32_t>& to, const std::vector<uint3
     return true;
 }
 
-bool ExecutionBuilder::updateOutputShapes(const std::vector<OutputShape>& outputShapes) {
+static bool isZeroSizedTensor(int executionResultCode, const OutputShape& outputShape) {
+    return (executionResultCode == ANEURALNETWORKS_NO_ERROR) && outputShape.isSufficient &&
+           outputShape.dimensions.size() &&
+           (std::find(outputShape.dimensions.begin(), outputShape.dimensions.end(), uint32_t(0)) !=
+            outputShape.dimensions.end());
+}
+
+bool ExecutionBuilder::updateOutputShapes(ErrorStatus status,
+                                          const std::vector<OutputShape>& outputShapes) {
+    NN_RET_CHECK(validateOutputShapesFromDriver(status, mModel, outputShapes));
+
     if (outputShapes.size() == 0) {
         return true;
     }
@@ -927,7 +1073,7 @@ ErrorStatus ExecutionBuilder::finishWithoutSyncFence(ErrorStatus status,
     CHECK(!mFinishedWithoutSyncFence) << "ExecutionBuilder::finishWithoutSyncFence is called twice";
     CHECK(!hasSyncFence())
             << "ExecutionBuilder::finishWithoutSyncFence is called when hasSyncFence()";
-    if (!updateOutputShapes(outputShapes) || !updateMemories()) {
+    if (!updateOutputShapes(status, outputShapes) || !updateMemories()) {
         status = ErrorStatus::GENERAL_FAILURE;
     }
     bool success = status == ErrorStatus::NONE;
@@ -951,19 +1097,124 @@ ErrorStatus ExecutionBuilder::finishWithoutSyncFence(ErrorStatus status,
     return status;
 }
 
-bool StepExecutor::updateOutputShapes(const std::vector<OutputShape>& from,
-                                      std::vector<OutputShape>* to) {
+std::string toString(StepExecutor::UpdateOutputShapes updateOutputShapes) {
+    return "{ .updatedDynamicTemporary = " +
+           std::to_string(updateOutputShapes.updatedDynamicTemporary) +
+           ", .mainOutputInsufficient = " +
+           std::to_string(updateOutputShapes.mainOutputInsufficient) + "}";
+}
+
+bool StepExecutor::updateOutputShapes(int executionResultCode, const std::vector<OutputShape>& from,
+                                      std::vector<OutputShape>* to, UpdateOutputShapes* update) {
+    CHECK(update != nullptr);
+    *update = {.updatedDynamicTemporary = false,
+               .mainOutputInsufficient = false,
+               .zeroSizedInput = false};
+
+    NN_RET_CHECK(validateOutputShapesFromDriver(executionResultCode, mModel, from));
+
     if (from.size() == 0) {
         return true;
     }
+
+    if (VLOG_IS_ON(EXECUTION)) {
+        for (const auto& shape : from) {
+            VLOG(EXECUTION) << "updateOutputShapes: " << toString(shape);
+        }
+    }
+
     if (mExecutionStep != nullptr) {
         const auto& indexMapping = mExecutionStep->getOutputIndexStepModelToMainModel();
         NN_RET_CHECK_LE(indexMapping.size(), from.size());
         for (uint32_t i = 0, e = indexMapping.size(); i < e; i++) {
-            uint32_t toIndex = indexMapping[i];
+            const uint32_t toIndex = indexMapping[i];
             NN_RET_CHECK_GT(to->size(), toIndex);
             NN_RET_CHECK(isUpdatable(to->at(toIndex).dimensions, from[i].dimensions));
             (*to)[toIndex] = from[i];
+            update->mainOutputInsufficient |= !(*to)[toIndex].isSufficient;
+            if (mExecutionStep->getModelOutputsThatAreDownstreamInputs().count(toIndex) &&
+                isZeroSizedTensor(executionResultCode, from[i])) {
+                update->zeroSizedInput = true;
+            }
+        }
+
+        if (!mDynamicTemporaries->empty()) {
+            // TODO(b/157236079): Instead of computing this here, precompute it in ExecutionStep?
+            std::map<uint32_t, uint32_t> operandIndexStepModelOutputToSourceModelTemp;
+            for (const auto& entry : mExecutionStep->getTempsAsStepModelOutputs()) {
+                operandIndexStepModelOutputToSourceModelTemp.emplace(entry.second, entry.first);
+            }
+
+            const uint32_t sourceModelIndex = mExecutionStep->getSourceModelIndex();
+            for (uint32_t i = 0, e = mModel->outputCount(); i < e; i++) {
+                const uint32_t stepModelOperandIndex = mModel->getOutputOperandIndex(i);
+                const auto it =
+                        operandIndexStepModelOutputToSourceModelTemp.find(stepModelOperandIndex);
+                if (it == operandIndexStepModelOutputToSourceModelTemp.end()) {
+                    continue;
+                }
+                const auto sourceOperandIndex = SourceOperandIndex(sourceModelIndex, it->second);
+                VLOG(EXECUTION) << "updateOutputShapes checking to see if output#" << i
+                                << " sourceOperandIndex = (" << sourceOperandIndex.first << ", "
+                                << sourceOperandIndex.second << ") is a dynamic temporary";
+                // This is a temporary, but it might not be a dynamic temporary.
+                const auto loc = mDynamicTemporaries->lookup(sourceOperandIndex, false);
+                if (loc == std::nullopt) {
+                    continue;
+                }
+                NN_RET_CHECK(isUpdatable(*loc->dimensions, from[i].dimensions));
+                bool changedShape = false;
+                const uint32_t actualSize = TypeManager::get()->getSizeOfData(
+                        mModel->getOperand(stepModelOperandIndex).type, from[i].dimensions);
+                if (actualSize > 0) {
+                    changedShape = mDynamicTemporaries->redeclare(sourceOperandIndex,
+                                                                  from[i].dimensions, actualSize);
+                } else if (!from[i].isSufficient) {
+                    NN_RET_CHECK(loc->length < UINT32_MAX / 2)
+                            << "output#" << i << " length overflow";
+                    changedShape = mDynamicTemporaries->redeclare(
+                            sourceOperandIndex, from[i].dimensions, 2 * loc->length);
+                } else {
+                    // The combination of not-fully-specified dimensions
+                    // and isSufficient means that we have no
+                    // information about whether the size of the dynamic
+                    // temporary is adequate.
+                    VLOG(EXECUTION) << "updateOutputShapes skipping redeclaration for output#" << i;
+                    if (executionResultCode == ANEURALNETWORKS_NO_ERROR) {
+                        NN_RET_CHECK(isZeroSizedTensor(executionResultCode, from[i]));
+                        // This is a zero-sized tensor, and by
+                        // definition, any dynamic temporary is an input
+                        // to an execution step.
+                        update->zeroSizedInput = true;
+                    }
+                }
+                if (changedShape) {
+                    // TODO: find a better place for this comment.
+                    //
+                    // isUpdatable(a, b) imposes a partial ordering a <=
+                    // b.  Every fully specified dimensions vector is an
+                    // upper bound of that ordering.  Therefore, any
+                    // change in dimensions moves towards an upper
+                    // bound, and hence there are a finite number of
+                    // such changes possible.
+                    //
+                    // actualSize can only be computed from dimensions
+                    // that are an upper bound.  Therefore, once
+                    // actualSize is computed, it will not change.
+                    //
+                    // If dimensions are not fully specified, and
+                    // estimated size changes, it increases.  There is
+                    // an upper bound on estimated size to avoid
+                    // overflow.
+                    //
+                    // Therefore, if we retry only when dimensions or
+                    // size chage, and we stop retrying if we would
+                    // otherwise overflow, we should only retry a finite
+                    // number of times.
+                    update->updatedDynamicTemporary = true;
+                }
+            }
+            mDynamicTemporaries->vlogDump("finished updateOutputShapes");
         }
     } else {
         NN_RET_CHECK_EQ(from.size(), to->size());
@@ -977,17 +1228,24 @@ bool StepExecutor::updateOutputShapes(const std::vector<OutputShape>& from,
 
 StepExecutor::StepExecutor(ExecutionBuilder* executionBuilder, const ModelBuilder* model,
                            std::shared_ptr<Device> device,
-                           std::shared_ptr<PreparedModel> preparedModel, const ExecutionStep* step)
+                           std::shared_ptr<PreparedModel> preparedModel, const ExecutionStep* step,
+                           DynamicTemporaries* dynamicTemporaries)
     : mExecutionBuilder(executionBuilder),
       mExecutionStep(step),
+      mDynamicTemporaries(dynamicTemporaries),
       mModel(model),
       mDevice(device),
       mPreparedModel(preparedModel),
       mInputs(model->inputCount()),
       mOutputs(model->outputCount()) {
     CHECK(mDevice != nullptr);
+    CHECK_EQ(step == nullptr, dynamicTemporaries == nullptr);
     VLOG(EXECUTION) << "StepExecutor::StepExecutor with " << mInputs.size() << " inputs and "
                     << mOutputs.size() << " outputs";
+}
+
+bool StepExecutor::areDynamicTemporariesAllocated() const {
+    return !mDynamicTemporaries || mDynamicTemporaries->allocated(mExecutionStep->getIndex());
 }
 
 void StepExecutor::mapInputsAndOutputsTrivially() {
@@ -1019,20 +1277,41 @@ void StepExecutor::mapInputOrOutput(const ModelArgumentInfo& builderInputOrOutpu
 
 int StepExecutor::setInputOrOutputFromMemory(const Operand& inputOrOutputOperand,
                                              const Memory* memory, uint32_t offset,
+                                             const hal::hidl_vec<uint32_t>& dimensions,
+                                             std::optional<uint32_t> length,
                                              ModelArgumentInfo* inputOrOutputInfo) {
     // Should be similar to
     //     ExecutionBuilder::setInputFromMemory()
     //     ExecutionBuilder::setOutputFromMemory()
 
     uint32_t poolIndex = mMemories.add(memory);
-    uint32_t length = TypeManager::get()->getSizeOfData(inputOrOutputOperand);
+    uint32_t lengthVal = length.value_or(TypeManager::get()->getSizeOfData(inputOrOutputOperand));
     CHECK(inputOrOutputInfo->unspecified());
     int n;
     std::tie(n, *inputOrOutputInfo) =
             ModelArgumentInfo::createFromMemory(inputOrOutputOperand,
-                                                /*type=*/nullptr, poolIndex, offset, length);
+                                                /*type=*/nullptr, poolIndex, offset, lengthVal);
+    if (n == ANEURALNETWORKS_NO_ERROR && dimensions.size()) {
+        CHECK(isUpdatable(inputOrOutputInfo->dimensions(), dimensions));
+        inputOrOutputInfo->dimensions() = dimensions;
+    }
     return n;
 }
+
+static std::string toString(std::vector<uint32_t> dimensions) {
+    std::string ret = "(";
+    bool wroteOne = false;
+    for (uint32_t dimension : dimensions) {
+        if (wroteOne) {
+            ret += ", ";
+        } else {
+            wroteOne = true;
+        }
+        ret += std::to_string(dimension);
+    }
+    ret += ")";
+    return ret;
+};
 
 static void logArguments(const char* kind, const std::vector<ModelArgumentInfo>& args) {
     for (unsigned i = 0; i < args.size(); i++) {
@@ -1040,12 +1319,14 @@ static void logArguments(const char* kind, const std::vector<ModelArgumentInfo>&
         std::string prefix = kind + std::string("[") + std::to_string(i) + "] = ";
         switch (arg.state()) {
             case ModelArgumentInfo::POINTER:
-                VLOG(EXECUTION) << prefix << "POINTER(" << SHOW_IF_DEBUG(arg.buffer()) << ")";
+                VLOG(EXECUTION) << prefix << "POINTER(" << SHOW_IF_DEBUG(arg.buffer()) << ") dim"
+                                << toString(arg.dimensions());
                 break;
             case ModelArgumentInfo::MEMORY:
                 VLOG(EXECUTION) << prefix << "MEMORY("
                                 << "pool=" << arg.locationAndLength().poolIndex << ", "
-                                << "off=" << arg.locationAndLength().offset << ")";
+                                << "off=" << arg.locationAndLength().offset << ") dim"
+                                << toString(arg.dimensions());
                 break;
             case ModelArgumentInfo::HAS_NO_VALUE:
                 VLOG(EXECUTION) << prefix << "HAS_NO_VALUE";
