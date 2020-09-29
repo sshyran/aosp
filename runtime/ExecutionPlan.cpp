@@ -497,7 +497,8 @@ int ExecutionStep::addOperation(int operationIndex) {
 }
 
 void ExecutionStep::mapInputsAndOutputs(
-        std::shared_ptr<StepExecutor> executor, const Memory* temporaryMemory,
+        std::shared_ptr<StepExecutor> executor,
+        const std::vector<hal::OutputShape>* mainModelOutputShapes, const Memory* temporaryMemory,
         const std::map<SourceOperandIndex, uint32_t>& sourceOperandToOffsetOfTemporary,
         const DynamicTemporaries& dynamicTemporaries,
         const std::map<SourceOperandIndex, uint32_t>& sourceOperandToInputIndex,
@@ -517,7 +518,10 @@ void ExecutionStep::mapInputsAndOutputs(
             executor->mapInput(it->second, stepInputIndex);
         } else if (auto it = sourceOperandToOutputIndex.find(sourceOperandIndex);
                    it != sourceOperandToOutputIndex.end()) {
-            executor->mapOutputToInput(it->second, stepInputIndex);
+            executor->mapOutputToInput(it->second, stepInputIndex,
+                                       mainModelOutputShapes
+                                               ? &mainModelOutputShapes->at(it->second).dimensions
+                                               : nullptr);
         } else if (auto it = sourceOperandToConstantReference.find(sourceOperandIndex);
                    it != sourceOperandToConstantReference.end()) {
             // Constant partition boundary operand. This could be an IF branch
@@ -1216,7 +1220,8 @@ std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
 // TODO: Find a better way to provide this functionality.
 int ExecutionPlan::fallback(std::shared_ptr<Controller> controller,
                             std::shared_ptr<StepExecutor>* executor,
-                            std::shared_ptr<ExecutionBurstController>* burstController) const {
+                            std::shared_ptr<ExecutionBurstController>* burstController,
+                            const std::vector<OutputShape>* mainModelOutputShapes) const {
     *executor = nullptr;
     if (burstController != nullptr) {
         *burstController = nullptr;
@@ -1236,7 +1241,7 @@ int ExecutionPlan::fallback(std::shared_ptr<Controller> controller,
     }
 
     controller->mNextStepIndex = controller->mFallbackNextStepIndex;
-    return next(controller, executor, burstController);
+    return next(controller, executor, burstController, mainModelOutputShapes);
 }
 
 ExecutionPlan::Buffer::Buffer(void* pointer, uint32_t size)
@@ -1332,6 +1337,7 @@ int ExecutionPlan::readConditionValue(std::shared_ptr<Controller> controller,
 int ExecutionPlan::next(std::shared_ptr<Controller> controller,
                         std::shared_ptr<StepExecutor>* executor,
                         std::shared_ptr<ExecutionBurstController>* burstController,
+                        const std::vector<OutputShape>* mainModelOutputShapes,
                         int syncFdOfLastStep) const {
     controller->mLastStepSyncFd = syncFdOfLastStep;
     *executor = nullptr;
@@ -1373,12 +1379,13 @@ int ExecutionPlan::next(std::shared_ptr<Controller> controller,
         return ANEURALNETWORKS_NO_ERROR;
     }
 
-    return nextCompound(controller, executor, burstController);
+    return nextCompound(controller, executor, burstController, mainModelOutputShapes);
 }
 
 int ExecutionPlan::nextCompound(std::shared_ptr<Controller> controller,
                                 std::shared_ptr<StepExecutor>* executor,
-                                std::shared_ptr<ExecutionBurstController>* burstController) const {
+                                std::shared_ptr<ExecutionBurstController>* burstController,
+                                const std::vector<OutputShape>* mainModelOutputShapes) const {
     if (controller->mNextStepIndex == Controller::kBadStepIndex) {
         return ANEURALNETWORKS_OP_FAILED;
     }
@@ -1391,13 +1398,13 @@ int ExecutionPlan::nextCompound(std::shared_ptr<Controller> controller,
 
     const auto& logicalStep = compoundBody->mSteps[controller->mNextStepIndex];
     if (const IfStep* step = logicalStep->tryIfStep()) {
-        return nextCompound(step, controller, executor, burstController);
+        return nextCompound(step, controller, executor, burstController, mainModelOutputShapes);
     } else if (const WhileStep* step = logicalStep->tryWhileStep()) {
-        return nextCompound(step, controller, executor, burstController);
+        return nextCompound(step, controller, executor, burstController, mainModelOutputShapes);
     } else if (const GotoStep* step = logicalStep->tryGotoStep()) {
-        return nextCompound(step, controller, executor, burstController);
+        return nextCompound(step, controller, executor, burstController, mainModelOutputShapes);
     } else if (const ExecutionStep* step = logicalStep->tryExecutionStep()) {
-        return nextCompound(step, controller, executor, burstController);
+        return nextCompound(step, controller, executor, burstController, mainModelOutputShapes);
     } else {
         CHECK(false) << "Unknown step variant";
         return ANEURALNETWORKS_BAD_STATE;
@@ -1406,7 +1413,8 @@ int ExecutionPlan::nextCompound(std::shared_ptr<Controller> controller,
 
 int ExecutionPlan::nextCompound(const ExecutionStep* step, std::shared_ptr<Controller> controller,
                                 std::shared_ptr<StepExecutor>* executor,
-                                std::shared_ptr<ExecutionBurstController>* burstController) const {
+                                std::shared_ptr<ExecutionBurstController>* burstController,
+                                const std::vector<OutputShape>* mainModelOutputShapes) const {
     VLOG(EXECUTION) << "next: Step#" << controller->mNextStepIndex << ": execute on "
                     << step->getDevice()->getName();
 
@@ -1418,7 +1426,7 @@ int ExecutionPlan::nextCompound(const ExecutionStep* step, std::shared_ptr<Contr
                                                step, &controller->mDynamicTemporaries);
 
     step->mapInputsAndOutputs(
-            *executor, controller->mTemporaries.get(),
+            *executor, mainModelOutputShapes, controller->mTemporaries.get(),
             controller->mSourceOperandToOffsetOfTemporary, controller->mDynamicTemporaries,
             controller->mSourceOperandToInputIndex, controller->mSourceOperandToOutputIndex,
             controller->mSourceOperandToConstantReference);
@@ -1505,7 +1513,8 @@ int ExecutionPlan::Controller::waitForLastStepSyncFence() const {
 
 int ExecutionPlan::nextCompound(const IfStep* step, std::shared_ptr<Controller> controller,
                                 std::shared_ptr<StepExecutor>* executor,
-                                std::shared_ptr<ExecutionBurstController>* burstController) const {
+                                std::shared_ptr<ExecutionBurstController>* burstController,
+                                const std::vector<OutputShape>* mainModelOutputShapes) const {
     VLOG(EXECUTION) << "next: " << toString(*step);
     // If the last step has a sync fence, wait for it to signal before reading the condition value.
     // This is safe because the steps are serialized when doing fenced compute.
@@ -1539,12 +1548,13 @@ int ExecutionPlan::nextCompound(const IfStep* step, std::shared_ptr<Controller> 
         // step->outerOutputOperands[i] to implement double buffering.
         controller->setOutput(step->outerOutputOperands[i], branchOutputOperands[i]);
     }
-    return nextCompound(controller, executor, burstController);
+    return nextCompound(controller, executor, burstController, mainModelOutputShapes);
 }
 
 int ExecutionPlan::nextCompound(const WhileStep* step, std::shared_ptr<Controller> controller,
                                 std::shared_ptr<StepExecutor>* executor,
-                                std::shared_ptr<ExecutionBurstController>* burstController) const {
+                                std::shared_ptr<ExecutionBurstController>* burstController,
+                                const std::vector<OutputShape>* mainModelOutputShapes) const {
     WhileState& state = controller->mWhileState[controller->mNextStepIndex];
     if (state.stage == WhileState::EVALUATE_CONDITION) {
         state.iteration = state.iteration == WhileState::kOutsideLoop ? 0 : state.iteration + 1;
@@ -1572,7 +1582,7 @@ int ExecutionPlan::nextCompound(const WhileStep* step, std::shared_ptr<Controlle
         }
 
         state.stage = WhileState::EVALUATE_BODY;
-        return nextCompound(controller, executor, burstController);
+        return nextCompound(controller, executor, burstController, mainModelOutputShapes);
     }
 
     CHECK(state.stage == WhileState::EVALUATE_BODY);
@@ -1660,15 +1670,16 @@ int ExecutionPlan::nextCompound(const WhileStep* step, std::shared_ptr<Controlle
     }
 
     state.stage = WhileState::EVALUATE_CONDITION;
-    return nextCompound(controller, executor, burstController);
+    return nextCompound(controller, executor, burstController, mainModelOutputShapes);
 }
 
 int ExecutionPlan::nextCompound(const GotoStep* step, std::shared_ptr<Controller> controller,
                                 std::shared_ptr<StepExecutor>* executor,
-                                std::shared_ptr<ExecutionBurstController>* burstController) const {
+                                std::shared_ptr<ExecutionBurstController>* burstController,
+                                const std::vector<OutputShape>* mainModelOutputShapes) const {
     VLOG(EXECUTION) << "next: " << toString(*step);
     controller->mNextStepIndex = step->gotoStepIndex;
-    return nextCompound(controller, executor, burstController);
+    return nextCompound(controller, executor, burstController, mainModelOutputShapes);
 }
 
 void ExecutionPlan::becomeCompoundIfEmpty() {
