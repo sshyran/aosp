@@ -356,7 +356,7 @@ bool calculateBroadcastedShape(const Shape& in1, const Shape& in2, Shape* out) {
         if (dim1 != dim2 && dim1 != 1 && dim2 != 1) {
             LOG(ERROR) << "Dimensions mismatch for broadcast:\n"
                        << "First tensor: dimension " << numberOfDims1 - i << " of size " << dim1
-                       << "\nSecond tensor: dimension " << numberOfDims2 - i << "of size " << dim2;
+                       << "\nSecond tensor: dimension " << numberOfDims2 - i << " of size " << dim2;
             return false;
         }
         out->dimensions[maxDims - i] = (dim1 == 1) ? dim2 : dim1;

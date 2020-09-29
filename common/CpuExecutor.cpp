@@ -1914,6 +1914,8 @@ void CpuExecutor::setOutputShapes(const std::vector<uint32_t>& outputIndexes,
         const RunTimeOperandInfo& from = operands[operandIndex];
         mOutputShapes[i].dimensions = from.dimensions;
         mOutputShapes[i].isSufficient = from.isSufficient();
+        VLOG(EXECUTION) << "CpuExecutor::setOutputShapes: mOutputShapes[" << i
+                        << "] = " << toString(mOutputShapes[i]);
     }
 }
 

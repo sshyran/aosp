@@ -405,7 +405,7 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
     }
 
     if (n != ANEURALNETWORKS_NO_ERROR) {
-        VLOG(EXECUTION) << "**Execution failed**";
+        VLOG(EXECUTION) << "**Execution failed** (ResultCode = " << n << ")";
         return {n, std::move(outputShapes), timing};
     }
 
