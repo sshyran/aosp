@@ -82,6 +82,7 @@ class GeneratedTests : public GeneratedTestBase {
     bool mExpectFailure = false;
     bool mTestQuantizationCoupling = false;
     bool mTestDeviceMemory = false;
+    Execution::ComputeMode mComputeMode = Execution::getComputeMode();
 };
 
 int GeneratedTests::mVndkVersion = __ANDROID_API_FUTURE__;
@@ -138,13 +139,14 @@ std::optional<Compilation> GeneratedTests::compileModel(const Model& model) {
     }
 }
 
-static void computeWithPtrs(const TestModel& testModel, Execution* execution, Result* result,
+static void computeWithPtrs(const TestModel& testModel, Execution* execution,
+                            Execution::ComputeMode computeMode, Result* result,
                             std::vector<TestBuffer>* outputs) {
     {
         NNTRACE_APP(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "computeWithPtrs example");
         createRequest(testModel, execution, outputs);
     }
-    *result = execution->compute();
+    *result = execution->compute(computeMode);
 }
 
 static ANeuralNetworksMemory* createDeviceMemoryForInput(const Compilation& compilation,
@@ -175,8 +177,8 @@ static ANeuralNetworksMemory* createDeviceMemoryForOutput(const Compilation& com
 
 // Set result = Result::NO_ERROR and outputs = {} if the test should be skipped.
 static void computeWithDeviceMemories(const Compilation& compilation, const TestModel& testModel,
-                                      Execution* execution, Result* result,
-                                      std::vector<TestBuffer>* outputs) {
+                                      Execution* execution, Execution::ComputeMode computeMode,
+                                      Result* result, std::vector<TestBuffer>* outputs) {
     ASSERT_NE(execution, nullptr);
     ASSERT_NE(result, nullptr);
     ASSERT_NE(outputs, nullptr);
@@ -218,7 +220,7 @@ static void computeWithDeviceMemories(const Compilation& compilation, const Test
         }
     }
 
-    *result = execution->compute();
+    *result = execution->compute(computeMode);
 
     // Copy out output results.
     for (uint32_t i = 0; i < testModel.main.outputIndexes.size(); i++) {
@@ -245,9 +247,10 @@ void GeneratedTests::executeWithCompilation(const Compilation& compilation,
     std::vector<TestBuffer> outputs;
 
     if (mTestDeviceMemory) {
-        computeWithDeviceMemories(compilation, testModel, &execution, &result, &outputs);
+        computeWithDeviceMemories(compilation, testModel, &execution, mComputeMode, &result,
+                                  &outputs);
     } else {
-        computeWithPtrs(testModel, &execution, &result, &outputs);
+        computeWithPtrs(testModel, &execution, mComputeMode, &result, &outputs);
     }
 
     if (result == Result::NO_ERROR && outputs.empty()) {
@@ -388,21 +391,18 @@ void GeneratedTests::TearDown() {
 
 #ifdef NNTEST_COMPUTE_MODE
 TEST_P(GeneratedTests, Sync) {
-    const auto oldComputeMode = Execution::setComputeMode(Execution::ComputeMode::SYNC);
+    mComputeMode = Execution::ComputeMode::SYNC;
     execute(testModel);
-    Execution::setComputeMode(oldComputeMode);
 }
 
 TEST_P(GeneratedTests, Async) {
-    const auto oldComputeMode = Execution::setComputeMode(Execution::ComputeMode::ASYNC);
+    mComputeMode = Execution::ComputeMode::ASYNC;
     execute(testModel);
-    Execution::setComputeMode(oldComputeMode);
 }
 
 TEST_P(GeneratedTests, Burst) {
-    const auto oldComputeMode = Execution::setComputeMode(Execution::ComputeMode::BURST);
+    mComputeMode = Execution::ComputeMode::BURST;
     execute(testModel);
-    Execution::setComputeMode(oldComputeMode);
 }
 #else
 TEST_P(GeneratedTests, Test) {
@@ -427,9 +427,8 @@ TEST_P(DeviceMemoryTest, Test) {
 }
 
 TEST_P(FencedComputeTest, Test) {
-    const auto oldComputeMode = Execution::setComputeMode(Execution::ComputeMode::FENCED);
+    mComputeMode = Execution::ComputeMode::FENCED;
     execute(testModel);
-    Execution::setComputeMode(oldComputeMode);
 }
 
 INSTANTIATE_GENERATED_TEST(GeneratedTests,

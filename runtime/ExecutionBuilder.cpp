@@ -966,7 +966,11 @@ int ExecutionBuilder::compute(sp<ExecutionCallback>* synchronizationCallback,
     std::shared_ptr<ExecutionPlan::Controller> controller =
             mPlan->makeController(this, burstBuilder);
     if (synchronous) {
-        VLOG(EXECUTION) << "ExecutionBuilder::compute (synchronous API)";
+        if (burstBuilder) {
+            VLOG(EXECUTION) << "ExecutionBuilder::compute (synchronous API, burst)";
+        } else {
+            VLOG(EXECUTION) << "ExecutionBuilder::compute (synchronous API)";
+        }
         sp<ExecutionCallback> localSynchronizationCallback = new ExecutionCallback();
         localSynchronizationCallback->setOnFinish(wrappedFinish);
         asyncStartComputePartitioned(this, *mPlan, controller, allowCpuFallback, deadline,
