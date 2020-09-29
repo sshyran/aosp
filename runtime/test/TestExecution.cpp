@@ -16,8 +16,6 @@
 
 #include <gtest/gtest.h>
 
-#include <android-base/scopeguard.h>
-
 #include <algorithm>
 #include <atomic>
 #include <cassert>
@@ -576,7 +574,7 @@ class TestCompilation : public WrapperCompilation {
         // fall back to CPU.  (If we allow CPU fallback, then when our
         // TestDriver reports an execution failure, we'll re-execute
         // on CPU, and will not see the failure.)
-        c->setPartitioning(DeviceManager::kPartitioningWithoutFallback);
+        c->forTest_setPartitioning(DeviceManager::kPartitioningWithoutFallback);
         mCompilation = reinterpret_cast<ANeuralNetworksCompilation*>(c);
     }
 };
@@ -757,19 +755,15 @@ void ExecutionTestTemplate<DriverClass>::TestWait() {
         SCOPED_TRACE("burstCompute");
 
         // TODO: If a burst API is added to nn::test_wrapper (e.g.,
-        // Execution::burstCompute()), then use that, rather than using
-        // Execution::setComputeMode() to make Execution::compute() use burst
-        // functionality.
-
-        auto oldComputeMode =
-                WrapperExecution::setComputeMode(WrapperExecution::ComputeMode::BURST);
-        base::ScopeGuard restore(
-                [oldComputeMode] { WrapperExecution::setComputeMode(oldComputeMode); });
+        // Execution::burstCompute()), then use that, rather than
+        // Execution::compute(WrapperExecution::ComputeMode::BURST).
 
         WrapperExecution execution(&mCompilation);
         ASSERT_NO_FATAL_FAILURE(setInputOutput(&execution));
         TestPreparedModelLatest::pauseExecutions(true);
-        std::thread run([this, &execution] { EXPECT_EQ(execution.compute(), kExpectResult); });
+        std::thread run([this, &execution] {
+            EXPECT_EQ(execution.compute(WrapperExecution::ComputeMode::BURST), kExpectResult);
+        });
         getDimensionsWhileRunning(execution);
         TestPreparedModelLatest::pauseExecutions(false);
         run.join();
