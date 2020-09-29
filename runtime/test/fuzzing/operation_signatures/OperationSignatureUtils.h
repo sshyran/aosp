@@ -165,6 +165,16 @@ inline void uniformFinalizer(RandomOperand* op) {
     }
 }
 
+// Get a random value between [-rank, rank) for the "axis" parameter of NNAPI operations.
+inline int32_t getRandomAxis(int32_t rank) {
+    return getUniform(-rank, rank - 1);
+}
+
+// Convert a potentially negative axis index to the equivalent positive axis index.
+inline int32_t toPositiveAxis(int32_t axis, int32_t rank) {
+    return axis >= 0 ? axis : axis + rank;
+}
+
 // A helper struct for DEFINE_OPERATION_SIGNATURE macro.
 struct OperationSignatureHelper {
     std::string name;
