@@ -114,9 +114,9 @@ DEFINE_OPERATION_SIGNATURE(HASHTABLE_LOOKUP_V1_0){
 
 static void gatherConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     // Generate value for "axis" scalar.
-    int32_t axis = getUniform<int32_t>(-rank, rank - 1);
+    int32_t axis = getRandomAxis(rank);
     op->inputs[1]->setScalarValue<int32_t>(axis);
-    if (axis < 0) axis += rank;
+    axis = toPositiveAxis(axis, rank);
 
     // Set dimensions for input and indices tensor.
     uint32_t indRank = getUniform<uint32_t>(1, 5);
@@ -137,7 +137,7 @@ static void gatherConstructor(TestOperandType, uint32_t rank, RandomOperation* o
 
 static void gatherFinalizer(RandomOperation* op) {
     int32_t axis = op->inputs[1]->value<int32_t>();
-    if (axis < 0) axis += op->inputs[0]->dimensions.size();
+    axis = toPositiveAxis(axis, op->inputs[0]->dimensions.size());
     uint32_t dimValue = op->inputs[0]->dimensions[axis].getValue();
     uint32_t numElements = op->inputs[2]->getNumberOfElements();
     for (uint32_t i = 0; i < numElements; i++) {
