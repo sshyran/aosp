@@ -409,8 +409,23 @@ class Execution {
         return result;
     }
 
-    Result compute() {
-        switch (mComputeMode) {
+    // By default, compute() uses the synchronous API. Either an argument or
+    // setComputeMode() can be used to change the behavior of compute() to
+    // either:
+    // - use the asynchronous or fenced API and then wait for computation to complete
+    // or
+    // - use the burst API
+    // Returns the previous ComputeMode.
+    enum class ComputeMode { SYNC, ASYNC, BURST, FENCED };
+    static ComputeMode setComputeMode(ComputeMode mode) {
+        ComputeMode oldComputeMode = mComputeMode;
+        mComputeMode = mode;
+        return oldComputeMode;
+    }
+    static ComputeMode getComputeMode() { return mComputeMode; }
+
+    Result compute(ComputeMode computeMode = mComputeMode) {
+        switch (computeMode) {
             case ComputeMode::SYNC: {
                 return static_cast<Result>(ANeuralNetworksExecution_compute(mExecution));
             }
@@ -453,19 +468,6 @@ class Execution {
             }
         }
         return Result::BAD_DATA;
-    }
-
-    // By default, compute() uses the synchronous API. setComputeMode() can be
-    // used to change the behavior of compute() to either:
-    // - use the asynchronous API and then wait for computation to complete
-    // or
-    // - use the burst API
-    // Returns the previous ComputeMode.
-    enum class ComputeMode { SYNC, ASYNC, BURST, FENCED };
-    static ComputeMode setComputeMode(ComputeMode mode) {
-        ComputeMode oldComputeMode = mComputeMode;
-        mComputeMode = mode;
-        return oldComputeMode;
     }
 
     Result getOutputOperandDimensions(uint32_t index, std::vector<uint32_t>* dimensions) {
