@@ -576,7 +576,7 @@ class TestCompilation : public WrapperCompilation {
         // fall back to CPU.  (If we allow CPU fallback, then when our
         // TestDriver reports an execution failure, we'll re-execute
         // on CPU, and will not see the failure.)
-        c->setPartitioning(DeviceManager::kPartitioningWithoutFallback);
+        c->forTest_setPartitioning(DeviceManager::kPartitioningWithoutFallback);
         mCompilation = reinterpret_cast<ANeuralNetworksCompilation*>(c);
     }
 };

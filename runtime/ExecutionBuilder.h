@@ -19,6 +19,7 @@
 
 #include <atomic>
 #include <memory>
+#include <string>
 #include <tuple>
 #include <utility>
 #include <vector>
@@ -38,6 +39,7 @@ namespace nn {
 class BurstBuilder;
 class CompilationBuilder;
 class Device;
+class DynamicTemporaries;
 class ExecutionBurstController;
 class ExecutionPlan;
 class ExecutionStep;
@@ -134,7 +136,8 @@ class ExecutionBuilder {
     const CompilationBuilder* mCompilation;
 
     // Update output dimensional information from OutputShape to ModelArgumentInfo.
-    bool updateOutputShapes(const std::vector<hal::OutputShape>& outputShapes);
+    bool updateOutputShapes(hal::ErrorStatus status,
+                            const std::vector<hal::OutputShape>& outputShapes);
 
     bool updateMemories();
 
@@ -226,9 +229,16 @@ class StepExecutor {
     //     Contains the output index mapping from the excerpted "step" model to
     //     main model if the execution has multiple "steps". Must be nullptr
     //     otherwise.
+    //     (step == nullptr) == (dynamicTemporaries == nullptr)
+    // dynamicTemporaries
+    //     If the execution has multiple "steps", describes the temporaries
+    //     of source models that do not have fully specified types and are outputs
+    //     of "step" models. Must be nullptr otherwise.
+    //     (step == nullptr) == (dynamicTemporaries == nullptr)
     StepExecutor(ExecutionBuilder* executionBuilder, const ModelBuilder* model,
                  std::shared_ptr<Device> device, std::shared_ptr<PreparedModel> preparedModel,
-                 const ExecutionStep* step = nullptr);
+                 const ExecutionStep* step = nullptr,
+                 DynamicTemporaries* dynamicTemporaries = nullptr);
 
     // Map inputs and outputs from ExecutionBuilder to StepExecutor,
     // in the case where we have a single-"step" execution (i.e., the executor
@@ -236,8 +246,17 @@ class StepExecutor {
     void mapInputsAndOutputsTrivially();
 
     // Update output shapes with shapes returned from execution.
-    bool updateOutputShapes(const std::vector<hal::OutputShape>& from,
-                            std::vector<hal::OutputShape>* to);
+    struct UpdateOutputShapes {
+        // These fields are meaningless unless updateOutputShapes() returns true
+        bool updatedDynamicTemporary;  // did shape (dimensions, size) information change for at
+                                       // least one dynamic temporary?
+        bool mainOutputInsufficient;  // is at least one main model output written by this execution
+                                      // marked !isSufficient?
+        bool zeroSizedInput;  // is at least one output of this execution step a zero-sized tensor
+                              // that needs to be read by some other step of the same execution?
+    };
+    bool updateOutputShapes(int executionResultCode, const std::vector<hal::OutputShape>& from,
+                            std::vector<hal::OutputShape>* to, UpdateOutputShapes* update);
 
     // Map inputs and outputs from ExecutionBuilder to StepExecutor,
     // one at a time.  Note that these are input/output indexes, not
@@ -252,15 +271,23 @@ class StepExecutor {
         mapInputOrOutput(mExecutionBuilder->mOutputs[builderIndex], &mInputs[executorIndex]);
     }
 
-    // The input or output is assumed to have the size of the
-    // corresponding operand.
-    int setInputFromMemory(uint32_t inputIndex, const Memory* memory, uint32_t offset) {
+    // If no length is provided, the input or output is assumed to have the length
+    // of the operand.  dimensions must either have zero rank or must be
+    // consistent with and at least as well specified as operand dimensions
+    // (i.e., either rank must match, or operand rank must be zero; and for each
+    // individual dimension, either dimension must match, or operand dimension
+    // must be zero).
+    int setInputFromMemory(uint32_t inputIndex, const Memory* memory, uint32_t offset,
+                           const hal::hidl_vec<uint32_t>& dimensions = {},
+                           std::optional<uint32_t> length = std::nullopt) {
         return setInputOrOutputFromMemory(mModel->getInputOperand(inputIndex), memory, offset,
-                                          &mInputs.at(inputIndex));
+                                          dimensions, length, &mInputs.at(inputIndex));
     }
-    int setOutputFromMemory(uint32_t outputIndex, const Memory* memory, uint32_t offset) {
+    int setOutputFromMemory(uint32_t outputIndex, const Memory* memory, uint32_t offset,
+                            const hal::hidl_vec<uint32_t>& dimensions = {},
+                            std::optional<uint32_t> length = std::nullopt) {
         return setInputOrOutputFromMemory(mModel->getOutputOperand(outputIndex), memory, offset,
-                                          &mOutputs.at(outputIndex));
+                                          dimensions, length, &mOutputs.at(outputIndex));
     }
 
     // Executes using the (driver, preparedModel) specified at construction time.
@@ -280,12 +307,24 @@ class StepExecutor {
             const std::vector<int>& wait_for, uint64_t timeoutDurationAfterFence,
             const std::optional<Deadline>& deadline);
 
+    // Do the dynamic temporaries defined by this step have valid allocations?
+    // (true if there are no dynamic temporaries defined by this step.)
+    bool areDynamicTemporariesAllocated() const;
+
    private:
     void mapInputOrOutput(const ModelArgumentInfo& builderInputOrOutput,
                           ModelArgumentInfo* executorInputOrOutput);
 
+    // If no length is provided, the input or output is assumed to have the length
+    // of the corresponding operand.  dimensions must either have zero rank or
+    // must be consistent with and at least as well specified as operand
+    // dimensions (i.e., either rank must match, or operand rank must be zero;
+    // and for each individual dimension, either dimension must match, or
+    // operand dimension must be zero).
     int setInputOrOutputFromMemory(const hal::Operand& inputOrOutputOperand, const Memory* memory,
-                                   uint32_t offset, ModelArgumentInfo* inputOrOutputInfo);
+                                   uint32_t offset, const hal::hidl_vec<uint32_t>& dimensions,
+                                   std::optional<uint32_t> length,
+                                   ModelArgumentInfo* inputOrOutputInfo);
 
     std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> computeWithMemories(
             const std::optional<Deadline>& deadline, const std::vector<const Memory*>& memories,
@@ -295,7 +334,10 @@ class StepExecutor {
     ExecutionBuilder* mExecutionBuilder;
 
     // describes the single execution step
-    const ExecutionStep* mExecutionStep = nullptr;
+    const ExecutionStep* mExecutionStep;
+
+    // describes the dynamic temporaries
+    DynamicTemporaries* mDynamicTemporaries;
 
     // model to be executed on the executor, in both original and
     // compiled forms; and device on which to execute it
@@ -317,6 +359,8 @@ class StepExecutor {
     std::vector<ModelArgumentInfo> mOutputs;
     MemoryTracker mMemories;
 };
+
+std::string toString(StepExecutor::UpdateOutputShapes updateOutputShapes);
 
 }  // namespace nn
 }  // namespace android
