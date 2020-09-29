@@ -180,7 +180,164 @@ void OperandTracker::markProcessed(uint32_t operationIndex, OperationReadyCallba
     }
 }
 
+uint32_t addTemporaryOfSize(uint32_t* totalSizeOfTemporaries, uint32_t size) {
+    // TODO: what about overflow?
+    *totalSizeOfTemporaries += alignBytesNeeded(*totalSizeOfTemporaries, size);
+    const uint32_t offset = *totalSizeOfTemporaries;
+    *totalSizeOfTemporaries += size;
+    return offset;
+};
+
+std::string toString(SourceOperandIndex sourceOperandIndex) {
+    return "(" + std::to_string(sourceOperandIndex.first) + ", " +
+           std::to_string(sourceOperandIndex.second) + ")";
+};
+
+std::string toString(hidl_vec<uint32_t> dimensions) {
+    std::string ret = "(";
+    bool wroteOne = false;
+    for (uint32_t dimension : dimensions) {
+        if (wroteOne) {
+            ret += ", ";
+        } else {
+            wroteOne = true;
+        }
+        ret += std::to_string(dimension);
+    }
+    ret += ")";
+    return ret;
+};
+
 }  // namespace
+
+void DynamicTemporaries::vlogDump(const char* context) const {
+    if (empty()) {
+        return;
+    }
+    if (context) {
+        VLOG(EXECUTION) << "DynamicTemporaries: \"" << context << "\"";
+    }
+    for (const auto& temp : mSourceOperandToTemporary) {
+        VLOG(EXECUTION) << "DynamicTemporaries: sourceOperandIndex = " << toString(temp.first)
+                        << ", stepIndex = " << temp.second.stepIndex
+                        << ", offset = " << temp.second.offset
+                        << ", dimensions = " << toString(temp.second.dimensions)
+                        << ", length = " << temp.second.length;
+    }
+}
+
+void DynamicTemporaries::declare(SourceOperandIndex sourceOperandIndex, uint32_t stepIndex,
+                                 const hidl_vec<uint32_t>& initialDimensions,
+                                 uint32_t initialLength) {
+    VLOG(EXECUTION) << "DynamicTemporaries::declare(sourceOperandIndex = "
+                    << toString(sourceOperandIndex) << ", stepIndex = " << stepIndex
+                    << ", initialDimensions = " << toString(initialDimensions)
+                    << ", initialLength = " << initialLength << ")";
+    CHECK(!mDeclared);
+    CHECK_GT(initialLength, 0u);
+    auto [_, isNew] = mSourceOperandToTemporary.emplace(
+            sourceOperandIndex,
+            InternalLocationAndShape{stepIndex, 0, initialDimensions, initialLength});
+    CHECK(isNew);
+    mStepIndexToSourceOperandIndexes[stepIndex].emplace_back(sourceOperandIndex);
+}
+
+bool DynamicTemporaries::redeclare(SourceOperandIndex sourceOperandIndex,
+                                   const hidl_vec<uint32_t>& newDimensions, uint32_t newLength) {
+    auto createAndLogResult = [sourceOperandIndex, &newDimensions, newLength](bool changedShape) {
+        VLOG(EXECUTION) << "DynamicTemporaries::redeclare(sourceOperandIndex = "
+                        << toString(sourceOperandIndex)
+                        << ", newDimensions = " << toString(newDimensions)
+                        << ", newLength = " << newLength << ") -> " << toString(changedShape);
+        return changedShape;
+    };
+
+    CHECK(mDeclared);
+    CHECK_GT(newLength, 0u);
+
+    InternalLocationAndShape& temp = mSourceOperandToTemporary.at(sourceOperandIndex);
+    if (temp.length == newLength && temp.dimensions == newDimensions) {
+        return createAndLogResult(false);
+    }
+    if (temp.length < newLength) {
+        // Otherwise allocation remains valid, even if it may be suboptimal
+        // (because it uses more space than needed).  Use case: Don't force
+        // client to allocate again just because the client reported more
+        // accurate shape information.
+        mAllocatedStepIndexes.erase(temp.stepIndex);
+    }
+    temp.length = newLength;
+    temp.dimensions = newDimensions;
+    return createAndLogResult(true);
+}
+
+int DynamicTemporaries::allocate(uint32_t stepIndex) {
+    VLOG(EXECUTION) << "DynamicTemporaries::allocate(stepIndex = " << stepIndex << ")";
+
+    CHECK(mDeclared);
+
+    const auto sourceOperandIndexesI = mStepIndexToSourceOperandIndexes.find(stepIndex);
+    if (sourceOperandIndexesI == mStepIndexToSourceOperandIndexes.end()) {
+        return ANEURALNETWORKS_NO_ERROR;
+    }
+
+    // perform layout
+    uint32_t newSize = 0;
+    for (const auto sourceOperandIndex : sourceOperandIndexesI->second) {
+        InternalLocationAndShape& temp = mSourceOperandToTemporary.at(sourceOperandIndex);
+        temp.offset = addTemporaryOfSize(&newSize, temp.length);
+    }
+
+    // perform (re-)allocation
+    // TODO: Today we may shrink the allocation in order to avoid wasting memory.  Is this important
+    //       to conserve memory, or do we waste time reallocating?
+    const double kWaste = 0.2 /* arbitrary */;  // Willing to waste space to avoid
+                                                // deallocation/reallocation overhead
+    auto& memory = mStepIndexToMemory[stepIndex];
+    const uint32_t oldSize = (memory ? memory->getSize() : 0);
+    if ((oldSize >= newSize) && (oldSize <= newSize * (1 + kWaste))) {
+        // Suitable allocation already exists; nothing to do
+    } else {
+        int n;
+        std::tie(n, memory) = MemoryAshmem::create(newSize);
+        if (n != ANEURALNETWORKS_NO_ERROR) {
+            LOG(ERROR) << "Failed to allocate dynamic temporaries of size " << newSize
+                       << " for step " << stepIndex;
+            mAllocatedStepIndexes.erase(stepIndex);
+            return n;
+        }
+    }
+
+    mAllocatedStepIndexes.insert(stepIndex);
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+bool DynamicTemporaries::allocated(uint32_t stepIndex) const {
+    return (mStepIndexToSourceOperandIndexes.find(stepIndex) ==
+            mStepIndexToSourceOperandIndexes.end()) ||
+           mAllocatedStepIndexes.count(stepIndex);
+}
+
+std::optional<DynamicTemporaries::LocationAndShape> DynamicTemporaries::lookup(
+        SourceOperandIndex sourceOperandIndex, bool mustBeAllocated) const {
+    CHECK(mDeclared);
+    if (auto it = mSourceOperandToTemporary.find(sourceOperandIndex);
+        it != mSourceOperandToTemporary.end()) {
+        const InternalLocationAndShape& temp = it->second;
+        const bool isAllocated = allocated(temp.stepIndex);
+        if (mustBeAllocated) {
+            CHECK(isAllocated) << "Source operand " << toString(sourceOperandIndex)
+                               << " must be allocated";
+        }
+        if (isAllocated) {
+            return LocationAndShape{mStepIndexToMemory.at(temp.stepIndex).get(), temp.offset,
+                                    &temp.dimensions, temp.length};
+        } else {
+            return LocationAndShape{nullptr, ~uint32_t(0), &temp.dimensions, temp.length};
+        }
+    }
+    return std::nullopt;
+}
 
 ExecutionStep::ExecutionStep(ExecutionPlan* plan, uint32_t stepIndex, uint32_t sourceModelIndex,
                              std::shared_ptr<Device> device)
@@ -283,6 +440,10 @@ int ExecutionStep::addOperand(uint32_t sourceOperandIndex, uint32_t* stepOperand
                 // The first time we've seen this operand is as an
                 // output.
                 mModelOutputs.emplace_back(sourceOperandIndex, *stepOperandIndex);
+                // It may be an input to a different partition, so keep track of
+                // it.
+                mPlan->recordOutputDef(SourceOperandIndex(mSourceModelIndex, sourceOperandIndex),
+                                       mIndex);
             }
         } break;
         case OperandLifeTime::SUBGRAPH: {
@@ -336,8 +497,10 @@ int ExecutionStep::addOperation(int operationIndex) {
 }
 
 void ExecutionStep::mapInputsAndOutputs(
-        std::shared_ptr<StepExecutor> executor, const Memory* temporaryMemory,
+        std::shared_ptr<StepExecutor> executor,
+        const std::vector<hal::OutputShape>* mainModelOutputShapes, const Memory* temporaryMemory,
         const std::map<SourceOperandIndex, uint32_t>& sourceOperandToOffsetOfTemporary,
+        const DynamicTemporaries& dynamicTemporaries,
         const std::map<SourceOperandIndex, uint32_t>& sourceOperandToInputIndex,
         const std::map<SourceOperandIndex, uint32_t>& sourceOperandToOutputIndex,
         const std::map<SourceOperandIndex, ConstantReferenceLocation>&
@@ -347,12 +510,18 @@ void ExecutionStep::mapInputsAndOutputs(
         if (auto it = sourceOperandToOffsetOfTemporary.find(sourceOperandIndex);
             it != sourceOperandToOffsetOfTemporary.end()) {
             executor->setInputFromMemory(stepInputIndex, temporaryMemory, it->second);
+        } else if (auto loc = dynamicTemporaries.lookup(sourceOperandIndex); loc != std::nullopt) {
+            executor->setInputFromMemory(stepInputIndex, loc->memory, loc->offset, *loc->dimensions,
+                                         loc->length);
         } else if (auto it = sourceOperandToInputIndex.find(sourceOperandIndex);
                    it != sourceOperandToInputIndex.end()) {
             executor->mapInput(it->second, stepInputIndex);
         } else if (auto it = sourceOperandToOutputIndex.find(sourceOperandIndex);
                    it != sourceOperandToOutputIndex.end()) {
-            executor->mapOutputToInput(it->second, stepInputIndex);
+            executor->mapOutputToInput(it->second, stepInputIndex,
+                                       mainModelOutputShapes
+                                               ? &mainModelOutputShapes->at(it->second).dimensions
+                                               : nullptr);
         } else if (auto it = sourceOperandToConstantReference.find(sourceOperandIndex);
                    it != sourceOperandToConstantReference.end()) {
             // Constant partition boundary operand. This could be an IF branch
@@ -368,6 +537,9 @@ void ExecutionStep::mapInputsAndOutputs(
         if (auto it = sourceOperandToOffsetOfTemporary.find(sourceOperandIndex);
             it != sourceOperandToOffsetOfTemporary.end()) {
             executor->setOutputFromMemory(stepOutputIndex, temporaryMemory, it->second);
+        } else if (auto loc = dynamicTemporaries.lookup(sourceOperandIndex); loc != std::nullopt) {
+            executor->setOutputFromMemory(stepOutputIndex, loc->memory, loc->offset,
+                                          *loc->dimensions, loc->length);
         } else if (auto it = sourceOperandToOutputIndex.find(sourceOperandIndex);
                    it != sourceOperandToOutputIndex.end()) {
             executor->mapOutput(it->second, stepOutputIndex);
@@ -381,6 +553,32 @@ void ExecutionStep::mapInputsAndOutputs(
     }
     for (uint32_t i = 0, n = mStepModelOutputs.size(); i < n; ++i) {
         mapOutput(mStepModelOutputs[i].first, i);
+    }
+}
+
+void ExecutionPlan::CompoundBody::findModelOutputsThatAreDownstreamInputs() {
+    auto declareModelOutputIsDownstreamInput =
+            [this](const SourceOperandIndex& sourceOperandIndex) {
+                const auto it = mOutputToDefiningExecutionStep.find(sourceOperandIndex);
+                CHECK(it != mOutputToDefiningExecutionStep.end());
+                uint32_t stepIndex = it->second;
+                CHECK_LT(stepIndex, mSteps.size());
+                VLOG(COMPILATION)
+                        << "ExecutionStep(" << stepIndex
+                        << ")->declareModelOutputIsDownstreamInput(mSourceOperandToOutputIndex.at"
+                        << toString(sourceOperandIndex) << ")";
+                CHECK(mSourceOperandToOutputIndex.find(sourceOperandIndex) !=
+                      mSourceOperandToOutputIndex.end());
+                mSteps[stepIndex]->executionStep()->declareModelOutputIsDownstreamInput(
+                        mSourceOperandToOutputIndex.at(sourceOperandIndex));
+            };
+    for (const auto& logicalStep : mSteps) {
+        if (const ExecutionStep* step = logicalStep->tryExecutionStep()) {
+            for (const auto& output : step->getOutputsAsStepModelInputs()) {
+                SourceOperandIndex sourceOperandIndex(step->getSourceModelIndex(), output.first);
+                declareModelOutputIsDownstreamInput(sourceOperandIndex);
+            }
+        }
     }
 }
 
@@ -416,6 +614,17 @@ void ExecutionPlan::CompoundBody::findTempsAsStepModelOutputs() {
             CHECK(logicalStep->isGoto());
         }
     }
+}
+
+void ExecutionStep::declareModelOutputIsDownstreamInput(uint32_t mainModelOutputIndex) {
+    VLOG(COMPILATION) << "ExecutionStep(" << mIndex << ")::declareModelOutputIsDownstreamInput("
+                      << mainModelOutputIndex << ")";
+    const auto it = std::find(mOutputIndexStepModelToMainModel.begin(),
+                              mOutputIndexStepModelToMainModel.end(), mainModelOutputIndex);
+    CHECK(it != mOutputIndexStepModelToMainModel.end());
+    const uint32_t stepModelOutputIndex = it - mOutputIndexStepModelToMainModel.begin();
+    CHECK(stepModelOutputIndex < mModelOutputs.size());
+    mModelOutputsThatAreDownstreamInputs.insert(stepModelOutputIndex);
 }
 
 void ExecutionStep::recordTempAsStepModelOutput(uint32_t stepOperandIndex) {
@@ -610,7 +819,8 @@ void LogicalStep::dump() const {
 
 int ExecutionPlan::CompoundBody::finish(const SourceModels* sourceModels,
                                         int32_t executionPreference, int32_t priority,
-                                        const std::optional<Deadline>& deadline) {
+                                        const std::optional<Deadline>& deadline,
+                                        int simulateFailureResultCode) {
     CHECK(!mSuccessfulFinish);
     CHECK(!deadline.has_value());
     const ModelBuilder* mainModel = sourceModels->getModel(kMainModelInSourceModels);
@@ -629,8 +839,8 @@ int ExecutionPlan::CompoundBody::finish(const SourceModels* sourceModels,
     findTempsAsStepModelOutputs();
     for (const auto& logicalStep : mSteps) {
         if (ExecutionStep* step = logicalStep->tryExecutionStep()) {
-            int n = step->finishStepModel(mainModel, &mHasStepModelOutputOfUnknownSize,
-                                          executionPreference, priority);
+            int n = step->finishStepModel(mainModel, &mHasDynamicTemporaries, executionPreference,
+                                          priority);
             if (n != ANEURALNETWORKS_NO_ERROR) {
                 VLOG(COMPILATION)
                         << "ExecutionPlan::CompoundBody::finish -- finishStepModel failed";
@@ -657,10 +867,11 @@ int ExecutionPlan::CompoundBody::finish(const SourceModels* sourceModels,
             CHECK(logicalStep->isGoto());
         }
     }
-    if (mHasStepModelOutputOfUnknownSize) {
-        VLOG(COMPILATION)
-                << "ExecutionPlan::CompoundBody::finish -- mHasStepModelOutputOfUnknownSize";
-        return ANEURALNETWORKS_OP_FAILED;
+
+    if (simulateFailureResultCode != ANEURALNETWORKS_NO_ERROR) {
+        VLOG(COMPILATION) << "ExecutionPlan::CompoundeBody::finish: simulating failure, ResultCode "
+                          << simulateFailureResultCode;
+        return simulateFailureResultCode;
     }
 
     for (uint32_t i = 0, n = mainModel->inputCount(); i < n; ++i) {
@@ -673,6 +884,7 @@ int ExecutionPlan::CompoundBody::finish(const SourceModels* sourceModels,
     }
 
     findControlFlowBoundaryConstants(sourceModels);
+    findModelOutputsThatAreDownstreamInputs();
 
     mSuccessfulFinish = true;
     return ANEURALNETWORKS_NO_ERROR;
@@ -713,25 +925,32 @@ void ExecutionPlan::CompoundBody::findControlFlowBoundaryConstants(
 }
 
 int ExecutionPlan::SimpleBody::finish(const SourceModels*, int32_t executionPreference,
-                                      int32_t priority, const std::optional<Deadline>& deadline) {
+                                      int32_t priority, const std::optional<Deadline>& deadline,
+                                      int simulateFailureResultCode) {
     CHECK(!mSuccessfulFinish);
     CHECK(mDevice != nullptr);
     VLOG(COMPILATION) << "ExecutionPlan::SimpleBody::finish, compilation";
-    const int n = compile(*mDevice, *mModel, executionPreference, priority, deadline, *mCacheDir,
-                          &mToken, &mPreparedModel);
+    int n = compile(*mDevice, *mModel, executionPreference, priority, deadline, *mCacheDir, &mToken,
+                    &mPreparedModel);
+    if (n == ANEURALNETWORKS_NO_ERROR && simulateFailureResultCode != ANEURALNETWORKS_NO_ERROR) {
+        VLOG(COMPILATION) << "ExecutionPlan::SimpleBody::finish: simulating failure, ResultCode "
+                          << simulateFailureResultCode;
+        n = simulateFailureResultCode;
+    }
     mSuccessfulFinish = (n == ANEURALNETWORKS_NO_ERROR);
     return n;
 }
 
 int ExecutionPlan::finish(int32_t executionPreference, int32_t priority,
-                          const std::optional<Deadline>& deadline) {
+                          const std::optional<Deadline>& deadline, int simulateFailureResultCode) {
     CHECK(mBody != nullptr);
-    return mBody->finish(&getSourceModels(), executionPreference, priority, deadline);
+    return mBody->finish(&getSourceModels(), executionPreference, priority, deadline,
+                         simulateFailureResultCode);
 }
 
 ExecutionPlan::Controller::Controller(const ExecutionPlan* plan, ExecutionBuilder* executionBuilder,
                                       const BurstBuilder* burstBuilder)
-    : Controller(plan, executionBuilder, burstBuilder, 0, {}, {}, {}, {}, {}, {}) {}
+    : Controller(plan, executionBuilder, burstBuilder, 0, {}, {}, {}, {}, {}, {}, {}) {}
 
 ExecutionPlan::Controller::Controller(
         const ExecutionPlan* plan, ExecutionBuilder* executionBuilder,
@@ -741,7 +960,8 @@ ExecutionPlan::Controller::Controller(
         std::map<SourceOperandIndex, uint32_t> sourceOperandToInputIndex,
         std::map<SourceOperandIndex, uint32_t> sourceOperandToOutputIndex,
         const std::map<SourceOperandIndex, ConstantCopyLocation>& sourceOperandToConstantCopy,
-        std::map<SourceOperandIndex, ConstantReferenceLocation> sourceOperandToConstantReference)
+        std::map<SourceOperandIndex, ConstantReferenceLocation> sourceOperandToConstantReference,
+        DynamicTemporaries dynamicTemporaries)
     : mPlan(plan),
       mExecutionBuilder(executionBuilder),
       mBurstBuilder(burstBuilder),
@@ -750,6 +970,7 @@ ExecutionPlan::Controller::Controller(
       mSourceOperandToInputIndex(std::move(sourceOperandToInputIndex)),
       mSourceOperandToOutputIndex(std::move(sourceOperandToOutputIndex)),
       mSourceOperandToConstantReference(std::move(sourceOperandToConstantReference)),
+      mDynamicTemporaries(std::move(dynamicTemporaries)),
       mNextStepIndex(0),
       mFallbackNextStepIndex(kBadStepIndex),
       mLastStepSyncFd(-1) {
@@ -823,7 +1044,7 @@ std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
         return std::shared_ptr<Controller>(new Controller(this, executionBuilder, burstBuilder));
     }
     // Create the layout for a Memory object big enough to hold
-    // - every partition boundary TEMPORARY operand and
+    // - every partition boundary TEMPORARY operand that is not a dynamic temporary, and
     // - buffers required by the control flow implementation.
     //
     // TODO: Rethink this approach for managing temporaries.  Some
@@ -844,21 +1065,17 @@ std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
     // what our Memory objects represent.
     //
     uint32_t totalSizeOfTemporaries = 0;
-    auto addTemporaryOfSize = [&totalSizeOfTemporaries](uint32_t size) {
-        totalSizeOfTemporaries += alignBytesNeeded(totalSizeOfTemporaries, size);
-        const uint32_t offset = totalSizeOfTemporaries;
-        totalSizeOfTemporaries += size;
-        return offset;
-    };
     // This function has two modes of operation:
     // 1. When lifetime is TEMPORARY_VARIABLE, we allocate memory for
-    //    TEMPORARY_VARIABLE source operands, skip SUBGRAPH_OUTPUT source
-    //    operands, and panic if we see a source operand of another lifetime.
+    //    TEMPORARY_VARIABLE source operands that are not dynamic temporaries,
+    //    skip TEMPORARY_VARIABLE source operands that are dynamic temporaries,
+    //    skip SUBGRAPH_OUTPUT source operands, and panic if we see a source
+    //    operand of another lifetime.
     // 2. When lifetime is SUBGRAPH_OUTPUT, we allocate memory for
     //    SUBGRAPH_OUTPUT source operands and panic if we see a source operand
     //    of another lifetime.
     auto mapTemporary =
-            [executionBuilder, addTemporaryOfSize](
+            [executionBuilder, &totalSizeOfTemporaries](
                     const SourceOperandIndex& sourceOperandIndex,
                     std::map<SourceOperandIndex, uint32_t>* sourceOperandToOffsetOfTemporary,
                     OperandLifeTime lifetime = OperandLifeTime::TEMPORARY_VARIABLE) {
@@ -873,13 +1090,19 @@ std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
                 }
                 CHECK(sourceOperand.lifetime == lifetime);
                 const uint32_t size = TypeManager::get()->getSizeOfData(sourceOperand);
-                CHECK_NE(size, 0u);
-                const uint32_t offset = addTemporaryOfSize(size);
-                auto [_, isNew] =
-                        sourceOperandToOffsetOfTemporary->emplace(sourceOperandIndex, offset);
-                CHECK(isNew);
-                VLOG(EXECUTION) << "temp: operand " << toString(sourceOperandIndex)
-                                << " offset = " << offset;
+                if (size != 0u) {
+                    const uint32_t offset = addTemporaryOfSize(&totalSizeOfTemporaries, size);
+                    auto [_, isNew] =
+                            sourceOperandToOffsetOfTemporary->emplace(sourceOperandIndex, offset);
+                    CHECK(isNew);
+                    VLOG(EXECUTION) << "temp: operand " << toString(sourceOperandIndex)
+                                    << " offset = " << offset;
+                } else {
+                    // Unknown size, hence dynamic temporary.  The mapping will
+                    // be established elsewhere (DynamicTemporaries::allocate()).
+                    CHECK(lifetime == OperandLifeTime::TEMPORARY_VARIABLE);
+                    CHECK(sourceOperand.lifetime == OperandLifeTime::TEMPORARY_VARIABLE);
+                }
             };
     std::map<SourceOperandIndex, uint32_t> sourceOperandToOffsetOfTemporary;
     std::map<SourceOperandIndex, uint32_t> sourceOperandToOffsetOfTemporary2;
@@ -963,24 +1186,46 @@ std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
     // Allocate temporary memory for boundary CONSTANT_COPY operands.
     for (const auto& [sourceOperandIndex, location] :
          compound()->mSourceOperandToBoundaryConstantCopy) {
-        const uint32_t offset = addTemporaryOfSize(location.length);
+        const uint32_t offset = addTemporaryOfSize(&totalSizeOfTemporaries, location.length);
         sourceOperandToOffsetOfTemporary.emplace(sourceOperandIndex, offset);
         VLOG(EXECUTION) << "temp (boundary constant): operand " << toString(sourceOperandIndex)
                         << " offset = " << offset;
     }
+    // Collect dynamic temporaries.
+    // TODO(b/157236079): Move some or all of this work to compilation time?
+    DynamicTemporaries dynamicTemporaries;
+    const TypeManager* typeManager = TypeManager::get();
+    forEachDynamicTemporary([typeManager, &dynamicTemporaries](
+                                    SourceOperandIndex sourceOperandIndex,
+                                    const Operand& sourceOperand, uint32_t definingStepIndex) {
+        CHECK(typeManager->isTensorType(sourceOperand.type));
+        // TODO: For now we guess an initial size equal to element
+        // size, which is overly conservative.
+        const uint32_t size = typeManager->getSizeOfData(sourceOperand.type, {1});
+        dynamicTemporaries.declare(sourceOperandIndex, definingStepIndex, sourceOperand.dimensions,
+                                   size);
+    });
+    dynamicTemporaries.endDeclarations();
+    dynamicTemporaries.vlogDump("finished declarations");
+
     return std::shared_ptr<Controller>(new Controller(
             this, executionBuilder, burstBuilder, totalSizeOfTemporaries,
             std::move(sourceOperandToOffsetOfTemporary),
             std::move(sourceOperandToOffsetOfTemporary2), compound()->mSourceOperandToInputIndex,
             compound()->mSourceOperandToOutputIndex,
             compound()->mSourceOperandToBoundaryConstantCopy,
-            compound()->mSourceOperandToBoundaryConstantReference));
+            compound()->mSourceOperandToBoundaryConstantReference, std::move(dynamicTemporaries)));
 }
 
 // TODO: Find a better way to provide this functionality.
 int ExecutionPlan::fallback(std::shared_ptr<Controller> controller,
-                            std::shared_ptr<StepExecutor>* executor) const {
+                            std::shared_ptr<StepExecutor>* executor,
+                            std::shared_ptr<ExecutionBurstController>* burstController,
+                            const std::vector<OutputShape>* mainModelOutputShapes) const {
     *executor = nullptr;
+    if (burstController != nullptr) {
+        *burstController = nullptr;
+    }
 
     VLOG(EXECUTION) << "ExecutionPlan::fallback(" << SHOW_IF_DEBUG(controller << ", " << executor)
                     << "): mFallbackNextStepIndex = " << controller->mFallbackNextStepIndex;
@@ -996,7 +1241,7 @@ int ExecutionPlan::fallback(std::shared_ptr<Controller> controller,
     }
 
     controller->mNextStepIndex = controller->mFallbackNextStepIndex;
-    return next(controller, executor);
+    return next(controller, executor, burstController, mainModelOutputShapes);
 }
 
 ExecutionPlan::Buffer::Buffer(void* pointer, uint32_t size)
@@ -1092,6 +1337,7 @@ int ExecutionPlan::readConditionValue(std::shared_ptr<Controller> controller,
 int ExecutionPlan::next(std::shared_ptr<Controller> controller,
                         std::shared_ptr<StepExecutor>* executor,
                         std::shared_ptr<ExecutionBurstController>* burstController,
+                        const std::vector<OutputShape>* mainModelOutputShapes,
                         int syncFdOfLastStep) const {
     controller->mLastStepSyncFd = syncFdOfLastStep;
     *executor = nullptr;
@@ -1133,12 +1379,13 @@ int ExecutionPlan::next(std::shared_ptr<Controller> controller,
         return ANEURALNETWORKS_NO_ERROR;
     }
 
-    return nextCompound(controller, executor, burstController);
+    return nextCompound(controller, executor, burstController, mainModelOutputShapes);
 }
 
 int ExecutionPlan::nextCompound(std::shared_ptr<Controller> controller,
                                 std::shared_ptr<StepExecutor>* executor,
-                                std::shared_ptr<ExecutionBurstController>* burstController) const {
+                                std::shared_ptr<ExecutionBurstController>* burstController,
+                                const std::vector<OutputShape>* mainModelOutputShapes) const {
     if (controller->mNextStepIndex == Controller::kBadStepIndex) {
         return ANEURALNETWORKS_OP_FAILED;
     }
@@ -1151,13 +1398,13 @@ int ExecutionPlan::nextCompound(std::shared_ptr<Controller> controller,
 
     const auto& logicalStep = compoundBody->mSteps[controller->mNextStepIndex];
     if (const IfStep* step = logicalStep->tryIfStep()) {
-        return nextCompound(step, controller, executor, burstController);
+        return nextCompound(step, controller, executor, burstController, mainModelOutputShapes);
     } else if (const WhileStep* step = logicalStep->tryWhileStep()) {
-        return nextCompound(step, controller, executor, burstController);
+        return nextCompound(step, controller, executor, burstController, mainModelOutputShapes);
     } else if (const GotoStep* step = logicalStep->tryGotoStep()) {
-        return nextCompound(step, controller, executor, burstController);
+        return nextCompound(step, controller, executor, burstController, mainModelOutputShapes);
     } else if (const ExecutionStep* step = logicalStep->tryExecutionStep()) {
-        return nextCompound(step, controller, executor, burstController);
+        return nextCompound(step, controller, executor, burstController, mainModelOutputShapes);
     } else {
         CHECK(false) << "Unknown step variant";
         return ANEURALNETWORKS_BAD_STATE;
@@ -1166,16 +1413,23 @@ int ExecutionPlan::nextCompound(std::shared_ptr<Controller> controller,
 
 int ExecutionPlan::nextCompound(const ExecutionStep* step, std::shared_ptr<Controller> controller,
                                 std::shared_ptr<StepExecutor>* executor,
-                                std::shared_ptr<ExecutionBurstController>* burstController) const {
+                                std::shared_ptr<ExecutionBurstController>* burstController,
+                                const std::vector<OutputShape>* mainModelOutputShapes) const {
     VLOG(EXECUTION) << "next: Step#" << controller->mNextStepIndex << ": execute on "
                     << step->getDevice()->getName();
-    *executor =
-            std::make_shared<StepExecutor>(controller->mExecutionBuilder, step->getStepModel(),
-                                           step->getDevice(), step->getPreparedStepModel(), step);
+
+    NN_RETURN_IF_ERROR(controller->mDynamicTemporaries.allocate(step->getIndex()));
+    controller->mDynamicTemporaries.vlogDump("finished allocating for a step");
+
+    *executor = std::make_shared<StepExecutor>(controller->mExecutionBuilder, step->getStepModel(),
+                                               step->getDevice(), step->getPreparedStepModel(),
+                                               step, &controller->mDynamicTemporaries);
+
     step->mapInputsAndOutputs(
-            *executor, controller->mTemporaries.get(),
-            controller->mSourceOperandToOffsetOfTemporary, controller->mSourceOperandToInputIndex,
-            controller->mSourceOperandToOutputIndex, controller->mSourceOperandToConstantReference);
+            *executor, mainModelOutputShapes, controller->mTemporaries.get(),
+            controller->mSourceOperandToOffsetOfTemporary, controller->mDynamicTemporaries,
+            controller->mSourceOperandToInputIndex, controller->mSourceOperandToOutputIndex,
+            controller->mSourceOperandToConstantReference);
     if (burstController != nullptr && controller->mBurstBuilder != nullptr) {
         *burstController = controller->mBurstBuilder->getControllerAt(controller->mNextStepIndex);
     }
@@ -1259,7 +1513,8 @@ int ExecutionPlan::Controller::waitForLastStepSyncFence() const {
 
 int ExecutionPlan::nextCompound(const IfStep* step, std::shared_ptr<Controller> controller,
                                 std::shared_ptr<StepExecutor>* executor,
-                                std::shared_ptr<ExecutionBurstController>* burstController) const {
+                                std::shared_ptr<ExecutionBurstController>* burstController,
+                                const std::vector<OutputShape>* mainModelOutputShapes) const {
     VLOG(EXECUTION) << "next: " << toString(*step);
     // If the last step has a sync fence, wait for it to signal before reading the condition value.
     // This is safe because the steps are serialized when doing fenced compute.
@@ -1293,12 +1548,13 @@ int ExecutionPlan::nextCompound(const IfStep* step, std::shared_ptr<Controller> 
         // step->outerOutputOperands[i] to implement double buffering.
         controller->setOutput(step->outerOutputOperands[i], branchOutputOperands[i]);
     }
-    return nextCompound(controller, executor, burstController);
+    return nextCompound(controller, executor, burstController, mainModelOutputShapes);
 }
 
 int ExecutionPlan::nextCompound(const WhileStep* step, std::shared_ptr<Controller> controller,
                                 std::shared_ptr<StepExecutor>* executor,
-                                std::shared_ptr<ExecutionBurstController>* burstController) const {
+                                std::shared_ptr<ExecutionBurstController>* burstController,
+                                const std::vector<OutputShape>* mainModelOutputShapes) const {
     WhileState& state = controller->mWhileState[controller->mNextStepIndex];
     if (state.stage == WhileState::EVALUATE_CONDITION) {
         state.iteration = state.iteration == WhileState::kOutsideLoop ? 0 : state.iteration + 1;
@@ -1326,7 +1582,7 @@ int ExecutionPlan::nextCompound(const WhileStep* step, std::shared_ptr<Controlle
         }
 
         state.stage = WhileState::EVALUATE_BODY;
-        return nextCompound(controller, executor, burstController);
+        return nextCompound(controller, executor, burstController, mainModelOutputShapes);
     }
 
     CHECK(state.stage == WhileState::EVALUATE_BODY);
@@ -1414,15 +1670,16 @@ int ExecutionPlan::nextCompound(const WhileStep* step, std::shared_ptr<Controlle
     }
 
     state.stage = WhileState::EVALUATE_CONDITION;
-    return nextCompound(controller, executor, burstController);
+    return nextCompound(controller, executor, burstController, mainModelOutputShapes);
 }
 
 int ExecutionPlan::nextCompound(const GotoStep* step, std::shared_ptr<Controller> controller,
                                 std::shared_ptr<StepExecutor>* executor,
-                                std::shared_ptr<ExecutionBurstController>* burstController) const {
+                                std::shared_ptr<ExecutionBurstController>* burstController,
+                                const std::vector<OutputShape>* mainModelOutputShapes) const {
     VLOG(EXECUTION) << "next: " << toString(*step);
     controller->mNextStepIndex = step->gotoStepIndex;
-    return nextCompound(controller, executor, burstController);
+    return nextCompound(controller, executor, burstController, mainModelOutputShapes);
 }
 
 void ExecutionPlan::becomeCompoundIfEmpty() {
@@ -1471,6 +1728,13 @@ void ExecutionPlan::becomeSingleStep(const std::shared_ptr<Device> device,
     CHECK(mState == EMPTY);
     mBody = new SimpleBody(device, model, mCacheDir, mToken);
     mState = SIMPLE;
+}
+
+void ExecutionPlan::recordOutputDef(SourceOperandIndex sourceOperandIndex, uint32_t stepIndex) {
+    auto [it, isNew] =
+            compound()->mOutputToDefiningExecutionStep.emplace(sourceOperandIndex, stepIndex);
+    CHECK(isNew) << "Step " << stepIndex << " redefines output operand "
+                 << toString(sourceOperandIndex) << " already defined by step " << it->second;
 }
 
 void ExecutionPlan::recordTemporaryDef(SourceOperandIndex sourceOperandIndex, uint32_t stepIndex) {
@@ -1524,8 +1788,17 @@ const std::vector<std::shared_ptr<LogicalStep>>& ExecutionPlan::forTest_compound
     return compound()->mSteps;
 }
 
-bool ExecutionPlan::forTest_hasStepModelOutputsOfUnknownSize() const {
-    return mBody->hasStepModelOutputsOfUnknownSize();
+std::set<uint32_t> ExecutionPlan::forTest_flatGetDynamicTemporaries() const {
+    CHECK_EQ(getSourceModels().size(), size_t(1));
+    std::set<uint32_t> ret;
+    forEachDynamicTemporary([&ret](SourceOperandIndex dynTemp, const Operand&, uint32_t) {
+        ret.insert(dynTemp.second);
+    });
+    return ret;
+}
+
+bool ExecutionPlan::hasDynamicTemporaries() const {
+    return mBody->hasDynamicTemporaries();
 }
 
 const uint8_t* ExecutionPlan::forTest_simpleGetCacheToken() const {
@@ -1600,14 +1873,36 @@ void ExecutionPlan::CompoundBody::forEachStepRoleOfOutput(uint32_t index,
     }
 }
 
+void ExecutionPlan::forEachDynamicTemporary(
+        const std::function<void(SourceOperandIndex, const Operand&, uint32_t definingStepIndex)>&
+                fn) const {
+    if (mState != COMPOUND) {
+        return;
+    }
+
+    for (const auto& logicalStep : compound()->mSteps) {
+        if (const ExecutionStep* step = logicalStep->tryExecutionStep()) {
+            const uint32_t stepIndex = step->getIndex();
+            const uint32_t sourceModelIndex = step->getSourceModelIndex();
+            for (const auto& entry : step->getTempsAsStepModelOutputs()) {
+                const auto sourceOperandIndex = SourceOperandIndex(sourceModelIndex, entry.first);
+                const auto& sourceOperand = getSourceOperand(sourceOperandIndex);
+                if (hasUnknownSize(sourceOperand)) {
+                    fn(sourceOperandIndex, sourceOperand, stepIndex);
+                }
+            }
+        }
+    }
+}
+
 int ModelBuilder::partitionTheWork(const std::vector<std::shared_ptr<Device>>& devices,
                                    uint32_t preference, uint32_t priority,
-                                   const std::optional<Deadline>& deadline,
-                                   ExecutionPlan* plan) const {
+                                   const std::optional<Deadline>& deadline, ExecutionPlan* plan,
+                                   int simulateFailureResultCode) const {
     uint32_t sourceModelIndex = plan->getSourceModels().addModel(this);
     NN_RETURN_IF_ERROR(partitionTheWorkInternal(sourceModelIndex, devices, preference, priority,
                                                 deadline, plan));
-    int n = plan->finish(preference, priority, deadline);
+    int n = plan->finish(preference, priority, deadline, simulateFailureResultCode);
     if (VLOG_IS_ON(COMPILATION)) {
         VLOG(COMPILATION) << "ModelBuilder::partitionTheWork: source model: ";
         logModelToInfo(makeHidlModel());
@@ -1668,12 +1963,24 @@ int ModelBuilder::partitionTheWorkInternal(uint32_t sourceModelIndex,
     // (see LogicalStep).
     std::vector<std::queue<uint32_t>> perDeviceQueue(deviceCount + 1);
 
+    // This helper function produces a device name.
+    auto deviceName = [&devices, kControlFlowInterpreter,
+                       deviceCount](int deviceIndex) -> std::string {
+        if (deviceIndex == kControlFlowInterpreter) {
+            return "NNAPI";
+        } else if (deviceIndex < 0 || size_t(deviceIndex) >= deviceCount) {
+            return "{unknown}";
+        } else {
+            return devices.at(deviceIndex)->getName();
+        }
+    };
+
     // This helper function enqueues the operation on the appropriate queue.
     auto enqueueOnAppropriateDevice = [&](uint32_t operationIndex) {
         int deviceIndex = bestDeviceForOperation[operationIndex];
         perDeviceQueue[deviceIndex].push(operationIndex);
         VLOG(COMPILATION) << "enqueueOnAppropriateDevice " << operationIndex << " onto "
-                          << deviceIndex;
+                          << deviceIndex << " (" << deviceName(deviceIndex) << ")";
     };
 
     // This helper function finds a device that has operations ready to process.
@@ -1692,11 +1999,14 @@ int ModelBuilder::partitionTheWorkInternal(uint32_t sourceModelIndex,
     };
 
     OperandTracker tracker(this, enqueueOnAppropriateDevice);
-    // For each iteration of this loop, we'll create an execution step.
+    // For each iteration of this loop, we'll create either an execution step or
+    // an interpreted control flow construct (including nested execution steps
+    // and interpreted control flow constructs).
     while (true) {
         // Find the device we'll do this step for.
         int deviceIndex = findNextDeviceToProcess();
-        VLOG(COMPILATION) << "findNextDeviceToProcess: " << deviceIndex;
+        VLOG(COMPILATION) << "findNextDeviceToProcess: " << deviceIndex << " ("
+                          << deviceName(deviceIndex) << ")";
         if (deviceIndex < 0) {
             break;
         }
@@ -2050,13 +2360,14 @@ int ModelBuilder::findBestDeviceForEachOperation(
             const int kControlFlowInterpreter = deviceCount;
             (*bestDeviceForOperation)[operationIndex] = kControlFlowInterpreter;
             VLOG(COMPILATION) << "ModelBuilder::findBestDeviceForEachOperation("
-                              << toString(operation.type) << ") = -1"
+                              << toString(operation.type) << ":" << operationIndex << ") = -1"
                               << " (NNAPI)";
         } else {
             (*bestDeviceForOperation)[operationIndex] = bestChoice;
             VLOG(COMPILATION) << "ModelBuilder::findBestDeviceForEachOperation("
-                              << toString(operation.type) << ") = " << bestChoice << " ("
-                              << devices[bestChoice]->getName() << ")";
+                              << toString(operation.type) << ":" << operationIndex
+                              << ") = " << bestChoice << " (" << devices[bestChoice]->getName()
+                              << ")";
         }
     }
     return ANEURALNETWORKS_NO_ERROR;

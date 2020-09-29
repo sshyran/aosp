@@ -47,8 +47,6 @@ class CompilationBuilder {
 
     int setPreference(int32_t preference);
 
-    int setPartitioning(uint32_t partitioning);
-
     int setCaching(const std::string& cacheDir, const uint8_t* token);
 
     int setPriority(int32_t priority);
@@ -66,9 +64,16 @@ class CompilationBuilder {
     int forEachStepRoleOfInput(uint32_t index, const StepRoleCallback& callback) const;
     int forEachStepRoleOfOutput(uint32_t index, const StepRoleCallback& callback) const;
 
-    const ExecutionPlan& forTest_getExecutionPlan() const { return mPlan; }
-
     bool createdWithExplicitDeviceList() const { return mExplicitDeviceList; }
+
+    bool hasDynamicTemporaries() const { return mPlan.hasDynamicTemporaries(); }
+
+    // These functions are solely intended for use by unit tests of the
+    // partitioning algorithm.
+    const ExecutionPlan& forTest_getExecutionPlan() const { return mPlan; }
+    int forTest_setPartitioning(uint32_t partitioning);
+    int forTest_failPartitioning(
+            int resultCode);  // If not ANEURALNETWORKS_NO_ERROR, then simulate partitioning failure
 
    private:
     const ModelBuilder* mModel;
@@ -82,6 +87,9 @@ class CompilationBuilder {
     // instantiated, we capture partitioning from DeviceManager; but
     // we can override this later.
     uint32_t mPartitioning;
+
+    // For testing purposes, simulate partitioning failure.
+    int mFailPartitioning = ANEURALNETWORKS_NO_ERROR;
 
     // Once the compilation has been finished, we should not allow further
     // modifications to the compilation.

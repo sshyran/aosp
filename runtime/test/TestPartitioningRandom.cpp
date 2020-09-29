@@ -46,6 +46,12 @@
 //
 // #define VERBOSE VERBOSE
 
+// Uncomment the following line to generate some debugging output that
+// may be useful to determine test coverage for support of dynamic
+// temporaries (http://b/132458982):
+//
+// #define TRACE_DYNTEMP TRACE_DYNTEMP
+
 // We randomly generate tests (model + input data) at runtime, and verify
 // that we get the same results whether we do partitioned compilation/execution
 // or non partitioned compilation/execution.  We perform a test as follows:
@@ -220,7 +226,7 @@ class TestCompilation : public WrapperCompilation {
     using WrapperCompilation::finish;
 
     Result setPartitioning(uint32_t partitioning) {
-        return static_cast<Result>(builder()->setPartitioning(partitioning));
+        return static_cast<Result>(builder()->forTest_setPartitioning(partitioning));
     }
 
     const ExecutionPlan& getExecutionPlan() const { return builder()->forTest_getExecutionPlan(); }
@@ -751,7 +757,14 @@ TEST_P(RandomPartitioningTest, Test) {
 
     const unsigned problemSize = 1 + randUInt(kMaxProblemSize);
     const WrapperOperandType problemType(WrapperType::TENSOR_FLOAT32, {problemSize, problemSize});
-    const WrapperOperandType unknownDimensionsType(WrapperType::TENSOR_FLOAT32, {0, 0});
+    const WrapperOperandType unknownDimensionsTypes[] = {
+            {WrapperType::TENSOR_FLOAT32, {}},
+            {WrapperType::TENSOR_FLOAT32, {0, 0}},
+            {WrapperType::TENSOR_FLOAT32, {0, problemSize}},
+            {WrapperType::TENSOR_FLOAT32, {problemSize, 0}},
+    };
+    const unsigned kUnknownDimensionsTypesCount =
+            sizeof(unknownDimensionsTypes) / sizeof(unknownDimensionsTypes[0]);
 
     static const WrapperOperandType activationFunctionType(WrapperType::INT32, {});
 
@@ -772,9 +785,20 @@ TEST_P(RandomPartitioningTest, Test) {
     // joining disjoint subgraphs rather than by forcing a root.
     const bool forceCommonRoot = (randFrac() < 0.75);
 
+    auto computeMode = WrapperExecution::getComputeMode();
+    // We check randFrac() independent of compute mode, because we don't want
+    // the random number sequence to change depending on compute mode: Compute
+    // mode should only affect how we perform the inference, not how we build the
+    // Model, the Compilation, or the Execution.
+    if (randFrac() < 0.5 && computeMode == WrapperExecution::ComputeMode::ASYNC) {
+        computeMode = WrapperExecution::ComputeMode::FENCED;
+    }
+
     TestModel model;
     std::vector<uint32_t> modelInputs;
     std::vector<uint32_t> modelOutputs;
+
+    std::set<uint32_t> operandsWithUnknownDimensions;
 
     // Each region in weights is a problem-sized 2-D TENSOR_FLOAT32.
     TestMemories weights;
@@ -802,11 +826,6 @@ TEST_P(RandomPartitioningTest, Test) {
     // operations (those that do not consume results produced by other
     // operations).
     unsigned rootOperationCount = 0;
-
-    // Track if we added operands with unknown dimensions. In this case,
-    // partitioned compilation will fail if such an operand is read in a
-    // different partition than it is written.
-    bool hasUnknownDimensions = false;
 
     // Generate operations.
     for (unsigned i = 0; i < numOperations; i++) {
@@ -995,19 +1014,21 @@ TEST_P(RandomPartitioningTest, Test) {
         // OUTPUTS /////////////////////////////////////////////////////////////////////////////////
 
         std::vector<uint32_t> operationOutputs(operationPattern.mNumOutputs);
-        std::generate(operationOutputs.begin(), operationOutputs.end(),
-                      [&model, &problemType, &unknownDimensionsType, &hasUnknownDimensions,
-                       allowUnknownDimensions, this] {
-                          // 3% unknowns causes ~35% of partitionings to fail
-                          // (determined by commenting out the fallback code,
-                          // running tests and noting number of failures).
-                          if (allowUnknownDimensions && randFrac() < 0.03) {
-                              hasUnknownDimensions = true;
-                              return model.addOperand(&unknownDimensionsType);
-                          } else {
-                              return model.addOperand(&problemType);
-                          }
-                      });
+        std::generate(
+                operationOutputs.begin(), operationOutputs.end(),
+                [&operandsWithUnknownDimensions, &model, &problemType, &unknownDimensionsTypes,
+                 allowUnknownDimensions, this] {
+                    // Before the fix for http://b/132458982, 3% unknowns
+                    // causes ~35% of partitionings to fail.
+                    if (allowUnknownDimensions && randFrac() < 0.03) {
+                        uint32_t opndIdx = model.addOperand(
+                                &unknownDimensionsTypes[randUInt(kUnknownDimensionsTypesCount)]);
+                        operandsWithUnknownDimensions.insert(opndIdx);
+                        return opndIdx;
+                    } else {
+                        return model.addOperand(&problemType);
+                    }
+                });
 
         // OPERATION ///////////////////////////////////////////////////////////////////////////////
 
@@ -1090,6 +1111,21 @@ TEST_P(RandomPartitioningTest, Test) {
         const auto& outputs = model.getOperationOutputs(randUInt(model.operationCount()));
         modelOutputs.push_back(outputs[randUInt(outputs.size())]);
     }
+    if (computeMode == WrapperExecution::ComputeMode::FENCED) {
+        if (std::any_of(modelOutputs.begin(), modelOutputs.end(),
+                        [&operandsWithUnknownDimensions](uint32_t opndIdx) {
+                            return operandsWithUnknownDimensions.count(opndIdx) != 0;
+                        })) {
+            // Workaround for http://b/162980246: Fenced execution is documented
+            // as requiring model outputs to have fully specified dimensions,
+            // either from Model or from Execution, but its implementation
+            // requires this to come from Model.  This test only guarantees that
+            // they have fully specified dimensions from Execution.  So in the
+            // case of a Model where some output does not have fully specified
+            // dimensions, perform asynchronous execution instead.
+            computeMode = WrapperExecution::ComputeMode::ASYNC;
+        }
+    }
 
     model.identifyInputsAndOutputs(modelInputs, modelOutputs);
 #ifdef VERBOSE
@@ -1157,37 +1193,49 @@ TEST_P(RandomPartitioningTest, Test) {
     // CPU fallback device
     devices.push_back(DeviceManager::getCpuDevice());
 
-    // Partitioned compilation.
-    // For test cases without unknown intermediate operand sizes we require the
-    // partitioning to succeed without CPU fallback. With unknown sizes we
-    // retry with a fallback if the non-fallback partitioning fails and require
-    // the fallback to succeed.
-    TestCompilation cNoFallback(&model, devices);
-    TestCompilation cWithFallback(&model, devices);
-    TestCompilation* c2 = nullptr;
-    ASSERT_EQ(cNoFallback.setPartitioning(DeviceManager::kPartitioningWithoutFallback),
-              Result::NO_ERROR);
-    auto compilationResult = cNoFallback.finish();
-    if (hasUnknownDimensions && compilationResult == Result::OP_FAILED &&
-        cNoFallback.getExecutionPlan().forTest_hasStepModelOutputsOfUnknownSize()) {
-        ASSERT_EQ(cWithFallback.setPartitioning(DeviceManager::kPartitioningWithFallback),
-                  Result::NO_ERROR);
-        ASSERT_EQ(cWithFallback.finish(), Result::NO_ERROR);
-        ASSERT_EQ(cWithFallback.getExecutionPlan().forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
-        ASSERT_EQ(cWithFallback.getExecutionPlan().forTest_simpleGetDevice(),
-                  DeviceManager::getCpuDevice());
-        c2 = &cWithFallback;
-    } else {
-        ASSERT_EQ(compilationResult, Result::NO_ERROR);
-        c2 = &cNoFallback;
+    // Partitioned compilation.  We require the partitioning to succeed without
+    // CPU fallback.
+    TestCompilation c2(&model, devices);
+    ASSERT_EQ(c2.setPartitioning(DeviceManager::kPartitioningWithoutFallback), Result::NO_ERROR);
+    ASSERT_EQ(c2.finish(), Result::NO_ERROR);
+#ifdef TRACE_DYNTEMP
+    {
+        const ExecutionPlan& plan = c2.getExecutionPlan();
+        const size_t dynamicTemporaryCount = plan.forTest_flatGetDynamicTemporaries().size();
+        std::cout << "TRACE_DYNTEMP: dynamic temporary count = " << dynamicTemporaryCount
+                  << std::endl;
+        if (plan.forTest_getKind() == ExecutionPlan::Kind::COMPOUND) {
+            size_t stepsWithModelOutputsThatAreDownstreamInputs = 0;
+            size_t countOfModelOutputsThatAreDownstreamInputs = 0;
+            for (const auto& step : plan.forTest_compoundGetSteps()) {
+                if (const size_t count = step->executionStep()
+                                                 ->getModelOutputsThatAreDownstreamInputs()
+                                                 .size()) {
+                    ++stepsWithModelOutputsThatAreDownstreamInputs;
+                    countOfModelOutputsThatAreDownstreamInputs += count;
+                }
+            }
+            if (countOfModelOutputsThatAreDownstreamInputs != 0) {
+                std::cout << "TRACE_DYNTEMP: model outputs that are downstream inputs: "
+                          << countOfModelOutputsThatAreDownstreamInputs << " / "
+                          << modelOutputs.size() << ", over "
+                          << stepsWithModelOutputsThatAreDownstreamInputs << " / "
+                          << plan.forTest_compoundGetSteps().size() << " steps" << std::endl;
+                EXPECT_LE(countOfModelOutputsThatAreDownstreamInputs, modelOutputs.size());
+            }
+        } else {
+            EXPECT_EQ(dynamicTemporaryCount, size_t(0))
+                    << "Only COMPOUND plan should have dynamic temporaries";
+        }
     }
+#endif
 
 #ifdef VERBOSE
     {
         std::cout << "signatures = " << signatures.size() << ", devices = " << devices.size()
                   << std::endl;
         // TODO: When dumping steps, include non-ExecutionSteps.
-        const ExecutionPlan& plan = c2->getExecutionPlan();
+        const ExecutionPlan& plan = c2.getExecutionPlan();
         switch (plan.forTest_getKind()) {
             case ExecutionPlan::Kind::SIMPLE:
                 std::cout << "plan: simple" << std::endl;
@@ -1345,7 +1393,7 @@ TEST_P(RandomPartitioningTest, Test) {
     // Non-partitioned execution.
     WrapperExecution e(&c);
     ASSERT_NO_FATAL_FAILURE(prepareForExecution(&e));
-    ASSERT_EQ(e.compute(), Result::NO_ERROR);
+    ASSERT_EQ(e.compute(computeMode), Result::NO_ERROR);
 
     // Copy the outputs of the non-partitioned execution to a save area.
     std::vector<float> nonPartitionedOutputs(problemSize * problemSize * model.outputCount());
@@ -1376,9 +1424,9 @@ TEST_P(RandomPartitioningTest, Test) {
     }
 
     // Partitioned execution.
-    WrapperExecution e2(c2);
+    WrapperExecution e2(&c2);
     ASSERT_NO_FATAL_FAILURE(prepareForExecution(&e2));
-    ASSERT_EQ(e2.compute(), Result::NO_ERROR);
+    ASSERT_EQ(e2.compute(computeMode), Result::NO_ERROR);
 
     // Compare the outputs of the partitioned execution to the save
     // area containing the outpus of the non-partitioned execution.

@@ -1543,6 +1543,26 @@ int ANeuralNetworksExecution_startComputeWithDependencies(
             waitForList.push_back(syncFenceFd);
         }
     }
+
+    if (r->getCompilation()->hasDynamicTemporaries()) {
+        // The current implementation of fenced execution does not support
+        // dynamic temporaries.  Fall back to non fenced execution.
+        LOG(INFO) << "ANeuralNetworksExecution_startComputeWithDependencies falling back"
+                  << " to ANeuralNetworksExecution_startCompute"
+                  << " because of boundary operands of unknown size";
+        for (int syncFenceFd : waitForList) {
+            if (syncFenceFd > 0) {
+                auto w = syncWait(syncFenceFd, -1);
+                if (w != FenceState::SIGNALED) {
+                    VLOG(EXECUTION) << "syncWait failed, fd: " << syncFenceFd;
+                    *event = nullptr;
+                    return ANEURALNETWORKS_OP_FAILED;
+                }
+            }
+        }
+        return ANeuralNetworksExecution_startCompute(execution, event);
+    }
+
     int syncFenceToSignal = -1;
     int n = r->computeFenced(waitForList, duration, &syncFenceToSignal);
     std::unique_ptr<SyncFenceEvent> e =
