@@ -90,6 +90,9 @@ TEST_F(MemoryTest, TestFd) {
     unlink(path);
 }
 
+// Hardware buffers are an Android concept, which aren't necessarily
+// available on other platforms such as ChromeOS, which also build NNAPI.
+#if defined(__ANDROID__)
 TEST_F(MemoryTest, TestAHardwareBuffer) {
     const uint32_t offsetForMatrix2 = 20;
     const uint32_t offsetForMatrix3 = 200;
@@ -147,4 +150,6 @@ TEST_F(MemoryTest, TestAHardwareBuffer) {
     AHardwareBuffer_release(buffer);
     buffer = nullptr;
 }
+#endif
+
 }  // end namespace
