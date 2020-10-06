@@ -392,32 +392,36 @@ cc_library_static {
     stl: "c++_static",
 }
 
+cc_defaults {
+    name: "neuralnetworks_generated_defaults",
+    defaults: ["neuralnetworks_float16"],
+    host_supported: true,
+    vendor_available: true,
+    static_libs: ["libneuralnetworks_generated_test_harness"],
+}
+
 cc_library_static {
     name: "neuralnetworks_generated_V1_0_example",
-    defaults: ["neuralnetworks_float16"],
+    defaults: ["neuralnetworks_generated_defaults"],
     srcs: ["generated/spec_V1_0/*.example.cpp"],
-    static_libs: ["libneuralnetworks_generated_test_harness"],
 }
 
 cc_library_static {
     name: "neuralnetworks_generated_V1_1_example",
-    defaults: ["neuralnetworks_float16"],
+    defaults: ["neuralnetworks_generated_defaults"],
     srcs: ["generated/spec_V1_1/*.example.cpp"],
-    static_libs: ["libneuralnetworks_generated_test_harness"],
 }
 
 cc_library_static {
     name: "neuralnetworks_generated_V1_2_example",
-    defaults: ["neuralnetworks_float16"],
+    defaults: ["neuralnetworks_generated_defaults"],
     srcs: ["generated/spec_V1_2/*.example.cpp"],
-    static_libs: ["libneuralnetworks_generated_test_harness"],
 }
 
 cc_library_static {
     name: "neuralnetworks_generated_V1_3_example",
-    defaults: ["neuralnetworks_float16"],
+    defaults: ["neuralnetworks_generated_defaults"],
     srcs: ["generated/spec_V1_3/*.example.cpp"],
-    static_libs: ["libneuralnetworks_generated_test_harness"],
 }
 
 cc_library_static {
