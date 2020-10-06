@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+#include <android-base/scopeguard.h>
 #include <gtest/gtest.h>
 
 #include "GeneratedTestUtils.h"
@@ -145,6 +146,9 @@ TEST_F(ComplianceTest, HardwareBufferModel) {
 
     AHardwareBuffer* buffer = nullptr;
     ASSERT_EQ(AHardwareBuffer_allocate(&desc, &buffer), 0);
+    auto allocateGuard =
+            android::base::make_scope_guard([buffer]() { AHardwareBuffer_release(buffer); });
+
     test_wrapper::Memory memory(buffer);
     ASSERT_TRUE(memory.isValid());
 
@@ -160,8 +164,6 @@ TEST_F(ComplianceTest, HardwareBufferModel) {
     ASSERT_TRUE(model.isValid());
     model.finish();
     testAvailableSinceV1_2(model);
-
-    AHardwareBuffer_release(buffer);
 }
 
 TEST_F(ComplianceTest, HardwareBufferRequest) {
