@@ -22,9 +22,9 @@
 
 #include <limits>
 #include <memory>
-#include <optional>
 #include <utility>
 
+#include "Result.h"
 #include "SharedMemory.h"
 #include "TypeUtils.h"
 #include "Types.h"
@@ -32,7 +32,7 @@
 namespace android::nn {
 namespace {
 
-std::optional<Mapping> mapAshmem(const Memory& memory) {
+Result<Mapping> mapAshmem(const Memory& memory) {
     CHECK_LE(memory.size, std::numeric_limits<uint32_t>::max());
     const auto size = memory.size;
 
@@ -40,8 +40,7 @@ std::optional<Mapping> mapAshmem(const Memory& memory) {
     std::shared_ptr<base::MappedFile> mapping =
             base::MappedFile::FromFd(fd, /*offset=*/0, size, PROT_READ | PROT_WRITE);
     if (mapping == nullptr) {
-        LOG(ERROR) << "Can't mmap the file descriptor.";
-        return std::nullopt;
+        return NN_ERROR() << "Can't mmap the file descriptor.";
     }
     void* data = mapping->data();
 
@@ -53,7 +52,7 @@ struct MmapFdMappingContext {
     std::any context;
 };
 
-std::optional<Mapping> mapMemFd(const Memory& memory) {
+Result<Mapping> mapMemFd(const Memory& memory) {
     const size_t size = memory.size;
     const native_handle_t* handle = memory.handle->handle();
     const int fd = handle->data[0];
@@ -62,8 +61,7 @@ std::optional<Mapping> mapMemFd(const Memory& memory) {
 
     std::shared_ptr<base::MappedFile> mapping = base::MappedFile::FromFd(fd, offset, size, prot);
     if (mapping == nullptr) {
-        LOG(ERROR) << "Can't mmap the file descriptor.";
-        return std::nullopt;
+        return NN_ERROR() << "Can't mmap the file descriptor.";
     }
     void* data = mapping->data();
 
@@ -73,18 +71,16 @@ std::optional<Mapping> mapMemFd(const Memory& memory) {
 
 }  // namespace
 
-std::optional<Memory> createSharedMemory(size_t size) {
+Result<Memory> createSharedMemory(size_t size) {
     int fd = ashmem_create_region("NnapiAshmem", size);
     if (fd < 0) {
-        LOG(ERROR) << "ashmem_create_region(" << size << ") fails with " << fd;
-        return std::nullopt;
+        return NN_ERROR() << "ashmem_create_region(" << size << ") fails with " << fd;
     }
 
     native_handle_t* handle = native_handle_create(1, 0);
     if (handle == nullptr) {
-        LOG(ERROR) << "Failed to create native_handle";
         // TODO(b/120417090): is ANEURALNETWORKS_UNEXPECTED_NULL the correct error to return here?
-        return std::nullopt;
+        return NN_ERROR() << "Failed to create native_handle";
     }
     handle->data[0] = fd;
 
@@ -95,27 +91,24 @@ std::optional<Memory> createSharedMemory(size_t size) {
     return Memory{.handle = std::move(nativeHandle), .size = size, .name = "ashmem"};
 }
 
-std::optional<Memory> createSharedMemoryFromFd(size_t size, int prot, int fd, size_t offset) {
+Result<Memory> createSharedMemoryFromFd(size_t size, int prot, int fd, size_t offset) {
     if (size == 0 || fd < 0) {
-        LOG(ERROR) << "Invalid size or fd";
-        return std::nullopt;
+        return NN_ERROR() << "Invalid size or fd";
     }
 
     // Duplicate the file descriptor so the resultant Memory owns its own version.
     int dupfd = dup(fd);
     if (dupfd == -1) {
-        LOG(ERROR) << "Failed to dup the fd";
         // TODO(b/120417090): is ANEURALNETWORKS_UNEXPECTED_NULL the correct error to return here?
-        return std::nullopt;
+        return NN_ERROR() << "Failed to dup the fd";
     }
 
     // Create a temporary native handle to own the dupfd.
     native_handle_t* nativeHandle = native_handle_create(1, 3);
     if (nativeHandle == nullptr) {
-        LOG(ERROR) << "Failed to create native_handle";
         close(dupfd);
         // TODO(b/120417090): is ANEURALNETWORKS_UNEXPECTED_NULL the correct error to return here?
-        return std::nullopt;
+        return NN_ERROR() << "Failed to create native_handle";
     }
 
     const auto [lowOffsetBits, highOffsetBits] = getIntsFromOffset(offset);
@@ -131,25 +124,22 @@ std::optional<Memory> createSharedMemoryFromFd(size_t size, int prot, int fd, si
     return Memory{.handle = std::move(ownedHandle), .size = size, .name = "mmap_fd"};
 }
 
-std::optional<Memory> createSharedMemoryFromHidlMemory(const hardware::hidl_memory& /*memory*/) {
-    LOG(ERROR) << "hidl_memory not supported on host";
-    return std::nullopt;
+Result<Memory> createSharedMemoryFromHidlMemory(const hardware::hidl_memory& /*memory*/) {
+    return NN_ERROR() << "hidl_memory not supported on host";
 }
 
-std::optional<Memory> createSharedMemoryFromAHWB(const AHardwareBuffer& /*ahwb*/) {
-    LOG(ERROR) << "AHardwareBuffer memory not supported on host";
-    return std::nullopt;
+Result<Memory> createSharedMemoryFromAHWB(const AHardwareBuffer& /*ahwb*/) {
+    return NN_ERROR() << "AHardwareBuffer memory not supported on host";
 }
 
-std::optional<Mapping> map(const Memory& memory) {
+Result<Mapping> map(const Memory& memory) {
     if (memory.name == "ashmem") {
         return mapAshmem(memory);
     }
     if (memory.name == "mmap_fd") {
         return mapMemFd(memory);
     }
-    LOG(ERROR) << "Cannot map unknown memory " << memory.name;
-    return std::nullopt;
+    return NN_ERROR() << "Cannot map unknown memory " << memory.name;
 }
 
 bool flush(const Mapping& mapping) {
