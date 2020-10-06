@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-#include "TestNeuralNetworksWrapper.h"
-
-//#include <android-base/logging.h>
+#include <android-base/scopeguard.h>
 #include <gtest/gtest.h>
+
+#include "TestNeuralNetworksWrapper.h"
 
 using namespace android::nn::test_wrapper;
 
@@ -135,6 +135,9 @@ TEST_F(TrivialTest, AddTwoWithHardwareBufferInput) {
     };
     AHardwareBuffer* matrix1Buffer = nullptr;
     ASSERT_EQ(AHardwareBuffer_allocate(&desc, &matrix1Buffer), 0);
+    auto allocateGuard = android::base::make_scope_guard(
+            [matrix1Buffer]() { AHardwareBuffer_release(matrix1Buffer); });
+
     Memory matrix1Memory(matrix1Buffer);
     ASSERT_TRUE(matrix1Memory.isValid());
 
@@ -175,7 +178,6 @@ TEST_F(TrivialTest, AddTwoWithHardwareBufferInput) {
     }
 
     ASSERT_EQ(CompareMatrices(expected2, actual), 0);
-    AHardwareBuffer_release(matrix1Buffer);
 }
 
 TEST_F(TrivialTest, AddThree) {
