@@ -28,6 +28,7 @@
 
 #include "OperandTypes.h"
 #include "OperationTypes.h"
+#include "Result.h"
 #include "Types.h"
 
 namespace android::nn {
@@ -178,20 +179,22 @@ std::vector<uint32_t> countNumberOfConsumers(size_t numberOfOperands,
     return numberOfConsumers;
 }
 
-std::optional<Dimensions> combineDimensions(const Dimensions& lhs, const Dimensions& rhs) {
+Result<Dimensions> combineDimensions(const Dimensions& lhs, const Dimensions& rhs) {
     if (rhs.empty()) return lhs;
     if (lhs.empty()) return rhs;
     if (lhs.size() != rhs.size()) {
-        LOG(ERROR) << "Incompatible ranks: " << lhs << " and " << rhs;
-        return std::nullopt;
+        std::ostringstream os;
+        os << "Incompatible ranks: " << lhs << " and " << rhs;
+        return NN_ERROR() << os.str();
     }
     Dimensions combined = lhs;
     for (size_t i = 0; i < lhs.size(); i++) {
         if (lhs[i] == 0) {
             combined[i] = rhs[i];
         } else if (rhs[i] != 0 && lhs[i] != rhs[i]) {
-            LOG(ERROR) << "Incompatible dimensions: " << lhs << " and " << rhs;
-            return std::nullopt;
+            std::ostringstream os;
+            os << "Incompatible dimensions: " << lhs << " and " << rhs;
+            return NN_ERROR() << os.str();
         }
     }
     return combined;
@@ -795,8 +798,6 @@ std::ostream& operator<<(std::ostream& os, const Version& version) {
             return os << "ANDROID_R";
         case Version::CURRENT_RUNTIME:
             return os << "CURRENT_RUNTIME";
-        case Version::INVALID:
-            return os << "INVALID";
     }
     return os << "Version{" << underlyingType(version) << "}";
 }

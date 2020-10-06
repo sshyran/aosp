@@ -27,6 +27,7 @@
 #include <set>
 #include <sstream>
 #include <string>
+#include <string_view>
 #include <tuple>
 #include <utility>
 #include <variant>
@@ -35,22 +36,9 @@
 #include "ControlFlow.h"
 #include "OperandTypes.h"
 #include "OperationTypes.h"
+#include "Result.h"
 #include "TypeUtils.h"
 #include "Types.h"
-
-#define NN_RET_IF_INVALID(version)           \
-    do {                                     \
-        if ((version) == Version::INVALID) { \
-            return Version::INVALID;         \
-        }                                    \
-    } while (0)
-
-#define NN_RET_IF_FALSE(cond)  \
-    do {                       \
-        if ((cond) == false) { \
-            return false;      \
-        }                      \
-    } while (0)
 
 // The NN_VALIDATE family of macros defined below is similar to the CHECK family defined in
 // system/core/base/include/android-base/logging.h
@@ -63,9 +51,8 @@
 //   NN_VALIDATE_FAIL() << "Something went wrong";
 //
 // The containing function must return a bool or Version.
-#define NN_VALIDATE_FAIL()                    \
-    return ::android::nn::FalseyErrorStream() \
-           << "NN_VALIDATE failed (" << __FILE__ << ":" << __LINE__ << "): "
+#define NN_VALIDATE_FAIL() \
+    return NN_ERROR() << "NN_VALIDATE failed (" << __FILE__ << ":" << __LINE__ << "): "
 
 // Logs an error and returns false or Version::INVALID if condition is false. Extra logging can be
 // appended using << after. For example:
@@ -106,39 +93,15 @@
 namespace android::nn {
 namespace {
 
-// A wrapper around LOG(ERROR) that can be implicitly converted to bool (always evaluates to false
-// or Version::INVALID). Used to implement stream logging in NN_VALIDATE.
-class FalseyErrorStream {
-    DISALLOW_COPY_AND_ASSIGN(FalseyErrorStream);
-
-   public:
-    FalseyErrorStream() = default;
-
-    template <typename T>
-    FalseyErrorStream& operator<<(const T& value) {
-        mBuffer << value;
-        return *this;
-    }
-
-    ~FalseyErrorStream() { LOG(ERROR) << mBuffer.str(); }
-
-    operator bool() const { return false; }                // NOLINT(google-explicit-constructor)
-    operator Version() const { return Version::INVALID; }  // NOLINT(google-explicit-constructor)
-
-   private:
-    std::ostringstream mBuffer;
-};
-
 constexpr auto kNullptrVariant = std::variant<const void*, void*>{};
 constexpr auto kInvalidMemoryDomainToken = Request::MemoryDomainToken{};
 
 template <typename Type, typename ValidationFunction>
-Version validateVector(const std::vector<Type>& objects,
-                       const ValidationFunction& validationFunction) {
+Result<Version> validateVector(const std::vector<Type>& objects,
+                               const ValidationFunction& validationFunction) {
     auto version = Version::ANDROID_OC_MR1;
     for (const auto& object : objects) {
-        version = combineVersions(version, validationFunction(object));
-        if (version == Version::INVALID) return Version::INVALID;
+        version = combineVersions(version, NN_TRY(validationFunction(object)));
     }
     return version;
 }
@@ -152,7 +115,7 @@ bool isValidExtensionName(const std::string& name) {
     return hasOnlyValidSymbols && hasAtLeastOnePeriod;
 }
 
-Version validateDeviceStatus(const DeviceStatus& deviceStatus) {
+Result<Version> validateDeviceStatus(const DeviceStatus& deviceStatus) {
     switch (deviceStatus) {
         case DeviceStatus::AVAILABLE:
         case DeviceStatus::BUSY:
@@ -163,7 +126,7 @@ Version validateDeviceStatus(const DeviceStatus& deviceStatus) {
     NN_VALIDATE_FAIL() << "Invalid DeviceStatus " << deviceStatus;
 }
 
-Version validateExecutionPreference(const ExecutionPreference& executionPreference) {
+Result<Version> validateExecutionPreference(const ExecutionPreference& executionPreference) {
     switch (executionPreference) {
         case ExecutionPreference::LOW_POWER:
         case ExecutionPreference::FAST_SINGLE_ANSWER:
@@ -173,7 +136,7 @@ Version validateExecutionPreference(const ExecutionPreference& executionPreferen
     NN_VALIDATE_FAIL() << "Invalid ExecutionPreference " << executionPreference;
 }
 
-Version validateDeviceType(const DeviceType& deviceType) {
+Result<Version> validateDeviceType(const DeviceType& deviceType) {
     switch (deviceType) {
         case DeviceType::UNKNOWN:
             // DeviceType was introduced in the 1.2 NN HAL. DeviceType::UNKNOWN is returned when
@@ -191,7 +154,7 @@ Version validateDeviceType(const DeviceType& deviceType) {
     NN_VALIDATE_FAIL() << "Invalid DeviceType " << deviceType;
 }
 
-Version validateMeasureTiming(const MeasureTiming& measureTiming) {
+Result<Version> validateMeasureTiming(const MeasureTiming& measureTiming) {
     switch (measureTiming) {
         case MeasureTiming::NO:
         case MeasureTiming::YES:
@@ -200,7 +163,7 @@ Version validateMeasureTiming(const MeasureTiming& measureTiming) {
     NN_VALIDATE_FAIL() << "Invalid MeasureTiming " << measureTiming;
 }
 
-Version validateOperandType(const OperandType& operandType) {
+Result<Version> validateOperandType(const OperandType& operandType) {
     switch (operandType) {
         case OperandType::FLOAT32:
         case OperandType::INT32:
@@ -230,12 +193,11 @@ Version validateOperandType(const OperandType& operandType) {
     NN_VALIDATE_FAIL() << "Invalid OperandType " << operandType;
 }
 
-Version validateOperandLifeTime(const Operand& operand, size_t index) {
+Result<Version> validateOperandLifeTime(const Operand& operand) {
     // Make sure SUBGRAPH operand type and lifetime always go together.
     NN_VALIDATE_EQ((operand.type == OperandType::SUBGRAPH),
                    (operand.lifetime == Operand::LifeTime::SUBGRAPH))
-            << "Operand " << index << ": Operand of type " << operand.type
-            << " cannot have lifetime " << operand.lifetime;
+            << "Operand of type " << operand.type << " cannot have lifetime " << operand.lifetime;
 
     switch (operand.lifetime) {
         case Operand::LifeTime::TEMPORARY_VARIABLE:
@@ -249,10 +211,10 @@ Version validateOperandLifeTime(const Operand& operand, size_t index) {
         case Operand::LifeTime::SUBGRAPH:
             return Version::ANDROID_R;
     }
-    NN_VALIDATE_FAIL() << "Operand " << index << ": Invalid Operand::LifeTime " << operand.lifetime;
+    NN_VALIDATE_FAIL() << "Invalid Operand::LifeTime " << operand.lifetime;
 }
 
-Version validatePriority(const Priority& priority) {
+Result<Version> validatePriority(const Priority& priority) {
     switch (priority) {
         case Priority::LOW:
         case Priority::MEDIUM:
@@ -262,7 +224,7 @@ Version validatePriority(const Priority& priority) {
     NN_VALIDATE_FAIL() << "Invalid Priority " << priority;
 }
 
-Version validateErrorStatus(const ErrorStatus& errorStatus) {
+Result<Version> validateErrorStatus(const ErrorStatus& errorStatus) {
     // Note that MISSED_DEADLINE_*, RESOURCE_EXHAUSTED_*, and DEAD_OBJECT were introduced ih
     // ANDROID_R, but these can be cast to ANDROID_OC_MR1 as GENERAL_FAILURE.
     switch (errorStatus) {
@@ -281,70 +243,65 @@ Version validateErrorStatus(const ErrorStatus& errorStatus) {
     NN_VALIDATE_FAIL() << "Invalid ErrorStatus " << errorStatus;
 }
 
-Version validateOutputShape(const OutputShape& /*outputShape*/) {
+Result<Version> validateOutputShape(const OutputShape& /*outputShape*/) {
     return Version::ANDROID_Q;
 }
 
-Version validateTiming(const Timing& timing) {
+Result<Version> validateTiming(const Timing& timing) {
     if (timing.timeInDriver != kNoTiming && timing.timeOnDevice != kNoTiming) {
         NN_VALIDATE_LE(timing.timeOnDevice, timing.timeInDriver);
     }
     return Version::ANDROID_Q;
 }
 
-Version validateCapabilitiesPerformanceInfo(const Capabilities::PerformanceInfo& performanceInfo) {
+Result<Version> validateCapabilitiesPerformanceInfo(
+        const Capabilities::PerformanceInfo& performanceInfo) {
     NN_VALIDATE_GT(performanceInfo.execTime, 0.0f);
     NN_VALIDATE_GT(performanceInfo.powerUsage, 0.0f);
     return Version::ANDROID_OC_MR1;
 }
 
-Version validateCapabilitiesOperandPerformance(
+Result<Version> validateCapabilitiesOperandPerformance(
         const Capabilities::OperandPerformance& operandPerformance) {
-    auto version = validateOperandType(operandPerformance.type);
-    NN_RET_IF_INVALID(version);
-
-    return combineVersions(version, validateCapabilitiesPerformanceInfo(operandPerformance.info));
+    auto version = NN_TRY(validateOperandType(operandPerformance.type));
+    return combineVersions(version,
+                           NN_TRY(validateCapabilitiesPerformanceInfo(operandPerformance.info)));
 }
 
-Version validateCapabilitiesOperandPerformanceTable(
+Result<Version> validateCapabilitiesOperandPerformanceTable(
         const Capabilities::OperandPerformanceTable& operandPerformances) {
     // OperandPerformanceTable's order was validated when it was created, and it is castable to any
     // version. If an OperandType does not exist in the lower version being converted to, that
     // OperandPerformance will be dropped.
-    NN_RET_IF_INVALID(
-            validateVector(operandPerformances.asVector(), validateCapabilitiesOperandPerformance));
+    NN_TRY(validateVector(operandPerformances.asVector(), validateCapabilitiesOperandPerformance));
     return Version::ANDROID_OC_MR1;
 }
 
-Version validateCapabilities(const Capabilities& capabilities) {
-    auto version = validateCapabilitiesOperandPerformanceTable(capabilities.operandPerformance);
-    NN_RET_IF_INVALID(version);
+Result<Version> validateCapabilities(const Capabilities& capabilities) {
+    auto version =
+            NN_TRY(validateCapabilitiesOperandPerformanceTable(capabilities.operandPerformance));
 
     version = combineVersions(version,
-                              validateCapabilitiesPerformanceInfo(
-                                      capabilities.relaxedFloat32toFloat16PerformanceScalar));
-    NN_RET_IF_INVALID(version);
-
+                              NN_TRY(validateCapabilitiesPerformanceInfo(
+                                      capabilities.relaxedFloat32toFloat16PerformanceScalar)));
     version = combineVersions(version,
-                              validateCapabilitiesPerformanceInfo(
-                                      capabilities.relaxedFloat32toFloat16PerformanceTensor));
-    NN_RET_IF_INVALID(version);
+                              NN_TRY(validateCapabilitiesPerformanceInfo(
+                                      capabilities.relaxedFloat32toFloat16PerformanceTensor)));
+    version = combineVersions(
+            version, NN_TRY(validateCapabilitiesPerformanceInfo(capabilities.ifPerformance)));
+    version = combineVersions(
+            version, NN_TRY(validateCapabilitiesPerformanceInfo(capabilities.whilePerformance)));
 
-    version = combineVersions(version,
-                              validateCapabilitiesPerformanceInfo(capabilities.ifPerformance));
-    NN_RET_IF_INVALID(version);
-
-    return combineVersions(version,
-                           validateCapabilitiesPerformanceInfo(capabilities.whilePerformance));
+    return version;
 }
 
-Version validateExtensionOperandTypeInformation(
+Result<Version> validateExtensionOperandTypeInformation(
         const Extension::OperandTypeInformation& operandTypeInformation) {
     NN_VALIDATE_GT(operandTypeInformation.byteSize, 0u);
     return Version::ANDROID_Q;
 }
 
-Version validateExtension(const Extension& extension) {
+Result<Version> validateExtension(const Extension& extension) {
     NN_VALIDATE(isValidExtensionName(extension.name));
 
     // Verify all OperandTypeInformations have unique types.
@@ -359,14 +316,13 @@ Version validateExtension(const Extension& extension) {
     const auto iter = std::adjacent_find(types.begin(), types.end());
     NN_VALIDATE(iter == types.end()) << "Extension has duplicate type " << *iter;
 
-    return combineVersions(
-            Version::ANDROID_Q,
-            validateVector(extension.operandTypes, validateExtensionOperandTypeInformation));
+    return combineVersions(Version::ANDROID_Q,
+                           NN_TRY(validateVector(extension.operandTypes,
+                                                 validateExtensionOperandTypeInformation)));
 }
 
-Version validateExtensions(const std::vector<Extension>& extensions) {
-    const auto version = validateVector(extensions, validateExtension);
-    NN_RET_IF_INVALID(version);
+Result<Version> validateExtensions(const std::vector<Extension>& extensions) {
+    const auto version = NN_TRY(validateVector(extensions, validateExtension));
 
     // Verify all extensions have unique names.
     std::vector<std::reference_wrapper<const std::string>> names;
@@ -382,79 +338,69 @@ Version validateExtensions(const std::vector<Extension>& extensions) {
     return version;
 }
 
-Version validateOperandDataLocation(const Operand& operand, size_t index, size_t operandValuesSize,
-                                    const std::vector<size_t>& poolSizes, size_t subgraphCount) {
+Result<Version> validateOperandDataLocation(const Operand& operand, size_t operandValuesSize,
+                                            const std::vector<size_t>& poolSizes,
+                                            size_t subgraphCount) {
     const DataLocation& location = operand.location;
     switch (operand.lifetime) {
         case Operand::LifeTime::CONSTANT_COPY:
             NN_VALIDATE(location.pointer == kNullptrVariant)
-                    << "Operand " << index << ": CONSTANT_COPY with a non-null pointer";
+                    << "CONSTANT_COPY with a non-null pointer";
             NN_VALIDATE_EQ(location.poolIndex, 0u)
-                    << "Operand " << index << ": CONSTANT_COPY with a non-zero poolIndex "
-                    << location.poolIndex;
+                    << "CONSTANT_COPY with a non-zero poolIndex " << location.poolIndex;
             // Do the addition using uint64_t to avoid potential wrap-around problems.
             NN_VALIDATE_LE(static_cast<uint64_t>(location.offset) + location.length,
                            operandValuesSize)
-                    << "Operand " << index << ": OperandValue location out of range.  Starts at "
-                    << location.offset << ", length " << location.length << ", max "
-                    << operandValuesSize;
+                    << "OperandValue location out of range.  Starts at " << location.offset
+                    << ", length " << location.length << ", max " << operandValuesSize;
             return Version::ANDROID_OC_MR1;
         case Operand::LifeTime::CONSTANT_REFERENCE:
             NN_VALIDATE_LT(location.poolIndex, poolSizes.size());
             // Do the addition using uint64_t to avoid potential wrap-around problems.
             NN_VALIDATE_LE(static_cast<uint64_t>(location.offset) + location.length,
                            poolSizes[location.poolIndex])
-                    << "Operand " << index << ": OperandValue location out of range.  Starts at "
-                    << location.offset << ", length " << location.length << ", max "
-                    << poolSizes[location.poolIndex];
+                    << "OperandValue location out of range.  Starts at " << location.offset
+                    << ", length " << location.length << ", max " << poolSizes[location.poolIndex];
             return Version::ANDROID_OC_MR1;
         case Operand::LifeTime::TEMPORARY_VARIABLE:
         case Operand::LifeTime::SUBGRAPH_INPUT:
         case Operand::LifeTime::SUBGRAPH_OUTPUT:
         case Operand::LifeTime::NO_VALUE:
             NN_VALIDATE(location.pointer == kNullptrVariant)
-                    << "Operand " << index << ": Unexpected pointer value for operand of lifetime "
-                    << operand.lifetime;
+                    << "Unexpected pointer value for operand of lifetime " << operand.lifetime;
             NN_VALIDATE_EQ(location.poolIndex, 0u)
-                    << "Operand " << index << ": Unexpected poolIndex " << location.poolIndex
-                    << " for operand of lifetime " << operand.lifetime;
-            NN_VALIDATE_EQ(location.offset, 0u)
-                    << "Operand " << index << ": Unexpected offset " << location.offset
-                    << " for operand of lifetime " << operand.lifetime;
-            NN_VALIDATE_EQ(location.length, 0u)
-                    << "Operand " << index << ": Unexpected length " << location.length
-                    << " for operand of lifetime " << operand.lifetime;
+                    << "Unexpected poolIndex " << location.poolIndex << " for operand of lifetime "
+                    << operand.lifetime;
+            NN_VALIDATE_EQ(location.offset, 0u) << "Unexpected offset " << location.offset
+                                                << " for operand of lifetime " << operand.lifetime;
+            NN_VALIDATE_EQ(location.length, 0u) << "Unexpected length " << location.length
+                                                << " for operand of lifetime " << operand.lifetime;
             return Version::ANDROID_OC_MR1;
         case Operand::LifeTime::SUBGRAPH:
-            NN_VALIDATE(location.pointer == kNullptrVariant)
-                    << "Operand " << index << ": SUBGRAPH with a non-null pointer";
+            NN_VALIDATE(location.pointer == kNullptrVariant) << "SUBGRAPH with a non-null pointer";
             NN_VALIDATE_EQ(location.poolIndex, 0u)
-                    << "Operand " << index << ": SUBGRAPH with a non-zero poolIndex "
-                    << location.poolIndex;
+                    << "SUBGRAPH with a non-zero poolIndex " << location.poolIndex;
             NN_VALIDATE_LT(location.offset, subgraphCount)
                     << "Subgraph index out of range: " << location.offset
                     << " >= " << subgraphCount;
             NN_VALIDATE_EQ(location.length, 0u)
-                    << "Operand " << index << ": SUBGRAPH with a non-zero length "
-                    << location.length;
+                    << "SUBGRAPH with a non-zero length " << location.length;
             return Version::ANDROID_R;
         case Operand::LifeTime::POINTER: {
             const bool nonNull =
                     std::visit([](auto* ptr) { return ptr != nullptr; }, location.pointer);
-            NN_VALIDATE(nonNull) << "Operand " << index << ": POINTER with a null pointer";
+            NN_VALIDATE(nonNull) << "POINTER with a null pointer";
             NN_VALIDATE_EQ(location.poolIndex, 0u)
-                    << "Operand " << index << ": POINTER with a non-zero poolIndex "
-                    << location.poolIndex;
+                    << "POINTER with a non-zero poolIndex " << location.poolIndex;
             NN_VALIDATE_EQ(location.offset, 0u)
-                    << "Operand " << index << ": POINTER with a non-zero offset "
-                    << location.offset;
+                    << "POINTER with a non-zero offset " << location.offset;
             return Version::ANDROID_OC_MR1;
         }
     }
-    NN_VALIDATE_FAIL() << "Operand " << index << ": Invalid Operand::LifeTime " << operand.lifetime;
+    NN_VALIDATE_FAIL() << "Invalid Operand::LifeTime " << operand.lifetime;
 }
 
-Version validateOperandDimensions(const Operand& operand, size_t index) {
+Result<Version> validateOperandDimensions(const Operand& operand) {
     switch (operand.type) {
         case OperandType::FLOAT32:
         case OperandType::INT32:
@@ -464,8 +410,7 @@ Version validateOperandDimensions(const Operand& operand, size_t index) {
         case OperandType::SUBGRAPH:
         case OperandType::OEM:
             NN_VALIDATE(operand.dimensions.empty())
-                    << "Operand " << index << ": Scalar data has dimensions of rank "
-                    << operand.dimensions.size();
+                    << "Scalar data has dimensions of rank " << operand.dimensions.size();
             return Version::ANDROID_OC_MR1;
         case OperandType::TENSOR_FLOAT32:
         case OperandType::TENSOR_INT32:
@@ -482,13 +427,11 @@ Version validateOperandDimensions(const Operand& operand, size_t index) {
                 operand.lifetime == Operand::LifeTime::CONSTANT_REFERENCE ||
                 operand.lifetime == Operand::LifeTime::POINTER) {
                 NN_VALIDATE(!operand.dimensions.empty())
-                        << "Operand " << index << ": Tensor has lifetime of " << operand.lifetime
+                        << "Tensor has lifetime of " << operand.lifetime
                         << " but dimensions of rank 0";
                 const auto size = getNonExtensionSize(operand);
-                NN_VALIDATE(size.has_value())
-                        << "Operand " << index << ": Tensor dimensions overflow";
-                NN_VALIDATE_EQ(size.value(), 0u)
-                        << "Operand " << index << ": Tensor has at least one unknown dimension";
+                NN_VALIDATE(size.has_value()) << "Tensor dimensions overflow";
+                NN_VALIDATE_EQ(size.value(), 0u) << "Tensor has at least one unknown dimension";
             }
             // TODO(b/165152547): aren't NO_VALUE arguments allowed to be .empty() even before
             // Android Q?
@@ -503,10 +446,10 @@ Version validateOperandDimensions(const Operand& operand, size_t index) {
         // Extension types were added in Android Q.
         return Version::ANDROID_Q;
     }
-    NN_VALIDATE_FAIL() << "Operand " << index << ": Invalid OperandType " << operand.type;
+    NN_VALIDATE_FAIL() << "Invalid OperandType " << operand.type;
 }
 
-Version validateOperandScale(const Operand& operand, size_t index) {
+Result<Version> validateOperandScale(const Operand& operand) {
     switch (operand.type) {
         case OperandType::FLOAT32:
         case OperandType::INT32:
@@ -519,22 +462,22 @@ Version validateOperandScale(const Operand& operand, size_t index) {
         case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:
         case OperandType::SUBGRAPH:
             NN_VALIDATE_EQ(operand.scale, 0.0f)
-                    << "Operand " << index << ": Operand of type " << operand.type
-                    << " with a non-zero scale (" << operand.scale << ")";
+                    << "Operand of type " << operand.type << " with a non-zero scale ("
+                    << operand.scale << ")";
             return Version::ANDROID_OC_MR1;
         case OperandType::TENSOR_INT32:
             // TENSOR_INT32 may be used with or without scale, depending on the operation.
             // TODO(b/119869082) We should have a separate type for TENSOR_INT32 with a scale.
-            NN_VALIDATE_GE(operand.scale, 0.0f) << "Operand " << index << ": Operand of type "
-                                                << operand.type << " with a negative scale";
+            NN_VALIDATE_GE(operand.scale, 0.0f)
+                    << "Operand of type " << operand.type << " with a negative scale";
             return Version::ANDROID_OC_MR1;
         case OperandType::TENSOR_QUANT8_ASYMM:
         case OperandType::TENSOR_QUANT16_SYMM:
         case OperandType::TENSOR_QUANT16_ASYMM:
         case OperandType::TENSOR_QUANT8_SYMM:
         case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
-            NN_VALIDATE_GT(operand.scale, 0.0f) << "Operand " << index << ": Operand of type "
-                                                << operand.type << " with a non-positive scale";
+            NN_VALIDATE_GT(operand.scale, 0.0f)
+                    << "Operand of type " << operand.type << " with a non-positive scale";
             return Version::ANDROID_OC_MR1;
         case OperandType::OEM:
         case OperandType::TENSOR_OEM_BYTE:
@@ -542,15 +485,14 @@ Version validateOperandScale(const Operand& operand, size_t index) {
             return Version::ANDROID_OC_MR1;
     }
     if (isExtension(operand.type)) {
-        NN_VALIDATE_EQ(operand.scale, 0.0f)
-                << "Operand " << index << ": Operand of type " << operand.type
-                << " with a non-zero scale (" << operand.scale << ")";
+        NN_VALIDATE_EQ(operand.scale, 0.0f) << "Operand of type " << operand.type
+                                            << " with a non-zero scale (" << operand.scale << ")";
         return Version::ANDROID_Q;
     }
-    NN_VALIDATE_FAIL() << "Operand " << index << ": Invalid OperandType " << operand.type;
+    NN_VALIDATE_FAIL() << "Invalid OperandType " << operand.type;
 }
 
-Version validateOperandZeroPoint(const Operand& operand, size_t index) {
+Result<Version> validateOperandZeroPoint(const Operand& operand) {
     switch (operand.type) {
         case OperandType::FLOAT32:
         case OperandType::INT32:
@@ -565,31 +507,28 @@ Version validateOperandZeroPoint(const Operand& operand, size_t index) {
         case OperandType::TENSOR_QUANT8_SYMM:
         case OperandType::SUBGRAPH:
             NN_VALIDATE_EQ(operand.zeroPoint, 0)
-                    << "Operand " << index << ": Operand of type " << operand.type
-                    << " with a non-zero zeroPoint " << operand.zeroPoint;
+                    << "Operand of type " << operand.type << " with a non-zero zeroPoint "
+                    << operand.zeroPoint;
             return Version::ANDROID_OC_MR1;
         case OperandType::TENSOR_QUANT8_ASYMM:
             NN_VALIDATE(operand.zeroPoint >= 0 && operand.zeroPoint <= 255)
-                    << "Operand " << index << ": Operand of type " << operand.type
-                    << " with an invalid zeroPoint " << operand.zeroPoint
-                    << ", must be in range [0, 255]";
+                    << "Operand of type " << operand.type << " with an invalid zeroPoint "
+                    << operand.zeroPoint << ", must be in range [0, 255]";
             return Version::ANDROID_OC_MR1;
         case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
             NN_VALIDATE(operand.zeroPoint >= -128 && operand.zeroPoint <= 127)
-                    << "Operand " << index << ": Operand of type " << operand.type
-                    << " with an invalid zeroPoint " << operand.zeroPoint
-                    << ", must be in range [-128, 127]";
+                    << "Operand of type " << operand.type << " with an invalid zeroPoint "
+                    << operand.zeroPoint << ", must be in range [-128, 127]";
             return Version::ANDROID_OC_MR1;
         case OperandType::TENSOR_QUANT16_ASYMM:
             NN_VALIDATE(operand.zeroPoint >= 0 && operand.zeroPoint <= 65535)
-                    << "Operand " << index << ": Operand of type " << operand.type
-                    << " with an invalid zeroPoint " << operand.zeroPoint
-                    << ", must be in range [0, 65535]";
+                    << "Operand of type " << operand.type << " with an invalid zeroPoint "
+                    << operand.zeroPoint << ", must be in range [0, 65535]";
             return Version::ANDROID_OC_MR1;
         case OperandType::TENSOR_QUANT16_SYMM:
             NN_VALIDATE_EQ(operand.zeroPoint, 0)
-                    << "Operand " << index << ": Operand of type " << operand.type
-                    << " with a non-zero zeroPoint " << operand.zeroPoint;
+                    << "Operand of type " << operand.type << " with a non-zero zeroPoint "
+                    << operand.zeroPoint;
             return Version::ANDROID_OC_MR1;
         case OperandType::OEM:
         case OperandType::TENSOR_OEM_BYTE:
@@ -597,15 +536,14 @@ Version validateOperandZeroPoint(const Operand& operand, size_t index) {
             return Version::ANDROID_OC_MR1;
     }
     if (isExtension(operand.type)) {
-        NN_VALIDATE_EQ(operand.zeroPoint, 0)
-                << "Operand " << index << ": Operand of type " << operand.type
-                << " with a non-zero zeroPoint " << operand.zeroPoint;
+        NN_VALIDATE_EQ(operand.zeroPoint, 0) << "Operand of type " << operand.type
+                                             << " with a non-zero zeroPoint " << operand.zeroPoint;
         return Version::ANDROID_Q;
     }
-    NN_VALIDATE_FAIL() << "Operand " << index << ": Invalid OperandType " << operand.type;
+    NN_VALIDATE_FAIL() << "Invalid OperandType " << operand.type;
 }
 
-Version validateOperandExtraParams(const Operand& operand, size_t index) {
+Result<Version> validateOperandExtraParams(const Operand& operand) {
     switch (operand.type) {
         case OperandType::FLOAT32:
         case OperandType::INT32:
@@ -623,34 +561,32 @@ Version validateOperandExtraParams(const Operand& operand, size_t index) {
         case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
         case OperandType::SUBGRAPH:
             NN_VALIDATE(std::holds_alternative<Operand::NoParams>(operand.extraParams))
-                    << "Operand " << index << ": Operand of type " << operand.type
+                    << "Operand of type " << operand.type
                     << " has extraParams when there must be none";
             return Version::ANDROID_OC_MR1;
         case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL: {
             NN_VALIDATE(
                     std::holds_alternative<Operand::SymmPerChannelQuantParams>(operand.extraParams))
-                    << "Operand " << index << ": Operand of type " << operand.type
+                    << "Operand of type " << operand.type
                     << " without a Channel Quantization params";
             const auto& channelQuant =
                     std::get<Operand::SymmPerChannelQuantParams>(operand.extraParams);
 
             const size_t count = operand.dimensions.size();
             NN_VALIDATE_LT(channelQuant.channelDim, count)
-                    << "Operand " << index << ": Operand of type " << operand.type
+                    << "Operand of type " << operand.type
                     << " with an invalid channelQuant.channelDim " << channelQuant.channelDim
                     << ", must be valid dimension index in range [0, " << count << ")";
             const uint32_t expected = operand.dimensions[channelQuant.channelDim];
             NN_VALIDATE_EQ(channelQuant.scales.size(), expected)
-                    << "Operand " << index << ": Operand of type " << operand.type
-                    << " with a wrong-sized scales, expected " << expected << " was "
-                    << channelQuant.scales.size();
+                    << "Operand of type " << operand.type << " with a wrong-sized scales, expected "
+                    << expected << " was " << channelQuant.scales.size();
             NN_VALIDATE_NE(expected, 0u)
-                    << "Operand " << index << ": Operand of type " << operand.type
-                    << " channel dimension " << channelQuant.channelDim
-                    << " is underspecified (can't be 0)";
+                    << "Operand of type " << operand.type << " channel dimension "
+                    << channelQuant.channelDim << " is underspecified (can't be 0)";
             for (uint32_t i = 0; i < expected; ++i) {
                 NN_VALIDATE_GT(channelQuant.scales[i], 0.0f)
-                        << "Operand " << index << ": Operand of type " << operand.type
+                        << "Operand of type " << operand.type
                         << " with a non-positive value in scales[" << i
                         << "]=" << channelQuant.scales[i];
             }
@@ -664,39 +600,24 @@ Version validateOperandExtraParams(const Operand& operand, size_t index) {
     if (isExtension(operand.type)) {
         NN_VALIDATE(std::holds_alternative<Operand::NoParams>(operand.extraParams) ||
                     std::holds_alternative<Operand::ExtensionParams>(operand.extraParams))
-                << "Operand " << index << ": Extension operand of type " << operand.type
+                << "Extension operand of type " << operand.type
                 << " must not have SymmPerChannelQuant extraParams";
         return Version::ANDROID_OC_MR1;
     }
-    NN_VALIDATE_FAIL() << "Operand " << index << ": Invalid OperandType " << operand.type;
+    NN_VALIDATE_FAIL() << "Invalid OperandType " << operand.type;
 }
 
-Version validateOperand(const Operand& operand, size_t index, size_t operandValuesSize,
-                        const std::vector<size_t>& poolSizes, size_t subgraphCount) {
-    auto version = Version::ANDROID_OC_MR1;
-
-    version = combineVersions(version, validateOperandType(operand.type));
-    NN_RET_IF_INVALID(version);
-
-    version = combineVersions(version, validateOperandLifeTime(operand, index));
-    NN_RET_IF_INVALID(version);
-
-    version = combineVersions(version, validateOperandDimensions(operand, index));
-    NN_RET_IF_INVALID(version);
-
-    version = combineVersions(version, validateOperandScale(operand, index));
-    NN_RET_IF_INVALID(version);
-
-    version = combineVersions(version, validateOperandZeroPoint(operand, index));
-    NN_RET_IF_INVALID(version);
-
-    version = combineVersions(version, validateOperandExtraParams(operand, index));
-    NN_RET_IF_INVALID(version);
-
+Result<Version> validateOperand(const Operand& operand, size_t operandValuesSize,
+                                const std::vector<size_t>& poolSizes, size_t subgraphCount) {
+    auto version = NN_TRY(validateOperandType(operand.type));
+    version = combineVersions(version, NN_TRY(validateOperandLifeTime(operand)));
+    version = combineVersions(version, NN_TRY(validateOperandDimensions(operand)));
+    version = combineVersions(version, NN_TRY(validateOperandScale(operand)));
+    version = combineVersions(version, NN_TRY(validateOperandZeroPoint(operand)));
+    version = combineVersions(version, NN_TRY(validateOperandExtraParams(operand)));
     version =
-            combineVersions(version, validateOperandDataLocation(operand, index, operandValuesSize,
-                                                                 poolSizes, subgraphCount));
-    NN_RET_IF_INVALID(version);
+            combineVersions(version, NN_TRY(validateOperandDataLocation(operand, operandValuesSize,
+                                                                        poolSizes, subgraphCount)));
 
     // For constants, validate that the length is as expected. The other lifetimes
     // expect the length to be 0. Don't validate for OEM types.
@@ -707,48 +628,52 @@ Version validateOperand(const Operand& operand, size_t index, size_t operandValu
             operand.type != OperandType::TENSOR_OEM_BYTE) {
             const auto expectedLength = getNonExtensionSize(operand).value();
             NN_VALIDATE_EQ(operand.location.length, expectedLength)
-                    << "Operand " << index << ": For operand " << operand.type
-                    << " expected a size of " << expectedLength << " but got "
-                    << operand.location.length;
+                    << "For operand " << operand.type << " expected a size of " << expectedLength
+                    << " but got " << operand.location.length;
         }
     }
 
     return version;
 }
 
-Version validateOperands(const std::vector<Operand>& operands, size_t operandValuesSize,
-                         const std::vector<size_t>& poolSizes, size_t subgraphCount) {
+Result<Version> validateOperands(const std::vector<Operand>& operands, size_t operandValuesSize,
+                                 const std::vector<size_t>& poolSizes, size_t subgraphCount) {
     auto version = Version::ANDROID_OC_MR1;
-    for (size_t index = 0; index < operands.size(); ++index) {
-        version =
-                combineVersions(version, validateOperand(operands[index], index, operandValuesSize,
-                                                         poolSizes, subgraphCount));
-        NN_RET_IF_INVALID(version);
+    for (size_t i = 0; i < operands.size(); ++i) {
+        auto result = validateOperand(operands[i], operandValuesSize, poolSizes, subgraphCount);
+        if (!result.has_value()) {
+            return NN_ERROR() << std::move(result).error() << " for operand " << i;
+        }
+        version = combineVersions(version, result.value());
     }
     return version;
 }
 
-Version validateOperationImpl(const Operation& operation, const std::vector<Operand>& operands,
-                              const std::vector<Model::Subgraph>& subgraphs);
+Result<Version> validateOperationImpl(const Operation& operation,
+                                      const std::vector<Operand>& operands,
+                                      const std::vector<Model::Subgraph>& subgraphs);
 
-Version validateOperations(const std::vector<Operation>& operations,
-                           const std::vector<Operand>& operands,
-                           const std::vector<Model::Subgraph>& subgraphs) {
+Result<Version> validateOperations(const std::vector<Operation>& operations,
+                                   const std::vector<Operand>& operands,
+                                   const std::vector<Model::Subgraph>& subgraphs) {
     auto version = Version::ANDROID_OC_MR1;
-    for (const auto& operation : operations) {
-        version = combineVersions(version, validateOperationImpl(operation, operands, subgraphs));
-        NN_RET_IF_INVALID(version);
+    for (size_t i = 0; i < operations.size(); ++i) {
+        auto result = validateOperationImpl(operations[i], operands, subgraphs);
+        if (!result.has_value()) {
+            return NN_ERROR() << std::move(result).error() << " for operation " << i;
+        }
+        version = combineVersions(version, result.value());
     }
     return version;
 }
 
-Version validateNativeHandle(const NativeHandle& handle) {
+Result<Version> validateNativeHandle(const NativeHandle& handle) {
     NN_VALIDATE(handle != nullptr);
     return Version::ANDROID_OC_MR1;
 }
 
-Version validateMemory(const Memory& memory) {
-    NN_RET_IF_INVALID(validateNativeHandle(memory.handle));
+Result<Version> validateMemory(const Memory& memory) {
+    NN_TRY(validateNativeHandle(memory.handle));
 
     if (memory.name == "ashmem") {
         NN_VALIDATE_NE(memory.size, 0u);
@@ -772,8 +697,9 @@ Version validateMemory(const Memory& memory) {
     NN_VALIDATE_FAIL() << "Unknown memory type " << memory.name;
 }
 
-bool isValidSubgraphInputOutputs(const std::vector<uint32_t>& indexes,
-                                 const std::vector<Operand>& operands, Operand::LifeTime lifetime) {
+Result<void> validateModelSubgraphInputOutputs(const std::vector<uint32_t>& indexes,
+                                               const std::vector<Operand>& operands,
+                                               Operand::LifeTime lifetime) {
     const size_t operandCount = operands.size();
     for (uint32_t i : indexes) {
         NN_VALIDATE_LT(i, operandCount)
@@ -802,10 +728,10 @@ bool isValidSubgraphInputOutputs(const std::vector<uint32_t>& indexes,
         }
     }
 
-    return true;
+    return {};
 }
 
-bool isValidExecutionOrder(const Model::Subgraph& subgraph) {
+Result<void> validateExecutionOrder(const Model::Subgraph& subgraph) {
     // Either the operand has a known value before model execution begins, or we've seen a writer
     // for this operand while walking operands in execution order. Initialize to known operands.
     std::vector<bool> operandValueKnown;
@@ -848,37 +774,34 @@ bool isValidExecutionOrder(const Model::Subgraph& subgraph) {
 
     // TODO(b/77871786): verify that every operation has at least one output operand that is read?
 
-    return true;
+    return {};
 }
 
-Version validateModelSubgraph(const Model::Subgraph& subgraph, size_t operandValuesSize,
-                              const std::vector<size_t>& poolSizes,
-                              const std::vector<Model::Subgraph>& referenced) {
+Result<Version> validateModelSubgraph(const Model::Subgraph& subgraph, size_t operandValuesSize,
+                                      const std::vector<size_t>& poolSizes,
+                                      const std::vector<Model::Subgraph>& referenced) {
     NN_VALIDATE(!subgraph.operands.empty());
     NN_VALIDATE(!subgraph.operations.empty());
     // TODO(b/134529942#comment7): should we verify !subgraph.inputIndexes.empty()?
     NN_VALIDATE(!subgraph.inputIndexes.empty());
     NN_VALIDATE(!subgraph.outputIndexes.empty());
 
-    auto version =
-            validateOperands(subgraph.operands, operandValuesSize, poolSizes, referenced.size());
-    NN_RET_IF_INVALID(version);
+    auto version = NN_TRY(
+            validateOperands(subgraph.operands, operandValuesSize, poolSizes, referenced.size()));
+    version = combineVersions(version, NN_TRY(validateOperations(subgraph.operations,
+                                                                 subgraph.operands, referenced)));
 
-    version = combineVersions(
-            version, validateOperations(subgraph.operations, subgraph.operands, referenced));
-    NN_RET_IF_INVALID(version);
+    NN_TRY(validateModelSubgraphInputOutputs(subgraph.inputIndexes, subgraph.operands,
+                                             Operand::LifeTime::SUBGRAPH_INPUT));
+    NN_TRY(validateModelSubgraphInputOutputs(subgraph.outputIndexes, subgraph.operands,
+                                             Operand::LifeTime::SUBGRAPH_OUTPUT));
 
-    NN_VALIDATE(isValidSubgraphInputOutputs(subgraph.inputIndexes, subgraph.operands,
-                                            Operand::LifeTime::SUBGRAPH_INPUT));
-    NN_VALIDATE(isValidSubgraphInputOutputs(subgraph.outputIndexes, subgraph.operands,
-                                            Operand::LifeTime::SUBGRAPH_OUTPUT));
-
-    NN_VALIDATE(isValidExecutionOrder(subgraph));
+    NN_TRY(validateExecutionOrder(subgraph));
 
     return version;
 }
 
-Version validateModelExtensionNamesAndPrefixes(
+Result<Version> validateModelExtensionNamesAndPrefixes(
         const std::vector<Model::ExtensionNameAndPrefix>& extensionNamesAndPrefixes) {
     for (const auto& extensionNameAndPrefix : extensionNamesAndPrefixes) {
         NN_VALIDATE(isValidExtensionName(extensionNameAndPrefix.name));
@@ -914,34 +837,30 @@ Version validateModelExtensionNamesAndPrefixes(
 }
 
 // Makes sure the model does not contain subgraph reference cycles.
-bool checkNoReferenceCycles(const Model& model, const Model::Subgraph& subgraph,
-                            std::set<const Model::Subgraph*>* path) {
+Result<void> checkNoReferenceCycles(const Model& model, const Model::Subgraph& subgraph,
+                                    std::set<const Model::Subgraph*>* path) {
     const auto [_, isNew] = path->insert(&subgraph);
     NN_VALIDATE(isNew) << "Model contains a circular subgraph reference";
     // TODO(b/165154824): It looks like this functions is doing a lot of redundant work.
     for (const Operand& operand : subgraph.operands) {
         if (operand.lifetime == Operand::LifeTime::SUBGRAPH) {
             const uint32_t refSubgraphIndex = operand.location.offset;
-            NN_RET_IF_FALSE(
-                    checkNoReferenceCycles(model, model.referenced[refSubgraphIndex], path));
+            NN_TRY(checkNoReferenceCycles(model, model.referenced[refSubgraphIndex], path));
         }
     }
     path->erase(&subgraph);
-    return true;
+    return {};
 }
 
-bool checkNoReferenceCycles(const Model& model) {
+Result<void> checkNoReferenceCycles(const Model& model) {
     std::set<const Model::Subgraph*> path;
     return checkNoReferenceCycles(model, model.main, &path);
 }
 
-Version validateModel(const Model& model) {
-    auto version = validateVector(model.pools, validateMemory);
-    NN_RET_IF_INVALID(version);
-
-    version = combineVersions(version,
-                              validateModelExtensionNamesAndPrefixes(model.extensionNameToPrefix));
-    NN_RET_IF_INVALID(version);
+Result<Version> validateModel(const Model& model) {
+    auto version = NN_TRY(validateVector(model.pools, validateMemory));
+    version = combineVersions(
+            version, NN_TRY(validateModelExtensionNamesAndPrefixes(model.extensionNameToPrefix)));
 
     // Ignore relaxComputationFloat32toFloat16 version because in the worst case it makes the
     // execution stricter.
@@ -960,36 +879,41 @@ Version validateModel(const Model& model) {
     const size_t operandValuesSize = model.operandValues.size();
 
     // Validate main subgraph.
-    version = combineVersions(version, validateModelSubgraph(model.main, operandValuesSize,
-                                                             poolSizes, model.referenced));
-    NN_RET_IF_INVALID(version);
+    auto result = validateModelSubgraph(model.main, operandValuesSize, poolSizes, model.referenced);
+    if (!result.has_value()) {
+        return NN_ERROR() << std::move(result).error() << " for main subgraph";
+    }
+    version = combineVersions(version, result.value());
 
     // Validate referenced subgraphs.
-    for (const Model::Subgraph& subgraph : model.referenced) {
-        version = combineVersions(version, validateModelSubgraph(subgraph, operandValuesSize,
-                                                                 poolSizes, model.referenced));
-        NN_RET_IF_INVALID(version);
+    for (size_t i = 0; i < model.referenced.size(); ++i) {
+        const auto& subgraph = model.referenced[i];
+        auto result =
+                validateModelSubgraph(subgraph, operandValuesSize, poolSizes, model.referenced);
+        if (!result.has_value()) {
+            return NN_ERROR() << std::move(result).error() << " for referenced subgraph" << i;
+        }
+        version = combineVersions(version, result.value());
     }
 
     // Ensure that there are no references formed by calling the subgraphs.
-    NN_VALIDATE(checkNoReferenceCycles(model));
+    NN_TRY(checkNoReferenceCycles(model));
 
     return version;
 }
 
-Version validateBufferDesc(const BufferDesc& /*bufferDesc*/) {
+Result<Version> validateBufferDesc(const BufferDesc& /*bufferDesc*/) {
     return Version::ANDROID_R;
 }
 
-Version validateBufferRole(const BufferRole& bufferRole) {
+Result<Version> validateBufferRole(const BufferRole& bufferRole) {
     NN_VALIDATE_GT(bufferRole.frequency, 0.0f);
     NN_VALIDATE_LE(bufferRole.frequency, 1.0f);
     return Version::ANDROID_R;
 }
 
-Version validateRequestArgument(const Request::Argument& requestArgument,
-                                const std::vector<size_t>& memorySizes, bool isOutput,
-                                size_t index) {
+Result<Version> validateRequestArgument(const Request::Argument& requestArgument,
+                                        const std::vector<size_t>& memorySizes, bool isOutput) {
     const auto lifetime = requestArgument.lifetime;
     const auto& location = requestArgument.location;
     const auto& dimensions = requestArgument.dimensions;
@@ -1023,11 +947,10 @@ Version validateRequestArgument(const Request::Argument& requestArgument,
             return Version::ANDROID_OC_MR1;
         }
     }
-    NN_VALIDATE_FAIL() << "Invalid Request::Argument::LifeTime " << lifetime << " for "
-                       << (isOutput ? "output" : "input") << " Request::Argument " << index;
+    NN_VALIDATE_FAIL() << "Invalid Request::Argument::LifeTime " << lifetime;
 }
 
-Version validateRequestMemoryPool(const Request::MemoryPool& memoryPool) {
+Result<Version> validateRequestMemoryPool(const Request::MemoryPool& memoryPool) {
     if (std::holds_alternative<Request::MemoryDomainToken>(memoryPool)) {
         NN_VALIDATE(std::get<Request::MemoryDomainToken>(memoryPool) != kInvalidMemoryDomainToken);
         return Version::ANDROID_R;
@@ -1039,9 +962,8 @@ Version validateRequestMemoryPool(const Request::MemoryPool& memoryPool) {
     return validateMemory(std::get<Memory>(memoryPool));
 }
 
-Version validateRequest(const Request& request) {
-    auto version = validateVector(request.pools, validateRequestMemoryPool);
-    NN_RET_IF_INVALID(version);
+Result<Version> validateRequest(const Request& request) {
+    auto version = NN_TRY(validateVector(request.pools, validateRequestMemoryPool));
 
     // Get memory sizes. For IBuffer or MemoryDomainToken types, set size to 0.
     std::vector<size_t> memorySizes;
@@ -1052,44 +974,48 @@ Version validateRequest(const Request& request) {
                        return memory != nullptr ? memory->size : 0;
                    });
 
-    for (size_t index = 0; index < request.inputs.size(); ++index) {
-        const auto& input = request.inputs[index];
-        const auto argVersion =
-                validateRequestArgument(input, memorySizes, /*isOutput=*/false, index);
-        version = combineVersions(version, argVersion);
-        NN_RET_IF_INVALID(version);
+    for (size_t i = 0; i < request.inputs.size(); ++i) {
+        const auto& input = request.inputs[i];
+        auto result = validateRequestArgument(input, memorySizes, /*isOutput=*/false);
+        if (!result.has_value()) {
+            return NN_ERROR() << std::move(result).error() << " for input RequestArgument " << i;
+        }
+        version = combineVersions(version, result.value());
     }
-    for (size_t index = 0; index < request.outputs.size(); ++index) {
-        const auto& output = request.outputs[index];
-        const auto argVersion =
-                validateRequestArgument(output, memorySizes, /*isOutput=*/true, index);
-        version = combineVersions(version, argVersion);
-        NN_RET_IF_INVALID(version);
+    for (size_t i = 0; i < request.outputs.size(); ++i) {
+        const auto& output = request.outputs[i];
+        auto result = validateRequestArgument(output, memorySizes, /*isOutput=*/true);
+        if (!result.has_value()) {
+            return NN_ERROR() << std::move(result).error() << " for output RequestArgument " << i;
+        }
+        version = combineVersions(version, result.value());
     }
 
     return version;
 }
 
-Version validateOptionalTimePoint(const OptionalTimePoint& optionalTimePoint) {
+Result<Version> validateOptionalTimePoint(const OptionalTimePoint& optionalTimePoint) {
     if (optionalTimePoint.has_value()) {
         NN_VALIDATE_GE(optionalTimePoint.value().time_since_epoch().count(), 0);
     }
     return Version::ANDROID_R;
 }
 
-Version validateOptionalTimeoutDuration(const OptionalTimeoutDuration& optionalTimeoutDuration) {
+Result<Version> validateOptionalTimeoutDuration(
+        const OptionalTimeoutDuration& optionalTimeoutDuration) {
     if (optionalTimeoutDuration.has_value()) {
         NN_VALIDATE_GE(optionalTimeoutDuration.value().count(), 0);
     }
     return Version::ANDROID_R;
 }
 
-Version validateRequestArgumentsForModel(const std::vector<Request::Argument>& requestArguments,
-                                         const std::vector<uint32_t>& operandIndexes,
-                                         const std::vector<Operand>& operands, bool isOutput) {
+Result<Version> validateRequestArgumentsForModel(
+        const std::vector<Request::Argument>& requestArguments,
+        const std::vector<uint32_t>& operandIndexes, const std::vector<Operand>& operands,
+        bool isOutput) {
     auto version = Version::ANDROID_OC_MR1;
     // The request should specify as many arguments as were described in the model.
-    const char* type = isOutput ? "output" : "input";
+    const std::string_view type = isOutput ? "output" : "input";
     const size_t requestArgumentCount = requestArguments.size();
     NN_VALIDATE_EQ(requestArgumentCount, operandIndexes.size())
             << "Request specifies " << requestArgumentCount << " " << type << "s but the model has "
@@ -1152,27 +1078,19 @@ Version validateRequestArgumentsForModel(const std::vector<Request::Argument>& r
     return version;
 }
 
-Version validateRequestForModelImpl(const Request& request, const Model& model) {
-    auto version = validateRequest(request);
-    NN_RET_IF_INVALID(version);
-
-    version = combineVersions(version, validateModel(model));
-    NN_RET_IF_INVALID(version);
-
-    version = combineVersions(
-            version, validateRequestArgumentsForModel(request.inputs, model.main.inputIndexes,
-                                                      model.main.operands, /*isOutput=*/false));
-    NN_RET_IF_INVALID(version);
-
-    version = combineVersions(
-            version, validateRequestArgumentsForModel(request.inputs, model.main.inputIndexes,
-                                                      model.main.operands, /*isOutput=*/true));
-    NN_RET_IF_INVALID(version);
-
+Result<Version> validateRequestForModelImpl(const Request& request, const Model& model) {
+    auto version = NN_TRY(validateRequest(request));
+    version = combineVersions(version, NN_TRY(validateModel(model)));
+    version = combineVersions(version, NN_TRY(validateRequestArgumentsForModel(
+                                               request.inputs, model.main.inputIndexes,
+                                               model.main.operands, /*isOutput=*/false)));
+    version = combineVersions(version, NN_TRY(validateRequestArgumentsForModel(
+                                               request.inputs, model.main.inputIndexes,
+                                               model.main.operands, /*isOutput=*/true)));
     return version;
 }
 
-Version validateMemoryDescImpl(
+Result<Version> validateMemoryDescImpl(
         const BufferDesc& desc,
         const std::vector<std::shared_ptr<const IPreparedModel>>& preparedModels,
         const std::vector<BufferRole>& inputRoles, const std::vector<BufferRole>& outputRoles,
@@ -1226,9 +1144,7 @@ Version validateMemoryDescImpl(
             NN_VALIDATE_EQ(operand.extraParams, operands.front().extraParams)
                     << operand.extraParams << " vs " << operands.front().extraParams;
         }
-        const auto combined = combineDimensions(dimensions, operand.dimensions);
-        NN_VALIDATE(combined.has_value());
-        dimensions = combined.value();
+        dimensions = NN_TRY(combineDimensions(dimensions, operand.dimensions));
     }
 
     // NOTE: validateMemoryDesc cannot validate scalar dimensions with extension operand type.
@@ -1343,7 +1259,7 @@ Shape OperationValidationContext::getOutputShape(uint32_t index) const {
 
 // TODO(b/169345292): reduce the duplicate validation here
 
-bool isValidOperandSymmPerChannelQuantParamsImpl(
+Result<void> validateOperandSymmPerChannelQuantParamsImpl(
         const Operand& operand, const Operand::SymmPerChannelQuantParams& channelQuant,
         const char* tag) {
     if (operand.type != OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
@@ -1358,56 +1274,56 @@ bool isValidOperandSymmPerChannelQuantParamsImpl(
     for (uint32_t i = 0; i < operand.dimensions[channelQuant.channelDim]; i++) {
         NN_VALIDATE_GT(channelQuant.scales[i], 0.0f) << tag << " invalid scaleArray[" << i << "]";
     }
-    return true;
+    return {};
 }
 
-bool isValidScalarDimensions(const Operand& type, const char* tag) {
+Result<void> validateScalarDimensions(const Operand& type, const char* tag) {
     NN_VALIDATE(type.dimensions.empty()) << tag << " invalid dimensions for scalar type";
-    return true;
+    return {};
 }
 
-bool isValidQuant8AsymmParams(const Operand& type, const char* tag) {
+Result<void> validateQuant8AsymmParams(const Operand& type, const char* tag) {
     NN_VALIDATE(0 <= type.zeroPoint && type.zeroPoint <= 255)
             << tag << " invalid zeroPoint: " << type.zeroPoint;
     NN_VALIDATE_GT(type.scale, 0.0f) << tag << " invalid scale";
-    return true;
+    return {};
 }
 
-bool isValidQuant8AsymmSignedParams(const Operand& type, const char* tag) {
+Result<void> validateQuant8AsymmSignedParams(const Operand& type, const char* tag) {
     NN_VALIDATE(-128 <= type.zeroPoint && type.zeroPoint <= 127)
             << tag << " invalid zeroPoint: " << type.zeroPoint;
     NN_VALIDATE_GT(type.scale, 0.0f) << tag << " invalid scale";
-    return true;
+    return {};
 }
 
-bool isValidQuant8SymmParams(const Operand& type, const char* tag) {
+Result<void> validateQuant8SymmParams(const Operand& type, const char* tag) {
     NN_VALIDATE_EQ(type.zeroPoint, 0) << tag << " invalid zeroPoint: " << type.zeroPoint;
     NN_VALIDATE_GT(type.scale, 0.0f) << tag << " invalid scale";
-    return true;
+    return {};
 }
 
-bool isValidQuant16AsymmParams(const Operand& type, const char* tag) {
+Result<void> validateQuant16AsymmParams(const Operand& type, const char* tag) {
     NN_VALIDATE(0 <= type.zeroPoint && type.zeroPoint <= 65535)
             << tag << " invalid zeroPoint: " << type.zeroPoint;
     NN_VALIDATE_GT(type.scale, 0.0f) << tag << " invalid scale";
-    return true;
+    return {};
 }
 
-bool isValidQuantSymmParams(const Operand& type, const char* tag) {
+Result<void> validateQuantSymmParams(const Operand& type, const char* tag) {
     NN_VALIDATE_EQ(type.zeroPoint, 0) << tag << " zeroPoint is not zero";
     NN_VALIDATE_GT(type.scale, 0.0f) << tag << " invalid scale";
-    return true;
+    return {};
 }
 
-bool isValidNoQuantParams(const Operand& type, const char* tag) {
+Result<void> validateNoQuantParams(const Operand& type, const char* tag) {
     NN_VALIDATE_EQ(type.zeroPoint, 0) << tag << " zeroPoint is not zero";
     NN_VALIDATE_EQ(type.scale, 0.0f) << tag << " scale is not zero";
-    return true;
+    return {};
 }
 
-bool isValidTensorDimensions(const Operand& type,
-                             const Extension::OperandTypeInformation* extensionOperandTypeInfo,
-                             const char* tag, bool allowPartial) {
+Result<void> validateTensorDimensions(
+        const Operand& type, const Extension::OperandTypeInformation* extensionOperandTypeInfo,
+        const char* tag, bool allowPartial) {
     if (!allowPartial) {
         NN_VALIDATE(!type.dimensions.empty()) << tag << " invalid operand dimensions";
     }
@@ -1423,70 +1339,70 @@ bool isValidTensorDimensions(const Operand& type,
             NN_VALIDATE_LE(size, kMaxSize) << tag << " operand byte size exceeds " << kMaxSize;
         }
     }
-    return true;
+    return {};
 }
 
-bool isValidOperandTypeImpl(const Operand& type,
-                            const Extension::OperandTypeInformation* const extensionOperandTypeInfo,
-                            const char* tag, bool allowPartial) {
+Result<void> validateOperandTypeImpl(
+        const Operand& type,
+        const Extension::OperandTypeInformation* const extensionOperandTypeInfo, const char* tag,
+        bool allowPartial) {
     if (isExtension(type.type)) {
         NN_VALIDATE(extensionOperandTypeInfo != nullptr);
         if (extensionOperandTypeInfo->isTensor) {
-            NN_VALIDATE(isValidTensorDimensions(type, extensionOperandTypeInfo, tag, allowPartial));
+            NN_TRY(validateTensorDimensions(type, extensionOperandTypeInfo, tag, allowPartial));
         } else {
-            NN_VALIDATE(isValidScalarDimensions(type, tag));
+            NN_TRY(validateScalarDimensions(type, tag));
         }
-        return isValidNoQuantParams(type, tag);
+        return validateNoQuantParams(type, tag);
     }
 
     NN_VALIDATE(extensionOperandTypeInfo == nullptr);
-    NN_VALIDATE(validateOperandType(type.type) != Version::INVALID)
-            << tag << " invalid OperandType: " << type.type;
+    NN_TRY(validateOperandType(type.type));
 
     if (isNonExtensionScalar(type.type)) {
-        NN_VALIDATE(isValidScalarDimensions(type, tag));
+        NN_TRY(validateScalarDimensions(type, tag));
         if (type.type != OperandType::OEM) {  // Historically, we have allowed OEM types
                                               // to use quantization parameters.
-            NN_VALIDATE(isValidNoQuantParams(type, tag));
+            NN_TRY(validateNoQuantParams(type, tag));
         }
     } else {
-        NN_VALIDATE(isValidTensorDimensions(type, extensionOperandTypeInfo, tag, allowPartial));
+        NN_TRY(validateTensorDimensions(type, extensionOperandTypeInfo, tag, allowPartial));
         if (type.type == OperandType::TENSOR_QUANT8_ASYMM) {
-            NN_VALIDATE(isValidQuant8AsymmParams(type, tag));
+            NN_TRY(validateQuant8AsymmParams(type, tag));
         } else if (type.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-            NN_VALIDATE(isValidQuant8AsymmSignedParams(type, tag));
+            NN_TRY(validateQuant8AsymmSignedParams(type, tag));
         } else if (type.type == OperandType::TENSOR_QUANT8_SYMM) {
-            NN_VALIDATE(isValidQuant8SymmParams(type, tag));
+            NN_TRY(validateQuant8SymmParams(type, tag));
         } else if (type.type == OperandType::TENSOR_QUANT16_ASYMM) {
-            NN_VALIDATE(isValidQuant16AsymmParams(type, tag));
+            NN_TRY(validateQuant16AsymmParams(type, tag));
         } else if (type.type == OperandType::TENSOR_QUANT16_SYMM) {
-            NN_VALIDATE(isValidQuantSymmParams(type, tag));
+            NN_TRY(validateQuantSymmParams(type, tag));
         } else if (type.type == OperandType::TENSOR_INT32 ||
                    type.type == OperandType::TENSOR_OEM_BYTE) {
             // TODO(b/119869082): TENSOR_INT32 should not use quantization parameters.
             // Historically, we have allowed OEM types to use quantization parameters.
         } else {
-            NN_VALIDATE(isValidNoQuantParams(type, tag));
+            NN_TRY(validateNoQuantParams(type, tag));
         }
     }
 
-    return true;
+    return {};
 }
 
-bool isValidOperandListImpl(const std::vector<uint32_t>& list, size_t operandCount,
-                            const char* tag) {
+Result<void> validateOperandListImpl(const std::vector<uint32_t>& list, size_t operandCount,
+                                     const char* tag) {
     for (size_t i = 0; i < list.size(); i++) {
         NN_VALIDATE_LT(list[i], operandCount) << tag << " invalid operand index at " << i << " = "
                                               << list[i] << ", operandCount " << operandCount;
     }
-    return true;
+    return {};
 }
 
-bool isValidOperationOperandTypes(const std::vector<Operand>& operands,
-                                  const std::vector<uint32_t>& inputIndexes,
-                                  const std::vector<OperandType>& inExpectedTypes,
-                                  const std::vector<uint32_t>& outputIndexes,
-                                  const std::vector<OperandType>& outExpectedInTypes) {
+Result<void> validateOperationOperandTypes(const std::vector<Operand>& operands,
+                                           const std::vector<uint32_t>& inputIndexes,
+                                           const std::vector<OperandType>& inExpectedTypes,
+                                           const std::vector<uint32_t>& outputIndexes,
+                                           const std::vector<OperandType>& outExpectedInTypes) {
     NN_VALIDATE_EQ(inputIndexes.size(), inExpectedTypes.size())
             << "Wrong operand count: expected " << inputIndexes.size() << " inputs, got "
             << inputIndexes.size() << " inputs";
@@ -1504,15 +1420,15 @@ bool isValidOperationOperandTypes(const std::vector<Operand>& operands,
                 << i << ", expected " << outExpectedInTypes[i];
     }
 
-    return true;
+    return {};
 }
 
-bool isValidSubgraphReference(const std::vector<Model::Subgraph>& subgraphs,
-                              const Operand& modelOperand) {
+Result<void> validateSubgraphReference(const std::vector<Model::Subgraph>& subgraphs,
+                                       const Operand& modelOperand) {
     NN_VALIDATE_EQ(modelOperand.type, OperandType::SUBGRAPH)
             << "Unexpected operand type: " << modelOperand.type;
     NN_VALIDATE_LT(modelOperand.location.offset, subgraphs.size()) << "Invalid subgraph reference";
-    return true;
+    return {};
 }
 const Model::Subgraph& getSubgraph(const std::vector<Model::Subgraph>& subgraphs,
                                    const Operand& modelOperand) {
@@ -1538,7 +1454,7 @@ const Operand& getOutputOperand(const std::vector<Model::Subgraph>& subgraphs,
 
 // Checks if two operands have the same types, ranks (if specified), dimensions
 // (if specified), scales, zeroPoints, and extraParams.
-bool isCompatible(const Operand& a, const Operand& b) {
+Result<void> compatible(const Operand& a, const Operand& b) {
     NN_VALIDATE_EQ(a.type, b.type) << a.type << " != " << b.type;
     if (!a.dimensions.empty() && !b.dimensions.empty()) {
         NN_VALIDATE_EQ(a.dimensions.size(), b.dimensions.size()) << "Incompatible dimensions";
@@ -1551,27 +1467,30 @@ bool isCompatible(const Operand& a, const Operand& b) {
     NN_VALIDATE_EQ(a.scale, b.scale);
     NN_VALIDATE_EQ(a.zeroPoint, b.zeroPoint);
     NN_VALIDATE_EQ(a.extraParams, b.extraParams) << a.extraParams << " != " << b.extraParams;
-    return true;
+    return {};
 }
 
-bool isValidConditionOperand(const Operand& operand) {
+Result<void> validateConditionOperand(const Operand& operand) {
     NN_VALIDATE_EQ(operand.type, OperandType::TENSOR_BOOL8)
             << "Unexpected condition operand type: " << operand.type;
     NN_VALIDATE_EQ(operand.dimensions.size(), 1u) << "Condition operand must be a singleton";
     NN_VALIDATE_EQ(operand.dimensions[0], 1u) << "Condition operand must be a singleton";
-    return true;
+    return {};
 }
 
-Version validateIfOperation(const std::vector<uint32_t>& inputs,
-                            const std::vector<uint32_t>& outputs,
-                            const std::vector<Operand>& operands,
-                            const std::vector<Model::Subgraph>& subgraphs) {
+Result<Version> validateIfOperation(const std::vector<uint32_t>& inputs,
+                                    const std::vector<uint32_t>& outputs,
+                                    const std::vector<Operand>& operands,
+                                    const std::vector<Model::Subgraph>& subgraphs) {
     namespace op = operation_if;
     NN_VALIDATE_GE(inputs.size(), 3u) << "IF must have at least 3 inputs";
     NN_VALIDATE_GE(outputs.size(), 1u) << "IF must have at least 1 output";
-    auto validateBranchOperand = [&](const Operand& branchModelOperand) -> bool {
-        NN_VALIDATE(isValidSubgraphReference(subgraphs, branchModelOperand))
-                << "Operand is not a valid subgraph reference";
+    auto validateBranchOperand = [&](const Operand& branchModelOperand) -> Result<void> {
+        auto result = validateSubgraphReference(subgraphs, branchModelOperand);
+        if (!result.has_value()) {
+            return NN_ERROR() << std::move(result).error()
+                              << "Operand is not a valid subgraph reference";
+        }
         const uint32_t branchModelInputCount = getInputCount(subgraphs, branchModelOperand);
         const uint32_t branchModelOutputCount = getOutputCount(subgraphs, branchModelOperand);
         NN_VALIDATE_EQ(inputs.size(), op::kFirstInput + branchModelInputCount);
@@ -1579,25 +1498,32 @@ Version validateIfOperation(const std::vector<uint32_t>& inputs,
         for (uint32_t i = 0; i < branchModelInputCount; ++i) {
             const Operand& innerOperand = getInputOperand(subgraphs, branchModelOperand, i);
             const Operand& outerOperand = operands[inputs[op::kFirstInput + i]];
-            NN_VALIDATE(isCompatible(innerOperand, outerOperand));
+            NN_TRY(compatible(innerOperand, outerOperand));
         }
         for (uint32_t i = 0; i < branchModelOutputCount; ++i) {
             const Operand& innerOperand = getOutputOperand(subgraphs, branchModelOperand, i);
             const Operand& outerOperand = operands[outputs[i]];
-            NN_VALIDATE(isCompatible(innerOperand, outerOperand));
+            NN_TRY(compatible(innerOperand, outerOperand));
         }
-        return true;
+        return {};
     };
-    NN_VALIDATE(isValidConditionOperand(operands[inputs[op::kCondBoolOperand]]))
-            << "Validation failed for IF condition operand";
-    NN_VALIDATE(validateBranchOperand(operands[inputs[op::kThenModelOperand]]))
-            << "Validation failed for IF then model";
-    NN_VALIDATE(validateBranchOperand(operands[inputs[op::kElseModelOperand]]))
-            << "Validation failed for IF else model";
+    auto result = validateConditionOperand(operands[inputs[op::kCondBoolOperand]]);
+    if (!result.has_value()) {
+        return NN_ERROR() << std::move(result).error()
+                          << "Validation failed for IF condition operand";
+    }
+    result = validateBranchOperand(operands[inputs[op::kThenModelOperand]]);
+    if (!result.has_value()) {
+        return NN_ERROR() << std::move(result).error() << "Validation failed for IF then model";
+    }
+    result = validateBranchOperand(operands[inputs[op::kElseModelOperand]]);
+    if (!result.has_value()) {
+        return NN_ERROR() << std::move(result).error() << "Validation failed for IF else model";
+    }
     return Version::ANDROID_R;
 }
 
-Version validateControlFlowOperandUnknownSize(const Operand& operand) {
+Result<Version> validateControlFlowOperandUnknownSize(const Operand& operand) {
     if (!isExtension(operand.type) && getNonExtensionSize(operand).value() == 0) {
         // 1.3 HAL (corresponding to Version::ANDROID_R) does not support CF operations with
         // operands of unknown size. See http://b/132458982#comment63.
@@ -1606,10 +1532,10 @@ Version validateControlFlowOperandUnknownSize(const Operand& operand) {
     return Version::ANDROID_R;
 }
 
-Version validateWhileOperation(const std::vector<uint32_t>& inputs,
-                               const std::vector<uint32_t>& outputs,
-                               const std::vector<Operand>& operands,
-                               const std::vector<Model::Subgraph>& subgraphs) {
+Result<Version> validateWhileOperation(const std::vector<uint32_t>& inputs,
+                                       const std::vector<uint32_t>& outputs,
+                                       const std::vector<Operand>& operands,
+                                       const std::vector<Model::Subgraph>& subgraphs) {
     // Let the loop have
     // - m >= 1 input-output operands,
     // - k >= 0 state-only operands, and
@@ -1621,10 +1547,13 @@ Version validateWhileOperation(const std::vector<uint32_t>& inputs,
     namespace op = operation_while;
     NN_VALIDATE_GE(inputs.size(), 3u) << "WHILE must have at least 3 inputs";
     NN_VALIDATE_GE(outputs.size(), 1u) << "WHILE must have at least 1 output";
-    auto validateCondOperand = [&](const Operand& condModelOperand) -> Version {
+    auto validateCondOperand = [&](const Operand& condModelOperand) -> Result<Version> {
         Version version = Version::ANDROID_R;
-        NN_VALIDATE(isValidSubgraphReference(subgraphs, condModelOperand))
-                << "Operand is not a valid subgraph reference";
+        auto result = validateSubgraphReference(subgraphs, condModelOperand);
+        if (!result.has_value()) {
+            return NN_ERROR() << std::move(result).error()
+                              << "Operand is not a valid subgraph reference";
+        }
         const uint32_t condModelInputCount = getInputCount(subgraphs, condModelOperand);
         const uint32_t condModelOutputCount = getOutputCount(subgraphs, condModelOperand);
         NN_VALIDATE_EQ(inputs.size(), op::kFirstInput + condModelInputCount);
@@ -1632,19 +1561,22 @@ Version validateWhileOperation(const std::vector<uint32_t>& inputs,
         for (uint32_t i = 0; i < condModelInputCount; ++i) {
             const Operand& innerOperand = getInputOperand(subgraphs, condModelOperand, i);
             const Operand& outerOperand = operands[inputs[op::kFirstInput + i]];
-            NN_VALIDATE(isCompatible(innerOperand, outerOperand));
-            version = combineVersions(version, validateControlFlowOperandUnknownSize(innerOperand));
-            NN_RET_IF_INVALID(version);
-            version = combineVersions(version, validateControlFlowOperandUnknownSize(outerOperand));
-            NN_RET_IF_INVALID(version);
+            NN_TRY(compatible(innerOperand, outerOperand));
+            version = combineVersions(version,
+                                      NN_TRY(validateControlFlowOperandUnknownSize(innerOperand)));
+            version = combineVersions(version,
+                                      NN_TRY(validateControlFlowOperandUnknownSize(outerOperand)));
         }
-        NN_VALIDATE(isValidConditionOperand(getOutputOperand(subgraphs, condModelOperand, 0)));
+        NN_TRY(validateConditionOperand(getOutputOperand(subgraphs, condModelOperand, 0)));
         return version;
     };
-    auto validateBodyOperand = [&](const Operand& bodyModelOperand) -> Version {
+    auto validateBodyOperand = [&](const Operand& bodyModelOperand) -> Result<Version> {
         Version version = Version::ANDROID_R;
-        NN_VALIDATE(isValidSubgraphReference(subgraphs, bodyModelOperand))
-                << "Operand is not a valid subgraph reference";
+        auto result = validateSubgraphReference(subgraphs, bodyModelOperand);
+        if (!result.has_value()) {
+            return NN_ERROR() << std::move(result).error()
+                              << "Operand is not a valid subgraph reference";
+        }
         const uint32_t bodyModelInputCount = getInputCount(subgraphs, bodyModelOperand);
         const uint32_t bodyModelOutputCount = getOutputCount(subgraphs, bodyModelOperand);
         NN_VALIDATE_EQ(inputs.size(), op::kFirstInput + bodyModelInputCount);
@@ -1656,49 +1588,53 @@ Version validateWhileOperation(const std::vector<uint32_t>& inputs,
         for (uint32_t i = 0, n = inputOutputCount + stateOnlyCount + inputOnlyCount; i < n; ++i) {
             const Operand& innerOperand = getInputOperand(subgraphs, bodyModelOperand, i);
             const Operand& outerOperand = operands[inputs[op::kFirstInput + i]];
-            NN_VALIDATE(isCompatible(innerOperand, outerOperand));
-            version = combineVersions(version, validateControlFlowOperandUnknownSize(innerOperand));
-            NN_RET_IF_INVALID(version);
-            version = combineVersions(version, validateControlFlowOperandUnknownSize(outerOperand));
-            NN_RET_IF_INVALID(version);
+            NN_TRY(compatible(innerOperand, outerOperand));
+            version = combineVersions(version,
+                                      NN_TRY(validateControlFlowOperandUnknownSize(innerOperand)));
+            version = combineVersions(version,
+                                      NN_TRY(validateControlFlowOperandUnknownSize(outerOperand)));
         }
         for (uint32_t i = 0; i < inputOutputCount; ++i) {
             const Operand& innerOperand = getOutputOperand(subgraphs, bodyModelOperand, i);
             const Operand& outerOperand = operands[outputs[i]];
-            NN_VALIDATE(isCompatible(innerOperand, outerOperand));
-            version = combineVersions(version, validateControlFlowOperandUnknownSize(outerOperand));
-            NN_RET_IF_INVALID(version);
+            NN_TRY(compatible(innerOperand, outerOperand));
+            version = combineVersions(version,
+                                      NN_TRY(validateControlFlowOperandUnknownSize(outerOperand)));
         }
         for (uint32_t i = 0, n = inputOutputCount + stateOnlyCount; i < n; ++i) {
             const Operand& inputOperand = getInputOperand(subgraphs, bodyModelOperand, i);
             const Operand& outputOperand = getOutputOperand(subgraphs, bodyModelOperand, i);
-            NN_VALIDATE(isCompatible(inputOperand, outputOperand));
-            version =
-                    combineVersions(version, validateControlFlowOperandUnknownSize(outputOperand));
-            NN_RET_IF_INVALID(version);
+            NN_TRY(compatible(inputOperand, outputOperand));
+            version = combineVersions(version,
+                                      NN_TRY(validateControlFlowOperandUnknownSize(outputOperand)));
         }
         return version;
     };
-    Version version = Version::ANDROID_R;
-    version =
-            combineVersions(version, validateCondOperand(operands[inputs[op::kCondModelOperand]]));
-    NN_VALIDATE(version != Version::INVALID) << "Validation failed for WHILE condition model";
-    version =
-            combineVersions(version, validateBodyOperand(operands[inputs[op::kBodyModelOperand]]));
-    NN_VALIDATE(version != Version::INVALID) << "Validation failed for WHILE body model";
+    auto result = validateCondOperand(operands[inputs[op::kCondModelOperand]]);
+    if (!result.has_value()) {
+        return NN_ERROR() << std::move(result).error()
+                          << "Validation failed for WHILE condition model";
+    }
+    auto version = result.value();
+    result = validateBodyOperand(operands[inputs[op::kBodyModelOperand]]);
+    if (!result.has_value()) {
+        return NN_ERROR() << std::move(result).error() << "Validation failed for WHILE body model";
+    }
+    version = combineVersions(version, result.value());
     return version;
 }
 
-Version validateOperationImpl(const Operation& operation, const std::vector<Operand>& operands,
-                              const std::vector<Model::Subgraph>& subgraphs) {
+Result<Version> validateOperationImpl(const Operation& operation,
+                                      const std::vector<Operand>& operands,
+                                      const std::vector<Model::Subgraph>& subgraphs) {
     const auto opType = operation.type;
     const auto& inputIndexes = operation.inputs;
     const auto& outputIndexes = operation.outputs;
 
-    NN_VALIDATE(isValidOperandListImpl(inputIndexes, operands.size(),
-                                       "ANeuralNetworksModel_addOperation inputs"));
-    NN_VALIDATE(isValidOperandListImpl(outputIndexes, operands.size(),
-                                       "ANeuralNetworksModel_addOperation outputs"));
+    NN_TRY(validateOperandListImpl(inputIndexes, operands.size(),
+                                   "ANeuralNetworksModel_addOperation inputs"));
+    NN_TRY(validateOperandListImpl(outputIndexes, operands.size(),
+                                   "ANeuralNetworksModel_addOperation outputs"));
 
     if (isExtension(opType)) {
         // There is no other validation we can do for an extension operation.
@@ -1748,8 +1684,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
             const auto inputRank = operands[inputIndexes[0]].dimensions.size();
             NN_VALIDATE_LE(inputRank, 4u)
                     << "Unsupported input tensor rank for operation " << opType;
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return version;
         }
         case OperationType::DEPTH_TO_SPACE: {
@@ -1787,8 +1723,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
             } else {
                 version = combineVersions(version, Version::ANDROID_OC_MR1);
             }
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return version;
         }
         case OperationType::SPACE_TO_DEPTH: {
@@ -1826,8 +1762,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
             } else {
                 version = combineVersions(version, Version::ANDROID_OC_MR1);
             }
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return version;
         }
         case OperationType::EMBEDDING_LOOKUP: {
@@ -1852,8 +1788,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
             } else {
                 version = Version::ANDROID_OC_MR1;
             }
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return version;
         }
         case OperationType::HASHTABLE_LOOKUP: {
@@ -1868,8 +1804,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
                                                         OperandType::TENSOR_INT32, inputType};
             std::vector<OperandType> outExpectedTypes = {inputType,
                                                          OperandType::TENSOR_QUANT8_ASYMM};
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return Version::ANDROID_OC_MR1;
         }
         case OperationType::LSH_PROJECTION: {
@@ -1904,8 +1840,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
                 NN_VALIDATE_FAIL() << "Unsupported hash tensor type for operation " << opType;
             }
             std::vector<OperandType> outExpectedTypes = {OperandType::TENSOR_INT32};
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return version;
         }
         case OperationType::BIDIRECTIONAL_SEQUENCE_LSTM: {
@@ -1951,8 +1887,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
                 version = Version::ANDROID_R;
             }
             std::vector<OperandType> outExpectedTypes(outputIndexes.size(), inputType);
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return version;
         }
         case OperationType::LSTM: {
@@ -1992,8 +1928,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
                     inExpectedTypes.push_back(inputType);
                 }
             }
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return version;
         }
         case OperationType::QUANTIZED_16BIT_LSTM: {
@@ -2010,8 +1946,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
                     OperandType::TENSOR_QUANT8_ASYMM};
             std::vector<OperandType> outExpectedTypes = {OperandType::TENSOR_QUANT16_SYMM,
                                                          OperandType::TENSOR_QUANT8_ASYMM};
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return Version::ANDROID_Q;
         }
         case OperationType::RANDOM_MULTINOMIAL: {
@@ -2026,8 +1962,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
                 NN_VALIDATE_FAIL() << "Unsupported input tensor type for operation " << opType;
             }
             std::vector<OperandType> outExpectedTypes = {OperandType::TENSOR_INT32};
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return Version::ANDROID_Q;
         }
         case OperationType::RNN: {
@@ -2062,8 +1998,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
             } else {
                 NN_VALIDATE_FAIL() << "Unsupported input tensor type for operation " << opType;
             }
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return version;
         }
         case OperationType::SVDF: {
@@ -2083,8 +2019,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
                     inputType, OperandType::INT32, OperandType::INT32,
             };
             std::vector<OperandType> outExpectedTypes = {inputType, inputType};
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return version;
         }
         case OperationType::BATCH_TO_SPACE_ND: {
@@ -2132,8 +2068,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
             } else {
                 version = combineVersions(version, Version::ANDROID_P);
             }
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return version;
         }
         case OperationType::SPACE_TO_BATCH_ND: {
@@ -2188,8 +2124,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
             } else {
                 version = combineVersions(version, Version::ANDROID_P);
             }
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return version;
         }
         case OperationType::PAD: {
@@ -2235,8 +2171,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
             const auto inputRank = operands[inputIndexes[0]].dimensions.size();
             NN_VALIDATE_LE(inputRank, 4u)
                     << "Unsupported input tensor rank for operation " << opType;
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return version;
         }
         case OperationType::PAD_V2: {
@@ -2281,8 +2217,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
             const auto inputRank = operands[inputIndexes[0]].dimensions.size();
             NN_VALIDATE_LE(inputRank, 4u)
                     << "Unsupported input tensor rank for operation " << opType;
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return version;
         }
         case OperationType::CAST: {
@@ -2328,8 +2264,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
             NN_VALIDATE(inputOperand.dimensions.empty() || outputOperand.dimensions.empty() ||
                         getNumberOfElements(outputOperand.dimensions) == 0 ||
                         inputOperand.dimensions == outputOperand.dimensions);
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return version;
         }
         case OperationType::MEAN: {
@@ -2353,8 +2289,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
             std::vector<OperandType> inExpectedTypes = {inputType, OperandType::TENSOR_INT32,
                                                         OperandType::INT32};
             std::vector<OperandType> outExpectedTypes = {inputType};
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return version;
         }
         case OperationType::ARGMAX:
@@ -2374,8 +2310,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
             } else {
                 NN_VALIDATE_FAIL() << "Unsupported input tensor type for operation " << opType;
             }
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return Version::ANDROID_Q;
         }
         case OperationType::EXPAND_DIMS: {
@@ -2400,8 +2336,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
             } else {
                 version = Version::ANDROID_Q;
             }
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return version;
         }
         case OperationType::SPLIT: {
@@ -2424,8 +2360,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
             std::vector<OperandType> inExpectedTypes = {inputType, OperandType::INT32,
                                                         OperandType::INT32};
             std::vector<OperandType> outExpectedTypes(outputIndexes.size(), inputType);
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return version;
         }
         case OperationType::MAXIMUM:
@@ -2451,8 +2387,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
             } else {
                 version = Version::ANDROID_Q;
             }
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return version;
         }
         case OperationType::GROUPED_CONV_2D: {
@@ -2510,8 +2446,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
             } else {
                 version = Version::ANDROID_Q;
             }
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return version;
         }
         case OperationType::TILE: {
@@ -2536,8 +2472,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
             } else {
                 version = Version::ANDROID_Q;
             }
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return version;
         }
         case OperationType::POW: {
@@ -2559,8 +2495,8 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
             } else {
                 version = Version::ANDROID_Q;
             }
-            NN_VALIDATE(isValidOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
-                                                     outputIndexes, outExpectedTypes));
+            NN_TRY(validateOperationOperandTypes(operands, inputIndexes, inExpectedTypes,
+                                                 outputIndexes, outExpectedTypes));
             return version;
         }
         case OperationType::IF: {
@@ -2583,11 +2519,12 @@ Version validateOperationImpl(const Operation& operation, const std::vector<Oper
                     << "Incomplete operation registration: " << opType;
             OperationValidationContext context(operationRegistration->name, inputIndexes,
                                                outputIndexes, operands);
-            auto version = operationRegistration->validate(&context);
-            if (version == Version::INVALID) {
-                LOG(ERROR) << "Validation failed for operation " << opType;
+            auto result = operationRegistration->validate(&context);
+            if (!result.has_value()) {
+                return NN_ERROR() << "Validation failed for operation " << opType << ": "
+                                  << std::move(result).error();
             }
-            return version;
+            return result;
 #endif
             NN_VALIDATE_FAIL() << "Validation for " << opType << " is not yet implemented";
         }
@@ -2600,99 +2537,99 @@ Version combineVersions(Version lhs, Version rhs) {
     return std::max<Version>(lhs, rhs);
 }
 
-Version validate(const DeviceStatus& deviceStatus) {
+Result<Version> validate(const DeviceStatus& deviceStatus) {
     return validateDeviceStatus(deviceStatus);
 }
 
-Version validate(const ExecutionPreference& executionPreference) {
+Result<Version> validate(const ExecutionPreference& executionPreference) {
     return validateExecutionPreference(executionPreference);
 }
 
-Version validate(const DeviceType& deviceType) {
+Result<Version> validate(const DeviceType& deviceType) {
     return validateDeviceType(deviceType);
 }
 
-Version validate(const MeasureTiming& measureTiming) {
+Result<Version> validate(const MeasureTiming& measureTiming) {
     return validateMeasureTiming(measureTiming);
 }
 
-Version validate(const Priority& priority) {
+Result<Version> validate(const Priority& priority) {
     return validatePriority(priority);
 }
 
-Version validate(const ErrorStatus& errorStatus) {
+Result<Version> validate(const ErrorStatus& errorStatus) {
     return validateErrorStatus(errorStatus);
 }
 
-Version validate(const OutputShape& outputShape) {
+Result<Version> validate(const OutputShape& outputShape) {
     return validateOutputShape(outputShape);
 }
 
-Version validate(const Timing& timing) {
+Result<Version> validate(const Timing& timing) {
     return validateTiming(timing);
 }
 
-Version validate(const Capabilities& capabilities) {
+Result<Version> validate(const Capabilities& capabilities) {
     return validateCapabilities(capabilities);
 }
 
-Version validate(const Extension& extension) {
+Result<Version> validate(const Extension& extension) {
     return validateExtension(extension);
 }
 
-Version validate(const NativeHandle& handle) {
+Result<Version> validate(const NativeHandle& handle) {
     return validateNativeHandle(handle);
 }
 
-Version validate(const Memory& memory) {
+Result<Version> validate(const Memory& memory) {
     return validateMemory(memory);
 }
 
-Version validate(const Model& model) {
+Result<Version> validate(const Model& model) {
     return validateModel(model);
 }
 
-Version validate(const BufferDesc& bufferDesc) {
+Result<Version> validate(const BufferDesc& bufferDesc) {
     return validateBufferDesc(bufferDesc);
 }
 
-Version validate(const BufferRole& bufferRole) {
+Result<Version> validate(const BufferRole& bufferRole) {
     return validateBufferRole(bufferRole);
 }
 
-Version validate(const Request& request) {
+Result<Version> validate(const Request& request) {
     return validateRequest(request);
 }
 
-Version validate(const OptionalTimePoint& optionalTimePoint) {
+Result<Version> validate(const OptionalTimePoint& optionalTimePoint) {
     return validateOptionalTimePoint(optionalTimePoint);
 }
 
-Version validate(const OptionalTimeoutDuration& optionalTimeoutDuration) {
+Result<Version> validate(const OptionalTimeoutDuration& optionalTimeoutDuration) {
     return validateOptionalTimeoutDuration(optionalTimeoutDuration);
 }
 
-Version validate(const std::vector<OutputShape>& outputShapes) {
+Result<Version> validate(const std::vector<OutputShape>& outputShapes) {
     return validateVector(outputShapes, validateOutputShape);
 }
 
-Version validate(const std::vector<Extension>& extensions) {
+Result<Version> validate(const std::vector<Extension>& extensions) {
     return validateExtensions(extensions);
 }
 
-Version validate(const std::vector<NativeHandle>& handles) {
+Result<Version> validate(const std::vector<NativeHandle>& handles) {
     return validateVector(handles, validateNativeHandle);
 }
 
-Version validate(const std::vector<BufferRole>& bufferRoles) {
+Result<Version> validate(const std::vector<BufferRole>& bufferRoles) {
     return validateVector(bufferRoles, validateBufferRole);
 }
 
-Version validateRequestForModel(const Request& request, const Model& model) {
+Result<Version> validateRequestForModel(const Request& request, const Model& model) {
     return validateRequestForModelImpl(request, model);
 }
 
-Version validateMemoryDesc(
+Result<Version> validateMemoryDesc(
         const BufferDesc& desc,
         const std::vector<std::shared_ptr<const IPreparedModel>>& preparedModels,
         const std::vector<BufferRole>& inputRoles, const std::vector<BufferRole>& outputRoles,
@@ -2702,24 +2639,25 @@ Version validateMemoryDesc(
                                   preparedModelRoles, combinedOperand);
 }
 
-bool isValidOperandSymmPerChannelQuantParams(const Operand& operand,
-                                             const Operand::SymmPerChannelQuantParams& channelQuant,
-                                             const char* tag) {
-    return isValidOperandSymmPerChannelQuantParamsImpl(operand, channelQuant, tag);
+Result<void> validateOperandSymmPerChannelQuantParams(
+        const Operand& operand, const Operand::SymmPerChannelQuantParams& channelQuant,
+        const char* tag) {
+    return validateOperandSymmPerChannelQuantParamsImpl(operand, channelQuant, tag);
 }
 
-bool isValidOperandType(const Operand& type,
-                        const Extension::OperandTypeInformation* extensionOperandTypeInfo,
-                        const char* tag, bool allowPartial) {
-    return isValidOperandTypeImpl(type, extensionOperandTypeInfo, tag, allowPartial);
+Result<void> validateOperandType(const Operand& type,
+                                 const Extension::OperandTypeInformation* extensionOperandTypeInfo,
+                                 const char* tag, bool allowPartial) {
+    return validateOperandTypeImpl(type, extensionOperandTypeInfo, tag, allowPartial);
 }
 
-bool isValidOperandList(const std::vector<uint32_t>& list, size_t operandCount, const char* tag) {
-    return isValidOperandListImpl(list, operandCount, tag);
+Result<void> validateOperandList(const std::vector<uint32_t>& list, size_t operandCount,
+                                 const char* tag) {
+    return validateOperandListImpl(list, operandCount, tag);
 }
 
-Version validateOperation(const Operation& operation, const std::vector<Operand>& operands,
-                          const std::vector<Model::Subgraph>& subgraphs) {
+Result<Version> validateOperation(const Operation& operation, const std::vector<Operand>& operands,
+                                  const std::vector<Model::Subgraph>& subgraphs) {
     return validateOperationImpl(operation, operands, subgraphs);
 }
 
