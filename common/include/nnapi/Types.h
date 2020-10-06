@@ -32,6 +32,7 @@
 
 #include "nnapi/OperandTypes.h"
 #include "nnapi/OperationTypes.h"
+#include "nnapi/Result.h"
 
 namespace android::nn {
 
@@ -141,7 +142,7 @@ struct Capabilities {
     };
     class OperandPerformanceTable {
        public:
-        static std::optional<OperandPerformanceTable> create(
+        static Result<OperandPerformanceTable> create(
                 std::vector<OperandPerformance> operandPerformances);
 
         PerformanceInfo lookup(OperandType type) const;
@@ -290,7 +291,7 @@ using OptionalTimePoint = std::optional<TimePoint>;
 using TimeoutDuration = std::chrono::nanoseconds;
 using OptionalTimeoutDuration = std::optional<TimeoutDuration>;
 
-enum class Version { ANDROID_OC_MR1, ANDROID_P, ANDROID_Q, ANDROID_R, CURRENT_RUNTIME, INVALID };
+enum class Version { ANDROID_OC_MR1, ANDROID_P, ANDROID_Q, ANDROID_R, CURRENT_RUNTIME };
 
 }  // namespace android::nn
 
