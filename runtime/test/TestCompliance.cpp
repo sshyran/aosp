@@ -134,6 +134,9 @@ TEST_F(ComplianceTest, Rank0TensorTemporaryVariable) {
     testAvailableSinceV1_2(model);
 }
 
+// Hardware buffers are an Android concept, which aren't necessarily
+// available on other platforms such as ChromeOS, which also build NNAPI.
+#if defined(__ANDROID__)
 TEST_F(ComplianceTest, HardwareBufferModel) {
     const size_t memorySize = 20;
     AHardwareBuffer_Desc desc{
@@ -188,6 +191,7 @@ TEST_F(ComplianceTest, HardwareBufferRequest) {
             .pools = {sharedMemoryPool, ahwbMemoryPool},
     });
 }
+#endif
 
 TEST_F(ComplianceTest, DeviceMemory) {
     Request::MemoryPool sharedMemoryPool, deviceMemoryPool;
