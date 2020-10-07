@@ -846,4 +846,32 @@ bool operator!=(const Operand::SymmPerChannelQuantParams& a,
     return !(a == b);
 }
 
+static bool operator==(const DataLocation& a, const DataLocation& b) {
+    constexpr auto toTuple = [](const DataLocation& location) {
+        return std::tie(location.pointer, location.poolIndex, location.offset, location.length);
+    };
+    return toTuple(a) == toTuple(b);
+}
+
+bool operator==(const Operand& a, const Operand& b) {
+    constexpr auto toTuple = [](const Operand& operand) {
+        return std::tie(operand.type, operand.dimensions, operand.scale, operand.zeroPoint,
+                        operand.lifetime, operand.location, operand.extraParams);
+    };
+    return toTuple(a) == toTuple(b);
+}
+bool operator!=(const Operand& a, const Operand& b) {
+    return !(a == b);
+}
+
+bool operator==(const Operation& a, const Operation& b) {
+    constexpr auto toTuple = [](const Operation& operation) {
+        return std::tie(operation.type, operation.inputs, operation.outputs);
+    };
+    return toTuple(a) == toTuple(b);
+}
+bool operator!=(const Operation& a, const Operation& b) {
+    return !(a == b);
+}
+
 }  // namespace android::nn
