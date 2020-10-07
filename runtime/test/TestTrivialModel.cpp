@@ -122,6 +122,9 @@ TEST_F(TrivialTest, AddTwo) {
     ASSERT_EQ(CompareMatrices(expected2, actual), 0);
 }
 
+// Hardware buffers are an Android concept, which aren't necessarily
+// available on other platforms such as ChromeOS, which also build NNAPI.
+#if defined(__ANDROID__)
 TEST_F(TrivialTest, AddTwoWithHardwareBufferInput) {
     Model modelAdd2;
     CreateAddTwoTensorModel(&modelAdd2);
@@ -179,6 +182,7 @@ TEST_F(TrivialTest, AddTwoWithHardwareBufferInput) {
 
     ASSERT_EQ(CompareMatrices(expected2, actual), 0);
 }
+#endif
 
 TEST_F(TrivialTest, AddThree) {
     Model modelAdd3;
