@@ -106,6 +106,10 @@ bool operator==(const Operand::SymmPerChannelQuantParams& a,
                 const Operand::SymmPerChannelQuantParams& b);
 bool operator!=(const Operand::SymmPerChannelQuantParams& a,
                 const Operand::SymmPerChannelQuantParams& b);
+bool operator==(const Operand& a, const Operand& b);
+bool operator!=(const Operand& a, const Operand& b);
+bool operator==(const Operation& a, const Operation& b);
+bool operator!=(const Operation& a, const Operation& b);
 
 }  // namespace android::nn
 
