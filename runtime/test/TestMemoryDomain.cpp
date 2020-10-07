@@ -419,12 +419,18 @@ static const auto kAllocateReturnChoices =
         testing::Values(AllocateReturn::OK, AllocateReturn::BAD_TOKEN, AllocateReturn::BAD_IBUFFER,
                         AllocateReturn::BAD_STATUS, AllocateReturn::NOT_SUPPORTED);
 
-INSTANTIATE_TEST_SUITE_P(DeviceVersionLatest, MemoryDomainTest,
-                         testing::Combine(testing::Values(false), testing::Bool(),
-                                          kAllocateReturnChoices));
 INSTANTIATE_TEST_SUITE_P(DeviceVersionV1_2, MemoryDomainTest,
                          testing::Combine(testing::Values(true), testing::Bool(),
                                           testing::Values(AllocateReturn::NOT_SUPPORTED)));
+
+// Hardware buffers are an Android concept, which aren't necessarily
+// available on other platforms such as ChromeOS, which also build NNAPI.
+// When using the latest driver, memory is allocated via hardware buffers,
+// which will fail on non-android platforms.
+#if defined(__ANDROID__)
+INSTANTIATE_TEST_SUITE_P(DeviceVersionLatest, MemoryDomainTest,
+                         testing::Combine(testing::Values(false), testing::Bool(),
+                                          kAllocateReturnChoices));
 
 class MemoryDomainCopyTest : public MemoryDomainTestBase {};
 
@@ -457,5 +463,6 @@ TEST_F(MemoryDomainCopyTest, MemoryCopyTest) {
 
     EXPECT_EQ(ashmem2->dataAs<float>()[0], initValue1);
 }
+#endif
 
 }  // namespace
