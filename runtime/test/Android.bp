@@ -389,7 +389,7 @@ cc_library_static {
         "libgtest_ndk_c++",
     ],
     sdk_version: "current",
-    stl: "c++_static",
+    stl: "libc++_static",
 }
 
 cc_defaults {
