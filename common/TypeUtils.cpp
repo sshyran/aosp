@@ -584,6 +584,20 @@ std::ostream& operator<<(std::ostream& os, const ErrorStatus& errorStatus) {
     return os << "ErrorStatus{" << underlyingType(errorStatus) << "}";
 }
 
+std::ostream& operator<<(std::ostream& os, const FusedActivationFunc& activation) {
+    switch (activation) {
+        case FusedActivationFunc::NONE:
+            return os << "NONE";
+        case FusedActivationFunc::RELU:
+            return os << "RELU";
+        case FusedActivationFunc::RELU1:
+            return os << "RELU1";
+        case FusedActivationFunc::RELU6:
+            return os << "RELU6";
+    }
+    return os << "FusedActivationFunc{" << underlyingType(activation) << "}";
+}
+
 std::ostream& operator<<(std::ostream& os, const OutputShape& outputShape) {
     return os << "OutputShape{.dimensions=" << outputShape.dimensions
               << ", .isSufficient=" << (outputShape.isSufficient ? "true" : "false") << "}";

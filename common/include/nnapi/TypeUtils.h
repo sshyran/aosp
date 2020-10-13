@@ -58,6 +58,7 @@ std::ostream& operator<<(std::ostream& os, const OperationType& operationType);
 std::ostream& operator<<(std::ostream& os, const Request::Argument::LifeTime& lifetime);
 std::ostream& operator<<(std::ostream& os, const Priority& priority);
 std::ostream& operator<<(std::ostream& os, const ErrorStatus& errorStatus);
+std::ostream& operator<<(std::ostream& os, const FusedActivationFunc& activation);
 std::ostream& operator<<(std::ostream& os, const OutputShape& outputShape);
 std::ostream& operator<<(std::ostream& os, const Timing& timing);
 std::ostream& operator<<(std::ostream& os, const Capabilities::PerformanceInfo& performanceInfo);
