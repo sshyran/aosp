@@ -116,6 +116,13 @@ enum class ErrorStatus {
     DEAD_OBJECT = 10000,
 };
 
+enum class FusedActivationFunc : int32_t {
+    NONE = 0,
+    RELU = 1,
+    RELU1 = 2,
+    RELU6 = 3,
+};
+
 using Dimension = uint32_t;
 using Dimensions = std::vector<Dimension>;
 

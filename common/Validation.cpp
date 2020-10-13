@@ -243,6 +243,17 @@ Result<Version> validateErrorStatus(const ErrorStatus& errorStatus) {
     NN_VALIDATE_FAIL() << "Invalid ErrorStatus " << errorStatus;
 }
 
+Result<Version> validateFusedActivationFunc(const FusedActivationFunc& activation) {
+    switch (activation) {
+        case FusedActivationFunc::NONE:
+        case FusedActivationFunc::RELU:
+        case FusedActivationFunc::RELU1:
+        case FusedActivationFunc::RELU6:
+            return Version::ANDROID_OC_MR1;
+    }
+    NN_VALIDATE_FAIL() << "Invalid FusedActivationFunc " << activation;
+}
+
 Result<Version> validateOutputShape(const OutputShape& /*outputShape*/) {
     return Version::ANDROID_Q;
 }
@@ -431,7 +442,7 @@ Result<Version> validateOperandDimensions(const Operand& operand) {
                         << " but dimensions of rank 0";
                 const auto size = getNonExtensionSize(operand);
                 NN_VALIDATE(size.has_value()) << "Tensor dimensions overflow";
-                NN_VALIDATE_EQ(size.value(), 0u) << "Tensor has at least one unknown dimension";
+                NN_VALIDATE_NE(size.value(), 0u) << "Tensor has at least one unknown dimension";
             }
             // TODO(b/165152547): aren't NO_VALUE arguments allowed to be .empty() even before
             // Android Q?
@@ -1085,7 +1096,7 @@ Result<Version> validateRequestForModelImpl(const Request& request, const Model&
                                                request.inputs, model.main.inputIndexes,
                                                model.main.operands, /*isOutput=*/false)));
     version = combineVersions(version, NN_TRY(validateRequestArgumentsForModel(
-                                               request.inputs, model.main.inputIndexes,
+                                               request.outputs, model.main.outputIndexes,
                                                model.main.operands, /*isOutput=*/true)));
     return version;
 }
@@ -2559,6 +2570,10 @@ Result<Version> validate(const Priority& priority) {
 
 Result<Version> validate(const ErrorStatus& errorStatus) {
     return validateErrorStatus(errorStatus);
+}
+
+Result<Version> validate(const FusedActivationFunc& activation) {
+    return validateFusedActivationFunc(activation);
 }
 
 Result<Version> validate(const OutputShape& outputShape) {
