@@ -37,6 +37,7 @@ Result<Version> validate(const DeviceType& deviceType);
 Result<Version> validate(const MeasureTiming& measureTiming);
 Result<Version> validate(const Priority& priority);
 Result<Version> validate(const ErrorStatus& errorStatus);
+Result<Version> validate(const FusedActivationFunc& activation);
 Result<Version> validate(const OutputShape& outputShape);
 Result<Version> validate(const Timing& timing);
 Result<Version> validate(const Capabilities& capabilities);
