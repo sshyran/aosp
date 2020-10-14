@@ -558,6 +558,7 @@ std::pair<int, std::unique_ptr<MemoryFd>> MemoryFd::create(size_t size, int prot
     native_handle_t* nativeHandle = native_handle_create(1, 3);
     if (nativeHandle == nullptr) {
         LOG(ERROR) << "Failed to create native_handle";
+        close(dupfd);
         // TODO(b/120417090): is ANEURALNETWORKS_UNEXPECTED_NULL the correct
         // error to return here?
         return {ANEURALNETWORKS_UNEXPECTED_NULL, nullptr};
