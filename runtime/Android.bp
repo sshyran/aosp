@@ -121,6 +121,7 @@ cc_defaults {
 
 cc_library_shared {
     name: "libneuralnetworks",
+    llndk_stubs: "libneuralnetworks.llndk",
     defaults: [
         "libneuralnetworks_defaults",
         "neuralnetworks_defaults",
@@ -164,7 +165,7 @@ ndk_library {
 }
 
 llndk_library {
-    name: "libneuralnetworks",
+    name: "libneuralnetworks.llndk",
     symbol_file: "libneuralnetworks.map.txt",
     export_include_dirs: ["include"],
 }
