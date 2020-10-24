@@ -85,7 +85,7 @@ void initVLogMask();
     } while (0)
 
 // The NN_RET_CHECK family of macros defined below is similar to the CHECK family defined in
-// system/core/base/include/android-base/logging.h
+// system/libbase/include/android-base/logging.h
 //
 // The difference is that NN_RET_CHECK macros use LOG(ERROR) instead of LOG(FATAL)
 // and return false instead of aborting.

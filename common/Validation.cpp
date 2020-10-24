@@ -41,7 +41,7 @@
 #include "Types.h"
 
 // The NN_VALIDATE family of macros defined below is similar to the CHECK family defined in
-// system/core/base/include/android-base/logging.h
+// system/libbase/include/android-base/logging.h
 //
 // The difference is that NN_VALIDATE macros use LOG(ERROR) instead of LOG(FATAL)
 // and return false instead of aborting.
