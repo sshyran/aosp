@@ -38,49 +38,54 @@
 
 namespace android {
 
-using namespace nn::hal;
+namespace V1_0 = ::android::hardware::neuralnetworks::V1_0;
+namespace V1_1 = ::android::hardware::neuralnetworks::V1_1;
+namespace V1_2 = ::android::hardware::neuralnetworks::V1_2;
+namespace V1_3 = ::android::hardware::neuralnetworks::V1_3;
 using CompilationBuilder = nn::CompilationBuilder;
 using Device = nn::Device;
 using DeviceManager = nn::DeviceManager;
 using HidlModel = V1_3::Model;
 using PreparedModelCallback = nn::PreparedModelCallback;
-using Result = nn::test_wrapper::Result;
 using SampleDriver = nn::sample_driver::SampleDriver;
 using WrapperCompilation = nn::test_wrapper::Compilation;
 using WrapperEvent = nn::test_wrapper::Event;
 using WrapperExecution = nn::test_wrapper::Execution;
 using WrapperModel = nn::test_wrapper::Model;
 using WrapperOperandType = nn::test_wrapper::OperandType;
+using WrapperResult = nn::test_wrapper::Result;
 using WrapperType = nn::test_wrapper::Type;
 using nn::convertToV1_0;
+using nn::convertToV1_3;
+using nn::ErrorStatus;
 
 template <typename T>
 using MQDescriptorSync = hardware::MQDescriptorSync<T>;
 
 namespace {
 
-const Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
+const V1_2::Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
 
 // Wraps the latest version of IPreparedModel to allow dummying up the execution status,
 // and control when the execution finishes.
-class TestPreparedModelLatest : public IPreparedModel {
+class TestPreparedModelLatest : public V1_3::IPreparedModel {
    public:
     // If errorStatus is NONE, then execute behaves normally (and sends back
     // the actual execution status).  Otherwise, don't bother to execute, and
     // just send back errorStatus (as the execution status, not the launch
     // status).
-    TestPreparedModelLatest(sp<V1_0::IPreparedModel> preparedModel, ErrorStatus errorStatus)
+    TestPreparedModelLatest(sp<V1_0::IPreparedModel> preparedModel, V1_3::ErrorStatus errorStatus)
         : mPreparedModelV1_0(preparedModel),
           mPreparedModelV1_2(V1_2::IPreparedModel::castFrom(preparedModel).withDefault(nullptr)),
           mPreparedModelV1_3(V1_3::IPreparedModel::castFrom(preparedModel).withDefault(nullptr)),
           mErrorStatus(errorStatus) {}
 
-    Return<V1_0::ErrorStatus> execute(const V1_0::Request& request,
-                                      const sp<V1_0::IExecutionCallback>& callback) override {
+    hardware::Return<V1_0::ErrorStatus> execute(
+            const V1_0::Request& request, const sp<V1_0::IExecutionCallback>& callback) override {
         CHECK(mPreparedModelV1_0 != nullptr) << "V1_0 prepared model is nullptr.";
         std::thread([this, request, callback] {
             dummyExecution();
-            if (mErrorStatus == ErrorStatus::NONE) {
+            if (mErrorStatus == V1_3::ErrorStatus::NONE) {
                 // Note that we lose the actual launch status.
                 (void)mPreparedModelV1_0->execute(request, callback);
             } else {
@@ -90,16 +95,17 @@ class TestPreparedModelLatest : public IPreparedModel {
         return V1_0::ErrorStatus::NONE;
     }
 
-    Return<V1_0::ErrorStatus> execute_1_2(const V1_0::Request& request, MeasureTiming measure,
-                                          const sp<V1_2::IExecutionCallback>& callback) override {
+    hardware::Return<V1_0::ErrorStatus> execute_1_2(
+            const V1_0::Request& request, V1_2::MeasureTiming measure,
+            const sp<V1_2::IExecutionCallback>& callback) override {
         CHECK(mPreparedModelV1_2 != nullptr) << "V1_2 prepared model is nullptr.";
         std::thread([this, request, measure, callback] {
             dummyExecution();
-            if (mErrorStatus == ErrorStatus::NONE) {
+            if (mErrorStatus == V1_3::ErrorStatus::NONE) {
                 // Note that we lose the actual launch status.
                 (void)mPreparedModelV1_2->execute_1_2(request, measure, callback);
-            } else if (mErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
-                OutputShape shape = {.dimensions = {1}, .isSufficient = false};
+            } else if (mErrorStatus == V1_3::ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
+                V1_2::OutputShape shape = {.dimensions = {1}, .isSufficient = false};
                 callback->notify_1_2(convertToV1_0(mErrorStatus), {shape}, kBadTiming);
             } else {
                 callback->notify_1_2(convertToV1_0(mErrorStatus), {}, kBadTiming);
@@ -108,19 +114,20 @@ class TestPreparedModelLatest : public IPreparedModel {
         return V1_0::ErrorStatus::NONE;
     }
 
-    Return<V1_3::ErrorStatus> execute_1_3(const V1_3::Request& request, MeasureTiming measure,
-                                          const OptionalTimePoint& deadline,
-                                          const OptionalTimeoutDuration& loopTimeoutDuration,
-                                          const sp<V1_3::IExecutionCallback>& callback) override {
+    hardware::Return<V1_3::ErrorStatus> execute_1_3(
+            const V1_3::Request& request, V1_2::MeasureTiming measure,
+            const V1_3::OptionalTimePoint& deadline,
+            const V1_3::OptionalTimeoutDuration& loopTimeoutDuration,
+            const sp<V1_3::IExecutionCallback>& callback) override {
         CHECK(mPreparedModelV1_3 != nullptr) << "V1_3 prepared model is nullptr.";
         std::thread([this, request, measure, deadline, loopTimeoutDuration, callback] {
             dummyExecution();
-            if (mErrorStatus == ErrorStatus::NONE) {
+            if (mErrorStatus == V1_3::ErrorStatus::NONE) {
                 // Note that we lose the actual launch status.
                 (void)mPreparedModelV1_3->execute_1_3(request, measure, deadline,
                                                       loopTimeoutDuration, callback);
-            } else if (mErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
-                OutputShape shape = {.dimensions = {1}, .isSufficient = false};
+            } else if (mErrorStatus == V1_3::ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
+                V1_2::OutputShape shape = {.dimensions = {1}, .isSufficient = false};
                 callback->notify_1_3(mErrorStatus, {shape}, kBadTiming);
             } else {
                 callback->notify_1_3(mErrorStatus, {}, kBadTiming);
@@ -129,53 +136,55 @@ class TestPreparedModelLatest : public IPreparedModel {
         return V1_3::ErrorStatus::NONE;
     }
 
-    Return<void> executeSynchronously(const V1_0::Request& request, MeasureTiming measure,
-                                      executeSynchronously_cb cb) override {
+    hardware::Return<void> executeSynchronously(const V1_0::Request& request,
+                                                V1_2::MeasureTiming measure,
+                                                executeSynchronously_cb cb) override {
         CHECK(mPreparedModelV1_2 != nullptr) << "V1_2 prepared model is nullptr.";
         dummyExecution();
-        if (mErrorStatus == ErrorStatus::NONE) {
+        if (mErrorStatus == V1_3::ErrorStatus::NONE) {
             return mPreparedModelV1_2->executeSynchronously(request, measure, cb);
-        } else if (mErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
-            OutputShape shape = {.dimensions = {1}, .isSufficient = false};
+        } else if (mErrorStatus == V1_3::ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
+            V1_2::OutputShape shape = {.dimensions = {1}, .isSufficient = false};
             cb(convertToV1_0(mErrorStatus), {shape}, kBadTiming);
-            return Void();
+            return hardware::Void();
         } else {
             cb(convertToV1_0(mErrorStatus), {}, kBadTiming);
-            return Void();
+            return hardware::Void();
         }
     }
 
-    Return<void> executeSynchronously_1_3(const V1_3::Request& request, MeasureTiming measure,
-                                          const OptionalTimePoint& deadline,
-                                          const OptionalTimeoutDuration& loopTimeoutDuration,
-                                          executeSynchronously_1_3_cb cb) override {
+    hardware::Return<void> executeSynchronously_1_3(
+            const V1_3::Request& request, V1_2::MeasureTiming measure,
+            const V1_3::OptionalTimePoint& deadline,
+            const V1_3::OptionalTimeoutDuration& loopTimeoutDuration,
+            executeSynchronously_1_3_cb cb) override {
         CHECK(mPreparedModelV1_3 != nullptr) << "V1_3 prepared model is nullptr.";
         dummyExecution();
-        if (mErrorStatus == ErrorStatus::NONE) {
+        if (mErrorStatus == V1_3::ErrorStatus::NONE) {
             return mPreparedModelV1_3->executeSynchronously_1_3(request, measure, deadline,
                                                                 loopTimeoutDuration, cb);
-        } else if (mErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
-            OutputShape shape = {.dimensions = {1}, .isSufficient = false};
+        } else if (mErrorStatus == V1_3::ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
+            V1_2::OutputShape shape = {.dimensions = {1}, .isSufficient = false};
             cb(mErrorStatus, {shape}, kBadTiming);
-            return Void();
+            return hardware::Void();
         } else {
             cb(mErrorStatus, {}, kBadTiming);
-            return Void();
+            return hardware::Void();
         }
     }
 
-    Return<void> configureExecutionBurst(
+    hardware::Return<void> configureExecutionBurst(
             const sp<V1_2::IBurstCallback>& callback,
             const MQDescriptorSync<V1_2::FmqRequestDatum>& requestChannel,
             const MQDescriptorSync<V1_2::FmqResultDatum>& resultChannel,
             configureExecutionBurst_cb cb) override {
         CHECK(mPreparedModelV1_2 != nullptr) << "V1_2 prepared model is nullptr.";
-        if (mErrorStatus == ErrorStatus::NONE) {
+        if (mErrorStatus == V1_3::ErrorStatus::NONE) {
             return mPreparedModelV1_2->configureExecutionBurst(callback, requestChannel,
                                                                resultChannel, cb);
         } else {
             cb(convertToV1_0(mErrorStatus), nullptr);
-            return Void();
+            return hardware::Void();
         }
     }
 
@@ -184,25 +193,27 @@ class TestPreparedModelLatest : public IPreparedModel {
     // SampleDriver is written with that in mind.  Therefore, this
     // implementation is synchronous also.  If the SampleDriver is updated to
     // return real sync fence, this must be updated.
-    Return<void> executeFenced(const V1_3::Request& request, const hidl_vec<hidl_handle>& waitFor,
-                               MeasureTiming measure, const OptionalTimePoint& deadline,
-                               const OptionalTimeoutDuration& loopTimeoutDuration,
-                               const OptionalTimeoutDuration& duration,
-                               executeFenced_cb cb) override {
+    hardware::Return<void> executeFenced(const V1_3::Request& request,
+                                         const hardware::hidl_vec<hardware::hidl_handle>& waitFor,
+                                         V1_2::MeasureTiming measure,
+                                         const V1_3::OptionalTimePoint& deadline,
+                                         const V1_3::OptionalTimeoutDuration& loopTimeoutDuration,
+                                         const V1_3::OptionalTimeoutDuration& duration,
+                                         executeFenced_cb cb) override {
         CHECK(mPreparedModelV1_3 != nullptr) << "V1_3 prepared model is nullptr.";
-        CHECK(mErrorStatus != ErrorStatus::OUTPUT_INSUFFICIENT_SIZE)
+        CHECK(mErrorStatus != V1_3::ErrorStatus::OUTPUT_INSUFFICIENT_SIZE)
                 << "executeFenced does not support dynamic output shape";
         dummyExecution();
-        if (mErrorStatus == ErrorStatus::NONE) {
+        if (mErrorStatus == V1_3::ErrorStatus::NONE) {
             return mPreparedModelV1_3->executeFenced(request, waitFor, measure, deadline,
                                                      loopTimeoutDuration, duration, cb);
         } else {
             // Due to the limitations of the SampleDriver, all failures look
             // like launch failures.  If the SampleDriver is updated to return
             // real sync fences, this must be updated.
-            cb(mErrorStatus, hidl_handle(nullptr), nullptr);
+            cb(mErrorStatus, hardware::hidl_handle(nullptr), nullptr);
         }
-        return Void();
+        return hardware::Void();
     }
 
     // We can place the TestPreparedModelLatest system in a "pause" mode where
@@ -225,7 +236,7 @@ class TestPreparedModelLatest : public IPreparedModel {
     const sp<V1_0::IPreparedModel> mPreparedModelV1_0;
     const sp<V1_2::IPreparedModel> mPreparedModelV1_2;
     const sp<V1_3::IPreparedModel> mPreparedModelV1_3;
-    ErrorStatus mErrorStatus;
+    V1_3::ErrorStatus mErrorStatus;
 
     static std::atomic<bool> mPauseExecutions;
     static std::atomic<unsigned int> mExecutionsInFlight;
@@ -245,25 +256,27 @@ using TestPreparedModel13 = TestPreparedModelLatest;
 // Like TestPreparedModelLatest, but implementing 1.2
 class TestPreparedModel12 : public V1_2::IPreparedModel {
    public:
-    TestPreparedModel12(sp<V1_0::IPreparedModel> preparedModel, ErrorStatus errorStatus)
+    TestPreparedModel12(sp<V1_0::IPreparedModel> preparedModel, V1_3::ErrorStatus errorStatus)
         : mLatestPreparedModel(new TestPreparedModelLatest(preparedModel, errorStatus)) {}
 
-    Return<V1_0::ErrorStatus> execute(const V1_0::Request& request,
-                                      const sp<V1_0::IExecutionCallback>& callback) override {
+    hardware::Return<V1_0::ErrorStatus> execute(
+            const V1_0::Request& request, const sp<V1_0::IExecutionCallback>& callback) override {
         return mLatestPreparedModel->execute(request, callback);
     }
 
-    Return<V1_0::ErrorStatus> execute_1_2(const V1_0::Request& request, MeasureTiming measure,
-                                          const sp<V1_2::IExecutionCallback>& callback) override {
+    hardware::Return<V1_0::ErrorStatus> execute_1_2(
+            const V1_0::Request& request, V1_2::MeasureTiming measure,
+            const sp<V1_2::IExecutionCallback>& callback) override {
         return mLatestPreparedModel->execute_1_2(request, measure, callback);
     }
 
-    Return<void> executeSynchronously(const V1_0::Request& request, MeasureTiming measure,
-                                      executeSynchronously_cb cb) override {
+    hardware::Return<void> executeSynchronously(const V1_0::Request& request,
+                                                V1_2::MeasureTiming measure,
+                                                executeSynchronously_cb cb) override {
         return mLatestPreparedModel->executeSynchronously(request, measure, cb);
     }
 
-    Return<void> configureExecutionBurst(
+    hardware::Return<void> configureExecutionBurst(
             const sp<V1_2::IBurstCallback>& callback,
             const MQDescriptorSync<V1_2::FmqRequestDatum>& requestChannel,
             const MQDescriptorSync<V1_2::FmqResultDatum>& resultChannel,
@@ -273,22 +286,22 @@ class TestPreparedModel12 : public V1_2::IPreparedModel {
     }
 
    private:
-    const sp<IPreparedModel> mLatestPreparedModel;
+    const sp<V1_3::IPreparedModel> mLatestPreparedModel;
 };
 
 // Like TestPreparedModelLatest, but implementing 1.0
 class TestPreparedModel10 : public V1_0::IPreparedModel {
    public:
-    TestPreparedModel10(sp<V1_0::IPreparedModel> preparedModel, ErrorStatus errorStatus)
+    TestPreparedModel10(sp<V1_0::IPreparedModel> preparedModel, V1_3::ErrorStatus errorStatus)
         : mLatestPreparedModel(new TestPreparedModelLatest(preparedModel, errorStatus)) {}
 
-    Return<V1_0::ErrorStatus> execute(const V1_0::Request& request,
-                                      const sp<V1_0::IExecutionCallback>& callback) override {
+    hardware::Return<V1_0::ErrorStatus> execute(
+            const V1_0::Request& request, const sp<V1_0::IExecutionCallback>& callback) override {
         return mLatestPreparedModel->execute(request, callback);
     }
 
    private:
-    const sp<IPreparedModel> mLatestPreparedModel;
+    const sp<V1_3::IPreparedModel> mLatestPreparedModel;
 };
 
 // Behaves like SampleDriver, except that it produces wrapped IPreparedModel.
@@ -300,13 +313,13 @@ class TestDriver13 : public SampleDriver {
     // status). Otherwise, don't bother to execute, and just send
     // back errorStatus (as the execution status, not the launch
     // status).
-    TestDriver13(const std::string& name, ErrorStatus errorStatus)
+    TestDriver13(const std::string& name, V1_3::ErrorStatus errorStatus)
         : SampleDriver(name.c_str()), mErrorStatus(errorStatus) {}
 
-    Return<void> getCapabilities_1_3(getCapabilities_1_3_cb _hidl_cb) override {
+    hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb _hidl_cb) override {
         android::nn::initVLogMask();
-        const PerformanceInfo kPerf = {.execTime = 0.75f, .powerUsage = 0.75f};
-        Capabilities capabilities = {
+        const V1_0::PerformanceInfo kPerf = {.execTime = 0.75f, .powerUsage = 0.75f};
+        V1_3::Capabilities capabilities = {
                 .relaxedFloat32toFloat16PerformanceScalar = kPerf,
                 .relaxedFloat32toFloat16PerformanceTensor = kPerf,
                 .operandPerformance =
@@ -314,41 +327,43 @@ class TestDriver13 : public SampleDriver {
                 .ifPerformance = kPerf,
                 .whilePerformance = kPerf};
         _hidl_cb(V1_3::ErrorStatus::NONE, capabilities);
-        return Void();
+        return hardware::Void();
     }
 
-    Return<void> getSupportedOperations_1_3(const HidlModel& model,
-                                            getSupportedOperations_1_3_cb cb) override {
+    hardware::Return<void> getSupportedOperations_1_3(const HidlModel& model,
+                                                      getSupportedOperations_1_3_cb cb) override {
         if (nn::validateModel(model)) {
             std::vector<bool> supported(model.main.operations.size(), true);
             cb(V1_3::ErrorStatus::NONE, supported);
         } else {
             cb(V1_3::ErrorStatus::INVALID_ARGUMENT, {});
         }
-        return Void();
+        return hardware::Void();
     }
 
-    Return<V1_3::ErrorStatus> prepareModel_1_3(
-            const HidlModel& model, ExecutionPreference preference, Priority priority,
-            const OptionalTimePoint& deadline, const hidl_vec<hidl_handle>& modelCache,
-            const hidl_vec<hidl_handle>& dataCache, const CacheToken& token,
+    hardware::Return<V1_3::ErrorStatus> prepareModel_1_3(
+            const HidlModel& model, V1_1::ExecutionPreference preference, V1_3::Priority priority,
+            const V1_3::OptionalTimePoint& deadline,
+            const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+            const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
+            const nn::HalCacheToken& token,
             const sp<V1_3::IPreparedModelCallback>& actualCallback) override {
         sp<PreparedModelCallback> localCallback = new PreparedModelCallback;
-        Return<V1_3::ErrorStatus> prepareModelReturn = SampleDriver::prepareModel_1_3(
+        hardware::Return<V1_3::ErrorStatus> prepareModelReturn = SampleDriver::prepareModel_1_3(
                 model, preference, priority, deadline, modelCache, dataCache, token, localCallback);
         if (!prepareModelReturn.isOkUnchecked()) {
             return prepareModelReturn;
         }
-        if (prepareModelReturn != ErrorStatus::NONE) {
+        if (prepareModelReturn != V1_3::ErrorStatus::NONE) {
             actualCallback->notify_1_3(
-                    localCallback->getStatus(),
+                    convertToV1_3(localCallback->getStatus()),
                     V1_3::IPreparedModel::castFrom(localCallback->getPreparedModel()));
             return prepareModelReturn;
         }
         localCallback->wait();
         if (localCallback->getStatus() != ErrorStatus::NONE) {
             actualCallback->notify_1_3(
-                    localCallback->getStatus(),
+                    convertToV1_3(localCallback->getStatus()),
                     V1_3::IPreparedModel::castFrom(localCallback->getPreparedModel()));
         } else {
             actualCallback->notify_1_3(
@@ -358,13 +373,14 @@ class TestDriver13 : public SampleDriver {
         return prepareModelReturn;
     }
 
-    Return<V1_0::ErrorStatus> prepareModel_1_2(
-            const V1_2::Model& model, ExecutionPreference preference,
-            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const CacheToken& token,
+    hardware::Return<V1_0::ErrorStatus> prepareModel_1_2(
+            const V1_2::Model& model, V1_1::ExecutionPreference preference,
+            const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+            const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
+            const nn::HalCacheToken& token,
             const sp<V1_2::IPreparedModelCallback>& actualCallback) override {
         sp<PreparedModelCallback> localCallback = new PreparedModelCallback;
-        Return<V1_0::ErrorStatus> prepareModelReturn = SampleDriver::prepareModel_1_2(
+        hardware::Return<V1_0::ErrorStatus> prepareModelReturn = SampleDriver::prepareModel_1_2(
                 model, preference, modelCache, dataCache, token, localCallback);
         if (!prepareModelReturn.isOkUnchecked()) {
             return prepareModelReturn;
@@ -388,11 +404,11 @@ class TestDriver13 : public SampleDriver {
         return prepareModelReturn;
     }
 
-    Return<V1_0::ErrorStatus> prepareModel_1_1(
-            const V1_1::Model& model, ExecutionPreference preference,
+    hardware::Return<V1_0::ErrorStatus> prepareModel_1_1(
+            const V1_1::Model& model, V1_1::ExecutionPreference preference,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         sp<PreparedModelCallback> localCallback = new PreparedModelCallback;
-        Return<V1_0::ErrorStatus> prepareModelReturn =
+        hardware::Return<V1_0::ErrorStatus> prepareModelReturn =
                 SampleDriver::prepareModel_1_1(model, preference, localCallback);
         if (!prepareModelReturn.isOkUnchecked()) {
             return prepareModelReturn;
@@ -414,75 +430,79 @@ class TestDriver13 : public SampleDriver {
         return prepareModelReturn;
     }
 
-    Return<V1_0::ErrorStatus> prepareModel(
+    hardware::Return<V1_0::ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
-        return prepareModel_1_1(nn::convertToV1_1(model), ExecutionPreference::FAST_SINGLE_ANSWER,
-                                actualCallback);
+        return prepareModel_1_1(nn::convertToV1_1(model),
+                                V1_1::ExecutionPreference::FAST_SINGLE_ANSWER, actualCallback);
     }
 
    private:
-    ErrorStatus mErrorStatus;
+    V1_3::ErrorStatus mErrorStatus;
 };
 
 // Like TestDriver, but implementing 1.2
 class TestDriver12 : public V1_2::IDevice {
    public:
-    TestDriver12(const std::string& name, ErrorStatus errorStatus)
+    TestDriver12(const std::string& name, V1_3::ErrorStatus errorStatus)
         : mLatestDriver(new TestDriver13(name, errorStatus)) {}
-    Return<void> getCapabilities_1_2(getCapabilities_1_2_cb _hidl_cb) override {
+    hardware::Return<void> getCapabilities_1_2(getCapabilities_1_2_cb _hidl_cb) override {
         return mLatestDriver->getCapabilities_1_2(_hidl_cb);
     }
-    Return<void> getCapabilities_1_1(getCapabilities_1_1_cb _hidl_cb) override {
+    hardware::Return<void> getCapabilities_1_1(getCapabilities_1_1_cb _hidl_cb) override {
         return mLatestDriver->getCapabilities_1_1(_hidl_cb);
     }
-    Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
+    hardware::Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
         return mLatestDriver->getCapabilities(_hidl_cb);
     }
-    Return<void> getSupportedOperations_1_2(const V1_2::Model& model,
-                                            getSupportedOperations_1_2_cb _hidl_cb) override {
+    hardware::Return<void> getSupportedOperations_1_2(
+            const V1_2::Model& model, getSupportedOperations_1_2_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations_1_2(model, _hidl_cb);
     }
-    Return<void> getSupportedOperations_1_1(const V1_1::Model& model,
-                                            getSupportedOperations_1_1_cb _hidl_cb) override {
+    hardware::Return<void> getSupportedOperations_1_1(
+            const V1_1::Model& model, getSupportedOperations_1_1_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations_1_1(model, _hidl_cb);
     }
-    Return<void> getSupportedOperations(const V1_0::Model& model,
-                                        getSupportedOperations_cb _hidl_cb) override {
+    hardware::Return<void> getSupportedOperations(const V1_0::Model& model,
+                                                  getSupportedOperations_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations(model, _hidl_cb);
     }
-    Return<V1_0::ErrorStatus> prepareModel_1_2(
-            const V1_2::Model& model, ExecutionPreference preference,
-            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const CacheToken& token,
+    hardware::Return<V1_0::ErrorStatus> prepareModel_1_2(
+            const V1_2::Model& model, V1_1::ExecutionPreference preference,
+            const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+            const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
+            const nn::HalCacheToken& token,
             const sp<V1_2::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel_1_2(model, preference, modelCache, dataCache, token,
                                                actualCallback);
     }
-    Return<V1_0::ErrorStatus> prepareModel_1_1(
-            const V1_1::Model& model, ExecutionPreference preference,
+    hardware::Return<V1_0::ErrorStatus> prepareModel_1_1(
+            const V1_1::Model& model, V1_1::ExecutionPreference preference,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel_1_1(model, preference, actualCallback);
     }
-    Return<V1_0::ErrorStatus> prepareModel(
+    hardware::Return<V1_0::ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel(model, actualCallback);
     }
-    Return<DeviceStatus> getStatus() override { return mLatestDriver->getStatus(); }
-    Return<void> getVersionString(getVersionString_cb _hidl_cb) override {
+    hardware::Return<V1_0::DeviceStatus> getStatus() override { return mLatestDriver->getStatus(); }
+    hardware::Return<void> getVersionString(getVersionString_cb _hidl_cb) override {
         return mLatestDriver->getVersionString(_hidl_cb);
     }
-    Return<void> getType(getType_cb _hidl_cb) override { return mLatestDriver->getType(_hidl_cb); }
-    Return<void> getSupportedExtensions(getSupportedExtensions_cb _hidl_cb) {
+    hardware::Return<void> getType(getType_cb _hidl_cb) override {
+        return mLatestDriver->getType(_hidl_cb);
+    }
+    hardware::Return<void> getSupportedExtensions(getSupportedExtensions_cb _hidl_cb) {
         return mLatestDriver->getSupportedExtensions(_hidl_cb);
     }
-    Return<void> getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb _hidl_cb) {
+    hardware::Return<void> getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb _hidl_cb) {
         return mLatestDriver->getNumberOfCacheFilesNeeded(_hidl_cb);
     }
-    Return<V1_0::ErrorStatus> prepareModelFromCache(
-            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const CacheToken& token, const sp<V1_2::IPreparedModelCallback>& callback) {
+    hardware::Return<V1_0::ErrorStatus> prepareModelFromCache(
+            const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+            const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
+            const nn::HalCacheToken& token, const sp<V1_2::IPreparedModelCallback>& callback) {
         return mLatestDriver->prepareModelFromCache(modelCache, dataCache, token, callback);
     }
 
@@ -493,29 +513,29 @@ class TestDriver12 : public V1_2::IDevice {
 // Like TestDriver, but implementing 1.1
 class TestDriver11 : public V1_1::IDevice {
    public:
-    TestDriver11(const std::string& name, ErrorStatus errorStatus)
+    TestDriver11(const std::string& name, V1_3::ErrorStatus errorStatus)
         : mLatestDriver(new TestDriver13(name, errorStatus)) {}
-    Return<void> getCapabilities_1_1(getCapabilities_1_1_cb _hidl_cb) override {
+    hardware::Return<void> getCapabilities_1_1(getCapabilities_1_1_cb _hidl_cb) override {
         return mLatestDriver->getCapabilities_1_1(_hidl_cb);
     }
-    Return<void> getSupportedOperations_1_1(const V1_1::Model& model,
-                                            getSupportedOperations_1_1_cb _hidl_cb) override {
+    hardware::Return<void> getSupportedOperations_1_1(
+            const V1_1::Model& model, getSupportedOperations_1_1_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations_1_1(model, _hidl_cb);
     }
-    Return<V1_0::ErrorStatus> prepareModel_1_1(
-            const V1_1::Model& model, ExecutionPreference preference,
+    hardware::Return<V1_0::ErrorStatus> prepareModel_1_1(
+            const V1_1::Model& model, V1_1::ExecutionPreference preference,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel_1_1(model, preference, actualCallback);
     }
-    Return<DeviceStatus> getStatus() override { return mLatestDriver->getStatus(); }
-    Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
+    hardware::Return<V1_0::DeviceStatus> getStatus() override { return mLatestDriver->getStatus(); }
+    hardware::Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
         return mLatestDriver->getCapabilities(_hidl_cb);
     }
-    Return<void> getSupportedOperations(const V1_0::Model& model,
-                                        getSupportedOperations_cb _hidl_cb) override {
+    hardware::Return<void> getSupportedOperations(const V1_0::Model& model,
+                                                  getSupportedOperations_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations(model, _hidl_cb);
     }
-    Return<V1_0::ErrorStatus> prepareModel(
+    hardware::Return<V1_0::ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel(model, actualCallback);
@@ -528,21 +548,21 @@ class TestDriver11 : public V1_1::IDevice {
 // Like TestDriver, but implementing 1.0
 class TestDriver10 : public V1_0::IDevice {
    public:
-    TestDriver10(const std::string& name, ErrorStatus errorStatus)
+    TestDriver10(const std::string& name, V1_3::ErrorStatus errorStatus)
         : mLatestDriver(new TestDriver13(name, errorStatus)) {}
-    Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
+    hardware::Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
         return mLatestDriver->getCapabilities(_hidl_cb);
     }
-    Return<void> getSupportedOperations(const V1_0::Model& model,
-                                        getSupportedOperations_cb _hidl_cb) override {
+    hardware::Return<void> getSupportedOperations(const V1_0::Model& model,
+                                                  getSupportedOperations_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations(model, _hidl_cb);
     }
-    Return<V1_0::ErrorStatus> prepareModel(
+    hardware::Return<V1_0::ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel(model, actualCallback);
     }
-    Return<DeviceStatus> getStatus() override { return mLatestDriver->getStatus(); }
+    hardware::Return<V1_0::DeviceStatus> getStatus() override { return mLatestDriver->getStatus(); }
 
    private:
     const sp<V1_3::IDevice> mLatestDriver;
@@ -560,7 +580,7 @@ class TestCompilation : public WrapperCompilation {
     // Otherwise, don't bother to execute, and just send back
     // errorStatus (as the execution status, not the launch status).
     TestCompilation(const WrapperModel* model, const std::string& deviceName,
-                    ErrorStatus errorStatus) {
+                    V1_3::ErrorStatus errorStatus) {
         std::vector<std::shared_ptr<Device>> devices;
         auto device = DeviceManager::forTest_makeDriverDevice(
                 deviceName, new DriverClass(deviceName, errorStatus));
@@ -613,7 +633,7 @@ class TestIntrospectionCompilation : public WrapperCompilation {
 
 template <class DriverClass>
 class ExecutionTestTemplate
-    : public ::testing::TestWithParam<std::tuple<ErrorStatus, Result, bool>> {
+    : public ::testing::TestWithParam<std::tuple<V1_3::ErrorStatus, WrapperResult, bool>> {
    public:
     ExecutionTestTemplate()
         : kName(toString(std::get<0>(GetParam()))),
@@ -648,11 +668,11 @@ class ExecutionTestTemplate
     // sends back the actual execution status).  Otherwise, don't
     // bother to execute, and just send back kForceErrorStatus (as the
     // execution status, not the launch status).
-    const ErrorStatus kForceErrorStatus;
+    const V1_3::ErrorStatus kForceErrorStatus;
 
-    // What result do we expect from the execution?  (The Result
+    // What result do we expect from the execution?  (The WrapperResult
     // equivalent of kForceErrorStatus.)
-    const Result kExpectResult;
+    const WrapperResult kExpectResult;
 
     // Whether mCompilation is created via Introspection API or not.
     const bool kUseIntrospectionAPI;
@@ -663,8 +683,10 @@ class ExecutionTestTemplate
     void setInputOutput(WrapperExecution* execution) {
         mInputBuffer = kInputBuffer;
         mOutputBuffer = kOutputBufferInitial;
-        ASSERT_EQ(execution->setInput(0, &mInputBuffer, sizeof(mInputBuffer)), Result::NO_ERROR);
-        ASSERT_EQ(execution->setOutput(0, &mOutputBuffer, sizeof(mOutputBuffer)), Result::NO_ERROR);
+        ASSERT_EQ(execution->setInput(0, &mInputBuffer, sizeof(mInputBuffer)),
+                  WrapperResult::NO_ERROR);
+        ASSERT_EQ(execution->setOutput(0, &mOutputBuffer, sizeof(mOutputBuffer)),
+                  WrapperResult::NO_ERROR);
     }
 
     const float kInputBuffer = 3.14;
@@ -683,7 +705,7 @@ class ExecutionTestTemplate
         uint32_t output = model.addOperand(&tensorType);
         model.addOperation(ANEURALNETWORKS_FLOOR, {input}, {output});
         model.identifyInputsAndOutputs({input}, {output});
-        assert(model.finish() == Result::NO_ERROR);
+        assert(model.finish() == WrapperResult::NO_ERROR);
 
         return model;
     }
@@ -697,13 +719,13 @@ void ExecutionTestTemplate<DriverClass>::TestWait() {
         GTEST_SKIP();
     }
 
-    ASSERT_EQ(mCompilation.finish(), Result::NO_ERROR);
+    ASSERT_EQ(mCompilation.finish(), WrapperResult::NO_ERROR);
 
     const auto getDimensionsWhileRunning = [](WrapperExecution& execution) {
         TestPreparedModelLatest::waitForExecutionToBegin();
         // Cannot query dimensions while execution is running
         std::vector<uint32_t> dimensions;
-        EXPECT_EQ(execution.getOutputOperandDimensions(0, &dimensions), Result::BAD_STATE);
+        EXPECT_EQ(execution.getOutputOperandDimensions(0, &dimensions), WrapperResult::BAD_STATE);
     };
 
     {
@@ -712,21 +734,22 @@ void ExecutionTestTemplate<DriverClass>::TestWait() {
         ASSERT_NO_FATAL_FAILURE(setInputOutput(&execution));
         TestPreparedModelLatest::pauseExecutions(true);
         WrapperEvent event;
-        ASSERT_EQ(execution.startCompute(&event), Result::NO_ERROR);
+        ASSERT_EQ(execution.startCompute(&event), WrapperResult::NO_ERROR);
         getDimensionsWhileRunning(execution);
         TestPreparedModelLatest::pauseExecutions(false);
         ASSERT_EQ(event.wait(), kExpectResult);
-        if (kExpectResult == Result::NO_ERROR) {
+        if (kExpectResult == WrapperResult::NO_ERROR) {
             ASSERT_EQ(mOutputBuffer, kOutputBufferExpected);
         }
         std::vector<uint32_t> dimensions;
-        if (kExpectResult == Result::NO_ERROR ||
-            kExpectResult == Result::OUTPUT_INSUFFICIENT_SIZE) {
+        if (kExpectResult == WrapperResult::NO_ERROR ||
+            kExpectResult == WrapperResult::OUTPUT_INSUFFICIENT_SIZE) {
             // Only one output operand, hardcoded as index 0.
             ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions), kExpectResult);
             ASSERT_EQ(dimensions, kOutputDimensionsExpected);
         } else {
-            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions), Result::BAD_STATE);
+            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions),
+                      WrapperResult::BAD_STATE);
         }
     }
     {
@@ -738,17 +761,18 @@ void ExecutionTestTemplate<DriverClass>::TestWait() {
         getDimensionsWhileRunning(execution);
         TestPreparedModelLatest::pauseExecutions(false);
         run.join();
-        if (kExpectResult == Result::NO_ERROR) {
+        if (kExpectResult == WrapperResult::NO_ERROR) {
             ASSERT_EQ(mOutputBuffer, kOutputBufferExpected);
         }
         std::vector<uint32_t> dimensions;
-        if (kExpectResult == Result::NO_ERROR ||
-            kExpectResult == Result::OUTPUT_INSUFFICIENT_SIZE) {
+        if (kExpectResult == WrapperResult::NO_ERROR ||
+            kExpectResult == WrapperResult::OUTPUT_INSUFFICIENT_SIZE) {
             // Only one output operand, hardcoded as index 0.
             ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions), kExpectResult);
             ASSERT_EQ(dimensions, kOutputDimensionsExpected);
         } else {
-            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions), Result::BAD_STATE);
+            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions),
+                      WrapperResult::BAD_STATE);
         }
     }
     {
@@ -767,20 +791,21 @@ void ExecutionTestTemplate<DriverClass>::TestWait() {
         getDimensionsWhileRunning(execution);
         TestPreparedModelLatest::pauseExecutions(false);
         run.join();
-        if (kExpectResult == Result::NO_ERROR) {
+        if (kExpectResult == WrapperResult::NO_ERROR) {
             ASSERT_EQ(mOutputBuffer, kOutputBufferExpected);
         }
         std::vector<uint32_t> dimensions;
-        if (kExpectResult == Result::NO_ERROR ||
-            kExpectResult == Result::OUTPUT_INSUFFICIENT_SIZE) {
+        if (kExpectResult == WrapperResult::NO_ERROR ||
+            kExpectResult == WrapperResult::OUTPUT_INSUFFICIENT_SIZE) {
             // Only one output operand, hardcoded as index 0.
             ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions), kExpectResult);
             ASSERT_EQ(dimensions, kOutputDimensionsExpected);
         } else {
-            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions), Result::BAD_STATE);
+            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions),
+                      WrapperResult::BAD_STATE);
         }
     }
-    if (kExpectResult != Result::OUTPUT_INSUFFICIENT_SIZE) {
+    if (kExpectResult != WrapperResult::OUTPUT_INSUFFICIENT_SIZE) {
         // computeWithDependencies doesn't support OUTPUT_INSUFFICIENT_SIZE
         SCOPED_TRACE("computeWithDependencies");
         WrapperExecution execution(&mCompilation);
@@ -796,32 +821,35 @@ void ExecutionTestTemplate<DriverClass>::TestWait() {
         getDimensionsWhileRunning(execution);
         TestPreparedModelLatest::pauseExecutions(false);
         run.join();
-        if (kExpectResult == Result::NO_ERROR) {
+        if (kExpectResult == WrapperResult::NO_ERROR) {
             ASSERT_EQ(event.wait(), kExpectResult);
             ASSERT_EQ(mOutputBuffer, kOutputBufferExpected);
         } else {
-            ASSERT_EQ(event.wait(), Result::UNEXPECTED_NULL);
+            ASSERT_EQ(event.wait(), WrapperResult::UNEXPECTED_NULL);
         }
         std::vector<uint32_t> dimensions;
-        if (kExpectResult == Result::NO_ERROR) {
+        if (kExpectResult == WrapperResult::NO_ERROR) {
             // Only one output operand, hardcoded as index 0.
             ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions), kExpectResult);
             ASSERT_EQ(dimensions, kOutputDimensionsExpected);
         } else {
-            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions), Result::BAD_STATE);
+            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions),
+                      WrapperResult::BAD_STATE);
         }
     }
 }
 
 auto kTestValues = ::testing::Values(
-        std::make_tuple(ErrorStatus::NONE, Result::NO_ERROR, /* kUseIntrospectionAPI */ false),
-        std::make_tuple(ErrorStatus::DEVICE_UNAVAILABLE, Result::UNAVAILABLE_DEVICE,
+        std::make_tuple(V1_3::ErrorStatus::NONE, WrapperResult::NO_ERROR,
                         /* kUseIntrospectionAPI */ false),
-        std::make_tuple(ErrorStatus::GENERAL_FAILURE, Result::OP_FAILED,
+        std::make_tuple(V1_3::ErrorStatus::DEVICE_UNAVAILABLE, WrapperResult::UNAVAILABLE_DEVICE,
                         /* kUseIntrospectionAPI */ false),
-        std::make_tuple(ErrorStatus::OUTPUT_INSUFFICIENT_SIZE, Result::OUTPUT_INSUFFICIENT_SIZE,
+        std::make_tuple(V1_3::ErrorStatus::GENERAL_FAILURE, WrapperResult::OP_FAILED,
                         /* kUseIntrospectionAPI */ false),
-        std::make_tuple(ErrorStatus::INVALID_ARGUMENT, Result::BAD_DATA,
+        std::make_tuple(V1_3::ErrorStatus::OUTPUT_INSUFFICIENT_SIZE,
+                        WrapperResult::OUTPUT_INSUFFICIENT_SIZE,
+                        /* kUseIntrospectionAPI */ false),
+        std::make_tuple(V1_3::ErrorStatus::INVALID_ARGUMENT, WrapperResult::BAD_DATA,
                         /* kUseIntrospectionAPI */ false));
 
 class ExecutionTest13 : public ExecutionTestTemplate<TestDriver13> {};
@@ -838,27 +866,29 @@ INSTANTIATE_TEST_SUITE_P(Flavor, ExecutionTest12, kTestValues);
 
 class ExecutionTest11 : public ExecutionTestTemplate<TestDriver11> {};
 TEST_P(ExecutionTest11, Wait) {
-    if (kForceErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) return;
+    if (kForceErrorStatus == V1_3::ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) return;
     TestWait();
 }
 INSTANTIATE_TEST_SUITE_P(Flavor, ExecutionTest11, kTestValues);
 
 class ExecutionTest10 : public ExecutionTestTemplate<TestDriver10> {};
 TEST_P(ExecutionTest10, Wait) {
-    if (kForceErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) return;
+    if (kForceErrorStatus == V1_3::ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) return;
     TestWait();
 }
 INSTANTIATE_TEST_SUITE_P(Flavor, ExecutionTest10, kTestValues);
 
 auto kIntrospectionTestValues = ::testing::Values(
-        std::make_tuple(ErrorStatus::NONE, Result::NO_ERROR, /* kUseIntrospectionAPI */ true),
-        std::make_tuple(ErrorStatus::DEVICE_UNAVAILABLE, Result::UNAVAILABLE_DEVICE,
+        std::make_tuple(V1_3::ErrorStatus::NONE, WrapperResult::NO_ERROR,
                         /* kUseIntrospectionAPI */ true),
-        std::make_tuple(ErrorStatus::GENERAL_FAILURE, Result::OP_FAILED,
+        std::make_tuple(V1_3::ErrorStatus::DEVICE_UNAVAILABLE, WrapperResult::UNAVAILABLE_DEVICE,
                         /* kUseIntrospectionAPI */ true),
-        std::make_tuple(ErrorStatus::OUTPUT_INSUFFICIENT_SIZE, Result::OUTPUT_INSUFFICIENT_SIZE,
+        std::make_tuple(V1_3::ErrorStatus::GENERAL_FAILURE, WrapperResult::OP_FAILED,
                         /* kUseIntrospectionAPI */ true),
-        std::make_tuple(ErrorStatus::INVALID_ARGUMENT, Result::BAD_DATA,
+        std::make_tuple(V1_3::ErrorStatus::OUTPUT_INSUFFICIENT_SIZE,
+                        WrapperResult::OUTPUT_INSUFFICIENT_SIZE,
+                        /* kUseIntrospectionAPI */ true),
+        std::make_tuple(V1_3::ErrorStatus::INVALID_ARGUMENT, WrapperResult::BAD_DATA,
                         /* kUseIntrospectionAPI */ true));
 
 INSTANTIATE_TEST_SUITE_P(IntrospectionFlavor, ExecutionTest13, kIntrospectionTestValues);

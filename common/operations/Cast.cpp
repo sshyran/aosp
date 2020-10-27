@@ -20,7 +20,6 @@
 
 #include <algorithm>
 
-#include "HalInterfaces.h"
 #include "Operations.h"
 #include "Tracing.h"
 
@@ -29,8 +28,6 @@ namespace nn {
 namespace cast {
 
 namespace {
-
-using namespace hal;
 
 template <typename FromT, typename ToT>
 void copyCast(const FromT* in, ToT* out, int numElements) {

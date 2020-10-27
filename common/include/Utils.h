@@ -28,6 +28,8 @@
 #include "HalInterfaces.h"
 #include "NeuralNetworks.h"
 #include "ValidateHal.h"
+#include "nnapi/TypeUtils.h"
+#include "nnapi/Types.h"
 
 namespace android {
 namespace nn {
@@ -135,24 +137,36 @@ void initVLogMask();
 #define NN_RET_CHECK_GE(x, y) NN_RET_CHECK_OP(x, y, >=)
 #define NN_RET_CHECK_GT(x, y) NN_RET_CHECK_OP(x, y, >)
 
+// Make an TimeoutDuration from a duration in nanoseconds. If the value exceeds
+// the max duration, return the maximum expressible duration.
+TimeoutDuration makeTimeoutDuration(uint64_t nanoseconds);
+
 // Type to represent a deadline time point across processes.
 using Deadline = std::chrono::steady_clock::time_point;
 
 // Make an Deadline from a duration. If the sum of the current time and the
 // duration exceeds the max time, return a time point holding the maximum
 // expressible time.
-Deadline makeDeadline(uint64_t duration);
+Deadline makeDeadline(TimeoutDuration duration);
+inline Deadline makeDeadline(uint64_t duration) {
+    return makeDeadline(makeTimeoutDuration(duration));
+}
 
 // Convenience function. If the duration is provided, this function creates a
 // Deadline using makeDeadline. If the duration is not provided, this function
 // returns std::nullopt.
-std::optional<Deadline> makeDeadline(std::optional<uint64_t> duration);
+inline std::optional<Deadline> makeDeadline(OptionalTimeoutDuration duration) {
+    return duration.has_value() ? makeDeadline(*duration) : std::optional<Deadline>{};
+}
+inline std::optional<Deadline> makeDeadline(std::optional<uint64_t> duration) {
+    return duration.has_value() ? makeDeadline(*duration) : std::optional<Deadline>{};
+}
 
 // Make an optional Deadline from an OptionalTimePoint. If
 // timePoint.nanosecondsSinceEpoch cannot be represented in Deadline, return a
 // time point holding the maximum Deadline. If the OptionalTimePoint is none,
 // this function returns std::nullopt.
-std::optional<Deadline> makeDeadline(const hal::OptionalTimePoint& timePoint);
+std::optional<Deadline> makeDeadline(const V1_3::OptionalTimePoint& timePoint);
 
 // Returns true if the deadline has passed. Returns false if either the deadline
 // has not been exceeded or if the deadline is not present.
@@ -160,7 +174,7 @@ bool hasDeadlinePassed(const std::optional<Deadline>& deadline);
 
 // Make an OptionalTimePoint from an optional Deadline. If the Deadline is not
 // provided, this function returns none for OptionalTimePoint.
-hal::OptionalTimePoint makeTimePoint(const std::optional<Deadline>& deadline);
+OptionalTimePoint makeTimePoint(const std::optional<Deadline>& deadline);
 
 // Ensure that every user of FalseyErrorStream is linked to the
 // correct instance, using the correct LOG_TAG
@@ -193,14 +207,14 @@ struct VersionedType {};
 
 template <>
 struct VersionedType<HalVersion::V1_2> {
-    using OperandPerformance = hal::V1_2::Capabilities::OperandPerformance;
-    using OperandType = hal::V1_2::OperandType;
+    using OperandPerformance = V1_2::Capabilities::OperandPerformance;
+    using OperandType = V1_2::OperandType;
 };
 
 template <>
 struct VersionedType<HalVersion::V1_3> {
-    using OperandPerformance = hal::V1_3::Capabilities::OperandPerformance;
-    using OperandType = hal::V1_3::OperandType;
+    using OperandPerformance = V1_3::Capabilities::OperandPerformance;
+    using OperandType = V1_3::OperandType;
 };
 
 template <HalVersion version>
@@ -218,32 +232,32 @@ using VersionedOperandType = typename VersionedType<version>::OperandType;
 // separately using Capabilities::ifPerformance and
 // Capabilities::whilePerformance.
 template <HalVersion version>
-hal::hidl_vec<VersionedOperandPerformance<version>> nonExtensionOperandPerformance(
-        hal::PerformanceInfo perf);
+hardware::hidl_vec<VersionedOperandPerformance<version>> nonExtensionOperandPerformance(
+        V1_0::PerformanceInfo perf);
 
 // Update the vector entry corresponding to the specified OperandType with the
 // specified PerformanceInfo value.  The vector must already have an entry for
 // that OperandType, and must be sorted by OperandType.
-void update(hal::hidl_vec<hal::V1_2::Capabilities::OperandPerformance>* operandPerformance,
-            hal::V1_2::OperandType type, hal::PerformanceInfo perf);
-void update(hal::hidl_vec<hal::V1_3::Capabilities::OperandPerformance>* operandPerformance,
-            hal::V1_3::OperandType type, hal::PerformanceInfo perf);
+void update(hardware::hidl_vec<V1_2::Capabilities::OperandPerformance>* operandPerformance,
+            V1_2::OperandType type, V1_0::PerformanceInfo perf);
+void update(hardware::hidl_vec<V1_3::Capabilities::OperandPerformance>* operandPerformance,
+            V1_3::OperandType type, V1_0::PerformanceInfo perf);
 
 // Look for a vector entry corresponding to the specified OperandType.  If
 // found, return the associated PerformanceInfo.  If not, return a pessimistic
 // PerformanceInfo (FLT_MAX).  The vector must be sorted by OperandType.
-hal::PerformanceInfo lookup(
-        const hal::hidl_vec<hal::V1_2::Capabilities::OperandPerformance>& operandPerformance,
-        hal::V1_2::OperandType type);
-hal::PerformanceInfo lookup(
-        const hal::hidl_vec<hal::V1_3::Capabilities::OperandPerformance>& operandPerformance,
-        hal::V1_3::OperandType type);
+V1_0::PerformanceInfo lookup(
+        const hardware::hidl_vec<V1_2::Capabilities::OperandPerformance>& operandPerformance,
+        V1_2::OperandType type);
+V1_0::PerformanceInfo lookup(
+        const hardware::hidl_vec<V1_3::Capabilities::OperandPerformance>& operandPerformance,
+        V1_3::OperandType type);
 
 // Returns true if an operand type is an extension type.
-bool isExtensionOperandType(hal::OperandType type);
+bool isExtensionOperandType(V1_3::OperandType type);
 
 // Returns true if an operation type is an extension type.
-bool isExtensionOperationType(hal::OperationType type);
+bool isExtensionOperationType(V1_3::OperationType type);
 
 // Returns the amount of space needed to store a value of the specified
 // dimensions and type. For a tensor with unspecified rank or at least one
@@ -253,8 +267,9 @@ bool isExtensionOperationType(hal::OperationType type);
 // Aborts if the size would overflow the return type.
 //
 // See also TypeManager::getSizeOfData(OperandType, const std::vector<uint32_t>&).
-uint32_t nonExtensionOperandSizeOfData(hal::OperandType type,
+uint32_t nonExtensionOperandSizeOfData(V1_3::OperandType type,
                                        const std::vector<uint32_t>& dimensions);
+uint32_t nonExtensionOperandSizeOfData(OperandType type, const std::vector<uint32_t>& dimensions);
 
 // Returns the amount of space needed to store a value of the dimensions and
 // type of this operand. For a tensor with unspecified rank or at least one
@@ -264,7 +279,10 @@ uint32_t nonExtensionOperandSizeOfData(hal::OperandType type,
 // Aborts if the size would overflow the return type.
 //
 // See also TypeManager::getSizeOfData(const Operand&).
-inline uint32_t nonExtensionOperandSizeOfData(const hal::Operand& operand) {
+inline uint32_t nonExtensionOperandSizeOfData(const Operand& operand) {
+    return nonExtensionOperandSizeOfData(operand.type, operand.dimensions);
+}
+inline uint32_t nonExtensionOperandSizeOfData(const V1_3::Operand& operand) {
     return nonExtensionOperandSizeOfData(operand.type, operand.dimensions);
 }
 
@@ -283,7 +301,9 @@ uint32_t sizeOfTensorData(uint32_t sizeOfElement, const std::vector<uint32_t>& d
 // Aborts if the specified type is an extension type.
 //
 // See also TypeManager::sizeOfDataOverflowsUInt32(OperandType, const std::vector<uint32_t>&).
-bool nonExtensionOperandSizeOfDataOverflowsUInt32(hal::OperandType type,
+bool nonExtensionOperandSizeOfDataOverflowsUInt32(OperandType type,
+                                                  const std::vector<uint32_t>& dimensions);
+bool nonExtensionOperandSizeOfDataOverflowsUInt32(V1_3::OperandType type,
                                                   const std::vector<uint32_t>& dimensions);
 
 // Returns true if the amount of space needed to store a value of the specified
@@ -300,17 +320,21 @@ bool sizeOfTensorDataOverflowsUInt32(uint32_t elementSize, const std::vector<uin
 bool nonExtensionOperandTypeIsScalar(int type);
 
 // Returns the name of the operation type in ASCII.
-std::string getOperationName(hal::OperationType opCode);
+std::string getOperationName(V1_3::OperationType opCode);
 
 // Returns the name of the operand type in ASCII.
-std::string getOperandTypeName(hal::OperandType type);
+std::string getOperandTypeName(V1_3::OperandType type);
 
 // Whether an operand of tensor type has unspecified dimensions.
 //
 // Undefined behavior if the operand type is a scalar type.
 bool tensorHasUnspecifiedDimensions(int type, const uint32_t* dim, uint32_t dimCount);
-bool tensorHasUnspecifiedDimensions(hal::OperandType type, const std::vector<uint32_t>& dimensions);
-bool tensorHasUnspecifiedDimensions(const hal::Operand& operand);
+bool tensorHasUnspecifiedDimensions(V1_3::OperandType type,
+                                    const std::vector<uint32_t>& dimensions);
+bool tensorHasUnspecifiedDimensions(OperandType type, const std::vector<uint32_t>& dimensions);
+bool tensorHasUnspecifiedDimensions(OperandType type, const Dimensions& dimensions);
+bool tensorHasUnspecifiedDimensions(const Operand& operand);
+bool tensorHasUnspecifiedDimensions(const V1_3::Operand& operand);
 bool tensorHasUnspecifiedDimensions(const ANeuralNetworksOperandType* type);
 
 // Returns the number of padding bytes needed to align data of the
@@ -323,10 +347,11 @@ bool tensorHasUnspecifiedDimensions(const ANeuralNetworksOperandType* type);
 uint32_t alignBytesNeeded(uint32_t index, size_t length);
 
 // Does a detailed LOG(INFO) of the model
-void logModelToInfo(const hal::V1_0::Model& model);
-void logModelToInfo(const hal::V1_1::Model& model);
-void logModelToInfo(const hal::V1_2::Model& model);
-void logModelToInfo(const hal::V1_3::Model& model);
+void logModelToInfo(const V1_0::Model& model);
+void logModelToInfo(const V1_1::Model& model);
+void logModelToInfo(const V1_2::Model& model);
+void logModelToInfo(const V1_3::Model& model);
+void logModelToInfo(const Model& model);
 
 inline std::string toString(uint32_t obj) {
     return std::to_string(obj);
@@ -344,22 +369,22 @@ std::string toString(const std::vector<Type>& range) {
 template <typename A, typename B>
 std::string toString(const std::pair<A, B>& pair) {
     std::ostringstream oss;
-    oss << "(" << toString(pair.first) << ", " << toString(pair.second) << ")";
+    oss << "(" << pair.first << ", " << pair.second << ")";
     return oss.str();
 }
 
-inline std::string toString(HalVersion halVersion) {
+inline std::ostream& operator<<(std::ostream& os, const HalVersion& halVersion) {
     switch (halVersion) {
         case HalVersion::UNKNOWN:
-            return "UNKNOWN HAL version";
+            return os << "UNKNOWN HAL version";
         case HalVersion::V1_0:
-            return "HAL version 1.0";
+            return os << "HAL version 1.0";
         case HalVersion::V1_1:
-            return "HAL version 1.1";
+            return os << "HAL version 1.1";
         case HalVersion::V1_2:
-            return "HAL version 1.2";
+            return os << "HAL version 1.2";
         case HalVersion::V1_3:
-            return "HAL version 1.3";
+            return os << "HAL version 1.3";
     }
 }
 
@@ -368,7 +393,7 @@ inline bool validCode(uint32_t codeCount, uint32_t codeCountOEM, uint32_t code) 
 }
 
 bool validateOperandSymmPerChannelQuantParams(
-        const hal::Operand& halOperand,
+        const V1_3::Operand& halOperand,
         const ANeuralNetworksSymmPerChannelQuantParams& channelQuant, const char* tag);
 
 // Validates an operand type.
@@ -376,25 +401,24 @@ bool validateOperandSymmPerChannelQuantParams(
 // extensionOperandTypeInfo must be nullptr iff the type is not an extension type.
 //
 // If allowPartial is true, the dimensions may be underspecified.
-int validateOperandType(
-        const ANeuralNetworksOperandType& type,
-        const hal::Extension::OperandTypeInformation* const extensionOperandTypeInfo,
-        const char* tag, bool allowPartial);
+int validateOperandType(const ANeuralNetworksOperandType& type,
+                        const Extension::OperandTypeInformation* const extensionOperandTypeInfo,
+                        const char* tag, bool allowPartial);
 int validateOperandList(uint32_t count, const uint32_t* list, uint32_t operandCount,
                         const char* tag);
 
 // A set of functions to help validate models containing IF or WHILE operations.
 struct SubgraphValidationHelper {
     // Checks if a given operand is a SUBGRAPH operand with a valid offset.
-    std::function<bool(const hal::Operand&)> isValidSubgraphReference;
+    std::function<bool(const Operand&)> isValidSubgraphReference;
     // Gets the input count of a subgraph referenced by a given operand.
-    std::function<uint32_t(const hal::Operand&)> getSubgraphInputCount;
+    std::function<uint32_t(const Operand&)> getSubgraphInputCount;
     // Gets the output count of a subgraph referenced by a given operand.
-    std::function<uint32_t(const hal::Operand&)> getSubgraphOutputCount;
+    std::function<uint32_t(const Operand&)> getSubgraphOutputCount;
     // Gets the specified input operand of a subgraph referenced by a given operand.
-    std::function<const hal::Operand*(const hal::Operand&, uint32_t)> getSubgraphInputOperand;
+    std::function<const Operand*(const Operand&, uint32_t)> getSubgraphInputOperand;
     // Gets the specified output operand of a subgraph referenced by a given operand.
-    std::function<const hal::Operand*(const hal::Operand&, uint32_t)> getSubgraphOutputOperand;
+    std::function<const Operand*(const Operand&, uint32_t)> getSubgraphOutputOperand;
     // Whether control flow operations with inner or outer input or output
     // operands of unknown size are allowed.
     bool allowControlFlowOperationWithOperandOfUnknownSize;
@@ -405,7 +429,7 @@ struct SubgraphValidationHelper {
 // The last argument is only used for validating IF and WHILE operations.
 int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                       const uint32_t* inputIndexes, uint32_t outputCount,
-                      const uint32_t* outputIndexes, const std::vector<hal::Operand>& operands,
+                      const uint32_t* outputIndexes, const std::vector<Operand>& operands,
                       HalVersion halVersion, const SubgraphValidationHelper& helper);
 
 inline size_t getSizeFromInts(int lower, int higher) {
@@ -414,40 +438,41 @@ inline size_t getSizeFromInts(int lower, int higher) {
 
 // Convert ANEURALNETWORKS_* result code to ErrorStatus.
 // Not guaranteed to be a 1-to-1 mapping.
-hal::ErrorStatus convertResultCodeToErrorStatus(int resultCode);
+ErrorStatus convertResultCodeToErrorStatus(int resultCode);
+V1_3::ErrorStatus convertResultCodeToHalErrorStatus(int resultCode);
 
 // Convert ErrorStatus to ANEURALNETWORKS_* result code.
 // Not guaranteed to be a 1-to-1 mapping.
-int convertErrorStatusToResultCode(hal::ErrorStatus status);
+int convertErrorStatusToResultCode(ErrorStatus status);
+int convertErrorStatusToResultCode(V1_3::ErrorStatus status);
 
 // Convert execution results to runtime format. Additionally checks that the
 // returned results abide by the HAL specification, and logs an error if the
 // result violates the specification.
-std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> getExecutionResult(
-        hal::ErrorStatus status, std::vector<hal::OutputShape> outputShapes, hal::Timing timing);
-
-// Combine two tensor dimensions, both may have unspecified dimensions or rank.
-std::optional<std::vector<uint32_t>> combineDimensions(const std::vector<uint32_t>& lhs,
-                                                       const std::vector<uint32_t>& rhs);
+std::tuple<int, std::vector<OutputShape>, Timing> getExecutionResult(
+        V1_3::ErrorStatus status, const hardware::hidl_vec<V1_2::OutputShape>& outputShapes,
+        const V1_2::Timing& timing);
+std::tuple<int, std::vector<OutputShape>, Timing> getExecutionResult(
+        ErrorStatus status, std::vector<OutputShape> outputShapes, Timing timing);
 
 // Versioning
 
-bool compliantWithV1_0(const hal::V1_0::Capabilities& capabilities);
-bool compliantWithV1_0(const hal::V1_1::Capabilities& capabilities);
-bool compliantWithV1_0(const hal::V1_2::Capabilities& capabilities);
-bool compliantWithV1_0(const hal::V1_3::Capabilities& capabilities);
-bool compliantWithV1_1(const hal::V1_0::Capabilities& capabilities);
-bool compliantWithV1_1(const hal::V1_1::Capabilities& capabilities);
-bool compliantWithV1_1(const hal::V1_2::Capabilities& capabilities);
-bool compliantWithV1_1(const hal::V1_3::Capabilities& capabilities);
-bool compliantWithV1_2(const hal::V1_0::Capabilities& capabilities);
-bool compliantWithV1_2(const hal::V1_1::Capabilities& capabilities);
-bool compliantWithV1_2(const hal::V1_2::Capabilities& capabilities);
-bool compliantWithV1_2(const hal::V1_3::Capabilities& capabilities);
-bool compliantWithV1_3(const hal::V1_0::Capabilities& capabilities);
-bool compliantWithV1_3(const hal::V1_1::Capabilities& capabilities);
-bool compliantWithV1_3(const hal::V1_2::Capabilities& capabilities);
-bool compliantWithV1_3(const hal::V1_3::Capabilities& capabilities);
+bool compliantWithV1_0(const V1_0::Capabilities& capabilities);
+bool compliantWithV1_0(const V1_1::Capabilities& capabilities);
+bool compliantWithV1_0(const V1_2::Capabilities& capabilities);
+bool compliantWithV1_0(const V1_3::Capabilities& capabilities);
+bool compliantWithV1_1(const V1_0::Capabilities& capabilities);
+bool compliantWithV1_1(const V1_1::Capabilities& capabilities);
+bool compliantWithV1_1(const V1_2::Capabilities& capabilities);
+bool compliantWithV1_1(const V1_3::Capabilities& capabilities);
+bool compliantWithV1_2(const V1_0::Capabilities& capabilities);
+bool compliantWithV1_2(const V1_1::Capabilities& capabilities);
+bool compliantWithV1_2(const V1_2::Capabilities& capabilities);
+bool compliantWithV1_2(const V1_3::Capabilities& capabilities);
+bool compliantWithV1_3(const V1_0::Capabilities& capabilities);
+bool compliantWithV1_3(const V1_1::Capabilities& capabilities);
+bool compliantWithV1_3(const V1_2::Capabilities& capabilities);
+bool compliantWithV1_3(const V1_3::Capabilities& capabilities);
 
 // If noncompliantOperations != nullptr, then
 //     precondition: noncompliantOperations->empty()
@@ -455,114 +480,127 @@ bool compliantWithV1_3(const hal::V1_3::Capabilities& capabilities);
 //                    operations; if the compliance check fails for some reason
 //                    other than a noncompliant operation,
 //                    *noncompliantOperations consists of the indices of all operations
-bool compliantWithV1_0(const hal::V1_0::Model& model);
-bool compliantWithV1_0(const hal::V1_1::Model& model);
-bool compliantWithV1_0(const hal::V1_2::Model& model,
+bool compliantWithV1_0(const V1_0::Model& model);
+bool compliantWithV1_0(const V1_1::Model& model);
+bool compliantWithV1_0(const V1_2::Model& model,
                        std::set<uint32_t>* noncompliantOperations = nullptr);
-bool compliantWithV1_0(const hal::V1_3::Model& model,
+bool compliantWithV1_0(const V1_3::Model& model,
                        std::set<uint32_t>* noncompliantOperations = nullptr);
-bool compliantWithV1_1(const hal::V1_0::Model& model);
-bool compliantWithV1_1(const hal::V1_1::Model& model);
-bool compliantWithV1_1(const hal::V1_2::Model& model,
+bool compliantWithV1_1(const V1_0::Model& model);
+bool compliantWithV1_1(const V1_1::Model& model);
+bool compliantWithV1_1(const V1_2::Model& model,
                        std::set<uint32_t>* noncompliantOperations = nullptr);
-bool compliantWithV1_1(const hal::V1_3::Model& model,
+bool compliantWithV1_1(const V1_3::Model& model,
                        std::set<uint32_t>* noncompliantOperations = nullptr);
-bool compliantWithV1_2(const hal::V1_0::Model& model);
-bool compliantWithV1_2(const hal::V1_1::Model& model);
-bool compliantWithV1_2(const hal::V1_2::Model& model,
+bool compliantWithV1_2(const V1_0::Model& model);
+bool compliantWithV1_2(const V1_1::Model& model);
+bool compliantWithV1_2(const V1_2::Model& model,
                        std::set<uint32_t>* noncompliantOperations = nullptr);
-bool compliantWithV1_2(const hal::V1_3::Model& model,
+bool compliantWithV1_2(const V1_3::Model& model,
                        std::set<uint32_t>* noncompliantOperations = nullptr);
 
-hal::V1_0::ErrorStatus convertToV1_0(hal::V1_0::ErrorStatus status);
-hal::V1_0::ErrorStatus convertToV1_0(hal::V1_3::ErrorStatus status);
-hal::V1_3::ErrorStatus convertToV1_3(hal::V1_0::ErrorStatus status);
-hal::V1_3::ErrorStatus convertToV1_3(hal::V1_3::ErrorStatus status);
+V1_0::ErrorStatus convertToV1_0(V1_0::ErrorStatus status);
+V1_0::ErrorStatus convertToV1_0(V1_3::ErrorStatus status);
+V1_3::ErrorStatus convertToV1_3(V1_0::ErrorStatus status);
+V1_3::ErrorStatus convertToV1_3(V1_3::ErrorStatus status);
 
-hal::V1_0::Capabilities convertToV1_0(const hal::V1_0::Capabilities& capabilities);
-hal::V1_0::Capabilities convertToV1_0(const hal::V1_1::Capabilities& capabilities);
-hal::V1_0::Capabilities convertToV1_0(const hal::V1_2::Capabilities& capabilities);
-hal::V1_0::Capabilities convertToV1_0(const hal::V1_3::Capabilities& capabilities);
-hal::V1_1::Capabilities convertToV1_1(const hal::V1_0::Capabilities& capabilities);
-hal::V1_1::Capabilities convertToV1_1(const hal::V1_1::Capabilities& capabilities);
-hal::V1_1::Capabilities convertToV1_1(const hal::V1_2::Capabilities& capabilities);
-hal::V1_1::Capabilities convertToV1_1(const hal::V1_3::Capabilities& capabilities);
-hal::V1_2::Capabilities convertToV1_2(const hal::V1_0::Capabilities& capabilities);
-hal::V1_2::Capabilities convertToV1_2(const hal::V1_1::Capabilities& capabilities);
-hal::V1_2::Capabilities convertToV1_2(const hal::V1_2::Capabilities& capabilities);
-hal::V1_2::Capabilities convertToV1_2(const hal::V1_3::Capabilities& capabilities);
-hal::V1_3::Capabilities convertToV1_3(const hal::V1_0::Capabilities& capabilities);
-hal::V1_3::Capabilities convertToV1_3(const hal::V1_1::Capabilities& capabilities);
-hal::V1_3::Capabilities convertToV1_3(const hal::V1_2::Capabilities& capabilities);
-hal::V1_3::Capabilities convertToV1_3(const hal::V1_3::Capabilities& capabilities);
+V1_0::Capabilities convertToV1_0(const V1_0::Capabilities& capabilities);
+V1_0::Capabilities convertToV1_0(const V1_1::Capabilities& capabilities);
+V1_0::Capabilities convertToV1_0(const V1_2::Capabilities& capabilities);
+V1_0::Capabilities convertToV1_0(const V1_3::Capabilities& capabilities);
+V1_1::Capabilities convertToV1_1(const V1_0::Capabilities& capabilities);
+V1_1::Capabilities convertToV1_1(const V1_1::Capabilities& capabilities);
+V1_1::Capabilities convertToV1_1(const V1_2::Capabilities& capabilities);
+V1_1::Capabilities convertToV1_1(const V1_3::Capabilities& capabilities);
+V1_2::Capabilities convertToV1_2(const V1_0::Capabilities& capabilities);
+V1_2::Capabilities convertToV1_2(const V1_1::Capabilities& capabilities);
+V1_2::Capabilities convertToV1_2(const V1_2::Capabilities& capabilities);
+V1_2::Capabilities convertToV1_2(const V1_3::Capabilities& capabilities);
+V1_3::Capabilities convertToV1_3(const V1_0::Capabilities& capabilities);
+V1_3::Capabilities convertToV1_3(const V1_1::Capabilities& capabilities);
+V1_3::Capabilities convertToV1_3(const V1_2::Capabilities& capabilities);
+V1_3::Capabilities convertToV1_3(const V1_3::Capabilities& capabilities);
 
-hal::V1_0::Model convertToV1_0(const hal::V1_0::Model& model);
-hal::V1_0::Model convertToV1_0(const hal::V1_1::Model& model);
-hal::V1_0::Model convertToV1_0(const hal::V1_2::Model& model);
-hal::V1_0::Model convertToV1_0(const hal::V1_3::Model& model);
-hal::V1_1::Model convertToV1_1(const hal::V1_0::Model& model);
-hal::V1_1::Model convertToV1_1(const hal::V1_1::Model& model);
-hal::V1_1::Model convertToV1_1(const hal::V1_2::Model& model);
-hal::V1_1::Model convertToV1_1(const hal::V1_3::Model& model);
-hal::V1_2::Model convertToV1_2(const hal::V1_0::Model& model);
-hal::V1_2::Model convertToV1_2(const hal::V1_1::Model& model);
-hal::V1_2::Model convertToV1_2(const hal::V1_2::Model& model);
-hal::V1_2::Model convertToV1_2(const hal::V1_3::Model& model);
-hal::V1_3::Model convertToV1_3(const hal::V1_0::Model& model);
-hal::V1_3::Model convertToV1_3(const hal::V1_1::Model& model);
-hal::V1_3::Model convertToV1_3(const hal::V1_2::Model& model);
-hal::V1_3::Model convertToV1_3(const hal::V1_3::Model& model);
+V1_0::Model convertToV1_0(const V1_0::Model& model);
+V1_0::Model convertToV1_0(const V1_1::Model& model);
+V1_0::Model convertToV1_0(const V1_2::Model& model);
+V1_0::Model convertToV1_0(const V1_3::Model& model);
+V1_1::Model convertToV1_1(const V1_0::Model& model);
+V1_1::Model convertToV1_1(const V1_1::Model& model);
+V1_1::Model convertToV1_1(const V1_2::Model& model);
+V1_1::Model convertToV1_1(const V1_3::Model& model);
+V1_2::Model convertToV1_2(const V1_0::Model& model);
+V1_2::Model convertToV1_2(const V1_1::Model& model);
+V1_2::Model convertToV1_2(const V1_2::Model& model);
+V1_2::Model convertToV1_2(const V1_3::Model& model);
+V1_3::Model convertToV1_3(const V1_0::Model& model);
+V1_3::Model convertToV1_3(const V1_1::Model& model);
+V1_3::Model convertToV1_3(const V1_2::Model& model);
+V1_3::Model convertToV1_3(const V1_3::Model& model);
 
-hal::V1_0::OperationType uncheckedConvertToV1_0(hal::V1_3::OperationType type);
-hal::V1_1::OperationType uncheckedConvertToV1_1(hal::V1_3::OperationType type);
-hal::V1_2::OperationType uncheckedConvertToV1_2(hal::V1_3::OperationType type);
+V1_0::OperationType uncheckedConvertToV1_0(V1_3::OperationType type);
+V1_1::OperationType uncheckedConvertToV1_1(V1_3::OperationType type);
+V1_2::OperationType uncheckedConvertToV1_2(V1_3::OperationType type);
 
-hal::V1_0::Operand convertToV1_0(const hal::V1_2::Operand& operand);
-hal::V1_0::Operand convertToV1_0(const hal::V1_3::Operand& operand);
-hal::V1_2::Operand convertToV1_2(const hal::V1_0::Operand& operand);
-hal::V1_2::Operand convertToV1_2(const hal::V1_3::Operand& operand);
-hal::V1_3::Operand convertToV1_3(const hal::V1_0::Operand& operand);
-hal::V1_3::Operand convertToV1_3(const hal::V1_2::Operand& operand);
-hal::V1_3::Operand convertToV1_3(const hal::V1_3::Operand& operand);
+V1_0::Operand convertToV1_0(const V1_2::Operand& operand);
+V1_0::Operand convertToV1_0(const V1_3::Operand& operand);
+V1_2::Operand convertToV1_2(const V1_0::Operand& operand);
+V1_2::Operand convertToV1_2(const V1_3::Operand& operand);
+V1_3::Operand convertToV1_3(const V1_0::Operand& operand);
+V1_3::Operand convertToV1_3(const V1_2::Operand& operand);
+V1_3::Operand convertToV1_3(const V1_3::Operand& operand);
 
-hal::hidl_vec<hal::V1_0::Operand> convertToV1_0(const hal::hidl_vec<hal::V1_0::Operand>& operands);
-hal::hidl_vec<hal::V1_0::Operand> convertToV1_0(const hal::hidl_vec<hal::V1_2::Operand>& operands);
-hal::hidl_vec<hal::V1_0::Operand> convertToV1_0(const hal::hidl_vec<hal::V1_3::Operand>& operands);
-hal::hidl_vec<hal::V1_2::Operand> convertToV1_2(const hal::hidl_vec<hal::V1_0::Operand>& operands);
-hal::hidl_vec<hal::V1_2::Operand> convertToV1_2(const hal::hidl_vec<hal::V1_2::Operand>& operands);
-hal::hidl_vec<hal::V1_2::Operand> convertToV1_2(const hal::hidl_vec<hal::V1_3::Operand>& operands);
-hal::hidl_vec<hal::V1_3::Operand> convertToV1_3(const hal::hidl_vec<hal::V1_0::Operand>& operands);
-hal::hidl_vec<hal::V1_3::Operand> convertToV1_3(const hal::hidl_vec<hal::V1_2::Operand>& operands);
-hal::hidl_vec<hal::V1_3::Operand> convertToV1_3(const hal::hidl_vec<hal::V1_3::Operand>& operands);
+hardware::hidl_vec<V1_0::Operand> convertToV1_0(const hardware::hidl_vec<V1_0::Operand>& operands);
+hardware::hidl_vec<V1_0::Operand> convertToV1_0(const hardware::hidl_vec<V1_2::Operand>& operands);
+hardware::hidl_vec<V1_0::Operand> convertToV1_0(const hardware::hidl_vec<V1_3::Operand>& operands);
+hardware::hidl_vec<V1_2::Operand> convertToV1_2(const hardware::hidl_vec<V1_0::Operand>& operands);
+hardware::hidl_vec<V1_2::Operand> convertToV1_2(const hardware::hidl_vec<V1_2::Operand>& operands);
+hardware::hidl_vec<V1_2::Operand> convertToV1_2(const hardware::hidl_vec<V1_3::Operand>& operands);
+hardware::hidl_vec<V1_3::Operand> convertToV1_3(const hardware::hidl_vec<V1_0::Operand>& operands);
+hardware::hidl_vec<V1_3::Operand> convertToV1_3(const hardware::hidl_vec<V1_2::Operand>& operands);
+hardware::hidl_vec<V1_3::Operand> convertToV1_3(const hardware::hidl_vec<V1_3::Operand>& operands);
 
-bool compliantWithV1_0(const hal::V1_0::Request& request);
-bool compliantWithV1_0(const hal::V1_3::Request& request);
-bool compliantWithV1_2(const hal::V1_3::Request& request);
+bool compliantWithV1_0(const V1_0::Request& request);
+bool compliantWithV1_0(const V1_3::Request& request);
+bool compliantWithV1_2(const V1_3::Request& request);
 
-hal::V1_0::Request convertToV1_0(const hal::V1_0::Request& request);
-hal::V1_0::Request convertToV1_0(const hal::V1_3::Request& request);
-hal::V1_0::Request convertToV1_2(const hal::V1_3::Request& request);
-hal::V1_3::Request convertToV1_3(const hal::V1_0::Request& request);
-hal::V1_3::Request convertToV1_3(const hal::V1_3::Request& request);
+V1_0::Request convertToV1_0(const V1_0::Request& request);
+V1_0::Request convertToV1_0(const V1_3::Request& request);
+V1_0::Request convertToV1_2(const V1_3::Request& request);
+V1_3::Request convertToV1_3(const V1_0::Request& request);
+V1_3::Request convertToV1_3(const V1_3::Request& request);
 
-bool compliantWithV1_0(hal::V1_0::OperandLifeTime lifetime);
-bool compliantWithV1_0(hal::V1_3::OperandLifeTime lifetime);
-bool compliantWithV1_3(hal::V1_0::OperandLifeTime lifetime);
-bool compliantWithV1_3(hal::V1_3::OperandLifeTime lifetime);
+bool compliantWithV1_0(V1_0::OperandLifeTime lifetime);
+bool compliantWithV1_0(V1_3::OperandLifeTime lifetime);
+bool compliantWithV1_3(V1_0::OperandLifeTime lifetime);
+bool compliantWithV1_3(V1_3::OperandLifeTime lifetime);
 
-hal::V1_0::OperandLifeTime convertToV1_0(hal::V1_0::OperandLifeTime lifetime);
-hal::V1_0::OperandLifeTime convertToV1_0(hal::V1_3::OperandLifeTime lifetime);
-hal::V1_3::OperandLifeTime convertToV1_3(hal::V1_0::OperandLifeTime lifetime);
-hal::V1_3::OperandLifeTime convertToV1_3(hal::V1_3::OperandLifeTime lifetime);
+V1_0::OperandLifeTime convertToV1_0(V1_0::OperandLifeTime lifetime);
+V1_0::OperandLifeTime convertToV1_0(V1_3::OperandLifeTime lifetime);
+V1_3::OperandLifeTime convertToV1_3(V1_0::OperandLifeTime lifetime);
+V1_3::OperandLifeTime convertToV1_3(V1_3::OperandLifeTime lifetime);
 
-constexpr hal::Priority convertToHalPriority(int32_t priority) {
+constexpr V1_3::Priority convertToHalPriority(int32_t priority) {
     switch (priority) {
         case ANEURALNETWORKS_PRIORITY_LOW:
-            return hal::Priority::LOW;
+            return V1_3::Priority::LOW;
         case ANEURALNETWORKS_PRIORITY_MEDIUM:
-            return hal::Priority::MEDIUM;
+            return V1_3::Priority::MEDIUM;
         case ANEURALNETWORKS_PRIORITY_HIGH:
-            return hal::Priority::HIGH;
+            return V1_3::Priority::HIGH;
+    }
+    LOG(FATAL) << "unrecognized priority: " << priority;
+    return {};
+}
+
+constexpr Priority convertToCanonicalPriority(int32_t priority) {
+    switch (priority) {
+        case ANEURALNETWORKS_PRIORITY_LOW:
+            return Priority::LOW;
+        case ANEURALNETWORKS_PRIORITY_MEDIUM:
+            return Priority::MEDIUM;
+        case ANEURALNETWORKS_PRIORITY_HIGH:
+            return Priority::HIGH;
     }
     LOG(FATAL) << "unrecognized priority: " << priority;
     return {};
@@ -582,6 +620,76 @@ FenceState syncWait(int fd, int timeout);
 #ifdef NN_DEBUGGABLE
 uint32_t getProp(const char* str, uint32_t defaultValue = 0);
 #endif  // NN_DEBUGGABLE
+
+// DEPRECATED. Use checked conversions from nnapi/hal/1.X/Conversions.h.
+Capabilities::OperandPerformance uncheckedConvert(
+        const V1_3::Capabilities::OperandPerformance& operandPerformance);
+Capabilities::PerformanceInfo uncheckedConvert(const V1_0::PerformanceInfo& performanceInfo);
+Capabilities uncheckedConvert(const V1_3::Capabilities& capabilities);
+DataLocation uncheckedConvert(const V1_0::DataLocation& location);
+ErrorStatus uncheckedConvert(V1_0::ErrorStatus status);
+ErrorStatus uncheckedConvert(V1_3::ErrorStatus status);
+Extension::OperandTypeInformation uncheckedConvert(const V1_2::Extension::OperandTypeInformation&);
+Extension uncheckedConvert(const V1_2::Extension& extension);
+hardware::hidl_vec<uint8_t> uncheckedConvert(const Operand::ExtensionParams& params);
+MeasureTiming uncheckedConvert(V1_2::MeasureTiming measure);
+Memory uncheckedConvert(const hardware::hidl_memory& memory);
+Model::ExtensionNameAndPrefix uncheckedConvert(const V1_2::Model::ExtensionNameAndPrefix&);
+Model::Subgraph uncheckedConvert(const V1_3::Subgraph& subgraph);
+Model uncheckedConvert(const V1_3::Model& model);
+Operand::ExtensionParams uncheckedConvert(const hardware::hidl_vec<uint8_t>& params);
+Operand::ExtraParams uncheckedConvert(const V1_2::Operand::ExtraParams& params);
+Operand::LifeTime uncheckedConvert(V1_3::OperandLifeTime lifetime);
+Operand::SymmPerChannelQuantParams uncheckedConvert(const V1_2::SymmPerChannelQuantParams& params);
+OperandType uncheckedConvert(V1_3::OperandType operandType);
+Operand uncheckedConvert(const V1_3::Operand& operand);
+OperationType uncheckedConvert(V1_3::OperationType operationType);
+Operation uncheckedConvert(const V1_3::Operation& operation);
+OptionalTimeoutDuration uncheckedConvert(const V1_3::OptionalTimeoutDuration& timeoutDuration);
+OutputShape uncheckedConvert(const V1_2::OutputShape& outputShape);
+Request::Argument uncheckedConvert(const V1_0::RequestArgument& requestArgument);
+Request::MemoryPool uncheckedConvert(const V1_3::Request::MemoryPool& memoryPool);
+Request uncheckedConvert(const V1_3::Request& request);
+std::vector<Extension> uncheckedConvert(const hardware::hidl_vec<V1_2::Extension>& extensions);
+std::vector<Memory> uncheckedConvert(const hardware::hidl_vec<hardware::hidl_memory>& memories);
+std::vector<Model::Subgraph> uncheckedConvert(const hardware::hidl_vec<V1_3::Subgraph>& subgraphs);
+std::vector<Operand> uncheckedConvert(const hardware::hidl_vec<V1_3::Operand>& operands);
+std::vector<OutputShape> uncheckedConvert(
+        const hardware::hidl_vec<V1_2::OutputShape>& outputShapes);
+std::vector<Request::MemoryPool> uncheckedConvert(
+        const hardware::hidl_vec<V1_3::Request::MemoryPool>& memoryPools);
+Timing uncheckedConvert(const V1_2::Timing& timing);
+
+// DEPRECATED. Use conversions from nnapi/hal/1.X/Conversions.h.
+hardware::hidl_memory convertToV1_0(const Memory& memory);
+hardware::hidl_vec<hardware::hidl_memory> convertToV1_0(const std::vector<Memory>& memories);
+hardware::hidl_vec<uint8_t> convertToV1_0(const Model::OperandValues& operandValues);
+hardware::hidl_vec<V1_2::OutputShape> convertToV1_2(const std::vector<OutputShape>& outputShapes);
+hardware::hidl_vec<V1_3::BufferRole> convertToV1_3(const std::vector<BufferRole>& bufferRoles);
+V1_0::DataLocation convertToV1_0(const DataLocation& location);
+V1_0::ErrorStatus convertToV1_0(ErrorStatus status);
+V1_0::RequestArgument convertToV1_0(const Request::Argument& requestArgument);
+V1_1::ExecutionPreference convertToV1_1(ExecutionPreference preference);
+V1_2::MeasureTiming convertToV1_2(MeasureTiming measure);
+V1_2::Model::ExtensionNameAndPrefix convertToV1_2(const Model::ExtensionNameAndPrefix&);
+V1_2::Operand::ExtraParams convertToV1_2(const Operand::ExtraParams& params);
+V1_2::OutputShape convertToV1_2(const OutputShape& outputShape);
+V1_2::SymmPerChannelQuantParams convertToV1_2(const Operand::SymmPerChannelQuantParams& params);
+V1_2::Timing convertToV1_2(const Timing& timing);
+V1_3::BufferRole convertToV1_3(const BufferRole& bufferRole);
+V1_3::ErrorStatus convertToV1_3(ErrorStatus status);
+V1_3::Model convertToV1_3(const Model& model);
+V1_3::Operand convertToV1_3(const Operand& operand);
+V1_3::OperandLifeTime convertToV1_3(Operand::LifeTime lifetime);
+V1_3::OperandType convertToV1_3(OperandType operandType);
+V1_3::Operation convertToV1_3(const Operation& operation);
+V1_3::OperationType convertToV1_3(OperationType operationType);
+V1_3::OptionalTimeoutDuration convertToV1_3(const OptionalTimeoutDuration& timeoutDuration);
+V1_3::OptionalTimePoint convertToV1_3(const OptionalTimePoint& timePoint);
+V1_3::Priority convertToV1_3(Priority priority);
+V1_3::Request convertToV1_3(const Request& request);
+V1_3::Request::MemoryPool convertToV1_3(const Request::MemoryPool& memoryPool);
+V1_3::Subgraph convertToV1_3(const Model::Subgraph& model);
 
 }  // namespace nn
 }  // namespace android

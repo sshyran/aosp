@@ -17,19 +17,17 @@
 #define LOG_TAG "Operations"
 
 #include "Pow.h"
-#include "HalInterfaces.h"
 #include "IndexedShapeWrapper.h"
 #include "OperationsUtils.h"
 
 #include <cmath>
+#include <vector>
 
 namespace android {
 namespace nn {
 namespace pow {
 
 namespace {
-
-using namespace hal;
 
 template <typename T>
 bool evalGeneric(const T* baseData, const Shape& baseShape, const T* exponentData,
@@ -81,7 +79,7 @@ bool eval(const void* baseData, const Shape& baseShape, const void* exponentData
                                reinterpret_cast<float*>(outputData), outputShape);
         } break;
         default: {
-            LOG(ERROR) << "Unsupported data type: " << toString(baseShape.type);
+            LOG(ERROR) << "Unsupported data type: " << baseShape.type;
             return false;
         }
     }

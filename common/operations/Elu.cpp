@@ -20,7 +20,6 @@
 #include <cmath>
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "IndexedShapeWrapper.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
@@ -29,8 +28,6 @@
 namespace android {
 namespace nn {
 namespace elu {
-
-using namespace hal;
 
 constexpr uint32_t kNumInputs = 2;
 constexpr uint32_t kInputTensor = 0;

@@ -28,15 +28,12 @@
 
 #include "ActivationFunctor.h"
 #include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
 
 namespace android {
 namespace nn {
-
-using namespace hal;
 
 namespace activation {
 
@@ -373,7 +370,7 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
         NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
     } else {
-        NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << getOperationName(opType);
+        NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << opType;
     }
     const Shape& input = context->getInputShape(kInputTensor);
     if (hasKnownRank(input)) {

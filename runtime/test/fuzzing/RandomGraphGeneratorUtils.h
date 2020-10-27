@@ -119,18 +119,13 @@ class LoggerStream {
 };
 
 template <typename T>
-inline std::string toString(const T& obj) {
-    return std::to_string(obj);
-}
-
-template <typename T>
 inline std::string joinStr(const std::string& joint, const std::vector<T>& items) {
     std::stringstream ss;
     for (uint32_t i = 0; i < items.size(); i++) {
         if (i == 0) {
-            ss << toString(items[i]);
+            ss << items[i];
         } else {
-            ss << joint << toString(items[i]);
+            ss << joint << items[i];
         }
     }
     return ss.str();
@@ -150,17 +145,14 @@ template <typename T>
 inline std::string joinStr(const std::string& joint, int limit, const std::vector<T>& items) {
     if (items.size() > static_cast<size_t>(limit)) {
         std::vector<T> topMax(items.begin(), items.begin() + limit);
-        return joinStr(joint, topMax) + ", (" + toString(items.size() - limit) + " ommited), " +
-               toString(items.back());
+        std::stringstream ss;
+        ss << joinStr(joint, topMax) << ", (" << (items.size() - limit) << " omitted), "
+           << items.back();
+        return ss.str();
     } else {
         return joinStr(joint, items);
     }
 }
-
-static const char* kLifeTimeNames[6] = {
-        "TEMPORARY_VARIABLE", "SUBGRAPH_INPUT",     "SUBGRAPH_OUTPUT",
-        "CONSTANT_COPY",      "CONSTANT_REFERENCE", "NO_VALUE",
-};
 
 static const bool kScalarDataType[]{
         true,   // ANEURALNETWORKS_FLOAT32
@@ -198,10 +190,9 @@ static const uint32_t kSizeOfDataType[]{
         1,  // ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED
 };
 
-template <>
-inline std::string toString<RandomVariableType>(const RandomVariableType& type) {
+inline std::ostream& operator<<(std::ostream& os, const RandomVariableType& type) {
     static const std::string typeNames[] = {"FREE", "CONST", "OP"};
-    return typeNames[static_cast<int>(type)];
+    return os << typeNames[static_cast<int>(type)];
 }
 
 inline std::string alignedString(std::string str, int width) {
@@ -210,51 +201,45 @@ inline std::string alignedString(std::string str, int width) {
     return str;
 }
 
-template <>
-inline std::string toString<RandomVariableRange>(const RandomVariableRange& range) {
-    return "[" + joinStr(", ", 20, range.getChoices()) + "]";
+inline std::ostream& operator<<(std::ostream& os, const RandomVariableRange& range) {
+    return os << "[" + joinStr(", ", 20, range.getChoices()) + "]";
 }
 
-template <>
-inline std::string toString<RandomOperandType>(const RandomOperandType& type) {
+inline std::ostream& operator<<(std::ostream& os, const RandomOperandType& type) {
     static const std::string typeNames[] = {"Input", "Output", "Internal", "Parameter", "No Value"};
-    return typeNames[static_cast<int>(type)];
+    return os << typeNames[static_cast<int>(type)];
 }
 
-template <>
-inline std::string toString<RandomVariableNode>(const RandomVariableNode& var) {
-    std::stringstream ss;
-    ss << "var" << var->index << " = ";
+inline std::ostream& operator<<(std::ostream& os, const RandomVariableNode& var) {
+    os << "var" << var->index << " = ";
     switch (var->type) {
         case RandomVariableType::FREE:
-            ss << "FREE " << toString(var->range);
+            os << "FREE " << var->range;
             break;
         case RandomVariableType::CONST:
-            ss << "CONST " << toString(var->value);
+            os << "CONST " << var->value;
             break;
         case RandomVariableType::OP:
-            ss << "var" << var->parent1->index << " " << var->op->getName();
-            if (var->parent2 != nullptr) ss << " var" << var->parent2->index;
-            ss << ", " << toString(var->range);
+            os << "var" << var->parent1->index << " " << var->op->getName();
+            if (var->parent2 != nullptr) os << " var" << var->parent2->index;
+            os << ", " << var->range;
             break;
         default:
             NN_FUZZER_CHECK(false);
     }
-    ss << ", timestamp = " << var->timestamp;
-    return ss.str();
+    os << ", timestamp = " << var->timestamp;
+    return os;
 }
 
-template <>
-inline std::string toString<RandomVariable>(const RandomVariable& var) {
-    return "var" + std::to_string(var.get()->index);
+inline std::ostream& operator<<(std::ostream& os, const RandomVariable& var) {
+    return os << "var" + std::to_string(var.get()->index);
 }
 
-template <>
-inline std::string toString<RandomOperand>(const RandomOperand& op) {
-    return toString(op.type) + ", dimension = [" +
-           joinStr(", ", op.dimensions,
-                   [](const RandomVariable& var) { return std::to_string(var.getValue()); }) +
-           "], scale = " + toString(op.scale) + " , zero_point = " + toString(op.zeroPoint);
+inline std::ostream& operator<<(std::ostream& os, const RandomOperand& op) {
+    return os << op.type << ", dimension = ["
+              << joinStr(", ", op.dimensions,
+                         [](const RandomVariable& var) { return std::to_string(var.getValue()); })
+              << "], scale = " << op.scale << " , zero_point = " << op.zeroPoint;
 }
 
 // This class is a workaround for two issues our code relies on:

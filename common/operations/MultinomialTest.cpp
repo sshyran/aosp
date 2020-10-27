@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-#include "Multinomial.h"
+#include <gmock/gmock-matchers.h>
+#include <gtest/gtest.h>
 
-#include "HalInterfaces.h"
+#include <unsupported/Eigen/CXX11/Tensor>
+#include <vector>
+
+#include "Multinomial.h"
 #include "NeuralNetworksWrapper.h"
 #include "philox_random.h"
 #include "simple_philox.h"
-
-#include <gmock/gmock-matchers.h>
-#include <gtest/gtest.h>
-#include <unsupported/Eigen/CXX11/Tensor>
 
 namespace android {
 namespace nn {

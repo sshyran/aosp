@@ -17,7 +17,10 @@
 #include "TestNeuralNetworksWrapper.h"
 
 #include <sys/mman.h>
+#include <memory>
+#include <string>
 #include <tuple>
+#include <utility>
 #include <vector>
 
 #include <android-base/macros.h>

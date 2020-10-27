@@ -43,6 +43,8 @@ class IPreparedModelDeathHandler;
 class MetaModel;
 class VersionedIPreparedModel;
 
+using ModelFactory = std::function<Model()>;
+
 /**
  * Each class (VersionedIDevice, VersionedIPreparedModel) wraps a HIDL interface
  * of any version to abstract away version differences. It allows the remainder
@@ -77,7 +79,7 @@ class VersionedIDevice {
      * @return A valid VersionedIDevice object, otherwise nullptr.
      */
     static std::shared_ptr<VersionedIDevice> create(std::string serviceName,
-                                                    const hal::DeviceFactory& makeDevice);
+                                                    const HalDeviceFactory& makeDevice);
 
     /**
      * Constructor for the VersionedIDevice object.
@@ -98,18 +100,17 @@ class VersionedIDevice {
      *             newer interfaces, and a hidl_death_recipient that will proactively handle
      *             the case when the service containing the IDevice object crashes.
      */
-    VersionedIDevice(hal::Capabilities capabilities,
-                     std::vector<hal::Extension> supportedExtensions, int32_t type,
-                     std::string versionString,
+    VersionedIDevice(Capabilities capabilities, std::vector<Extension> supportedExtensions,
+                     int32_t type, std::string versionString,
                      std::pair<uint32_t, uint32_t> numberOfCacheFilesNeeded,
-                     std::string serviceName, const hal::DeviceFactory& makeDevice, Core core);
+                     std::string serviceName, const HalDeviceFactory& makeDevice, Core core);
 
     /**
      * Gets the capabilities of a driver.
      *
      * @return capabilities Capabilities of the driver.
      */
-    const hal::Capabilities& getCapabilities() const;
+    const Capabilities& getCapabilities() const;
 
     /**
      * Gets information about extensions supported by the driver implementation.
@@ -122,7 +123,7 @@ class VersionedIDevice {
      *
      * @return extensions A list of supported extensions.
      */
-    const std::vector<hal::Extension>& getSupportedExtensions() const;
+    const std::vector<Extension>& getSupportedExtensions() const;
 
     /**
      * Gets the supported operations in a MetaModel.
@@ -152,7 +153,7 @@ class VersionedIDevice {
      *                             corresponds with the index of the operation
      *                             it is describing.
      */
-    std::pair<hal::ErrorStatus, hal::hidl_vec<bool>> getSupportedOperations(
+    std::pair<ErrorStatus, std::vector<bool>> getSupportedOperations(
             const MetaModel& metaModel) const;
 
     /**
@@ -220,9 +221,9 @@ class VersionedIDevice {
      *         that has been prepared for execution, else nullptr.
      */
     std::pair<int, std::shared_ptr<VersionedIPreparedModel>> prepareModel(
-            const hal::ModelFactory& makeModel, hal::ExecutionPreference preference, hal::Priority,
+            const ModelFactory& makeModel, ExecutionPreference preference, Priority,
             const std::optional<Deadline>& deadline, const std::string& cacheDir,
-            const std::optional<hal::CacheToken>& maybeToken) const;
+            const std::optional<CacheToken>& maybeToken) const;
 
     /**
      * Returns the feature level of a driver.
@@ -366,11 +367,11 @@ class VersionedIDevice {
      *       execution. If the buffer was unable to be allocated due to an error, the token must be
      *       0.
      */
-    std::tuple<hal::ErrorStatus, sp<hal::IBuffer>, uint32_t> allocate(
-            const hal::BufferDesc& desc,
+    std::tuple<V1_3::ErrorStatus, sp<V1_3::IBuffer>, uint32_t> allocate(
+            const V1_3::BufferDesc& desc,
             const std::vector<std::shared_ptr<VersionedIPreparedModel>>& preparedModels,
-            const hal::hidl_vec<hal::BufferRole>& inputRoles,
-            const hal::hidl_vec<hal::BufferRole>& outputRoles) const;
+            const std::vector<BufferRole>& inputRoles,
+            const std::vector<BufferRole>& outputRoles) const;
 
     /**
      * Blocks until the device is not in a bad state.
@@ -382,20 +383,20 @@ class VersionedIDevice {
 
    private:
     // Cached initialization results.
-    const hal::Capabilities kCapabilities;
-    const std::vector<hal::Extension> kSupportedExtensions;
+    const Capabilities kCapabilities;
+    const std::vector<Extension> kSupportedExtensions;
     const int32_t kType;
     const std::string kVersionString;
     const std::pair<uint32_t, uint32_t> kNumberOfCacheFilesNeeded;
 
     // internal methods to prepare a model
     std::pair<int, std::shared_ptr<VersionedIPreparedModel>> prepareModelInternal(
-            const hal::Model& model, hal::ExecutionPreference preference, hal::Priority priority,
+            const Model& model, ExecutionPreference preference, Priority priority,
             const std::optional<Deadline>& deadline, const std::string& cacheDir,
-            const std::optional<hal::CacheToken>& maybeToken) const;
+            const std::optional<CacheToken>& maybeToken) const;
     std::pair<int, std::shared_ptr<VersionedIPreparedModel>> prepareModelFromCacheInternal(
             const std::optional<Deadline>& deadline, const std::string& cacheDir,
-            const hal::CacheToken& token) const;
+            const CacheToken& token) const;
 
     /**
      * This is a utility class for VersionedIDevice that encapsulates a
@@ -426,7 +427,7 @@ class VersionedIDevice {
          *                     the case when the service containing the IDevice
          *                     object crashes.
          */
-        Core(sp<hal::V1_0::IDevice> device, sp<IDeviceDeathHandler> deathHandler);
+        Core(sp<V1_0::IDevice> device, sp<IDeviceDeathHandler> deathHandler);
 
         /**
          * Destructor for the Core object.
@@ -456,7 +457,7 @@ class VersionedIDevice {
          *               interface.
          * @return A valid Core object, otherwise nullopt.
          */
-        static std::optional<Core> create(sp<hal::V1_0::IDevice> device);
+        static std::optional<Core> create(sp<V1_0::IDevice> device);
 
         /**
          * Returns sp<*::IDevice> that is a downcast of the sp<V1_0::IDevice>
@@ -466,19 +467,19 @@ class VersionedIDevice {
         template <typename T_IDevice>
         sp<T_IDevice> getDevice() const;
         template <>
-        sp<hal::V1_0::IDevice> getDevice() const {
+        sp<V1_0::IDevice> getDevice() const {
             return mDeviceV1_0;
         }
         template <>
-        sp<hal::V1_1::IDevice> getDevice() const {
+        sp<V1_1::IDevice> getDevice() const {
             return mDeviceV1_1;
         }
         template <>
-        sp<hal::V1_2::IDevice> getDevice() const {
+        sp<V1_2::IDevice> getDevice() const {
             return mDeviceV1_2;
         }
         template <>
-        sp<hal::V1_3::IDevice> getDevice() const {
+        sp<V1_3::IDevice> getDevice() const {
             return mDeviceV1_3;
         }
 
@@ -511,10 +512,10 @@ class VersionedIDevice {
          * Idiomatic usage: if mDeviceV1_1 is non-null, do V1_1 dispatch; otherwise,
          * do V1_0 dispatch.
          */
-        sp<hal::V1_0::IDevice> mDeviceV1_0;
-        sp<hal::V1_1::IDevice> mDeviceV1_1;
-        sp<hal::V1_2::IDevice> mDeviceV1_2;
-        sp<hal::V1_3::IDevice> mDeviceV1_3;
+        sp<V1_0::IDevice> mDeviceV1_0;
+        sp<V1_1::IDevice> mDeviceV1_1;
+        sp<V1_2::IDevice> mDeviceV1_2;
+        sp<V1_3::IDevice> mDeviceV1_3;
 
         /**
          * HIDL callback to be invoked if the service for mDeviceV1_0 crashes.
@@ -548,16 +549,16 @@ class VersionedIDevice {
     // If a callback is provided, this method protects it against driver death
     // and waits for it (callback->wait()).
     template <typename T_Return, typename T_IDevice, typename T_Callback = std::nullptr_t>
-    hal::Return<T_Return> recoverable(
+    hardware::Return<T_Return> recoverable(
             const char* context,
-            const std::function<hal::Return<T_Return>(const sp<T_IDevice>&)>& fn,
+            const std::function<hardware::Return<T_Return>(const sp<T_IDevice>&)>& fn,
             const T_Callback& callback = nullptr) const EXCLUDES(mMutex);
 
     // The name of the service that implements the driver.
     const std::string kServiceName;
 
     // Factory function object to generate an IDevice object.
-    const hal::DeviceFactory kMakeDevice;
+    const HalDeviceFactory kMakeDevice;
 
     // Guards access to mCore.
     mutable std::shared_mutex mMutex;
@@ -591,7 +592,7 @@ class VersionedIPreparedModel {
      *                     the case when the service containing the IDevice
      *                     object crashes.
      */
-    VersionedIPreparedModel(sp<hal::V1_0::IPreparedModel> preparedModel,
+    VersionedIPreparedModel(sp<V1_0::IPreparedModel> preparedModel,
                             sp<IPreparedModelDeathHandler> deathHandler);
 
     /**
@@ -676,10 +677,9 @@ class VersionedIPreparedModel {
      *         UINT64_MAX. A driver may choose to report any time as UINT64_MAX,
      *         indicating that measurement is not available.
      */
-    std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> execute(
-            const hal::Request& request, hal::MeasureTiming measure,
-            const std::optional<Deadline>& deadline,
-            const hal::OptionalTimeoutDuration& loopTimeoutDuration, bool preferSynchronous) const;
+    std::tuple<int, std::vector<OutputShape>, Timing> execute(
+            const Request& request, MeasureTiming measure, const std::optional<Deadline>& deadline,
+            const OptionalTimeoutDuration& loopTimeoutDuration, bool preferSynchronous) const;
 
     /**
      * Creates a burst controller on a prepared model.
@@ -763,30 +763,28 @@ class VersionedIPreparedModel {
      *           sync execution. Either IFencedExecutionCallback will be
      *           returned or optional timing information is returned
      */
-    std::tuple<int, hal::hidl_handle, sp<hal::IFencedExecutionCallback>, hal::Timing> executeFenced(
-            const hal::Request& request, const hal::hidl_vec<hal::hidl_handle>& waitFor,
-            hal::MeasureTiming measure, const std::optional<Deadline>& deadline,
-            const hal::OptionalTimeoutDuration& loopTimeoutDuration,
-            const hal::OptionalTimeoutDuration& timeoutDurationAfterFence);
+    std::tuple<int, hardware::hidl_handle, sp<V1_3::IFencedExecutionCallback>, Timing>
+    executeFenced(const Request& request, const hardware::hidl_vec<hardware::hidl_handle>& waitFor,
+                  MeasureTiming measure, const std::optional<Deadline>& deadline,
+                  const OptionalTimeoutDuration& loopTimeoutDuration,
+                  const OptionalTimeoutDuration& timeoutDurationAfterFence);
 
    private:
     friend class VersionedIDevice;
 
-    std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> executeAsynchronously(
-            const hal::Request& request, hal::MeasureTiming timing,
-            const std::optional<Deadline>& deadline,
-            const hal::OptionalTimeoutDuration& loopTimeoutDuration) const;
-    std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> executeSynchronously(
-            const hal::Request& request, hal::MeasureTiming measure,
-            const std::optional<Deadline>& deadline,
-            const hal::OptionalTimeoutDuration& loopTimeoutDuration) const;
+    std::tuple<int, std::vector<OutputShape>, Timing> executeAsynchronously(
+            const Request& request, MeasureTiming timing, const std::optional<Deadline>& deadline,
+            const OptionalTimeoutDuration& loopTimeoutDuration) const;
+    std::tuple<int, std::vector<OutputShape>, Timing> executeSynchronously(
+            const Request& request, MeasureTiming measure, const std::optional<Deadline>& deadline,
+            const OptionalTimeoutDuration& loopTimeoutDuration) const;
 
     /**
      * Returns sp<V1_3::IPreparedModel> that is a downcast of the sp<V1_0::IPreparedModel>
      * passed to the constructor.  This will be nullptr if that IPreparedModel is
      * not actually of the specified downcast type.
      */
-    sp<hal::V1_3::IPreparedModel> getV1_3() const { return mPreparedModelV1_3; }
+    sp<V1_3::IPreparedModel> getV1_3() const { return mPreparedModelV1_3; }
 
     /**
      * All versions of IPreparedModel are necessary because the preparedModel could be v1.0,
@@ -810,9 +808,9 @@ class VersionedIPreparedModel {
      *       otherwise, if mPreparedModelV1_2 is non-null, do V1_2 dispatch;
      *       otherwise, do V1_0 dispatch.
      */
-    sp<hal::V1_0::IPreparedModel> mPreparedModelV1_0;
-    sp<hal::V1_2::IPreparedModel> mPreparedModelV1_2;
-    sp<hal::V1_3::IPreparedModel> mPreparedModelV1_3;
+    sp<V1_0::IPreparedModel> mPreparedModelV1_0;
+    sp<V1_2::IPreparedModel> mPreparedModelV1_2;
+    sp<V1_3::IPreparedModel> mPreparedModelV1_3;
 
     /**
      * HIDL callback to be invoked if the service for mPreparedModelV1_0 crashes.

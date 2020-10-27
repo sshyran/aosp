@@ -17,15 +17,18 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_META_MODEL_H
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_META_MODEL_H
 
-#include "HalInterfaces.h"
-
 #include <android-base/macros.h>
+
 #include <functional>
 #include <map>
 #include <optional>
 #include <set>
 #include <utility>
 #include <vector>
+
+#include "HalInterfaces.h"
+#include "Utils.h"
+#include "nnapi/Types.h"
 
 namespace android::nn {
 
@@ -67,14 +70,15 @@ class MetaModel {
     template <class T_Model>
     using ReturnedSlice = std::optional<std::pair<T_Model, Mapper>>;
 
-    MetaModel(hal::Model model, bool strictSlicing)
-        : mHidlModel(std::move(model)), mStrictSlicing(strictSlicing) {}
+    MetaModel(Model model, bool strictSlicing)
+        : mModel(std::move(model)), mStrictSlicing(strictSlicing) {}
 
-    const hal::Model& getModel() const { return mHidlModel; }
+    const Model& getModel() const { return mModel; }
 
-    ReturnedSlice<hal::V1_0::Model> getSliceV1_0() const { return getSlice(&mSliceV1_0); }
-    ReturnedSlice<hal::V1_1::Model> getSliceV1_1() const { return getSlice(&mSliceV1_1); }
-    ReturnedSlice<hal::V1_2::Model> getSliceV1_2() const { return getSlice(&mSliceV1_2); }
+    ReturnedSlice<V1_0::Model> getSliceV1_0() const { return getSlice(&mSliceV1_0); }
+    ReturnedSlice<V1_1::Model> getSliceV1_1() const { return getSlice(&mSliceV1_1); }
+    ReturnedSlice<V1_2::Model> getSliceV1_2() const { return getSlice(&mSliceV1_2); }
+    ReturnedSlice<V1_3::Model> getSliceV1_3() const { return getSlice(&mSliceV1_3); }
 
     // Disallowing copy constructor and assignment operator is for efficiency,
     // not for correctness.  The default copy constructor and assignment
@@ -92,7 +96,7 @@ class MetaModel {
     MetaModel& operator=(MetaModel&&) = default;
 
    private:
-    hal::Model mHidlModel;
+    Model mModel;
 
     // mStrictSlicing controls validity checking.  If the slicing algorithm
     // produces an invalid model (because something has gone wrong with the
@@ -114,12 +118,20 @@ class MetaModel {
         using Operation = typename decltype(mHidlModel.operations)::value_type;
         using OperationType = decltype(Operation::type);
     };
-    mutable Slice<hal::V1_0::Model> mSliceV1_0;
-    mutable Slice<hal::V1_1::Model> mSliceV1_1;
-    mutable Slice<hal::V1_2::Model> mSliceV1_2;
+    template <>
+    struct Slice<V1_3::Model> {  // Trivial slice.
+        SliceState mState = SliceState::UNINITIALIZED;
+        V1_3::Model mHidlModel;
+    };
+    mutable Slice<V1_0::Model> mSliceV1_0;
+    mutable Slice<V1_1::Model> mSliceV1_1;
+    mutable Slice<V1_2::Model> mSliceV1_2;
+    mutable Slice<V1_3::Model> mSliceV1_3;
 
     template <class T_SlicedModel>
     ReturnedSlice<T_SlicedModel> getSlice(Slice<T_SlicedModel>* slice) const;
+    template <>
+    ReturnedSlice<V1_3::Model> getSlice(Slice<V1_3::Model>* slice) const;
 
     template <class T_SlicedModel>
     Slice<T_SlicedModel> makeSlice() const;

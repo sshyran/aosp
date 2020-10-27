@@ -508,8 +508,8 @@ bool isQuantizedType(TestOperandType type);
 
 TestModel convertQuant8AsymmOperandsToSigned(const TestModel& testModel);
 
-const char* toString(TestOperandType type);
-const char* toString(TestOperationType type);
+std::ostream& operator<<(std::ostream& os, const TestOperandType& type);
+std::ostream& operator<<(std::ostream& os, const TestOperationType& type);
 
 // Dump a test model in the format of a spec file for debugging and visualization purpose.
 class SpecDumper {
