@@ -88,7 +88,7 @@ std::ostream& operator<<(std::ostream& os,
 std::ostream& operator<<(std::ostream& os, const Operand::ExtraParams& extraParams);
 std::ostream& operator<<(std::ostream& os, const Operand& operand);
 std::ostream& operator<<(std::ostream& os, const Operation& operation);
-std::ostream& operator<<(std::ostream& os, const NativeHandle& handle);
+std::ostream& operator<<(std::ostream& os, const SharedHandle& handle);
 std::ostream& operator<<(std::ostream& os, const Memory& memory);
 std::ostream& operator<<(std::ostream& os, const Model::Subgraph& subgraph);
 std::ostream& operator<<(std::ostream& os, const Model::OperandValues& operandValues);

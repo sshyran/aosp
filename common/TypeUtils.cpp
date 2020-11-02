@@ -701,7 +701,7 @@ std::ostream& operator<<(std::ostream& os, const Operation& operation) {
               << ", .outputs=" << operation.outputs << "}";
 }
 
-std::ostream& operator<<(std::ostream& os, const NativeHandle& handle) {
+std::ostream& operator<<(std::ostream& os, const SharedHandle& handle) {
     return os << (handle != nullptr ? "<non-empty handle>" : "<empty handle>");
 }
 
