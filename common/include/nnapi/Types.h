@@ -18,8 +18,7 @@
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_NNAPI_TYPES_H
 
 #include <android-base/expected.h>
-#include <utils/NativeHandle.h>
-#include <utils/StrongPointer.h>
+#include <android-base/unique_fd.h>
 
 #include <array>
 #include <chrono>
@@ -238,10 +237,15 @@ struct Operand {
     ExtraParams extraParams;
 };
 
-using NativeHandle = ::android::sp<::android::NativeHandle>;
+struct Handle {
+    std::vector<base::unique_fd> fds;
+    std::vector<int> ints;
+};
+
+using SharedHandle = std::shared_ptr<const Handle>;
 
 struct Memory {
-    NativeHandle handle;
+    SharedHandle handle;
     size_t size = 0;
     std::string name;
 };
@@ -313,7 +317,8 @@ struct Request {
 class SyncFence {
    public:
     static SyncFence createAsSignaled();
-    static Result<SyncFence> create(NativeHandle syncFence);
+    static SyncFence create(base::unique_fd fd);
+    static Result<SyncFence> create(SharedHandle syncFence);
 
     // The function syncWait() has the same semantics as the system function
     // ::sync_wait(), except that the syncWait() return value is semantically
@@ -329,12 +334,14 @@ class SyncFence {
 
     FenceState syncWait(OptionalTimeout optionalTimeout) const;
 
-    NativeHandle getHandle() const;
+    SharedHandle getSharedHandle() const;
+    bool hasFd() const;
+    int getFd() const;
 
    private:
-    explicit SyncFence(NativeHandle syncFence);
+    explicit SyncFence(SharedHandle syncFence);
 
-    NativeHandle mSyncFence;
+    SharedHandle mSyncFence;
 };
 
 using Clock = std::chrono::steady_clock;
