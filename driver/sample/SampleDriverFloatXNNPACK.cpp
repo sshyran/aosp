@@ -1552,7 +1552,9 @@ class SamplePreparedModelXNNPACK : public SamplePreparedModel {
    public:
     SamplePreparedModelXNNPACK(const Model& model, const SampleDriver* driver,
                                ExecutionPreference preference, uid_t userId, Priority priority)
-        : SamplePreparedModel(model, driver, preference, userId, priority) {}
+        : SamplePreparedModel(model, driver, preference, userId, priority),
+          mSubgraph(nullptr),
+          mThreadpool(nullptr) {}
     ~SamplePreparedModelXNNPACK() {
         delete mSubgraph;
         pthreadpool_destroy(mThreadpool);
