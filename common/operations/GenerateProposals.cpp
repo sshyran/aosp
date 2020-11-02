@@ -220,7 +220,7 @@ bool validate(const IOperationValidationContext* context) {
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateHalVersion(context, HalVersion::V1_2);
+    return validateVersion(context, Version::ANDROID_Q);
 }
 
 bool prepare(IOperationExecutionContext* context) {
@@ -742,9 +742,9 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return validateHalVersion(context, HalVersion::V1_3);
+        return validateVersion(context, Version::ANDROID_R);
     } else {
-        return validateHalVersion(context, HalVersion::V1_2);
+        return validateVersion(context, Version::ANDROID_Q);
     }
 }
 
@@ -1268,9 +1268,9 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return validateHalVersion(context, HalVersion::V1_3);
+        return validateVersion(context, Version::ANDROID_R);
     } else {
-        return validateHalVersion(context, HalVersion::V1_2);
+        return validateVersion(context, Version::ANDROID_Q);
     }
 }
 
@@ -1597,7 +1597,7 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(
             context, {inputType, inputType, OperandType::TENSOR_INT32, OperandType::TENSOR_INT32}));
-    return validateHalVersion(context, HalVersion::V1_2);
+    return validateVersion(context, Version::ANDROID_Q);
 }
 
 bool prepare(IOperationExecutionContext* context) {

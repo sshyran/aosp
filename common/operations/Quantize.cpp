@@ -17,12 +17,12 @@
 #include "OperationsUtils.h"
 #define LOG_TAG "Operations"
 
+#include <algorithm>
+#include <cmath>
+
 #include "IndexedShapeWrapper.h"
 #include "OperationResolver.h"
 #include "Tracing.h"
-
-#include <algorithm>
-#include <cmath>
 
 namespace android {
 namespace nn {
@@ -77,9 +77,9 @@ bool validate(const IOperationValidationContext* context) {
                  outputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
             << "Unsupported output operand type for QUANTIZE op: " << outputType;
     if (outputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return validateHalVersion(context, HalVersion::V1_3);
+        return validateVersion(context, Version::ANDROID_R);
     } else {
-        return validateHalVersion(context, HalVersion::V1_2);
+        return validateVersion(context, Version::ANDROID_Q);
     }
 }
 

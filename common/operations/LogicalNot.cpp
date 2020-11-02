@@ -49,7 +49,7 @@ bool validate(const IOperationValidationContext* context) {
             << "Unsupported tensor type for LOGICAL_NOT";
     NN_RET_CHECK(validateInputTypes(context, {inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateHalVersion(context, HalVersion::V1_2);
+    return validateVersion(context, Version::ANDROID_Q);
 }
 
 bool prepare(IOperationExecutionContext* context) {

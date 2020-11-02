@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-#include "QuantizedLSTM.h"
-
-#include "NeuralNetworksWrapper.h"
-
 #include <gmock/gmock-matchers.h>
 #include <gtest/gtest.h>
+
 #include <iostream>
+#include <vector>
+
+#include "NeuralNetworksWrapper.h"
+#include "QuantizedLSTM.h"
 
 namespace android {
 namespace nn {

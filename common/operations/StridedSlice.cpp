@@ -106,13 +106,13 @@ bool validate(const IOperationValidationContext* context) {
                  inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
             << "Unsupported input operand type for STRIDED_SLICE op: " << inputType;
 
-    HalVersion minSupportedHalVersion;
+    Version minSupportedVersion;
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedHalVersion = HalVersion::V1_3;
+        minSupportedVersion = Version::ANDROID_R;
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        minSupportedHalVersion = HalVersion::V1_2;
+        minSupportedVersion = Version::ANDROID_Q;
     } else {
-        minSupportedHalVersion = HalVersion::V1_1;
+        minSupportedVersion = Version::ANDROID_P;
     }
 
     NN_RET_CHECK(validateInputTypes(context, {
@@ -129,7 +129,7 @@ bool validate(const IOperationValidationContext* context) {
     if (hasKnownRank(input)) {
         NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
     }
-    return validateHalVersion(context, minSupportedHalVersion);
+    return validateVersion(context, minSupportedVersion);
 }
 
 bool prepare(IOperationExecutionContext* context) {

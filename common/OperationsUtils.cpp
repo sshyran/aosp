@@ -86,9 +86,8 @@ bool validateOutputTypes(const IOperationValidationContext* context,
             [context](uint32_t index) { return context->getOutputType(index); });
 }
 
-bool validateHalVersion(const IOperationValidationContext* context,
-                        HalVersion minSupportedHalVersion) {
-    if (context->getHalVersion() < minSupportedHalVersion) {
+bool validateVersion(const IOperationValidationContext* context, Version minSupportedVersion) {
+    if (context->getVersion() < minSupportedVersion) {
         std::ostringstream message;
         message << "Operation " << context->getOperationName() << " with inputs {";
         for (uint32_t i = 0, n = context->getNumInputs(); i < n; ++i) {
@@ -104,8 +103,8 @@ bool validateHalVersion(const IOperationValidationContext* context,
             }
             message << context->getOutputType(i);
         }
-        message << "} is only supported since " << minSupportedHalVersion << " (validating using "
-                << context->getHalVersion() << ")";
+        message << "} is only supported since " << minSupportedVersion << " (validating using "
+                << context->getVersion() << ")";
         NN_RET_CHECK_FAIL() << message.str();
     }
     return true;

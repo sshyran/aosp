@@ -91,7 +91,7 @@ bool validate(const IOperationValidationContext* context) {
             << "Unsupported tensor type for elementwise operation";
     NN_RET_CHECK(validateInputTypes(context, {inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateHalVersion(context, HalVersion::V1_2);
+    return validateVersion(context, Version::ANDROID_Q);
 }
 
 bool validateAbs(const IOperationValidationContext* context) {
@@ -103,8 +103,8 @@ bool validateAbs(const IOperationValidationContext* context) {
             << "Unsupported tensor type for operation ABS";
     NN_RET_CHECK(validateInputTypes(context, {inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateHalVersion(context, (inputType == OperandType::TENSOR_INT32 ? HalVersion::V1_3
-                                                                               : HalVersion::V1_2));
+    return validateVersion(context, (inputType == OperandType::TENSOR_INT32 ? Version::ANDROID_R
+                                                                            : Version::ANDROID_Q));
 }
 
 bool validateFloor(const IOperationValidationContext* context) {
@@ -123,9 +123,9 @@ bool validateFloor(const IOperationValidationContext* context) {
         NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
     }
 
-    return validateHalVersion(
-            context,
-            (inputType == OperandType::TENSOR_FLOAT16 ? HalVersion::V1_2 : HalVersion::V1_0));
+    return validateVersion(context,
+                           (inputType == OperandType::TENSOR_FLOAT16 ? Version::ANDROID_Q
+                                                                     : Version::ANDROID_OC_MR1));
 }
 
 bool prepare(IOperationExecutionContext* context) {

@@ -233,13 +233,13 @@ bool validate(const IOperationValidationContext* context) {
     auto inputType = context->getInputType(kInputTensor);
     std::vector<OperandType> inExpectedTypes;
     if (inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_0));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_OC_MR1));
         inExpectedTypes = {inputType, OperandType::FLOAT32};
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
         inExpectedTypes = {inputType, OperandType::FLOAT16};
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_R));
         inExpectedTypes = {inputType, OperandType::FLOAT32};
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
@@ -249,11 +249,11 @@ bool validate(const IOperationValidationContext* context) {
         NN_RET_CHECK_LE(inputRank, 4);
     }
     if (context->getNumInputs() == kNumInputs) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
         inExpectedTypes.push_back(OperandType::INT32);
     } else {
         if (inputRank != 2 && inputRank != 4 && inputRank != 0) {
-            NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+            NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
         }
     }
     return validateInputTypes(context, inExpectedTypes) &&

@@ -156,14 +156,14 @@ bool validate(const IOperationValidationContext* context) {
                 << "Unsupported input operand type for UNIDIRECTIONAL_SEQUENCE_LSTM op: "
                 << inputType;
     }
-    HalVersion minHalVersionSupported = HalVersion::V1_2;
+    Version minVersionSupported = Version::ANDROID_Q;
     if (context->getNumOutputs() == kNumOutputsWithState) {
-        minHalVersionSupported = HalVersion::V1_3;
+        minVersionSupported = Version::ANDROID_R;
         outExpectedTypes.insert(outExpectedTypes.end(), {inputType, inputType});
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
-    return validateHalVersion(context, minHalVersionSupported);
+    return validateVersion(context, minVersionSupported);
 }
 
 bool prepare(IOperationExecutionContext* context) {
