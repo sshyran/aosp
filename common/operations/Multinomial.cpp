@@ -18,18 +18,17 @@
 
 #include "Multinomial.h"
 
-#include "CpuExecutor.h"
-#include "CpuOperationUtils.h"
-#include "Tracing.h"
-
-#include "guarded_philox_random.h"
-#include "philox_random.h"
-#include "simple_philox.h"
-
 #include <algorithm>
 #include <limits>
 #include <unsupported/Eigen/CXX11/Tensor>
 #include <vector>
+
+#include "CpuExecutor.h"
+#include "CpuOperationUtils.h"
+#include "Tracing.h"
+#include "guarded_philox_random.h"
+#include "philox_random.h"
+#include "simple_philox.h"
 
 namespace android {
 namespace nn {

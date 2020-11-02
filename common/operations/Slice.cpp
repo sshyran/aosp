@@ -16,11 +16,11 @@
 
 #define LOG_TAG "Operations"
 
+#include <vector>
+
 #include "CpuOperationUtils.h"
 #include "IndexedShapeWrapper.h"
 #include "OperationResolver.h"
-
-#include <vector>
 
 namespace android {
 namespace nn {
@@ -90,9 +90,9 @@ bool validate(const IOperationValidationContext* context) {
                  inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
             << "Unsupported tensor type for operation " << kOperationName;
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_R));
     } else {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
     }
     return validateInputTypes(context,
                               {inputType, OperandType::TENSOR_INT32, OperandType::TENSOR_INT32}) &&

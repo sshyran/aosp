@@ -77,7 +77,7 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(getValueType(outputType, &valueType));
     NN_RET_CHECK(validateInputTypes(context, {OperandType::TENSOR_INT32, valueType}));
 
-    return validateHalVersion(context, HalVersion::V1_3);
+    return validateVersion(context, Version::ANDROID_R);
 }
 
 bool prepare(IOperationExecutionContext* context) {

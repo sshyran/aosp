@@ -16,13 +16,12 @@
 
 #define LOG_TAG "Operations"
 
-#include <vector>
-
 #include "RNN.h"
+
+#include <vector>
 
 #include "CpuExecutor.h"
 #include "CpuOperationUtils.h"
-
 #include "Tracing.h"
 
 namespace android {

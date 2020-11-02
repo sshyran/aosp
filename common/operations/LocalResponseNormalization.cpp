@@ -139,14 +139,14 @@ bool validate(const IOperationValidationContext* context) {
     std::vector<OperandType> inExpectedTypes;
     std::vector<OperandType> outExpectedTypes;
     if (inputType == OperandType::TENSOR_FLOAT32) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_0));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_OC_MR1));
         inExpectedTypes = {
                 OperandType::TENSOR_FLOAT32, OperandType::INT32,   OperandType::FLOAT32,
                 OperandType::FLOAT32,        OperandType::FLOAT32,
         };
         outExpectedTypes = {OperandType::TENSOR_FLOAT32};
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
         inExpectedTypes = {
                 OperandType::TENSOR_FLOAT16, OperandType::INT32,   OperandType::FLOAT16,
                 OperandType::FLOAT16,        OperandType::FLOAT16,
@@ -158,9 +158,9 @@ bool validate(const IOperationValidationContext* context) {
 
     if (context->getNumInputs() == kNumInputs) {
         inExpectedTypes.push_back(OperandType::INT32);
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
     } else if (context->getInputShape(kInputTensor).dimensions.size() != 4) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
     }
 
     const Shape& input = context->getInputShape(kInputTensor);
