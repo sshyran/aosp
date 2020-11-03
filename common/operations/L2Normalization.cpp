@@ -196,7 +196,7 @@ bool l2normQuant8Signed(const int8_t* inputData, const Shape& inputShape, int32_
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(context->getNumInputs() == kNumInputs ||
                  context->getNumInputs() == kNumInputs - 1);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
@@ -225,7 +225,7 @@ bool validate(const IOperationValidationContext* context) {
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateVersion(context, minSupportedVersion);
+    return minSupportedVersion;
 }
 
 bool prepare(IOperationExecutionContext* context) {

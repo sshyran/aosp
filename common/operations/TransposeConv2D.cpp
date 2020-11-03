@@ -433,7 +433,7 @@ bool transposeConvQuant8PerChannel(const T* inputData, const Shape& inputShape,
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     const uint32_t inputCount = context->getNumInputs();
     NN_RET_CHECK(inputCount == kNumInputs1 || inputCount == kNumInputs2);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
@@ -476,7 +476,7 @@ bool validate(const IOperationValidationContext* context) {
     inExpectedTypes.insert(inExpectedTypes.end(), argExpectedTypes.begin(), argExpectedTypes.end());
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateVersion(context, minSupportedVersion);
+    return minSupportedVersion;
 }
 
 bool prepare(IOperationExecutionContext* context) {

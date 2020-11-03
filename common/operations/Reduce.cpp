@@ -66,7 +66,7 @@ inline bool compute(IOperationExecutionContext* context, T init, T func(T, T)) {
 
 }  // namespace
 
-bool validateProdSum(const IOperationValidationContext* context) {
+Result<Version> validateProdSum(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor);
@@ -80,10 +80,10 @@ bool validateProdSum(const IOperationValidationContext* context) {
     if (hasKnownRank(input)) {
         NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
     }
-    return validateVersion(context, Version::ANDROID_Q);
+    return Version::ANDROID_Q;
 }
 
-bool validateMaxMin(const IOperationValidationContext* context) {
+Result<Version> validateMaxMin(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor);
@@ -103,10 +103,10 @@ bool validateMaxMin(const IOperationValidationContext* context) {
     if (hasKnownRank(input)) {
         NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
     }
-    return validateVersion(context, minVersion);
+    return minVersion;
 }
 
-bool validateLogical(const IOperationValidationContext* context) {
+Result<Version> validateLogical(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor);
@@ -119,7 +119,7 @@ bool validateLogical(const IOperationValidationContext* context) {
     if (hasKnownRank(input)) {
         NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
     }
-    return validateVersion(context, Version::ANDROID_Q);
+    return Version::ANDROID_Q;
 }
 
 bool prepare(IOperationExecutionContext* context) {

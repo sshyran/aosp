@@ -73,7 +73,7 @@ bool executeTyped(IOperationExecutionContext* context) {
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor);
@@ -89,7 +89,7 @@ bool validate(const IOperationValidationContext* context) {
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
         minSupportedVersion = Version::ANDROID_R;
     }
-    return validateVersion(context, minSupportedVersion);
+    return minSupportedVersion;
 }
 
 bool prepare(IOperationExecutionContext* context) {

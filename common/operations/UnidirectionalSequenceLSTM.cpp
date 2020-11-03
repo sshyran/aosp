@@ -112,7 +112,7 @@ inline LSTMParams getLSTMParams(IOperationExecutionContext* context) {
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     const uint32_t numOutputs = context->getNumOutputs();
     NN_RET_CHECK(numOutputs == kNumOutputs || numOutputs == kNumOutputsWithState);
@@ -163,7 +163,7 @@ bool validate(const IOperationValidationContext* context) {
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
-    return validateVersion(context, minVersionSupported);
+    return minVersionSupported;
 }
 
 bool prepare(IOperationExecutionContext* context) {

@@ -99,7 +99,7 @@ inline bool instanceNorm(const T* inputData, const Shape& inputShape, T gamma, T
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     std::vector<OperandType> inExpectedTypes;
@@ -111,12 +111,11 @@ bool validate(const IOperationValidationContext* context) {
         inExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::FLOAT16, OperandType::FLOAT16,
                            OperandType::FLOAT16, OperandType::BOOL};
     } else {
-        LOG(ERROR) << "Unsupported input tensor type for operation " << kOperationName;
-        return false;
+        return NN_ERROR() << "Unsupported input tensor type for operation " << kOperationName;
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateVersion(context, Version::ANDROID_Q);
+    return Version::ANDROID_Q;
 }
 
 bool prepare(IOperationExecutionContext* context) {
