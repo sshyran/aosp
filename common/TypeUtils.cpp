@@ -103,7 +103,6 @@ size_t getNonExtensionSize(OperandType operandType) {
     switch (operandType) {
         case OperandType::SUBGRAPH:
         case OperandType::OEM:
-        case OperandType::TENSOR_OEM_BYTE:
             return 0;
         case OperandType::TENSOR_QUANT8_ASYMM:
         case OperandType::BOOL:
@@ -111,6 +110,7 @@ size_t getNonExtensionSize(OperandType operandType) {
         case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:
         case OperandType::TENSOR_QUANT8_SYMM:
         case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+        case OperandType::TENSOR_OEM_BYTE:
             return 1;
         case OperandType::TENSOR_QUANT16_SYMM:
         case OperandType::TENSOR_FLOAT16:
