@@ -17,9 +17,11 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_CALLBACKS_H
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_CALLBACKS_H
 
-#include "HalInterfaces.h"
-
+#include <HalInterfaces.h>
+#include <Utils.h>
 #include <android-base/thread_annotations.h>
+#include <nnapi/Types.h>
+
 #include <condition_variable>
 #include <functional>
 #include <mutex>
@@ -60,7 +62,7 @@ namespace android::nn {
  *
  * This callback object is passed as an argument to IDevice::prepareModel*.
  */
-class PreparedModelCallback : public hal::IPreparedModelCallback {
+class PreparedModelCallback : public V1_3::IPreparedModelCallback {
    public:
     /**
      * IPreparedModelCallback::notify marks the callback object with the return
@@ -85,8 +87,8 @@ class PreparedModelCallback : public hal::IPreparedModelCallback {
      * @param preparedModel Returned model that has been prepared for execution,
      *     nullptr if the model was unable to be prepared.
      */
-    hal::Return<void> notify(hal::V1_0::ErrorStatus status,
-                             const sp<hal::V1_0::IPreparedModel>& preparedModel) override;
+    hardware::Return<void> notify(V1_0::ErrorStatus status,
+                                  const sp<V1_0::IPreparedModel>& preparedModel) override;
 
     /**
      * IPreparedModelCallback::notify_1_2 marks the callback object with the
@@ -111,8 +113,8 @@ class PreparedModelCallback : public hal::IPreparedModelCallback {
      * @param preparedModel Returned model that has been prepared for execution,
      *     nullptr if the model was unable to be prepared.
      */
-    hal::Return<void> notify_1_2(hal::V1_0::ErrorStatus status,
-                                 const sp<hal::V1_2::IPreparedModel>& preparedModel) override;
+    hardware::Return<void> notify_1_2(V1_0::ErrorStatus status,
+                                      const sp<V1_2::IPreparedModel>& preparedModel) override;
 
     /**
      * IPreparedModelCallback::notify_1_3 marks the callback object with the
@@ -139,8 +141,8 @@ class PreparedModelCallback : public hal::IPreparedModelCallback {
      * @param preparedModel Returned model that has been prepared for execution,
      *     nullptr if the model was unable to be prepared.
      */
-    hal::Return<void> notify_1_3(hal::V1_3::ErrorStatus status,
-                                 const sp<hal::V1_3::IPreparedModel>& preparedModel) override;
+    hardware::Return<void> notify_1_3(V1_3::ErrorStatus status,
+                                      const sp<V1_3::IPreparedModel>& preparedModel) override;
 
     /**
      * Mark the callback object as a dead object. This acts as a call to notify.
@@ -169,7 +171,7 @@ class PreparedModelCallback : public hal::IPreparedModelCallback {
      *     - RESOURCE_EXHAUSTED_* if the task was aborted by the driver
      *     - DEAD_OBJECT if the driver crashed without returning a result
      */
-    hal::V1_3::ErrorStatus getStatus() const;
+    ErrorStatus getStatus() const;
 
     /**
      * Retrieves the model that has been prepared for execution from the
@@ -181,7 +183,7 @@ class PreparedModelCallback : public hal::IPreparedModelCallback {
      * @return preparedModel Returned model that has been prepared for
      *     execution, nullptr if the model was unable to be prepared.
      */
-    sp<hal::V1_0::IPreparedModel> getPreparedModel() const;
+    sp<V1_0::IPreparedModel> getPreparedModel() const;
 
     /**
      * Queries whether the object is dead.
@@ -191,15 +193,15 @@ class PreparedModelCallback : public hal::IPreparedModelCallback {
     bool isDeadObject() const;
 
    private:
-    hal::Return<void> notifyInternal(bool deadObject, hal::ErrorStatus errorStatus,
-                                     const sp<hal::V1_0::IPreparedModel>& preparedModel);
+    hardware::Return<void> notifyInternal(bool deadObject, ErrorStatus errorStatus,
+                                          const sp<V1_0::IPreparedModel>& preparedModel);
 
     mutable std::mutex mMutex;
     mutable std::condition_variable mCondition;
     bool mNotified GUARDED_BY(mMutex) = false;
     bool mDeadObject = false;
-    hal::ErrorStatus mErrorStatus = hal::ErrorStatus::GENERAL_FAILURE;
-    sp<hal::V1_0::IPreparedModel> mPreparedModel;
+    ErrorStatus mErrorStatus = ErrorStatus::GENERAL_FAILURE;
+    sp<V1_0::IPreparedModel> mPreparedModel;
 };
 
 /**
@@ -216,9 +218,9 @@ class PreparedModelCallback : public hal::IPreparedModelCallback {
  *
  * This callback object is passed as an argument to IPreparedModel::execute*.
  */
-class ExecutionCallback : public hal::IExecutionCallback {
+class ExecutionCallback : public V1_3::IExecutionCallback {
     using ExecutionFinish =
-            std::function<hal::ErrorStatus(hal::ErrorStatus, const std::vector<hal::OutputShape>&)>;
+            std::function<ErrorStatus(ErrorStatus, const std::vector<OutputShape>&)>;
 
    public:
     /**
@@ -244,7 +246,7 @@ class ExecutionCallback : public hal::IExecutionCallback {
      *         enough to store the resultant values
      *     - INVALID_ARGUMENT if the input request is invalid
      */
-    hal::Return<void> notify(hal::V1_0::ErrorStatus status) override;
+    hardware::Return<void> notify(V1_0::ErrorStatus status) override;
 
     /**
      * IExecutionCallback::notify_1_2 marks the callback object with the results
@@ -279,9 +281,9 @@ class ExecutionCallback : public hal::IExecutionCallback {
      *     reported as UINT64_MAX. A driver may choose to report any time as
      *     UINT64_MAX, indicating that particular measurement is not available.
      */
-    hal::Return<void> notify_1_2(hal::V1_0::ErrorStatus status,
-                                 const hal::hidl_vec<hal::OutputShape>& outputShapes,
-                                 const hal::Timing& timing) override;
+    hardware::Return<void> notify_1_2(V1_0::ErrorStatus status,
+                                      const hardware::hidl_vec<V1_2::OutputShape>& outputShapes,
+                                      const V1_2::Timing& timing) override;
 
     /**
      * IExecutionCallback::notify_1_3 marks the callback object with the results
@@ -318,15 +320,15 @@ class ExecutionCallback : public hal::IExecutionCallback {
      *     reported as UINT64_MAX. A driver may choose to report any time as
      *     UINT64_MAX, indicating that particular measurement is not available.
      */
-    hal::Return<void> notify_1_3(hal::V1_3::ErrorStatus status,
-                                 const hal::hidl_vec<hal::OutputShape>& outputShapes,
-                                 const hal::Timing& timing) override;
+    hardware::Return<void> notify_1_3(V1_3::ErrorStatus status,
+                                      const hardware::hidl_vec<V1_2::OutputShape>& outputShapes,
+                                      const V1_2::Timing& timing) override;
 
     // An overload of the latest notify interface to hide the version from ExecutionBuilder.
-    hal::Return<void> notify(hal::V1_3::ErrorStatus status,
-                             const hal::hidl_vec<hal::OutputShape>& outputShapes,
-                             const hal::Timing& timing) {
-        return notify_1_3(status, outputShapes, timing);
+    hardware::Return<void> notify(ErrorStatus status, const std::vector<OutputShape>& outputShapes,
+                                  const Timing& timing) {
+        return notify_1_3(convertToV1_3(status), convertToV1_2(outputShapes),
+                          convertToV1_2(timing));
     }
 
     /**
@@ -362,7 +364,7 @@ class ExecutionCallback : public hal::IExecutionCallback {
      *     - RESOURCE_EXHAUSTED_* if the task was aborted by the driver
      *     - DEAD_OBJECT if the driver crashed without returning a result
      */
-    hal::V1_3::ErrorStatus getStatus() const;
+    ErrorStatus getStatus() const;
 
     /**
      * Retrieves the output shapes returned from the asynchronous task launched
@@ -385,7 +387,7 @@ class ExecutionCallback : public hal::IExecutionCallback {
      *     OUTPUT_INSUFFICIENT_SIZE, or if the status is NONE and the model has
      *     at least one output operand that is not fully-specified.
      */
-    const std::vector<hal::OutputShape>& getOutputShapes() const;
+    const std::vector<OutputShape>& getOutputShapes() const;
 
     /**
      * Retrieves the duration of execution of the asynchronous task launched by
@@ -400,7 +402,7 @@ class ExecutionCallback : public hal::IExecutionCallback {
      * @return timing Duration of the execution. Every time must be UINT64_MAX
      *     unless the status is NONE.
      */
-    hal::Timing getTiming() const;
+    Timing getTiming() const;
 
     /**
      * ExecutionCallback::bindThread binds a thread to the ExecutionCallback
@@ -461,9 +463,8 @@ class ExecutionCallback : public hal::IExecutionCallback {
      * before any call to wait or get* return. It then enables all prior and
      * future wait calls on the ExecutionCallback object to proceed.
      */
-    hal::Return<void> notifyInternal(bool deadObject, hal::ErrorStatus errorStatus,
-                                     std::vector<hal::OutputShape> outputShapes,
-                                     hal::Timing timing);
+    hardware::Return<void> notifyInternal(bool deadObject, ErrorStatus errorStatus,
+                                          std::vector<OutputShape> outputShapes, Timing timing);
 
     // members
     mutable std::mutex mMutex;
@@ -472,9 +473,9 @@ class ExecutionCallback : public hal::IExecutionCallback {
     ExecutionFinish mOnFinish GUARDED_BY(mMutex);
     bool mNotified GUARDED_BY(mMutex) = false;
     bool mDeadObject = false;
-    hal::ErrorStatus mErrorStatus = hal::ErrorStatus::GENERAL_FAILURE;
-    std::vector<hal::OutputShape> mOutputShapes;
-    hal::Timing mTiming = {};
+    ErrorStatus mErrorStatus = ErrorStatus::GENERAL_FAILURE;
+    std::vector<OutputShape> mOutputShapes;
+    Timing mTiming = {};
 };
 
 }  // namespace android::nn

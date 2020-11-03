@@ -20,7 +20,6 @@
 #include <utility>
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "NeuralNetworks.h"
 #include "Utils.h"
 
@@ -38,10 +37,10 @@ class ModelArgumentInfo {
     ModelArgumentInfo() {}
 
     static std::pair<int, ModelArgumentInfo> createFromPointer(
-            const hal::Operand& operand, const ANeuralNetworksOperandType* type,
+            const Operand& operand, const ANeuralNetworksOperandType* type,
             void* data /* nullptr means HAS_NO_VALUE */, uint32_t length);
     static std::pair<int, ModelArgumentInfo> createFromMemory(
-            const hal::Operand& operand, const ANeuralNetworksOperandType* type, uint32_t poolIndex,
+            const Operand& operand, const ANeuralNetworksOperandType* type, uint32_t poolIndex,
             uint32_t offset, uint32_t length);
 
     enum State { POINTER, MEMORY, HAS_NO_VALUE, UNSPECIFIED };
@@ -78,17 +77,17 @@ class ModelArgumentInfo {
         return mLocationAndLength.length;
     }
 
-    const hal::DataLocation& locationAndLength() const {
+    const DataLocation& locationAndLength() const {
         CHECK_EQ(mState, MEMORY);
         return mLocationAndLength;
     }
-    hal::DataLocation& locationAndLength() {
+    DataLocation& locationAndLength() {
         CHECK_EQ(mState, MEMORY);
         return mLocationAndLength;
     }
 
    private:
-    int updateDimensionInfo(const hal::Operand& operand, const ANeuralNetworksOperandType* newType);
+    int updateDimensionInfo(const Operand& operand, const ANeuralNetworksOperandType* newType);
 
     // Whether the argument was specified as being in a Memory, as a pointer,
     // has no value, or has not been specified.
@@ -101,16 +100,16 @@ class ModelArgumentInfo {
     //   mDimensions is valid.
     State mState = UNSPECIFIED;            // fixed at creation
     void* mBuffer = nullptr;               // fixed at creation
-    hal::DataLocation mLocationAndLength;  // can be updated after creation
+    DataLocation mLocationAndLength;       // can be updated after creation
     std::vector<uint32_t> mDimensions;     // can be updated after creation
     bool mIsSufficient = true;             // can be updated after creation
 };
 
-// Convert ModelArgumentInfo to HIDL RequestArgument. For pointer arguments, use the location
+// Convert ModelArgumentInfo to HIDL Request::Argument. For pointer arguments, use the location
 // information in ptrArgsLocations.
-hal::hidl_vec<hal::RequestArgument> createRequestArguments(
+std::vector<Request::Argument> createRequestArguments(
         const std::vector<ModelArgumentInfo>& argumentInfos,
-        const std::vector<hal::DataLocation>& ptrArgsLocations);
+        const std::vector<DataLocation>& ptrArgsLocations);
 
 }  // namespace nn
 }  // namespace android

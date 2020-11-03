@@ -26,7 +26,6 @@
 #include <vector>
 
 #include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "Operations.h"
 #include "OperationsUtils.h"
@@ -48,8 +47,6 @@ constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
 namespace {
-
-using namespace hal;
 
 // If possible we will use this static buffer for the tensor.
 constexpr size_t kStaticBufferSize = 1605632;
@@ -566,7 +563,9 @@ bool validate(const IOperationValidationContext* context) {
                            OperandType::INT32};
 
         if (filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
-            NN_RET_CHECK_EQ(context->getInputExtraParams(kFilterTensor).channelQuant().channelDim,
+            NN_RET_CHECK_EQ(std::get<Operand::SymmPerChannelQuantParams>(
+                                    context->getInputExtraParams(kFilterTensor))
+                                    .channelDim,
                             0)
                     << "Unsupported filter tensor channel dimension for operation "
                     << kOperationName;
@@ -727,7 +726,9 @@ bool execute(IOperationExecutionContext* context) {
                         context->getInputShape(kInputTensor),
                         context->getInputBuffer<int8_t>(kFilterTensor),
                         context->getInputShape(kFilterTensor),
-                        context->getInputExtraParams(kFilterTensor).channelQuant().scales.data(),
+                        std::get<Operand::SymmPerChannelQuantParams>(
+                                context->getInputExtraParams(kFilterTensor))
+                                .scales.data(),
                         context->getInputBuffer<int32_t>(kBiasTensor),
                         context->getInputShape(kBiasTensor), param.padding_left,
                         param.padding_right, param.padding_top, param.padding_bottom,
@@ -758,7 +759,9 @@ bool execute(IOperationExecutionContext* context) {
                         context->getInputShape(kInputTensor),
                         context->getInputBuffer<int8_t>(kFilterTensor),
                         context->getInputShape(kFilterTensor),
-                        context->getInputExtraParams(kFilterTensor).channelQuant().scales.data(),
+                        std::get<Operand::SymmPerChannelQuantParams>(
+                                context->getInputExtraParams(kFilterTensor))
+                                .scales.data(),
                         context->getInputBuffer<int32_t>(kBiasTensor),
                         context->getInputShape(kBiasTensor), param.padding_left,
                         param.padding_right, param.padding_top, param.padding_bottom,

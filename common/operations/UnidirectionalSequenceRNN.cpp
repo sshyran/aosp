@@ -20,9 +20,9 @@
 #include <utility>
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "RNN.h"
+#include "nnapi/TypeUtils.h"
 
 namespace android {
 namespace nn {
@@ -43,8 +43,6 @@ constexpr uint32_t kOutputTensor = 0;
 constexpr uint32_t kStateOutputTensor = 1;
 
 namespace {
-
-using namespace hal;
 
 template <typename T>
 void transposeFirstTwoDims(const T* input, const Shape& inputShape, T* output) {
@@ -135,7 +133,7 @@ bool validate(const IOperationValidationContext* context) {
     OperandType inputType = context->getInputType(kInputTensor);
     if (inputType != OperandType::TENSOR_FLOAT16 && inputType != OperandType::TENSOR_FLOAT32) {
         LOG(ERROR) << "Unsupported input operand type for UNIDIRECTIONAL_SEQUENCE_RNN op: "
-                   << toString(inputType);
+                   << inputType;
         return false;
     }
     NN_RET_CHECK(validateInputTypes(context, {inputType, inputType, inputType, inputType, inputType,

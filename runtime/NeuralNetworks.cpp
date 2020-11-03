@@ -22,6 +22,7 @@
 
 #include "NeuralNetworks.h"
 
+#include <nnapi/Types.h>
 #include <vndk/hardware_buffer.h>
 
 #include <algorithm>
@@ -35,7 +36,6 @@
 #include "ControlFlow.h"
 #include "Event.h"
 #include "ExecutionBuilder.h"
-#include "HalInterfaces.h"
 #include "Manager.h"
 #include "Memory.h"
 #include "MetaModel.h"
@@ -46,7 +46,7 @@
 #include "Utils.h"
 
 using namespace android::nn;
-using namespace android::nn::hal;
+using android::sp;
 
 // Make sure the constants defined in the header files have not changed values.
 // IMPORTANT: When adding new values, update kNumberOfDataTypes or kNumberOfDataTypesOEM
@@ -558,12 +558,14 @@ static_assert(static_cast<int32_t>(DeviceType::ACCELERATOR) == ANEURALNETWORKS_D
 
 // Make sure that the constants are compatible with the values defined in
 // hardware/interfaces/neuralnetworks/1.3/types.hal.
-static_assert(android::nn::convertToHalPriority(ANEURALNETWORKS_PRIORITY_LOW) == Priority::LOW,
+static_assert(android::nn::convertToCanonicalPriority(ANEURALNETWORKS_PRIORITY_LOW) ==
+                      Priority::LOW,
               "ANEURALNETWORKS_PRIORITY_LOW does not map to Priority::LOW");
-static_assert(android::nn::convertToHalPriority(ANEURALNETWORKS_PRIORITY_MEDIUM) ==
+static_assert(android::nn::convertToCanonicalPriority(ANEURALNETWORKS_PRIORITY_MEDIUM) ==
                       Priority::MEDIUM,
               "ANEURALNETWORKS_PRIORITY_MEDIUM does not map to Priority::MEDIUM");
-static_assert(android::nn::convertToHalPriority(ANEURALNETWORKS_PRIORITY_HIGH) == Priority::HIGH,
+static_assert(android::nn::convertToCanonicalPriority(ANEURALNETWORKS_PRIORITY_HIGH) ==
+                      Priority::HIGH,
               "ANEURALNETWORKS_PRIORITY_HIGH does not map to Priority::HIGH");
 
 // Asserts for ANeuralNetworksOperandType memory layout
@@ -597,9 +599,8 @@ static_assert(alignof(ANeuralNetworksSymmPerChannelQuantParams) == alignof(void*
 // Asserts for compilation caching
 static_assert(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN == 32,
               "ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN has changed");
-static_assert(static_cast<uint32_t>(Constant::BYTE_SIZE_OF_CACHE_TOKEN) ==
-                      ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN,
-              "Constant::BYTE_SIZE_OF_CACHE_TOKEN != ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN");
+static_assert(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN == kByteSizeOfCacheToken,
+              "ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN != kByteSizeOfCacheToken");
 
 // Asserts for compilation priority
 static_assert(ANEURALNETWORKS_PRIORITY_LOW == 90, "ANEURALNETWORKS_PRIORITY_LOW has changed");
@@ -608,14 +609,6 @@ static_assert(ANEURALNETWORKS_PRIORITY_MEDIUM == 100,
 static_assert(ANEURALNETWORKS_PRIORITY_HIGH == 110, "ANEURALNETWORKS_PRIORITY_HIGH has changed");
 static_assert(ANEURALNETWORKS_PRIORITY_DEFAULT == ANEURALNETWORKS_PRIORITY_MEDIUM,
               "ANEURALNETWORKS_PRIORITY_DEFAULT has changed");
-
-// Asserts for loop timeout duration
-static_assert(static_cast<uint64_t>(LoopTimeoutDurationNs::DEFAULT) ==
-                      operation_while::kTimeoutNsDefault,
-              "LoopTimeoutDurationNs::DEFAULT != operation_while::kTimeoutNsDefault");
-static_assert(static_cast<uint64_t>(LoopTimeoutDurationNs::MAXIMUM) ==
-                      operation_while::kTimeoutNsMaximum,
-              "LoopTimeoutDurationNs::MAXIMUM != operation_while::kTimeoutNsMaximum");
 
 int ANeuralNetworks_getDeviceCount(uint32_t* numDevices) {
     if (numDevices == nullptr) {
@@ -718,7 +711,7 @@ int ANeuralNetworksModel_getSupportedOperationsForDevices(
         return ANEURALNETWORKS_BAD_STATE;
     }
 
-    const Model hidlModel = m->makeHidlModel();
+    const Model canonicalModel = m->makeModel();
     const std::vector<uint32_t>& opMap = m->getSortedOperationMapping();
     // init the output array to false for all the operations.
     std::fill(supportedOps, supportedOps + opMap.size(), false);
@@ -737,7 +730,7 @@ int ANeuralNetworksModel_getSupportedOperationsForDevices(
         }
 
         Device* d = reinterpret_cast<Device*>(const_cast<ANeuralNetworksDevice*>(devices[i]));
-        const MetaModel metaModel(hidlModel, DeviceManager::get()->strictSlicing());
+        const MetaModel metaModel(canonicalModel, DeviceManager::get()->strictSlicing());
         const std::vector<bool> supportsByDevice = d->getSupportedOperations(metaModel);
         for (uint32_t j = 0; j < supportsByDevice.size(); j++) {
             uint32_t originalIdx = opMap[j];
@@ -988,9 +981,9 @@ int ANeuralNetworksMemory_copy(const ANeuralNetworksMemory* src, const ANeuralNe
         LOG(ERROR) << "ANeuralNetworksMemory_copy passed a nullptr";
         return ANEURALNETWORKS_UNEXPECTED_NULL;
     }
-    const Memory* s = reinterpret_cast<const Memory*>(src);
-    const Memory* d = reinterpret_cast<const Memory*>(dst);
-    return Memory::copy(*s, *d);
+    const RuntimeMemory* s = reinterpret_cast<const RuntimeMemory*>(src);
+    const RuntimeMemory* d = reinterpret_cast<const RuntimeMemory*>(dst);
+    return RuntimeMemory::copy(*s, *d);
 }
 
 int ANeuralNetworksMemory_createFromFd(size_t size, int prot, int fd, size_t offset,
@@ -1024,7 +1017,7 @@ int ANeuralNetworksMemory_createFromAHardwareBuffer(const AHardwareBuffer* ahwb,
 void ANeuralNetworksMemory_free(ANeuralNetworksMemory* memory) {
     NNTRACE_RT(NNTRACE_PHASE_TERMINATION, "ANeuralNetworksMemory_free");
     // No validation.  Free of nullptr is valid.
-    Memory* m = reinterpret_cast<Memory*>(memory);
+    RuntimeMemory* m = reinterpret_cast<RuntimeMemory*>(memory);
     delete m;
 }
 
@@ -1091,7 +1084,7 @@ int ANeuralNetworksModel_setOperandValueFromMemory(ANeuralNetworksModel* model, 
         LOG(ERROR) << "ANeuralNetworksModel_setOperandValue passed a nullptr";
         return ANEURALNETWORKS_UNEXPECTED_NULL;
     }
-    const Memory* mem = reinterpret_cast<const Memory*>(memory);
+    const RuntimeMemory* mem = reinterpret_cast<const RuntimeMemory*>(memory);
     ModelBuilder* m = reinterpret_cast<ModelBuilder*>(model);
     return m->setOperandValueFromMemory(index, mem, offset, length);
 }
@@ -1302,7 +1295,7 @@ int ANeuralNetworksExecution_setInputFromMemory(ANeuralNetworksExecution* execut
         return ANEURALNETWORKS_UNEXPECTED_NULL;
     }
 
-    const Memory* m = reinterpret_cast<const Memory*>(memory);
+    const RuntimeMemory* m = reinterpret_cast<const RuntimeMemory*>(memory);
     ExecutionBuilder* r = reinterpret_cast<ExecutionBuilder*>(execution);
     return r->setInputFromMemory(index, type, m, offset, length);
 }
@@ -1330,7 +1323,7 @@ int ANeuralNetworksExecution_setOutputFromMemory(ANeuralNetworksExecution* execu
     }
 
     ExecutionBuilder* r = reinterpret_cast<ExecutionBuilder*>(execution);
-    const Memory* m = reinterpret_cast<const Memory*>(memory);
+    const RuntimeMemory* m = reinterpret_cast<const RuntimeMemory*>(memory);
     return r->setOutputFromMemory(index, type, m, offset, length);
 }
 

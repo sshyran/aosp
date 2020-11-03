@@ -34,7 +34,7 @@ class FibonacciOperationResolver : public IOperationResolver {
         return &instance;
     }
 
-    const OperationRegistration* findOperation(hal::OperationType operationType) const override;
+    const OperationRegistration* findOperation(OperationType operationType) const override;
 
    private:
     FibonacciOperationResolver() {}
@@ -45,10 +45,10 @@ class FibonacciOperationResolver : public IOperationResolver {
 class FibonacciDriver : public SampleDriver {
    public:
     FibonacciDriver() : SampleDriver(kDriverName, FibonacciOperationResolver::get()) {}
-    hal::Return<void> getSupportedExtensions(getSupportedExtensions_cb cb) override;
-    hal::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
-    hal::Return<void> getSupportedOperations_1_3(const hal::V1_3::Model& model,
-                                                 getSupportedOperations_1_3_cb cb) override;
+    hardware::Return<void> getSupportedExtensions(getSupportedExtensions_cb cb) override;
+    hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
+    hardware::Return<void> getSupportedOperations_1_3(const V1_3::Model& model,
+                                                      getSupportedOperations_1_3_cb cb) override;
 
     static constexpr char kDriverName[] = "sample-driver-fibonacci-extension";
 };

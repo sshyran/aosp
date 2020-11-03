@@ -98,7 +98,6 @@ const test_helper::TestModel& get_test_model_align_corners_2x2_to_1x1();
 namespace android::nn {
 namespace {
 
-using namespace hal;
 using sample_driver::SampleDriverPartial;
 using Result = test_wrapper::Result;
 using WrapperOperandType = test_wrapper::OperandType;
@@ -113,18 +112,18 @@ class TestDriver : public SampleDriverPartial {
    public:
     TestDriver() : SampleDriverPartial(kTestDriverName) {}
 
-    Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
+    hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
         cb(V1_3::ErrorStatus::NONE, {/* Placeholder zero-filled capabilities. */});
-        return Void();
+        return hardware::Void();
     }
 
     void setSupportedInputCount(uint32_t count) { mSupportedInputCount = count; }
 
    private:
-    std::vector<bool> getSupportedOperationsImpl(const Model& model) const override {
+    std::vector<bool> getSupportedOperationsImpl(const V1_3::Model& model) const override {
         std::vector<bool> supported(model.main.operations.size());
         std::transform(model.main.operations.begin(), model.main.operations.end(),
-                       supported.begin(), [this](const Operation& operation) {
+                       supported.begin(), [this](const V1_3::Operation& operation) {
                            SCOPED_TRACE("operation = " + toString(operation.type));
                            EXPECT_EQ(operation.inputs.size(), mSupportedInputCount);
                            return operation.inputs.size() == mSupportedInputCount;

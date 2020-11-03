@@ -101,8 +101,6 @@ inline bool hasTensor(IOperationExecutionContext* context, const uint32_t tensor
 
 }  // namespace
 
-using hal::OperandType;
-
 bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);

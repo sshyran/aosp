@@ -22,7 +22,6 @@
 #include <vector>
 
 #include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "Tracing.h"
 
@@ -44,8 +43,6 @@ constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
 namespace {
-
-using namespace hal;
 
 inline bool localResponseNormFloat32Impl(const float* inputData, const Shape& inputShape,
                                          int32_t radius, float bias, float alpha, float beta,

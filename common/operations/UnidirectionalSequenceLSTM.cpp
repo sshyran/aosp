@@ -18,7 +18,6 @@
 
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "IndexedShapeWrapper.h"
 #include "LSTM.h"
 #include "OperationResolver.h"
@@ -88,8 +87,6 @@ constexpr uint32_t kCellStateOutTensor = 2;
 
 namespace {
 
-using namespace hal;
-
 inline bool hasTensor(IOperationExecutionContext* context, const uint32_t tensor) {
     return context->getInputBuffer(tensor) != nullptr;
 }
@@ -157,7 +154,7 @@ bool validate(const IOperationValidationContext* context) {
     } else {
         NN_RET_CHECK_FAIL()
                 << "Unsupported input operand type for UNIDIRECTIONAL_SEQUENCE_LSTM op: "
-                << toString(inputType);
+                << inputType;
     }
     HalVersion minHalVersionSupported = HalVersion::V1_2;
     if (context->getNumOutputs() == kNumOutputsWithState) {

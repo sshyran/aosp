@@ -134,8 +134,6 @@ cc_defaults {
         "fibonacci_extension/FibonacciExtensionTest.cpp",
 
         "TestMain.cpp",
-
-        "Bridge.cpp",
     ],
     static_libs: [
         "android.hardware.neuralnetworks@1.0-adapter-helper",

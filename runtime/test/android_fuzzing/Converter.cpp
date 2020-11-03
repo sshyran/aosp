@@ -29,39 +29,38 @@ namespace android::nn::fuzz {
 namespace {
 
 using namespace test_helper;
-using namespace android_nn_fuzz;
 
 constexpr uint32_t kMaxSize = 65536;
 
-TestOperandType convert(OperandType type) {
+TestOperandType convert(android_nn_fuzz::OperandType type) {
     return static_cast<TestOperandType>(type);
 }
 
-TestOperationType convert(OperationType type) {
+TestOperationType convert(android_nn_fuzz::OperationType type) {
     return static_cast<TestOperationType>(type);
 }
 
-TestOperandLifeTime convert(OperandLifeTime lifetime) {
+TestOperandLifeTime convert(android_nn_fuzz::OperandLifeTime lifetime) {
     return static_cast<TestOperandLifeTime>(lifetime);
 }
 
-std::vector<float> convert(const Scales& scales) {
+std::vector<float> convert(const android_nn_fuzz::Scales& scales) {
     const auto& repeatedScale = scales.scale();
     return std::vector<float>(repeatedScale.begin(), repeatedScale.end());
 }
 
-TestSymmPerChannelQuantParams convert(const SymmPerChannelQuantParams& params) {
+TestSymmPerChannelQuantParams convert(const android_nn_fuzz::SymmPerChannelQuantParams& params) {
     std::vector<float> scales = convert(params.scales());
     const uint32_t channelDim = params.channel_dim();
     return {.scales = std::move(scales), .channelDim = channelDim};
 }
 
-std::vector<uint32_t> convert(const Dimensions& dimensions) {
+std::vector<uint32_t> convert(const android_nn_fuzz::Dimensions& dimensions) {
     const auto& repeatedDimension = dimensions.dimension();
     return std::vector<uint32_t>(repeatedDimension.begin(), repeatedDimension.end());
 }
 
-TestBuffer convert(size_t size, const Buffer& buffer) {
+TestBuffer convert(size_t size, const android_nn_fuzz::Buffer& buffer) {
     if (size == 0) {
         return TestBuffer();
     }
@@ -70,7 +69,7 @@ TestBuffer convert(size_t size, const Buffer& buffer) {
     return TestBuffer::createRandom(size % kMaxSize, &generator);
 }
 
-TestOperand convert(const Operand& operand) {
+TestOperand convert(const android_nn_fuzz::Operand& operand) {
     const TestOperandType type = convert(operand.type());
     std::vector<uint32_t> dimensions = convert(operand.dimensions());
     const float scale = operand.scale();
@@ -79,7 +78,7 @@ TestOperand convert(const Operand& operand) {
     auto channelQuant = convert(operand.channel_quant());
 
     const bool isIgnored = false;
-    const auto halType = static_cast<hal::OperandType>(type);
+    const auto halType = static_cast<V1_3::OperandType>(type);
     const bool willOverflow = nonExtensionOperandSizeOfDataOverflowsUInt32(halType, dimensions);
     const bool makeEmpty = (lifetime == TestOperandLifeTime::NO_VALUE ||
                             lifetime == TestOperandLifeTime::TEMPORARY_VARIABLE || willOverflow);
@@ -97,7 +96,7 @@ TestOperand convert(const Operand& operand) {
             .data = std::move(data)};
 }
 
-std::vector<TestOperand> convert(const Operands& operands) {
+std::vector<TestOperand> convert(const android_nn_fuzz::Operands& operands) {
     std::vector<TestOperand> testOperands;
     testOperands.reserve(operands.operand_size());
     const auto& repeatedOperand = operands.operand();
@@ -106,19 +105,19 @@ std::vector<TestOperand> convert(const Operands& operands) {
     return testOperands;
 }
 
-std::vector<uint32_t> convert(const Indexes& indexes) {
+std::vector<uint32_t> convert(const android_nn_fuzz::Indexes& indexes) {
     const auto& repeatedIndex = indexes.index();
     return std::vector<uint32_t>(repeatedIndex.begin(), repeatedIndex.end());
 }
 
-TestOperation convert(const Operation& operation) {
+TestOperation convert(const android_nn_fuzz::Operation& operation) {
     const TestOperationType type = convert(operation.type());
     std::vector<uint32_t> inputs = convert(operation.inputs());
     std::vector<uint32_t> outputs = convert(operation.outputs());
     return {.type = type, .inputs = std::move(inputs), .outputs = std::move(outputs)};
 }
 
-std::vector<TestOperation> convert(const Operations& operations) {
+std::vector<TestOperation> convert(const android_nn_fuzz::Operations& operations) {
     std::vector<TestOperation> testOperations;
     testOperations.reserve(operations.operation_size());
     const auto& repeatedOperation = operations.operation();
@@ -142,7 +141,7 @@ void calculateNumberOfConsumers(const std::vector<TestOperation>& operations,
     std::for_each(operations.begin(), operations.end(), addAllConsumers);
 }
 
-TestModel convert(const Model& model) {
+TestModel convert(const android_nn_fuzz::Model& model) {
     std::vector<TestOperand> operands = convert(model.operands());
     std::vector<TestOperation> operations = convert(model.operations());
     std::vector<uint32_t> inputIndexes = convert(model.input_indexes());
@@ -161,7 +160,7 @@ TestModel convert(const Model& model) {
 
 }  // anonymous namespace
 
-TestModel convertToTestModel(const Test& model) {
+TestModel convertToTestModel(const android_nn_fuzz::Test& model) {
     return convert(model.model());
 }
 
