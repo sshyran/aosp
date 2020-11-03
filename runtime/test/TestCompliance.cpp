@@ -27,7 +27,6 @@
 
 namespace android::nn::compliance_test {
 
-using namespace hal;
 using namespace test_helper;
 using HidlModel = V1_3::Model;
 using WrapperModel = test_wrapper::Model;
@@ -42,7 +41,7 @@ static HidlModel createHidlModel(const WrapperModel& wrapperModel) {
     auto modelBuilder = reinterpret_cast<const ModelBuilder*>(wrapperModel.getHandle());
     EXPECT_TRUE(modelBuilder->isFinished());
     EXPECT_TRUE(modelBuilder->isValid());
-    return modelBuilder->makeHidlModel();
+    return convertToV1_3(modelBuilder->makeModel());
 }
 
 static void testAvailableSinceV1_3(const WrapperModel& wrapperModel) {
@@ -73,12 +72,12 @@ static void testAvailableSinceV1_0(const WrapperModel& wrapperModel) {
     ASSERT_TRUE(compliantWithV1_0(hidlModel));
 }
 
-static void testAvailableSinceV1_2(const Request& request) {
+static void testAvailableSinceV1_2(const V1_3::Request& request) {
     ASSERT_FALSE(compliantWithV1_0(request));
     ASSERT_TRUE(compliantWithV1_2(request));
 }
 
-static void testAvailableSinceV1_3(const Request& request) {
+static void testAvailableSinceV1_3(const V1_3::Request& request) {
     ASSERT_FALSE(compliantWithV1_0(request));
     ASSERT_FALSE(compliantWithV1_2(request));
 }
@@ -172,20 +171,20 @@ TEST_F(ComplianceTest, HardwareBufferModel) {
 TEST_F(ComplianceTest, HardwareBufferRequest) {
     const auto [n, ahwb] = MemoryRuntimeAHWB::create(1024);
     ASSERT_EQ(n, ANEURALNETWORKS_NO_ERROR);
-    Request::MemoryPool sharedMemoryPool, ahwbMemoryPool = ahwb->getMemoryPool();
+    V1_3::Request::MemoryPool sharedMemoryPool, ahwbMemoryPool = ahwb->getMemoryPool();
     sharedMemoryPool.hidlMemory(allocateSharedMemory(1024));
     ASSERT_TRUE(sharedMemoryPool.hidlMemory().valid());
     ASSERT_TRUE(ahwbMemoryPool.hidlMemory().valid());
 
     // AHardwareBuffer as input.
-    testAvailableSinceV1_2(Request{
+    testAvailableSinceV1_2(V1_3::Request{
             .inputs = {{.hasNoValue = false, .location = {.poolIndex = 0}, .dimensions = {}}},
             .outputs = {{.hasNoValue = false, .location = {.poolIndex = 1}, .dimensions = {}}},
             .pools = {ahwbMemoryPool, sharedMemoryPool},
     });
 
     // AHardwareBuffer as output.
-    testAvailableSinceV1_2(Request{
+    testAvailableSinceV1_2(V1_3::Request{
             .inputs = {{.hasNoValue = false, .location = {.poolIndex = 0}, .dimensions = {}}},
             .outputs = {{.hasNoValue = false, .location = {.poolIndex = 1}, .dimensions = {}}},
             .pools = {sharedMemoryPool, ahwbMemoryPool},
@@ -194,20 +193,20 @@ TEST_F(ComplianceTest, HardwareBufferRequest) {
 #endif
 
 TEST_F(ComplianceTest, DeviceMemory) {
-    Request::MemoryPool sharedMemoryPool, deviceMemoryPool;
+    V1_3::Request::MemoryPool sharedMemoryPool, deviceMemoryPool;
     sharedMemoryPool.hidlMemory(allocateSharedMemory(1024));
     ASSERT_TRUE(sharedMemoryPool.hidlMemory().valid());
     deviceMemoryPool.token(1);
 
     // Device memory as input.
-    testAvailableSinceV1_3(Request{
+    testAvailableSinceV1_3(V1_3::Request{
             .inputs = {{.hasNoValue = false, .location = {.poolIndex = 0}, .dimensions = {}}},
             .outputs = {{.hasNoValue = false, .location = {.poolIndex = 1}, .dimensions = {}}},
             .pools = {deviceMemoryPool, sharedMemoryPool},
     });
 
     // Device memory as output.
-    testAvailableSinceV1_3(Request{
+    testAvailableSinceV1_3(V1_3::Request{
             .inputs = {{.hasNoValue = false, .location = {.poolIndex = 0}, .dimensions = {}}},
             .outputs = {{.hasNoValue = false, .location = {.poolIndex = 1}, .dimensions = {}}},
             .pools = {sharedMemoryPool, deviceMemoryPool},

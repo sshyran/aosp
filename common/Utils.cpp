@@ -22,6 +22,10 @@
 #include <android-base/properties.h>
 #include <android-base/strings.h>
 #include <errno.h>
+#include <nnapi/hal/1.0/Conversions.h>
+#include <nnapi/hal/1.1/Conversions.h>
+#include <nnapi/hal/1.2/Conversions.h>
+#include <nnapi/hal/1.3/Conversions.h>
 #include <poll.h>
 
 #include <algorithm>
@@ -42,13 +46,12 @@
 #include "NeuralNetworksOEM.h"
 #include "OperationResolver.h"
 #include "ValidateHal.h"
+#include "nnapi/TypeUtils.h"
 
 namespace android {
 namespace nn {
 
-using namespace hal;
-
-constexpr PerformanceInfo kNoPerformanceInfo = {.execTime = FLT_MAX, .powerUsage = FLT_MAX};
+constexpr V1_0::PerformanceInfo kNoPerformanceInfo = {.execTime = FLT_MAX, .powerUsage = FLT_MAX};
 
 const char kVLogPropKey[] = "debug.nn.vlog";
 int vLogMask = ~0;
@@ -98,21 +101,26 @@ void initVLogMask() {
     }
 }
 
-Deadline makeDeadline(uint64_t duration) {
+TimeoutDuration makeTimeoutDuration(uint64_t nanoseconds) {
+    // According to the standard, std::chrono::nanoseconds::rep is a signed
+    // integer type of at least 64 bits. This check prevents an overflow when
+    // rep is exactly 64 bits.
+    if constexpr (sizeof(std::chrono::nanoseconds::rep) == sizeof(int64_t)) {
+        nanoseconds = std::min(nanoseconds,
+                               static_cast<uint64_t>(std::chrono::nanoseconds::max().count()));
+    }
+    return std::chrono::nanoseconds{nanoseconds};
+}
+
+Deadline makeDeadline(TimeoutDuration duration) {
     const auto maxTime = Deadline::max();
     const auto currentTime = std::chrono::steady_clock::now();
 
-    // Create Deadline. If there would be an overflow, use the max value.
-    const uint64_t remainingNanoseconds =
-            std::chrono::duration_cast<std::chrono::nanoseconds>(maxTime - currentTime).count();
-    if (duration > remainingNanoseconds) {
+    // If there would be an overflow, use the max value.
+    if (duration > maxTime - currentTime) {
         return maxTime;
     }
-    return currentTime + std::chrono::nanoseconds{duration};
-}
-
-std::optional<Deadline> makeDeadline(std::optional<uint64_t> duration) {
-    return duration.has_value() ? makeDeadline(*duration) : std::optional<Deadline>{};
+    return currentTime + duration;
 }
 
 static uint64_t getMaxNanosecondsSinceEpoch() {
@@ -121,8 +129,8 @@ static uint64_t getMaxNanosecondsSinceEpoch() {
     return maxTime.time_since_epoch().count();
 }
 
-std::optional<Deadline> makeDeadline(const OptionalTimePoint& timePoint) {
-    using Discriminator = hal::OptionalTimePoint::hidl_discriminator;
+std::optional<Deadline> makeDeadline(const V1_3::OptionalTimePoint& timePoint) {
+    using Discriminator = V1_3::OptionalTimePoint::hidl_discriminator;
     if (timePoint.getDiscriminator() == Discriminator::none) {
         return std::nullopt;
     }
@@ -146,12 +154,7 @@ bool hasDeadlinePassed(const std::optional<Deadline>& deadline) {
 }
 
 static OptionalTimePoint makeTimePoint(const Deadline& deadline) {
-    const auto timeSinceEpoch = deadline.time_since_epoch();
-    const uint64_t nanosecondsSinceEpoch =
-            std::chrono::duration_cast<std::chrono::nanoseconds>(timeSinceEpoch).count();
-    OptionalTimePoint ret;
-    ret.nanosecondsSinceEpoch(nanosecondsSinceEpoch);
-    return ret;
+    return deadline;
 }
 
 OptionalTimePoint makeTimePoint(const std::optional<Deadline>& deadline) {
@@ -159,18 +162,18 @@ OptionalTimePoint makeTimePoint(const std::optional<Deadline>& deadline) {
 }
 
 static bool isExtensionOperandType(int32_t type) {
-    return static_cast<uint32_t>(type) > static_cast<uint32_t>(OperandTypeRange::BASE_MAX);
+    return (static_cast<uint32_t>(type) >> kExtensionTypeBits) != 0;
 }
 
 static bool isExtensionOperationType(ANeuralNetworksOperationType type) {
-    return static_cast<uint32_t>(type) > static_cast<uint32_t>(OperationTypeRange::BASE_MAX);
+    return (static_cast<uint32_t>(type) >> kExtensionTypeBits) != 0;
 }
 
-bool isExtensionOperandType(OperandType type) {
+bool isExtensionOperandType(V1_3::OperandType type) {
     return isExtensionOperandType(static_cast<int32_t>(type));
 }
 
-bool isExtensionOperationType(OperationType type) {
+bool isExtensionOperationType(V1_3::OperationType type) {
     return isExtensionOperationType(static_cast<int32_t>(type));
 }
 
@@ -211,7 +214,7 @@ class OperationValidationContext : public IOperationValidationContext {
     uint32_t getNumInputs() const override;
     OperandType getInputType(uint32_t index) const override;
     Shape getInputShape(uint32_t index) const override;
-    const OperandExtraParams getInputExtraParams(uint32_t index) const override;
+    const Operand::ExtraParams& getInputExtraParams(uint32_t index) const override;
 
     uint32_t getNumOutputs() const override;
     OperandType getOutputType(uint32_t index) const override;
@@ -266,7 +269,7 @@ Shape OperationValidationContext::getInputShape(uint32_t index) const {
             operand->extraParams};
 }
 
-const OperandExtraParams OperationValidationContext::getInputExtraParams(uint32_t index) const {
+const Operand::ExtraParams& OperationValidationContext::getInputExtraParams(uint32_t index) const {
     return getInputOperand(index)->extraParams;
 }
 
@@ -284,15 +287,11 @@ Shape OperationValidationContext::getOutputShape(uint32_t index) const {
 
 #define COUNT(X) (sizeof(X) / sizeof(X[0]))
 
-std::string getOperandTypeName(OperandType type) {
+std::string getOperandTypeName(V1_3::OperandType type) {
     return toString(type);
 }
 
-static std::string getOperationName(uint32_t code) {
-    return getOperationName(static_cast<OperationType>(code));
-}
-
-std::string getOperationName(OperationType type) {
+std::string getOperationName(V1_3::OperationType type) {
     return toString(type);
 }
 
@@ -360,12 +359,14 @@ bool nonExtensionOperandTypeIsScalar(int type) {
 }
 
 uint32_t nonExtensionOperandSizeOfData(OperandType type, const std::vector<uint32_t>& dimensions) {
-    CHECK(!isExtensionOperandType(type)) << "Size of extension operand data is unknown";
-    int n = static_cast<int>(type);
-    uint32_t sizeOfElement = tableLookup(kSizeOfDataType, kSizeOfDataTypeOEM, n);
-    return tableLookup(kScalarDataType, kScalarDataTypeOEM, n)
-                   ? sizeOfElement
-                   : sizeOfTensorData(sizeOfElement, dimensions);
+    const size_t size = getNonExtensionSize(type, dimensions).value();
+    CHECK_LE(size, std::numeric_limits<uint32_t>::max());
+    return size;
+}
+
+uint32_t nonExtensionOperandSizeOfData(V1_3::OperandType type,
+                                       const std::vector<uint32_t>& dimensions) {
+    return nonExtensionOperandSizeOfData(uncheckedConvert(type), dimensions);
 }
 
 // Returns a pair of {false, size} on success, {true, 0} if size overflows uint32_t.
@@ -389,14 +390,19 @@ uint32_t sizeOfTensorData(uint32_t sizeOfElement, const std::vector<uint32_t>& d
     return size;
 }
 
-bool nonExtensionOperandSizeOfDataOverflowsUInt32(hal::OperandType type,
+bool nonExtensionOperandSizeOfDataOverflowsUInt32(OperandType type,
                                                   const std::vector<uint32_t>& dimensions) {
-    CHECK(!isExtensionOperandType(type)) << "Size of extension operand data is unknown";
+    CHECK(!isExtension(type)) << "Size of extension operand data is unknown";
     int n = static_cast<int>(type);
     uint32_t sizeOfElement = tableLookup(kSizeOfDataType, kSizeOfDataTypeOEM, n);
     return tableLookup(kScalarDataType, kScalarDataTypeOEM, n)
                    ? false
                    : sizeOfTensorDataOverflowsUInt32(sizeOfElement, dimensions);
+}
+
+bool nonExtensionOperandSizeOfDataOverflowsUInt32(V1_3::OperandType type,
+                                                  const std::vector<uint32_t>& dimensions) {
+    return nonExtensionOperandSizeOfDataOverflowsUInt32(uncheckedConvert(type), dimensions);
 }
 
 bool sizeOfTensorDataOverflowsUInt32(uint32_t sizeOfElement,
@@ -417,11 +423,21 @@ bool tensorHasUnspecifiedDimensions(OperandType type, const std::vector<uint32_t
                                           dimensions.size());
 }
 
+bool tensorHasUnspecifiedDimensions(V1_3::OperandType type,
+                                    const std::vector<uint32_t>& dimensions) {
+    return tensorHasUnspecifiedDimensions(static_cast<int>(type), dimensions.data(),
+                                          dimensions.size());
+}
+
 bool tensorHasUnspecifiedDimensions(const ANeuralNetworksOperandType* type) {
     return tensorHasUnspecifiedDimensions(type->type, type->dimensions, type->dimensionCount);
 }
 
 bool tensorHasUnspecifiedDimensions(const Operand& operand) {
+    return tensorHasUnspecifiedDimensions(operand.type, operand.dimensions);
+}
+
+bool tensorHasUnspecifiedDimensions(const V1_3::Operand& operand) {
     return tensorHasUnspecifiedDimensions(static_cast<int>(operand.type), operand.dimensions.data(),
                                           operand.dimensions.size());
 }
@@ -490,10 +506,15 @@ void logModelToInfo(const V1_3::Model& model) {
     LOG(INFO) << "extensionNameToPrefix" << toString(model.extensionNameToPrefix);
 }
 
+void logModelToInfo(const Model& model) {
+    LOG(INFO) << "Model start";
+    logModelToInfo(convertToV1_3(model));
+}
+
 bool validateOperandSymmPerChannelQuantParams(
-        const Operand& halOperand, const ANeuralNetworksSymmPerChannelQuantParams& channelQuant,
-        const char* tag) {
-    if (halOperand.type != OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        const V1_3::Operand& halOperand,
+        const ANeuralNetworksSymmPerChannelQuantParams& channelQuant, const char* tag) {
+    if (halOperand.type != V1_3::OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
         return false;
     }
 
@@ -663,17 +684,15 @@ int validateOperationOperandTypes(const std::vector<Operand>& operands, uint32_t
     }
     for (uint32_t i = 0; i < inOperandCount; i++) {
         if (operands[inOperandIndexes[i]].type != inExpectedTypes[i]) {
-            LOG(ERROR) << "Invalid input tensor type "
-                       << toString(operands[inOperandIndexes[i]].type) << " for input " << i
-                       << ", expected " << toString(inExpectedTypes[i]);
+            LOG(ERROR) << "Invalid input tensor type " << operands[inOperandIndexes[i]].type
+                       << " for input " << i << ", expected " << inExpectedTypes[i];
             return ANEURALNETWORKS_BAD_DATA;
         }
     }
     for (uint32_t i = 0; i < outOperandCount; i++) {
         if (operands[outOperandIndexes[i]].type != outExpectedInTypes[i]) {
-            LOG(ERROR) << "Invalid output tensor type "
-                       << toString(operands[outOperandIndexes[i]].type) << " for input " << i
-                       << ", expected " << toString(outExpectedInTypes[i]);
+            LOG(ERROR) << "Invalid output tensor type " << operands[outOperandIndexes[i]].type
+                       << " for input " << i << ", expected " << outExpectedInTypes[i];
             return ANEURALNETWORKS_BAD_DATA;
         }
     }
@@ -684,9 +703,9 @@ int validateOperationOperandTypes(const std::vector<Operand>& operands, uint32_t
 static int validateHalVersion(ANeuralNetworksOperationType opType, HalVersion halVersion,
                               HalVersion minSupportedHalVersion) {
     if (halVersion < minSupportedHalVersion) {
-        LOG(ERROR) << "The given inputs and outputs for operation " << getOperationName(opType)
-                   << " are only supported in " << toString(minSupportedHalVersion)
-                   << " and later (validating using " << toString(halVersion) << ")";
+        LOG(ERROR) << "The given inputs and outputs for operation " << opType
+                   << " are only supported in " << minSupportedHalVersion
+                   << " and later (validating using " << halVersion << ")";
         return ANEURALNETWORKS_BAD_DATA;
     }
     return ANEURALNETWORKS_NO_ERROR;
@@ -695,7 +714,7 @@ static int validateHalVersion(ANeuralNetworksOperationType opType, HalVersion ha
 // Checks if two operands have the same types, ranks (if specified), dimensions
 // (if specified), scales, zeroPoints, and extraParams.
 static bool compatible(const Operand& a, const Operand& b) {
-    NN_RET_CHECK(a.type == b.type) << toString(a.type) << " != " << toString(b.type);
+    NN_RET_CHECK(a.type == b.type) << a.type << " != " << b.type;
     if (a.dimensions.size() != 0 && b.dimensions.size() != 0) {
         NN_RET_CHECK_EQ(a.dimensions.size(), b.dimensions.size()) << "Incompatible dimensions";
         for (uint32_t i = 0, n = a.dimensions.size(); i < n; ++i) {
@@ -706,14 +725,13 @@ static bool compatible(const Operand& a, const Operand& b) {
     }
     NN_RET_CHECK_EQ(a.scale, b.scale);
     NN_RET_CHECK_EQ(a.zeroPoint, b.zeroPoint);
-    NN_RET_CHECK(a.extraParams == b.extraParams)
-            << toString(a.extraParams) << " != " << toString(b.extraParams);
+    NN_RET_CHECK(a.extraParams == b.extraParams) << a.extraParams << " != " << b.extraParams;
     return true;
 }
 
 static bool validateConditionOperand(const Operand& operand) {
     NN_RET_CHECK(operand.type == OperandType::TENSOR_BOOL8)
-            << "Unexpected condition operand type: " << toString(operand.type);
+            << "Unexpected condition operand type: " << operand.type;
     NN_RET_CHECK_EQ(operand.dimensions.size(), 1u) << "Condition operand must be a singleton";
     NN_RET_CHECK_EQ(operand.dimensions[0], 1u) << "Condition operand must be a singleton";
     return true;
@@ -764,8 +782,7 @@ static bool validateIfOperation(uint32_t inputCount, const uint32_t* inputs, uin
 
 static bool validateControlFlowOperandUnknownSize(const SubgraphValidationHelper& helper,
                                                   const Operand& operand) {
-    if (!helper.allowControlFlowOperationWithOperandOfUnknownSize &&
-        !isExtensionOperandType(operand.type)) {
+    if (!helper.allowControlFlowOperationWithOperandOfUnknownSize && !isExtension(operand.type)) {
         NN_RET_CHECK_NE(nonExtensionOperandSizeOfData(operand.type, operand.dimensions), 0u);
     }
     return true;
@@ -847,8 +864,7 @@ static bool validateWhileOperation(uint32_t inputCount, const uint32_t* inputs,
 static inline int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                     const uint32_t* inputIndexes, uint32_t outputCount,
                                     const uint32_t* outputIndexes,
-                                    const std::vector<hal::Operand>& operands,
-                                    HalVersion halVersion) {
+                                    const std::vector<Operand>& operands, HalVersion halVersion) {
     if (opType == ANEURALNETWORKS_IF || opType == ANEURALNETWORKS_WHILE) {
         NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_3));
         LOG(ERROR) << "This validateOperation() overload does not support control flow";
@@ -873,7 +889,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
         if (halVersion < HalVersion::V1_2) {
             LOG(ERROR)
                     << "Extension operations are supported since HAL version 1.2, validating using "
-                    << toString(halVersion);
+                    << halVersion;
             return ANEURALNETWORKS_BAD_DATA;
         }
         // There is no other validation we can do for an extension operation.
@@ -883,7 +899,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
     auto logInvalidInOutNumber = [opType, inputCount, outputCount](int expIn, int expOut) {
         LOG(ERROR) << "Invalid number of input operands (" << inputCount << ", expected " << expIn
                    << ") or output operands (" << outputCount << ", expected " << expOut
-                   << ") for operation " << getOperationName(opType);
+                   << ") for operation " << opType;
     };
 
     switch (opType) {
@@ -916,14 +932,12 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                    OperandType::TENSOR_INT32};
                 outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM_SIGNED};
             } else {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             const auto inputRank = operands[inputIndexes[0]].dimensions.size();
             if (inputRank > 4) {
-                LOG(ERROR) << "Unsupported input tensor rank for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor rank for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
@@ -934,7 +948,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             if ((inputCount != 3 && inputCount != 2) || outputCount != 1) {
                 LOG(ERROR) << "Invalid number of input operands (" << inputCount
                            << ", expected 3 or 2) or output operands (" << outputCount
-                           << ", expected 1) for operation " << getOperationName(opType);
+                           << ", expected 1) for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             auto inputType = operands[inputIndexes[0]].type;
@@ -957,8 +971,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM_SIGNED, OperandType::INT32};
                 outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM_SIGNED};
             } else {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             if (inputCount == 3) {
@@ -975,7 +988,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             if ((inputCount != 3 && inputCount != 2) || outputCount != 1) {
                 LOG(ERROR) << "Invalid number of input operands (" << inputCount
                            << ", expected 3 or 2) or output operands (" << outputCount
-                           << ", expected 1) for operation " << getOperationName(opType);
+                           << ", expected 1) for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             auto inputType = operands[inputIndexes[0]].type;
@@ -998,8 +1011,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM_SIGNED, OperandType::INT32};
                 outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM_SIGNED};
             } else {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             if (inputCount == 3) {
@@ -1023,8 +1035,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 inputType != OperandType::TENSOR_INT32 &&
                 inputType != OperandType::TENSOR_QUANT8_ASYMM &&
                 inputType != OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             std::vector<OperandType> inExpectedTypes = {OperandType::TENSOR_INT32, inputType};
@@ -1051,8 +1062,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             if (inputType != OperandType::TENSOR_FLOAT32 &&
                 inputType != OperandType::TENSOR_INT32 &&
                 inputType != OperandType::TENSOR_QUANT8_ASYMM) {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             std::vector<OperandType> inExpectedTypes = {OperandType::TENSOR_INT32,
@@ -1074,8 +1084,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 inputType != OperandType::TENSOR_FLOAT32 &&
                 inputType != OperandType::TENSOR_INT32 &&
                 inputType != OperandType::TENSOR_QUANT8_ASYMM) {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             auto hashType = operands[inputIndexes[0]].type;
@@ -1097,8 +1106,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                         OperandType::INT32,
                 };
             } else {
-                LOG(ERROR) << "Unsupported hash tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported hash tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             std::vector<OperandType> outExpectedTypes = {OperandType::TENSOR_INT32};
@@ -1117,7 +1125,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                  outputCount != kNumOutputsMergedWithState)) {
                 LOG(ERROR) << "Invalid number of input operands (" << inputCount
                            << ", expected 61) or output operands (" << outputCount
-                           << ", expected 1, 2, 5 or 6) for operation " << getOperationName(opType);
+                           << ", expected 1, 2, 5 or 6) for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
 
@@ -1125,8 +1133,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             auto inputType = operands[inputIndexes[0]].type;
             if (inputType != OperandType::TENSOR_FLOAT32 &&
                 inputType != OperandType::TENSOR_FLOAT16) {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
 
@@ -1162,7 +1169,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             if ((inputCount != 23 && inputCount != 27) || outputCount != 4) {
                 LOG(ERROR) << "Invalid number of input operands (" << inputCount
                            << ", expected 23 or 27) or output operands (" << outputCount
-                           << ", expected 4) for operation " << getOperationName(opType);
+                           << ", expected 4) for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             std::vector<OperandType> inExpectedTypes;
@@ -1170,8 +1177,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             auto inputType = operands[inputIndexes[0]].type;
             if (inputType != OperandType::TENSOR_FLOAT32 &&
                 inputType != OperandType::TENSOR_FLOAT16) {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
 
@@ -1239,8 +1245,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                         OperandType::TENSOR_INT32,
                 };
             } else {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             std::vector<OperandType> outExpectedTypes = {OperandType::TENSOR_INT32};
@@ -1279,8 +1284,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                         OperandType::TENSOR_FLOAT16,
                 };
             } else {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
@@ -1299,8 +1303,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             } else if (inputType == OperandType::TENSOR_FLOAT16) {
                 NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
             } else {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             std::vector<OperandType> inExpectedTypes = {
@@ -1316,7 +1319,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             if ((inputCount != 3 && inputCount != 2) || outputCount != 1) {
                 LOG(ERROR) << "Invalid number of input operands (" << inputCount
                            << ", expected 3 or 2) or output operands (" << outputCount
-                           << ", expected 1) for operation " << getOperationName(opType);
+                           << ", expected 1) for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             auto inputType = operands[inputIndexes[0]].type;
@@ -1349,8 +1352,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 };
                 outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM_SIGNED};
             } else {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             if (inputCount == 3) {
@@ -1367,7 +1369,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             if ((inputCount != 4 && inputCount != 3) || outputCount != 1) {
                 LOG(ERROR) << "Invalid number of input operands (" << inputCount
                            << ", expected 4 or 3) or output operands (" << outputCount
-                           << ", expected 1) for operation " << getOperationName(opType);
+                           << ", expected 1) for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             auto inputType = operands[inputIndexes[0]].type;
@@ -1407,8 +1409,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 };
                 outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM_SIGNED};
             } else {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             if (inputCount == 4) {
@@ -1462,14 +1463,12 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 };
                 outExpectedTypes = {inputType};
             } else {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             const auto inputRank = operands[inputIndexes[0]].dimensions.size();
             if (inputRank > 4) {
-                LOG(ERROR) << "Unsupported input tensor rank for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor rank for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
@@ -1514,14 +1513,12 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 };  // TODO(b/116699425): Make it UINT8.
                 outExpectedTypes = {inputType};
             } else {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             const auto inputRank = operands[inputIndexes[0]].dimensions.size();
             if (inputRank > 4) {
-                LOG(ERROR) << "Unsupported input tensor rank for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor rank for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
@@ -1559,7 +1556,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 outExpectedTypes = {inputType};  // Only identity CAST is supported.
                 NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_3));
             } else {
-                LOG(ERROR) << "Unsupported data type for operation " << getOperationName(opType);
+                LOG(ERROR) << "Unsupported data type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             // Validate that output shape is equal to input shape if dimensions
@@ -1586,8 +1583,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             }
             const auto inputRank = operands[inputIndexes[0]].dimensions.size();
             if (inputRank > 4) {
-                LOG(ERROR) << "Unsupported input tensor rank for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor rank for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             auto inputType = operands[inputIndexes[0]].type;
@@ -1600,8 +1596,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
                 NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_3));
             } else {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             std::vector<OperandType> inExpectedTypes = {inputType, OperandType::TENSOR_INT32,
@@ -1628,8 +1623,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 inExpectedTypes = {inputType, OperandType::INT32};
                 outExpectedTypes = {OperandType::TENSOR_INT32};
             } else {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
@@ -1653,8 +1647,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 inExpectedTypes = {inputType, OperandType::INT32};
                 outExpectedTypes = {inputType};
             } else {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
@@ -1669,7 +1662,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
         case ANEURALNETWORKS_SPLIT: {
             if (inputCount != 3) {
                 LOG(ERROR) << "Invalid number of input operands (" << inputCount << ", expected 3)"
-                           << getOperationName(opType);
+                           << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             auto inputType = operands[inputIndexes[0]].type;
@@ -1678,8 +1671,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 inputType != OperandType::TENSOR_INT32 &&
                 inputType != OperandType::TENSOR_QUANT8_ASYMM &&
                 inputType != OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
@@ -1711,8 +1703,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 inExpectedTypes = {inputType, inputType};
                 outExpectedTypes = {inputType};
             } else {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
@@ -1728,7 +1719,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             if ((inputCount != 12 && inputCount != 9) || outputCount != 1) {
                 LOG(ERROR) << "Invalid number of input operands (" << inputCount
                            << ", expected 12 or 9) or output operands (" << outputCount
-                           << ", expected 1) for operation " << getOperationName(opType);
+                           << ", expected 1) for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             auto inputType = operands[inputIndexes[0]].type;
@@ -1751,15 +1742,16 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                        inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
                 if (filterType != inputType &&
                     filterType != OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
-                    LOG(ERROR) << "Unsupported filter tensor type for operation "
-                               << getOperationName(opType);
+                    LOG(ERROR) << "Unsupported filter tensor type for operation " << opType;
                     return ANEURALNETWORKS_BAD_DATA;
                 }
 
                 if (filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL &&
-                    operands[inputIndexes[1]].extraParams.channelQuant().channelDim != 0) {
+                    std::get<Operand::SymmPerChannelQuantParams>(
+                            operands[inputIndexes[1]].extraParams)
+                                    .channelDim != 0) {
                     LOG(ERROR) << "Unsupported filter tensor channel dimension for operation "
-                               << getOperationName(opType);
+                               << opType;
                     return ANEURALNETWORKS_BAD_DATA;
                 }
 
@@ -1769,8 +1761,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                         OperandType::INT32, OperandType::INT32};
                 outExpectedTypes = {inputType};
             } else {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
 
@@ -1805,8 +1796,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 inExpectedTypes = {inputType, OperandType::TENSOR_INT32};
                 outExpectedTypes = {inputType};
             } else {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
@@ -1831,8 +1821,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 inExpectedTypes = {inputType, inputType};
                 outExpectedTypes = {inputType};
             } else {
-                LOG(ERROR) << "Unsupported input tensor type for operation "
-                           << getOperationName(opType);
+                LOG(ERROR) << "Unsupported input tensor type for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
@@ -1864,7 +1853,7 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                             static_cast<OperationType>(opType));
             if (operationRegistration == nullptr) {
                 if (0 <= opType && opType < kNumberOfOperationTypes) {
-                    LOG(ERROR) << getOperationName(opType) << " not registered";
+                    LOG(ERROR) << opType << " not registered";
                 } else {
                     LOG(ERROR) << "Operation type " << opType << " out of the range [0, "
                                << kNumberOfOperationTypes << ")";
@@ -1872,14 +1861,14 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 return ANEURALNETWORKS_UNEXPECTED_NULL;
             }
             if (operationRegistration->validate == nullptr) {
-                LOG(ERROR) << "Incomplete operation registration: " << getOperationName(opType);
+                LOG(ERROR) << "Incomplete operation registration: " << opType;
                 return ANEURALNETWORKS_UNEXPECTED_NULL;
             }
             OperationValidationContext context(operationRegistration->name, inputCount,
                                                inputIndexes, outputCount, outputIndexes,
                                                operands.data(), halVersion);
             if (!operationRegistration->validate(&context)) {
-                LOG(ERROR) << "Validation failed for operation " << getOperationName(opType);
+                LOG(ERROR) << "Validation failed for operation " << opType;
                 return ANEURALNETWORKS_BAD_DATA;
             }
             return ANEURALNETWORKS_NO_ERROR;
@@ -1943,10 +1932,26 @@ int convertErrorStatusToResultCode(ErrorStatus status) {
             return ANEURALNETWORKS_RESOURCE_EXHAUSTED_TRANSIENT;
         case ErrorStatus::RESOURCE_EXHAUSTED_PERSISTENT:
             return ANEURALNETWORKS_RESOURCE_EXHAUSTED_PERSISTENT;
+        case ErrorStatus::DEAD_OBJECT:
+            return ANEURALNETWORKS_DEAD_OBJECT;
     }
-    LOG(ERROR) << "Unknown ErrorStatus " << toString(status)
-               << " mapped to ANEURALNETWORKS_OP_FAILED";
+    LOG(ERROR) << "Unknown ErrorStatus " << status << " mapped to ANEURALNETWORKS_OP_FAILED";
     return ANEURALNETWORKS_OP_FAILED;
+}
+
+V1_3::ErrorStatus convertResultCodeToHalErrorStatus(int resultCode) {
+    return convertToV1_3(convertResultCodeToErrorStatus(resultCode));
+}
+
+int convertErrorStatusToResultCode(V1_3::ErrorStatus status) {
+    return convertErrorStatusToResultCode(uncheckedConvert(status));
+}
+
+std::tuple<int, std::vector<OutputShape>, Timing> getExecutionResult(
+        V1_3::ErrorStatus status, const hardware::hidl_vec<V1_2::OutputShape>& outputShapes,
+        const V1_2::Timing& timing) {
+    return getExecutionResult(uncheckedConvert(status), uncheckedConvert(outputShapes),
+                              uncheckedConvert(timing));
 }
 
 std::tuple<int, std::vector<OutputShape>, Timing> getExecutionResult(
@@ -1966,42 +1971,22 @@ std::tuple<int, std::vector<OutputShape>, Timing> getExecutionResult(
     return {n, std::move(outputShapes), timing};
 }
 
-std::optional<std::vector<uint32_t>> combineDimensions(const std::vector<uint32_t>& lhs,
-                                                       const std::vector<uint32_t>& rhs) {
-    if (rhs.empty()) return lhs;
-    if (lhs.empty()) return rhs;
-    if (lhs.size() != rhs.size()) {
-        LOG(ERROR) << "Incompatible ranks: " << toString(lhs) << " and " << toString(rhs);
-        return std::nullopt;
-    }
-    std::vector<uint32_t> combined = lhs;
-    for (uint32_t i = 0; i < lhs.size(); i++) {
-        if (lhs[i] == 0) {
-            combined[i] = rhs[i];
-        } else if (rhs[i] != 0 && lhs[i] != rhs[i]) {
-            LOG(ERROR) << "Incompatible dimensions: " << toString(lhs) << " and " << toString(rhs);
-            return std::nullopt;
-        }
-    }
-    return combined;
-}
-
 // Capabilities::operandPerformance utilities.
 // The field Capabilities::operandPerformance is a vector sorted by the field
 // Capabilities::OperandPerformance::type.
 
 template <HalVersion version>
-hidl_vec<VersionedOperandPerformance<version>> nonExtensionOperandPerformance(
-        PerformanceInfo perf) {
+hardware::hidl_vec<VersionedOperandPerformance<version>> nonExtensionOperandPerformance(
+        V1_0::PerformanceInfo perf) {
     using OpPerf = VersionedOperandPerformance<version>;
 
     // Note: range presents enumerators in declaration order, not in numerical order.
-    static constexpr hidl_enum_range<VersionedOperandType<version>> kOperandTypeRange;
+    static constexpr hardware::hidl_enum_range<VersionedOperandType<version>> kOperandTypeRange;
 
     std::vector<OpPerf> ret;
     ret.reserve(kOperandTypeRange.end() - kOperandTypeRange.begin());
     for (VersionedOperandType<version> type : kOperandTypeRange) {
-        if (static_cast<OperandType>(type) != OperandType::SUBGRAPH) {
+        if (static_cast<V1_3::OperandType>(type) != V1_3::OperandType::SUBGRAPH) {
             ret.push_back(OpPerf{type, perf});
         }
     }
@@ -2011,14 +1996,14 @@ hidl_vec<VersionedOperandPerformance<version>> nonExtensionOperandPerformance(
     return ret;
 }
 
-template hal::hidl_vec<V1_2::Capabilities::OperandPerformance>
-nonExtensionOperandPerformance<HalVersion::V1_2>(PerformanceInfo perf);
-template hal::hidl_vec<V1_3::Capabilities::OperandPerformance>
-nonExtensionOperandPerformance<HalVersion::V1_3>(PerformanceInfo perf);
+template hardware::hidl_vec<V1_2::Capabilities::OperandPerformance>
+nonExtensionOperandPerformance<HalVersion::V1_2>(V1_0::PerformanceInfo perf);
+template hardware::hidl_vec<V1_3::Capabilities::OperandPerformance>
+nonExtensionOperandPerformance<HalVersion::V1_3>(V1_0::PerformanceInfo perf);
 
 template <HalVersion version>
-void update(hal::hidl_vec<VersionedOperandPerformance<version>>* operandPerformance,
-            VersionedOperandType<version> type, hal::PerformanceInfo perf) {
+void update(hardware::hidl_vec<VersionedOperandPerformance<version>>* operandPerformance,
+            VersionedOperandType<version> type, V1_0::PerformanceInfo perf) {
     CHECK(operandPerformance != nullptr);
     const auto it =
             std::lower_bound(operandPerformance->begin(), operandPerformance->end(), type,
@@ -2029,23 +2014,24 @@ void update(hal::hidl_vec<VersionedOperandPerformance<version>>* operandPerforma
     it->info = perf;
 }
 
-void update(hidl_vec<V1_2::Capabilities::OperandPerformance>* operandPerformance,
-            V1_2::OperandType type, PerformanceInfo perf) {
+void update(hardware::hidl_vec<V1_2::Capabilities::OperandPerformance>* operandPerformance,
+            V1_2::OperandType type, V1_0::PerformanceInfo perf) {
     update<HalVersion::V1_2>(operandPerformance, type, perf);
 }
-void update(hidl_vec<V1_3::Capabilities::OperandPerformance>* operandPerformance,
-            V1_3::OperandType type, PerformanceInfo perf) {
+void update(hardware::hidl_vec<V1_3::Capabilities::OperandPerformance>* operandPerformance,
+            V1_3::OperandType type, V1_0::PerformanceInfo perf) {
     update<HalVersion::V1_3>(operandPerformance, type, perf);
 }
 
 template <HalVersion version>
-PerformanceInfo lookup(const hidl_vec<VersionedOperandPerformance<version>>& operandPerformance,
-                       VersionedOperandType<version> type) {
+V1_0::PerformanceInfo lookup(
+        const hardware::hidl_vec<VersionedOperandPerformance<version>>& operandPerformance,
+        VersionedOperandType<version> type) {
     const auto it = std::lower_bound(operandPerformance.begin(), operandPerformance.end(), type,
                                      [](const VersionedOperandPerformance<version>& perf,
                                         VersionedOperandType<version> type) {
-                                         return static_cast<OperandType>(perf.type) <
-                                                static_cast<OperandType>(type);
+                                         return static_cast<V1_3::OperandType>(perf.type) <
+                                                static_cast<V1_3::OperandType>(type);
                                      });
     if (it == operandPerformance.end()) {
         LOG(WARNING) << "No PerformanceInfo for " << toString(type);
@@ -2055,12 +2041,14 @@ PerformanceInfo lookup(const hidl_vec<VersionedOperandPerformance<version>>& ope
     }
 }
 
-PerformanceInfo lookup(const hidl_vec<V1_2::Capabilities::OperandPerformance>& operandPerformance,
-                       V1_2::OperandType type) {
+V1_0::PerformanceInfo lookup(
+        const hardware::hidl_vec<V1_2::Capabilities::OperandPerformance>& operandPerformance,
+        V1_2::OperandType type) {
     return lookup<HalVersion::V1_2>(operandPerformance, type);
 }
-PerformanceInfo lookup(const hidl_vec<V1_3::Capabilities::OperandPerformance>& operandPerformance,
-                       V1_3::OperandType type) {
+V1_0::PerformanceInfo lookup(
+        const hardware::hidl_vec<V1_3::Capabilities::OperandPerformance>& operandPerformance,
+        V1_3::OperandType type) {
     CHECK(type != V1_3::OperandType::SUBGRAPH)
             << "Use Capabilities::ifPerformance or Capabilities::whilePerformance";
     return lookup<HalVersion::V1_3>(operandPerformance, type);
@@ -2070,16 +2058,16 @@ PerformanceInfo lookup(const hidl_vec<V1_3::Capabilities::OperandPerformance>& o
 
 // In Android P, most data types are treated as having the same performance as TENSOR_QUANT8_ASYMM.
 // This array must be in sorted order.
-static const OperandType kQuantized8PerformanceConsistentWithP[] = {
-        OperandType::INT32, OperandType::UINT32, OperandType::TENSOR_INT32, OperandType::OEM,
-        OperandType::TENSOR_OEM_BYTE};
+static const V1_3::OperandType kQuantized8PerformanceConsistentWithP[] = {
+        V1_3::OperandType::INT32, V1_3::OperandType::UINT32, V1_3::OperandType::TENSOR_INT32,
+        V1_3::OperandType::OEM, V1_3::OperandType::TENSOR_OEM_BYTE};
 
 static bool isQuantized8PerformanceConsistentWithP(const V1_2::Capabilities& capabilities) {
-    const PerformanceInfo quantized8Performance =
+    const V1_0::PerformanceInfo quantized8Performance =
             lookup(capabilities.operandPerformance, V1_2::OperandType::TENSOR_QUANT8_ASYMM);
     return std::all_of(std::begin(kQuantized8PerformanceConsistentWithP),
                        std::end(kQuantized8PerformanceConsistentWithP),
-                       [quantized8Performance, &capabilities](OperandType type) {
+                       [quantized8Performance, &capabilities](V1_3::OperandType type) {
                            return quantized8Performance ==
                                   lookup(capabilities.operandPerformance,
                                          static_cast<V1_2::OperandType>(type));
@@ -2087,26 +2075,26 @@ static bool isQuantized8PerformanceConsistentWithP(const V1_2::Capabilities& cap
 }
 
 static bool isQuantized8PerformanceConsistentWithP(const V1_3::Capabilities& capabilities) {
-    const PerformanceInfo quantized8Performance =
-            lookup(capabilities.operandPerformance, OperandType::TENSOR_QUANT8_ASYMM);
+    const V1_0::PerformanceInfo quantized8Performance =
+            lookup(capabilities.operandPerformance, V1_3::OperandType::TENSOR_QUANT8_ASYMM);
     return std::all_of(std::begin(kQuantized8PerformanceConsistentWithP),
                        std::end(kQuantized8PerformanceConsistentWithP),
-                       [quantized8Performance, &capabilities](OperandType type) {
+                       [quantized8Performance, &capabilities](V1_3::OperandType type) {
                            return quantized8Performance ==
                                   lookup(capabilities.operandPerformance, type);
                        });
 }
 
-static hidl_vec<V1_2::Capabilities::OperandPerformance> makeQuantized8PerformanceConsistentWithP(
-        PerformanceInfo quantized8Performance) {
-    hidl_vec<V1_2::Capabilities::OperandPerformance> ret(
+static hardware::hidl_vec<V1_2::Capabilities::OperandPerformance>
+makeQuantized8PerformanceConsistentWithP(V1_0::PerformanceInfo quantized8Performance) {
+    hardware::hidl_vec<V1_2::Capabilities::OperandPerformance> ret(
             std::size(kQuantized8PerformanceConsistentWithP));
-    std::transform(
-            std::begin(kQuantized8PerformanceConsistentWithP),
-            std::end(kQuantized8PerformanceConsistentWithP), ret.begin(),
-            [quantized8Performance](OperandType type) -> V1_2::Capabilities::OperandPerformance {
-                return {static_cast<V1_2::OperandType>(type), quantized8Performance};
-            });
+    std::transform(std::begin(kQuantized8PerformanceConsistentWithP),
+                   std::end(kQuantized8PerformanceConsistentWithP), ret.begin(),
+                   [quantized8Performance](
+                           V1_3::OperandType type) -> V1_2::Capabilities::OperandPerformance {
+                       return {static_cast<V1_2::OperandType>(type), quantized8Performance};
+                   });
     return ret;
 }
 
@@ -2119,9 +2107,9 @@ bool compliantWithV1_0(const V1_1::Capabilities& capabilities) {
 }
 
 bool compliantWithV1_0(const V1_2::Capabilities& capabilities) {
-    const PerformanceInfo perfTensorFloat32 =
+    const V1_0::PerformanceInfo perfTensorFloat32 =
             lookup(capabilities.operandPerformance, V1_2::OperandType::TENSOR_FLOAT32);
-    const PerformanceInfo perfFloat32 =
+    const V1_0::PerformanceInfo perfFloat32 =
             lookup(capabilities.operandPerformance, V1_2::OperandType::FLOAT32);
     if (perfTensorFloat32 != perfFloat32 ||
         perfTensorFloat32 != capabilities.relaxedFloat32toFloat16PerformanceTensor ||
@@ -2133,10 +2121,10 @@ bool compliantWithV1_0(const V1_2::Capabilities& capabilities) {
 }
 
 bool compliantWithV1_0(const V1_3::Capabilities& capabilities) {
-    const PerformanceInfo perfTensorFloat32 =
-            lookup(capabilities.operandPerformance, OperandType::TENSOR_FLOAT32);
-    const PerformanceInfo perfFloat32 =
-            lookup(capabilities.operandPerformance, OperandType::FLOAT32);
+    const V1_0::PerformanceInfo perfTensorFloat32 =
+            lookup(capabilities.operandPerformance, V1_3::OperandType::TENSOR_FLOAT32);
+    const V1_0::PerformanceInfo perfFloat32 =
+            lookup(capabilities.operandPerformance, V1_3::OperandType::FLOAT32);
     if (perfTensorFloat32 != perfFloat32 ||
         perfTensorFloat32 != capabilities.relaxedFloat32toFloat16PerformanceTensor ||
         perfFloat32 != capabilities.relaxedFloat32toFloat16PerformanceScalar) {
@@ -2168,8 +2156,8 @@ bool compliantWithV1_1(const V1_2::Capabilities& capabilities) {
 bool compliantWithV1_1(const V1_3::Capabilities& capabilities) {
     if ((capabilities.relaxedFloat32toFloat16PerformanceTensor !=
          capabilities.relaxedFloat32toFloat16PerformanceScalar) ||
-        (lookup(capabilities.operandPerformance, OperandType::TENSOR_FLOAT32) !=
-         lookup(capabilities.operandPerformance, OperandType::FLOAT32))) {
+        (lookup(capabilities.operandPerformance, V1_3::OperandType::TENSOR_FLOAT32) !=
+         lookup(capabilities.operandPerformance, V1_3::OperandType::FLOAT32))) {
         return false;
     }
 
@@ -2323,9 +2311,9 @@ V1_0::Capabilities convertToV1_0(const V1_3::Capabilities& capabilities) {
                    << " from V1_3::Capabilities to V1_0::Capabilities";
     }
     return {.float32Performance =
-                    lookup(capabilities.operandPerformance, OperandType::TENSOR_FLOAT32),
-            .quantized8Performance =
-                    lookup(capabilities.operandPerformance, OperandType::TENSOR_QUANT8_ASYMM)};
+                    lookup(capabilities.operandPerformance, V1_3::OperandType::TENSOR_FLOAT32),
+            .quantized8Performance = lookup(capabilities.operandPerformance,
+                                            V1_3::OperandType::TENSOR_QUANT8_ASYMM)};
 }
 
 V1_1::Capabilities convertToV1_1(const V1_0::Capabilities& capabilities) {
@@ -2357,9 +2345,9 @@ V1_1::Capabilities convertToV1_1(const V1_3::Capabilities& capabilities) {
                    << " from V1_3::Capabilities to V1_1::Capabilities";
     }
     return {.float32Performance =
-                    lookup(capabilities.operandPerformance, OperandType::TENSOR_FLOAT32),
+                    lookup(capabilities.operandPerformance, V1_3::OperandType::TENSOR_FLOAT32),
             .quantized8Performance =
-                    lookup(capabilities.operandPerformance, OperandType::TENSOR_QUANT8_ASYMM),
+                    lookup(capabilities.operandPerformance, V1_3::OperandType::TENSOR_QUANT8_ASYMM),
             .relaxedFloat32toFloat16Performance =
                     capabilities.relaxedFloat32toFloat16PerformanceTensor};
 }
@@ -2415,7 +2403,7 @@ V1_2::Capabilities convertToV1_2(const V1_3::Capabilities& capabilities) {
                     capabilities.relaxedFloat32toFloat16PerformanceTensor,
     };
     const auto& inputOpPerf = capabilities.operandPerformance;
-    hidl_vec<V1_3::Capabilities::OperandPerformance> opPerfSupported;
+    hardware::hidl_vec<V1_3::Capabilities::OperandPerformance> opPerfSupported;
     opPerfSupported.resize(inputOpPerf.size());
     auto last =
             std::copy_if(inputOpPerf.begin(), inputOpPerf.end(), opPerfSupported.begin(),
@@ -2477,17 +2465,18 @@ static V1_1::Operation convertToV1_1(const V1_0::Operation& operation) {
             .outputs = operation.outputs};
 }
 
-static hidl_vec<V1_0::Operation> uncheckedConvertToV1_0(
-        const hidl_vec<V1_1::Operation>& operations) {
-    hidl_vec<V1_0::Operation> result(operations.size());
+static hardware::hidl_vec<V1_0::Operation> uncheckedConvertToV1_0(
+        const hardware::hidl_vec<V1_1::Operation>& operations) {
+    hardware::hidl_vec<V1_0::Operation> result(operations.size());
     std::transform(
             operations.begin(), operations.end(), result.begin(),
             [](const V1_1::Operation& operation) { return uncheckedConvertToV1_0(operation); });
     return result;
 }
 
-static hidl_vec<V1_1::Operation> convertToV1_1(const hidl_vec<V1_0::Operation>& operations) {
-    hidl_vec<V1_1::Operation> result(operations.size());
+static hardware::hidl_vec<V1_1::Operation> convertToV1_1(
+        const hardware::hidl_vec<V1_0::Operation>& operations) {
+    hardware::hidl_vec<V1_1::Operation> result(operations.size());
     std::transform(operations.begin(), operations.end(), result.begin(),
                    [](const V1_0::Operation& operation) { return convertToV1_1(operation); });
     return result;
@@ -2513,13 +2502,15 @@ static bool compliantWith(HalVersion version, const V1_3::Model& model,
                           std::set<uint32_t>* noncompliantOperations) {
     // A boolean vector indicating whether each pool is compliant with the target HAL version.
     std::vector<bool> isPoolCompliant(model.pools.size(), false);
-    std::transform(model.pools.begin(), model.pools.end(), isPoolCompliant.begin(),
-                   [version](const hidl_memory& pool) { return validatePool(pool, version); });
+    std::transform(
+            model.pools.begin(), model.pools.end(), isPoolCompliant.begin(),
+            [version](const hardware::hidl_memory& pool) { return validatePool(pool, version); });
 
     // A boolean vector indicating whether each operand is compliant with the target HAL version.
     std::vector<bool> isOperandCompliant(model.main.operands.size(), false);
     std::transform(model.main.operands.begin(), model.main.operands.end(),
-                   isOperandCompliant.begin(), [&isPoolCompliant, version](const Operand& op) {
+                   isOperandCompliant.begin(),
+                   [&isPoolCompliant, version](const V1_3::Operand& op) {
                        bool is_operand_compliant = false;
                        switch (version) {
                            case HalVersion::UNKNOWN:
@@ -2541,22 +2532,24 @@ static bool compliantWith(HalVersion version, const V1_3::Model& model,
                                break;
                        }
                        return is_operand_compliant &&
-                              !(op.lifetime == OperandLifeTime::CONSTANT_REFERENCE &&
+                              !(op.lifetime == V1_3::OperandLifeTime::CONSTANT_REFERENCE &&
                                 !isPoolCompliant[op.location.poolIndex]);
                    });
 
-    auto allOperandsCompliant = [&isOperandCompliant](const hidl_vec<uint32_t>& indices) {
+    auto allOperandsCompliant = [&isOperandCompliant](const hardware::hidl_vec<uint32_t>& indices) {
         return std::all_of(
                 indices.begin(), indices.end(),
                 [&isOperandCompliant](const uint32_t ind) { return isOperandCompliant[ind]; });
     };
 
-    auto localValidateOperation = [&model, version, &allOperandsCompliant](const Operation& op) {
+    auto localValidateOperation = [&model, version,
+                                   &allOperandsCompliant](const V1_3::Operation& op) {
         if (!allOperandsCompliant(op.inputs) || !allOperandsCompliant(op.outputs)) return false;
-        int error = validateOperation(
-                static_cast<int32_t>(op.type), op.inputs.size(),
-                op.inputs.size() > 0 ? op.inputs.data() : nullptr, op.outputs.size(),
-                op.outputs.size() > 0 ? op.outputs.data() : nullptr, model.main.operands, version);
+        int error = validateOperation(static_cast<int32_t>(op.type), op.inputs.size(),
+                                      op.inputs.size() > 0 ? op.inputs.data() : nullptr,
+                                      op.outputs.size(),
+                                      op.outputs.size() > 0 ? op.outputs.data() : nullptr,
+                                      uncheckedConvert(model.main.operands), version);
         return error == ANEURALNETWORKS_NO_ERROR;
     };
 
@@ -2586,15 +2579,17 @@ bool compliantWithV1_0(const V1_1::Model& model) {
     // V1_0::Model because all 1.0 drivers require strict calculation by default
     // in the P NN runtime. Even if fp16 calculations are allowed, they can
     // still be computed by a strict fp32 driver.
-    return std::all_of(
-            model.operations.begin(), model.operations.end(), [&model](const V1_1::Operation& op) {
-                int error = validateOperation(static_cast<int32_t>(op.type), op.inputs.size(),
-                                              op.inputs.size() > 0 ? op.inputs.data() : nullptr,
-                                              op.outputs.size(),
-                                              op.outputs.size() > 0 ? op.outputs.data() : nullptr,
-                                              convertToV1_3(model.operands), HalVersion::V1_0);
-                return error == ANEURALNETWORKS_NO_ERROR;
-            });
+    auto operands = uncheckedConvert(convertToV1_3(model.operands));
+    return std::all_of(model.operations.begin(), model.operations.end(),
+                       [&operands](const V1_1::Operation& op) {
+                           int error = validateOperation(
+                                   static_cast<int32_t>(op.type), op.inputs.size(),
+                                   op.inputs.size() > 0 ? op.inputs.data() : nullptr,
+                                   op.outputs.size(),
+                                   op.outputs.size() > 0 ? op.outputs.data() : nullptr, operands,
+                                   HalVersion::V1_0);
+                           return error == ANEURALNETWORKS_NO_ERROR;
+                       });
 }
 
 bool compliantWithV1_0(const V1_2::Model& model, std::set<uint32_t>* noncompliantOperations) {
@@ -2697,81 +2692,86 @@ static V1_3::Operation convertToV1_3(const V1_2::Operation& operation) {
             .outputs = operation.outputs};
 }
 
-static hidl_vec<V1_0::Operation> uncheckedConvertToV1_0(
-        const hidl_vec<V1_3::Operation>& operations) {
-    hidl_vec<V1_0::Operation> result(operations.size());
+static hardware::hidl_vec<V1_0::Operation> uncheckedConvertToV1_0(
+        const hardware::hidl_vec<V1_3::Operation>& operations) {
+    hardware::hidl_vec<V1_0::Operation> result(operations.size());
     std::transform(
             operations.begin(), operations.end(), result.begin(),
             [](const V1_3::Operation& operation) { return uncheckedConvertToV1_0(operation); });
     return result;
 }
 
-static hidl_vec<V1_0::Operation> uncheckedConvertToV1_0(
-        const hidl_vec<V1_2::Operation>& operations) {
-    hidl_vec<V1_0::Operation> result(operations.size());
+static hardware::hidl_vec<V1_0::Operation> uncheckedConvertToV1_0(
+        const hardware::hidl_vec<V1_2::Operation>& operations) {
+    hardware::hidl_vec<V1_0::Operation> result(operations.size());
     std::transform(
             operations.begin(), operations.end(), result.begin(),
             [](const V1_2::Operation& operation) { return uncheckedConvertToV1_0(operation); });
     return result;
 }
 
-static hidl_vec<V1_2::Operation> uncheckedConvertToV1_2(
-        const hidl_vec<V1_3::Operation>& operations) {
-    hidl_vec<V1_2::Operation> result(operations.size());
+static hardware::hidl_vec<V1_2::Operation> uncheckedConvertToV1_2(
+        const hardware::hidl_vec<V1_3::Operation>& operations) {
+    hardware::hidl_vec<V1_2::Operation> result(operations.size());
     std::transform(
             operations.begin(), operations.end(), result.begin(),
             [](const V1_3::Operation& operation) { return uncheckedConvertToV1_2(operation); });
     return result;
 }
 
-static hidl_vec<V1_1::Operation> uncheckedConvertToV1_1(
-        const hidl_vec<V1_2::Operation>& operations) {
-    hidl_vec<V1_1::Operation> result(operations.size());
+static hardware::hidl_vec<V1_1::Operation> uncheckedConvertToV1_1(
+        const hardware::hidl_vec<V1_2::Operation>& operations) {
+    hardware::hidl_vec<V1_1::Operation> result(operations.size());
     std::transform(
             operations.begin(), operations.end(), result.begin(),
             [](const V1_2::Operation& operation) { return uncheckedConvertToV1_1(operation); });
     return result;
 }
 
-static hidl_vec<V1_1::Operation> uncheckedConvertToV1_1(
-        const hidl_vec<V1_3::Operation>& operations) {
-    hidl_vec<V1_1::Operation> result(operations.size());
+static hardware::hidl_vec<V1_1::Operation> uncheckedConvertToV1_1(
+        const hardware::hidl_vec<V1_3::Operation>& operations) {
+    hardware::hidl_vec<V1_1::Operation> result(operations.size());
     std::transform(
             operations.begin(), operations.end(), result.begin(),
             [](const V1_3::Operation& operation) { return uncheckedConvertToV1_1(operation); });
     return result;
 }
 
-static hidl_vec<V1_2::Operation> convertToV1_2(const hidl_vec<V1_0::Operation>& operations) {
-    hidl_vec<V1_2::Operation> result(operations.size());
+static hardware::hidl_vec<V1_2::Operation> convertToV1_2(
+        const hardware::hidl_vec<V1_0::Operation>& operations) {
+    hardware::hidl_vec<V1_2::Operation> result(operations.size());
     std::transform(operations.begin(), operations.end(), result.begin(),
                    [](const V1_0::Operation& operation) { return convertToV1_2(operation); });
     return result;
 }
 
-static hidl_vec<V1_2::Operation> convertToV1_2(const hidl_vec<V1_1::Operation>& operations) {
-    hidl_vec<V1_2::Operation> result(operations.size());
+static hardware::hidl_vec<V1_2::Operation> convertToV1_2(
+        const hardware::hidl_vec<V1_1::Operation>& operations) {
+    hardware::hidl_vec<V1_2::Operation> result(operations.size());
     std::transform(operations.begin(), operations.end(), result.begin(),
                    [](const V1_1::Operation& operation) { return convertToV1_2(operation); });
     return result;
 }
 
-static hidl_vec<V1_3::Operation> convertToV1_3(const hidl_vec<V1_0::Operation>& operations) {
-    hidl_vec<V1_3::Operation> result(operations.size());
+static hardware::hidl_vec<V1_3::Operation> convertToV1_3(
+        const hardware::hidl_vec<V1_0::Operation>& operations) {
+    hardware::hidl_vec<V1_3::Operation> result(operations.size());
     std::transform(operations.begin(), operations.end(), result.begin(),
                    [](const V1_0::Operation& operation) { return convertToV1_3(operation); });
     return result;
 }
 
-static hidl_vec<V1_3::Operation> convertToV1_3(const hidl_vec<V1_1::Operation>& operations) {
-    hidl_vec<V1_3::Operation> result(operations.size());
+static hardware::hidl_vec<V1_3::Operation> convertToV1_3(
+        const hardware::hidl_vec<V1_1::Operation>& operations) {
+    hardware::hidl_vec<V1_3::Operation> result(operations.size());
     std::transform(operations.begin(), operations.end(), result.begin(),
                    [](const V1_1::Operation& operation) { return convertToV1_3(operation); });
     return result;
 }
 
-static hidl_vec<V1_3::Operation> convertToV1_3(const hidl_vec<V1_2::Operation>& operations) {
-    hidl_vec<V1_3::Operation> result(operations.size());
+static hardware::hidl_vec<V1_3::Operation> convertToV1_3(
+        const hardware::hidl_vec<V1_2::Operation>& operations) {
+    hardware::hidl_vec<V1_3::Operation> result(operations.size());
     std::transform(operations.begin(), operations.end(), result.begin(),
                    [](const V1_2::Operation& operation) { return convertToV1_3(operation); });
     return result;
@@ -2817,19 +2817,19 @@ V1_0::OperandType convertToV1_0(const V1_3::OperandType& operandType) {
     return static_cast<V1_0::OperandType>(operandType);
 }
 
-bool compliantWithV1_0(hal::V1_0::OperandLifeTime lifetime) {
+bool compliantWithV1_0(V1_0::OperandLifeTime lifetime) {
     return true;
 }
 
-bool compliantWithV1_0(hal::V1_3::OperandLifeTime lifetime) {
+bool compliantWithV1_0(V1_3::OperandLifeTime lifetime) {
     return lifetime != V1_3::OperandLifeTime::SUBGRAPH;
 }
 
-bool compliantWithV1_3(hal::V1_0::OperandLifeTime lifetime) {
+bool compliantWithV1_3(V1_0::OperandLifeTime lifetime) {
     return true;
 }
 
-bool compliantWithV1_3(hal::V1_3::OperandLifeTime lifetime) {
+bool compliantWithV1_3(V1_3::OperandLifeTime lifetime) {
     return true;
 }
 
@@ -2919,57 +2919,57 @@ V1_3::Operand convertToV1_3(const V1_3::Operand& operand) {
     return operand;
 }
 
-hidl_vec<V1_0::Operand> convertToV1_0(const hidl_vec<V1_0::Operand>& operands) {
+hardware::hidl_vec<V1_0::Operand> convertToV1_0(const hardware::hidl_vec<V1_0::Operand>& operands) {
     return operands;
 }
 
-hidl_vec<V1_0::Operand> convertToV1_0(const hidl_vec<V1_2::Operand>& operands) {
-    hidl_vec<V1_0::Operand> result(operands.size());
+hardware::hidl_vec<V1_0::Operand> convertToV1_0(const hardware::hidl_vec<V1_2::Operand>& operands) {
+    hardware::hidl_vec<V1_0::Operand> result(operands.size());
     std::transform(operands.begin(), operands.end(), result.begin(),
                    [](const V1_2::Operand& operand) { return convertToV1_0(operand); });
     return result;
 }
 
-hidl_vec<V1_0::Operand> convertToV1_0(const hidl_vec<V1_3::Operand>& operands) {
-    hidl_vec<V1_0::Operand> result(operands.size());
+hardware::hidl_vec<V1_0::Operand> convertToV1_0(const hardware::hidl_vec<V1_3::Operand>& operands) {
+    hardware::hidl_vec<V1_0::Operand> result(operands.size());
     std::transform(operands.begin(), operands.end(), result.begin(),
                    [](const V1_3::Operand& operand) { return convertToV1_0(operand); });
     return result;
 }
 
-hidl_vec<V1_2::Operand> convertToV1_2(const hidl_vec<V1_0::Operand>& operands) {
-    hidl_vec<V1_2::Operand> result(operands.size());
+hardware::hidl_vec<V1_2::Operand> convertToV1_2(const hardware::hidl_vec<V1_0::Operand>& operands) {
+    hardware::hidl_vec<V1_2::Operand> result(operands.size());
     std::transform(operands.begin(), operands.end(), result.begin(),
                    [](const V1_0::Operand& operand) { return convertToV1_2(operand); });
     return result;
 }
 
-hidl_vec<V1_2::Operand> convertToV1_2(const hidl_vec<V1_2::Operand>& operands) {
+hardware::hidl_vec<V1_2::Operand> convertToV1_2(const hardware::hidl_vec<V1_2::Operand>& operands) {
     return operands;
 }
 
-hidl_vec<V1_2::Operand> convertToV1_2(const hidl_vec<V1_3::Operand>& operands) {
-    hidl_vec<V1_2::Operand> result(operands.size());
+hardware::hidl_vec<V1_2::Operand> convertToV1_2(const hardware::hidl_vec<V1_3::Operand>& operands) {
+    hardware::hidl_vec<V1_2::Operand> result(operands.size());
     std::transform(operands.begin(), operands.end(), result.begin(),
                    [](const V1_3::Operand& operand) { return convertToV1_2(operand); });
     return result;
 }
 
-hidl_vec<V1_3::Operand> convertToV1_3(const hidl_vec<V1_0::Operand>& operands) {
-    hidl_vec<V1_3::Operand> result(operands.size());
+hardware::hidl_vec<V1_3::Operand> convertToV1_3(const hardware::hidl_vec<V1_0::Operand>& operands) {
+    hardware::hidl_vec<V1_3::Operand> result(operands.size());
     std::transform(operands.begin(), operands.end(), result.begin(),
                    [](const V1_0::Operand& operand) { return convertToV1_3(operand); });
     return result;
 }
 
-hidl_vec<V1_3::Operand> convertToV1_3(const hidl_vec<V1_2::Operand>& operands) {
-    hidl_vec<V1_3::Operand> result(operands.size());
+hardware::hidl_vec<V1_3::Operand> convertToV1_3(const hardware::hidl_vec<V1_2::Operand>& operands) {
+    hardware::hidl_vec<V1_3::Operand> result(operands.size());
     std::transform(operands.begin(), operands.end(), result.begin(),
                    [](const V1_2::Operand& operand) { return convertToV1_3(operand); });
     return result;
 }
 
-hidl_vec<V1_3::Operand> convertToV1_3(const hidl_vec<V1_3::Operand>& operands) {
+hardware::hidl_vec<V1_3::Operand> convertToV1_3(const hardware::hidl_vec<V1_3::Operand>& operands) {
     return operands;
 }
 
@@ -3158,16 +3158,16 @@ bool compliantWithV1_2(const V1_3::Request& request) {
     });
 }
 
-static hidl_memory convertToV1_0(const V1_3::Request::MemoryPool& pool) {
+static hardware::hidl_memory convertToV1_0(const V1_3::Request::MemoryPool& pool) {
     switch (pool.getDiscriminator()) {
         case V1_3::Request::MemoryPool::hidl_discriminator::hidlMemory:
             return pool.hidlMemory();
         case V1_3::Request::MemoryPool::hidl_discriminator::token:
-            return hidl_memory{};
+            return hardware::hidl_memory{};
     }
 }
 
-static V1_3::Request::MemoryPool convertToV1_3(const hidl_memory& pool) {
+static V1_3::Request::MemoryPool convertToV1_3(const hardware::hidl_memory& pool) {
     V1_3::Request::MemoryPool ret;
     ret.hidlMemory(pool);
     return ret;
@@ -3178,7 +3178,7 @@ V1_0::Request convertToV1_0(const V1_0::Request& request) {
 }
 
 static V1_0::Request uncheckedConvertToV1_0(const V1_3::Request& request) {
-    hidl_vec<hidl_memory> pools(request.pools.size());
+    hardware::hidl_vec<hardware::hidl_memory> pools(request.pools.size());
     std::transform(request.pools.begin(), request.pools.end(), pools.begin(),
                    [](const auto& pool) { return convertToV1_0(pool); });
     return {.inputs = request.inputs, .outputs = request.outputs, .pools = std::move(pools)};
@@ -3201,7 +3201,7 @@ V1_0::Request convertToV1_2(const V1_3::Request& request) {
 }
 
 V1_3::Request convertToV1_3(const V1_0::Request& request) {
-    hidl_vec<V1_3::Request::MemoryPool> pools(request.pools.size());
+    hardware::hidl_vec<V1_3::Request::MemoryPool> pools(request.pools.size());
     std::transform(request.pools.begin(), request.pools.end(), pools.begin(),
                    [](const auto& pool) { return convertToV1_3(pool); });
     return {.inputs = request.inputs, .outputs = request.outputs, .pools = std::move(pools)};
@@ -3256,6 +3256,294 @@ uint32_t getProp(const char* str, uint32_t defaultValue) {
     }
 }
 #endif  // NN_DEBUGGABLE
+
+ErrorStatus uncheckedConvert(V1_0::ErrorStatus status) {
+    return nnTryGetValue(convert(status));
+}
+
+ErrorStatus uncheckedConvert(V1_3::ErrorStatus status) {
+    return nnTryGetValue(convert(status));
+}
+
+OperandType uncheckedConvert(V1_3::OperandType operandType) {
+    return nnTryGetValue(convert(operandType));
+}
+
+OperationType uncheckedConvert(V1_3::OperationType operandType) {
+    return nnTryGetValue(convert(operandType));
+}
+
+Operand::LifeTime uncheckedConvert(V1_3::OperandLifeTime lifetime) {
+    return nnTryGetValue(convert(lifetime));
+}
+
+MeasureTiming uncheckedConvert(V1_2::MeasureTiming measure) {
+    return nnTryGetValue(convert(measure));
+}
+
+DataLocation uncheckedConvert(const V1_0::DataLocation& location) {
+    return nnTryGetValue(convert(location));
+}
+
+Operand uncheckedConvert(const V1_3::Operand& operand) {
+    return nnTryGetValue(convert(operand));
+}
+
+Operand::ExtraParams uncheckedConvert(const V1_2::Operand::ExtraParams& params) {
+    return nnTryGetValue(convert(params));
+}
+
+Operand::SymmPerChannelQuantParams uncheckedConvert(const V1_2::SymmPerChannelQuantParams& params) {
+    return nnTryGetValue(convert(params));
+}
+
+Operand::ExtensionParams uncheckedConvert(const hardware::hidl_vec<uint8_t>& params) {
+    return params;
+}
+
+Operation uncheckedConvert(const V1_3::Operation& operation) {
+    return nnTryGetValue(convert(operation));
+}
+
+template <typename CanonicalType, typename HalType>
+static std::vector<CanonicalType> convertVec(const hardware::hidl_vec<HalType>& items) {
+    std::vector<CanonicalType> result(items.size());
+    std::transform(items.begin(), items.end(), result.begin(),
+                   [](const HalType& item) { return uncheckedConvert(item); });
+    return result;
+}
+
+Model uncheckedConvert(const V1_3::Model& model) {
+    return nnTryGetValue(convert(model));
+}
+
+Model::Subgraph uncheckedConvert(const V1_3::Subgraph& subgraph) {
+    return nnTryGetValue(convert(subgraph));
+}
+
+Model::ExtensionNameAndPrefix uncheckedConvert(const V1_2::Model::ExtensionNameAndPrefix& x) {
+    return nnTryGetValue(convert(x));
+}
+
+Request uncheckedConvert(const V1_3::Request& request) {
+    return nnTryGetValue(convert(request));
+}
+
+Request::Argument uncheckedConvert(const V1_0::RequestArgument& requestArgument) {
+    return nnTryGetValue(convert(requestArgument));
+}
+
+Request::MemoryPool uncheckedConvert(const V1_3::Request::MemoryPool& memoryPool) {
+    return nnTryGetValue(convert(memoryPool));
+}
+
+OutputShape uncheckedConvert(const V1_2::OutputShape& outputShape) {
+    return nnTryGetValue(convert(outputShape));
+}
+
+std::vector<OutputShape> uncheckedConvert(
+        const hardware::hidl_vec<V1_2::OutputShape>& outputShapes) {
+    return convertVec<OutputShape>(outputShapes);
+}
+
+Capabilities uncheckedConvert(const V1_3::Capabilities& capabilities) {
+    return nnTryGetValue(convert(capabilities));
+}
+
+Capabilities::OperandPerformance uncheckedConvert(
+        const V1_3::Capabilities::OperandPerformance& operandPerformance) {
+    return nnTryGetValue(convert(operandPerformance));
+}
+
+Capabilities::PerformanceInfo uncheckedConvert(const V1_0::PerformanceInfo& performanceInfo) {
+    return nnTryGetValue(convert(performanceInfo));
+}
+
+Extension uncheckedConvert(const V1_2::Extension& extension) {
+    return nnTryGetValue(convert(extension));
+}
+
+std::vector<Extension> uncheckedConvert(const hardware::hidl_vec<V1_2::Extension>& extensions) {
+    return convertVec<Extension>(extensions);
+}
+
+Extension::OperandTypeInformation uncheckedConvert(
+        const V1_2::Extension::OperandTypeInformation& info) {
+    return nnTryGetValue(convert(info));
+}
+
+OptionalTimeoutDuration uncheckedConvert(const V1_3::OptionalTimeoutDuration& timeoutDuration) {
+    return nnTryGetValue(convert(timeoutDuration));
+}
+
+Timing uncheckedConvert(const V1_2::Timing& timing) {
+    return nnTryGetValue(convert(timing));
+}
+
+V1_0::ErrorStatus convertToV1_0(ErrorStatus status) {
+    return static_cast<V1_0::ErrorStatus>(static_cast<int>(status));
+}
+
+V1_3::ErrorStatus convertToV1_3(ErrorStatus status) {
+    return nnTryGetValue(V1_3::utils::convert(status));
+}
+
+V1_3::OperandType convertToV1_3(OperandType operandType) {
+    return nnTryGetValue(V1_3::utils::convert(operandType));
+}
+
+V1_3::OperationType convertToV1_3(OperationType operandType) {
+    return nnTryGetValue(V1_3::utils::convert(operandType));
+}
+
+V1_3::OperandLifeTime convertToV1_3(Operand::LifeTime lifetime) {
+    return nnTryGetValue(V1_3::utils::convert(lifetime));
+}
+
+V1_1::ExecutionPreference convertToV1_1(ExecutionPreference preference) {
+    return nnTryGetValue(V1_1::utils::convert(preference));
+}
+
+V1_3::Priority convertToV1_3(Priority priority) {
+    return nnTryGetValue(V1_3::utils::convert(priority));
+}
+
+V1_2::MeasureTiming convertToV1_2(MeasureTiming measure) {
+    return nnTryGetValue(V1_2::utils::convert(measure));
+}
+
+V1_0::DataLocation convertToV1_0(const DataLocation& location) {
+    return nnTryGetValue(V1_0::utils::convert(location));
+}
+
+V1_3::Operand convertToV1_3(const Operand& operand) {
+    return nnTryGetValue(V1_3::utils::convert(operand));
+}
+
+V1_2::Operand::ExtraParams convertToV1_2(const Operand::ExtraParams& params) {
+    return nnTryGetValue(V1_2::utils::convert(params));
+}
+
+V1_2::SymmPerChannelQuantParams convertToV1_2(const Operand::SymmPerChannelQuantParams& params) {
+    return nnTryGetValue(V1_2::utils::convert(params));
+}
+
+hardware::hidl_vec<uint8_t> uncheckedConvert(const Operand::ExtensionParams& params) {
+    return params;
+}
+
+V1_3::Operation convertToV1_3(const Operation& operation) {
+    return nnTryGetValue(V1_3::utils::convert(operation));
+}
+
+template <typename HalType, typename CanonicalType>
+static hardware::hidl_vec<HalType> convertVecToV1_0(const std::vector<CanonicalType>& items) {
+    hardware::hidl_vec<HalType> result(items.size());
+    std::transform(items.begin(), items.end(), result.begin(),
+                   [](const CanonicalType& item) { return convertToV1_0(item); });
+    return result;
+}
+
+template <typename HalType, typename CanonicalType>
+static hardware::hidl_vec<HalType> convertVecToV1_2(const std::vector<CanonicalType>& items) {
+    hardware::hidl_vec<HalType> result(items.size());
+    std::transform(items.begin(), items.end(), result.begin(),
+                   [](const CanonicalType& item) { return convertToV1_2(item); });
+    return result;
+}
+
+template <typename HalType, typename CanonicalType>
+static hardware::hidl_vec<HalType> convertVecToV1_3(const std::vector<CanonicalType>& items) {
+    hardware::hidl_vec<HalType> result(items.size());
+    std::transform(items.begin(), items.end(), result.begin(),
+                   [](const CanonicalType& item) { return convertToV1_3(item); });
+    return result;
+}
+
+V1_2::OutputShape convertToV1_2(const OutputShape& outputShape) {
+    return nnTryGetValue(V1_2::utils::convert(outputShape));
+}
+
+hardware::hidl_vec<V1_2::OutputShape> convertToV1_2(const std::vector<OutputShape>& outputShapes) {
+    return convertVecToV1_2<V1_2::OutputShape>(outputShapes);
+}
+
+V1_3::Model convertToV1_3(const Model& model) {
+    return nnTryGetValue(V1_3::utils::convert(model));
+}
+
+V1_3::Subgraph convertToV1_3(const Model::Subgraph& subgraph) {
+    return nnTryGetValue(V1_3::utils::convert(subgraph));
+}
+
+V1_2::Model::ExtensionNameAndPrefix convertToV1_2(const Model::ExtensionNameAndPrefix& x) {
+    return nnTryGetValue(V1_2::utils::convert(x));
+}
+
+V1_3::Request convertToV1_3(const Request& request) {
+    return nnTryGetValue(V1_3::utils::convert(request));
+}
+
+V1_0::RequestArgument convertToV1_0(const Request::Argument& requestArgument) {
+    return nnTryGetValue(V1_0::utils::convert(requestArgument));
+}
+
+V1_3::Request::MemoryPool convertToV1_3(const Request::MemoryPool& memoryPool) {
+    return nnTryGetValue(V1_3::utils::convert(memoryPool));
+}
+
+std::vector<Request::MemoryPool> uncheckedConvert(
+        const hardware::hidl_vec<V1_3::Request::MemoryPool>& memoryPools) {
+    return convertVec<Request::MemoryPool>(memoryPools);
+}
+
+V1_3::OptionalTimePoint convertToV1_3(const OptionalTimePoint& timePoint) {
+    return nnTryGetValue(V1_3::utils::convert(timePoint));
+}
+
+V1_3::OptionalTimeoutDuration convertToV1_3(const OptionalTimeoutDuration& timeoutDuration) {
+    return nnTryGetValue(V1_3::utils::convert(timeoutDuration));
+}
+
+V1_2::Timing convertToV1_2(const Timing& timing) {
+    return nnTryGetValue(V1_2::utils::convert(timing));
+}
+
+V1_3::BufferRole convertToV1_3(const BufferRole& bufferRole) {
+    return nnTryGetValue(V1_3::utils::convert(bufferRole));
+}
+
+hardware::hidl_vec<V1_3::BufferRole> convertToV1_3(const std::vector<BufferRole>& bufferRoles) {
+    return convertVecToV1_3<V1_3::BufferRole>(bufferRoles);
+}
+
+hardware::hidl_vec<uint8_t> convertToV1_0(const Model::OperandValues& operandValues) {
+    return nnTryGetValue(V1_0::utils::convert(operandValues));
+}
+
+hardware::hidl_memory convertToV1_0(const Memory& memory) {
+    return nnTryGetValue(V1_0::utils::convert(memory));
+}
+
+Memory uncheckedConvert(const hardware::hidl_memory& memory) {
+    return nnTryGetValue(convert(memory));
+}
+
+hardware::hidl_vec<hardware::hidl_memory> convertToV1_0(const std::vector<Memory>& memories) {
+    return convertVecToV1_0<hardware::hidl_memory>(memories);
+}
+
+std::vector<Memory> uncheckedConvert(const hardware::hidl_vec<hardware::hidl_memory>& memories) {
+    return convertVec<Memory>(memories);
+}
+
+std::vector<Model::Subgraph> uncheckedConvert(const hardware::hidl_vec<V1_3::Subgraph>& subgraphs) {
+    return convertVec<Model::Subgraph>(subgraphs);
+}
+
+std::vector<Operand> uncheckedConvert(const hardware::hidl_vec<V1_3::Operand>& operands) {
+    return convertVec<Operand>(operands);
+}
 
 }  // namespace nn
 }  // namespace android

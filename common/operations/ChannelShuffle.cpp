@@ -16,7 +16,6 @@
 
 #define LOG_TAG "Operations"
 
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
@@ -24,8 +23,6 @@
 namespace android {
 namespace nn {
 namespace channel_shuffle {
-
-using namespace hal;
 
 constexpr char kOperationName[] = "CHANNEL_SHUFFLE";
 

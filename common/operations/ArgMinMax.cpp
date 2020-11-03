@@ -19,15 +19,12 @@
 #define LOG_TAG "Operations"
 
 #include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
 #include "Operations.h"
 
 #include "Tracing.h"
 
 namespace android {
 namespace nn {
-
-using namespace hal;
 
 template <typename In, typename Out>
 static void argMinMaxImpl(const In* inputData, const Shape& inputShape, int32_t axis, bool isArgMin,

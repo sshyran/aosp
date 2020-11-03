@@ -31,16 +31,17 @@
 #include "TestNeuralNetworksWrapper.h"
 
 using namespace android::nn;
-using namespace hal;
-using Result = test_wrapper::Result;
+namespace hardware = android::hardware;
+using WrapperResult = test_wrapper::Result;
 using Type = test_wrapper::Type;
-const Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
+const V1_2::Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
 template <typename T>
 using MQDescriptorSync = ::android::hardware::MQDescriptorSync<T>;
+using android::sp;
 
 namespace android::hardware::neuralnetworks::V1_0 {
 
-::std::ostream& operator<<(::std::ostream& os, ErrorStatus errorStatus) {
+::std::ostream& operator<<(::std::ostream& os, V1_3::ErrorStatus errorStatus) {
     return os << toString(errorStatus);
 }
 
@@ -66,10 +67,10 @@ std::ostream& operator<<(std::ostream& os, HasCalledPrepareModel hasCalledPrepar
 }
 
 // Whether the driver is expected to be registered because it can pass initialization.
-bool canDeviceBeRegistered(ErrorStatus error, uint32_t numModelCache, uint32_t numDataCache) {
+bool canDeviceBeRegistered(V1_3::ErrorStatus error, uint32_t numModelCache, uint32_t numDataCache) {
     constexpr uint32_t maxNumCacheFiles =
-            static_cast<uint32_t>(Constant::MAX_NUMBER_OF_CACHE_FILES);
-    return error == ErrorStatus::NONE && numModelCache <= maxNumCacheFiles &&
+            static_cast<uint32_t>(V1_2::Constant::MAX_NUMBER_OF_CACHE_FILES);
+    return error == V1_3::ErrorStatus::NONE && numModelCache <= maxNumCacheFiles &&
            numDataCache <= maxNumCacheFiles;
 }
 
@@ -94,55 +95,59 @@ class CachingDriver : public sample_driver::SampleDriver {
    private:
     static constexpr size_t kCacheSize = 256;
 
-    class CachingPreparedModel : public IPreparedModel {
+    class CachingPreparedModel : public V1_3::IPreparedModel {
        public:
         CachingPreparedModel() = default;
 
-        Return<V1_0::ErrorStatus> execute(const V1_0::Request&,
-                                          const sp<V1_0::IExecutionCallback>&) override {
+        hardware::Return<V1_0::ErrorStatus> execute(const V1_0::Request&,
+                                                    const sp<V1_0::IExecutionCallback>&) override {
             return V1_0::ErrorStatus::DEVICE_UNAVAILABLE;
         }
-        Return<V1_0::ErrorStatus> execute_1_2(const V1_0::Request&, MeasureTiming,
-                                              const sp<V1_2::IExecutionCallback>&) override {
+        hardware::Return<V1_0::ErrorStatus> execute_1_2(
+                const V1_0::Request&, V1_2::MeasureTiming,
+                const sp<V1_2::IExecutionCallback>&) override {
             return V1_0::ErrorStatus::DEVICE_UNAVAILABLE;
         }
-        Return<V1_3::ErrorStatus> execute_1_3(const V1_3::Request&, MeasureTiming,
-                                              const OptionalTimePoint&,
-                                              const OptionalTimeoutDuration&,
-                                              const sp<V1_3::IExecutionCallback>&) override {
+        hardware::Return<V1_3::ErrorStatus> execute_1_3(
+                const V1_3::Request&, V1_2::MeasureTiming, const V1_3::OptionalTimePoint&,
+                const V1_3::OptionalTimeoutDuration&,
+                const sp<V1_3::IExecutionCallback>&) override {
             return V1_3::ErrorStatus::DEVICE_UNAVAILABLE;
         }
-        Return<void> executeSynchronously(const V1_0::Request&, MeasureTiming,
-                                          executeSynchronously_cb cb) override {
+        hardware::Return<void> executeSynchronously(const V1_0::Request&, V1_2::MeasureTiming,
+                                                    executeSynchronously_cb cb) override {
             cb(V1_0::ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
-            return Void();
+            return hardware::Void();
         }
-        Return<void> executeSynchronously_1_3(const V1_3::Request&, MeasureTiming,
-                                              const OptionalTimePoint&,
-                                              const OptionalTimeoutDuration&,
-                                              executeSynchronously_1_3_cb cb) override {
+        hardware::Return<void> executeSynchronously_1_3(const V1_3::Request&, V1_2::MeasureTiming,
+                                                        const V1_3::OptionalTimePoint&,
+                                                        const V1_3::OptionalTimeoutDuration&,
+                                                        executeSynchronously_1_3_cb cb) override {
             cb(V1_3::ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
-            return Void();
+            return hardware::Void();
         }
-        Return<void> configureExecutionBurst(const sp<V1_2::IBurstCallback>&,
-                                             const MQDescriptorSync<V1_2::FmqRequestDatum>&,
-                                             const MQDescriptorSync<V1_2::FmqResultDatum>&,
-                                             configureExecutionBurst_cb cb) override {
+        hardware::Return<void> configureExecutionBurst(
+                const sp<V1_2::IBurstCallback>&, const MQDescriptorSync<V1_2::FmqRequestDatum>&,
+                const MQDescriptorSync<V1_2::FmqResultDatum>&,
+                configureExecutionBurst_cb cb) override {
             cb(V1_0::ErrorStatus::DEVICE_UNAVAILABLE, nullptr);
-            return Void();
+            return hardware::Void();
         }
-        Return<void> executeFenced(const hal::Request&, const hidl_vec<hidl_handle>&, MeasureTiming,
-                                   const OptionalTimePoint&, const OptionalTimeoutDuration&,
-                                   const OptionalTimeoutDuration&, executeFenced_cb cb) {
-            cb(ErrorStatus::DEVICE_UNAVAILABLE, hidl_handle(nullptr), nullptr);
-            return Void();
+        hardware::Return<void> executeFenced(const V1_3::Request&,
+                                             const hardware::hidl_vec<hardware::hidl_handle>&,
+                                             V1_2::MeasureTiming, const V1_3::OptionalTimePoint&,
+                                             const V1_3::OptionalTimeoutDuration&,
+                                             const V1_3::OptionalTimeoutDuration&,
+                                             executeFenced_cb cb) {
+            cb(V1_3::ErrorStatus::DEVICE_UNAVAILABLE, hardware::hidl_handle(nullptr), nullptr);
+            return hardware::Void();
         }
     };
 
    public:
-    CachingDriver(std::string_view name, ErrorStatus errorStatusGetNumCacheFiles,
+    CachingDriver(std::string_view name, V1_3::ErrorStatus errorStatusGetNumCacheFiles,
                   uint32_t numModelCache, uint32_t numDataCache,
-                  ErrorStatus errorStatusPrepareFromCache)
+                  V1_3::ErrorStatus errorStatusPrepareFromCache)
         : SampleDriver(name.data()),
           mErrorStatusGetNumCacheFiles(errorStatusGetNumCacheFiles),
           mNumModelCache(numModelCache),
@@ -156,39 +161,40 @@ class CachingDriver : public sample_driver::SampleDriver {
     ~CachingDriver() override {}
 
     // Reports faster than cpu.
-    Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
+    hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
         android::nn::initVLogMask();
-        const PerformanceInfo kPerf = {.execTime = 0.1, .powerUsage = 0.1};
-        Capabilities capabilities = {
+        const V1_0::PerformanceInfo kPerf = {.execTime = 0.1, .powerUsage = 0.1};
+        V1_3::Capabilities capabilities = {
                 .relaxedFloat32toFloat16PerformanceScalar = kPerf,
                 .relaxedFloat32toFloat16PerformanceTensor = kPerf,
                 .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>(kPerf),
                 .ifPerformance = kPerf,
                 .whilePerformance = kPerf};
         cb(V1_3::ErrorStatus::NONE, capabilities);
-        return Void();
+        return hardware::Void();
     }
 
     // Reports supporting all operations.
-    Return<void> getSupportedOperations_1_3(const Model& model,
-                                            getSupportedOperations_1_3_cb cb) override {
+    hardware::Return<void> getSupportedOperations_1_3(const V1_3::Model& model,
+                                                      getSupportedOperations_1_3_cb cb) override {
         std::vector<bool> supported(model.main.operations.size(), true);
         cb(V1_3::ErrorStatus::NONE, supported);
-        return Void();
+        return hardware::Void();
     }
 
     // Reports according to mGetNumCacheFiles.
-    Return<void> getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb cb) override {
+    hardware::Return<void> getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb cb) override {
         cb(convertToV1_0(mErrorStatusGetNumCacheFiles), mNumModelCache, mNumDataCache);
-        return Void();
+        return hardware::Void();
     }
 
     // Generates CachingPreparedModel.
     // Writes the cache entry per mCacheXData and sets mHasCalledPrepareModel.
-    Return<V1_3::ErrorStatus> prepareModel_1_3(
-            const Model&, ExecutionPreference, Priority, const OptionalTimePoint&,
-            const hidl_vec<hidl_handle>& modelCacheHandle,
-            const hidl_vec<hidl_handle>& dataCacheHandle, const CacheToken&,
+    hardware::Return<V1_3::ErrorStatus> prepareModel_1_3(
+            const V1_3::Model&, V1_1::ExecutionPreference, V1_3::Priority,
+            const V1_3::OptionalTimePoint&,
+            const hardware::hidl_vec<hardware::hidl_handle>& modelCacheHandle,
+            const hardware::hidl_vec<hardware::hidl_handle>& dataCacheHandle, const HalCacheToken&,
             const sp<V1_3::IPreparedModelCallback>& cb) override {
         checkNumberOfCacheHandles(modelCacheHandle.size(), dataCacheHandle.size());
         if (modelCacheHandle.size() != 0 || dataCacheHandle.size() != 0) {
@@ -204,9 +210,10 @@ class CachingDriver : public sample_driver::SampleDriver {
 
     // Checks if the cache entry is correct, notifies error status according to
     // mErrorStatusPrepareFromCache, sets mHasCalledPrepareModelFromCache.
-    Return<V1_3::ErrorStatus> prepareModelFromCache_1_3(
-            const OptionalTimePoint&, const hidl_vec<hidl_handle>& modelCacheHandle,
-            const hidl_vec<hidl_handle>& dataCacheHandle, const CacheToken&,
+    hardware::Return<V1_3::ErrorStatus> prepareModelFromCache_1_3(
+            const V1_3::OptionalTimePoint&,
+            const hardware::hidl_vec<hardware::hidl_handle>& modelCacheHandle,
+            const hardware::hidl_vec<hardware::hidl_handle>& dataCacheHandle, const HalCacheToken&,
             const sp<V1_3::IPreparedModelCallback>& callback) override {
         readFromCache(modelCacheHandle, mModelCacheData);
         readFromCache(dataCacheHandle, mDataCacheData);
@@ -236,7 +243,8 @@ class CachingDriver : public sample_driver::SampleDriver {
         }
     }
 
-    void writeToCache(const hidl_vec<hidl_handle>& handles, const std::vector<uint8_t>& cache) {
+    void writeToCache(const hardware::hidl_vec<hardware::hidl_handle>& handles,
+                      const std::vector<uint8_t>& cache) {
         for (uint32_t i = 0; i < handles.size(); ++i) {
             ASSERT_EQ(handles[i]->numFds, 1);
             EXPECT_EQ(write(handles[i]->data[0], cache.data(), kCacheSize),
@@ -244,7 +252,8 @@ class CachingDriver : public sample_driver::SampleDriver {
         }
     }
 
-    void readFromCache(const hidl_vec<hidl_handle>& handles, const std::vector<uint8_t>& expected) {
+    void readFromCache(const hardware::hidl_vec<hardware::hidl_handle>& handles,
+                       const std::vector<uint8_t>& expected) {
         for (uint32_t i = 0; i < handles.size(); ++i) {
             ASSERT_EQ(handles[i]->numFds, 1);
             std::vector<uint8_t> actual(kCacheSize);
@@ -257,10 +266,10 @@ class CachingDriver : public sample_driver::SampleDriver {
     std::vector<uint8_t> mModelCacheData;
     std::vector<uint8_t> mDataCacheData;
 
-    const ErrorStatus mErrorStatusGetNumCacheFiles;
+    const V1_3::ErrorStatus mErrorStatusGetNumCacheFiles;
     const uint32_t mNumModelCache;
     const uint32_t mNumDataCache;
-    const ErrorStatus mErrorStatusPrepareFromCache;
+    const V1_3::ErrorStatus mErrorStatusPrepareFromCache;
 
     bool mHasCalledPrepareModelFromCache = false;
     HasCalledPrepareModel mHasCalledPrepareModel = HasCalledPrepareModel::NO;
@@ -279,7 +288,7 @@ void CreateBroadcastAddModel(test_wrapper::Model* model) {
     model->addOperation(ANEURALNETWORKS_ADD, {a, b, d}, {c});
     model->identifyInputsAndOutputs({a, b}, {c});
     ASSERT_TRUE(model->isValid());
-    ASSERT_EQ(model->finish(), Result::NO_ERROR);
+    ASSERT_EQ(model->finish(), WrapperResult::NO_ERROR);
 }
 
 void getDeviceWithName(std::string_view deviceName, const ANeuralNetworksDevice** outputDevice) {
@@ -307,17 +316,17 @@ void getDeviceWithName(std::string_view deviceName, const ANeuralNetworksDevice*
 // - ErrorStatus returning from getNumberOfCacheFilesNeeded
 // - Number of model cache files returning from getNumberOfCacheFilesNeeded
 // - Number of data cache files returning from getNumberOfCacheFilesNeeded
-using DeviceRegistrationTestParam = std::tuple<ErrorStatus, uint32_t, uint32_t>;
+using DeviceRegistrationTestParam = std::tuple<V1_3::ErrorStatus, uint32_t, uint32_t>;
 
 class DeviceRegistrationTest : public ::testing::TestWithParam<DeviceRegistrationTestParam> {
    protected:
     static constexpr std::string_view kDeviceName = "deviceTestCompilationCaching";
-    const ErrorStatus kErrorStatusGetNumCacheFiles = std::get<0>(GetParam());
+    const V1_3::ErrorStatus kErrorStatusGetNumCacheFiles = std::get<0>(GetParam());
     const uint32_t kNumModelCache = std::get<1>(GetParam());
     const uint32_t kNumDataCache = std::get<2>(GetParam());
     const sp<CachingDriver> kDriver =
             new CachingDriver(kDeviceName, kErrorStatusGetNumCacheFiles, kNumModelCache,
-                              kNumDataCache, ErrorStatus::NONE);
+                              kNumDataCache, V1_3::ErrorStatus::NONE);
 };
 
 TEST_P(DeviceRegistrationTest, CachingFailure) {
@@ -344,7 +353,7 @@ TEST_P(DeviceRegistrationTest, CachingFailure) {
 // - Number of model cache files returning from getNumberOfCacheFilesNeeded
 // - Number of data cache files returning from getNumberOfCacheFilesNeeded
 // - ErrorStatus returning from prepareModelFromCache_1_3
-using CompilationCachingTestParam = std::tuple<uint32_t, uint32_t, ErrorStatus>;
+using CompilationCachingTestParam = std::tuple<uint32_t, uint32_t, V1_3::ErrorStatus>;
 
 class CompilationCachingTest : public ::testing::TestWithParam<CompilationCachingTestParam> {
    protected:
@@ -390,27 +399,29 @@ class CompilationCachingTest : public ::testing::TestWithParam<CompilationCachin
     }
 
     void createCache() {
-        sp<CachingDriver> driver = new CachingDriver(kDeviceName, ErrorStatus::NONE, kNumModelCache,
-                                                     kNumDataCache, ErrorStatus::NONE);
+        sp<CachingDriver> driver =
+                new CachingDriver(kDeviceName, V1_3::ErrorStatus::NONE, kNumModelCache,
+                                  kNumDataCache, V1_3::ErrorStatus::NONE);
         compileModel(driver, /*withToken=*/true);
     }
 
     static constexpr std::string_view kDeviceName = "deviceTestCompilationCaching";
     const uint32_t kNumModelCache = std::get<0>(GetParam());
     const uint32_t kNumDataCache = std::get<1>(GetParam());
-    const ErrorStatus kErrorStatusPrepareFromCache = std::get<2>(GetParam());
+    const V1_3::ErrorStatus kErrorStatusPrepareFromCache = std::get<2>(GetParam());
     const bool kIsCachingSupported = isCachingSupported(kNumModelCache, kNumDataCache);
     test_wrapper::Model mModel;
     std::string mCacheDir;
-    const CacheToken kToken{};
+    const HalCacheToken kToken{};
 };
 
 TEST_P(CompilationCachingTest, TokenProvidedAndCacheNotExist) {
     if (DeviceManager::get()->getUseCpuOnly()) {
         return;
     }
-    sp<CachingDriver> driver = new CachingDriver(kDeviceName, ErrorStatus::NONE, kNumModelCache,
-                                                 kNumDataCache, kErrorStatusPrepareFromCache);
+    sp<CachingDriver> driver =
+            new CachingDriver(kDeviceName, V1_3::ErrorStatus::NONE, kNumModelCache, kNumDataCache,
+                              kErrorStatusPrepareFromCache);
     compileModel(driver, /*withToken=*/true);
 
     // When cache file does not exist, the runtime should never call prepareModelFromCache_1_3.
@@ -427,8 +438,9 @@ TEST_P(CompilationCachingTest, TokenProvidedAndCacheExist) {
         return;
     }
     createCache();
-    sp<CachingDriver> driver = new CachingDriver(kDeviceName, ErrorStatus::NONE, kNumModelCache,
-                                                 kNumDataCache, kErrorStatusPrepareFromCache);
+    sp<CachingDriver> driver =
+            new CachingDriver(kDeviceName, V1_3::ErrorStatus::NONE, kNumModelCache, kNumDataCache,
+                              kErrorStatusPrepareFromCache);
     compileModel(driver, /*withToken=*/true);
 
     // When cache files exist, the runtime should call prepareModelFromCache_1_3 iff caching
@@ -437,7 +449,7 @@ TEST_P(CompilationCachingTest, TokenProvidedAndCacheExist) {
 
     HasCalledPrepareModel expectHasCalledPrepareModel;
     if (kIsCachingSupported) {
-        if (kErrorStatusPrepareFromCache == ErrorStatus::NONE) {
+        if (kErrorStatusPrepareFromCache == V1_3::ErrorStatus::NONE) {
             // The runtime should not call prepareModel_1_3 iff caching supported and
             // prepareModelFromCache_1_3 succeeds.
             expectHasCalledPrepareModel = HasCalledPrepareModel::NO;
@@ -457,8 +469,9 @@ TEST_P(CompilationCachingTest, TokenNotProvided) {
     if (DeviceManager::get()->getUseCpuOnly()) {
         return;
     }
-    sp<CachingDriver> driver = new CachingDriver(kDeviceName, ErrorStatus::NONE, kNumModelCache,
-                                                 kNumDataCache, kErrorStatusPrepareFromCache);
+    sp<CachingDriver> driver =
+            new CachingDriver(kDeviceName, V1_3::ErrorStatus::NONE, kNumModelCache, kNumDataCache,
+                              kErrorStatusPrepareFromCache);
     compileModel(driver, /*withToken=*/false);
 
     // When no NDK token is provided by the client, the runtime should never call
@@ -468,15 +481,15 @@ TEST_P(CompilationCachingTest, TokenNotProvided) {
 }
 
 static const auto kErrorStatusGetNumCacheFilesChoices =
-        testing::Values(ErrorStatus::NONE, ErrorStatus::DEVICE_UNAVAILABLE);
+        testing::Values(V1_3::ErrorStatus::NONE, V1_3::ErrorStatus::DEVICE_UNAVAILABLE);
 static const auto kNumCacheChoices =
-        testing::Values(0ul, 1ul, static_cast<uint32_t>(Constant::MAX_NUMBER_OF_CACHE_FILES),
-                        static_cast<uint32_t>(Constant::MAX_NUMBER_OF_CACHE_FILES) + 1);
+        testing::Values(0ul, 1ul, static_cast<uint32_t>(V1_2::Constant::MAX_NUMBER_OF_CACHE_FILES),
+                        static_cast<uint32_t>(V1_2::Constant::MAX_NUMBER_OF_CACHE_FILES) + 1);
 static const auto kNumValidCacheChoices =
-        testing::Values(0ul, 1ul, static_cast<uint32_t>(Constant::MAX_NUMBER_OF_CACHE_FILES));
+        testing::Values(0ul, 1ul, static_cast<uint32_t>(V1_2::Constant::MAX_NUMBER_OF_CACHE_FILES));
 static const auto kErrorStatusPrepareFromCacheChoices =
-        testing::Values(ErrorStatus::NONE, ErrorStatus::GENERAL_FAILURE,
-                        ErrorStatus::DEVICE_UNAVAILABLE, ErrorStatus::INVALID_ARGUMENT);
+        testing::Values(V1_3::ErrorStatus::NONE, V1_3::ErrorStatus::GENERAL_FAILURE,
+                        V1_3::ErrorStatus::DEVICE_UNAVAILABLE, V1_3::ErrorStatus::INVALID_ARGUMENT);
 
 INSTANTIATE_TEST_SUITE_P(TestCompilationCaching, DeviceRegistrationTest,
                          testing::Combine(kErrorStatusGetNumCacheFilesChoices, kNumCacheChoices,

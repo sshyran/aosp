@@ -111,22 +111,22 @@ void RandomVariableBase::updateTimestamp() {
 }
 
 RandomVariable::RandomVariable(int value) : mVar(new RandomVariableBase(value)) {
-    NN_FUZZER_LOG << "New RandomVariable " << toString(mVar);
+    NN_FUZZER_LOG << "New RandomVariable " << mVar;
     RandomVariableNetwork::get()->add(mVar);
 }
 RandomVariable::RandomVariable(int lower, int upper) : mVar(new RandomVariableBase(lower, upper)) {
-    NN_FUZZER_LOG << "New RandomVariable " << toString(mVar);
+    NN_FUZZER_LOG << "New RandomVariable " << mVar;
     RandomVariableNetwork::get()->add(mVar);
 }
 RandomVariable::RandomVariable(const std::vector<int>& choices)
     : mVar(new RandomVariableBase(choices)) {
-    NN_FUZZER_LOG << "New RandomVariable " << toString(mVar);
+    NN_FUZZER_LOG << "New RandomVariable " << mVar;
     RandomVariableNetwork::get()->add(mVar);
 }
 RandomVariable::RandomVariable(RandomVariableType type)
     : mVar(new RandomVariableBase(1, defaultValue)) {
     NN_FUZZER_CHECK(type == RandomVariableType::FREE);
-    NN_FUZZER_LOG << "New RandomVariable " << toString(mVar);
+    NN_FUZZER_LOG << "New RandomVariable " << mVar;
     RandomVariableNetwork::get()->add(mVar);
 }
 RandomVariable::RandomVariable(const RandomVariable& lhs, const RandomVariable& rhs,
@@ -142,7 +142,7 @@ RandomVariable::RandomVariable(const RandomVariable& lhs, const RandomVariable& 
     mVar->parent1->children.push_back(mVar);
     if (mVar->parent2 != nullptr) mVar->parent2->children.push_back(mVar);
     RandomVariableNetwork::get()->add(mVar);
-    NN_FUZZER_LOG << "New RandomVariable " << toString(mVar);
+    NN_FUZZER_LOG << "New RandomVariable " << mVar;
 }
 
 void RandomVariable::setRange(int lower, int upper) {
@@ -287,12 +287,12 @@ class Addition : public IRandomVariableOp {
             std::pair<int, int> parent2 = {*parent2In->begin(), *parent2In->rbegin()};
             std::pair<int, int> child = {*childIn->begin(), *childIn->rbegin()};
 
-            // From ranges for parent, evalute range for child.
+            // From ranges for parent, evaluate range for child.
             // [a, b] + [c, d] -> [a + c, b + d]
             fillRange(childOut, std::max(child.first, parent1.first + parent2.first),
                       std::min(child.second, parent1.second + parent2.second));
 
-            // From ranges for child and one parent, evalute range for another parent.
+            // From ranges for child and one parent, evaluate range for another parent.
             // [a, b] - [c, d] -> [a - d, b - c]
             fillRange(parent1Out, std::max(parent1.first, child.first - parent2.second),
                       std::min(parent1.second, child.second - parent2.first));
@@ -418,7 +418,7 @@ class Modulo : public IRandomVariableOp {
             // For the special case that child is a const 0, it would be faster if the range for
             // parents are evaluated separately.
 
-            // Evalute parent1 directly.
+            // Evaluate parent1 directly.
             for (auto i : *parent1In) {
                 for (auto j : *parent2In) {
                     if (i % j == 0) {
@@ -427,7 +427,7 @@ class Modulo : public IRandomVariableOp {
                     }
                 }
             }
-            // Evalute parent2, see if a multiple of parent2 value can be found in parent1.
+            // Evaluate parent2, see if a multiple of parent2 value can be found in parent1.
             int parent1Max = *parent1In->rbegin();
             for (auto i : *parent2In) {
                 int jMax = parent1Max / i;
@@ -713,7 +713,7 @@ inline std::string toString(const RandomVariableNode& var, EvalContext* context)
                << joinStr(", ", 20, std::vector<int>(committed.begin(), committed.end())) << "]";
             break;
         case RandomVariableType::CONST:
-            ss << "CONST " << toString(var->value);
+            ss << "CONST " << var->value;
             break;
         case RandomVariableType::OP:
             ss << "var" << var->parent1->index << " " << var->op->getName();
@@ -1204,14 +1204,14 @@ bool RandomVariableNetwork::freeze() {
     for (const auto& var : nodes) {
         if (var->type != RandomVariableType::FREE) continue;
         size_t size = var->range.size();
-        NN_FUZZER_LOG << "Freeze " << toString(var);
+        NN_FUZZER_LOG << "Freeze " << var;
         var->freeze();
-        NN_FUZZER_LOG << "  " << toString(var);
+        NN_FUZZER_LOG << "  " << var;
         // There is no need to re-evaluate if the FREE RandomVariable have only one choice.
         if (size > 1) {
             var->updateTimestamp();
             if (!evalRange()) {
-                NN_FUZZER_LOG << "Freeze failed at " << toString(var);
+                NN_FUZZER_LOG << "Freeze failed at " << var;
                 return false;
             }
         }

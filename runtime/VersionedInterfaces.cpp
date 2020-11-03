@@ -18,13 +18,12 @@
 
 #include "VersionedInterfaces.h"
 
-#include <fcntl.h>
-
 #include <android-base/logging.h>
 #include <android-base/properties.h>
 #include <android-base/scopeguard.h>
 #include <android-base/thread_annotations.h>
 #include <cutils/native_handle.h>
+#include <fcntl.h>
 
 #include <algorithm>
 #include <chrono>
@@ -104,18 +103,14 @@ namespace nn {
 // anonymous namespace
 namespace {
 
-using namespace hal;
-
-const Timing kNoTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
-
-void sendFailureMessage(IPreparedModelCallback* cb) {
+void sendFailureMessage(V1_3::IPreparedModelCallback* cb) {
     CHECK(cb != nullptr);
-    cb->notify_1_3(ErrorStatus::GENERAL_FAILURE, nullptr);
+    cb->notify_1_3(V1_3::ErrorStatus::GENERAL_FAILURE, nullptr);
 }
 
 // This class is thread safe
 template <typename Callback>
-class DeathHandler : public hidl_death_recipient {
+class DeathHandler : public hardware::hidl_death_recipient {
    public:
     void serviceDied(uint64_t /*cookie*/, const wp<hidl::base::V1_0::IBase>& /*who*/) override {
         LOG(ERROR) << "DeathHandler::serviceDied -- service unexpectedly died!";
@@ -164,7 +159,7 @@ static std::pair<int, std::shared_ptr<VersionedIPreparedModel>> makeVersionedIPr
     // proactively handle service crashes. If the linkToDeath call fails,
     // asynchronous calls are susceptible to hangs if the service crashes before
     // providing the response.
-    const Return<bool> ret = preparedModel->linkToDeath(deathHandler, 0);
+    const hardware::Return<bool> ret = preparedModel->linkToDeath(deathHandler, 0);
     if (ret.isDeadObject()) {
         LOG(ERROR) << "makeVersionedIPreparedModel failed to register a death recipient for the "
                       "IPreparedModel object because the IPreparedModel object is dead.";
@@ -206,10 +201,10 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
         const Request& request, MeasureTiming measure, const std::optional<Deadline>& deadline,
         const OptionalTimeoutDuration& loopTimeoutDuration) const {
     const auto failDeadObject = []() -> std::tuple<int, std::vector<OutputShape>, Timing> {
-        return {ANEURALNETWORKS_DEAD_OBJECT, {}, kNoTiming};
+        return {ANEURALNETWORKS_DEAD_OBJECT, {}, {}};
     };
-    const auto failWithStatus = [](ErrorStatus status) {
-        return getExecutionResult(status, {}, kNoTiming);
+    const auto failWithStatus = [](V1_3::ErrorStatus status) {
+        return getExecutionResult(status, {}, {});
     };
     const auto getResults = [failDeadObject](const ExecutionCallback& cb) {
         if (cb.isDeadObject()) {
@@ -221,21 +216,23 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
     const sp<ExecutionCallback> callback = new ExecutionCallback();
     const auto scoped = mDeathHandler->protectCallback(callback);
 
-    // version 1.3+ HAL
+    // version 1.3 HAL
+    const V1_3::Request request13 = convertToV1_3(request);
     if (mPreparedModelV1_3 != nullptr) {
         const auto otp = makeTimePoint(deadline);
-        Return<ErrorStatus> ret = mPreparedModelV1_3->execute_1_3(request, measure, otp,
-                                                                  loopTimeoutDuration, callback);
+        hardware::Return<V1_3::ErrorStatus> ret = mPreparedModelV1_3->execute_1_3(
+                request13, convertToV1_2(measure), convertToV1_3(otp),
+                convertToV1_3(loopTimeoutDuration), callback);
         if (ret.isDeadObject()) {
             LOG(ERROR) << "execute_1_3 failure: " << ret.description();
             return failDeadObject();
         }
         if (!ret.isOk()) {
             LOG(ERROR) << "execute_1_3 failure: " << ret.description();
-            return failWithStatus(ErrorStatus::GENERAL_FAILURE);
+            return failWithStatus(V1_3::ErrorStatus::GENERAL_FAILURE);
         }
-        if (ret != ErrorStatus::NONE) {
-            LOG(ERROR) << "execute_1_3 returned " << toString(static_cast<ErrorStatus>(ret));
+        if (ret != V1_3::ErrorStatus::NONE) {
+            LOG(ERROR) << "execute_1_3 returned " << toString(static_cast<V1_3::ErrorStatus>(ret));
             return failWithStatus(ret);
         }
         callback->wait();
@@ -244,21 +241,21 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
 
     // version 1.2 HAL
     if (mPreparedModelV1_2 != nullptr) {
-        const bool compliant = compliantWithV1_2(request);
+        const bool compliant = compliantWithV1_2(request13);
         if (!compliant) {
             LOG(ERROR) << "Could not handle execute_1_2!";
-            return failWithStatus(ErrorStatus::GENERAL_FAILURE);
+            return failWithStatus(V1_3::ErrorStatus::GENERAL_FAILURE);
         }
-        const V1_0::Request request12 = convertToV1_2(request);
-        Return<V1_0::ErrorStatus> ret =
-                mPreparedModelV1_2->execute_1_2(request12, measure, callback);
+        const V1_0::Request request12 = convertToV1_2(request13);
+        hardware::Return<V1_0::ErrorStatus> ret =
+                mPreparedModelV1_2->execute_1_2(request12, convertToV1_2(measure), callback);
         if (ret.isDeadObject()) {
             LOG(ERROR) << "execute_1_2 failure: " << ret.description();
             return failDeadObject();
         }
         if (!ret.isOk()) {
             LOG(ERROR) << "execute_1_2 failure: " << ret.description();
-            return failWithStatus(ErrorStatus::GENERAL_FAILURE);
+            return failWithStatus(V1_3::ErrorStatus::GENERAL_FAILURE);
         }
         const V1_0::ErrorStatus status = static_cast<V1_0::ErrorStatus>(ret);
         if (status != V1_0::ErrorStatus::NONE) {
@@ -271,20 +268,20 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
 
     // version 1.0 HAL
     if (mPreparedModelV1_0 != nullptr) {
-        const bool compliant = compliantWithV1_0(request);
+        const bool compliant = compliantWithV1_0(request13);
         if (!compliant) {
             LOG(ERROR) << "Could not handle execute!";
-            return failWithStatus(ErrorStatus::GENERAL_FAILURE);
+            return failWithStatus(V1_3::ErrorStatus::GENERAL_FAILURE);
         }
-        const V1_0::Request request10 = convertToV1_0(request);
-        Return<V1_0::ErrorStatus> ret = mPreparedModelV1_0->execute(request10, callback);
+        const V1_0::Request request10 = convertToV1_0(request13);
+        hardware::Return<V1_0::ErrorStatus> ret = mPreparedModelV1_0->execute(request10, callback);
         if (ret.isDeadObject()) {
             LOG(ERROR) << "execute failure: " << ret.description();
             return failDeadObject();
         }
         if (!ret.isOk()) {
             LOG(ERROR) << "execute failure: " << ret.description();
-            return failWithStatus(ErrorStatus::GENERAL_FAILURE);
+            return failWithStatus(V1_3::ErrorStatus::GENERAL_FAILURE);
         }
         const V1_0::ErrorStatus status = static_cast<V1_0::ErrorStatus>(ret);
         if (status != V1_0::ErrorStatus::NONE) {
@@ -297,24 +294,27 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
 
     // No prepared model available
     LOG(ERROR) << "executeAsynchronously called with no preparedModel";
-    return failWithStatus(ErrorStatus::GENERAL_FAILURE);
+    return failWithStatus(V1_3::ErrorStatus::GENERAL_FAILURE);
 }
 
 std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::executeSynchronously(
         const Request& request, MeasureTiming measure, const std::optional<Deadline>& deadline,
         const OptionalTimeoutDuration& loopTimeoutDuration) const {
     const std::tuple<int, std::vector<OutputShape>, Timing> kDeadObject = {
-            ANEURALNETWORKS_DEAD_OBJECT, {}, kNoTiming};
-    const auto kFailure = getExecutionResult(ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
+            ANEURALNETWORKS_DEAD_OBJECT, {}, {}};
+    const auto kFailure = getExecutionResult(ErrorStatus::GENERAL_FAILURE, {}, {});
 
-    // version 1.3+ HAL
+    // version 1.3 HAL
+    const V1_3::Request request13 = convertToV1_3(request);
     if (mPreparedModelV1_3 != nullptr) {
         std::tuple<int, std::vector<OutputShape>, Timing> result;
         const auto otp = makeTimePoint(deadline);
-        Return<void> ret = mPreparedModelV1_3->executeSynchronously_1_3(
-                request, measure, otp, loopTimeoutDuration,
-                [&result](ErrorStatus error, const hidl_vec<OutputShape>& outputShapes,
-                          const Timing& timing) {
+        hardware::Return<void> ret = mPreparedModelV1_3->executeSynchronously_1_3(
+                request13, convertToV1_2(measure), convertToV1_3(otp),
+                convertToV1_3(loopTimeoutDuration),
+                [&result](V1_3::ErrorStatus error,
+                          const hardware::hidl_vec<V1_2::OutputShape>& outputShapes,
+                          const V1_2::Timing& timing) {
                     result = getExecutionResult(error, outputShapes, timing);
                 });
         if (ret.isDeadObject()) {
@@ -330,18 +330,19 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
 
     // version 1.2 HAL
     if (mPreparedModelV1_2 != nullptr) {
-        const bool compliant = compliantWithV1_2(request);
+        const bool compliant = compliantWithV1_2(request13);
         if (!compliant) {
             LOG(ERROR) << "Could not handle executeSynchronously!";
             return kFailure;
         }
-        const V1_0::Request request12 = convertToV1_2(request);
+        const V1_0::Request request12 = convertToV1_2(request13);
 
         std::tuple<int, std::vector<OutputShape>, Timing> result;
-        Return<void> ret = mPreparedModelV1_2->executeSynchronously(
-                request12, measure,
-                [&result](V1_0::ErrorStatus error, const hidl_vec<OutputShape>& outputShapes,
-                          const Timing& timing) {
+        hardware::Return<void> ret = mPreparedModelV1_2->executeSynchronously(
+                request12, convertToV1_2(measure),
+                [&result](V1_0::ErrorStatus error,
+                          const hardware::hidl_vec<V1_2::OutputShape>& outputShapes,
+                          const V1_2::Timing& timing) {
                     result = getExecutionResult(convertToV1_3(error), outputShapes, timing);
                 });
         if (ret.isDeadObject()) {
@@ -363,11 +364,11 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
         const Request& request, MeasureTiming measure, const std::optional<Deadline>& deadline,
         const OptionalTimeoutDuration& loopTimeoutDuration, bool preferSynchronous) const {
     if (preferSynchronous) {
-        VLOG(EXECUTION) << "Before executeSynchronously() " << SHOW_IF_DEBUG(toString(request));
+        VLOG(EXECUTION) << "Before executeSynchronously() " << SHOW_IF_DEBUG(request);
         return executeSynchronously(request, measure, deadline, loopTimeoutDuration);
     }
 
-    VLOG(EXECUTION) << "Before executeAsynchronously() " << SHOW_IF_DEBUG(toString(request));
+    VLOG(EXECUTION) << "Before executeAsynchronously() " << SHOW_IF_DEBUG(request);
     return executeAsynchronously(request, measure, deadline, loopTimeoutDuration);
 }
 
@@ -397,13 +398,15 @@ std::shared_ptr<ExecutionBurstController> VersionedIPreparedModel::configureExec
     return ExecutionBurstController::create(mPreparedModelV1_2, pollingTimeWindow);
 }
 
-static std::pair<ErrorStatus, Capabilities> getCapabilitiesFunction(V1_3::IDevice* device) {
+static std::pair<V1_3::ErrorStatus, V1_3::Capabilities> getCapabilitiesFunction(
+        V1_3::IDevice* device) {
     CHECK(device != nullptr);
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_INITIALIZATION, "getCapabilities_1_3");
-    const std::pair<ErrorStatus, Capabilities> kFailure = {ErrorStatus::GENERAL_FAILURE, {}};
-    std::pair<ErrorStatus, Capabilities> result = kFailure;
-    const Return<void> ret = device->getCapabilities_1_3(
-            [&result](ErrorStatus error, const Capabilities& capabilities) {
+    const std::pair<V1_3::ErrorStatus, V1_3::Capabilities> kFailure = {
+            V1_3::ErrorStatus::GENERAL_FAILURE, {}};
+    std::pair<V1_3::ErrorStatus, V1_3::Capabilities> result = kFailure;
+    const hardware::Return<void> ret = device->getCapabilities_1_3(
+            [&result](V1_3::ErrorStatus error, const V1_3::Capabilities& capabilities) {
                 result = std::make_pair(error, capabilities);
             });
     if (!ret.isOk()) {
@@ -413,38 +416,39 @@ static std::pair<ErrorStatus, Capabilities> getCapabilitiesFunction(V1_3::IDevic
     return result;
 }
 
-std::tuple<int, hal::hidl_handle, sp<hal::IFencedExecutionCallback>, hal::Timing>
-VersionedIPreparedModel::executeFenced(
-        const hal::Request& request, const hal::hidl_vec<hal::hidl_handle>& waitFor,
-        MeasureTiming measure, const std::optional<Deadline>& deadline,
-        const OptionalTimeoutDuration& loopTimeoutDuration,
-        const hal::OptionalTimeoutDuration& timeoutDurationAfterFence) {
-    // version 1.3+ HAL
-    hal::hidl_handle syncFence;
-    sp<hal::IFencedExecutionCallback> dispatchCallback;
-    hal::Timing timing = {UINT64_MAX, UINT64_MAX};
+std::tuple<int, hardware::hidl_handle, sp<V1_3::IFencedExecutionCallback>, Timing>
+VersionedIPreparedModel::executeFenced(const Request& request,
+                                       const hardware::hidl_vec<hardware::hidl_handle>& waitFor,
+                                       MeasureTiming measure,
+                                       const std::optional<Deadline>& deadline,
+                                       const OptionalTimeoutDuration& loopTimeoutDuration,
+                                       const OptionalTimeoutDuration& timeoutDurationAfterFence) {
+    // version 1.3 HAL
+    hardware::hidl_handle syncFence;
+    sp<V1_3::IFencedExecutionCallback> dispatchCallback;
+    Timing timing = {UINT64_MAX, UINT64_MAX};
     if (mPreparedModelV1_3 != nullptr) {
         ErrorStatus errorStatus;
         const auto otp = makeTimePoint(deadline);
-        Return<void> ret = mPreparedModelV1_3->executeFenced(
-                request, waitFor, measure, otp, loopTimeoutDuration, timeoutDurationAfterFence,
+        hardware::Return<void> ret = mPreparedModelV1_3->executeFenced(
+                convertToV1_3(request), waitFor, convertToV1_2(measure), convertToV1_3(otp),
+                convertToV1_3(loopTimeoutDuration), convertToV1_3(timeoutDurationAfterFence),
                 [&syncFence, &errorStatus, &dispatchCallback](
-                        ErrorStatus error, const hidl_handle& handle,
-                        const sp<hal::IFencedExecutionCallback>& callback) {
+                        V1_3::ErrorStatus error, const hardware::hidl_handle& handle,
+                        const sp<V1_3::IFencedExecutionCallback>& callback) {
                     syncFence = handle;
-                    errorStatus = error;
+                    errorStatus = uncheckedConvert(error);
                     dispatchCallback = callback;
                 });
         if (!ret.isOk()) {
             LOG(ERROR) << "executeFenced failure: " << ret.description();
-            return std::make_tuple(ANEURALNETWORKS_OP_FAILED, hal::hidl_handle(nullptr), nullptr,
-                                   timing);
+            return std::make_tuple(ANEURALNETWORKS_OP_FAILED, hardware::hidl_handle(nullptr),
+                                   nullptr, timing);
         }
         if (errorStatus != ErrorStatus::NONE) {
-            LOG(ERROR) << "executeFenced returned "
-                       << toString(static_cast<ErrorStatus>(errorStatus));
+            LOG(ERROR) << "executeFenced returned " << errorStatus;
             return std::make_tuple(convertErrorStatusToResultCode(errorStatus),
-                                   hal::hidl_handle(nullptr), nullptr, timing);
+                                   hardware::hidl_handle(nullptr), nullptr, timing);
         }
         return std::make_tuple(ANEURALNETWORKS_NO_ERROR, syncFence, dispatchCallback, timing);
     }
@@ -454,33 +458,35 @@ VersionedIPreparedModel::executeFenced(
     LOG(INFO) << "No drivers able to handle sync fences, falling back to regular execution";
     for (const auto& fenceHandle : waitFor) {
         if (!fenceHandle.getNativeHandle()) {
-            return std::make_tuple(ANEURALNETWORKS_BAD_DATA, hal::hidl_handle(nullptr), nullptr,
-                                   timing);
+            return std::make_tuple(ANEURALNETWORKS_BAD_DATA, hardware::hidl_handle(nullptr),
+                                   nullptr, timing);
         }
         int syncFd = fenceHandle.getNativeHandle()->data[0];
         if (syncFd <= 0) {
-            return std::make_tuple(ANEURALNETWORKS_BAD_DATA, hal::hidl_handle(nullptr), nullptr,
-                                   timing);
+            return std::make_tuple(ANEURALNETWORKS_BAD_DATA, hardware::hidl_handle(nullptr),
+                                   nullptr, timing);
         }
         auto r = syncWait(syncFd, -1);
         if (r != FenceState::SIGNALED) {
             LOG(ERROR) << "syncWait failed, fd: " << syncFd;
-            return std::make_tuple(ANEURALNETWORKS_OP_FAILED, hal::hidl_handle(nullptr), nullptr,
-                                   timing);
+            return std::make_tuple(ANEURALNETWORKS_OP_FAILED, hardware::hidl_handle(nullptr),
+                                   nullptr, timing);
         }
     }
     int errorCode;
     std::tie(errorCode, std::ignore, timing) =
             executeSynchronously(request, measure, deadline, loopTimeoutDuration);
-    return std::make_tuple(errorCode, hal::hidl_handle(nullptr), nullptr, timing);
+    return std::make_tuple(errorCode, hardware::hidl_handle(nullptr), nullptr, timing);
 }
 
-static std::pair<ErrorStatus, Capabilities> getCapabilitiesFunction(V1_2::IDevice* device) {
+static std::pair<V1_3::ErrorStatus, V1_3::Capabilities> getCapabilitiesFunction(
+        V1_2::IDevice* device) {
     CHECK(device != nullptr);
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_INITIALIZATION, "getCapabilities_1_2");
-    const std::pair<ErrorStatus, Capabilities> kFailure = {ErrorStatus::GENERAL_FAILURE, {}};
-    std::pair<ErrorStatus, Capabilities> result = kFailure;
-    const Return<void> ret = device->getCapabilities_1_2(
+    const std::pair<V1_3::ErrorStatus, V1_3::Capabilities> kFailure = {
+            V1_3::ErrorStatus::GENERAL_FAILURE, {}};
+    std::pair<V1_3::ErrorStatus, V1_3::Capabilities> result = kFailure;
+    const hardware::Return<void> ret = device->getCapabilities_1_2(
             [&result](V1_0::ErrorStatus error, const V1_2::Capabilities& capabilities) {
                 result = std::make_pair(convertToV1_3(error), convertToV1_3(capabilities));
             });
@@ -491,12 +497,14 @@ static std::pair<ErrorStatus, Capabilities> getCapabilitiesFunction(V1_2::IDevic
     return result;
 }
 
-static std::pair<ErrorStatus, Capabilities> getCapabilitiesFunction(V1_1::IDevice* device) {
+static std::pair<V1_3::ErrorStatus, V1_3::Capabilities> getCapabilitiesFunction(
+        V1_1::IDevice* device) {
     CHECK(device != nullptr);
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_INITIALIZATION, "getCapabilities_1_1");
-    const std::pair<ErrorStatus, Capabilities> kFailure = {ErrorStatus::GENERAL_FAILURE, {}};
-    std::pair<ErrorStatus, Capabilities> result = kFailure;
-    const Return<void> ret = device->getCapabilities_1_1(
+    const std::pair<V1_3::ErrorStatus, V1_3::Capabilities> kFailure = {
+            V1_3::ErrorStatus::GENERAL_FAILURE, {}};
+    std::pair<V1_3::ErrorStatus, V1_3::Capabilities> result = kFailure;
+    const hardware::Return<void> ret = device->getCapabilities_1_1(
             [&result](V1_0::ErrorStatus error, const V1_1::Capabilities& capabilities) {
                 // Time taken to convert capabilities is trivial
                 result = std::make_pair(convertToV1_3(error), convertToV1_3(capabilities));
@@ -508,12 +516,14 @@ static std::pair<ErrorStatus, Capabilities> getCapabilitiesFunction(V1_1::IDevic
     return result;
 }
 
-static std::pair<ErrorStatus, Capabilities> getCapabilitiesFunction(V1_0::IDevice* device) {
+static std::pair<V1_3::ErrorStatus, V1_3::Capabilities> getCapabilitiesFunction(
+        V1_0::IDevice* device) {
     CHECK(device != nullptr);
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_INITIALIZATION, "getCapabilities");
-    const std::pair<ErrorStatus, Capabilities> kFailure = {ErrorStatus::GENERAL_FAILURE, {}};
-    std::pair<ErrorStatus, Capabilities> result = kFailure;
-    const Return<void> ret = device->getCapabilities(
+    const std::pair<V1_3::ErrorStatus, V1_3::Capabilities> kFailure = {
+            V1_3::ErrorStatus::GENERAL_FAILURE, {}};
+    std::pair<V1_3::ErrorStatus, V1_3::Capabilities> result = kFailure;
+    const hardware::Return<void> ret = device->getCapabilities(
             [&result](V1_0::ErrorStatus error, const V1_0::Capabilities& capabilities) {
                 // Time taken to convert capabilities is trivial
                 result = std::make_pair(convertToV1_3(error), convertToV1_3(capabilities));
@@ -525,14 +535,16 @@ static std::pair<ErrorStatus, Capabilities> getCapabilitiesFunction(V1_0::IDevic
     return result;
 }
 
-static std::pair<ErrorStatus, hidl_vec<Extension>> getSupportedExtensionsFunction(
-        V1_2::IDevice* device) {
+static std::pair<V1_3::ErrorStatus, hardware::hidl_vec<V1_2::Extension>>
+getSupportedExtensionsFunction(V1_2::IDevice* device) {
     CHECK(device != nullptr);
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_INITIALIZATION, "getSupportedExtensions");
-    const std::pair<ErrorStatus, hidl_vec<Extension>> kFailure = {ErrorStatus::GENERAL_FAILURE, {}};
-    std::pair<ErrorStatus, hidl_vec<Extension>> result = kFailure;
-    const Return<void> ret = device->getSupportedExtensions(
-            [&result](V1_0::ErrorStatus error, const hidl_vec<Extension>& extensions) {
+    const std::pair<V1_3::ErrorStatus, hardware::hidl_vec<V1_2::Extension>> kFailure = {
+            V1_3::ErrorStatus::GENERAL_FAILURE, {}};
+    std::pair<V1_3::ErrorStatus, hardware::hidl_vec<V1_2::Extension>> result = kFailure;
+    const hardware::Return<void> ret = device->getSupportedExtensions(
+            [&result](V1_0::ErrorStatus error,
+                      const hardware::hidl_vec<V1_2::Extension>& extensions) {
                 result = std::make_pair(convertToV1_3(error), extensions);
             });
     if (!ret.isOk()) {
@@ -542,18 +554,18 @@ static std::pair<ErrorStatus, hidl_vec<Extension>> getSupportedExtensionsFunctio
     return result;
 }
 
-static std::pair<ErrorStatus, hidl_vec<Extension>> getSupportedExtensionsFunction(
-        V1_0::IDevice* device) {
+static std::pair<V1_3::ErrorStatus, hardware::hidl_vec<V1_2::Extension>>
+getSupportedExtensionsFunction(V1_0::IDevice* device) {
     CHECK(device != nullptr);
-    return {ErrorStatus::NONE, {/* No extensions. */}};
+    return {V1_3::ErrorStatus::NONE, {/* No extensions. */}};
 }
 
 static int32_t getTypeFunction(V1_2::IDevice* device) {
     CHECK(device != nullptr);
     constexpr int32_t kFailure = -1;
     int32_t result = kFailure;
-    const Return<void> ret =
-            device->getType([&result](V1_0::ErrorStatus error, DeviceType deviceType) {
+    const hardware::Return<void> ret =
+            device->getType([&result](V1_0::ErrorStatus error, V1_2::DeviceType deviceType) {
                 if (error == V1_0::ErrorStatus::NONE) {
                     result = static_cast<int32_t>(deviceType);
                 }
@@ -570,12 +582,14 @@ static int32_t getTypeFunction(V1_0::IDevice* device) {
     return ANEURALNETWORKS_DEVICE_UNKNOWN;
 }
 
-static std::pair<ErrorStatus, hidl_string> getVersionStringFunction(V1_2::IDevice* device) {
+static std::pair<V1_3::ErrorStatus, hardware::hidl_string> getVersionStringFunction(
+        V1_2::IDevice* device) {
     CHECK(device != nullptr);
-    const std::pair<ErrorStatus, hidl_string> kFailure = {ErrorStatus::GENERAL_FAILURE, ""};
-    std::pair<ErrorStatus, hidl_string> result = kFailure;
-    const Return<void> ret = device->getVersionString(
-            [&result](V1_0::ErrorStatus error, const hidl_string& version) {
+    const std::pair<V1_3::ErrorStatus, hardware::hidl_string> kFailure = {
+            V1_3::ErrorStatus::GENERAL_FAILURE, ""};
+    std::pair<V1_3::ErrorStatus, hardware::hidl_string> result = kFailure;
+    const hardware::Return<void> ret = device->getVersionString(
+            [&result](V1_0::ErrorStatus error, const hardware::hidl_string& version) {
                 result = std::make_pair(convertToV1_3(error), version);
             });
     if (!ret.isOk()) {
@@ -585,18 +599,19 @@ static std::pair<ErrorStatus, hidl_string> getVersionStringFunction(V1_2::IDevic
     return result;
 }
 
-static std::pair<ErrorStatus, hidl_string> getVersionStringFunction(V1_0::IDevice* device) {
+static std::pair<V1_3::ErrorStatus, hardware::hidl_string> getVersionStringFunction(
+        V1_0::IDevice* device) {
     CHECK(device != nullptr);
-    return {ErrorStatus::NONE, "UNKNOWN"};
+    return {V1_3::ErrorStatus::NONE, "UNKNOWN"};
 }
 
-static std::tuple<ErrorStatus, uint32_t, uint32_t> getNumberOfCacheFilesNeededFunction(
+static std::tuple<V1_3::ErrorStatus, uint32_t, uint32_t> getNumberOfCacheFilesNeededFunction(
         V1_2::IDevice* device) {
     CHECK(device != nullptr);
-    constexpr std::tuple<ErrorStatus, uint32_t, uint32_t> kFailure = {ErrorStatus::GENERAL_FAILURE,
-                                                                      0, 0};
-    std::tuple<ErrorStatus, uint32_t, uint32_t> result = kFailure;
-    const Return<void> ret = device->getNumberOfCacheFilesNeeded(
+    constexpr std::tuple<V1_3::ErrorStatus, uint32_t, uint32_t> kFailure = {
+            V1_3::ErrorStatus::GENERAL_FAILURE, 0, 0};
+    std::tuple<V1_3::ErrorStatus, uint32_t, uint32_t> result = kFailure;
+    const hardware::Return<void> ret = device->getNumberOfCacheFilesNeeded(
             [&result](V1_0::ErrorStatus error, uint32_t numModelCache, uint32_t numDataCache) {
                 result = {convertToV1_3(error), numModelCache, numDataCache};
             });
@@ -607,17 +622,17 @@ static std::tuple<ErrorStatus, uint32_t, uint32_t> getNumberOfCacheFilesNeededFu
     return result;
 }
 
-static std::tuple<ErrorStatus, uint32_t, uint32_t> getNumberOfCacheFilesNeededFunction(
+static std::tuple<V1_3::ErrorStatus, uint32_t, uint32_t> getNumberOfCacheFilesNeededFunction(
         V1_0::IDevice* device) {
     CHECK(device != nullptr);
-    return {ErrorStatus::NONE, 0, 0};
+    return {V1_3::ErrorStatus::NONE, 0, 0};
 }
 
 struct InitialData {
-    hal::Capabilities capabilities;
-    hal::hidl_vec<hal::Extension> supportedExtensions;
+    V1_3::Capabilities capabilities;
+    hardware::hidl_vec<V1_2::Extension> supportedExtensions;
     int32_t type;
-    hal::hidl_string versionString;
+    hardware::hidl_string versionString;
     std::pair<uint32_t, uint32_t> numberOfCacheFilesNeeded;
 };
 
@@ -626,7 +641,7 @@ static std::optional<InitialData> initializeFunction(Device* device) {
     CHECK(device != nullptr);
 
     auto [capabilitiesStatus, capabilities] = getCapabilitiesFunction(device);
-    if (capabilitiesStatus != ErrorStatus::NONE) {
+    if (capabilitiesStatus != V1_3::ErrorStatus::NONE) {
         LOG(ERROR) << "IDevice::getCapabilities* returned the error "
                    << toString(capabilitiesStatus);
         return std::nullopt;
@@ -634,7 +649,7 @@ static std::optional<InitialData> initializeFunction(Device* device) {
     VLOG(MANAGER) << "Capab " << toString(capabilities);
 
     auto [versionStatus, versionString] = getVersionStringFunction(device);
-    if (versionStatus != ErrorStatus::NONE) {
+    if (versionStatus != V1_3::ErrorStatus::NONE) {
         LOG(ERROR) << "IDevice::getVersionString returned the error " << toString(versionStatus);
         return std::nullopt;
     }
@@ -647,7 +662,7 @@ static std::optional<InitialData> initializeFunction(Device* device) {
     }
 
     auto [extensionsStatus, supportedExtensions] = getSupportedExtensionsFunction(device);
-    if (extensionsStatus != ErrorStatus::NONE) {
+    if (extensionsStatus != V1_3::ErrorStatus::NONE) {
         LOG(ERROR) << "IDevice::getSupportedExtensions returned the error "
                    << toString(extensionsStatus);
         return std::nullopt;
@@ -655,7 +670,7 @@ static std::optional<InitialData> initializeFunction(Device* device) {
 
     const auto [cacheFilesStatus, numModelCacheFiles, numDataCacheFiles] =
             getNumberOfCacheFilesNeededFunction(device);
-    if (cacheFilesStatus != ErrorStatus::NONE) {
+    if (cacheFilesStatus != V1_3::ErrorStatus::NONE) {
         LOG(ERROR) << "IDevice::getNumberOfCacheFilesNeeded returned the error "
                    << toString(cacheFilesStatus);
         return std::nullopt;
@@ -663,7 +678,7 @@ static std::optional<InitialData> initializeFunction(Device* device) {
 
     // The following limit is enforced by VTS
     constexpr uint32_t maxNumCacheFiles =
-            static_cast<uint32_t>(Constant::MAX_NUMBER_OF_CACHE_FILES);
+            static_cast<uint32_t>(V1_2::Constant::MAX_NUMBER_OF_CACHE_FILES);
     if (numModelCacheFiles > maxNumCacheFiles || numDataCacheFiles > maxNumCacheFiles) {
         LOG(ERROR)
                 << "IDevice::getNumberOfCacheFilesNeeded returned invalid number of cache files: "
@@ -684,7 +699,7 @@ static std::optional<InitialData> initializeFunction(Device* device) {
 
 template <typename Core>
 std::optional<InitialData> initialize(const Core& core) {
-    // version 1.3+ HAL
+    // version 1.3 HAL
     if (const auto device = core.template getDevice<V1_3::IDevice>()) {
         return initializeFunction(device.get());
     }
@@ -710,7 +725,7 @@ std::optional<InitialData> initialize(const Core& core) {
 }
 
 std::shared_ptr<VersionedIDevice> VersionedIDevice::create(std::string serviceName,
-                                                           const DeviceFactory& makeDevice) {
+                                                           const HalDeviceFactory& makeDevice) {
     CHECK(makeDevice != nullptr)
             << "VersionedIDevice::create passed invalid device factory object.";
 
@@ -736,15 +751,16 @@ std::shared_ptr<VersionedIDevice> VersionedIDevice::create(std::string serviceNa
     auto [capabilities, supportedExtensions, type, versionString, numberOfCacheFilesNeeded] =
             std::move(*initialData);
     return std::make_shared<VersionedIDevice>(
-            std::move(capabilities), std::move(supportedExtensions), type, std::move(versionString),
-            numberOfCacheFilesNeeded, std::move(serviceName), makeDevice, std::move(core.value()));
+            uncheckedConvert(capabilities), uncheckedConvert(supportedExtensions), type,
+            std::move(versionString), numberOfCacheFilesNeeded, std::move(serviceName), makeDevice,
+            std::move(core.value()));
 }
 
-VersionedIDevice::VersionedIDevice(hal::Capabilities capabilities,
-                                   std::vector<hal::Extension> supportedExtensions, int32_t type,
+VersionedIDevice::VersionedIDevice(Capabilities capabilities,
+                                   std::vector<Extension> supportedExtensions, int32_t type,
                                    std::string versionString,
                                    std::pair<uint32_t, uint32_t> numberOfCacheFilesNeeded,
-                                   std::string serviceName, const DeviceFactory& makeDevice,
+                                   std::string serviceName, const HalDeviceFactory& makeDevice,
                                    Core core)
     : kCapabilities(std::move(capabilities)),
       kSupportedExtensions(std::move(supportedExtensions)),
@@ -765,7 +781,7 @@ std::optional<VersionedIDevice::Core> VersionedIDevice::Core::create(sp<V1_0::ID
     // proactively handle service crashes. If the linkToDeath call fails,
     // asynchronous calls are susceptible to hangs if the service crashes before
     // providing the response.
-    const Return<bool> ret = device->linkToDeath(deathHandler, 0);
+    const hardware::Return<bool> ret = device->linkToDeath(deathHandler, 0);
     if (!ret.isOk()) {
         LOG(ERROR) << "VersionedIDevice::Core::create failed to register a death recipient for the "
                       "IDevice object because of failure: "
@@ -828,12 +844,13 @@ std::pair<sp<T_IDevice>, sp<IDeviceDeathHandler>> VersionedIDevice::Core::getDev
 }
 
 template <typename T_Return, typename T_IDevice, typename T_Callback>
-Return<T_Return> callProtected(const char* context,
-                               const std::function<Return<T_Return>(const sp<T_IDevice>&)>& fn,
-                               const sp<T_IDevice>& device, const sp<T_Callback>& callback,
-                               const sp<IDeviceDeathHandler>& deathHandler) {
+hardware::Return<T_Return> callProtected(
+        const char* context,
+        const std::function<hardware::Return<T_Return>(const sp<T_IDevice>&)>& fn,
+        const sp<T_IDevice>& device, const sp<T_Callback>& callback,
+        const sp<IDeviceDeathHandler>& deathHandler) {
     const auto scoped = deathHandler->protectCallback(callback);
-    Return<T_Return> ret = fn(device);
+    hardware::Return<T_Return> ret = fn(device);
     // Suppose there was a transport error.  We have the following cases:
     // 1. Either not due to a dead device, or due to a device that was
     //    already dead at the time of the call to protectCallback().  In
@@ -863,16 +880,16 @@ Return<T_Return> callProtected(const char* context,
     return ret;
 }
 template <typename T_Return, typename T_IDevice>
-Return<T_Return> callProtected(const char*,
-                               const std::function<Return<T_Return>(const sp<T_IDevice>&)>& fn,
-                               const sp<T_IDevice>& device, const std::nullptr_t&,
-                               const sp<IDeviceDeathHandler>&) {
+hardware::Return<T_Return> callProtected(
+        const char*, const std::function<hardware::Return<T_Return>(const sp<T_IDevice>&)>& fn,
+        const sp<T_IDevice>& device, const std::nullptr_t&, const sp<IDeviceDeathHandler>&) {
     return fn(device);
 }
 
 template <typename T_Return, typename T_IDevice, typename T_Callback>
-Return<T_Return> VersionedIDevice::recoverable(
-        const char* context, const std::function<Return<T_Return>(const sp<T_IDevice>&)>& fn,
+hardware::Return<T_Return> VersionedIDevice::recoverable(
+        const char* context,
+        const std::function<hardware::Return<T_Return>(const sp<T_IDevice>&)>& fn,
         const T_Callback& callback) const EXCLUDES(mMutex) {
     CHECK_EQ(callback == nullptr, (std::is_same_v<T_Callback, std::nullptr_t>));
 
@@ -880,7 +897,7 @@ Return<T_Return> VersionedIDevice::recoverable(
     sp<IDeviceDeathHandler> deathHandler;
     std::tie(device, deathHandler) = getDeviceAndDeathHandler<T_IDevice>();
 
-    Return<T_Return> ret = callProtected(context, fn, device, callback, deathHandler);
+    hardware::Return<T_Return> ret = callProtected(context, fn, device, callback, deathHandler);
 
     if (ret.isDeadObject()) {
         {
@@ -958,42 +975,42 @@ const std::vector<Extension>& VersionedIDevice::getSupportedExtensions() const {
     return kSupportedExtensions;
 }
 
-std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
+std::pair<ErrorStatus, std::vector<bool>> VersionedIDevice::getSupportedOperations(
         const MetaModel& metaModel) const {
-    const std::pair<ErrorStatus, hidl_vec<bool>> kFailure = {ErrorStatus::GENERAL_FAILURE, {}};
-    std::pair<ErrorStatus, hidl_vec<bool>> result;
+    const std::pair<ErrorStatus, std::vector<bool>> kFailure = {ErrorStatus::GENERAL_FAILURE, {}};
+    std::pair<ErrorStatus, std::vector<bool>> result;
 
     const Model& model = metaModel.getModel();
 
     auto noneSupported = [&model] {
-        hidl_vec<bool> supported(model.main.operations.size());
-        std::fill(supported.begin(), supported.end(), false);
+        std::vector<bool> supported(model.main.operations.size(), false);
         return std::make_pair(ErrorStatus::NONE, std::move(supported));
     };
 
-    auto remappedResult = [&model](const std::pair<ErrorStatus, hidl_vec<bool>>& result,
-                                   const std::function<uint32_t(uint32_t)>&
-                                           slicedModelOperationIndexToModelOperationIndex) {
-        const ErrorStatus status = result.first;
-        const hidl_vec<bool>& supported = result.second;
-        hidl_vec<bool> remappedSupported(model.main.operations.size());
-        std::fill(remappedSupported.begin(), remappedSupported.end(), false);
-        for (size_t i = 0; i < supported.size(); ++i) {
-            if (supported[i]) {
-                remappedSupported[slicedModelOperationIndexToModelOperationIndex(i)] = true;
-            }
-        }
-        return std::make_pair(status, std::move(remappedSupported));
-    };
+    auto remappedResult =
+            [&model](const std::pair<ErrorStatus, std::vector<bool>>& result,
+                     const MetaModel::Mapper& slicedModelOperationIndexToModelOperationIndex) {
+                const ErrorStatus status = result.first;
+                const std::vector<bool>& supported = result.second;
+                std::vector<bool> remappedSupported(model.main.operations.size(), false);
+                for (size_t i = 0; i < supported.size(); ++i) {
+                    if (supported[i]) {
+                        remappedSupported[slicedModelOperationIndexToModelOperationIndex(i)] = true;
+                    }
+                }
+                return std::make_pair(status, std::move(remappedSupported));
+            };
 
-    // version 1.3+ HAL
+    // version 1.3 HAL
+    const V1_3::Model model13 = convertToV1_3(model);
     if (getDevice<V1_3::IDevice>() != nullptr) {
         NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "getSupportedOperations_1_3");
-        Return<void> ret = recoverable<void, V1_3::IDevice>(
-                __FUNCTION__, [&model, &result](const sp<V1_3::IDevice>& device) {
+        hardware::Return<void> ret = recoverable<void, V1_3::IDevice>(
+                __FUNCTION__, [&model13, &result](const sp<V1_3::IDevice>& device) {
                     return device->getSupportedOperations_1_3(
-                            model, [&result](ErrorStatus error, const hidl_vec<bool>& supported) {
-                                result = std::make_pair(error, supported);
+                            model13, [&result](V1_3::ErrorStatus error,
+                                               const hardware::hidl_vec<bool>& supported) {
+                                result = std::make_pair(uncheckedConvert(error), supported);
                             });
                 });
         if (!ret.isOk()) {
@@ -1005,11 +1022,11 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
 
     // version 1.2 HAL
     if (getDevice<V1_2::IDevice>() != nullptr) {
-        const bool compliant = compliantWithV1_2(model);
+        const bool compliant = compliantWithV1_2(model13);
         V1_2::Model model12;
-        std::function<uint32_t(uint32_t)> slicedModelOperationIndexToModelOperationIndex;
+        MetaModel::Mapper slicedModelOperationIndexToModelOperationIndex;
         if (compliant) {
-            model12 = convertToV1_2(model);
+            model12 = convertToV1_2(model13);
         } else {
             const auto slice12 = metaModel.getSliceV1_2();
             if (!slice12.has_value()) {
@@ -1018,12 +1035,12 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
             std::tie(model12, slicedModelOperationIndexToModelOperationIndex) = *slice12;
         }
         NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "getSupportedOperations_1_2");
-        Return<void> ret = recoverable<void, V1_2::IDevice>(
+        hardware::Return<void> ret = recoverable<void, V1_2::IDevice>(
                 __FUNCTION__, [&model12, &result](const sp<V1_2::IDevice>& device) {
                     return device->getSupportedOperations_1_2(
-                            model12,
-                            [&result](V1_0::ErrorStatus error, const hidl_vec<bool>& supported) {
-                                result = std::make_pair(convertToV1_3(error), supported);
+                            model12, [&result](V1_0::ErrorStatus error,
+                                               const hardware::hidl_vec<bool>& supported) {
+                                result = std::make_pair(uncheckedConvert(error), supported);
                             });
                 });
         if (!ret.isOk()) {
@@ -1038,11 +1055,11 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
 
     // version 1.1 HAL
     if (getDevice<V1_1::IDevice>() != nullptr) {
-        const bool compliant = compliantWithV1_1(model);
+        const bool compliant = compliantWithV1_1(model13);
         V1_1::Model model11;
-        std::function<uint32_t(uint32_t)> slicedModelOperationIndexToModelOperationIndex;
+        MetaModel::Mapper slicedModelOperationIndexToModelOperationIndex;
         if (compliant) {
-            model11 = convertToV1_1(model);
+            model11 = convertToV1_1(model13);
         } else {
             const auto slice11 = metaModel.getSliceV1_1();
             if (!slice11.has_value()) {
@@ -1051,12 +1068,12 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
             std::tie(model11, slicedModelOperationIndexToModelOperationIndex) = *slice11;
         }
         NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "getSupportedOperations_1_1");
-        Return<void> ret = recoverable<void, V1_1::IDevice>(
+        hardware::Return<void> ret = recoverable<void, V1_1::IDevice>(
                 __FUNCTION__, [&model11, &result](const sp<V1_1::IDevice>& device) {
                     return device->getSupportedOperations_1_1(
-                            model11,
-                            [&result](V1_0::ErrorStatus error, const hidl_vec<bool>& supported) {
-                                result = std::make_pair(convertToV1_3(error), supported);
+                            model11, [&result](V1_0::ErrorStatus error,
+                                               const hardware::hidl_vec<bool>& supported) {
+                                result = std::make_pair(uncheckedConvert(error), supported);
                             });
                 });
         if (!ret.isOk()) {
@@ -1071,11 +1088,11 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
 
     // version 1.0 HAL
     if (getDevice<V1_0::IDevice>() != nullptr) {
-        const bool compliant = compliantWithV1_0(model);
+        const bool compliant = compliantWithV1_0(model13);
         V1_0::Model model10;
-        std::function<uint32_t(uint32_t)> slicedModelOperationIndexToModelOperationIndex;
+        MetaModel::Mapper slicedModelOperationIndexToModelOperationIndex;
         if (compliant) {
-            model10 = convertToV1_0(model);
+            model10 = convertToV1_0(model13);
         } else {
             const auto slice10 = metaModel.getSliceV1_0();
             if (!slice10.has_value()) {
@@ -1084,12 +1101,12 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
             std::tie(model10, slicedModelOperationIndexToModelOperationIndex) = *slice10;
         }
         NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "getSupportedOperations");
-        Return<void> ret = recoverable<void, V1_0::IDevice>(
+        hardware::Return<void> ret = recoverable<void, V1_0::IDevice>(
                 __FUNCTION__, [&model10, &result](const sp<V1_0::IDevice>& device) {
                     return device->getSupportedOperations(
-                            model10,
-                            [&result](V1_0::ErrorStatus error, const hidl_vec<bool>& supported) {
-                                result = std::make_pair(convertToV1_3(error), supported);
+                            model10, [&result](V1_0::ErrorStatus error,
+                                               const hardware::hidl_vec<bool>& supported) {
+                                result = std::make_pair(uncheckedConvert(error), supported);
                             });
                 });
         if (!ret.isOk()) {
@@ -1111,7 +1128,7 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
 // handle is expected to come in as empty, and is only set to a fd when the function returns true.
 // The file descriptor is always opened with both read and write permission.
 static bool createCacheHandle(const std::string& cache, bool createIfNotExist,
-                              hidl_handle* handle) {
+                              hardware::hidl_handle* handle) {
     CHECK(handle->getNativeHandle() == nullptr);
     int fd = open(cache.c_str(), createIfNotExist ? (O_RDWR | O_CREAT) : O_RDWR, S_IRUSR | S_IWUSR);
     NN_RET_CHECK_GE(fd, 0);
@@ -1127,16 +1144,15 @@ static bool createCacheHandle(const std::string& cache, bool createIfNotExist,
 
 // Opens a list of cache files and returns the handle vector. Returns empty vector on fail.
 // The file descriptors are always opened with both read and write permission.
-static hidl_vec<hidl_handle> createCacheHandleVec(uint32_t numCacheFiles,
-                                                  const std::string& baseFileName,
-                                                  bool createIfNotExist) {
-    CHECK(numCacheFiles <= static_cast<uint32_t>(Constant::MAX_NUMBER_OF_CACHE_FILES));
-    hidl_vec<hidl_handle> handles(numCacheFiles);
+static hardware::hidl_vec<hardware::hidl_handle> createCacheHandleVec(
+        uint32_t numCacheFiles, const std::string& baseFileName, bool createIfNotExist) {
+    CHECK(numCacheFiles <= static_cast<uint32_t>(V1_2::Constant::MAX_NUMBER_OF_CACHE_FILES));
+    hardware::hidl_vec<hardware::hidl_handle> handles(numCacheFiles);
     for (uint32_t i = 0; i < numCacheFiles; i++) {
         std::string filename = baseFileName + std::to_string(i);
         VLOG(COMPILATION) << "Cache " << i << ": " << filename;
         if (!createCacheHandle(filename, createIfNotExist, &handles[i])) {
-            return hidl_vec<hidl_handle>();
+            return hardware::hidl_vec<hardware::hidl_handle>();
         }
     }
     return handles;
@@ -1146,8 +1162,9 @@ static hidl_vec<hidl_handle> createCacheHandleVec(uint32_t numCacheFiles,
 // fail and leaves the vectors empty. Each vector is expected to come in as empty.
 static bool getCacheHandles(const std::string& cacheDir, const CacheToken& token,
                             const std::pair<uint32_t, uint32_t>& numCacheFiles,
-                            bool createIfNotExist, hidl_vec<hidl_handle>* modelCache,
-                            hidl_vec<hidl_handle>* dataCache) {
+                            bool createIfNotExist,
+                            hardware::hidl_vec<hardware::hidl_handle>* modelCache,
+                            hardware::hidl_vec<hardware::hidl_handle>* dataCache) {
     // The filename includes ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN * 2 characters for token,
     // and 1 character for model/data cache identifier.
     std::string filename(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN * 2 + 1, '0');
@@ -1193,7 +1210,7 @@ static std::pair<int, std::shared_ptr<VersionedIPreparedModel>> prepareModelResu
 
     if (status != ErrorStatus::NONE) {
         LOG(ERROR) << prepareName << " on " << serviceName << " failed: "
-                   << "prepareReturnStatus=" << toString(status);
+                   << "prepareReturnStatus=" << status;
         return prepareModelFailure(status);
     }
     if (preparedModel == nullptr) {
@@ -1214,7 +1231,7 @@ std::pair<int, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevice::prepa
             ANEURALNETWORKS_DEAD_OBJECT, nullptr};
 
     // Get cache files if they exist, otherwise create them.
-    hidl_vec<hidl_handle> modelCache, dataCache;
+    hardware::hidl_vec<hardware::hidl_handle> modelCache, dataCache;
     if (!maybeToken.has_value() ||
         !getCacheHandles(cacheDir, *maybeToken, kNumberOfCacheFilesNeeded,
                          /*createIfNotExist=*/true, &modelCache, &dataCache)) {
@@ -1226,19 +1243,22 @@ std::pair<int, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevice::prepa
     static const CacheToken kNullToken{};
     const CacheToken token = maybeToken.value_or(kNullToken);
 
+    const V1_3::Model model13 = convertToV1_3(model);
     const sp<PreparedModelCallback> callback = new PreparedModelCallback();
 
     // If 1.3 device, try preparing model
     if (getDevice<V1_3::IDevice>() != nullptr) {
         const auto otp = makeTimePoint(deadline);
-        const Return<ErrorStatus> ret = recoverable<ErrorStatus, V1_3::IDevice>(
-                __FUNCTION__,
-                [&model, preference, priority, &otp, &modelCache, &dataCache, &token,
-                 &callback](const sp<V1_3::IDevice>& device) {
-                    return device->prepareModel_1_3(model, preference, priority, otp, modelCache,
-                                                    dataCache, token, callback);
-                },
-                callback);
+        const hardware::Return<V1_3::ErrorStatus> ret =
+                recoverable<V1_3::ErrorStatus, V1_3::IDevice>(
+                        __FUNCTION__,
+                        [&model13, preference, priority, &otp, &modelCache, &dataCache, &token,
+                         &callback](const sp<V1_3::IDevice>& device) {
+                            return device->prepareModel_1_3(
+                                    model13, convertToV1_1(preference), convertToV1_3(priority),
+                                    convertToV1_3(otp), modelCache, dataCache, token, callback);
+                        },
+                        callback);
         if (ret.isDeadObject()) {
             LOG(ERROR) << "prepareModel_1_3 failure: " << ret.description();
             return kDeadObject;
@@ -1247,9 +1267,10 @@ std::pair<int, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevice::prepa
             LOG(ERROR) << "prepareModel_1_3 failure: " << ret.description();
             return prepareModelFailure();
         }
-        if (ret != ErrorStatus::NONE) {
-            LOG(ERROR) << "prepareModel_1_3 returned " << toString(static_cast<ErrorStatus>(ret));
-            return prepareModelFailure(ret);
+        const ErrorStatus status = uncheckedConvert(ret);
+        if (status != ErrorStatus::NONE) {
+            LOG(ERROR) << "prepareModel_1_3 returned " << status;
+            return prepareModelFailure(status);
         }
         return prepareModelResult(*callback, "prepareModel_1_3", kServiceName);
     }
@@ -1264,20 +1285,22 @@ std::pair<int, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevice::prepa
             // but could be larger for other models).
             NNTRACE_FULL_SUBTRACT(NNTRACE_LAYER_RUNTIME, NNTRACE_PHASE_COMPILATION,
                                   "VersionedIDevice::prepareModel_1_2");
-            compliant = compliantWithV1_2(model);
+            compliant = compliantWithV1_2(model13);
             if (compliant) {
-                model12 = convertToV1_2(model);  // copy is elided
+                model12 = convertToV1_2(model13);  // copy is elided
             }
         }
         if (compliant) {
-            const Return<V1_0::ErrorStatus> ret = recoverable<V1_0::ErrorStatus, V1_2::IDevice>(
-                    __FUNCTION__,
-                    [&model12, &preference, &modelCache, &dataCache, &token,
-                     &callback](const sp<V1_2::IDevice>& device) {
-                        return device->prepareModel_1_2(model12, preference, modelCache, dataCache,
-                                                        token, callback);
-                    },
-                    callback);
+            const hardware::Return<V1_0::ErrorStatus> ret =
+                    recoverable<V1_0::ErrorStatus, V1_2::IDevice>(
+                            __FUNCTION__,
+                            [&model12, &preference, &modelCache, &dataCache, &token,
+                             &callback](const sp<V1_2::IDevice>& device) {
+                                return device->prepareModel_1_2(model12, convertToV1_1(preference),
+                                                                modelCache, dataCache, token,
+                                                                callback);
+                            },
+                            callback);
             if (ret.isDeadObject()) {
                 LOG(ERROR) << "prepareModel_1_2 failure: " << ret.description();
                 return kDeadObject;
@@ -1286,10 +1309,10 @@ std::pair<int, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevice::prepa
                 LOG(ERROR) << "prepareModel_1_2 failure: " << ret.description();
                 return prepareModelFailure();
             }
-            const V1_0::ErrorStatus status = static_cast<V1_0::ErrorStatus>(ret);
-            if (status != V1_0::ErrorStatus::NONE) {
-                LOG(ERROR) << "prepareModel_1_2 returned " << toString(status);
-                return prepareModelFailure(convertToV1_3(status));
+            const ErrorStatus status = uncheckedConvert(ret);
+            if (status != ErrorStatus::NONE) {
+                LOG(ERROR) << "prepareModel_1_2 returned " << status;
+                return prepareModelFailure(status);
             }
             return prepareModelResult(*callback, "prepareModel_1_2", kServiceName);
         }
@@ -1308,18 +1331,20 @@ std::pair<int, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevice::prepa
             // but could be larger for other models).
             NNTRACE_FULL_SUBTRACT(NNTRACE_LAYER_RUNTIME, NNTRACE_PHASE_COMPILATION,
                                   "VersionedIDevice::prepareModel_1_1");
-            compliant = compliantWithV1_1(model);
+            compliant = compliantWithV1_1(model13);
             if (compliant) {
-                model11 = convertToV1_1(model);  // copy is elided
+                model11 = convertToV1_1(model13);  // copy is elided
             }
         }
         if (compliant) {
-            const Return<V1_0::ErrorStatus> ret = recoverable<V1_0::ErrorStatus, V1_1::IDevice>(
-                    __FUNCTION__,
-                    [&model11, &preference, &callback](const sp<V1_1::IDevice>& device) {
-                        return device->prepareModel_1_1(model11, preference, callback);
-                    },
-                    callback);
+            const hardware::Return<V1_0::ErrorStatus> ret =
+                    recoverable<V1_0::ErrorStatus, V1_1::IDevice>(
+                            __FUNCTION__,
+                            [&model11, &preference, &callback](const sp<V1_1::IDevice>& device) {
+                                return device->prepareModel_1_1(model11, convertToV1_1(preference),
+                                                                callback);
+                            },
+                            callback);
             if (ret.isDeadObject()) {
                 LOG(ERROR) << "prepareModel_1_1 failure: " << ret.description();
                 return kDeadObject;
@@ -1328,10 +1353,10 @@ std::pair<int, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevice::prepa
                 LOG(ERROR) << "prepareModel_1_1 failure: " << ret.description();
                 return prepareModelFailure();
             }
-            const V1_0::ErrorStatus status = static_cast<V1_0::ErrorStatus>(ret);
-            if (status != V1_0::ErrorStatus::NONE) {
-                LOG(ERROR) << "prepareModel_1_1 returned " << toString(status);
-                return prepareModelFailure(convertToV1_3(status));
+            const ErrorStatus status = uncheckedConvert(ret);
+            if (status != ErrorStatus::NONE) {
+                LOG(ERROR) << "prepareModel_1_1 returned " << status;
+                return prepareModelFailure(status);
             }
             return prepareModelResult(*callback, "prepareModel_1_1", kServiceName);
         }
@@ -1350,18 +1375,19 @@ std::pair<int, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevice::prepa
             // but could be larger for other models).
             NNTRACE_FULL_SUBTRACT(NNTRACE_LAYER_RUNTIME, NNTRACE_PHASE_COMPILATION,
                                   "VersionedIDevice::prepareModel");
-            compliant = compliantWithV1_0(model);
+            compliant = compliantWithV1_0(model13);
             if (compliant) {
-                model10 = convertToV1_0(model);  // copy is elided
+                model10 = convertToV1_0(model13);  // copy is elided
             }
         }
         if (compliant) {
-            const Return<V1_0::ErrorStatus> ret = recoverable<V1_0::ErrorStatus, V1_0::IDevice>(
-                    __FUNCTION__,
-                    [&model10, &callback](const sp<V1_0::IDevice>& device) {
-                        return device->prepareModel(model10, callback);
-                    },
-                    callback);
+            const hardware::Return<V1_0::ErrorStatus> ret =
+                    recoverable<V1_0::ErrorStatus, V1_0::IDevice>(
+                            __FUNCTION__,
+                            [&model10, &callback](const sp<V1_0::IDevice>& device) {
+                                return device->prepareModel(model10, callback);
+                            },
+                            callback);
             if (ret.isDeadObject()) {
                 LOG(ERROR) << "prepareModel failure: " << ret.description();
                 return kDeadObject;
@@ -1370,10 +1396,10 @@ std::pair<int, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevice::prepa
                 LOG(ERROR) << "prepareModel failure: " << ret.description();
                 return prepareModelFailure();
             }
-            const V1_0::ErrorStatus status = static_cast<V1_0::ErrorStatus>(ret);
-            if (status != V1_0::ErrorStatus::NONE) {
-                LOG(ERROR) << "prepareModel returned " << toString(status);
-                return prepareModelFailure(convertToV1_3(status));
+            const ErrorStatus status = uncheckedConvert(ret);
+            if (status != ErrorStatus::NONE) {
+                LOG(ERROR) << "prepareModel returned " << status;
+                return prepareModelFailure(status);
             }
             return prepareModelResult(*callback, "prepareModel", kServiceName);
         }
@@ -1398,24 +1424,25 @@ VersionedIDevice::prepareModelFromCacheInternal(const std::optional<Deadline>& d
             ANEURALNETWORKS_DEAD_OBJECT, nullptr};
 
     // Get cache files if they exist, otherwise return from the function early.
-    hidl_vec<hidl_handle> modelCache, dataCache;
+    hardware::hidl_vec<hardware::hidl_handle> modelCache, dataCache;
     if (!getCacheHandles(cacheDir, token, kNumberOfCacheFilesNeeded,
                          /*createIfNotExist=*/false, &modelCache, &dataCache)) {
         return prepareModelFailure();
     }
 
-    // version 1.3+ HAL
+    // version 1.3 HAL
     if (getDevice<V1_3::IDevice>() != nullptr) {
         const auto otp = makeTimePoint(deadline);
         const sp<PreparedModelCallback> callback = new PreparedModelCallback();
-        const Return<ErrorStatus> ret = recoverable<ErrorStatus, V1_3::IDevice>(
-                __FUNCTION__,
-                [&otp, &modelCache, &dataCache, &token,
-                 &callback](const sp<V1_3::IDevice>& device) {
-                    return device->prepareModelFromCache_1_3(otp, modelCache, dataCache, token,
-                                                             callback);
-                },
-                callback);
+        const hardware::Return<V1_3::ErrorStatus> ret =
+                recoverable<V1_3::ErrorStatus, V1_3::IDevice>(
+                        __FUNCTION__,
+                        [&otp, &modelCache, &dataCache, &token,
+                         &callback](const sp<V1_3::IDevice>& device) {
+                            return device->prepareModelFromCache_1_3(convertToV1_3(otp), modelCache,
+                                                                     dataCache, token, callback);
+                        },
+                        callback);
         if (ret.isDeadObject()) {
             LOG(ERROR) << "prepareModelFromCache_1_3 failure: " << ret.description();
             return kDeadObject;
@@ -1424,10 +1451,10 @@ VersionedIDevice::prepareModelFromCacheInternal(const std::optional<Deadline>& d
             LOG(ERROR) << "prepareModelFromCache_1_3 failure: " << ret.description();
             return prepareModelFailure();
         }
-        if (ret != ErrorStatus::NONE) {
-            LOG(ERROR) << "prepareModelFromCache_1_3 returned "
-                       << toString(static_cast<ErrorStatus>(ret));
-            return prepareModelFailure(ret);
+        const ErrorStatus status = uncheckedConvert(ret);
+        if (status != ErrorStatus::NONE) {
+            LOG(ERROR) << "prepareModelFromCache_1_3 returned " << status;
+            return prepareModelFailure(status);
         }
         return prepareModelResult(*callback, "prepareModelFromCache_1_3", kServiceName);
     }
@@ -1435,12 +1462,15 @@ VersionedIDevice::prepareModelFromCacheInternal(const std::optional<Deadline>& d
     // version 1.2 HAL
     if (getDevice<V1_2::IDevice>() != nullptr) {
         const sp<PreparedModelCallback> callback = new PreparedModelCallback();
-        const Return<V1_0::ErrorStatus> ret = recoverable<V1_0::ErrorStatus, V1_2::IDevice>(
-                __FUNCTION__,
-                [&modelCache, &dataCache, &token, &callback](const sp<V1_2::IDevice>& device) {
-                    return device->prepareModelFromCache(modelCache, dataCache, token, callback);
-                },
-                callback);
+        const hardware::Return<V1_0::ErrorStatus> ret =
+                recoverable<V1_0::ErrorStatus, V1_2::IDevice>(
+                        __FUNCTION__,
+                        [&modelCache, &dataCache, &token,
+                         &callback](const sp<V1_2::IDevice>& device) {
+                            return device->prepareModelFromCache(modelCache, dataCache, token,
+                                                                 callback);
+                        },
+                        callback);
         if (ret.isDeadObject()) {
             LOG(ERROR) << "prepareModelFromCache failure: " << ret.description();
             return kDeadObject;
@@ -1449,10 +1479,10 @@ VersionedIDevice::prepareModelFromCacheInternal(const std::optional<Deadline>& d
             LOG(ERROR) << "prepareModelFromCache failure: " << ret.description();
             return prepareModelFailure();
         }
-        const V1_0::ErrorStatus status = static_cast<V1_0::ErrorStatus>(ret);
-        if (status != V1_0::ErrorStatus::NONE) {
-            LOG(ERROR) << "prepareModelFromCache returned " << toString(status);
-            return prepareModelFailure(convertToV1_3(status));
+        const ErrorStatus status = uncheckedConvert(ret);
+        if (status != ErrorStatus::NONE) {
+            LOG(ERROR) << "prepareModelFromCache returned " << status;
+            return prepareModelFailure(status);
         }
         return prepareModelResult(*callback, "prepareModelFromCache", kServiceName);
     }
@@ -1520,28 +1550,31 @@ const std::string& VersionedIDevice::getName() const {
     return kServiceName;
 }
 
-std::tuple<ErrorStatus, sp<IBuffer>, uint32_t> VersionedIDevice::allocate(
-        const BufferDesc& desc,
+std::tuple<V1_3::ErrorStatus, sp<V1_3::IBuffer>, uint32_t> VersionedIDevice::allocate(
+        const V1_3::BufferDesc& desc,
         const std::vector<std::shared_ptr<VersionedIPreparedModel>>& versionedPreparedModels,
-        const hidl_vec<BufferRole>& inputRoles, const hidl_vec<BufferRole>& outputRoles) const {
-    const auto kFailure = std::make_tuple<ErrorStatus, sp<IBuffer>, uint32_t>(
-            ErrorStatus::GENERAL_FAILURE, nullptr, 0);
+        const std::vector<BufferRole>& inputRoles,
+        const std::vector<BufferRole>& outputRoles) const {
+    const auto kFailure = std::make_tuple<V1_3::ErrorStatus, sp<V1_3::IBuffer>, uint32_t>(
+            V1_3::ErrorStatus::GENERAL_FAILURE, nullptr, 0);
 
-    // version 1.3+ HAL
+    // version 1.3 HAL
     if (getDevice<V1_3::IDevice>() != nullptr) {
-        hidl_vec<sp<V1_3::IPreparedModel>> preparedModels(versionedPreparedModels.size());
+        hardware::hidl_vec<sp<V1_3::IPreparedModel>> preparedModels(versionedPreparedModels.size());
         std::transform(versionedPreparedModels.begin(), versionedPreparedModels.end(),
                        preparedModels.begin(),
                        [](const auto& preparedModel) { return preparedModel->getV1_3(); });
 
-        std::tuple<ErrorStatus, sp<IBuffer>, int32_t> result;
-        const Return<void> ret = recoverable<void, V1_3::IDevice>(
+        std::tuple<V1_3::ErrorStatus, sp<V1_3::IBuffer>, int32_t> result;
+        const hardware::Return<void> ret = recoverable<void, V1_3::IDevice>(
                 __FUNCTION__, [&](const sp<V1_3::IDevice>& device) {
-                    return device->allocate(desc, preparedModels, inputRoles, outputRoles,
-                                            [&result](ErrorStatus error, const sp<IBuffer>& buffer,
-                                                      uint32_t token) {
-                                                result = {error, buffer, token};
-                                            });
+                    return device->allocate(
+                            desc, preparedModels, convertToV1_3(inputRoles),
+                            convertToV1_3(outputRoles),
+                            [&result](V1_3::ErrorStatus error, const sp<V1_3::IBuffer>& buffer,
+                                      uint32_t token) {
+                                result = {error, buffer, token};
+                            });
                 });
         if (!ret.isOk()) {
             LOG(ERROR) << "allocate failure: " << ret.description();

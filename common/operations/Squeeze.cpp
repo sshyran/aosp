@@ -20,7 +20,6 @@
 
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "Operations.h"
 #include "Tracing.h"
@@ -36,8 +35,6 @@ constexpr uint32_t kSqueezeDims = 1;
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
-using namespace hal;
-
 bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
@@ -46,7 +43,7 @@ bool validate(const IOperationValidationContext* context) {
                  inputType == OperandType::TENSOR_FLOAT32 ||
                  inputType == OperandType::TENSOR_QUANT8_ASYMM ||
                  inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
-            << "Unsupported input operand type for SQUEEZE op: " << toString(inputType);
+            << "Unsupported input operand type for SQUEEZE op: " << inputType;
 
     HalVersion minSupportedHalVersion;
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {

@@ -28,10 +28,9 @@
 #include "CpuExecutor.h"
 #include "HalInterfaces.h"
 #include "Utils.h"
+#include "nnapi/TypeUtils.h"
 
 namespace android::nn {
-
-using namespace hal;
 
 std::shared_ptr<ManagedBuffer> ManagedBuffer::create(uint32_t size,
                                                      std::set<PreparedModelRole> roles,
@@ -40,7 +39,7 @@ std::shared_ptr<ManagedBuffer> ManagedBuffer::create(uint32_t size,
     if (buffer == nullptr) {
         return nullptr;
     }
-    if (isExtensionOperandType(operand.type)) {
+    if (isExtension(operand.type)) {
         LOG(ERROR) << "ManagedBuffer cannot handle extension operands.";
         return nullptr;
     }
@@ -55,19 +54,18 @@ ManagedBuffer::ManagedBuffer(std::unique_ptr<uint8_t[]> buffer, uint32_t size,
       kOperandType(operand.type),
       kInitialDimensions(operand.dimensions),
       mUpdatedDimensions(operand.dimensions) {
-    CHECK(!isExtensionOperandType(kOperandType));
+    CHECK(!isExtension(kOperandType));
 }
 
 ErrorStatus ManagedBuffer::validateRequest(uint32_t poolIndex, const Request& request,
-                                           const IPreparedModel* preparedModel) const {
+                                           const V1_3::IPreparedModel* preparedModel) const {
     CHECK_LT(poolIndex, request.pools.size());
-    CHECK(request.pools[poolIndex].getDiscriminator() ==
-          Request::MemoryPool::hidl_discriminator::token);
+    CHECK(std::holds_alternative<Request::MemoryDomainToken>(request.pools[poolIndex]));
     std::lock_guard<std::mutex> guard(mMutex);
 
     bool usedAsInput = false, usedAsOutput = false;
     for (uint32_t i = 0; i < request.inputs.size(); i++) {
-        if (request.inputs[i].hasNoValue) continue;
+        if (request.inputs[i].lifetime != Request::Argument::LifeTime::POOL) continue;
         if (request.inputs[i].location.poolIndex != poolIndex) continue;
         // Validate if the input role is specified during allocation.
         if (kRoles.count({preparedModel, IOType::INPUT, i}) == 0) {
@@ -89,7 +87,7 @@ ErrorStatus ManagedBuffer::validateRequest(uint32_t poolIndex, const Request& re
         usedAsInput = true;
     }
     for (uint32_t i = 0; i < request.outputs.size(); i++) {
-        if (request.outputs[i].hasNoValue) continue;
+        if (request.outputs[i].lifetime != Request::Argument::LifeTime::POOL) continue;
         if (request.outputs[i].location.poolIndex != poolIndex) continue;
         if (usedAsInput || usedAsOutput) {
             LOG(ERROR) << "ManagedBuffer::validateRequest -- using the same device memory for "

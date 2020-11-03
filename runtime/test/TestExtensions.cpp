@@ -32,7 +32,9 @@ using DeviceManager = ::android::nn::DeviceManager;
 using SampleDriver = ::android::nn::sample_driver::SampleDriver;
 using TypeManager = ::android::nn::TypeManager;
 
-using namespace android::nn::hal;
+namespace hardware = ::android::hardware;
+namespace V1_0 = ::android::hardware::neuralnetworks::V1_0;
+namespace V1_3 = ::android::hardware::neuralnetworks::V1_3;
 
 const char* kTestDriverName = "extensions-test-driver";
 const char* kTestExtension1 = "vendor.test.one";
@@ -44,23 +46,24 @@ class TestDriver : public SampleDriver {
     TestDriver() : SampleDriver(kTestDriverName) {}
     ~TestDriver() override {}
 
-    Return<void> getSupportedExtensions(getSupportedExtensions_cb cb) override {
+    hardware::Return<void> getSupportedExtensions(getSupportedExtensions_cb cb) override {
         cb(V1_0::ErrorStatus::NONE, {
                                             {.name = kTestExtension1},
                                             {.name = kTestExtension2},
                                             {.name = kTestExtension3},
                                     });
-        return Void();
+        return hardware::Void();
     }
 
-    Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
+    hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
         cb(V1_3::ErrorStatus::NONE, {/* Placeholder zero-filled capabilities. */});
-        return Void();
+        return hardware::Void();
     }
 
-    Return<void> getSupportedOperations_1_3(const Model&, getSupportedOperations_1_3_cb) override {
+    hardware::Return<void> getSupportedOperations_1_3(const V1_3::Model&,
+                                                      getSupportedOperations_1_3_cb) override {
         CHECK(false) << "not implemented";
-        return Void();
+        return hardware::Void();
     }
 };
 

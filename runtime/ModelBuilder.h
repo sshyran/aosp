@@ -23,7 +23,6 @@
 #include <memory>
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "Memory.h"
 #include "NeuralNetworks.h"
 #include "Utils.h"
@@ -34,7 +33,7 @@ namespace nn {
 class CompilationBuilder;
 class Device;
 class ExecutionPlan;
-class Memory;
+class RuntimeMemory;
 
 class ModelBuilder {
    public:
@@ -44,7 +43,7 @@ class ModelBuilder {
     // Adds an operand to the model.
     int addOperand(const ANeuralNetworksOperandType& type);
     int setOperandValue(uint32_t index, const void* buffer, size_t length);
-    int setOperandValueFromMemory(uint32_t index, const Memory* memory, uint32_t offset,
+    int setOperandValueFromMemory(uint32_t index, const RuntimeMemory* memory, uint32_t offset,
                                   size_t length);
     int setOperandValueFromModel(uint32_t index, const ModelBuilder* value);
     int setOperandSymmPerChannelQuantParams(
@@ -72,7 +71,7 @@ class ModelBuilder {
                           const std::vector<std::shared_ptr<Device>>& devices,
                           bool explicitDeviceList = false);
 
-    hal::Model makeHidlModel() const;
+    Model makeModel() const;
 
     uint32_t operandCount() const {
         // We don't allow more than uint32_t worth of operands
@@ -89,7 +88,7 @@ class ModelBuilder {
         return mInputIndexes[i];
     }
     const std::vector<uint32_t>& getInputOperandIndexes() const { return mInputIndexes; }
-    const hal::Operand& getInputOperand(uint32_t i) const {
+    const Operand& getInputOperand(uint32_t i) const {
         uint32_t index = getInputOperandIndex(i);
         CHECK_LT(index, mOperands.size());
         return mOperands[index];
@@ -99,15 +98,15 @@ class ModelBuilder {
         return mOutputIndexes[i];
     }
     const std::vector<uint32_t>& getOutputOperandIndexes() const { return mOutputIndexes; }
-    const hal::Operand& getOutputOperand(uint32_t i) const {
+    const Operand& getOutputOperand(uint32_t i) const {
         uint32_t index = getOutputOperandIndex(i);
         CHECK_LT(index, mOperands.size());
         return mOperands[index];
     }
-    const hal::Operand& getOperand(uint32_t index) const { return mOperands[index]; }
-    const hal::Operation& getOperation(uint32_t index) const { return mOperations[index]; }
+    const Operand& getOperand(uint32_t index) const { return mOperands[index]; }
+    const Operation& getOperation(uint32_t index) const { return mOperations[index]; }
     const MemoryTracker& getMemories() const { return mMemories; }
-    const std::vector<hal::Operation>& getOperations() const { return mOperations; }
+    const std::vector<Operation>& getOperations() const { return mOperations; }
     const std::vector<uint32_t>& getSortedOperationMapping() const {
         return mSortedOperationIndexMap;
     }
@@ -121,8 +120,8 @@ class ModelBuilder {
         CHECK_LT(i, mReferencedModels.size());
         return mReferencedModels[i];
     }
-    const ModelBuilder* getReferencedModel(const hal::Operand& operand) const {
-        CHECK(operand.lifetime == hal::OperandLifeTime::SUBGRAPH);
+    const ModelBuilder* getReferencedModel(const Operand& operand) const {
+        CHECK(operand.lifetime == Operand::LifeTime::SUBGRAPH);
         return getReferencedModel(operand.location.offset);
     }
 
@@ -174,7 +173,7 @@ class ModelBuilder {
     // optional arguments are set to default values. This transformation enables
     // more drivers to execute the model. See http://b/147105700.
     void removeTrailingArgumentsWithDefaultValues();
-    uint32_t getNumTrailingArgumentsToRemove(const hal::Operation& operation) const;
+    uint32_t getNumTrailingArgumentsToRemove(const Operation& operation) const;
 
     // Sorts the operations to be in the correct order for single threaded
     // node-at-a-time execution.
@@ -184,7 +183,7 @@ class ModelBuilder {
     int copyLargeValuesToSharedMemory();
 
     // The operations of the graph.
-    std::vector<hal::Operation> mOperations;
+    std::vector<Operation> mOperations;
     // The mapping from sorted index to the original index of operations in mOperations.
     // mSortedOperationIndexMap is empty before sortIntoRunOrder() is called.
     std::vector<uint32_t> mSortedOperationIndexMap;
@@ -193,7 +192,7 @@ class ModelBuilder {
     // Is at least one of those operations an extension operation?
     bool mHasExtensionOperation = false;
     // The description of the operands of the graph.
-    std::vector<hal::Operand> mOperands;
+    std::vector<Operand> mOperands;
     // Is at least one of those operands an OEM operand?
     bool mHasOEMOperand = false;
     // The indexes of input operands of the model.
@@ -233,7 +232,7 @@ class ModelBuilder {
     // Models referenced by operands in this model.
     std::vector<const ModelBuilder*> mReferencedModels;
 
-    class HidlModelMaker;
+    class ModelMaker;
 };
 
 }  // namespace nn

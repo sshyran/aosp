@@ -36,8 +36,6 @@
 namespace android::nn {
 namespace {
 
-using namespace hal;
-
 using V1_2::FmqRequestDatum;
 using V1_2::FmqResultDatum;
 using V1_2::IBurstCallback;
@@ -45,10 +43,10 @@ using V1_2::IBurstContext;
 using FmqRequestDescriptor = hardware::MQDescriptorSync<FmqRequestDatum>;
 using FmqResultDescriptor = hardware::MQDescriptorSync<FmqResultDatum>;
 
-constexpr Timing kNoTiming = {std::numeric_limits<uint64_t>::max(),
-                              std::numeric_limits<uint64_t>::max()};
+constexpr V1_2::Timing kNoTiming12 = {std::numeric_limits<uint64_t>::max(),
+                                      std::numeric_limits<uint64_t>::max()};
 
-class BurstContextDeathHandler : public hidl_death_recipient {
+class BurstContextDeathHandler : public hardware::hidl_death_recipient {
    public:
     using Callback = std::function<void()>;
 
@@ -68,7 +66,7 @@ class BurstContextDeathHandler : public hidl_death_recipient {
 }  // anonymous namespace
 
 // serialize a request into a packet
-std::vector<FmqRequestDatum> serialize(const V1_0::Request& request, MeasureTiming measure,
+std::vector<FmqRequestDatum> serialize(const V1_0::Request& request, V1_2::MeasureTiming measure,
                                        const std::vector<int32_t>& slots) {
     // count how many elements need to be sent for a request
     size_t count = 2 + request.inputs.size() + request.outputs.size() + request.pools.size();
@@ -149,11 +147,11 @@ std::vector<FmqRequestDatum> serialize(const V1_0::Request& request, MeasureTimi
 }
 
 // deserialize a packet into the result
-std::optional<std::tuple<V1_0::ErrorStatus, std::vector<OutputShape>, Timing>> deserialize(
-        const std::vector<FmqResultDatum>& data) {
+std::optional<std::tuple<V1_0::ErrorStatus, std::vector<V1_2::OutputShape>, V1_2::Timing>>
+deserialize(const std::vector<FmqResultDatum>& data) {
     using discriminator = FmqResultDatum::hidl_discriminator;
 
-    std::vector<OutputShape> outputShapes;
+    std::vector<V1_2::OutputShape> outputShapes;
     size_t index = 0;
 
     // validate packet information
@@ -218,7 +216,7 @@ std::optional<std::tuple<V1_0::ErrorStatus, std::vector<OutputShape>, Timing>> d
     }
 
     // unpackage execution timing
-    const Timing timing = data[index].executionTiming();
+    const V1_2::Timing timing = data[index].executionTiming();
     index++;
 
     // validate packet information
@@ -254,7 +252,7 @@ ResultChannelReceiver::ResultChannelReceiver(std::unique_ptr<FmqResultChannel> f
                                              std::chrono::microseconds pollingTimeWindow)
     : mFmqResultChannel(std::move(fmqResultChannel)), kPollingTimeWindow(pollingTimeWindow) {}
 
-std::optional<std::tuple<V1_0::ErrorStatus, std::vector<OutputShape>, Timing>>
+std::optional<std::tuple<V1_0::ErrorStatus, std::vector<V1_2::OutputShape>, V1_2::Timing>>
 ResultChannelReceiver::getBlocking() {
     const auto packet = getPacketBlocking();
     if (!packet) {
@@ -275,7 +273,8 @@ void ResultChannelReceiver::invalidate() {
     // TODO: look for a different/better way to signal/notify the futex to
     // wake up any thread waiting on it
     FmqResultDatum datum;
-    datum.packetInformation({/*.packetSize=*/0, /*.errorStatus=*/V1_0::ErrorStatus::GENERAL_FAILURE,
+    datum.packetInformation({/*.packetSize=*/0,
+                             /*.errorStatus=*/V1_0::ErrorStatus::GENERAL_FAILURE,
                              /*.numberOfOperands=*/0});
     mFmqResultChannel->writeBlocking(&datum, 1);
 }
@@ -363,7 +362,7 @@ RequestChannelSender::create(size_t channelLength) {
 RequestChannelSender::RequestChannelSender(std::unique_ptr<FmqRequestChannel> fmqRequestChannel)
     : mFmqRequestChannel(std::move(fmqRequestChannel)) {}
 
-bool RequestChannelSender::send(const V1_0::Request& request, MeasureTiming measure,
+bool RequestChannelSender::send(const V1_0::Request& request, V1_2::MeasureTiming measure,
                                 const std::vector<int32_t>& slots) {
     const std::vector<FmqRequestDatum> serialized = serialize(request, measure, slots);
     return sendPacket(serialized);
@@ -389,30 +388,31 @@ void RequestChannelSender::invalidate() {
     mValid = false;
 }
 
-Return<void> ExecutionBurstController::ExecutionBurstCallback::getMemories(
-        const hidl_vec<int32_t>& slots, getMemories_cb cb) {
+hardware::Return<void> ExecutionBurstController::ExecutionBurstCallback::getMemories(
+        const hardware::hidl_vec<int32_t>& slots, getMemories_cb cb) {
     std::lock_guard<std::mutex> guard(mMutex);
 
     // get all memories
-    hidl_vec<hidl_memory> memories(slots.size());
+    hardware::hidl_vec<hardware::hidl_memory> memories(slots.size());
     std::transform(slots.begin(), slots.end(), memories.begin(), [this](int32_t slot) {
-        return slot < mMemoryCache.size() ? mMemoryCache[slot] : hidl_memory{};
+        return slot < mMemoryCache.size() ? mMemoryCache[slot] : hardware::hidl_memory{};
     });
 
     // ensure all memories are valid
     if (!std::all_of(memories.begin(), memories.end(),
-                     [](const hidl_memory& memory) { return memory.valid(); })) {
+                     [](const hardware::hidl_memory& memory) { return memory.valid(); })) {
         cb(V1_0::ErrorStatus::INVALID_ARGUMENT, {});
-        return Void();
+        return hardware::Void();
     }
 
     // return successful
     cb(V1_0::ErrorStatus::NONE, std::move(memories));
-    return Void();
+    return hardware::Void();
 }
 
 std::vector<int32_t> ExecutionBurstController::ExecutionBurstCallback::getSlots(
-        const hidl_vec<hidl_memory>& memories, const std::vector<intptr_t>& keys) {
+        const hardware::hidl_vec<hardware::hidl_memory>& memories,
+        const std::vector<intptr_t>& keys) {
     std::lock_guard<std::mutex> guard(mMutex);
 
     // retrieve (or bind) all slots corresponding to memories
@@ -439,8 +439,8 @@ std::pair<bool, int32_t> ExecutionBurstController::ExecutionBurstCallback::freeM
     return {true, slot};
 }
 
-int32_t ExecutionBurstController::ExecutionBurstCallback::getSlotLocked(const hidl_memory& memory,
-                                                                        intptr_t key) {
+int32_t ExecutionBurstController::ExecutionBurstCallback::getSlotLocked(
+        const hardware::hidl_memory& memory, intptr_t key) {
     auto iter = mMemoryIdToSlot.find(key);
     if (iter == mMemoryIdToSlot.end()) {
         const int32_t slot = allocateSlotLocked();
@@ -503,7 +503,7 @@ std::unique_ptr<ExecutionBurstController> ExecutionBurstController::create(
     // configure burst
     V1_0::ErrorStatus errorStatus;
     sp<IBurstContext> burstContext;
-    const Return<void> ret = preparedModel->configureExecutionBurst(
+    const hardware::Return<void> ret = preparedModel->configureExecutionBurst(
             callback, *requestChannelDescriptor, *resultChannelDescriptor,
             [&errorStatus, &burstContext](V1_0::ErrorStatus status,
                                           const sp<IBurstContext>& context) {
@@ -539,7 +539,7 @@ std::unique_ptr<ExecutionBurstController> ExecutionBurstController::create(
     // proactively handle service crashes. If the linkToDeath call fails,
     // asynchronous calls are susceptible to hangs if the service crashes before
     // providing the response.
-    const Return<bool> deathHandlerRet = burstContext->linkToDeath(deathHandler, 0);
+    const hardware::Return<bool> deathHandlerRet = burstContext->linkToDeath(deathHandler, 0);
     if (!deathHandlerRet.isOk() || deathHandlerRet != true) {
         LOG(ERROR) << "ExecutionBurstController::create -- Failed to register a death recipient "
                       "for the IBurstContext object.";
@@ -555,7 +555,7 @@ ExecutionBurstController::ExecutionBurstController(
         const std::shared_ptr<RequestChannelSender>& requestChannelSender,
         const std::shared_ptr<ResultChannelReceiver>& resultChannelReceiver,
         const sp<IBurstContext>& burstContext, const sp<ExecutionBurstCallback>& callback,
-        const sp<hidl_death_recipient>& deathHandler)
+        const sp<hardware::hidl_death_recipient>& deathHandler)
     : mRequestChannelSender(requestChannelSender),
       mResultChannelReceiver(resultChannelReceiver),
       mBurstContext(burstContext),
@@ -572,17 +572,17 @@ ExecutionBurstController::~ExecutionBurstController() {
     }
 }
 
-static std::tuple<int, std::vector<OutputShape>, Timing, bool> getExecutionResult(
-        V1_0::ErrorStatus status, std::vector<OutputShape> outputShapes, Timing timing,
+static std::tuple<int, std::vector<V1_2::OutputShape>, V1_2::Timing, bool> getExecutionResult(
+        V1_0::ErrorStatus status, std::vector<V1_2::OutputShape> outputShapes, V1_2::Timing timing,
         bool fallback) {
     auto [n, checkedOutputShapes, checkedTiming] =
             getExecutionResult(convertToV1_3(status), std::move(outputShapes), timing);
-    return {n, std::move(checkedOutputShapes), checkedTiming, fallback};
+    return {n, convertToV1_2(checkedOutputShapes), convertToV1_2(checkedTiming), fallback};
 }
 
-std::tuple<int, std::vector<OutputShape>, Timing, bool> ExecutionBurstController::compute(
-        const V1_0::Request& request, MeasureTiming measure,
-        const std::vector<intptr_t>& memoryIds) {
+std::tuple<int, std::vector<V1_2::OutputShape>, V1_2::Timing, bool>
+ExecutionBurstController::compute(const V1_0::Request& request, V1_2::MeasureTiming measure,
+                                  const std::vector<intptr_t>& memoryIds) {
     // This is the first point when we know an execution is occurring, so begin
     // to collect systraces. Note that the first point we can begin collecting
     // systraces in ExecutionBurstServer is when the RequestChannelReceiver
@@ -598,7 +598,7 @@ std::tuple<int, std::vector<OutputShape>, Timing, bool> ExecutionBurstController
     if (!success) {
         LOG(ERROR) << "Error sending FMQ packet";
         // only use fallback execution path if the packet could not be sent
-        return getExecutionResult(V1_0::ErrorStatus::GENERAL_FAILURE, {}, kNoTiming,
+        return getExecutionResult(V1_0::ErrorStatus::GENERAL_FAILURE, {}, kNoTiming12,
                                   /*fallback=*/true);
     }
 
@@ -607,7 +607,7 @@ std::tuple<int, std::vector<OutputShape>, Timing, bool> ExecutionBurstController
     if (!result) {
         LOG(ERROR) << "Error retrieving FMQ packet";
         // only use fallback execution path if the packet could not be sent
-        return getExecutionResult(V1_0::ErrorStatus::GENERAL_FAILURE, {}, kNoTiming,
+        return getExecutionResult(V1_0::ErrorStatus::GENERAL_FAILURE, {}, kNoTiming12,
                                   /*fallback=*/false);
     }
 

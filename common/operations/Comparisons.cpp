@@ -19,7 +19,6 @@
 #include <functional>
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "IndexedShapeWrapper.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
@@ -36,8 +35,6 @@ constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
 namespace {
-
-using namespace hal;
 
 template <typename DataType, typename ComparisonType>
 bool compute(const std::function<bool(ComparisonType, ComparisonType)>& func, const DataType* aData,
@@ -135,7 +132,7 @@ bool validate(const IOperationValidationContext* context) {
             inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_INT32 ||
             inputType == OperandType::TENSOR_QUANT8_ASYMM ||
             inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
-            << "Unsupported input operand type for comparison op: " << toString(inputType);
+            << "Unsupported input operand type for comparison op: " << inputType;
     NN_RET_CHECK(validateInputTypes(context, {inputType, inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {OperandType::TENSOR_BOOL8}));
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {

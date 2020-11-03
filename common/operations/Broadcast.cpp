@@ -29,15 +29,13 @@
 #include <vector>
 
 #include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
 #include "IndexedShapeWrapper.h"
 #include "OperationResolver.h"
 #include "Tracing.h"
+#include "nnapi/Types.h"
 
 namespace android {
 namespace nn {
-
-using namespace hal;
 
 namespace broadcast {
 
@@ -53,16 +51,16 @@ namespace {
 
 #define ANDROID_NN_MACRO_DISPATCH(macro)                                \
     switch (activation) {                                               \
-        case (int32_t)FusedActivationFunc::NONE:                        \
+        case static_cast<int32_t>(FusedActivationFunc::NONE):           \
             macro(kNone);                                               \
             break;                                                      \
-        case (int32_t)FusedActivationFunc::RELU:                        \
+        case static_cast<int32_t>(FusedActivationFunc::RELU):           \
             macro(kRelu);                                               \
             break;                                                      \
-        case (int32_t)FusedActivationFunc::RELU1:                       \
+        case static_cast<int32_t>(FusedActivationFunc::RELU1):          \
             macro(kRelu1);                                              \
             break;                                                      \
-        case (int32_t)FusedActivationFunc::RELU6:                       \
+        case static_cast<int32_t>(FusedActivationFunc::RELU6):          \
             macro(kRelu6);                                              \
             break;                                                      \
         default:                                                        \
@@ -464,7 +462,7 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
                inputType == OperandType::TENSOR_INT32) {
         NN_RET_CHECK(validateHalVersion(context, std::max(HalVersion::V1_3, opIntroducedAt)));
     } else {
-        NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << getOperationName(opType);
+        NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << opType;
     }
     const Shape& input1 = context->getInputShape(kInputTensor1);
     const Shape& input2 = context->getInputShape(kInputTensor2);

@@ -41,8 +41,8 @@ OperationType convert(TestOperationType type) {
     return static_cast<OperationType>(type);
 }
 
-OperandLifeTime convert(TestOperandLifeTime lifetime) {
-    return static_cast<OperandLifeTime>(lifetime);
+Operand::LifeTime convert(TestOperandLifeTime lifetime) {
+    return static_cast<Operand::LifeTime>(lifetime);
 }
 
 Scales convert(const std::vector<float>& scales) {

@@ -34,20 +34,22 @@
 #include "TestUtils.h"
 
 using namespace android::nn;
-using namespace hal;
-using Result = test_wrapper::Result;
+namespace hardware = android::hardware;
+using WrapperResult = test_wrapper::Result;
 using Type = test_wrapper::Type;
+using android::sp;
 
 namespace {
 
 // A buffer for test that does nothing.
-class TestBuffer : public IBuffer {
+class TestBuffer : public V1_3::IBuffer {
    public:
-    Return<ErrorStatus> copyTo(const hidl_memory&) override {
-        return ErrorStatus::DEVICE_UNAVAILABLE;
+    hardware::Return<V1_3::ErrorStatus> copyTo(const hardware::hidl_memory&) override {
+        return V1_3::ErrorStatus::DEVICE_UNAVAILABLE;
     }
-    Return<ErrorStatus> copyFrom(const hidl_memory&, const hidl_vec<uint32_t>&) override {
-        return ErrorStatus::DEVICE_UNAVAILABLE;
+    hardware::Return<V1_3::ErrorStatus> copyFrom(const hardware::hidl_memory&,
+                                                 const hardware::hidl_vec<uint32_t>&) override {
+        return V1_3::ErrorStatus::DEVICE_UNAVAILABLE;
     }
 };
 
@@ -73,64 +75,67 @@ std::ostream& operator<<(std::ostream& os, AllocateReturn allocateReturn) {
 
 class TestDriverLatest : public sample_driver::SampleDriver {
    public:
-    TestDriverLatest(const char* name, std::set<OperationType> supportedOperations,
+    TestDriverLatest(const char* name, std::set<V1_3::OperationType> supportedOperations,
                      AllocateReturn allocateReturn)
         : SampleDriver(name),
           kSupportedOperations(std::move(supportedOperations)),
           kAllocateReturn(allocateReturn) {}
 
-    Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
+    hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
         android::nn::initVLogMask();
         // Faster than cpu.
-        const PerformanceInfo kPerf = {.execTime = 0.1, .powerUsage = 0.1};
-        const Capabilities capabilities = {
+        const V1_0::PerformanceInfo kPerf = {.execTime = 0.1, .powerUsage = 0.1};
+        const V1_3::Capabilities capabilities = {
                 .relaxedFloat32toFloat16PerformanceScalar = kPerf,
                 .relaxedFloat32toFloat16PerformanceTensor = kPerf,
                 .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>(kPerf),
                 .ifPerformance = kPerf,
                 .whilePerformance = kPerf};
-        cb(ErrorStatus::NONE, capabilities);
-        return Void();
+        cb(V1_3::ErrorStatus::NONE, capabilities);
+        return hardware::Void();
     }
 
-    Return<void> getSupportedOperations_1_3(const Model& model,
-                                            getSupportedOperations_1_3_cb cb) override {
+    hardware::Return<void> getSupportedOperations_1_3(const V1_3::Model& model,
+                                                      getSupportedOperations_1_3_cb cb) override {
         // The tests will never use a referenced model.
         CHECK(model.referenced.size() == 0);
         std::vector<bool> supported(model.main.operations.size(), false);
-        std::transform(
-                model.main.operations.begin(), model.main.operations.end(), supported.begin(),
-                [this](const Operation& op) { return kSupportedOperations.count(op.type) > 0; });
-        cb(ErrorStatus::NONE, supported);
-        return Void();
+        std::transform(model.main.operations.begin(), model.main.operations.end(),
+                       supported.begin(), [this](const V1_3::Operation& op) {
+                           return kSupportedOperations.count(op.type) > 0;
+                       });
+        cb(V1_3::ErrorStatus::NONE, supported);
+        return hardware::Void();
     }
 
-    Return<void> allocate(const BufferDesc&, const hidl_vec<sp<IPreparedModel>>&,
-                          const hidl_vec<BufferRole>&, const hidl_vec<BufferRole>&,
-                          allocate_cb cb) override {
+    hardware::Return<void> allocate(const V1_3::BufferDesc&,
+                                    const hardware::hidl_vec<sp<V1_3::IPreparedModel>>&,
+                                    const hardware::hidl_vec<V1_3::BufferRole>&,
+                                    const hardware::hidl_vec<V1_3::BufferRole>&,
+                                    allocate_cb cb) override {
         switch (kAllocateReturn) {
             case AllocateReturn::OK:
-                cb(ErrorStatus::NONE, new TestBuffer(), mValidBufferToken++);
-                return Void();
+                cb(V1_3::ErrorStatus::NONE, new TestBuffer(), mValidBufferToken++);
+                return hardware::Void();
             case AllocateReturn::BAD_IBUFFER:
-                cb(ErrorStatus::NONE, nullptr, mValidBufferToken++);
-                return Void();
+                cb(V1_3::ErrorStatus::NONE, nullptr, mValidBufferToken++);
+                return hardware::Void();
             case AllocateReturn::BAD_TOKEN:
-                cb(ErrorStatus::NONE, new TestBuffer(), 0);
-                return Void();
+                cb(V1_3::ErrorStatus::NONE, new TestBuffer(), 0);
+                return hardware::Void();
             case AllocateReturn::BAD_STATUS:
-                cb(ErrorStatus::GENERAL_FAILURE, new TestBuffer(), mValidBufferToken++);
-                return Void();
+                cb(V1_3::ErrorStatus::GENERAL_FAILURE, new TestBuffer(), mValidBufferToken++);
+                return hardware::Void();
             case AllocateReturn::NOT_SUPPORTED:
-                cb(ErrorStatus::GENERAL_FAILURE, nullptr, 0);
-                return Void();
+                cb(V1_3::ErrorStatus::GENERAL_FAILURE, nullptr, 0);
+                return hardware::Void();
         }
         LOG(FATAL) << "Invalid AllocateReturn code " << static_cast<int>(kAllocateReturn);
-        return Void();
+        return hardware::Void();
     }
 
    private:
-    const std::set<OperationType> kSupportedOperations;
+    const std::set<V1_3::OperationType> kSupportedOperations;
     const AllocateReturn kAllocateReturn;
     uint32_t mValidBufferToken = 1;
 };
@@ -160,7 +165,7 @@ void createTestModel(test_wrapper::Model* model) {
     model->addOperation(ANEURALNETWORKS_SUB, {input1, input2, act}, {temp});
     model->addOperation(ANEURALNETWORKS_MUL, {output0, temp, act}, {output1});
     model->identifyInputsAndOutputs({input0, input1, input2}, {output0, output1});
-    EXPECT_EQ(model->finish(), Result::NO_ERROR);
+    EXPECT_EQ(model->finish(), WrapperResult::NO_ERROR);
 }
 
 class MemoryDomainTestBase : public ::testing::Test {
@@ -199,14 +204,14 @@ class MemoryDomainTestBase : public ::testing::Test {
             std::vector<const ANeuralNetworksDevice*> devices(deviceNames.size());
             std::transform(deviceNames.begin(), deviceNames.end(), devices.begin(),
                            [&deviceMap](const std::string& name) { return deviceMap.at(name); });
-            Result result;
+            WrapperResult result;
             std::tie(result, compilation) =
                     test_wrapper::Compilation::createForDevices(&mModel, devices);
-            EXPECT_EQ(result, Result::NO_ERROR);
+            EXPECT_EQ(result, WrapperResult::NO_ERROR);
         } else {
             compilation = test_wrapper::Compilation(&mModel);
         }
-        EXPECT_EQ(compilation.finish(), Result::NO_ERROR);
+        EXPECT_EQ(compilation.finish(), WrapperResult::NO_ERROR);
         return compilation;
     }
 
@@ -245,7 +250,8 @@ class MemoryDomainTest : public MemoryDomainTestBase,
                          public ::testing::WithParamInterface<MemoryDomainTestParam> {
    protected:
     // If kUseV1_2Driver, allocateReturn must be AllocateReturn::NOT_SUPPORTED.
-    void createAndRegisterDriver(const char* name, std::set<OperationType> supportedOperations,
+    void createAndRegisterDriver(const char* name,
+                                 std::set<V1_3::OperationType> supportedOperations,
                                  AllocateReturn allocateReturn) {
         sp<V1_0::IDevice> driver;
         if (kUseV1_2Driver) {
@@ -275,9 +281,10 @@ class MemoryDomainTest : public MemoryDomainTestBase,
 
 // Test device memory allocation on a compilation with only a single partition.
 TEST_P(MemoryDomainTest, SinglePartition) {
-    createAndRegisterDriver("test_driver",
-                            {OperationType::ADD, OperationType::SUB, OperationType::MUL},
-                            kAllocateReturn);
+    createAndRegisterDriver(
+            "test_driver",
+            {V1_3::OperationType::ADD, V1_3::OperationType::SUB, V1_3::OperationType::MUL},
+            kAllocateReturn);
     auto compilation = createCompilation({"test_driver"});
     ASSERT_NE(compilation.getHandle(), nullptr);
 
@@ -285,7 +292,7 @@ TEST_P(MemoryDomainTest, SinglePartition) {
     if (kAllocateReturn == AllocateReturn::OK) {
         // The memory should be backed by the IBuffer returned from the driver.
         ASSERT_EQ(n, ANEURALNETWORKS_NO_ERROR);
-        const Memory* m = reinterpret_cast<const Memory*>(memory.get());
+        const RuntimeMemory* m = reinterpret_cast<const RuntimeMemory*>(memory.get());
         ASSERT_NE(m, nullptr);
         EXPECT_NE(m->getIBuffer(), nullptr);
     } else {
@@ -295,7 +302,7 @@ TEST_P(MemoryDomainTest, SinglePartition) {
         } else {
             // The memory should fallback to ashmem or blob ahwb based on the driver version.
             ASSERT_EQ(n, ANEURALNETWORKS_NO_ERROR);
-            const Memory* m = reinterpret_cast<const Memory*>(memory.get());
+            const RuntimeMemory* m = reinterpret_cast<const RuntimeMemory*>(memory.get());
             ASSERT_NE(m, nullptr);
             EXPECT_EQ(m->getIBuffer(), nullptr);
             const auto& hidlMemory = m->getHidlMemory();
@@ -311,9 +318,9 @@ TEST_P(MemoryDomainTest, SinglePartition) {
 
 // Test device memory allocation on a compilation with multiple partitions.
 TEST_P(MemoryDomainTest, MultiplePartitions) {
-    createAndRegisterDriver("test_driver_add", {OperationType::ADD}, kAllocateReturn);
-    createAndRegisterDriver("test_driver_sub", {OperationType::SUB}, kAllocateReturn);
-    createAndRegisterDriver("test_driver_mul", {OperationType::MUL}, kAllocateReturn);
+    createAndRegisterDriver("test_driver_add", {V1_3::OperationType::ADD}, kAllocateReturn);
+    createAndRegisterDriver("test_driver_sub", {V1_3::OperationType::SUB}, kAllocateReturn);
+    createAndRegisterDriver("test_driver_mul", {V1_3::OperationType::MUL}, kAllocateReturn);
     auto compilation = createCompilation({"test_driver_add", "test_driver_sub", "test_driver_mul"});
     ASSERT_NE(compilation.getHandle(), nullptr);
 
@@ -323,7 +330,7 @@ TEST_P(MemoryDomainTest, MultiplePartitions) {
         if (kAllocateReturn == AllocateReturn::OK) {
             // The memory should be backed by the IBuffer returned from the driver.
             ASSERT_EQ(n, ANEURALNETWORKS_NO_ERROR);
-            const Memory* m = reinterpret_cast<const Memory*>(memory.get());
+            const RuntimeMemory* m = reinterpret_cast<const RuntimeMemory*>(memory.get());
             ASSERT_NE(m, nullptr);
             EXPECT_NE(m->getIBuffer(), nullptr);
         } else {
@@ -333,7 +340,7 @@ TEST_P(MemoryDomainTest, MultiplePartitions) {
             } else {
                 // The memory should fallback to ashmem or blob ahwb based on the driver version.
                 ASSERT_EQ(n, ANEURALNETWORKS_NO_ERROR);
-                const Memory* m = reinterpret_cast<const Memory*>(memory.get());
+                const RuntimeMemory* m = reinterpret_cast<const RuntimeMemory*>(memory.get());
                 ASSERT_NE(m, nullptr);
                 EXPECT_EQ(m->getIBuffer(), nullptr);
                 const auto& hidlMemory = m->getHidlMemory();
@@ -357,7 +364,7 @@ TEST_P(MemoryDomainTest, MultiplePartitions) {
         } else {
             // The memory should fallback to ashmem or blob ahwb based on the driver version.
             ASSERT_EQ(n, ANEURALNETWORKS_NO_ERROR);
-            const Memory* m = reinterpret_cast<const Memory*>(memory.get());
+            const RuntimeMemory* m = reinterpret_cast<const RuntimeMemory*>(memory.get());
             ASSERT_NE(m, nullptr);
             EXPECT_EQ(m->getIBuffer(), nullptr);
             const auto& hidlMemory = m->getHidlMemory();
@@ -380,7 +387,7 @@ TEST_P(MemoryDomainTest, MultiplePartitions) {
         } else {
             // The memory should fallback to ashmem or blob ahwb based on the driver version.
             ASSERT_EQ(n, ANEURALNETWORKS_NO_ERROR);
-            const Memory* m = reinterpret_cast<const Memory*>(memory.get());
+            const RuntimeMemory* m = reinterpret_cast<const RuntimeMemory*>(memory.get());
             ASSERT_NE(m, nullptr);
             EXPECT_EQ(m->getIBuffer(), nullptr);
             const auto& hidlMemory = m->getHidlMemory();
@@ -396,9 +403,10 @@ TEST_P(MemoryDomainTest, MultiplePartitions) {
 
 // Test device memory allocation with dynamic shape.
 TEST_P(MemoryDomainTest, DynamicShape) {
-    createAndRegisterDriver("test_driver",
-                            {OperationType::ADD, OperationType::SUB, OperationType::MUL},
-                            kAllocateReturn);
+    createAndRegisterDriver(
+            "test_driver",
+            {V1_3::OperationType::ADD, V1_3::OperationType::SUB, V1_3::OperationType::MUL},
+            kAllocateReturn);
     auto compilation = createCompilation({"test_driver"});
     ASSERT_NE(compilation.getHandle(), nullptr);
 
@@ -406,7 +414,7 @@ TEST_P(MemoryDomainTest, DynamicShape) {
     if (kAllocateReturn == AllocateReturn::OK) {
         // The memory should be backed by the IBuffer returned from the driver.
         ASSERT_EQ(n, ANEURALNETWORKS_NO_ERROR);
-        const Memory* m = reinterpret_cast<const Memory*>(memory.get());
+        const RuntimeMemory* m = reinterpret_cast<const RuntimeMemory*>(memory.get());
         ASSERT_NE(m, nullptr);
         EXPECT_NE(m->getIBuffer(), nullptr);
     } else {
