@@ -19,15 +19,12 @@
 #include "EmbeddingLookup.h"
 
 #include "CpuExecutor.h"
-#include "HalInterfaces.h"
 #include "Operations.h"
 
 #include "Tracing.h"
 
 namespace android {
 namespace nn {
-
-using namespace hal;
 
 EmbeddingLookup::EmbeddingLookup(const Operation& operation, RunTimeOperandInfo* operands) {
     value_ = GetInput(operation, operands, kValueTensor);

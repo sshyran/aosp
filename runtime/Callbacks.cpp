@@ -18,28 +18,25 @@
 
 #include "Callbacks.h"
 
+#include <Utils.h>
 #include <android-base/logging.h>
+
 #include <limits>
 #include <utility>
 #include <vector>
 
 namespace android::nn {
 
-using namespace hal;
-
-constexpr Timing kNoTiming = {.timeOnDevice = std::numeric_limits<uint64_t>::max(),
-                              .timeInDriver = std::numeric_limits<uint64_t>::max()};
-
 // PreparedModelCallback methods begin here
 
-Return<void> PreparedModelCallback::notifyInternal(bool deadObject, ErrorStatus errorStatus,
-                                                   const sp<V1_0::IPreparedModel>& preparedModel) {
+hardware::Return<void> PreparedModelCallback::notifyInternal(
+        bool deadObject, ErrorStatus errorStatus, const sp<V1_0::IPreparedModel>& preparedModel) {
     {
         std::lock_guard<std::mutex> hold(mMutex);
 
         // quick-return if object has already been notified
         if (mNotified) {
-            return Void();
+            return hardware::Void();
         }
 
         // store results and mark as notified
@@ -50,22 +47,22 @@ Return<void> PreparedModelCallback::notifyInternal(bool deadObject, ErrorStatus 
     }
 
     mCondition.notify_all();
-    return Void();
+    return hardware::Void();
 }
 
-Return<void> PreparedModelCallback::notify(V1_0::ErrorStatus errorStatus,
-                                           const sp<V1_0::IPreparedModel>& preparedModel) {
-    return notifyInternal(false, static_cast<ErrorStatus>(errorStatus), preparedModel);
+hardware::Return<void> PreparedModelCallback::notify(
+        V1_0::ErrorStatus errorStatus, const sp<V1_0::IPreparedModel>& preparedModel) {
+    return notifyInternal(false, uncheckedConvert(errorStatus), preparedModel);
 }
 
-Return<void> PreparedModelCallback::notify_1_2(V1_0::ErrorStatus errorStatus,
-                                               const sp<V1_2::IPreparedModel>& preparedModel) {
-    return notifyInternal(false, static_cast<ErrorStatus>(errorStatus), preparedModel);
+hardware::Return<void> PreparedModelCallback::notify_1_2(
+        V1_0::ErrorStatus errorStatus, const sp<V1_2::IPreparedModel>& preparedModel) {
+    return notifyInternal(false, uncheckedConvert(errorStatus), preparedModel);
 }
 
-Return<void> PreparedModelCallback::notify_1_3(ErrorStatus errorStatus,
-                                               const sp<V1_3::IPreparedModel>& preparedModel) {
-    return notifyInternal(false, errorStatus, preparedModel);
+hardware::Return<void> PreparedModelCallback::notify_1_3(
+        V1_3::ErrorStatus errorStatus, const sp<V1_3::IPreparedModel>& preparedModel) {
+    return notifyInternal(false, uncheckedConvert(errorStatus), preparedModel);
 }
 
 void PreparedModelCallback::notifyAsDeadObject() {
@@ -94,24 +91,26 @@ bool PreparedModelCallback::isDeadObject() const {
 
 // ExecutionCallback methods begin here
 
-Return<void> ExecutionCallback::notify(V1_0::ErrorStatus errorStatus) {
-    return notifyInternal(false, static_cast<ErrorStatus>(errorStatus), {}, kNoTiming);
+hardware::Return<void> ExecutionCallback::notify(V1_0::ErrorStatus errorStatus) {
+    return notifyInternal(false, uncheckedConvert(errorStatus), {}, {});
 }
 
-Return<void> ExecutionCallback::notify_1_2(V1_0::ErrorStatus errorStatus,
-                                           const hidl_vec<OutputShape>& outputShapes,
-                                           const Timing& timing) {
-    return notifyInternal(false, static_cast<ErrorStatus>(errorStatus), outputShapes, timing);
+hardware::Return<void> ExecutionCallback::notify_1_2(
+        V1_0::ErrorStatus errorStatus, const hardware::hidl_vec<V1_2::OutputShape>& outputShapes,
+        const V1_2::Timing& timing) {
+    return notifyInternal(false, uncheckedConvert(errorStatus), uncheckedConvert(outputShapes),
+                          uncheckedConvert(timing));
 }
 
-Return<void> ExecutionCallback::notify_1_3(V1_3::ErrorStatus errorStatus,
-                                           const hidl_vec<OutputShape>& outputShapes,
-                                           const Timing& timing) {
-    return notifyInternal(false, errorStatus, outputShapes, timing);
+hardware::Return<void> ExecutionCallback::notify_1_3(
+        V1_3::ErrorStatus errorStatus, const hardware::hidl_vec<V1_2::OutputShape>& outputShapes,
+        const V1_2::Timing& timing) {
+    return notifyInternal(false, uncheckedConvert(errorStatus), uncheckedConvert(outputShapes),
+                          uncheckedConvert(timing));
 }
 
 void ExecutionCallback::notifyAsDeadObject() {
-    notifyInternal(true, ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
+    notifyInternal(true, ErrorStatus::GENERAL_FAILURE, {}, {});
 }
 
 void ExecutionCallback::wait() const {
@@ -199,9 +198,9 @@ void ExecutionCallback::setOnFinish(const ExecutionFinish& finish) {
     mOnFinish = finish;
 }
 
-Return<void> ExecutionCallback::notifyInternal(bool deadObject, ErrorStatus errorStatus,
-                                               std::vector<OutputShape> outputShapes,
-                                               Timing timing) {
+hardware::Return<void> ExecutionCallback::notifyInternal(bool deadObject, ErrorStatus errorStatus,
+                                                         std::vector<OutputShape> outputShapes,
+                                                         Timing timing) {
     // check results
     if (!deadObject) {
         if (errorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
@@ -211,7 +210,7 @@ Return<void> ExecutionCallback::notifyInternal(bool deadObject, ErrorStatus erro
                         << "Notified with empty output shape vector when OUTPUT_INSUFFICIENT_SIZE";
                 errorStatus = ErrorStatus::GENERAL_FAILURE;
                 outputShapes = {};
-                timing = kNoTiming;
+                timing = {};
             }
         } else if (errorStatus != ErrorStatus::NONE) {
             // outputShapes must be empty if errorStatus is neither NONE nor
@@ -221,7 +220,7 @@ Return<void> ExecutionCallback::notifyInternal(bool deadObject, ErrorStatus erro
                               "neither NONE nor OUTPUT_INSUFFICIENT_SIZE";
                 errorStatus = ErrorStatus::GENERAL_FAILURE;
                 outputShapes = {};
-                timing = kNoTiming;
+                timing = {};
             }
         }
     }
@@ -232,7 +231,7 @@ Return<void> ExecutionCallback::notifyInternal(bool deadObject, ErrorStatus erro
 
         // quick-return if object has already been notified
         if (mNotified) {
-            return Void();
+            return hardware::Void();
         }
 
         mDeadObject = deadObject;
@@ -250,7 +249,7 @@ Return<void> ExecutionCallback::notifyInternal(bool deadObject, ErrorStatus erro
         }
     }
     mCondition.notify_all();
-    return Void();
+    return hardware::Void();
 }
 
 }  // namespace android::nn

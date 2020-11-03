@@ -26,14 +26,14 @@ namespace sample_driver {
 
 class SampleDriverFull : public SampleDriver {
    public:
-    SampleDriverFull(const char* name, hal::PerformanceInfo perf)
+    SampleDriverFull(const char* name, V1_0::PerformanceInfo perf)
         : SampleDriver(name), mPerf(perf) {}
-    hal::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
-    hal::Return<void> getSupportedOperations_1_3(const hal::V1_3::Model& model,
-                                                 getSupportedOperations_1_3_cb cb) override;
+    hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
+    hardware::Return<void> getSupportedOperations_1_3(const V1_3::Model& model,
+                                                      getSupportedOperations_1_3_cb cb) override;
 
    private:
-    hal::PerformanceInfo mPerf;
+    V1_0::PerformanceInfo mPerf;
 };
 
 }  // namespace sample_driver

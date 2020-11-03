@@ -22,14 +22,11 @@
 #include <vector>
 
 #include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "Tracing.h"
 
 namespace android {
 namespace nn {
-
-using namespace hal;
 
 namespace pooling {
 
@@ -334,8 +331,7 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
                 OperandType::INT32,
         };
     } else {
-        NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
-                            << getOperationName(opType);
+        NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation " << opType;
     }
 
     if (inputCount >= 10) {

@@ -25,34 +25,34 @@ namespace android {
 namespace nn {
 namespace sample_driver {
 
-void notify(const sp<hal::V1_0::IPreparedModelCallback>& callback, const hal::ErrorStatus& status,
+void notify(const sp<V1_0::IPreparedModelCallback>& callback, const V1_3::ErrorStatus& status,
             const sp<SamplePreparedModel>& preparedModel);
 
-void notify(const sp<hal::V1_2::IPreparedModelCallback>& callback, const hal::ErrorStatus& status,
+void notify(const sp<V1_2::IPreparedModelCallback>& callback, const V1_3::ErrorStatus& status,
             const sp<SamplePreparedModel>& preparedModel);
 
-void notify(const sp<hal::V1_3::IPreparedModelCallback>& callback, const hal::ErrorStatus& status,
+void notify(const sp<V1_3::IPreparedModelCallback>& callback, const V1_3::ErrorStatus& status,
             const sp<SamplePreparedModel>& preparedModel);
 
-void notify(const sp<hal::V1_0::IExecutionCallback>& callback, const hal::ErrorStatus& status,
-            const hal::hidl_vec<hal::OutputShape>&, hal::Timing);
+void notify(const sp<V1_0::IExecutionCallback>& callback, const V1_3::ErrorStatus& status,
+            const hardware::hidl_vec<V1_2::OutputShape>&, V1_2::Timing);
 
-void notify(const sp<hal::V1_2::IExecutionCallback>& callback, const hal::ErrorStatus& status,
-            const hal::hidl_vec<hal::OutputShape>& outputShapes, hal::Timing timing);
+void notify(const sp<V1_2::IExecutionCallback>& callback, const V1_3::ErrorStatus& status,
+            const hardware::hidl_vec<V1_2::OutputShape>& outputShapes, V1_2::Timing timing);
 
-void notify(const sp<hal::V1_3::IExecutionCallback>& callback, const hal::ErrorStatus& status,
-            const hal::hidl_vec<hal::OutputShape>& outputShapes, hal::Timing timing);
+void notify(const sp<V1_3::IExecutionCallback>& callback, const V1_3::ErrorStatus& status,
+            const hardware::hidl_vec<V1_2::OutputShape>& outputShapes, V1_2::Timing timing);
 
 template <typename T_Model, typename T_IPreparedModelCallback>
-hal::ErrorStatus prepareModelBase(const T_Model& model, const SampleDriver* driver,
-                                  hal::ExecutionPreference preference, hal::Priority priority,
-                                  const hal::OptionalTimePoint& halDeadline,
-                                  const sp<T_IPreparedModelCallback>& callback,
-                                  bool isFullModelSupported = true) {
+V1_3::ErrorStatus prepareModelBase(const T_Model& model, const SampleDriver* driver,
+                                   V1_1::ExecutionPreference preference, V1_3::Priority priority,
+                                   const V1_3::OptionalTimePoint& halDeadline,
+                                   const sp<T_IPreparedModelCallback>& callback,
+                                   bool isFullModelSupported = true) {
     const uid_t userId = hardware::IPCThreadState::self()->getCallingUid();
     if (callback.get() == nullptr) {
         LOG(ERROR) << "invalid callback passed to prepareModelBase";
-        return hal::ErrorStatus::INVALID_ARGUMENT;
+        return V1_3::ErrorStatus::INVALID_ARGUMENT;
     }
     if (VLOG_IS_ON(DRIVER)) {
         VLOG(DRIVER) << "prepareModelBase";
@@ -60,17 +60,17 @@ hal::ErrorStatus prepareModelBase(const T_Model& model, const SampleDriver* driv
     }
     if (!validateModel(model) || !validateExecutionPreference(preference) ||
         !validatePriority(priority)) {
-        notify(callback, hal::ErrorStatus::INVALID_ARGUMENT, nullptr);
-        return hal::ErrorStatus::INVALID_ARGUMENT;
+        notify(callback, V1_3::ErrorStatus::INVALID_ARGUMENT, nullptr);
+        return V1_3::ErrorStatus::INVALID_ARGUMENT;
     }
     if (!isFullModelSupported) {
-        notify(callback, hal::ErrorStatus::INVALID_ARGUMENT, nullptr);
-        return hal::ErrorStatus::NONE;
+        notify(callback, V1_3::ErrorStatus::INVALID_ARGUMENT, nullptr);
+        return V1_3::ErrorStatus::NONE;
     }
     const auto deadline = makeDeadline(halDeadline);
     if (hasDeadlinePassed(deadline)) {
-        notify(callback, hal::ErrorStatus::MISSED_DEADLINE_PERSISTENT, nullptr);
-        return hal::ErrorStatus::NONE;
+        notify(callback, V1_3::ErrorStatus::MISSED_DEADLINE_PERSISTENT, nullptr);
+        return V1_3::ErrorStatus::NONE;
     }
 
     // asynchronously prepare the model from a new, detached thread
@@ -78,13 +78,13 @@ hal::ErrorStatus prepareModelBase(const T_Model& model, const SampleDriver* driv
         sp<SamplePreparedModel> preparedModel =
                 new SamplePreparedModel(convertToV1_3(model), driver, preference, userId, priority);
         if (!preparedModel->initialize()) {
-            notify(callback, hal::ErrorStatus::INVALID_ARGUMENT, nullptr);
+            notify(callback, V1_3::ErrorStatus::INVALID_ARGUMENT, nullptr);
             return;
         }
-        notify(callback, hal::ErrorStatus::NONE, preparedModel);
+        notify(callback, V1_3::ErrorStatus::NONE, preparedModel);
     }).detach();
 
-    return hal::ErrorStatus::NONE;
+    return V1_3::ErrorStatus::NONE;
 }
 
 }  // namespace sample_driver

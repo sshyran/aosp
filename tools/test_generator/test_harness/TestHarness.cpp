@@ -558,12 +558,12 @@ void dumpTestBufferToSpecFileHelper(const TestBuffer& buffer, bool useHexFloat, 
 
 }  // namespace
 
-const char* toString(TestOperandType type) {
-    return kOperandTypeNames[static_cast<int>(type)];
+std::ostream& operator<<(std::ostream& os, const TestOperandType& type) {
+    return os << kOperandTypeNames[static_cast<int>(type)];
 }
 
-const char* toString(TestOperationType type) {
-    return kOperationTypeNames[static_cast<int>(type)];
+std::ostream& operator<<(std::ostream& os, const TestOperationType& type) {
+    return os << kOperationTypeNames[static_cast<int>(type)];
 }
 
 // Dump a test buffer.
@@ -605,7 +605,7 @@ void SpecDumper::dumpTestBuffer(TestOperandType type, const TestBuffer& buffer, 
 
 void SpecDumper::dumpTestOperand(const TestOperand& operand, uint32_t index) {
     mOs << "op" << index << " = " << getOperandClassInSpecFile(operand.lifetime) << "(\"op" << index
-        << "\", [\"" << toString(operand.type) << "\", ["
+        << "\", [\"" << operand.type << "\", ["
         << join(", ", operand.dimensions, defaultToStringFunc<uint32_t>) << "]";
     if (operand.scale != 0.0f || operand.zeroPoint != 0) {
         mOs << ", float.fromhex(" << toHexFloatString(operand.scale) << "), " << operand.zeroPoint;
@@ -635,7 +635,7 @@ void SpecDumper::dumpTestOperand(const TestOperand& operand, uint32_t index) {
 
 void SpecDumper::dumpTestOperation(const TestOperation& operation) {
     auto toOperandName = [](uint32_t index) { return "op" + std::to_string(index); };
-    mOs << "model = model.Operation(\"" << toString(operation.type) << "\", "
+    mOs << "model = model.Operation(\"" << operation.type << "\", "
         << join(", ", operation.inputs, toOperandName) << ").To("
         << join(", ", operation.outputs, toOperandName) << ")\n";
 }

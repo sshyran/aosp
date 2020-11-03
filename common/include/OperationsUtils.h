@@ -23,6 +23,7 @@
 
 #include "HalInterfaces.h"
 #include "Utils.h"
+#include "nnapi/Types.h"
 
 namespace android {
 namespace nn {
@@ -45,11 +46,11 @@ enum PaddingScheme {
 
 // Stores operand type information. "Shape" is a historical name.
 struct Shape {
-    hal::OperandType type = hal::OperandType::FLOAT32;
+    OperandType type = OperandType::FLOAT32;
     std::vector<uint32_t> dimensions;
     float scale = 0.0f;
     int32_t offset = 0;
-    hal::OperandExtraParams extraParams;
+    Operand::ExtraParams extraParams;
 };
 
 // Provides information available during graph creation to validate an operation.
@@ -76,12 +77,12 @@ class IOperationValidationContext {
     virtual HalVersion getHalVersion() const = 0;
 
     virtual uint32_t getNumInputs() const = 0;
-    virtual hal::OperandType getInputType(uint32_t index) const = 0;
+    virtual OperandType getInputType(uint32_t index) const = 0;
     virtual Shape getInputShape(uint32_t index) const = 0;
-    virtual const hal::OperandExtraParams getInputExtraParams(uint32_t index) const = 0;
+    virtual const Operand::ExtraParams& getInputExtraParams(uint32_t index) const = 0;
 
     virtual uint32_t getNumOutputs() const = 0;
-    virtual hal::OperandType getOutputType(uint32_t index) const = 0;
+    virtual OperandType getOutputType(uint32_t index) const = 0;
     virtual Shape getOutputShape(uint32_t index) const = 0;
 };
 
@@ -91,13 +92,13 @@ class IOperationExecutionContext {
     virtual ~IOperationExecutionContext() {}
 
     virtual uint32_t getNumInputs() const = 0;
-    virtual hal::OperandType getInputType(uint32_t index) const = 0;
+    virtual OperandType getInputType(uint32_t index) const = 0;
     virtual Shape getInputShape(uint32_t index) const = 0;
     virtual const void* getInputBuffer(uint32_t index) const = 0;
-    virtual const hal::OperandExtraParams getInputExtraParams(uint32_t index) const = 0;
+    virtual const Operand::ExtraParams& getInputExtraParams(uint32_t index) const = 0;
 
     virtual uint32_t getNumOutputs() const = 0;
-    virtual hal::OperandType getOutputType(uint32_t index) const = 0;
+    virtual OperandType getOutputType(uint32_t index) const = 0;
     virtual Shape getOutputShape(uint32_t index) const = 0;
     virtual void* getOutputBuffer(uint32_t index) = 0;
 
@@ -125,11 +126,11 @@ class IOperationExecutionContext {
 
 // Verifies that the number and types of operation inputs are as expected.
 bool validateInputTypes(const IOperationValidationContext* context,
-                        const std::vector<hal::OperandType>& expectedTypes);
+                        const std::vector<OperandType>& expectedTypes);
 
 // Verifies that the number and types of operation outputs are as expected.
 bool validateOutputTypes(const IOperationValidationContext* context,
-                         const std::vector<hal::OperandType>& expectedTypes);
+                         const std::vector<OperandType>& expectedTypes);
 
 // Verifies that the HAL version specified in the context is greater or equal
 // than the minimal supported HAL version.

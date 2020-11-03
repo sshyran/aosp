@@ -16,6 +16,7 @@
 
 #include <gtest/gtest.h>
 
+#include <algorithm>
 #include <memory>
 #include <vector>
 
@@ -28,7 +29,6 @@
 namespace android::nn {
 namespace {
 
-using namespace hal;
 using sample_driver::SampleDriverPartial;
 using Result = test_wrapper::Result;
 using WrapperOperandType = test_wrapper::OperandType;
@@ -50,20 +50,21 @@ class FailingTestDriver : public SampleDriverPartial {
     // EmptyOperationResolver causes execution to fail.
     FailingTestDriver() : SampleDriverPartial(kTestDriverName, &mEmptyOperationResolver) {}
 
-    Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
+    hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
         cb(V1_3::ErrorStatus::NONE,
-           {.operandPerformance = {{.type = OperandType::TENSOR_FLOAT32,
+           {.operandPerformance = {{.type = V1_3::OperandType::TENSOR_FLOAT32,
                                     .info = {.execTime = 0.1,  // Faster than CPU.
                                              .powerUsage = 0.1}}}});
-        return Void();
+        return hardware::Void();
     }
 
    private:
-    std::vector<bool> getSupportedOperationsImpl(const Model& model) const override {
+    std::vector<bool> getSupportedOperationsImpl(const V1_3::Model& model) const override {
         std::vector<bool> supported(model.main.operations.size());
-        std::transform(
-                model.main.operations.begin(), model.main.operations.end(), supported.begin(),
-                [](const Operation& operation) { return operation.type == OperationType::SQRT; });
+        std::transform(model.main.operations.begin(), model.main.operations.end(),
+                       supported.begin(), [](const V1_3::Operation& operation) {
+                           return operation.type == V1_3::OperationType::SQRT;
+                       });
         return supported;
     }
 

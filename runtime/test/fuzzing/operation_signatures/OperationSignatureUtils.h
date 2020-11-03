@@ -310,7 +310,7 @@ inline void defaultScalarOperandConstructor(TestOperandType dataType, uint32_t, 
             op->zeroPoint = 0;
             break;
         default:
-            NN_FUZZER_CHECK(false) << "Data type " << toString(dataType)
+            NN_FUZZER_CHECK(false) << "Data type " << dataType
                                    << " is not supported in defaultScalarOperandConstructor.";
     }
 }

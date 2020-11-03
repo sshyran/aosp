@@ -16,7 +16,6 @@
 
 #define LOG_TAG "Operations"
 
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 #include "Utils.h"
@@ -34,19 +33,19 @@ constexpr uint32_t kOutputScalar = 0;
 bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    hal::OperandType inputType = context->getInputType(kInputTensor);
-    NN_RET_CHECK(inputType == hal::OperandType::TENSOR_FLOAT16 ||
-                 inputType == hal::OperandType::TENSOR_FLOAT32 ||
-                 inputType == hal::OperandType::TENSOR_INT32 ||
-                 inputType == hal::OperandType::TENSOR_QUANT8_ASYMM ||
-                 inputType == hal::OperandType::TENSOR_QUANT16_SYMM ||
-                 inputType == hal::OperandType::TENSOR_BOOL8 ||
-                 inputType == hal::OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL ||
-                 inputType == hal::OperandType::TENSOR_QUANT16_ASYMM ||
-                 inputType == hal::OperandType::TENSOR_QUANT8_SYMM ||
-                 inputType == hal::OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
-            << "Incorrect input type for a RANK op: " << toString(inputType);
-    NN_RET_CHECK(validateOutputTypes(context, {hal::OperandType::INT32}));
+    OperandType inputType = context->getInputType(kInputTensor);
+    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
+                 inputType == OperandType::TENSOR_FLOAT32 ||
+                 inputType == OperandType::TENSOR_INT32 ||
+                 inputType == OperandType::TENSOR_QUANT8_ASYMM ||
+                 inputType == OperandType::TENSOR_QUANT16_SYMM ||
+                 inputType == OperandType::TENSOR_BOOL8 ||
+                 inputType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL ||
+                 inputType == OperandType::TENSOR_QUANT16_ASYMM ||
+                 inputType == OperandType::TENSOR_QUANT8_SYMM ||
+                 inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
+            << "Incorrect input type for a RANK op: " << inputType;
+    NN_RET_CHECK(validateOutputTypes(context, {OperandType::INT32}));
     return validateHalVersion(context, HalVersion::V1_3);
 }
 

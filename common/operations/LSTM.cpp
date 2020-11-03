@@ -22,17 +22,15 @@
 
 #include "CpuExecutor.h"
 #include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
 #include "Utils.h"
+#include "nnapi/Types.h"
 
 namespace android {
 namespace nn {
 
 namespace {
-
-using namespace hal;
 
 template <typename T>
 inline T* GetBuffer(RunTimeOperandInfo* operand) {
@@ -113,7 +111,7 @@ LSTMCell::LSTMCell(const Operation& operation, RunTimeOperandInfo* operands) {
     } else {
         // For LSTM from HAL v1.0 assign operands with no values
         static RunTimeOperandInfo no_value;
-        no_value.lifetime = OperandLifeTime::NO_VALUE;
+        no_value.lifetime = Operand::LifeTime::NO_VALUE;
 
         input_layer_norm_weights_ = &no_value;
         forget_layer_norm_weights_ = &no_value;
@@ -221,8 +219,8 @@ bool LSTMCell::CheckInputTensorDimensions(
     // omitted ones can be omited in case CIFG LSTM is used.
     params->use_layer_norm = !IsNullInput(output_layer_norm_weights);
 
-    params->use_projection_weight = (projection_weights->lifetime != OperandLifeTime::NO_VALUE);
-    params->use_projection_bias = (projection_bias->lifetime != OperandLifeTime::NO_VALUE);
+    params->use_projection_weight = (projection_weights->lifetime != Operand::LifeTime::NO_VALUE);
+    params->use_projection_bias = (projection_bias->lifetime != Operand::LifeTime::NO_VALUE);
 
     // Make sure the input gate bias is present only when not a CIFG-LSTM.
     if (params->use_cifg) {

@@ -48,11 +48,7 @@ inline bool StartsWith(std::string_view sv, std::string_view prefix) {
 
 namespace {
 
-using namespace hal;
-
-const uint8_t kLowBitsType = static_cast<uint8_t>(ExtensionTypeEncoding::LOW_BITS_TYPE);
-const uint32_t kMaxPrefix =
-        (1 << static_cast<uint8_t>(ExtensionTypeEncoding::HIGH_BITS_PREFIX)) - 1;
+constexpr uint32_t kMaxPrefix = (1 << kExtensionPrefixBits) - 1;
 
 // Checks if the two structures contain the same information. The order of
 // operand types within the structures does not matter.
@@ -235,7 +231,7 @@ bool TypeManager::getExtensionType(const char* extensionName, uint16_t typeWithi
                                    int32_t* type) {
     uint16_t prefix;
     NN_RET_CHECK(getExtensionPrefix(extensionName, &prefix));
-    *type = (prefix << kLowBitsType) | typeWithinExtension;
+    *type = (prefix << kExtensionTypeBits) | typeWithinExtension;
     return true;
 }
 
@@ -249,8 +245,8 @@ bool TypeManager::getExtensionInfo(uint16_t prefix, const Extension** extension)
 bool TypeManager::getExtensionOperandTypeInfo(
         OperandType type, const Extension::OperandTypeInformation** info) const {
     uint32_t operandType = static_cast<uint32_t>(type);
-    uint16_t prefix = operandType >> kLowBitsType;
-    uint16_t typeWithinExtension = operandType & ((1 << kLowBitsType) - 1);
+    uint16_t prefix = operandType >> kExtensionTypeBits;
+    uint16_t typeWithinExtension = operandType & ((1 << kExtensionTypeBits) - 1);
     const Extension* extension;
     NN_RET_CHECK(getExtensionInfo(prefix, &extension))
             << "Cannot find extension corresponding to prefix " << prefix;
@@ -268,7 +264,7 @@ bool TypeManager::getExtensionOperandTypeInfo(
 }
 
 bool TypeManager::isTensorType(OperandType type) const {
-    if (!isExtensionOperandType(type)) {
+    if (!isExtension(type)) {
         return !nonExtensionOperandTypeIsScalar(static_cast<int>(type));
     }
     const Extension::OperandTypeInformation* info;
@@ -278,7 +274,7 @@ bool TypeManager::isTensorType(OperandType type) const {
 
 uint32_t TypeManager::getSizeOfData(OperandType type,
                                     const std::vector<uint32_t>& dimensions) const {
-    if (!isExtensionOperandType(type)) {
+    if (!isExtension(type)) {
         return nonExtensionOperandSizeOfData(type, dimensions);
     }
     const Extension::OperandTypeInformation* info;
@@ -286,9 +282,9 @@ uint32_t TypeManager::getSizeOfData(OperandType type,
     return info->isTensor ? sizeOfTensorData(info->byteSize, dimensions) : info->byteSize;
 }
 
-bool TypeManager::sizeOfDataOverflowsUInt32(hal::OperandType type,
+bool TypeManager::sizeOfDataOverflowsUInt32(OperandType type,
                                             const std::vector<uint32_t>& dimensions) const {
-    if (!isExtensionOperandType(type)) {
+    if (!isExtension(type)) {
         return nonExtensionOperandSizeOfDataOverflowsUInt32(type, dimensions);
     }
     const Extension::OperandTypeInformation* info;

@@ -16,7 +16,6 @@
 
 #define LOG_TAG "Operations"
 
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 
@@ -31,8 +30,6 @@ constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
 namespace {
-
-using namespace hal;
 
 bool compute(const bool8* input, const Shape& shape, bool8* output) {
     const auto size = getNumberOfElements(shape);

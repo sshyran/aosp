@@ -37,23 +37,23 @@ namespace android::nn {
 class ManagedBuffer {
    public:
     static std::shared_ptr<ManagedBuffer> create(uint32_t size, std::set<PreparedModelRole> roles,
-                                                 const hal::Operand& operand);
+                                                 const Operand& operand);
 
     // Prefer ManagedBuffer::create.
     ManagedBuffer(std::unique_ptr<uint8_t[]> buffer, uint32_t size,
-                  std::set<PreparedModelRole> roles, const hal::Operand& operand);
+                  std::set<PreparedModelRole> roles, const Operand& operand);
 
     RunTimePoolInfo createRunTimePoolInfo() const {
         return RunTimePoolInfo::createFromExistingBuffer(kBuffer.get(), kSize);
     }
 
     // "poolIndex" is the index of this buffer in the request.pools.
-    hal::ErrorStatus validateRequest(uint32_t poolIndex, const hal::Request& request,
-                                     const hal::IPreparedModel* preparedModel) const;
+    ErrorStatus validateRequest(uint32_t poolIndex, const Request& request,
+                                const V1_3::IPreparedModel* preparedModel) const;
 
     // "size" is the byte size of the hidl_memory provided to the copyFrom or copyTo method.
-    hal::ErrorStatus validateCopyFrom(const std::vector<uint32_t>& dimensions, uint32_t size) const;
-    hal::ErrorStatus validateCopyTo(uint32_t size) const;
+    ErrorStatus validateCopyFrom(const std::vector<uint32_t>& dimensions, uint32_t size) const;
+    ErrorStatus validateCopyTo(uint32_t size) const;
 
     bool updateDimensions(const std::vector<uint32_t>& dimensions);
     void setInitialized(bool initialized);
@@ -63,7 +63,7 @@ class ManagedBuffer {
     const std::unique_ptr<uint8_t[]> kBuffer;
     const uint32_t kSize;
     const std::set<PreparedModelRole> kRoles;
-    const hal::OperandType kOperandType;
+    const OperandType kOperandType;
     const std::vector<uint32_t> kInitialDimensions;
     std::vector<uint32_t> mUpdatedDimensions;
     bool mInitialized = false;

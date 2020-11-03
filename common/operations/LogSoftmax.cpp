@@ -16,18 +16,17 @@
 
 #define LOG_TAG "Operations"
 
-#include "HalInterfaces.h"
+#include <algorithm>
+#include <cmath>
+#include <vector>
+
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
 
-#include <cmath>
-
 namespace android {
 namespace nn {
 namespace log_softmax {
-
-using namespace hal;
 
 constexpr char kOperationName[] = "LOG_SOFTMAX";
 
