@@ -192,6 +192,23 @@ EntryType tableLookup(const EntryType (&table)[entryCount],
     }
 }
 
+static Version convert(HalVersion halVersion) {
+    switch (halVersion) {
+        case HalVersion::UNKNOWN:
+            break;
+        case HalVersion::V1_0:
+            return Version::ANDROID_OC_MR1;
+        case HalVersion::V1_1:
+            return Version::ANDROID_P;
+        case HalVersion::V1_2:
+            return Version::ANDROID_Q;
+        case HalVersion::V1_3:
+            return Version::ANDROID_R;
+    }
+    LOG(FATAL) << "Cannot convert " << halVersion;
+    return {};
+}
+
 class OperationValidationContext : public IOperationValidationContext {
     DISALLOW_IMPLICIT_CONSTRUCTORS(OperationValidationContext);
 
@@ -206,10 +223,10 @@ class OperationValidationContext : public IOperationValidationContext {
           outputCount(outputCount),
           outputIndexes(outputIndexes),
           operands(operands),
-          halVersion(halVersion) {}
+          version(convert(halVersion)) {}
 
     const char* getOperationName() const override;
-    HalVersion getHalVersion() const override;
+    Version getVersion() const override;
 
     uint32_t getNumInputs() const override;
     OperandType getInputType(uint32_t index) const override;
@@ -230,15 +247,15 @@ class OperationValidationContext : public IOperationValidationContext {
     uint32_t outputCount;
     const uint32_t* outputIndexes;
     const Operand* operands;
-    HalVersion halVersion;
+    Version version;
 };
 
 const char* OperationValidationContext::getOperationName() const {
     return operationName;
 }
 
-HalVersion OperationValidationContext::getHalVersion() const {
-    return halVersion;
+Version OperationValidationContext::getVersion() const {
+    return version;
 }
 
 const Operand* OperationValidationContext::getInputOperand(uint32_t index) const {

@@ -73,9 +73,9 @@ bool validate(const IOperationValidationContext* context) {
                                     {inputType, OperandType::INT32, OperandType::TENSOR_INT32}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return validateHalVersion(context, HalVersion::V1_3);
+        return validateVersion(context, Version::ANDROID_R);
     } else {
-        return validateHalVersion(context, HalVersion::V1_2);
+        return validateVersion(context, Version::ANDROID_Q);
     }
 }
 

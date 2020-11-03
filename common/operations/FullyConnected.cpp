@@ -224,7 +224,7 @@ bool validate(const IOperationValidationContext* context) {
     std::vector<OperandType> inExpectedTypes;
     std::vector<OperandType> outExpectedTypes;
     if (inputType == OperandType::TENSOR_FLOAT32) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_0));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_OC_MR1));
         inExpectedTypes = {
                 OperandType::TENSOR_FLOAT32,
                 OperandType::TENSOR_FLOAT32,
@@ -232,7 +232,7 @@ bool validate(const IOperationValidationContext* context) {
                 OperandType::INT32,
         };
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
         inExpectedTypes = {
                 OperandType::TENSOR_FLOAT16,
                 OperandType::TENSOR_FLOAT16,
@@ -249,9 +249,9 @@ bool validate(const IOperationValidationContext* context) {
         bool meetsQuantizedScaleConstraintBeforeV1_2 = (outputScale > inputScale * weightsScale);
 
         if (!meetsQuantizedScaleConstraintBeforeV1_2) {
-            NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+            NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
         } else {
-            NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_0));
+            NN_RET_CHECK(validateVersion(context, Version::ANDROID_OC_MR1));
         }
 
         inExpectedTypes = {
@@ -261,7 +261,7 @@ bool validate(const IOperationValidationContext* context) {
                 OperandType::INT32,
         };
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_R));
 
         inExpectedTypes = {
                 OperandType::TENSOR_QUANT8_ASYMM_SIGNED,

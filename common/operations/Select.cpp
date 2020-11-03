@@ -78,7 +78,7 @@ bool validate(const IOperationValidationContext* context) {
             << "Unsupported input operand type for select op: " << inputType;
     NN_RET_CHECK(validateInputTypes(context, {OperandType::TENSOR_BOOL8, inputType, inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateHalVersion(context, HalVersion::V1_2);
+    return validateVersion(context, Version::ANDROID_Q);
 }
 
 bool prepare(IOperationExecutionContext* context) {

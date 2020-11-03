@@ -149,7 +149,7 @@ bool validate(const IOperationValidationContext* context) {
     outExpectedTypes.push_back(OperandType::TENSOR_QUANT8_ASYMM_SIGNED);
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
 
-    return validateHalVersion(context, HalVersion::V1_3);
+    return validateVersion(context, Version::ANDROID_R);
 }
 
 bool prepare(IOperationExecutionContext* context) {

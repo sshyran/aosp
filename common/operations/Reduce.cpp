@@ -80,7 +80,7 @@ bool validateProdSum(const IOperationValidationContext* context) {
     if (hasKnownRank(input)) {
         NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
     }
-    return validateHalVersion(context, HalVersion::V1_2);
+    return validateVersion(context, Version::ANDROID_Q);
 }
 
 bool validateMaxMin(const IOperationValidationContext* context) {
@@ -95,15 +95,15 @@ bool validateMaxMin(const IOperationValidationContext* context) {
     NN_RET_CHECK(
             validateInputTypes(context, {inputType, OperandType::TENSOR_INT32, OperandType::BOOL}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    auto minHalVersion = HalVersion::V1_2;
+    auto minVersion = Version::ANDROID_Q;
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minHalVersion = HalVersion::V1_3;
+        minVersion = Version::ANDROID_R;
     }
     const Shape& input = context->getInputShape(kInputTensor);
     if (hasKnownRank(input)) {
         NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
     }
-    return validateHalVersion(context, minHalVersion);
+    return validateVersion(context, minVersion);
 }
 
 bool validateLogical(const IOperationValidationContext* context) {
@@ -119,7 +119,7 @@ bool validateLogical(const IOperationValidationContext* context) {
     if (hasKnownRank(input)) {
         NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
     }
-    return validateHalVersion(context, HalVersion::V1_2);
+    return validateVersion(context, Version::ANDROID_Q);
 }
 
 bool prepare(IOperationExecutionContext* context) {

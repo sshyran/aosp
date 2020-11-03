@@ -434,19 +434,19 @@ bool divFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, c
 }  // namespace
 
 bool validate(OperationType opType, const IOperationValidationContext* context) {
-    const HalVersion opIntroducedAt = (opType == OperationType::DIV || opType == OperationType::SUB)
-                                              ? HalVersion::V1_1
-                                              : HalVersion::V1_0;
+    const Version opIntroducedAt = (opType == OperationType::DIV || opType == OperationType::SUB)
+                                           ? Version::ANDROID_P
+                                           : Version::ANDROID_OC_MR1;
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     auto inputType = context->getInputType(kInputTensor1);
     if (inputType == OperandType::TENSOR_FLOAT32) {
-        NN_RET_CHECK(validateHalVersion(context, std::max(HalVersion::V1_0, opIntroducedAt)));
+        NN_RET_CHECK(validateVersion(context, std::max(Version::ANDROID_OC_MR1, opIntroducedAt)));
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        NN_RET_CHECK(validateHalVersion(context, std::max(HalVersion::V1_2, opIntroducedAt)));
+        NN_RET_CHECK(validateVersion(context, std::max(Version::ANDROID_Q, opIntroducedAt)));
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
         if (opType == OperationType::SUB) {
-            NN_RET_CHECK(validateHalVersion(context, std::max(HalVersion::V1_2, opIntroducedAt)));
+            NN_RET_CHECK(validateVersion(context, std::max(Version::ANDROID_Q, opIntroducedAt)));
         } else if (opType == OperationType::DIV) {
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation DIV";
         } else if (opType == OperationType::MUL) {
@@ -454,13 +454,15 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
             Shape input1 = context->getInputShape(kInputTensor1);
             Shape input2 = context->getInputShape(kInputTensor2);
             NN_RET_CHECK_GT(output.scale, input1.scale * input2.scale);
-            NN_RET_CHECK(validateHalVersion(context, std::max(HalVersion::V1_0, opIntroducedAt)));
+            NN_RET_CHECK(
+                    validateVersion(context, std::max(Version::ANDROID_OC_MR1, opIntroducedAt)));
         } else {
-            NN_RET_CHECK(validateHalVersion(context, std::max(HalVersion::V1_0, opIntroducedAt)));
+            NN_RET_CHECK(
+                    validateVersion(context, std::max(Version::ANDROID_OC_MR1, opIntroducedAt)));
         }
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED ||
                inputType == OperandType::TENSOR_INT32) {
-        NN_RET_CHECK(validateHalVersion(context, std::max(HalVersion::V1_3, opIntroducedAt)));
+        NN_RET_CHECK(validateVersion(context, std::max(Version::ANDROID_R, opIntroducedAt)));
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << opType;
     }

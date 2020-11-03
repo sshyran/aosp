@@ -16,14 +16,13 @@
 
 #define LOG_TAG "Operations"
 
+#include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
+#include <tensorflow/lite/kernels/internal/reference/reference_ops.h>
+
 #include <vector>
 
 #include "CpuOperationUtils.h"
 #include "OperationResolver.h"
-
-#include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
-#include <tensorflow/lite/kernels/internal/reference/reference_ops.h>
-
 #include "Tracing.h"
 
 namespace android {
@@ -76,11 +75,11 @@ bool validate(const IOperationValidationContext* context) {
 
     const OperandType inputType = context->getInputType(kInputTensor);
     if (inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_1));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_P));
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_R));
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
     }

@@ -187,13 +187,13 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
                  inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
             << "Unsupported tensor type for operation " << opType;
     if (inputType == OperandType::TENSOR_FLOAT16 || inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
     }
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_R));
     }
     if (scalarType != OperandType::INT32) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
         if (inputType == OperandType::TENSOR_FLOAT32) {
             NN_RET_CHECK(scalarType == OperandType::FLOAT32);
         } else if (inputType == OperandType::TENSOR_FLOAT16) {
@@ -204,15 +204,15 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
         }
     }
     if (numInputs < kNumInputs) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_0));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_OC_MR1));
     } else if (numInputs == kNumInputs) {
         inExpectedTypes.push_back(OperandType::BOOL);
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
     } else {
         while (inExpectedTypes.size() < numInputs) {
             inExpectedTypes.push_back(OperandType::BOOL);
         }
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_R));
     }
     return validateInputTypes(context, inExpectedTypes) &&
            validateOutputTypes(context, {inputType});
