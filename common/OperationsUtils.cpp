@@ -32,8 +32,6 @@ namespace nn {
 
 namespace {
 
-using namespace hal;
-
 bool validateOperandTypes(const std::vector<OperandType>& expectedTypes, const char* tag,
                           uint32_t operandCount,
                           std::function<OperandType(uint32_t)> getOperandType) {
@@ -41,8 +39,8 @@ bool validateOperandTypes(const std::vector<OperandType>& expectedTypes, const c
     for (uint32_t i = 0; i < operandCount; ++i) {
         OperandType type = getOperandType(i);
         NN_RET_CHECK(type == expectedTypes[i])
-                << "Invalid " << tag << " tensor type " << toString(type) << " for " << tag << " "
-                << i << ", expected " << toString(expectedTypes[i]);
+                << "Invalid " << tag << " tensor type " << type << " for " << tag << " " << i
+                << ", expected " << expectedTypes[i];
     }
     return true;
 }
@@ -97,17 +95,17 @@ bool validateHalVersion(const IOperationValidationContext* context,
             if (i != 0) {
                 message << ", ";
             }
-            message << toString(context->getInputType(i));
+            message << context->getInputType(i);
         }
         message << "} and outputs {";
         for (uint32_t i = 0, n = context->getNumOutputs(); i < n; ++i) {
             if (i != 0) {
                 message << ", ";
             }
-            message << toString(context->getOutputType(i));
+            message << context->getOutputType(i);
         }
-        message << "} is only supported since " << toString(minSupportedHalVersion)
-                << " (validating using " << toString(context->getHalVersion()) << ")";
+        message << "} is only supported since " << minSupportedHalVersion << " (validating using "
+                << context->getHalVersion() << ")";
         NN_RET_CHECK_FAIL() << message.str();
     }
     return true;

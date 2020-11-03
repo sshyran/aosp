@@ -34,12 +34,11 @@ struct RunTimeOperandInfo;
 
 class BidirectionalSequenceLSTM {
    public:
-    BidirectionalSequenceLSTM(const hal::Operation& operation, RunTimeOperandInfo* operands);
+    BidirectionalSequenceLSTM(const Operation& operation, RunTimeOperandInfo* operands);
 
-    bool Prepare(const hal::Operation& operation, RunTimeOperandInfo* operands,
-                 Shape* fwOutputShape, Shape* bwOutputShape, Shape* fwOutputActivationState,
-                 Shape* fwOutputCellState, Shape* bwOutputActivationState,
-                 Shape* bwOutputCellState);
+    bool Prepare(const Operation& operation, RunTimeOperandInfo* operands, Shape* fwOutputShape,
+                 Shape* bwOutputShape, Shape* fwOutputActivationState, Shape* fwOutputCellState,
+                 Shape* bwOutputActivationState, Shape* bwOutputCellState);
     bool Eval();
 
     // Input Tensors of size {max_time, n_batch, n_input}

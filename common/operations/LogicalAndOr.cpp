@@ -16,7 +16,9 @@
 
 #define LOG_TAG "Operations"
 
-#include "HalInterfaces.h"
+#include <functional>
+#include <vector>
+
 #include "IndexedShapeWrapper.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
@@ -33,8 +35,6 @@ constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
 namespace {
-
-using namespace hal;
 
 bool compute(const std::function<bool(bool, bool)>& func, const bool8* aData, const Shape& aShape,
              const bool8* bData, const Shape& bShape, bool8* outputData, const Shape& outputShape) {

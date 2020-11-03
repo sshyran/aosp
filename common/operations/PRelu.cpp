@@ -19,7 +19,6 @@
 #include <algorithm>
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "IndexedShapeWrapper.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
@@ -30,8 +29,6 @@
 namespace android {
 namespace nn {
 namespace prelu {
-
-using namespace hal;
 
 constexpr char kOperationName[] = "PRELU";
 

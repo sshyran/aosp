@@ -20,7 +20,6 @@
 #include <vector>
 
 #include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "Tracing.h"
 
@@ -41,8 +40,6 @@ constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
 namespace {
-
-using namespace hal;
 
 template <typename T>
 inline bool instanceNormNhwc(const T* inputData, const Shape& inputShape, T gamma, T beta,

@@ -23,7 +23,7 @@
 #include <cmath>
 #include <vector>
 
-#include "HalInterfaces.h"
+#include "nnapi/Types.h"
 
 namespace android {
 namespace nn {
@@ -33,9 +33,9 @@ struct Shape;
 
 class Multinomial {
    public:
-    Multinomial(const hal::Operation& operation, RunTimeOperandInfo* operands);
+    Multinomial(const Operation& operation, RunTimeOperandInfo* operands);
 
-    static bool Prepare(const hal::Operation& operation, RunTimeOperandInfo* operands,
+    static bool Prepare(const Operation& operation, RunTimeOperandInfo* operands,
                         Shape* outputShape);
     bool Eval();
 

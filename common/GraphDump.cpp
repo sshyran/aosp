@@ -18,9 +18,8 @@
 
 #include "GraphDump.h"
 
-#include "HalInterfaces.h"
-
 #include <android-base/logging.h>
+
 #include <algorithm>
 #include <iostream>
 #include <map>
@@ -28,10 +27,10 @@
 #include <string>
 #include <utility>
 
+#include "Utils.h"
+
 namespace android {
 namespace nn {
-
-using namespace hal;
 
 // class Dumper is a wrapper around an std::ostream (if instantiated
 // with a pointer to a stream) or around LOG(INFO) (otherwise).
@@ -112,25 +111,40 @@ static std::string translate(OperandType type) {
             return "OEM";
         case OperandType::TENSOR_OEM_BYTE:
             return "TOEMB";
-        default:
-            return toString(type);
+        default: {
+            std::ostringstream oss;
+            oss << type;
+            return oss.str();
+        }
     }
 }
 
 // If the specified Operand of the specified Model has OperandType
 // nnType corresponding to C++ type cppType and is of
-// OperandLifeTime::CONSTANT_COPY, then write the Operand's value to
+// Operand::LifeTime::CONSTANT_COPY, then write the Operand's value to
 // the Dumper.
 namespace {
 template <OperandType nnType, typename cppType>
 void tryValueDump(Dumper& dump, const Model& model, const Operand& opnd) {
-    if (opnd.type != nnType || opnd.lifetime != OperandLifeTime::CONSTANT_COPY ||
-        opnd.location.length != sizeof(cppType)) {
+    if (opnd.type != nnType) {
+        return;
+    }
+
+    const void* pointer = nullptr;
+    if (opnd.lifetime == Operand::LifeTime::CONSTANT_COPY) {
+        pointer = model.operandValues.data() + opnd.location.offset;
+    } else if (opnd.lifetime == Operand::LifeTime::POINTER) {
+        pointer = std::get<const void*>(opnd.location.pointer);
+    } else {
+        return;
+    }
+
+    if (opnd.location.length != sizeof(cppType)) {
         return;
     }
 
     cppType val;
-    memcpy(&val, &model.operandValues[opnd.location.offset], sizeof(cppType));
+    memcpy(&val, pointer, sizeof(cppType));
     dump << " = " << val;
 }
 }  // namespace
@@ -172,25 +186,28 @@ void graphDump(const char* name, const Model& model, std::ostream* outStream) {
         const char* kind = nullptr;
         const char* io = nullptr;
         switch (opnd.lifetime) {
-            case OperandLifeTime::CONSTANT_COPY:
+            case Operand::LifeTime::CONSTANT_COPY:
                 kind = "COPY";
                 break;
-            case OperandLifeTime::CONSTANT_REFERENCE:
+            case Operand::LifeTime::CONSTANT_REFERENCE:
                 kind = "REF";
                 break;
-            case OperandLifeTime::SUBGRAPH_INPUT:
+            case Operand::LifeTime::SUBGRAPH_INPUT:
                 io = "input";
                 break;
-            case OperandLifeTime::SUBGRAPH_OUTPUT:
+            case Operand::LifeTime::SUBGRAPH_OUTPUT:
                 io = "output";
                 break;
-            case OperandLifeTime::NO_VALUE:
+            case Operand::LifeTime::NO_VALUE:
                 kind = "NO";
                 break;
-            case OperandLifeTime::SUBGRAPH:
+            case Operand::LifeTime::SUBGRAPH:
                 kind = "SUBGRAPH";
                 break;
-            default:
+            case Operand::LifeTime::POINTER:
+                kind = "POINTER";
+                break;
+            case Operand::LifeTime::TEMPORARY_VARIABLE:
                 // nothing interesting
                 break;
         }
@@ -205,7 +222,7 @@ void graphDump(const char* name, const Model& model, std::ostream* outStream) {
         tryValueDump<OperandType::FLOAT32, float>(dump, model, opnd);
         tryValueDump<OperandType::INT32, int>(dump, model, opnd);
         tryValueDump<OperandType::UINT32, unsigned>(dump, model, opnd);
-        if (opnd.dimensions.size()) {
+        if (!opnd.dimensions.empty()) {
             dump << "(";
             for (unsigned i = 0, e = opnd.dimensions.size(); i < e; i++) {
                 if (i > 0) {
@@ -230,7 +247,7 @@ void graphDump(const char* name, const Model& model, std::ostream* outStream) {
                 dump << " ordering=out";
             }
         }
-        dump << " label=\"" << i << ": " << toString(operation.type) << "\"]" << Dumper::endl;
+        dump << " label=\"" << i << ": " << operation.type << "\"]" << Dumper::endl;
         {
             // operation inputs
             for (unsigned in = 0, inE = operation.inputs.size(); in < inE; in++) {

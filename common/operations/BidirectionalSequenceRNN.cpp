@@ -20,7 +20,6 @@
 #include <utility>
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "RNN.h"
 
@@ -60,8 +59,6 @@ constexpr uint32_t kFwOutputHiddenStateTensor = 2;
 constexpr uint32_t kBwOutputHiddenStateTensor = 3;
 
 namespace {
-
-using namespace hal;
 
 template <typename T>
 void transposeFirstTwoDims(const T* input, const Shape& inputShape, T* output) {
@@ -327,7 +324,7 @@ bool validate(const IOperationValidationContext* context) {
     OperandType inputType = context->getInputType(kInputTensor);
     if (inputType != OperandType::TENSOR_FLOAT16 && inputType != OperandType::TENSOR_FLOAT32) {
         LOG(ERROR) << "Unsupported input operand type for UNIDIRECTIONAL_SEQUENCE_RNN op: "
-                   << toString(inputType);
+                   << inputType;
         return false;
     }
     NN_RET_CHECK(validateInputTypes(

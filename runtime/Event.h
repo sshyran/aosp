@@ -28,7 +28,7 @@ class IEvent {
    public:
     virtual ~IEvent() = default;
     virtual void wait() const = 0;
-    virtual hal::ErrorStatus getStatus() const = 0;
+    virtual ErrorStatus getStatus() const = 0;
     virtual int getSyncFenceFd(bool shouldDup) const = 0;
 };
 
@@ -40,7 +40,7 @@ class CallbackEvent : public IEvent {
     }
 
     void wait() const override { kExecutionCallback->wait(); }
-    hal::ErrorStatus getStatus() const override { return kExecutionCallback->getStatus(); }
+    ErrorStatus getStatus() const override { return kExecutionCallback->getStatus(); }
     // Always return -1 as this is not backed by a sync fence.
     int getSyncFenceFd(bool /*should_dup*/) const override { return -1; }
 
@@ -51,7 +51,7 @@ class CallbackEvent : public IEvent {
 // The SyncFenceEvent wraps sync fence and IFencedExecutionCallback
 class SyncFenceEvent : public IEvent {
    public:
-    SyncFenceEvent(int sync_fence_fd, const sp<hal::IFencedExecutionCallback>& callback)
+    SyncFenceEvent(int sync_fence_fd, const sp<V1_3::IFencedExecutionCallback>& callback)
         : kFencedExecutionCallback(callback) {
         if (sync_fence_fd > 0) {
             // Dup the provided file descriptor
@@ -69,18 +69,18 @@ class SyncFenceEvent : public IEvent {
     // Get the status of the event.
     // In case of syncWait error, query the dispatch callback for detailed
     // error status.
-    hal::ErrorStatus getStatus() const override {
-        auto error = hal::ErrorStatus::NONE;
+    ErrorStatus getStatus() const override {
+        auto error = ErrorStatus::NONE;
         if (mSyncFenceFd > 0 && syncWait(mSyncFenceFd, -1) != FenceState::SIGNALED) {
-            error = hal::ErrorStatus::GENERAL_FAILURE;
+            error = ErrorStatus::GENERAL_FAILURE;
             // If there is a callback available, use the callback to get the error code.
             if (kFencedExecutionCallback != nullptr) {
-                const hal::Return<void> ret = kFencedExecutionCallback->getExecutionInfo(
-                        [&error](hal::ErrorStatus status, hal::Timing, hal::Timing) {
-                            error = status;
+                const hardware::Return<void> ret = kFencedExecutionCallback->getExecutionInfo(
+                        [&error](V1_3::ErrorStatus status, V1_2::Timing, V1_2::Timing) {
+                            error = uncheckedConvert(status);
                         });
                 if (!ret.isOk()) {
-                    error = hal::ErrorStatus::GENERAL_FAILURE;
+                    error = ErrorStatus::GENERAL_FAILURE;
                 }
             }
         }
@@ -102,7 +102,7 @@ class SyncFenceEvent : public IEvent {
    private:
     // TODO(b/148423931): used android::base::unique_fd instead.
     int mSyncFenceFd = -1;
-    const sp<hal::IFencedExecutionCallback> kFencedExecutionCallback;
+    const sp<V1_3::IFencedExecutionCallback> kFencedExecutionCallback;
 };
 
 }  // namespace android::nn
