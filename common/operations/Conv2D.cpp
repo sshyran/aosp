@@ -526,7 +526,7 @@ bool convQuant8PerChannel(const T* inputData, const Shape& inputShape, const int
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     const uint32_t numInputs = context->getNumInputs();
     NN_RET_CHECK(
             std::binary_search(std::begin(kNumInputsArray), std::end(kNumInputsArray), numInputs));
@@ -624,7 +624,7 @@ bool validate(const IOperationValidationContext* context) {
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateVersion(context, minSupportedVersion);
+    return minSupportedVersion;
 }
 
 bool prepare(IOperationExecutionContext* context) {

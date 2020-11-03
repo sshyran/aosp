@@ -197,7 +197,7 @@ constexpr uint32_t kImageInfoTensor = 3;
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     std::vector<OperandType> inExpectedTypes;
@@ -211,16 +211,14 @@ bool validate(const IOperationValidationContext* context) {
             inExpectedTypes = {OperandType::TENSOR_QUANT16_ASYMM, deltaInputType,
                                OperandType::TENSOR_INT32, OperandType::TENSOR_QUANT16_ASYMM};
         } else {
-            LOG(ERROR) << "Unsupported input tensor type for operation " << kOperationName;
-            return false;
+            return NN_ERROR() << "Unsupported input tensor type for operation " << kOperationName;
         }
     } else {
-        LOG(ERROR) << "Unsupported input tensor type for operation " << kOperationName;
-        return false;
+        return NN_ERROR() << "Unsupported input tensor type for operation " << kOperationName;
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateVersion(context, Version::ANDROID_Q);
+    return Version::ANDROID_Q;
 }
 
 bool prepare(IOperationExecutionContext* context) {
@@ -703,7 +701,7 @@ bool boxWithNmsLimitQuant(const int8_t* scoresData, const Shape& scoresShape,
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     std::vector<OperandType> inExpectedTypes;
@@ -742,9 +740,9 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return validateVersion(context, Version::ANDROID_R);
+        return Version::ANDROID_R;
     } else {
-        return validateVersion(context, Version::ANDROID_Q);
+        return Version::ANDROID_Q;
     }
 }
 
@@ -1213,7 +1211,7 @@ bool generateProposalsQuant(const T_8QInput* scoresData, const Shape& scoresShap
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     std::vector<OperandType> inExpectedTypes;
@@ -1268,9 +1266,9 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return validateVersion(context, Version::ANDROID_R);
+        return Version::ANDROID_R;
     } else {
-        return validateVersion(context, Version::ANDROID_Q);
+        return Version::ANDROID_Q;
     }
 }
 
@@ -1569,7 +1567,7 @@ bool detectionPostprocessFloat16(
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     std::vector<OperandType> inExpectedTypes;
@@ -1597,7 +1595,7 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(
             context, {inputType, inputType, OperandType::TENSOR_INT32, OperandType::TENSOR_INT32}));
-    return validateVersion(context, Version::ANDROID_Q);
+    return Version::ANDROID_Q;
 }
 
 bool prepare(IOperationExecutionContext* context) {

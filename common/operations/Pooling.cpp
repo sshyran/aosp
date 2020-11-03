@@ -288,7 +288,7 @@ bool maxPool(const T* inputData, const Shape& inputShape, const PoolingParam& pa
 
 }  // namespace
 
-bool validate(OperationType opType, const IOperationValidationContext* context) {
+Result<Version> validate(OperationType opType, const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     auto inputCount = context->getNumInputs();
     NN_RET_CHECK(inputCount == 11 || inputCount == 10 || inputCount == 8 || inputCount == 7);
@@ -349,7 +349,7 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateVersion(context, minSupportedVersion);
+    return minSupportedVersion;
 }
 
 bool prepare(IOperationExecutionContext* context) {
