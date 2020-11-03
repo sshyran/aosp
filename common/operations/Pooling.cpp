@@ -24,6 +24,7 @@
 #include "CpuOperationUtils.h"
 #include "OperationResolver.h"
 #include "Tracing.h"
+#include "nnapi/Validation.h"
 
 namespace android {
 namespace nn {
@@ -293,14 +294,15 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
     NN_RET_CHECK(inputCount == 11 || inputCount == 10 || inputCount == 8 || inputCount == 7);
     auto inputType = context->getInputType(kInputTensor);
     std::vector<OperandType> inExpectedTypes;
+    auto minSupportedVersion = Version::ANDROID_OC_MR1;
     if (inputType == OperandType::TENSOR_FLOAT32) {
-        NN_RET_CHECK(validateVersion(context, Version::ANDROID_OC_MR1));
+        minSupportedVersion = Version::ANDROID_OC_MR1;
         inExpectedTypes = {
                 inputType,          OperandType::INT32, OperandType::INT32, OperandType::INT32,
                 OperandType::INT32, OperandType::INT32, OperandType::INT32,
         };
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
+        minSupportedVersion = Version::ANDROID_Q;
         inExpectedTypes = {
                 OperandType::TENSOR_FLOAT16, OperandType::INT32, OperandType::INT32,
                 OperandType::INT32,          OperandType::INT32, OperandType::INT32,
@@ -308,7 +310,7 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
         };
     } else if (opType != OperationType::L2_POOL_2D &&
                inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        NN_RET_CHECK(validateVersion(context, Version::ANDROID_OC_MR1));
+        minSupportedVersion = Version::ANDROID_OC_MR1;
         inExpectedTypes = {
                 OperandType::TENSOR_QUANT8_ASYMM,
                 OperandType::INT32,
@@ -320,7 +322,7 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
         };
     } else if (opType != OperationType::L2_POOL_2D &&
                inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK(validateVersion(context, Version::ANDROID_R));
+        minSupportedVersion = Version::ANDROID_R;
         inExpectedTypes = {
                 OperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                 OperandType::INT32,
@@ -341,12 +343,13 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
     }
     if (inputCount == 11 || inputCount == 8) {
         inExpectedTypes.push_back(OperandType::BOOL);
-        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
+        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_Q);
     } else {
-        NN_RET_CHECK(validateVersion(context, Version::ANDROID_OC_MR1));
+        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_OC_MR1);
     }
-    return validateInputTypes(context, inExpectedTypes) &&
-           validateOutputTypes(context, {inputType});
+    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
+    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+    return validateVersion(context, minSupportedVersion);
 }
 
 bool prepare(IOperationExecutionContext* context) {

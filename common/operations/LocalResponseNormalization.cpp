@@ -138,15 +138,16 @@ bool validate(const IOperationValidationContext* context) {
     const OperandType inputType = context->getInputType(kInputTensor);
     std::vector<OperandType> inExpectedTypes;
     std::vector<OperandType> outExpectedTypes;
+    auto minSupportedVersion = Version::ANDROID_OC_MR1;
     if (inputType == OperandType::TENSOR_FLOAT32) {
-        NN_RET_CHECK(validateVersion(context, Version::ANDROID_OC_MR1));
+        minSupportedVersion = Version::ANDROID_OC_MR1;
         inExpectedTypes = {
                 OperandType::TENSOR_FLOAT32, OperandType::INT32,   OperandType::FLOAT32,
                 OperandType::FLOAT32,        OperandType::FLOAT32,
         };
         outExpectedTypes = {OperandType::TENSOR_FLOAT32};
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
+        minSupportedVersion = Version::ANDROID_Q;
         inExpectedTypes = {
                 OperandType::TENSOR_FLOAT16, OperandType::INT32,   OperandType::FLOAT16,
                 OperandType::FLOAT16,        OperandType::FLOAT16,
@@ -158,17 +159,18 @@ bool validate(const IOperationValidationContext* context) {
 
     if (context->getNumInputs() == kNumInputs) {
         inExpectedTypes.push_back(OperandType::INT32);
-        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
+        minSupportedVersion = Version::ANDROID_Q;
     } else if (context->getInputShape(kInputTensor).dimensions.size() != 4) {
-        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
+        minSupportedVersion = Version::ANDROID_Q;
     }
 
     const Shape& input = context->getInputShape(kInputTensor);
     if (hasKnownRank(input)) {
         NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
     }
-    return validateInputTypes(context, inExpectedTypes) &&
-           validateOutputTypes(context, {inputType});
+    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
+    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+    return validateVersion(context, minSupportedVersion);
 }
 
 bool prepare(IOperationExecutionContext* context) {
