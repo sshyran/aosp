@@ -18,11 +18,11 @@
 
 #include "SVDF.h"
 
-#include "CpuExecutor.h"
-#include "CpuOperationUtils.h"
-
 #include <algorithm>
 #include <vector>
+
+#include "CpuExecutor.h"
+#include "CpuOperationUtils.h"
 #include "Tracing.h"
 
 namespace android {

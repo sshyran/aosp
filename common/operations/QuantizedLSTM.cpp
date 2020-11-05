@@ -18,15 +18,15 @@
 
 #include "QuantizedLSTM.h"
 
-#include "CpuExecutor.h"
-#include "CpuOperationUtils.h"
-
-#include "Tracing.h"
-
 #include <public/gemmlowp.h>
 #include <tensorflow/lite/kernels/internal/reference/legacy_reference_ops.h>
+
 #include <algorithm>
 #include <vector>
+
+#include "CpuExecutor.h"
+#include "CpuOperationUtils.h"
+#include "Tracing.h"
 
 namespace android {
 namespace nn {

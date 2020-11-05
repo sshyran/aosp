@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-#include "LSHProjection.h"
-
-#include "NeuralNetworksWrapper.h"
-
-#include <gmock/gmock.h>
 #include <gmock/gmock-matchers.h>
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
+
+#include <vector>
+
+#include "LSHProjection.h"
+#include "NeuralNetworksWrapper.h"
 
 using ::testing::FloatNear;
 using ::testing::Matcher;
