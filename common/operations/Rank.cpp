@@ -46,7 +46,7 @@ bool validate(const IOperationValidationContext* context) {
                  inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
             << "Incorrect input type for a RANK op: " << inputType;
     NN_RET_CHECK(validateOutputTypes(context, {OperandType::INT32}));
-    return validateHalVersion(context, HalVersion::V1_3);
+    return validateVersion(context, Version::ANDROID_R);
 }
 
 bool prepare(IOperationExecutionContext* context) {

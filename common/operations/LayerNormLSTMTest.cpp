@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "LSTM.h"
-
-#include "NeuralNetworksWrapper.h"
-
 #include <android-base/logging.h>
 #include <gmock/gmock-matchers.h>
 #include <gtest/gtest.h>
+
 #include <sstream>
 #include <string>
 #include <vector>
+
+#include "LSTM.h"
+#include "NeuralNetworksWrapper.h"
 
 namespace android {
 namespace nn {

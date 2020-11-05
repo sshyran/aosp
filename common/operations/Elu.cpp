@@ -57,7 +57,7 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     auto inputType = context->getInputType(kInputTensor);
     if (inputType == OperandType::TENSOR_FLOAT16 || inputType == OperandType::TENSOR_FLOAT32) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_R));
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation ELU";
     }

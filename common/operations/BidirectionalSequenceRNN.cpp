@@ -335,11 +335,11 @@ bool validate(const IOperationValidationContext* context) {
     std::vector<OperandType> outExpectedTypes(numOutputs, inputType);
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
 
-    HalVersion minSupportedHalVersion = HalVersion::V1_2;
+    Version minSupportedVersion = Version::ANDROID_Q;
     if (numOutputs == kNumOutputsWithState || numOutputs == kNumOutputsMergedWithState) {
-        minSupportedHalVersion = HalVersion::V1_3;
+        minSupportedVersion = Version::ANDROID_R;
     }
-    return validateHalVersion(context, minSupportedHalVersion);
+    return validateVersion(context, minSupportedVersion);
 }
 
 bool prepare(IOperationExecutionContext* context) {

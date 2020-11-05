@@ -16,10 +16,11 @@
 
 #define LOG_TAG "Operations"
 
+#include "Tile.h"
+
 #include <algorithm>
 #include <utility>
 
-#include "Tile.h"
 #include "Tracing.h"
 
 namespace android {

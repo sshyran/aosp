@@ -88,7 +88,7 @@ bool validate(const IOperationValidationContext* context) {
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
-    return validateHalVersion(context, HalVersion::V1_2);
+    return validateVersion(context, Version::ANDROID_Q);
 }
 
 bool prepare(IOperationExecutionContext* context) {

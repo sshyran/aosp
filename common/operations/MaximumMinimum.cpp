@@ -16,10 +16,11 @@
 
 #define LOG_TAG "Operations"
 
+#include "MaximumMinimum.h"
+
 #include <algorithm>
 #include <vector>
 
-#include "MaximumMinimum.h"
 #include "IndexedShapeWrapper.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
