@@ -35,6 +35,7 @@
 
 #include "ControlFlow.h"
 #include "OperandTypes.h"
+#include "OperationResolver.h"
 #include "OperationTypes.h"
 #include "Result.h"
 #include "TypeUtils.h"
@@ -1174,17 +1175,13 @@ Result<Version> validateMemoryDescImpl(
     return Version::ANDROID_R;
 }
 
-// TODO: Enable this block of code once canonical types are integrated in the rest of the NNAPI
-// codebase.
-#if 0
 class OperationValidationContext : public IOperationValidationContext {
     DISALLOW_IMPLICIT_CONSTRUCTORS(OperationValidationContext);
 
    public:
-    OperationValidationContext(const char* operationName, const std::vector<uint32_t>&
-    inputIndexes,
+    OperationValidationContext(const char* operationName, const std::vector<uint32_t>& inputIndexes,
                                const std::vector<uint32_t>& outputIndexes,
-                               const std::vector<Operand>& operands, Version version)
+                               const std::vector<Operand>& operands, HalVersion version)
         : operationName(operationName),
           inputIndexes(inputIndexes),
           outputIndexes(outputIndexes),
@@ -1192,12 +1189,12 @@ class OperationValidationContext : public IOperationValidationContext {
           version(version) {}
 
     const char* getOperationName() const override;
-    Version getVersion() const override;
+    HalVersion getHalVersion() const override;
 
     uint32_t getNumInputs() const override;
     OperandType getInputType(uint32_t index) const override;
     Shape getInputShape(uint32_t index) const override;
-    const Operand::ExtraParams getInputExtraParams(uint32_t index) const override;
+    const Operand::ExtraParams& getInputExtraParams(uint32_t index) const override;
 
     uint32_t getNumOutputs() const override;
     OperandType getOutputType(uint32_t index) const override;
@@ -1211,14 +1208,14 @@ class OperationValidationContext : public IOperationValidationContext {
     const std::vector<uint32_t>& inputIndexes;
     const std::vector<uint32_t>& outputIndexes;
     const std::vector<Operand>& operands;
-    Version version;
+    HalVersion version;
 };
 
 const char* OperationValidationContext::getOperationName() const {
     return operationName;
 }
 
-Version OperationValidationContext::getVersion() const {
+HalVersion OperationValidationContext::getHalVersion() const {
     return version;
 }
 
@@ -1252,8 +1249,7 @@ Shape OperationValidationContext::getInputShape(uint32_t index) const {
             operand->extraParams};
 }
 
-const Operand::ExtraParams OperationValidationContext::getInputExtraParams(uint32_t index) const
-{
+const Operand::ExtraParams& OperationValidationContext::getInputExtraParams(uint32_t index) const {
     return getInputOperand(index)->extraParams;
 }
 
@@ -1266,7 +1262,6 @@ Shape OperationValidationContext::getOutputShape(uint32_t index) const {
     return {operand->type, operand->dimensions, operand->scale, operand->zeroPoint,
             operand->extraParams};
 }
-#endif
 
 // TODO(b/169345292): reduce the duplicate validation here
 
@@ -2517,9 +2512,6 @@ Result<Version> validateOperationImpl(const Operation& operation,
             return validateWhileOperation(inputIndexes, outputIndexes, operands, subgraphs);
         }
         default: {
-            // TODO: Enable this block of code once canonical types are integrated in the rest of
-            // the NNAPI codebase.
-#if 0
             const OperationRegistration* operationRegistration =
                     BuiltinOperationResolver::get()->findOperation(
                             static_cast<OperationType>(opType));
@@ -2528,16 +2520,23 @@ Result<Version> validateOperationImpl(const Operation& operation,
             // TODO: return ErrorStatus::UNEXPECTED_NULL
             NN_VALIDATE(operationRegistration->validate != nullptr)
                     << "Incomplete operation registration: " << opType;
-            OperationValidationContext context(operationRegistration->name, inputIndexes,
-                                               outputIndexes, operands);
-            auto result = operationRegistration->validate(&context);
-            if (!result.has_value()) {
-                return NN_ERROR() << "Validation failed for operation " << opType << ": "
-                                  << std::move(result).error();
+
+            constexpr HalVersion kHalVersions[] = {HalVersion::V1_0, HalVersion::V1_1,
+                                                   HalVersion::V1_2, HalVersion::V1_3};
+            constexpr Version kVersions[] = {Version::ANDROID_OC_MR1, Version::ANDROID_P,
+                                             Version::ANDROID_Q, Version::ANDROID_R};
+            static_assert(std::size(kHalVersions) == std::size(kVersions));
+
+            for (size_t i = 0; i < std::size(kHalVersions); ++i) {
+                OperationValidationContext context(operationRegistration->name, inputIndexes,
+                                                   outputIndexes, operands, kHalVersions[i]);
+                auto valid = operationRegistration->validate(&context);
+                if (valid) {
+                    return kVersions[i];
+                }
             }
-            return result;
-#endif
-            NN_VALIDATE_FAIL() << "Validation for " << opType << " is not yet implemented";
+
+            return NN_ERROR() << "Validation failed for operation " << opType;
         }
     }
 }

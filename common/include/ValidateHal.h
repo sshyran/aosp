@@ -21,18 +21,10 @@
 #include <tuple>
 
 #include "HalInterfaces.h"
+#include "nnapi/TypeUtils.h"
 
 namespace android {
 namespace nn {
-
-enum class HalVersion : int32_t {
-    UNKNOWN,
-    V1_0,
-    V1_1,
-    V1_2,
-    V1_3,
-    LATEST = V1_3,
-};
 
 enum class IOType { INPUT, OUTPUT };
 using PreparedModelRole = std::tuple<const V1_3::IPreparedModel*, IOType, uint32_t>;

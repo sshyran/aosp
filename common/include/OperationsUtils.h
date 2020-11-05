@@ -21,8 +21,7 @@
 #include <cstdint>
 #include <vector>
 
-#include "HalInterfaces.h"
-#include "Utils.h"
+#include "nnapi/TypeUtils.h"
 #include "nnapi/Types.h"
 
 namespace android {

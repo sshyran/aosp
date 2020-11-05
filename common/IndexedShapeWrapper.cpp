@@ -18,6 +18,10 @@
 
 #include "IndexedShapeWrapper.h"
 
+#include <vector>
+
+#include "Utils.h"
+
 namespace android {
 namespace nn {
 
