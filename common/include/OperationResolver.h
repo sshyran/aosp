@@ -17,7 +17,10 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATION_RESOLVER_H
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATION_RESOLVER_H
 
-#include "HalInterfaces.h"
+#include <android-base/macros.h>
+
+#include <utility>
+
 #include "OperationsUtils.h"
 
 namespace android {
@@ -53,9 +56,9 @@ struct OperationRegistration {
                           std::function<bool(IOperationExecutionContext*)> execute, Flag flags)
         : type(type),
           name(name),
-          validate(validate),
-          prepare(prepare),
-          execute(execute),
+          validate(std::move(validate)),
+          prepare(std::move(prepare)),
+          execute(std::move(execute)),
           flags(flags) {}
 };
 
@@ -87,6 +90,9 @@ class BuiltinOperationResolver : public IOperationResolver {
     }
 
     const OperationRegistration* findOperation(OperationType operationType) const override;
+
+    // The number of operation types (OperationCode) defined in NeuralNetworks.h.
+    static constexpr int kNumberOfOperationTypes = 102;
 
    private:
     BuiltinOperationResolver();
