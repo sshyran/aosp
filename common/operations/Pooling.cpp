@@ -294,13 +294,13 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
     auto inputType = context->getInputType(kInputTensor);
     std::vector<OperandType> inExpectedTypes;
     if (inputType == OperandType::TENSOR_FLOAT32) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_0));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_OC_MR1));
         inExpectedTypes = {
                 inputType,          OperandType::INT32, OperandType::INT32, OperandType::INT32,
                 OperandType::INT32, OperandType::INT32, OperandType::INT32,
         };
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
         inExpectedTypes = {
                 OperandType::TENSOR_FLOAT16, OperandType::INT32, OperandType::INT32,
                 OperandType::INT32,          OperandType::INT32, OperandType::INT32,
@@ -308,7 +308,7 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
         };
     } else if (opType != OperationType::L2_POOL_2D &&
                inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_0));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_OC_MR1));
         inExpectedTypes = {
                 OperandType::TENSOR_QUANT8_ASYMM,
                 OperandType::INT32,
@@ -320,7 +320,7 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
         };
     } else if (opType != OperationType::L2_POOL_2D &&
                inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_R));
         inExpectedTypes = {
                 OperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                 OperandType::INT32,
@@ -341,9 +341,9 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
     }
     if (inputCount == 11 || inputCount == 8) {
         inExpectedTypes.push_back(OperandType::BOOL);
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
     } else {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_0));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_OC_MR1));
     }
     return validateInputTypes(context, inExpectedTypes) &&
            validateOutputTypes(context, {inputType});

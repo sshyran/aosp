@@ -17,11 +17,12 @@
 #define LOG_TAG "Operations"
 
 #include "Pow.h"
-#include "IndexedShapeWrapper.h"
-#include "OperationsUtils.h"
 
 #include <cmath>
 #include <vector>
+
+#include "IndexedShapeWrapper.h"
+#include "OperationsUtils.h"
 
 namespace android {
 namespace nn {

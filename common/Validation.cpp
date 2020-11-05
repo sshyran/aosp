@@ -1181,7 +1181,7 @@ class OperationValidationContext : public IOperationValidationContext {
    public:
     OperationValidationContext(const char* operationName, const std::vector<uint32_t>& inputIndexes,
                                const std::vector<uint32_t>& outputIndexes,
-                               const std::vector<Operand>& operands, HalVersion version)
+                               const std::vector<Operand>& operands, Version version)
         : operationName(operationName),
           inputIndexes(inputIndexes),
           outputIndexes(outputIndexes),
@@ -1189,7 +1189,7 @@ class OperationValidationContext : public IOperationValidationContext {
           version(version) {}
 
     const char* getOperationName() const override;
-    HalVersion getHalVersion() const override;
+    Version getVersion() const override;
 
     uint32_t getNumInputs() const override;
     OperandType getInputType(uint32_t index) const override;
@@ -1208,14 +1208,14 @@ class OperationValidationContext : public IOperationValidationContext {
     const std::vector<uint32_t>& inputIndexes;
     const std::vector<uint32_t>& outputIndexes;
     const std::vector<Operand>& operands;
-    HalVersion version;
+    Version version;
 };
 
 const char* OperationValidationContext::getOperationName() const {
     return operationName;
 }
 
-HalVersion OperationValidationContext::getHalVersion() const {
+Version OperationValidationContext::getVersion() const {
     return version;
 }
 
@@ -2521,18 +2521,16 @@ Result<Version> validateOperationImpl(const Operation& operation,
             NN_VALIDATE(operationRegistration->validate != nullptr)
                     << "Incomplete operation registration: " << opType;
 
-            constexpr HalVersion kHalVersions[] = {HalVersion::V1_0, HalVersion::V1_1,
-                                                   HalVersion::V1_2, HalVersion::V1_3};
             constexpr Version kVersions[] = {Version::ANDROID_OC_MR1, Version::ANDROID_P,
-                                             Version::ANDROID_Q, Version::ANDROID_R};
-            static_assert(std::size(kHalVersions) == std::size(kVersions));
+                                             Version::ANDROID_Q, Version::ANDROID_R,
+                                             Version::CURRENT_RUNTIME};
 
-            for (size_t i = 0; i < std::size(kHalVersions); ++i) {
+            for (const auto version : kVersions) {
                 OperationValidationContext context(operationRegistration->name, inputIndexes,
-                                                   outputIndexes, operands, kHalVersions[i]);
+                                                   outputIndexes, operands, version);
                 auto valid = operationRegistration->validate(&context);
                 if (valid) {
-                    return kVersions[i];
+                    return version;
                 }
             }
 

@@ -16,16 +16,17 @@
 
 #define LOG_TAG "Operations"
 
-#include "CpuOperationUtils.h"
-#include "OperationResolver.h"
-#include "OperationsUtils.h"
-#include "Tracing.h"
-
 #include <tensorflow/lite/kernels/internal/common.h>
+
 #include <algorithm>
 #include <cfloat>
 #include <cmath>
 #include <vector>
+
+#include "CpuOperationUtils.h"
+#include "OperationResolver.h"
+#include "OperationsUtils.h"
+#include "Tracing.h"
 
 namespace android {
 namespace nn {
@@ -372,9 +373,9 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return validateHalVersion(context, HalVersion::V1_3);
+        return validateVersion(context, Version::ANDROID_R);
     } else {
-        return validateHalVersion(context, HalVersion::V1_2);
+        return validateVersion(context, Version::ANDROID_Q);
     }
 }
 

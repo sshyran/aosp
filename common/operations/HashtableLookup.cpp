@@ -20,7 +20,6 @@
 
 #include "CpuExecutor.h"
 #include "Operations.h"
-
 #include "Tracing.h"
 
 namespace android {

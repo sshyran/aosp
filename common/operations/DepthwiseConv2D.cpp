@@ -496,13 +496,13 @@ bool validate(const IOperationValidationContext* context) {
     }
 
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_R));
     } else if (inputType == OperandType::TENSOR_FLOAT16 ||
                filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL || withLayout ||
                withDilation || !meetsQuantizedScaleConstraintBeforeV1_2) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
     } else {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_0));
+        NN_RET_CHECK(validateVersion(context, Version::ANDROID_OC_MR1));
     }
     return validateInputTypes(context, inExpectedTypes) &&
            validateOutputTypes(context, {inputType});
