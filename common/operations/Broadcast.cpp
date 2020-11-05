@@ -206,7 +206,7 @@ bool addQuant8(const T* in1, const Shape& shape1, const T* in2, const Shape& sha
 bool executeInt32(const int32_t* aData, const Shape& aShape, const int32_t* bData,
                   const Shape& bShape, int32_t activation, int32_t* outputData,
                   const Shape& outputShape, int32_t func(int32_t, int32_t)) {
-    NN_RET_CHECK_EQ(activation, ANEURALNETWORKS_FUSED_NONE);
+    NN_RET_CHECK_EQ(static_cast<FusedActivationFunc>(activation), FusedActivationFunc::NONE);
     IndexedShapeWrapper aShapeIndexed(aShape);
     IndexedShapeWrapper bShapeIndexed(bShape);
     IndexedShapeWrapper outputShapeIndexed(outputShape);
