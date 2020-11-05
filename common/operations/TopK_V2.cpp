@@ -85,11 +85,11 @@ bool validate(const IOperationValidationContext* context) {
             << "Unsupported input operand type for select op: " << inputType;
     NN_RET_CHECK(validateInputTypes(context, {inputType, OperandType::INT32}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType, OperandType::TENSOR_INT32}));
-    HalVersion minSupportedHalVersion = HalVersion::V1_2;
+    Version minSupportedVersion = Version::ANDROID_Q;
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedHalVersion = HalVersion::V1_3;
+        minSupportedVersion = Version::ANDROID_R;
     }
-    return validateHalVersion(context, minSupportedHalVersion);
+    return validateVersion(context, minSupportedVersion);
 }
 
 bool prepare(IOperationExecutionContext* context) {

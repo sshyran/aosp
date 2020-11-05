@@ -20,7 +20,6 @@
 
 #include "Operations.h"
 #include "OperationsUtils.h"
-
 #include "Tracing.h"
 
 namespace android {

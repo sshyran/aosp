@@ -230,7 +230,7 @@ bool validate(const IOperationValidationContext* context) {
     std::vector<OperandType> inExpectedTypes;
     std::vector<OperandType> outExpectedTypes;
     auto inputType = context->getInputType(kHeatmapTensor);
-    auto minSupportedHalVersion = HalVersion::V1_2;
+    auto minSupportedVersion = Version::ANDROID_Q;
     if (inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_FLOAT16) {
         inExpectedTypes = {inputType, inputType, OperandType::BOOL};
         outExpectedTypes = {inputType, inputType};
@@ -243,14 +243,14 @@ bool validate(const IOperationValidationContext* context) {
                            OperandType::TENSOR_QUANT16_ASYMM, OperandType::BOOL};
         outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             OperandType::TENSOR_QUANT16_ASYMM};
-        minSupportedHalVersion = HalVersion::V1_3;
+        minSupportedVersion = Version::ANDROID_R;
     } else {
         LOG(ERROR) << "Unsupported input tensor type for operation " << kOperationName;
         return false;
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
-    return validateHalVersion(context, minSupportedHalVersion);
+    return validateVersion(context, minSupportedVersion);
 }
 
 bool prepare(IOperationExecutionContext* context) {
