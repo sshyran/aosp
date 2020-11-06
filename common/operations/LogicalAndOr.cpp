@@ -60,7 +60,7 @@ bool compute(const std::function<bool(bool, bool)>& func, const bool8* aData, co
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor1);
@@ -68,7 +68,7 @@ bool validate(const IOperationValidationContext* context) {
             << "Unsupported tensor type for a logical operation";
     NN_RET_CHECK(validateInputTypes(context, {inputType, inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateVersion(context, Version::ANDROID_Q);
+    return Version::ANDROID_Q;
 }
 
 bool prepare(IOperationExecutionContext* context) {

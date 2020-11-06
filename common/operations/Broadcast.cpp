@@ -33,6 +33,7 @@
 #include "OperationResolver.h"
 #include "Tracing.h"
 #include "nnapi/Types.h"
+#include "nnapi/Validation.h"
 
 namespace android {
 namespace nn {
@@ -433,20 +434,20 @@ bool divFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, c
 
 }  // namespace
 
-bool validate(OperationType opType, const IOperationValidationContext* context) {
-    const Version opIntroducedAt = (opType == OperationType::DIV || opType == OperationType::SUB)
-                                           ? Version::ANDROID_P
-                                           : Version::ANDROID_OC_MR1;
+Result<Version> validate(OperationType opType, const IOperationValidationContext* context) {
+    auto minSupportedVersion = (opType == OperationType::DIV || opType == OperationType::SUB)
+                                       ? Version::ANDROID_P
+                                       : Version::ANDROID_OC_MR1;
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     auto inputType = context->getInputType(kInputTensor1);
     if (inputType == OperandType::TENSOR_FLOAT32) {
-        NN_RET_CHECK(validateVersion(context, std::max(Version::ANDROID_OC_MR1, opIntroducedAt)));
+        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_OC_MR1);
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        NN_RET_CHECK(validateVersion(context, std::max(Version::ANDROID_Q, opIntroducedAt)));
+        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_Q);
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
         if (opType == OperationType::SUB) {
-            NN_RET_CHECK(validateVersion(context, std::max(Version::ANDROID_Q, opIntroducedAt)));
+            minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_Q);
         } else if (opType == OperationType::DIV) {
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation DIV";
         } else if (opType == OperationType::MUL) {
@@ -454,15 +455,13 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
             Shape input1 = context->getInputShape(kInputTensor1);
             Shape input2 = context->getInputShape(kInputTensor2);
             NN_RET_CHECK_GT(output.scale, input1.scale * input2.scale);
-            NN_RET_CHECK(
-                    validateVersion(context, std::max(Version::ANDROID_OC_MR1, opIntroducedAt)));
+            minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_OC_MR1);
         } else {
-            NN_RET_CHECK(
-                    validateVersion(context, std::max(Version::ANDROID_OC_MR1, opIntroducedAt)));
+            minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_OC_MR1);
         }
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED ||
                inputType == OperandType::TENSOR_INT32) {
-        NN_RET_CHECK(validateVersion(context, std::max(Version::ANDROID_R, opIntroducedAt)));
+        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_R);
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << opType;
     }
@@ -472,8 +471,9 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
         NN_RET_CHECK_LE(getNumberOfDimensions(input1), 4);
         NN_RET_CHECK_LE(getNumberOfDimensions(input2), 4);
     }
-    return validateInputTypes(context, {inputType, inputType, OperandType::INT32}) &&
-           validateOutputTypes(context, {inputType});
+    NN_RET_CHECK(validateInputTypes(context, {inputType, inputType, OperandType::INT32}));
+    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+    return minSupportedVersion;
 }
 
 bool prepare(IOperationExecutionContext* context) {
