@@ -23,6 +23,7 @@
 #include <cutils/native_handle.h>
 #include <hidl/HidlTransportSupport.h>
 #include <hidl/ServiceManagement.h>
+#include <nnapi/hal/1.3/Buffer.h>
 
 #include <algorithm>
 #include <functional>
@@ -256,14 +257,21 @@ std::pair<int, std::unique_ptr<RuntimeMemory>> DriverDevice::allocate(const Memo
                        CHECK(versionedPreparedModel != nullptr);
                        return versionedPreparedModel;
                    });
-    auto [status, buffer, token] =
+    auto [status, hidlBuffer, token] =
             kInterface->allocate(hidlDesc, preparedModels, desc.inputRoles, desc.outputRoles);
     if (status != V1_3::ErrorStatus::NONE) {
         LOG(ERROR) << "DriverDevice::allocate -- memory allocation on device " << getName()
                    << " failed!";
         return {convertErrorStatusToResultCode(status), nullptr};
     }
-    return MemoryFromDevice::create(std::move(buffer), token);
+    auto buffer =
+            V1_3::utils::Buffer::create(hidlBuffer, static_cast<Request::MemoryDomainToken>(token));
+    if (!buffer.has_value()) {
+        LOG(ERROR) << "DriverDevice::allocate -- memory allocation on device " << getName()
+                   << " failed: " << buffer.error().message;
+        return {ANEURALNETWORKS_OP_FAILED, nullptr};
+    }
+    return MemoryFromDevice::create(std::move(buffer).value());
 }
 
 // Figures out how to place each of the input or outputs in a buffer. This just
@@ -356,7 +364,7 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
     uint32_t count = localMemories.size();
     request.pools.resize(count);
     for (uint32_t i = 0; i < count; i++) {
-        request.pools[i] = uncheckedConvert(localMemories[i]->getMemoryPool());
+        request.pools[i] = localMemories[i]->getMemoryPool();
     }
 
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_IPC, NNTRACE_PHASE_EXECUTION,
@@ -467,7 +475,7 @@ std::tuple<int, int, sp<V1_3::IFencedExecutionCallback>, Timing> DriverPreparedM
     uint32_t count = localMemories.size();
     request.pools.resize(count);
     for (uint32_t i = 0; i < count; i++) {
-        request.pools[i] = uncheckedConvert(localMemories[i]->getMemoryPool());
+        request.pools[i] = localMemories[i]->getMemoryPool();
     }
 
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_IPC, NNTRACE_PHASE_EXECUTION,
