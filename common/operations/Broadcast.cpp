@@ -434,7 +434,7 @@ bool divFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, c
 
 }  // namespace
 
-bool validate(OperationType opType, const IOperationValidationContext* context) {
+Result<Version> validate(OperationType opType, const IOperationValidationContext* context) {
     auto minSupportedVersion = (opType == OperationType::DIV || opType == OperationType::SUB)
                                        ? Version::ANDROID_P
                                        : Version::ANDROID_OC_MR1;
@@ -473,7 +473,7 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
     }
     NN_RET_CHECK(validateInputTypes(context, {inputType, inputType, OperandType::INT32}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateVersion(context, minSupportedVersion);
+    return minSupportedVersion;
 }
 
 bool prepare(IOperationExecutionContext* context) {

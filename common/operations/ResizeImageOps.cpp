@@ -169,7 +169,7 @@ inline bool getOptionalScalar(const IOperationExecutionContext* context, uint32_
 
 }  // namespace
 
-bool validate(OperationType opType, const IOperationValidationContext* context) {
+Result<Version> validate(OperationType opType, const IOperationValidationContext* context) {
     const auto numInputs = context->getNumInputs();
     if (opType == OperationType::RESIZE_BILINEAR) {
         NN_RET_CHECK(numInputs >= kNumInputs - 1 && numInputs <= kNumInputs + kNumOptionalInputs);
@@ -218,7 +218,7 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateVersion(context, minSupportedVersion);
+    return minSupportedVersion;
 }
 
 bool prepare(OperationType opType, IOperationExecutionContext* context) {

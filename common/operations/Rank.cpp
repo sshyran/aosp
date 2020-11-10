@@ -30,7 +30,7 @@ constexpr uint32_t kInputTensor = 0;
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputScalar = 0;
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor);
@@ -46,7 +46,7 @@ bool validate(const IOperationValidationContext* context) {
                  inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
             << "Incorrect input type for a RANK op: " << inputType;
     NN_RET_CHECK(validateOutputTypes(context, {OperandType::INT32}));
-    return validateVersion(context, Version::ANDROID_R);
+    return Version::ANDROID_R;
 }
 
 bool prepare(IOperationExecutionContext* context) {

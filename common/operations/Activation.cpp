@@ -353,7 +353,7 @@ bool hardSwishQuant(const T* inputData, const Shape& inputShape, T* outputData,
 
 }  // namespace
 
-bool validate(OperationType opType, const IOperationValidationContext* context) {
+Result<Version> validate(OperationType opType, const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     auto inputType = context->getInputType(kInputTensor);
@@ -379,10 +379,10 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
     }
     NN_RET_CHECK(validateInputTypes(context, {inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateVersion(context, minSupportedVersion);
+    return minSupportedVersion;
 }
 
-bool validateHardSwish(const IOperationValidationContext* context) {
+Result<Version> validateHardSwish(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     auto inputType = context->getInputType(kInputTensor);
@@ -396,7 +396,7 @@ bool validateHardSwish(const IOperationValidationContext* context) {
     }
     NN_RET_CHECK(validateInputTypes(context, {inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateVersion(context, minSupportedVersion);
+    return minSupportedVersion;
 }
 
 bool prepare(OperationType opType, IOperationExecutionContext* context) {
