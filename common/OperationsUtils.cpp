@@ -86,8 +86,9 @@ bool validateOutputTypes(const IOperationValidationContext* context,
             [context](uint32_t index) { return context->getOutputType(index); });
 }
 
-bool validateVersion(const IOperationValidationContext* context, Version minSupportedVersion) {
-    if (context->getVersion() < minSupportedVersion) {
+bool validateVersion(const IOperationValidationContext* context, Version contextVersion,
+                     Version minSupportedVersion) {
+    if (contextVersion < minSupportedVersion) {
         std::ostringstream message;
         message << "Operation " << context->getOperationName() << " with inputs {";
         for (uint32_t i = 0, n = context->getNumInputs(); i < n; ++i) {
@@ -104,7 +105,7 @@ bool validateVersion(const IOperationValidationContext* context, Version minSupp
             message << context->getOutputType(i);
         }
         message << "} is only supported since " << minSupportedVersion << " (validating using "
-                << context->getVersion() << ")";
+                << contextVersion << ")";
         NN_RET_CHECK_FAIL() << message.str();
     }
     return true;

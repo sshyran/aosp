@@ -198,6 +198,8 @@ class FalseyErrorStream {
 
     operator bool() const { return false; }
 
+    operator Result<Version>() const { return error() << mBuffer.str(); }
+
    private:
     std::ostringstream mBuffer;
 };

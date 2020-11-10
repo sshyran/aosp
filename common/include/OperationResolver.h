@@ -32,7 +32,7 @@ struct OperationRegistration {
     const char* name;
 
     // Validates operand types, shapes, and any values known during graph creation.
-    std::function<bool(const IOperationValidationContext*)> validate;
+    std::function<Result<Version>(const IOperationValidationContext*)> validate;
 
     // prepare is called when the inputs this operation depends on have been
     // computed. Typically, prepare does any remaining validation and sets
@@ -50,10 +50,11 @@ struct OperationRegistration {
         bool allowZeroSizedInput = false;
     } flags;
 
-    OperationRegistration(OperationType type, const char* name,
-                          std::function<bool(const IOperationValidationContext*)> validate,
-                          std::function<bool(IOperationExecutionContext*)> prepare,
-                          std::function<bool(IOperationExecutionContext*)> execute, Flag flags)
+    OperationRegistration(
+            OperationType type, const char* name,
+            std::function<Result<Version>(const IOperationValidationContext*)> validate,
+            std::function<bool(IOperationExecutionContext*)> prepare,
+            std::function<bool(IOperationExecutionContext*)> execute, Flag flags)
         : type(type),
           name(name),
           validate(std::move(validate)),

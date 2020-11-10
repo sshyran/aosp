@@ -59,19 +59,6 @@ class IOperationValidationContext {
 
     virtual const char* getOperationName() const = 0;
 
-    // The version of the environment in which the operation is to be executed.
-    //
-    // Operation validation logic needs to handle all versions to support the following use cases
-    // (assume in these examples that the latest version is Version::ANDROID_Q):
-    // 1. Our runtime wants to distribute work to a driver implementing an older version and calls,
-    //    for example, compliantWithV1_0(const V1_2::Model&).
-    // 2. A driver implements an older version and delegates model validation to, for example,
-    //    validateModel(const V1_0::Model&).
-    //
-    // If getVersion() returns Version::ANDROID_OC_MR1 and the operation is only supported since
-    // Version::ANDROID_P, validation will fail.
-    virtual Version getVersion() const = 0;
-
     virtual uint32_t getNumInputs() const = 0;
     virtual OperandType getInputType(uint32_t index) const = 0;
     virtual Shape getInputShape(uint32_t index) const = 0;
@@ -130,7 +117,8 @@ bool validateOutputTypes(const IOperationValidationContext* context,
 
 // Verifies that the HAL version specified in the context is greater or equal
 // than the minimal supported HAL version.
-bool validateVersion(const IOperationValidationContext* context, Version minSupportedVersion);
+bool validateVersion(const IOperationValidationContext* context, Version contextVersion,
+                     Version minSupportedVersion);
 
 // Verifies that the two shapes are the same.
 bool SameShape(const Shape& in1, const Shape& in2);

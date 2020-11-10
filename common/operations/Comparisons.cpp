@@ -123,7 +123,7 @@ bool executeGreaterTyped(IOperationExecutionContext* context) {
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor1);
@@ -136,9 +136,9 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(validateInputTypes(context, {inputType, inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {OperandType::TENSOR_BOOL8}));
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return validateVersion(context, Version::ANDROID_R);
+        return Version::ANDROID_R;
     } else {
-        return validateVersion(context, Version::ANDROID_Q);
+        return Version::ANDROID_Q;
     }
 }
 

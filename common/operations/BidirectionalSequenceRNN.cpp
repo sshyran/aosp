@@ -313,7 +313,7 @@ bool executeTyped(IOperationExecutionContext* context) {
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     // Exact number is dependent on the mergeOutputs parameter and checked
     // during preparation.
@@ -323,9 +323,8 @@ bool validate(const IOperationValidationContext* context) {
 
     OperandType inputType = context->getInputType(kInputTensor);
     if (inputType != OperandType::TENSOR_FLOAT16 && inputType != OperandType::TENSOR_FLOAT32) {
-        LOG(ERROR) << "Unsupported input operand type for UNIDIRECTIONAL_SEQUENCE_RNN op: "
-                   << inputType;
-        return false;
+        return NN_ERROR() << "Unsupported input operand type for UNIDIRECTIONAL_SEQUENCE_RNN op: "
+                          << inputType;
     }
     NN_RET_CHECK(validateInputTypes(
             context, {inputType, inputType, inputType, inputType, inputType, inputType, inputType,
@@ -339,7 +338,7 @@ bool validate(const IOperationValidationContext* context) {
     if (numOutputs == kNumOutputsWithState || numOutputs == kNumOutputsMergedWithState) {
         minSupportedVersion = Version::ANDROID_R;
     }
-    return validateVersion(context, minSupportedVersion);
+    return minSupportedVersion;
 }
 
 bool prepare(IOperationExecutionContext* context) {

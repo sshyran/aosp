@@ -59,7 +59,7 @@ inline bool eval(const T* inputData, const Shape& inputShape, int32_t axis,
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor);
@@ -73,9 +73,9 @@ bool validate(const IOperationValidationContext* context) {
                                     {inputType, OperandType::INT32, OperandType::TENSOR_INT32}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return validateVersion(context, Version::ANDROID_R);
+        return Version::ANDROID_R;
     } else {
-        return validateVersion(context, Version::ANDROID_Q);
+        return Version::ANDROID_Q;
     }
 }
 

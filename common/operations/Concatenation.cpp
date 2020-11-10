@@ -29,6 +29,7 @@
 #include "CpuOperationUtils.h"
 #include "OperationResolver.h"
 #include "Tracing.h"
+#include "nnapi/Validation.h"
 
 namespace android {
 namespace nn {
@@ -135,29 +136,30 @@ inline bool concatenation<int8_t>(IOperationExecutionContext* context) {
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     uint32_t inputCount = context->getNumInputs();
     NN_RET_CHECK_GE(inputCount, 2);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     const OperandType inputType = context->getInputType(0);
+    auto minSupportedVersion = Version::ANDROID_OC_MR1;
     if (inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        NN_RET_CHECK(validateVersion(context, Version::ANDROID_OC_MR1));
+        minSupportedVersion = Version::ANDROID_OC_MR1;
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
+        minSupportedVersion = Version::ANDROID_Q;
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK(validateVersion(context, Version::ANDROID_R));
+        minSupportedVersion = Version::ANDROID_R;
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
     }
     std::vector<OperandType> inExpectedTypes(inputCount - 1, inputType);
     inExpectedTypes.push_back(OperandType::INT32);
-    if (context->getVersion() < Version::ANDROID_Q &&
-        inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+    if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
         const Shape& output = context->getOutputShape(kOutputTensor);
         for (uint32_t i = 0; i < inputCount - 1; ++i) {
             const Shape& input = context->getInputShape(i);
-            NN_RET_CHECK_EQ(input.scale, output.scale);
-            NN_RET_CHECK_EQ(input.offset, output.offset);
+            if (input.scale != output.scale || input.offset != output.offset) {
+                minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_Q);
+            }
         }
     }
     for (uint32_t i = 0; i < inputCount - 1; ++i) {
@@ -166,8 +168,9 @@ bool validate(const IOperationValidationContext* context) {
             NN_RET_CHECK_LE(inputRank, 4);
         }
     }
-    return validateInputTypes(context, inExpectedTypes) &&
-           validateOutputTypes(context, {inputType});
+    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
+    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+    return minSupportedVersion;
 }
 
 bool prepare(IOperationExecutionContext* context) {
