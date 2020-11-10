@@ -184,7 +184,7 @@ inline bool roiPooling<int8_t, uint16_t>(const int8_t* inputData, const Shape& i
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     std::vector<OperandType> inExpectedTypes;
@@ -210,16 +210,14 @@ bool validate(const IOperationValidationContext* context) {
                            OperandType::FLOAT32,
                            OperandType::BOOL};
     } else {
-        LOG(ERROR) << "Unsupported input tensor type for operation " << kOperationName;
-        return false;
+        return NN_ERROR() << "Unsupported input tensor type for operation " << kOperationName;
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return validateVersion(context, Version::ANDROID_R);
-        ;
+        return Version::ANDROID_R;
     } else {
-        return validateVersion(context, Version::ANDROID_Q);
+        return Version::ANDROID_Q;
     }
 }
 

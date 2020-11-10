@@ -224,7 +224,7 @@ inline bool heatmapMaxKeypointQuant(const int8_t* heatmap, const Shape& heatmapS
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     std::vector<OperandType> inExpectedTypes;
@@ -245,12 +245,11 @@ bool validate(const IOperationValidationContext* context) {
                             OperandType::TENSOR_QUANT16_ASYMM};
         minSupportedVersion = Version::ANDROID_R;
     } else {
-        LOG(ERROR) << "Unsupported input tensor type for operation " << kOperationName;
-        return false;
+        return NN_ERROR() << "Unsupported input tensor type for operation " << kOperationName;
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
-    return validateVersion(context, minSupportedVersion);
+    return minSupportedVersion;
 }
 
 bool prepare(IOperationExecutionContext* context) {

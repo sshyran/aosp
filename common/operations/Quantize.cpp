@@ -63,7 +63,7 @@ bool quantizeToQuant8Signed(const T* inputData, int8_t* outputData, const Shape&
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
 
@@ -77,9 +77,9 @@ bool validate(const IOperationValidationContext* context) {
                  outputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
             << "Unsupported output operand type for QUANTIZE op: " << outputType;
     if (outputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return validateVersion(context, Version::ANDROID_R);
+        return Version::ANDROID_R;
     } else {
-        return validateVersion(context, Version::ANDROID_Q);
+        return Version::ANDROID_Q;
     }
 }
 

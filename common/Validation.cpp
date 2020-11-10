@@ -1181,15 +1181,13 @@ class OperationValidationContext : public IOperationValidationContext {
    public:
     OperationValidationContext(const char* operationName, const std::vector<uint32_t>& inputIndexes,
                                const std::vector<uint32_t>& outputIndexes,
-                               const std::vector<Operand>& operands, Version version)
+                               const std::vector<Operand>& operands)
         : operationName(operationName),
           inputIndexes(inputIndexes),
           outputIndexes(outputIndexes),
-          operands(operands),
-          version(version) {}
+          operands(operands) {}
 
     const char* getOperationName() const override;
-    Version getVersion() const override;
 
     uint32_t getNumInputs() const override;
     OperandType getInputType(uint32_t index) const override;
@@ -1208,15 +1206,10 @@ class OperationValidationContext : public IOperationValidationContext {
     const std::vector<uint32_t>& inputIndexes;
     const std::vector<uint32_t>& outputIndexes;
     const std::vector<Operand>& operands;
-    Version version;
 };
 
 const char* OperationValidationContext::getOperationName() const {
     return operationName;
-}
-
-Version OperationValidationContext::getVersion() const {
-    return version;
 }
 
 const Operand* OperationValidationContext::getInputOperand(uint32_t index) const {
@@ -2521,20 +2514,9 @@ Result<Version> validateOperationImpl(const Operation& operation,
             NN_VALIDATE(operationRegistration->validate != nullptr)
                     << "Incomplete operation registration: " << opType;
 
-            constexpr Version kVersions[] = {Version::ANDROID_OC_MR1, Version::ANDROID_P,
-                                             Version::ANDROID_Q, Version::ANDROID_R,
-                                             Version::CURRENT_RUNTIME};
-
-            for (const auto version : kVersions) {
-                OperationValidationContext context(operationRegistration->name, inputIndexes,
-                                                   outputIndexes, operands, version);
-                auto valid = operationRegistration->validate(&context);
-                if (valid) {
-                    return version;
-                }
-            }
-
-            return NN_ERROR() << "Validation failed for operation " << opType;
+            OperationValidationContext context(operationRegistration->name, inputIndexes,
+                                               outputIndexes, operands);
+            return operationRegistration->validate(&context);
         }
     }
 }

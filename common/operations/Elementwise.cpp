@@ -82,7 +82,7 @@ bool executeAbs(IOperationExecutionContext* context) {
     }
 }
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor);
@@ -91,10 +91,10 @@ bool validate(const IOperationValidationContext* context) {
             << "Unsupported tensor type for elementwise operation";
     NN_RET_CHECK(validateInputTypes(context, {inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateVersion(context, Version::ANDROID_Q);
+    return Version::ANDROID_Q;
 }
 
-bool validateAbs(const IOperationValidationContext* context) {
+Result<Version> validateAbs(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor);
@@ -103,11 +103,10 @@ bool validateAbs(const IOperationValidationContext* context) {
             << "Unsupported tensor type for operation ABS";
     NN_RET_CHECK(validateInputTypes(context, {inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateVersion(context, (inputType == OperandType::TENSOR_INT32 ? Version::ANDROID_R
-                                                                            : Version::ANDROID_Q));
+    return inputType == OperandType::TENSOR_INT32 ? Version::ANDROID_R : Version::ANDROID_Q;
 }
 
-bool validateFloor(const IOperationValidationContext* context) {
+Result<Version> validateFloor(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
 
@@ -123,9 +122,7 @@ bool validateFloor(const IOperationValidationContext* context) {
         NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
     }
 
-    return validateVersion(context,
-                           (inputType == OperandType::TENSOR_FLOAT16 ? Version::ANDROID_Q
-                                                                     : Version::ANDROID_OC_MR1));
+    return inputType == OperandType::TENSOR_FLOAT16 ? Version::ANDROID_Q : Version::ANDROID_OC_MR1;
 }
 
 bool prepare(IOperationExecutionContext* context) {

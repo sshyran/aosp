@@ -61,7 +61,7 @@ bool getValueType(OperandType outputType, OperandType* valueType) {
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     // Check output type first because input value type is dependent on the
@@ -77,7 +77,7 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(getValueType(outputType, &valueType));
     NN_RET_CHECK(validateInputTypes(context, {OperandType::TENSOR_INT32, valueType}));
 
-    return validateVersion(context, Version::ANDROID_R);
+    return Version::ANDROID_R;
 }
 
 bool prepare(IOperationExecutionContext* context) {
