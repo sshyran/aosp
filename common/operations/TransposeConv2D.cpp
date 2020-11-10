@@ -474,9 +474,9 @@ bool validate(const IOperationValidationContext* context) {
                             OperandType::INT32,        OperandType::INT32, OperandType::BOOL};
     }
     inExpectedTypes.insert(inExpectedTypes.end(), argExpectedTypes.begin(), argExpectedTypes.end());
-    NN_RET_CHECK(validateVersion(context, minSupportedVersion));
-    return validateInputTypes(context, inExpectedTypes) &&
-           validateOutputTypes(context, {inputType});
+    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
+    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+    return validateVersion(context, minSupportedVersion);
 }
 
 bool prepare(IOperationExecutionContext* context) {

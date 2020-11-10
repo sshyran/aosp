@@ -89,14 +89,16 @@ bool validate(const IOperationValidationContext* context) {
                  inputType == OperandType::TENSOR_QUANT8_ASYMM ||
                  inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
             << "Unsupported tensor type for operation " << kOperationName;
+    auto minSupportedVersion = Version::ANDROID_OC_MR1;
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK(validateVersion(context, Version::ANDROID_R));
+        minSupportedVersion = Version::ANDROID_R;
     } else {
-        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
+        minSupportedVersion = Version::ANDROID_Q;
     }
-    return validateInputTypes(context,
-                              {inputType, OperandType::TENSOR_INT32, OperandType::TENSOR_INT32}) &&
-           validateOutputTypes(context, {inputType});
+    NN_RET_CHECK(validateInputTypes(
+            context, {inputType, OperandType::TENSOR_INT32, OperandType::TENSOR_INT32}));
+    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+    return validateVersion(context, minSupportedVersion);
 }
 
 bool prepare(IOperationExecutionContext* context) {

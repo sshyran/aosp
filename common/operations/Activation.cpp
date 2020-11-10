@@ -357,18 +357,19 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     auto inputType = context->getInputType(kInputTensor);
+    auto minSupportedVersion = Version::ANDROID_OC_MR1;
     if (inputType == OperandType::TENSOR_FLOAT32) {
-        NN_RET_CHECK(validateVersion(context, Version::ANDROID_OC_MR1));
+        minSupportedVersion = Version::ANDROID_OC_MR1;
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
+        minSupportedVersion = Version::ANDROID_Q;
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
         if (opType == OperationType::TANH) {
-            NN_RET_CHECK(validateVersion(context, Version::ANDROID_Q));
+            minSupportedVersion = Version::ANDROID_Q;
         } else {
-            NN_RET_CHECK(validateVersion(context, Version::ANDROID_OC_MR1));
+            minSupportedVersion = Version::ANDROID_OC_MR1;
         }
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK(validateVersion(context, Version::ANDROID_R));
+        minSupportedVersion = Version::ANDROID_R;
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << opType;
     }
@@ -376,21 +377,26 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
     if (hasKnownRank(input)) {
         NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
     }
-    return validateInputTypes(context, {inputType}) && validateOutputTypes(context, {inputType});
+    NN_RET_CHECK(validateInputTypes(context, {inputType}));
+    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+    return validateVersion(context, minSupportedVersion);
 }
 
 bool validateHardSwish(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     auto inputType = context->getInputType(kInputTensor);
+    auto minSupportedVersion = Version::ANDROID_OC_MR1;
     if (inputType == OperandType::TENSOR_FLOAT16 || inputType == OperandType::TENSOR_FLOAT32 ||
         inputType == OperandType::TENSOR_QUANT8_ASYMM ||
         inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK(validateVersion(context, Version::ANDROID_R));
+        minSupportedVersion = Version::ANDROID_R;
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation ELU";
     }
-    return validateInputTypes(context, {inputType}) && validateOutputTypes(context, {inputType});
+    NN_RET_CHECK(validateInputTypes(context, {inputType}));
+    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+    return validateVersion(context, minSupportedVersion);
 }
 
 bool prepare(OperationType opType, IOperationExecutionContext* context) {
