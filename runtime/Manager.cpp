@@ -23,6 +23,7 @@
 #include <cutils/native_handle.h>
 #include <hidl/HidlTransportSupport.h>
 #include <hidl/ServiceManagement.h>
+#include <nnapi/IPreparedModel.h>
 #include <nnapi/hal/1.3/Buffer.h>
 
 #include <algorithm>
@@ -131,7 +132,7 @@ class DriverPreparedModel : public RuntimePreparedModel {
             const std::optional<Deadline>& deadline,
             const OptionalTimeoutDuration& loopTimeoutDuration) const override;
 
-    std::tuple<int, int, sp<V1_3::IFencedExecutionCallback>, Timing> executeFenced(
+    std::tuple<int, int, ExecuteFencedInfoCallback, Timing> executeFenced(
             const std::vector<ModelArgumentInfo>& inputs,
             const std::vector<ModelArgumentInfo>& outputs,
             const std::vector<const RuntimeMemory*>& memories, const std::vector<int>& waitFor,
@@ -430,7 +431,7 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
     return {ANEURALNETWORKS_NO_ERROR, std::move(outputShapes), timing};
 }
 
-std::tuple<int, int, sp<V1_3::IFencedExecutionCallback>, Timing> DriverPreparedModel::executeFenced(
+std::tuple<int, int, ExecuteFencedInfoCallback, Timing> DriverPreparedModel::executeFenced(
         const std::vector<ModelArgumentInfo>& inputs, const std::vector<ModelArgumentInfo>& outputs,
         const std::vector<const RuntimeMemory*>& memories, const std::vector<int>& waitFor,
         MeasureTiming measure, const std::optional<Deadline>& deadline,
@@ -492,7 +493,7 @@ std::tuple<int, int, sp<V1_3::IFencedExecutionCallback>, Timing> DriverPreparedM
         waitForHandles.push_back(SyncFence::create(base::unique_fd(dupFd)));
     }
 
-    auto [n, syncFence, executeFencedCallback, timing] =
+    auto [n, syncFence, executeFencedInfoCallback, timing] =
             mPreparedModel->executeFenced(request, waitForHandles, measure, deadline,
                                           loopTimeoutDuration, timeoutDurationAfterFence);
 
@@ -531,7 +532,7 @@ std::tuple<int, int, sp<V1_3::IFencedExecutionCallback>, Timing> DriverPreparedM
     }
 
     VLOG(EXECUTION) << "DriverPreparedModel::executeFenced completed";
-    return {ANEURALNETWORKS_NO_ERROR, syncFenceFd, executeFencedCallback, timing};
+    return {ANEURALNETWORKS_NO_ERROR, syncFenceFd, executeFencedInfoCallback, timing};
 }
 
 // A special abstracted device for the CPU. Only one instance of this class will exist.
@@ -609,7 +610,7 @@ class CpuPreparedModel : public RuntimePreparedModel {
         return nullptr;
     }
 
-    std::tuple<int, int, sp<V1_3::IFencedExecutionCallback>, Timing> executeFenced(
+    std::tuple<int, int, ExecuteFencedInfoCallback, Timing> executeFenced(
             const std::vector<ModelArgumentInfo>& inputs,
             const std::vector<ModelArgumentInfo>& outputs,
             const std::vector<const RuntimeMemory*>& memories, const std::vector<int>& wait_for,
@@ -700,7 +701,7 @@ static std::tuple<int, std::vector<OutputShape>, Timing> computeOnCpu(
     return {err, outputShapes, {}};
 }
 
-std::tuple<int, int, sp<V1_3::IFencedExecutionCallback>, Timing> CpuPreparedModel::executeFenced(
+std::tuple<int, int, ExecuteFencedInfoCallback, Timing> CpuPreparedModel::executeFenced(
         const std::vector<ModelArgumentInfo>& inputs, const std::vector<ModelArgumentInfo>& outputs,
         const std::vector<const RuntimeMemory*>& memories, const std::vector<int>& waitFor,
         MeasureTiming measure, const std::optional<Deadline>& deadline,
