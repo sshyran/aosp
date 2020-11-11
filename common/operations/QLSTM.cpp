@@ -101,7 +101,7 @@ inline bool hasTensor(IOperationExecutionContext* context, const uint32_t tensor
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
 
@@ -149,7 +149,7 @@ bool validate(const IOperationValidationContext* context) {
     outExpectedTypes.push_back(OperandType::TENSOR_QUANT8_ASYMM_SIGNED);
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
 
-    return validateVersion(context, Version::ANDROID_R);
+    return Version::ANDROID_R;
 }
 
 bool prepare(IOperationExecutionContext* context) {

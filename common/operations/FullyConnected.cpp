@@ -217,7 +217,7 @@ bool validateShapes(const Shape& input, const Shape& weights, const Shape& bias,
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     auto inputType = context->getInputType(kInputTensor);
@@ -272,7 +272,6 @@ bool validate(const IOperationValidationContext* context) {
         };
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation " << kOperationName;
-        return false;
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
@@ -284,7 +283,7 @@ bool validate(const IOperationValidationContext* context) {
         NN_RET_CHECK(validateShapes(input, weights, bias));
     }
 
-    return validateVersion(context, minSupportedVersion);
+    return minSupportedVersion;
 }
 
 bool prepare(IOperationExecutionContext* context) {
