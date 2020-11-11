@@ -25,13 +25,14 @@
 #include <tuple>
 #include <vector>
 
-#include "Callbacks.h"
 #include "CompilationBuilder.h"
+#include "ExecutionCallback.h"
 #include "HalInterfaces.h"
 #include "HalUtils.h"
 #include "Manager.h"
 #include "ModelBuilder.h"
 #include "NeuralNetworks.h"
+#include "PreparedModelCallback.h"
 #include "SampleDriver.h"
 #include "TestNeuralNetworksWrapper.h"
 #include "Utils.h"

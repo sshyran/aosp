@@ -118,6 +118,7 @@ cc_defaults {
         //
         // b/109953668, disable OpenMP
         // "TestOpenmpSettings.cpp",
+        "PreparedModelCallback.cpp",
         "TestCompilationCaching.cpp",
         "TestCompliance.cpp",
         "TestExecution.cpp",
