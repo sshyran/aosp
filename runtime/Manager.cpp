@@ -35,9 +35,9 @@
 #include <vector>
 
 #include "AppInfoFetcher.h"
-#include "Callbacks.h"
 #include "CpuExecutor.h"
 #include "ExecutionBurstController.h"
+#include "ExecutionCallback.h"
 #include "HalInterfaces.h"
 #include "Memory.h"
 #include "MetaModel.h"
