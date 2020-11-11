@@ -18,6 +18,8 @@
 
 #include "ExecutionBuilder.h"
 
+#include <nnapi/IPreparedModel.h>
+
 #include <algorithm>
 #include <limits>
 #include <map>
@@ -380,22 +382,13 @@ int ExecutionBuilder::getDuration(int32_t durationCode, uint64_t* duration) cons
     Timing timingLaunched = mTimingWithoutFencedExecutionCallback;
     Timing timingFenced = timingLaunched;
     if (mFencedExecutionCallback != nullptr) {
-        ErrorStatus status;
-        const hardware::Return<void> ret = mFencedExecutionCallback->getExecutionInfo(
-                [&status, &timingLaunched, &timingFenced](
-                        V1_3::ErrorStatus error, V1_2::Timing tLaunched, V1_2::Timing tFenced) {
-                    status = uncheckedConvert(error);
-                    timingLaunched = uncheckedConvert(tLaunched);
-                    timingFenced = uncheckedConvert(tFenced);
-                });
-        if (!ret.isOk()) {
-            *duration = UINT64_MAX;
-            return ANEURALNETWORKS_OP_FAILED;
-        }
-        if (status != ErrorStatus::NONE) {
+        auto result = mFencedExecutionCallback();
+        if (!result.has_value()) {
+            LOG(ERROR) << "Fenced execution callback failed: " << result.error().message;
             *duration = UINT64_MAX;
             return ANEURALNETWORKS_BAD_STATE;
         }
+        std::tie(timingLaunched, timingFenced) = std::move(result).value();
     }
     uint64_t microDuration = UINT64_MAX;
     switch (durationCode) {
@@ -746,7 +739,7 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
 // fence and the fenced compute callback returned from the last partition.
 // Any failed partition will result in the whole execution fallback to CPU if
 // allowCpuFallback is set to true.
-static std::tuple<int, int, sp<V1_3::IFencedExecutionCallback>> startComputeFenced(
+static std::tuple<int, int, ExecuteFencedInfoCallback> startComputeFenced(
         ExecutionBuilder* executionBuilder, const ExecutionPlan& plan,
         std::shared_ptr<ExecutionPlan::Controller> controller, const std::vector<int>& waitFor,
         uint64_t timeoutDurationAfterFence, const std::optional<Deadline>& deadline,
@@ -771,7 +764,7 @@ static std::tuple<int, int, sp<V1_3::IFencedExecutionCallback>> startComputeFenc
     // Initiate waitForFds, syncFence for the first step.
     std::vector<int> waitForFds = waitFor;
     int syncFence = -1;
-    sp<V1_3::IFencedExecutionCallback> computeFencedCallback;
+    ExecuteFencedInfoCallback executeFencedInfoCallback;
 
     while (true) {
         VLOG(EXECUTION) << "looking for next StepExecutor";
@@ -800,7 +793,7 @@ static std::tuple<int, int, sp<V1_3::IFencedExecutionCallback>> startComputeFenc
                 executionBuilder->finishWithoutSyncFence(
                         ErrorStatus::NONE, executionBuilder->getInitialOutputShapes());
             }
-            return std::make_tuple(ANEURALNETWORKS_NO_ERROR, syncFence, computeFencedCallback);
+            return {ANEURALNETWORKS_NO_ERROR, syncFence, executeFencedInfoCallback};
         }
         const bool executorIsCpu = executor->isCpu();
 
@@ -810,7 +803,7 @@ static std::tuple<int, int, sp<V1_3::IFencedExecutionCallback>> startComputeFenc
 
         // Update waitForFds, syncFence for the next step.
         syncFence = syncFd;
-        computeFencedCallback = callback;
+        executeFencedInfoCallback = callback;
         waitForFds.clear();
         if (syncFd > 0) {
             waitForFds = {syncFd};
@@ -1385,7 +1378,7 @@ std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::computeWithMemor
     return {n, std::move(outputShapes), timing};
 }
 
-std::tuple<int, int, sp<V1_3::IFencedExecutionCallback>> StepExecutor::computeFenced(
+std::tuple<int, int, ExecuteFencedInfoCallback> StepExecutor::computeFenced(
         const std::vector<int>& waitFor, uint64_t timeoutDurationAfterFence,
         const std::optional<Deadline>& deadline) {
     CHECK(mPreparedModel != nullptr);
@@ -1402,13 +1395,13 @@ std::tuple<int, int, sp<V1_3::IFencedExecutionCallback>> StepExecutor::computeFe
     if (timeoutDurationAfterFence > 0) {
         optionalTimeoutDurationAfterFence = makeTimeoutDuration(timeoutDurationAfterFence);
     }
-    const auto [n, syncFence, computeFencedCallback, timing] = mPreparedModel->executeFenced(
+    const auto [n, syncFenceFd, executeFencedInfoCallback, timing] = mPreparedModel->executeFenced(
             mInputs, mOutputs, mMemories.getObjects(), waitFor, measure, deadline,
             loopTimeoutDuration, optionalTimeoutDurationAfterFence);
-    if (syncFence < 0 && computeFencedCallback == nullptr) {
+    if (syncFenceFd < 0 && executeFencedInfoCallback == nullptr) {
         mExecutionBuilder->reportTimingWithoutFencedExecutionCallback(timing);
     }
-    return {n, syncFence, computeFencedCallback};
+    return {n, syncFenceFd, executeFencedInfoCallback};
 }
 
 // For cpuFallback{Partial,Full}, recompile the model on CPU and then start compute.
