@@ -17,13 +17,12 @@
 #include "Converter.h"
 
 #include <android-base/logging.h>
+#include <nnapi/TypeUtils.h>
 
 #include <algorithm>
 #include <random>
 #include <utility>
 #include <vector>
-
-#include "Utils.h"
 
 namespace android::nn::fuzz {
 namespace {
@@ -78,11 +77,11 @@ TestOperand convert(const android_nn_fuzz::Operand& operand) {
     auto channelQuant = convert(operand.channel_quant());
 
     const bool isIgnored = false;
-    const auto halType = static_cast<V1_3::OperandType>(type);
-    const bool willOverflow = nonExtensionOperandSizeOfDataOverflowsUInt32(halType, dimensions);
+    const auto opType = static_cast<OperandType>(type);
+    const size_t size = getNonExtensionSize(opType, dimensions).value_or(0);
     const bool makeEmpty = (lifetime == TestOperandLifeTime::NO_VALUE ||
-                            lifetime == TestOperandLifeTime::TEMPORARY_VARIABLE || willOverflow);
-    const size_t bufferSize = makeEmpty ? 0 : nonExtensionOperandSizeOfData(halType, dimensions);
+                            lifetime == TestOperandLifeTime::TEMPORARY_VARIABLE);
+    const size_t bufferSize = makeEmpty ? 0 : size;
     TestBuffer data = convert(bufferSize, operand.data());
 
     return {.type = type,
