@@ -86,8 +86,8 @@ cc_library_static {
     srcs: [
         "ExecutionBurstController.cpp",
         "ExecutionBurstServer.cpp",
+        "LegacyUtils.cpp",
         "MemoryUtils.cpp",
-        "Utils.cpp",
     ],
     header_libs: [
         "gemmlowp_headers",
@@ -156,12 +156,12 @@ cc_library_static {
         "ExecutionBurstServer.cpp",
         "GraphDump.cpp",
         "IndexedShapeWrapper.cpp",
+        "LegacyUtils.cpp",
         "MemoryUtils.cpp",
         "MetaModel.cpp",
         "OperationsUtils.cpp",
         "QuantUtils.cpp",
         "TokenHasher.cpp",
-        "Utils.cpp",
         "ValidateHal.cpp",
         "operations/ArgMinMax.cpp",
         "operations/BidirectionalSequenceLSTM.cpp",
