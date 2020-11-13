@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include <android/hardware/neuralnetworks/1.3/types.h>
+#include <nnapi/TypeUtils.h>
 #include <src/libfuzzer/libfuzzer_macro.h>
 
 #include <algorithm>
@@ -22,22 +22,21 @@
 #include "Converter.h"
 #include "Model.pb.h"
 #include "TestHarness.h"
-#include "Utils.h"
 
 // Fuzz test logic. This function will either run to completion and return, or crash.
 extern void nnapiFuzzTest(const ::test_helper::TestModel& testModel);
 
 namespace {
 
-using ::android::nn::nonExtensionOperandSizeOfDataOverflowsUInt32;
+using ::android::nn::getNonExtensionSize;
+using ::android::nn::OperandType;
 using ::android::nn::fuzz::convertToTestModel;
-using ::android::nn::V1_3::OperandType;
 using ::test_helper::TestModel;
 using ::test_helper::TestOperand;
 
 bool operandOverflows(const TestOperand& operand) {
     const auto operandType = static_cast<OperandType>(operand.type);
-    return nonExtensionOperandSizeOfDataOverflowsUInt32(operandType, operand.dimensions);
+    return getNonExtensionSize(operandType, operand.dimensions).has_value();
 }
 
 bool shouldSkip(const TestModel& model) {
