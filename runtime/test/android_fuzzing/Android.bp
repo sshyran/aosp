@@ -40,7 +40,6 @@ cc_library_static {
         "libprotobuf-cpp-full",
     ],
     static_libs: [
-        "android.hardware.neuralnetworks@1.3",
         "libneuralnetworks_common",
         "libneuralnetworks_generated_test_harness",
         "libneuralnetworks_static",
@@ -48,6 +47,7 @@ cc_library_static {
     whole_static_libs: [
         "libneuralnetworks_fuzzer_proto",
         "libprotobuf-mutator",
+        "neuralnetworks_types",
     ],
 }
 
