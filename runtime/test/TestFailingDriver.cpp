@@ -22,6 +22,7 @@
 
 #include "CompilationBuilder.h"
 #include "ExecutionPlan.h"
+#include "HalUtils.h"
 #include "Manager.h"
 #include "SampleDriverPartial.h"
 #include "TestNeuralNetworksWrapper.h"
@@ -51,10 +52,7 @@ class FailingTestDriver : public SampleDriverPartial {
     FailingTestDriver() : SampleDriverPartial(kTestDriverName, &mEmptyOperationResolver) {}
 
     hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
-        cb(V1_3::ErrorStatus::NONE,
-           {.operandPerformance = {{.type = V1_3::OperandType::TENSOR_FLOAT32,
-                                    .info = {.execTime = 0.1,  // Faster than CPU.
-                                             .powerUsage = 0.1}}}});
+        cb(V1_3::ErrorStatus::NONE, makeCapabilities(0.1));  // Faster than CPU.
         return hardware::Void();
     }
 

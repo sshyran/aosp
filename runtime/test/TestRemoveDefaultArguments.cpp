@@ -23,6 +23,7 @@
 #include <vector>
 
 #include "GeneratedTestUtils.h"
+#include "HalUtils.h"
 #include "Manager.h"
 #include "SampleDriverPartial.h"
 #include "TestNeuralNetworksWrapper.h"
@@ -113,7 +114,7 @@ class TestDriver : public SampleDriverPartial {
     TestDriver() : SampleDriverPartial(kTestDriverName) {}
 
     hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
-        cb(V1_3::ErrorStatus::NONE, {/* Placeholder zero-filled capabilities. */});
+        cb(V1_3::ErrorStatus::NONE, makeCapabilities(1.0));
         return hardware::Void();
     }
 

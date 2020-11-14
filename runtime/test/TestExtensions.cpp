@@ -20,6 +20,7 @@
 #include <vector>
 
 #include "HalInterfaces.h"
+#include "HalUtils.h"
 #include "Manager.h"
 #include "NeuralNetworks.h"
 #include "NeuralNetworksExtensions.h"
@@ -56,7 +57,7 @@ class TestDriver : public SampleDriver {
     }
 
     hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
-        cb(V1_3::ErrorStatus::NONE, {/* Placeholder zero-filled capabilities. */});
+        cb(V1_3::ErrorStatus::NONE, ::android::nn::makeCapabilities(1.0));
         return hardware::Void();
     }
 
