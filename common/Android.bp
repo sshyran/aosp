@@ -86,6 +86,7 @@ cc_library_static {
     srcs: [
         "ExecutionBurstController.cpp",
         "ExecutionBurstServer.cpp",
+        "LegacyHalUtils.cpp",
         "LegacyUtils.cpp",
         "MemoryUtils.cpp",
     ],
@@ -156,6 +157,7 @@ cc_library_static {
         "ExecutionBurstServer.cpp",
         "GraphDump.cpp",
         "IndexedShapeWrapper.cpp",
+        "LegacyHalUtils.cpp",
         "LegacyUtils.cpp",
         "MemoryUtils.cpp",
         "MetaModel.cpp",
