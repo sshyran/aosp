@@ -782,6 +782,20 @@ std::ostream& operator<<(std::ostream& os, const TimePoint& timePoint) {
     return os << timePoint.time_since_epoch().count() << "ns since epoch";
 }
 
+std::ostream& operator<<(std::ostream& os, const SyncFence::FenceState& fenceState) {
+    switch (fenceState) {
+        case SyncFence::FenceState::ACTIVE:
+            return os << "ACTIVE";
+        case SyncFence::FenceState::SIGNALED:
+            return os << "SIGNALED";
+        case SyncFence::FenceState::ERROR:
+            return os << "ERROR";
+        case SyncFence::FenceState::UNKNOWN:
+            return os << "UNKNOWN";
+    }
+    return os << "SyncFence::FenceState{" << underlyingType(fenceState) << "}";
+}
+
 std::ostream& operator<<(std::ostream& os, const OptionalTimePoint& optionalTimePoint) {
     if (!optionalTimePoint.has_value()) {
         return os << "<no time point>";

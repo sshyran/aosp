@@ -17,6 +17,9 @@
 #include "Types.h"
 
 #include <android-base/logging.h>
+#include <cutils/native_handle.h>
+#include <errno.h>
+#include <poll.h>
 
 #include <algorithm>
 #include <cstddef>
@@ -119,6 +122,68 @@ Capabilities::PerformanceInfo Capabilities::OperandPerformanceTable::lookup(
 const std::vector<Capabilities::OperandPerformance>&
 Capabilities::OperandPerformanceTable::asVector() const {
     return mSorted;
+}
+
+SyncFence SyncFence::createAsSignaled() {
+    return SyncFence(nullptr);
+}
+
+Result<SyncFence> SyncFence::create(NativeHandle syncFence) {
+    const bool isValid = (syncFence != nullptr && syncFence->handle() != nullptr &&
+                          syncFence->handle()->numFds == 1 && syncFence->handle()->numInts == 0 &&
+                          &syncFence->handle()->data[0] != nullptr);
+    if (!isValid) {
+        return NN_ERROR() << "Invalid sync fence handle passed to SyncFence::create";
+    }
+    return SyncFence(std::move(syncFence));
+}
+
+SyncFence::SyncFence(NativeHandle syncFence) : mSyncFence(std::move(syncFence)) {}
+
+SyncFence::FenceState SyncFence::syncWait(OptionalTimeout optionalTimeout) const {
+    if (mSyncFence == nullptr) {
+        return FenceState::SIGNALED;
+    }
+
+    const int fd = mSyncFence->handle()->data[0];
+    const int timeout = optionalTimeout.value_or(Timeout{-1}).count();
+
+    // This implementation is directly based on the ::sync_wait() implementation.
+
+    struct pollfd fds;
+    int ret;
+
+    if (fd < 0) {
+        errno = EINVAL;
+        return FenceState::UNKNOWN;
+    }
+
+    fds.fd = fd;
+    fds.events = POLLIN;
+
+    do {
+        ret = poll(&fds, 1, timeout);
+        if (ret > 0) {
+            if (fds.revents & POLLNVAL) {
+                errno = EINVAL;
+                return FenceState::UNKNOWN;
+            }
+            if (fds.revents & POLLERR) {
+                errno = EINVAL;
+                return FenceState::ERROR;
+            }
+            return FenceState::SIGNALED;
+        } else if (ret == 0) {
+            errno = ETIME;
+            return FenceState::ACTIVE;
+        }
+    } while (ret == -1 && (errno == EINTR || errno == EAGAIN));
+
+    return FenceState::UNKNOWN;
+}
+
+NativeHandle SyncFence::getHandle() const {
+    return mSyncFence;
 }
 
 }  // namespace android::nn

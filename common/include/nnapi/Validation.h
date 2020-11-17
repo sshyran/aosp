@@ -69,10 +69,9 @@ using PreparedModelRole = std::tuple<const IPreparedModel*, IOType, uint32_t>;
 // IMPORTANT: This function cannot validate dimensions and extraParams with extension operand type.
 // Each driver should do their own validation of extension type dimensions and extraParams.
 Result<Version> validateMemoryDesc(
-        const BufferDesc& desc,
-        const std::vector<std::shared_ptr<const IPreparedModel>>& preparedModels,
+        const BufferDesc& desc, const std::vector<SharedPreparedModel>& preparedModels,
         const std::vector<BufferRole>& inputRoles, const std::vector<BufferRole>& outputRoles,
-        const std::function<const Model*(const std::shared_ptr<const IPreparedModel>&)>& getModel,
+        const std::function<const Model*(const SharedPreparedModel&)>& getModel,
         std::set<PreparedModelRole>* preparedModelRoles, Operand* combinedOperand);
 
 Result<void> validateOperandSymmPerChannelQuantParams(
