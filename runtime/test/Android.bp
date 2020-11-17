@@ -393,7 +393,8 @@ cc_library_static {
 cc_defaults {
     name: "neuralnetworks_generated_defaults",
     defaults: ["neuralnetworks_float16"],
-    host_supported: true,
+    // b/146324523, NNAPI host build capability
+    host_supported: false,
     vendor_available: true,
     static_libs: ["libneuralnetworks_generated_test_harness"],
 }
