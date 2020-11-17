@@ -245,8 +245,8 @@ class IDevice {
      */
     virtual GeneralResult<SharedPreparedModel> prepareModel(
             const Model& model, ExecutionPreference preference, Priority priority,
-            OptionalTimePoint deadline, const std::vector<NativeHandle>& modelCache,
-            const std::vector<NativeHandle>& dataCache, const CacheToken& token) const = 0;
+            OptionalTimePoint deadline, const std::vector<SharedHandle>& modelCache,
+            const std::vector<SharedHandle>& dataCache, const CacheToken& token) const = 0;
 
     /**
      * Creates a prepared model from cache files for execution.
@@ -301,8 +301,8 @@ class IDevice {
      *     for execution, otherwise GeneralError.
      */
     virtual GeneralResult<SharedPreparedModel> prepareModelFromCache(
-            OptionalTimePoint deadline, const std::vector<NativeHandle>& modelCache,
-            const std::vector<NativeHandle>& dataCache, const CacheToken& token) const = 0;
+            OptionalTimePoint deadline, const std::vector<SharedHandle>& modelCache,
+            const std::vector<SharedHandle>& dataCache, const CacheToken& token) const = 0;
 
     /**
      * Allocates a driver-managed buffer with the properties specified by the descriptor as well as

@@ -19,12 +19,12 @@
 #include <android-base/scopeguard.h>
 #include <android/hardware_buffer.h>
 #include <android/hidl/allocator/1.0/IAllocator.h>
-#include <cutils/native_handle.h>
 #include <hidl/HidlSupport.h>
 #include <hidlmemory/mapping.h>
 #include <sys/mman.h>
 #include <vndk/hardware_buffer.h>
 
+#include <algorithm>
 #include <any>
 #include <limits>
 #include <memory>
@@ -66,28 +66,74 @@ GeneralResult<hidl_memory> allocateSharedMemory(size_t size) {
     return maybeMemory;
 }
 
-Memory createMemory(const hidl_memory& memory) {
+GeneralResult<hardware::hidl_handle> hidlHandleFromSharedHandle(const SharedHandle& handle) {
+    if (handle == nullptr) {
+        return {};
+    }
+
+    std::vector<base::unique_fd> fds;
+    fds.reserve(handle->fds.size());
+    for (const auto& fd : handle->fds) {
+        int dupFd = dup(fd);
+        if (dupFd == -1) {
+            return NN_ERROR(ErrorStatus::GENERAL_FAILURE) << "Failed to dup the fd";
+        }
+        fds.emplace_back(dupFd);
+    }
+
+    native_handle_t* nativeHandle = native_handle_create(handle->fds.size(), handle->ints.size());
+    if (nativeHandle == nullptr) {
+        return NN_ERROR(ErrorStatus::GENERAL_FAILURE) << "Failed to create native_handle";
+    }
+    for (size_t i = 0; i < fds.size(); ++i) {
+        nativeHandle->data[i] = fds[i].release();
+    }
+    std::copy(handle->ints.begin(), handle->ints.end(), &nativeHandle->data[nativeHandle->numFds]);
+
+    hardware::hidl_handle hidlHandle;
+    hidlHandle.setTo(nativeHandle, /*shouldOwn=*/true);
+    return hidlHandle;
+}
+
+GeneralResult<SharedHandle> sharedHandleFromNativeHandle(const native_handle_t* handle) {
+    if (handle == nullptr) {
+        return nullptr;
+    }
+
+    std::vector<base::unique_fd> fds;
+    fds.reserve(handle->numFds);
+    for (int i = 0; i < handle->numFds; ++i) {
+        int dupFd = dup(handle->data[i]);
+        if (dupFd == -1) {
+            return NN_ERROR(ErrorStatus::GENERAL_FAILURE) << "Failed to dup the fd";
+        }
+        fds.emplace_back(dupFd);
+    }
+
+    std::vector<int> ints(&handle->data[handle->numFds],
+                          &handle->data[handle->numFds + handle->numInts]);
+
+    return std::make_shared<const Handle>(Handle{
+            .fds = std::move(fds),
+            .ints = std::move(ints),
+    });
+}
+
+GeneralResult<Memory> createMemory(const hidl_memory& memory) {
     CHECK_LE(memory.size(), std::numeric_limits<uint32_t>::max());
-
-    auto* cloned = native_handle_clone(memory.handle());
-    auto nativeHandle = ::android::NativeHandle::create(cloned, /*ownsHandle=*/true);
-
-    return {
-            .handle = std::move(nativeHandle),
+    return Memory{
+            .handle = NN_TRY(sharedHandleFromNativeHandle(memory.handle())),
             .size = static_cast<uint32_t>(memory.size()),
             .name = memory.name(),
     };
 }
 
-hidl_memory createHidlMemory(const Memory& memory) {
-    const auto hidlMemory = hidl_memory(memory.name, memory.handle->handle(), memory.size);
-    // Copy memory to force the native_handle_t to be copied.
-    auto copiedMemory = hidlMemory;
-    return copiedMemory;
+GeneralResult<hidl_memory> createHidlMemory(const Memory& memory) {
+    return hidl_memory(memory.name, NN_TRY(hidlHandleFromSharedHandle(memory.handle)), memory.size);
 }
 
 GeneralResult<Mapping> mapAshmem(const Memory& memory) {
-    const auto hidlMemory = createHidlMemory(memory);
+    const auto hidlMemory = NN_TRY(createHidlMemory(memory));
     const auto mapping = mapMemory(hidlMemory);
     if (mapping == nullptr) {
         return NN_ERROR(ErrorStatus::GENERAL_FAILURE) << "Failed to map memory";
@@ -116,10 +162,10 @@ struct MmapFdMappingContext {
 
 GeneralResult<Mapping> mapMemFd(const Memory& memory) {
     const size_t size = memory.size;
-    const native_handle_t* handle = memory.handle->handle();
-    const int fd = handle->data[0];
-    const int prot = handle->data[1];
-    const size_t offset = getOffsetFromInts(handle->data[2], handle->data[3]);
+    const SharedHandle& handle = memory.handle;
+    const int fd = handle->fds[0];
+    const int prot = handle->ints[0];
+    const size_t offset = getOffsetFromInts(handle->ints[1], handle->ints[2]);
 
     std::shared_ptr<base::MappedFile> mapping = base::MappedFile::FromFd(fd, offset, size, prot);
     if (mapping == nullptr) {
@@ -132,7 +178,7 @@ GeneralResult<Mapping> mapMemFd(const Memory& memory) {
 }
 
 GeneralResult<Mapping> mapAhwbBlobMemory(const Memory& memory) {
-    const auto* handle = memory.handle->handle();
+    const SharedHandle& handle = memory.handle;
     const auto size = memory.size;
     const auto format = AHARDWAREBUFFER_FORMAT_BLOB;
     const auto usage = AHARDWAREBUFFER_USAGE_CPU_READ_OFTEN | AHARDWAREBUFFER_USAGE_CPU_WRITE_OFTEN;
@@ -152,7 +198,8 @@ GeneralResult<Mapping> mapAhwbBlobMemory(const Memory& memory) {
 
     AHardwareBuffer* hardwareBuffer = nullptr;
     status_t status = AHardwareBuffer_createFromHandle(
-            &desc, handle, AHARDWAREBUFFER_CREATE_FROM_HANDLE_METHOD_CLONE, &hardwareBuffer);
+            &desc, NN_TRY(hidlHandleFromSharedHandle(handle)),
+            AHARDWAREBUFFER_CREATE_FROM_HANDLE_METHOD_CLONE, &hardwareBuffer);
     if (status != NO_ERROR) {
         return NN_ERROR(ErrorStatus::GENERAL_FAILURE)
                << "Can't create AHardwareBuffer from handle. Error: " << status;
@@ -196,31 +243,23 @@ GeneralResult<Memory> createSharedMemoryFromFd(size_t size, int prot, int fd, si
     }
 
     // Duplicate the file descriptor so the resultant Memory owns its own version.
-    int dupfd = dup(fd);
-    if (dupfd == -1) {
+    int dupFd = dup(fd);
+    if (dupFd == -1) {
         // TODO(b/120417090): is ANEURALNETWORKS_UNEXPECTED_NULL the correct error to return here?
         return NN_ERROR(ErrorStatus::INVALID_ARGUMENT) << "Failed to dup the fd";
     }
 
-    // Create a temporary native handle to own the dupfd.
-    native_handle_t* nativeHandle = native_handle_create(1, 3);
-    if (nativeHandle == nullptr) {
-        close(dupfd);
-        // TODO(b/120417090): is ANEURALNETWORKS_UNEXPECTED_NULL the correct error to return here?
-        return NN_ERROR(ErrorStatus::GENERAL_FAILURE) << "Failed to create native_handle";
-    }
+    std::vector<base::unique_fd> fds;
+    fds.emplace_back(dupFd);
 
     const auto [lowOffsetBits, highOffsetBits] = getIntsFromOffset(offset);
-    nativeHandle->data[0] = dupfd;
-    nativeHandle->data[1] = prot;
-    nativeHandle->data[2] = lowOffsetBits;
-    nativeHandle->data[3] = highOffsetBits;
+    std::vector<int> ints = {prot, lowOffsetBits, highOffsetBits};
 
-    // Create a NativeHandle which owns the native handle and fd so that we don't have to manually
-    // clean either the native handle or the fd.
-    auto ownedHandle = ::android::NativeHandle::create(nativeHandle, /*ownsHandle=*/true);
-
-    return Memory{.handle = std::move(ownedHandle), .size = size, .name = "mmap_fd"};
+    SharedHandle handle = std::make_shared<const Handle>(Handle{
+            .fds = std::move(fds),
+            .ints = std::move(ints),
+    });
+    return Memory{.handle = std::move(handle), .size = size, .name = "mmap_fd"};
 }
 
 GeneralResult<Memory> createSharedMemoryFromHidlMemory(const hardware::hidl_memory& memory) {
@@ -232,19 +271,20 @@ GeneralResult<Memory> createSharedMemoryFromAHWB(const AHardwareBuffer& ahwb) {
     AHardwareBuffer_describe(&ahwb, &bufferDesc);
     const native_handle_t* handle = AHardwareBuffer_getNativeHandle(&ahwb);
 
-    auto* cloned = native_handle_clone(handle);
-    auto nativeHandle = ::android::NativeHandle::create(cloned, /*ownsHandle=*/true);
-
     if (bufferDesc.format == AHARDWAREBUFFER_FORMAT_BLOB) {
         return Memory{
-                .handle = std::move(nativeHandle),
+                .handle = NN_TRY(sharedHandleFromNativeHandle(handle)),
                 .size = bufferDesc.width,
                 .name = "hardware_buffer_blob",
         };
     }
 
     // memory size is not used for non-BLOB AHWB memory.
-    return Memory{.handle = std::move(nativeHandle), .size = 0, .name = "hardware_buffer"};
+    return Memory{
+            .handle = NN_TRY(sharedHandleFromNativeHandle(handle)),
+            .size = 0,
+            .name = "hardware_buffer",
+    };
 }
 
 GeneralResult<Mapping> map(const Memory& memory) {
