@@ -100,6 +100,7 @@ std::ostream& operator<<(std::ostream& os, const BufferRole& bufferRole);
 std::ostream& operator<<(std::ostream& os, const Request::Argument& requestArgument);
 std::ostream& operator<<(std::ostream& os, const Request::MemoryPool& memoryPool);
 std::ostream& operator<<(std::ostream& os, const Request& request);
+std::ostream& operator<<(std::ostream& os, const SyncFence::FenceState& fenceState);
 std::ostream& operator<<(std::ostream& os, const TimePoint& timePoint);
 std::ostream& operator<<(std::ostream& os, const OptionalTimePoint& optionalTimePoint);
 std::ostream& operator<<(std::ostream& os, const TimeoutDuration& timeoutDuration);

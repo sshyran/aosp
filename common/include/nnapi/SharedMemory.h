@@ -43,7 +43,7 @@ class MutableMemoryBuilder {
     DataLocation append(size_t length);
     bool empty() const;
 
-    Result<Memory> finish();
+    GeneralResult<Memory> finish();
 
    private:
     uint32_t mPoolIndex;
@@ -57,7 +57,7 @@ class ConstantMemoryBuilder {
     DataLocation append(const void* data, size_t length);
     bool empty() const;
 
-    Result<Memory> finish();
+    GeneralResult<Memory> finish();
 
    private:
     struct LazyCopy {
@@ -70,13 +70,13 @@ class ConstantMemoryBuilder {
     std::vector<LazyCopy> mSlices;
 };
 
-Result<Memory> createSharedMemory(size_t size);
+GeneralResult<Memory> createSharedMemory(size_t size);
 
-Result<Memory> createSharedMemoryFromFd(size_t size, int prot, int fd, size_t offset);
+GeneralResult<Memory> createSharedMemoryFromFd(size_t size, int prot, int fd, size_t offset);
 
-Result<Memory> createSharedMemoryFromHidlMemory(const hardware::hidl_memory& memory);
+GeneralResult<Memory> createSharedMemoryFromHidlMemory(const hardware::hidl_memory& memory);
 
-Result<Memory> createSharedMemoryFromAHWB(const AHardwareBuffer& ahwb);
+GeneralResult<Memory> createSharedMemoryFromAHWB(const AHardwareBuffer& ahwb);
 
 struct Mapping {
     std::variant<void*, const void*> pointer;
@@ -84,7 +84,7 @@ struct Mapping {
     std::any context;
 };
 
-Result<Mapping> map(const Memory& memory);
+GeneralResult<Mapping> map(const Memory& memory);
 
 bool flush(const Mapping& mapping);
 
