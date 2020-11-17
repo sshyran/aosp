@@ -22,6 +22,7 @@
 #include <optional>
 #include <sstream>
 #include <string>
+#include <tuple>
 #include <utility>
 
 namespace android::nn {
@@ -38,11 +39,19 @@ using Result = base::expected<Type, std::string>;
 
 namespace detail {
 
+template <typename... Ts>
 class ErrorBuilder {
    public:
+    template <typename... Us>
+    explicit ErrorBuilder(Us&&... args) : mArgs(std::forward<Us>(args)...) {}
+
     template <typename T, typename E>
-    operator base::expected<T, E>() const /* NOLINT(google-explicit-constructor) */ {
-        return base::unexpected<E>(std::move(mStream).str());
+    operator base::expected<T, E>() /* NOLINT(google-explicit-constructor) */ {
+        return std::apply(
+                [this](Ts&&... args) {
+                    return base::unexpected<E>(E{std::move(mStream).str(), std::move(args)...});
+                },
+                std::move(mArgs));
     }
 
     template <typename T>
@@ -52,6 +61,7 @@ class ErrorBuilder {
     }
 
    private:
+    std::tuple<Ts...> mArgs;
     std::ostringstream mStream;
 };
 
@@ -60,8 +70,9 @@ class ErrorBuilder {
 /**
  * Creates an error builder for the case where no arguments are provided.
  */
-inline detail::ErrorBuilder error() {
-    return detail::ErrorBuilder();
+template <typename... Types>
+inline detail::ErrorBuilder<std::decay_t<Types>...> error(Types&&... args) {
+    return detail::ErrorBuilder<std::decay_t<Types>...>(std::forward<Types>(args)...);
 }
 
 /**
@@ -80,7 +91,7 @@ inline detail::ErrorBuilder error() {
  *     return <regular_return_value>;
  */
 #define NN_ERROR(...)                                                     \
-    [] {                                                                  \
+    [&] {                                                                 \
         using ::android::nn::error;                                       \
         return error(__VA_ARGS__) << __FILE__ << ":" << __LINE__ << ": "; \
     }()
