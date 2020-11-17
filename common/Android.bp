@@ -242,7 +242,8 @@ cc_library_static {
 
 cc_defaults {
     name: "neuralnetworks_utils_defaults",
-    host_supported: true,
+    // b/146324523, NNAPI host build capability
+    host_supported: false,
     vendor_available: true,
     apex_available: [
         "//apex_available:platform",
