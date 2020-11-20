@@ -17,7 +17,6 @@
 #include "Types.h"
 
 #include <android-base/logging.h>
-#include <cutils/native_handle.h>
 #include <errno.h>
 #include <poll.h>
 
@@ -25,6 +24,7 @@
 #include <cstddef>
 #include <iterator>
 #include <limits>
+#include <memory>
 #include <optional>
 #include <utility>
 #include <vector>
@@ -128,24 +128,32 @@ SyncFence SyncFence::createAsSignaled() {
     return SyncFence(nullptr);
 }
 
-Result<SyncFence> SyncFence::create(NativeHandle syncFence) {
-    const bool isValid = (syncFence != nullptr && syncFence->handle() != nullptr &&
-                          syncFence->handle()->numFds == 1 && syncFence->handle()->numInts == 0 &&
-                          &syncFence->handle()->data[0] != nullptr);
+SyncFence SyncFence::create(base::unique_fd fd) {
+    std::vector<base::unique_fd> fds;
+    fds.push_back(std::move(fd));
+    return SyncFence(std::make_shared<const Handle>(Handle{
+            .fds = std::move(fds),
+            .ints = {},
+    }));
+}
+
+Result<SyncFence> SyncFence::create(SharedHandle syncFence) {
+    const bool isValid =
+            (syncFence != nullptr && syncFence->fds.size() == 1 && syncFence->ints.empty());
     if (!isValid) {
         return NN_ERROR() << "Invalid sync fence handle passed to SyncFence::create";
     }
     return SyncFence(std::move(syncFence));
 }
 
-SyncFence::SyncFence(NativeHandle syncFence) : mSyncFence(std::move(syncFence)) {}
+SyncFence::SyncFence(SharedHandle syncFence) : mSyncFence(std::move(syncFence)) {}
 
 SyncFence::FenceState SyncFence::syncWait(OptionalTimeout optionalTimeout) const {
     if (mSyncFence == nullptr) {
         return FenceState::SIGNALED;
     }
 
-    const int fd = mSyncFence->handle()->data[0];
+    const int fd = mSyncFence->fds.front().get();
     const int timeout = optionalTimeout.value_or(Timeout{-1}).count();
 
     // This implementation is directly based on the ::sync_wait() implementation.
@@ -182,8 +190,16 @@ SyncFence::FenceState SyncFence::syncWait(OptionalTimeout optionalTimeout) const
     return FenceState::UNKNOWN;
 }
 
-NativeHandle SyncFence::getHandle() const {
+SharedHandle SyncFence::getSharedHandle() const {
     return mSyncFence;
+}
+
+bool SyncFence::hasFd() const {
+    return mSyncFence != nullptr;
+}
+
+int SyncFence::getFd() const {
+    return mSyncFence == nullptr ? -1 : mSyncFence->fds.front().get();
 }
 
 }  // namespace android::nn

@@ -33,6 +33,7 @@
 #include "ControlFlow.h"
 #include "ExecutionPlan.h"
 #include "HalInterfaces.h"
+#include "HalUtils.h"
 #include "Manager.h"
 #include "ModelBuilder.h"
 #include "NeuralNetworks.h"
@@ -174,16 +175,6 @@ using WrapperOperandType = ::android::nn::test_wrapper::OperandType;
 using WrapperSymmPerChannelQuantParams = ::android::nn::test_wrapper::SymmPerChannelQuantParams;
 using WrapperType = ::android::nn::test_wrapper::Type;
 using android::sp;
-
-V1_3::Capabilities makeCapabilities(float perf) {
-    V1_0::PerformanceInfo perfInfo = {.execTime = perf, .powerUsage = perf};
-    return {.relaxedFloat32toFloat16PerformanceScalar = perfInfo,
-            .relaxedFloat32toFloat16PerformanceTensor = perfInfo,
-            .operandPerformance =
-                    ::android::nn::nonExtensionOperandPerformance<HalVersion::V1_3>(perfInfo),
-            .ifPerformance = perfInfo,
-            .whilePerformance = perfInfo};
-};
 
 void update(V1_3::Capabilities* capabilities, V1_3::OperandType type, float perf) {
     V1_0::PerformanceInfo perfInfo = {.execTime = perf, .powerUsage = perf};
@@ -2056,7 +2047,7 @@ TEST_F(PartitioningTest, Perf) {
         model.finish();
         ASSERT_TRUE(model.isValid());
 
-        const V1_3::Capabilities baseCapabilities = makeCapabilities(0.5);
+        const V1_3::Capabilities baseCapabilities = ::android::nn::makeCapabilities(0.5);
 
         {
             // better than base
@@ -2846,7 +2837,7 @@ TEST_F(PerfTest, Lookup) {
     // We'll use this to ensure that we can save and then recover a type's performance.
     auto typePerf = [](V1_3::OperandType type) { return float(static_cast<uint32_t>(type)); };
 
-    V1_3::Capabilities capabilities = makeCapabilities(-1.0f);
+    V1_3::Capabilities capabilities = ::android::nn::makeCapabilities(-1.0f);
 
     for (uint32_t type = static_cast<uint32_t>(V1_3::OperandTypeRange::FUNDAMENTAL_MIN);
          type <= static_cast<uint32_t>(V1_3::OperandTypeRange::FUNDAMENTAL_MAX); ++type) {

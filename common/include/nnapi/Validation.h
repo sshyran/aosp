@@ -42,7 +42,7 @@ Result<Version> validate(const OutputShape& outputShape);
 Result<Version> validate(const Timing& timing);
 Result<Version> validate(const Capabilities& capabilities);
 Result<Version> validate(const Extension& extension);
-Result<Version> validate(const NativeHandle& handle);
+Result<Version> validate(const SharedHandle& handle);
 Result<Version> validate(const Memory& memory);
 Result<Version> validate(const Model& model);
 Result<Version> validate(const BufferDesc& bufferDesc);
@@ -53,7 +53,7 @@ Result<Version> validate(const OptionalTimeoutDuration& optionalTimeoutDuration)
 
 Result<Version> validate(const std::vector<OutputShape>& outputShapes);
 Result<Version> validate(const std::vector<Extension>& extensions);
-Result<Version> validate(const std::vector<NativeHandle>& handles);
+Result<Version> validate(const std::vector<SharedHandle>& handles);
 Result<Version> validate(const std::vector<BufferRole>& bufferRoles);
 
 // Validate request applied to model.
