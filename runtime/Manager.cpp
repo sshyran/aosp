@@ -432,8 +432,6 @@ std::tuple<int, int, sp<V1_3::IFencedExecutionCallback>, Timing> DriverPreparedM
     CHECK(std::all_of(waitFor.begin(), waitFor.end(), [](int fd) { return fd > 0; }));
     // Make a copy of the memory tracker as we will append memory pools for pointer arguments.
     std::vector<const RuntimeMemory*> localMemories = memories;
-    sp<V1_3::IFencedExecutionCallback> executeFencedCallback;
-    Timing timing;
 
     // We separate the input & output pools so accelerators only need to copy
     // the contents of the input pools. We could also use it to set protection
@@ -443,12 +441,12 @@ std::tuple<int, int, sp<V1_3::IFencedExecutionCallback>, Timing> DriverPreparedM
     const auto [n1, inputPtrArgsMemory, inputPtrArgsLocations] =
             allocatePointerArgumentsToPool(inputs, &localMemories);
     if (n1 != ANEURALNETWORKS_NO_ERROR) {
-        return {n1, -1, nullptr, timing};
+        return {n1, -1, nullptr, {}};
     }
     const auto [n2, outputPtrArgsMemory, outputPtrArgsLocations] =
             allocatePointerArgumentsToPool(outputs, &localMemories);
     if (n2 != ANEURALNETWORKS_NO_ERROR) {
-        return {n2, -1, nullptr, timing};
+        return {n2, -1, nullptr, {}};
     }
 
     // Copy the input data that was specified via a pointer.
@@ -475,28 +473,18 @@ std::tuple<int, int, sp<V1_3::IFencedExecutionCallback>, Timing> DriverPreparedM
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_IPC, NNTRACE_PHASE_EXECUTION,
                         "DriverPreparedModel::executeFenced");
 
-    int n = ANEURALNETWORKS_OP_FAILED;
-    hardware::hidl_vec<hardware::hidl_handle> waitForHandles;
-    waitForHandles.resize(waitFor.size());
-    for (uint32_t i = 0; i < waitFor.size(); i++) {
-        native_handle_t* nativeHandle = native_handle_create(1, 0);
-        if (nativeHandle == nullptr) {
-            LOG(ERROR) << "Failed to create native_handle";
-            return {n, -1, nullptr, timing};
-        }
-        int dupFd = dup(waitFor[i]);
+    std::vector<SyncFence> waitForHandles;
+    waitForHandles.reserve(waitFor.size());
+    for (int fd : waitFor) {
+        int dupFd = dup(fd);
         if (dupFd <= 0) {
             LOG(ERROR) << "Unable to dup the file descriptor";
-            return {n, -1, nullptr, timing};
+            return {ANEURALNETWORKS_OP_FAILED, -1, nullptr, {}};
         }
-        nativeHandle->data[0] = dupFd;
-        hardware::hidl_handle hidlHandle;
-        hidlHandle.setTo(nativeHandle, /*shouldOwn=*/true);
-        waitForHandles[i] = std::move(hidlHandle);
+        waitForHandles.push_back(SyncFence::create(base::unique_fd(dupFd)));
     }
 
-    hardware::hidl_handle syncFence;
-    std::tie(n, syncFence, executeFencedCallback, timing) =
+    auto [n, syncFence, executeFencedCallback, timing] =
             mPreparedModel->executeFenced(request, waitForHandles, measure, deadline,
                                           loopTimeoutDuration, timeoutDurationAfterFence);
 
@@ -506,8 +494,8 @@ std::tuple<int, int, sp<V1_3::IFencedExecutionCallback>, Timing> DriverPreparedM
     }
 
     int syncFenceFd = -1;
-    if (syncFence.getNativeHandle()) {
-        syncFenceFd = dup(syncFence.getNativeHandle()->data[0]);
+    if (syncFence.hasFd()) {
+        syncFenceFd = dup(syncFence.getFd());
         if (syncFenceFd < 0) {
             LOG(ERROR) << "Failed to dup the file descriptor";
             return {ANEURALNETWORKS_OP_FAILED, -1, nullptr, timing};
