@@ -23,6 +23,7 @@
 #include <limits>
 #include <memory>
 #include <utility>
+#include <vector>
 
 #include "Result.h"
 #include "SharedMemory.h"
@@ -36,7 +37,7 @@ GeneralResult<Mapping> mapAshmem(const Memory& memory) {
     CHECK_LE(memory.size, std::numeric_limits<uint32_t>::max());
     const auto size = memory.size;
 
-    int fd = memory.handle->handle()->data[0];
+    const int fd = memory.handle->fds[0];
     std::shared_ptr<base::MappedFile> mapping =
             base::MappedFile::FromFd(fd, /*offset=*/0, size, PROT_READ | PROT_WRITE);
     if (mapping == nullptr) {
@@ -54,10 +55,10 @@ struct MmapFdMappingContext {
 
 GeneralResult<Mapping> mapMemFd(const Memory& memory) {
     const size_t size = memory.size;
-    const native_handle_t* handle = memory.handle->handle();
-    const int fd = handle->data[0];
-    const int prot = handle->data[1];
-    const size_t offset = getOffsetFromInts(handle->data[2], handle->data[3]);
+    const SharedHandle& handle = memory.handle;
+    const int fd = handle->fds[0];
+    const int prot = handle->ints[0];
+    const size_t offset = getOffsetFromInts(handle->ints[1], handle->ints[2]);
 
     std::shared_ptr<base::MappedFile> mapping = base::MappedFile::FromFd(fd, offset, size, prot);
     if (mapping == nullptr) {
@@ -78,18 +79,14 @@ GeneralResult<Memory> createSharedMemory(size_t size) {
                << "ashmem_create_region(" << size << ") fails with " << fd;
     }
 
-    native_handle_t* handle = native_handle_create(1, 0);
-    if (handle == nullptr) {
-        // TODO(b/120417090): is ANEURALNETWORKS_UNEXPECTED_NULL the correct error to return here?
-        return NN_ERROR(ErrorStatus::GENERAL_FAILURE) << "Failed to create native_handle";
-    }
-    handle->data[0] = fd;
+    std::vector<base::unique_fd> fds;
+    fds.emplace_back(fd);
 
-    // Create a NativeHandle which owns the native handle and fd so that we don't have to manually
-    // clean either the native handle or the fd.
-    auto nativeHandle = ::android::NativeHandle::create(handle, /*ownsHandle=*/true);
-
-    return Memory{.handle = std::move(nativeHandle), .size = size, .name = "ashmem"};
+    SharedHandle handle = std::make_shared<const Handle>(Handle{
+            .fds = std::move(fds),
+            .ints = {},
+    });
+    return Memory{.handle = std::move(handle), .size = size, .name = "ashmem"};
 }
 
 GeneralResult<Memory> createSharedMemoryFromFd(size_t size, int prot, int fd, size_t offset) {
@@ -98,31 +95,23 @@ GeneralResult<Memory> createSharedMemoryFromFd(size_t size, int prot, int fd, si
     }
 
     // Duplicate the file descriptor so the resultant Memory owns its own version.
-    int dupfd = dup(fd);
-    if (dupfd == -1) {
+    int dupFd = dup(fd);
+    if (dupFd == -1) {
         // TODO(b/120417090): is ANEURALNETWORKS_UNEXPECTED_NULL the correct error to return here?
         return NN_ERROR(ErrorStatus::INVALID_ARGUMENT) << "Failed to dup the fd";
     }
 
-    // Create a temporary native handle to own the dupfd.
-    native_handle_t* nativeHandle = native_handle_create(1, 3);
-    if (nativeHandle == nullptr) {
-        close(dupfd);
-        // TODO(b/120417090): is ANEURALNETWORKS_UNEXPECTED_NULL the correct error to return here?
-        return NN_ERROR(ErrorStatus::GENERAL_FAILURE) << "Failed to create native_handle";
-    }
+    std::vector<base::unique_fd> fds;
+    fds.emplace_back(dupFd);
 
     const auto [lowOffsetBits, highOffsetBits] = getIntsFromOffset(offset);
-    nativeHandle->data[0] = dupfd;
-    nativeHandle->data[1] = prot;
-    nativeHandle->data[2] = lowOffsetBits;
-    nativeHandle->data[3] = highOffsetBits;
+    std::vector<int> ints = {prot, lowOffsetBits, highOffsetBits};
 
-    // Create a NativeHandle which owns the native handle and fd so that we don't have to manually
-    // clean either the native handle or the fd.
-    auto ownedHandle = ::android::NativeHandle::create(nativeHandle, /*ownsHandle=*/true);
-
-    return Memory{.handle = std::move(ownedHandle), .size = size, .name = "mmap_fd"};
+    SharedHandle handle = std::make_shared<const Handle>(Handle{
+            .fds = std::move(fds),
+            .ints = std::move(ints),
+    });
+    return Memory{.handle = std::move(handle), .size = size, .name = "mmap_fd"};
 }
 
 GeneralResult<Memory> createSharedMemoryFromHidlMemory(const hardware::hidl_memory& /*memory*/) {

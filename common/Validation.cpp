@@ -679,13 +679,15 @@ Result<Version> validateOperations(const std::vector<Operation>& operations,
     return version;
 }
 
-Result<Version> validateNativeHandle(const NativeHandle& handle) {
+Result<Version> validateSharedHandle(const SharedHandle& handle) {
     NN_VALIDATE(handle != nullptr);
+    NN_VALIDATE(std::all_of(handle->fds.begin(), handle->fds.end(),
+                            [](const base::unique_fd& fd) { return fd.ok(); }));
     return Version::ANDROID_OC_MR1;
 }
 
 Result<Version> validateMemory(const Memory& memory) {
-    NN_TRY(validateNativeHandle(memory.handle));
+    NN_TRY(validateSharedHandle(memory.handle));
 
     if (memory.name == "ashmem") {
         NN_VALIDATE_NE(memory.size, 0u);
@@ -2571,8 +2573,8 @@ Result<Version> validate(const Extension& extension) {
     return validateExtension(extension);
 }
 
-Result<Version> validate(const NativeHandle& handle) {
-    return validateNativeHandle(handle);
+Result<Version> validate(const SharedHandle& handle) {
+    return validateSharedHandle(handle);
 }
 
 Result<Version> validate(const Memory& memory) {
@@ -2611,8 +2613,8 @@ Result<Version> validate(const std::vector<Extension>& extensions) {
     return validateExtensions(extensions);
 }
 
-Result<Version> validate(const std::vector<NativeHandle>& handles) {
-    return validateVector(handles, validateNativeHandle);
+Result<Version> validate(const std::vector<SharedHandle>& handles) {
+    return validateVector(handles, validateSharedHandle);
 }
 
 Result<Version> validate(const std::vector<BufferRole>& bufferRoles) {

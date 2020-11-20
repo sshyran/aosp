@@ -754,8 +754,8 @@ class VersionedIPreparedModel {
      *                                  all sync fences in waitFor are signaled.
      * @return A tuple consisting of:
      *         - Error code of the dispatch call.
-     *         - A sync_fence that will be triggered when the task is completed.
-     *           The sync_fence will be set to error if critical error occurs when doing
+     *         - A SyncFence that will be triggered when the task is completed.
+     *           The SyncFence will be set to error if critical error occurs when doing
      *           actual evaluation.
      *         - A callback can be used to query information like duration
      *           and detailed runtime error status when the task is completed.
@@ -763,11 +763,11 @@ class VersionedIPreparedModel {
      *           sync execution. Either IFencedExecutionCallback will be
      *           returned or optional timing information is returned
      */
-    std::tuple<int, hardware::hidl_handle, sp<V1_3::IFencedExecutionCallback>, Timing>
-    executeFenced(const Request& request, const hardware::hidl_vec<hardware::hidl_handle>& waitFor,
-                  MeasureTiming measure, const std::optional<Deadline>& deadline,
-                  const OptionalTimeoutDuration& loopTimeoutDuration,
-                  const OptionalTimeoutDuration& timeoutDurationAfterFence);
+    std::tuple<int, SyncFence, sp<V1_3::IFencedExecutionCallback>, Timing> executeFenced(
+            const Request& request, const std::vector<SyncFence>& waitFor, MeasureTiming measure,
+            const std::optional<Deadline>& deadline,
+            const OptionalTimeoutDuration& loopTimeoutDuration,
+            const OptionalTimeoutDuration& timeoutDurationAfterFence);
 
    private:
     friend class VersionedIDevice;
