@@ -111,12 +111,19 @@ std::ostream& operator<<(std::ostream& os, const HalVersion& halVersion);
 bool operator==(const Timing& a, const Timing& b);
 bool operator!=(const Timing& a, const Timing& b);
 bool operator==(const Capabilities::PerformanceInfo& a, const Capabilities::PerformanceInfo& b);
+bool operator!=(const Capabilities::PerformanceInfo& a, const Capabilities::PerformanceInfo& b);
 bool operator==(const Capabilities::OperandPerformance& a,
                 const Capabilities::OperandPerformance& b);
+bool operator!=(const Capabilities::OperandPerformance& a,
+                const Capabilities::OperandPerformance& b);
 bool operator==(const Capabilities& a, const Capabilities& b);
+bool operator!=(const Capabilities& a, const Capabilities& b);
 bool operator==(const Extension::OperandTypeInformation& a,
                 const Extension::OperandTypeInformation& b);
+bool operator!=(const Extension::OperandTypeInformation& a,
+                const Extension::OperandTypeInformation& b);
 bool operator==(const Extension& a, const Extension& b);
+bool operator!=(const Extension& a, const Extension& b);
 bool operator==(const Operand::SymmPerChannelQuantParams& a,
                 const Operand::SymmPerChannelQuantParams& b);
 bool operator!=(const Operand::SymmPerChannelQuantParams& a,
