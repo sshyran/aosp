@@ -849,7 +849,6 @@ std::ostream& operator<<(std::ostream& os, const HalVersion& halVersion) {
 bool operator==(const Timing& a, const Timing& b) {
     return a.timeOnDevice == b.timeOnDevice && a.timeInDriver == b.timeInDriver;
 }
-
 bool operator!=(const Timing& a, const Timing& b) {
     return !(a == b);
 }
@@ -857,10 +856,17 @@ bool operator!=(const Timing& a, const Timing& b) {
 bool operator==(const Capabilities::PerformanceInfo& a, const Capabilities::PerformanceInfo& b) {
     return a.execTime == b.execTime && a.powerUsage == b.powerUsage;
 }
+bool operator!=(const Capabilities::PerformanceInfo& a, const Capabilities::PerformanceInfo& b) {
+    return !(a == b);
+}
 
 bool operator==(const Capabilities::OperandPerformance& a,
                 const Capabilities::OperandPerformance& b) {
     return a.type == b.type && a.info == b.info;
+}
+bool operator!=(const Capabilities::OperandPerformance& a,
+                const Capabilities::OperandPerformance& b) {
+    return !(a == b);
 }
 
 bool operator==(const Capabilities& a, const Capabilities& b) {
@@ -871,14 +877,24 @@ bool operator==(const Capabilities& a, const Capabilities& b) {
            a.operandPerformance.asVector() == b.operandPerformance.asVector() &&
            a.ifPerformance == b.ifPerformance && a.whilePerformance == b.whilePerformance;
 }
+bool operator!=(const Capabilities& a, const Capabilities& b) {
+    return !(a == b);
+}
 
 bool operator==(const Extension::OperandTypeInformation& a,
                 const Extension::OperandTypeInformation& b) {
     return a.type == b.type && a.isTensor == b.isTensor && a.byteSize == b.byteSize;
 }
+bool operator!=(const Extension::OperandTypeInformation& a,
+                const Extension::OperandTypeInformation& b) {
+    return !(a == b);
+}
 
 bool operator==(const Extension& a, const Extension& b) {
     return a.name == b.name && a.operandTypes == b.operandTypes;
+}
+bool operator!=(const Extension& a, const Extension& b) {
+    return !(a == b);
 }
 
 bool operator==(const Operand::SymmPerChannelQuantParams& a,
