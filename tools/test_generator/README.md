@@ -7,7 +7,7 @@
 
 ## Writing a Test Specification
 
-You should create new test specs in `nn/runtime/test/specs/<version>/` and name it with `.mod.py` suffix, so that other tools can automatically update the unit tests.
+You should create new test specs in `runtime/test/specs/<version>/` and name it with `.mod.py` suffix, so that other tools can automatically update the unit tests.
 
 ### Specifying Operands
 
@@ -465,7 +465,7 @@ The spec above will result in 96 tests if introduced in v1.0 or v1.1, and 192 te
 Once you have your model ready, run
 
 ```
-$ANDROID_BUILD_TOP/frameworks/ml/nn/runtime/test/specs/generate_all_tests.sh
+$ANDROID_BUILD_TOP/packages/modules/NeuralNetworks/runtime/test/specs/generate_all_tests.sh
 ```
 
 It will update all CTS and VTS tests based on spec files in `nn/runtime/test/specs/V1_*/*`.
