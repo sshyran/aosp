@@ -81,7 +81,7 @@ for i in $(seq 1 $NUMBER_RUNS); do
 done
 
 echo "CPU run data from 'parse_benchmark.py $LOGFILE'"
-$ANDROID_BUILD_TOP/frameworks/ml/nn/tools/parse_benchmark.py $LOGFILE
+$ANDROID_BUILD_TOP/packages/modules/NeuralNetworks/tools/parse_benchmark.py $LOGFILE
 
 # Run with driver
 LOGFILE=$LOGDIR/perf-driver.txt
@@ -97,4 +97,4 @@ for i in $(seq 1 $NUMBER_RUNS); do
 done
 
 echo "Driver run data from 'parse_benchmark.py $LOGFILE'"
-$ANDROID_BUILD_TOP/frameworks/ml/nn/tools/parse_benchmark.py $LOGFILE
+$ANDROID_BUILD_TOP/packages/modules/NeuralNetworks/tools/parse_benchmark.py $LOGFILE
