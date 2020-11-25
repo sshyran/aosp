@@ -27,7 +27,7 @@ done
 TOOL=$(dirname $0)/generate_api.py
 SPECFILE=$(dirname $0)/types.spec
 HALDIR=${ANDROID_BUILD_TOP}/hardware/interfaces/neuralnetworks
-NDKDIR=${ANDROID_BUILD_TOP}/frameworks/ml/nn/runtime/include
+NDKDIR=${ANDROID_BUILD_TOP}/packages/modules/NeuralNetworks/runtime/include
 
 RET=0
 function doit {

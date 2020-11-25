@@ -364,10 +364,10 @@ cc_library_static {
         "generated/spec_V1_*/*.example.cpp",
     ],
     include_dirs: [
-        "frameworks/ml/nn/common/include",
-        "frameworks/ml/nn/runtime/",
-        "frameworks/ml/nn/runtime/include/",
-        "frameworks/ml/nn/tools/test_generator/test_harness/include",
+        "packages/modules/NeuralNetworks/common/include",
+        "packages/modules/NeuralNetworks/runtime/",
+        "packages/modules/NeuralNetworks/runtime/include/",
+        "packages/modules/NeuralNetworks/tools/test_generator/test_harness/include",
     ],
     cflags: [
         "-DNNTEST_CTS",
@@ -444,9 +444,9 @@ cc_library_static {
         "fuzzing/operation_signatures/*.cpp",
     ],
     include_dirs: [
-        "frameworks/ml/nn/common/include",
-        "frameworks/ml/nn/runtime/",
-        "frameworks/ml/nn/runtime/include/",
+        "packages/modules/NeuralNetworks/common/include",
+        "packages/modules/NeuralNetworks/runtime/",
+        "packages/modules/NeuralNetworks/runtime/include/",
     ],
     header_libs: [
         "libneuralnetworks_generated_test_harness_headers_for_cts",
