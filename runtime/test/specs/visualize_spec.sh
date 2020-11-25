@@ -21,7 +21,7 @@ set -Eeuo pipefail
 
 SPEC_FILE=$1
 SPEC_NAME=`basename -s .mod.py $1`
-VISUALIZER_DIR=$ANDROID_BUILD_TOP/frameworks/ml/nn/tools/test_generator
+VISUALIZER_DIR=$ANDROID_BUILD_TOP/packages/modules/NeuralNetworks/tools/test_generator
 
 # Create tmp dir for the generated HTML.
 LOG_DIR=$(mktemp -d)/nnapi-spec-html
