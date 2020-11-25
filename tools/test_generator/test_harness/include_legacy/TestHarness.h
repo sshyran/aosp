@@ -15,7 +15,7 @@
  */
 
 /* Header-only library for various helpers of test harness
- * See frameworks/ml/nn/runtime/test/TestGenerated.cpp for how this is used.
+ * See packages/modules/NeuralNetworks/runtime/test/TestGenerated.cpp for how this is used.
  */
 #ifndef ANDROID_FRAMEWORKS_ML_NN_TOOLS_TEST_GENERATOR_TEST_HARNESS_LEGACY_TEST_HARNESS_H
 #define ANDROID_FRAMEWORKS_ML_NN_TOOLS_TEST_GENERATOR_TEST_HARNESS_LEGACY_TEST_HARNESS_H
