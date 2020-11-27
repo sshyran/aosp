@@ -91,26 +91,9 @@ bool PreparedModelCallback::isDeadObject() const {
 
 // ExecutionCallback methods begin here
 
-hardware::Return<void> ExecutionCallback::notify(V1_0::ErrorStatus errorStatus) {
-    return notifyInternal(false, uncheckedConvert(errorStatus), {}, {});
-}
-
-hardware::Return<void> ExecutionCallback::notify_1_2(
-        V1_0::ErrorStatus errorStatus, const hardware::hidl_vec<V1_2::OutputShape>& outputShapes,
-        const V1_2::Timing& timing) {
-    return notifyInternal(false, uncheckedConvert(errorStatus), uncheckedConvert(outputShapes),
-                          uncheckedConvert(timing));
-}
-
-hardware::Return<void> ExecutionCallback::notify_1_3(
-        V1_3::ErrorStatus errorStatus, const hardware::hidl_vec<V1_2::OutputShape>& outputShapes,
-        const V1_2::Timing& timing) {
-    return notifyInternal(false, uncheckedConvert(errorStatus), uncheckedConvert(outputShapes),
-                          uncheckedConvert(timing));
-}
-
-void ExecutionCallback::notifyAsDeadObject() {
-    notifyInternal(true, ErrorStatus::GENERAL_FAILURE, {}, {});
+void ExecutionCallback::notify(ErrorStatus status, const std::vector<OutputShape>& outputShapes,
+                               const Timing& timing) {
+    notifyInternal(status, outputShapes, timing);
 }
 
 void ExecutionCallback::wait() const {
@@ -146,11 +129,6 @@ const std::vector<OutputShape>& ExecutionCallback::getOutputShapes() const {
 Timing ExecutionCallback::getTiming() const {
     wait();
     return mTiming;
-}
-
-bool ExecutionCallback::isDeadObject() const {
-    wait();
-    return mDeadObject;
 }
 
 bool ExecutionCallback::bindThread(std::thread asyncThread) {
@@ -198,11 +176,10 @@ void ExecutionCallback::setOnFinish(const ExecutionFinish& finish) {
     mOnFinish = finish;
 }
 
-hardware::Return<void> ExecutionCallback::notifyInternal(bool deadObject, ErrorStatus errorStatus,
-                                                         std::vector<OutputShape> outputShapes,
-                                                         Timing timing) {
+void ExecutionCallback::notifyInternal(ErrorStatus errorStatus,
+                                       std::vector<OutputShape> outputShapes, Timing timing) {
     // check results
-    if (!deadObject) {
+    {
         if (errorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
             // outputShapes must not be empty if OUTPUT_INSUFFICIENT_SIZE.
             if (outputShapes.size() == 0) {
@@ -231,10 +208,9 @@ hardware::Return<void> ExecutionCallback::notifyInternal(bool deadObject, ErrorS
 
         // quick-return if object has already been notified
         if (mNotified) {
-            return hardware::Void();
+            return;
         }
 
-        mDeadObject = deadObject;
         mErrorStatus = errorStatus;
         mOutputShapes = std::move(outputShapes);
         mTiming = timing;
@@ -249,7 +225,6 @@ hardware::Return<void> ExecutionCallback::notifyInternal(bool deadObject, ErrorS
         }
     }
     mCondition.notify_all();
-    return hardware::Void();
 }
 
 }  // namespace android::nn
