@@ -117,6 +117,7 @@ int ModelBuilder::addOperand(const ANeuralNetworksOperandType& type) {
 
     mOperands.push_back(std::move(operand));
     mHasOEMOperand |= isOemOperand;
+    mHasControlFlow |= (operandType == OperandType::SUBGRAPH);
     return ANEURALNETWORKS_NO_ERROR;
 }
 
@@ -406,6 +407,8 @@ int ModelBuilder::addOperation(ANeuralNetworksOperationType type, uint32_t input
     mOperations.push_back(std::move(operation));
     mHasOEMOperation |= (operationType == OperationType::OEM_OPERATION);
     mHasExtensionOperation |= isExtension(operationType);
+    mHasControlFlow |=
+            (operationType == OperationType::IF || operationType == OperationType::WHILE);
 
     return ANEURALNETWORKS_NO_ERROR;
 }

@@ -64,6 +64,7 @@ class ModelBuilder {
 
     bool hasOEMOperation() const { return mHasOEMOperation; }
     bool hasExtensionOperation() const { return mHasExtensionOperation; }
+    bool hasControlFlow() const { return mHasControlFlow; }
 
     // explicitDeviceList is true if the list of devices was provided explicitly
     // via the ANeuralNetworksModel_createForDevices API (which has certain
@@ -234,6 +235,9 @@ class ModelBuilder {
     // Main subgraphs of models referenced by operands in this model. Required
     // for validateOperation().
     std::vector<Model::Subgraph> mReferencedSubgraphsForValidation;
+
+    // Does the model contain control flow operands or operations?
+    bool mHasControlFlow = false;
 
     class ModelMaker;
 };
