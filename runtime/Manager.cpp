@@ -649,9 +649,16 @@ std::pair<int, std::shared_ptr<RuntimePreparedModel>> CpuDevice::prepareModel(
             << "Should never call prepareModel with cache information on CpuDevice";
 
     const Model model = makeModel();
-    if (!validateModel(convertToV1_3(model), ValidationMode::RUNTIME) ||
-        !validateExecutionPreference(convertToV1_1(preference)) ||
-        !validatePriority(convertToV1_3(priority))) {
+    if (auto result = validate(model); !result.ok()) {
+        LOG(ERROR) << "Invalid Model: " << result.error();
+        return {ANEURALNETWORKS_OP_FAILED, nullptr};
+    }
+    if (auto result = validate(preference); !result.ok()) {
+        LOG(ERROR) << "Invalid ExecutionPreference: " << result.error();
+        return {ANEURALNETWORKS_OP_FAILED, nullptr};
+    }
+    if (auto result = validate(priority); !result.ok()) {
+        LOG(ERROR) << "Invalid Priority: " << result.error();
         return {ANEURALNETWORKS_OP_FAILED, nullptr};
     }
     if (hasDeadlinePassed(deadline)) {
