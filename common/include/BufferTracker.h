@@ -30,6 +30,7 @@
 #include "CpuExecutor.h"
 #include "HalInterfaces.h"
 #include "Utils.h"
+#include "ValidateHal.h"
 
 namespace android::nn {
 
