@@ -900,7 +900,7 @@ Model ModelBuilder::ModelMaker::makeModel(const ModelBuilder* mainModel) {
     model.operandValues = std::move(mOperandValues);
     model.pools.resize(mMemories.size());
     std::transform(mMemories.begin(), mMemories.end(), model.pools.begin(),
-                   [](const RuntimeMemory* m) { return uncheckedConvert(m->getHidlMemory()); });
+                   [](const RuntimeMemory* m) { return m->getMemory(); });
     model.relaxComputationFloat32toFloat16 = mainModel->mRelaxComputationFloat32toFloat16;
     model.extensionNameToPrefix = std::move(mExtensionNameToPrefix);
     return model;

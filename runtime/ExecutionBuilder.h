@@ -17,6 +17,8 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_EXECUTION_BUILDER_H
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_EXECUTION_BUILDER_H
 
+#include <nnapi/Validation.h>
+
 #include <atomic>
 #include <memory>
 #include <string>
