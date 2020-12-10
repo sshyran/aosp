@@ -27,9 +27,9 @@
 
 #include "CompilationBuilder.h"
 #include "GraphDump.h"
+#include "LegacyUtils.h"
 #include "Manager.h"
 #include "TypeManager.h"
-#include "Utils.h"
 
 namespace android {
 namespace nn {

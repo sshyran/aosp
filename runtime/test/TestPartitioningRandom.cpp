@@ -43,7 +43,6 @@
 #include "NeuralNetworks.h"
 #include "SampleDriver.h"
 #include "TestNeuralNetworksWrapper.h"
-#include "Utils.h"
 #include "ValidateHal.h"
 
 // Uncomment the following line to generate some debugging output that
@@ -1140,7 +1139,7 @@ TEST_P(RandomPartitioningTest, Test) {
     if (compilationResult == Result::OP_FAILED && hasUnknownDimensions &&
         cNoFallback.getExecutionPlan().hasDynamicTemporaries() &&
         std::any_of(devices.begin(), devices.end(), [](const std::shared_ptr<Device>& device) {
-            return device->getFeatureLevel() < __ANDROID_API_Q__;
+            return device->getFeatureLevel() < nn::kHalVersionV1_2ToApi.android;
         })) {
         ASSERT_EQ(cWithFallback.setPartitioning(DeviceManager::kPartitioningWithFallback),
                   Result::NO_ERROR);

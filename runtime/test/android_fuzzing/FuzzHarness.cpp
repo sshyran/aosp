@@ -20,6 +20,7 @@
 #include <algorithm>
 
 #include "Converter.h"
+#include "LegacyUtils.h"
 #include "Model.pb.h"
 #include "TestHarness.h"
 

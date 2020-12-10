@@ -22,10 +22,9 @@
 #include <utility>
 #include <vector>
 
-#include "HalInterfaces.h"
+#include "LegacyUtils.h"
 #include "NeuralNetworks.h"
 #include "TypeManager.h"
-#include "Utils.h"
 
 namespace android {
 namespace nn {

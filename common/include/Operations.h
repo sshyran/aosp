@@ -17,6 +17,7 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_H
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_H
 
+#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
 #include "operations/BidirectionalSequenceLSTM.h"
 #include "operations/Cast.h"
 #include "operations/EmbeddingLookup.h"
@@ -31,11 +32,14 @@
 #include "operations/RNN.h"
 #include "operations/SVDF.h"
 #include "operations/Tile.h"
+#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
 
 #include <stddef.h>
 
 #include <cstdint>
 #include <vector>
+
+#include "ActivationFunctor.h"
 
 namespace android {
 namespace nn {

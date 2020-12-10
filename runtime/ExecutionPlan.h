@@ -21,7 +21,6 @@
 
 #include <android-base/logging.h>
 #include <nnapi/Types.h>
-#include <openssl/sha.h>
 
 #include <algorithm>
 #include <chrono>
@@ -36,12 +35,12 @@
 #include <variant>
 #include <vector>
 
+#include "LegacyUtils.h"
 #include "Memory.h"
 #include "ModelArgumentInfo.h"
 #include "ModelBuilder.h"
 #include "NeuralNetworks.h"
 #include "TokenHasher.h"
-#include "Utils.h"
 
 namespace android {
 namespace nn {
