@@ -20,8 +20,8 @@
 #include <utility>
 #include <vector>
 
+#include "LegacyUtils.h"
 #include "NeuralNetworks.h"
-#include "Utils.h"
 
 namespace android {
 namespace nn {

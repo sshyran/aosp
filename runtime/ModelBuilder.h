@@ -23,9 +23,9 @@
 #include <memory>
 #include <vector>
 
+#include "LegacyUtils.h"
 #include "Memory.h"
 #include "NeuralNetworks.h"
-#include "Utils.h"
 
 namespace android {
 namespace nn {
