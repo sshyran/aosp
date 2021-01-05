@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-#ifndef NNAPI_NEURALNETWORKSTYPES_H_
-#define NNAPI_NEURALNETWORKSTYPES_H_
+#ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_SL_SUPPORT_LIBRARY_TYPES_H
+#define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_SL_SUPPORT_LIBRARY_TYPES_H
 
 #include <stdint.h>
 #include <stdio.h>
 
-#include "NeuralNetworksWrapper.h"
+#include "NeuralNetworks.h"
 
 // Function types
 
@@ -219,4 +219,4 @@ typedef int (*ANeuralNetworksEvent_createFromSyncFenceFd_fn)(int sync_fence_fd,
 typedef int (*ANeuralNetworksEvent_getSyncFenceFd_fn)(const ANeuralNetworksEvent* event,
                                                       int* sync_fence_fd);
 
-#endif  // NNAPI_NEURALNETWORKSTYPES_H_
+#endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_SL_SUPPORT_LIBRARY_TYPES_H

@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_SUPPORT_LIBRARY_H
-#define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_SUPPORT_LIBRARY_H
+#ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_SL_SUPPORT_LIBRARY_H
+#define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_SL_SUPPORT_LIBRARY_H
 
 #include <stdint.h>
 #include <stdio.h>
@@ -1558,4 +1558,4 @@ const NnApiSupportLibrary* LoadNnApiSupportLibrary(const char* lib_name);
 
 void FreeNnApiSupportLibrary(const NnApiSupportLibrary* nnapi);
 
-#endif  // ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_SUPPORT_LIBRARY_H
+#endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_SL_SUPPORT_LIBRARY_H
