@@ -9,8 +9,6 @@ group("all") {
     ":libneuralnetworks",
     ":driver_cache",
     ":vendor-nn-hal",
-    "chromeos/tests:vts",
-    "chromeos/tests:cts",
   ]
   if (use.test) {
     deps += [
@@ -19,6 +17,8 @@ group("all") {
       ":driver_cache_testrunner",
       ":runtime_testrunner",
       ":runtime_generated_testrunner",
+      "chromeos/tests:vts",
+      "chromeos/tests:cts",
     ]
   }
 }
