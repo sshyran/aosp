@@ -940,8 +940,7 @@ bool LSTMCell::LSTMStep(
                 cell_scratch, input_gate_scratch, n_batch * n_cell, cell_state_out_buffer);
     }
     if (params.cell_clip > 0.0) {
-        tflite::tensor_utils::ClipVector(cell_state_out_buffer, n_batch * n_cell, params.cell_clip,
-                                         cell_state_out_buffer);
+        tflite::tensor_utils::CwiseClipping(cell_state_out_buffer, n_batch * n_cell, params.cell_clip);
     }
 
     // For each batch and cell: update the output gate.
@@ -978,8 +977,7 @@ bool LSTMCell::LSTMStep(
                 projection_weights_buffer, n_output, n_cell, output_gate_scratch, n_batch,
                 output_buffer);
         if (params.proj_clip > 0.0) {
-            tflite::tensor_utils::ClipVector(output_buffer, n_batch * n_output, params.proj_clip,
-                                             output_buffer);
+            tflite::tensor_utils::CwiseClipping(output_buffer, n_batch * n_output, params.proj_clip);
         }
     } else {
         std::copy_n(output_gate_scratch, n_batch * n_output, output_buffer);

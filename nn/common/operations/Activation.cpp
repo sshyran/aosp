@@ -258,7 +258,6 @@ bool tanhQuant8Signed(const int8_t* inputData, const Shape& inputShape, int8_t* 
         return false;
     }
 
-    int numElements = getNumberOfElements(inputShape);
     static constexpr int kInputIntegerBits = 4;
 
     const double input_real_multiplier =
@@ -274,7 +273,9 @@ bool tanhQuant8Signed(const int8_t* inputData, const Shape& inputShape, int8_t* 
 
     NNTRACE_COMP_SWITCH("reference_integer_ops::Tanh");
     tflite::reference_integer_ops::Tanh(inputShape.offset, input_range_radius, input_multiplier,
-                                        input_left_shift, numElements, inputData, outputData);
+                                        input_left_shift,
+                                        convertShapeToTflshape(inputShape), inputData,
+                                        convertShapeToTflshape(outputShape), outputData);
 
     return true;
 }
