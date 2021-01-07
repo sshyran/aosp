@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_BUFFER_TRACKER_H
-#define ANDROID_FRAMEWORKS_ML_NN_COMMON_BUFFER_TRACKER_H
+#ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_HAL_BUFFER_TRACKER_H
+#define ANDROID_FRAMEWORKS_ML_NN_COMMON_HAL_BUFFER_TRACKER_H
 
 #include <android-base/macros.h>
 
@@ -35,15 +35,15 @@
 namespace android::nn {
 
 // This class manages a CPU buffer allocated on heap and provides validation methods.
-class ManagedBuffer {
+class HalManagedBuffer {
    public:
-    static std::shared_ptr<ManagedBuffer> create(uint32_t size,
-                                                 std::set<HalPreparedModelRole> roles,
-                                                 const Operand& operand);
+    static std::shared_ptr<HalManagedBuffer> create(uint32_t size,
+                                                    std::set<HalPreparedModelRole> roles,
+                                                    const Operand& operand);
 
-    // Prefer ManagedBuffer::create.
-    ManagedBuffer(std::unique_ptr<uint8_t[]> buffer, uint32_t size,
-                  std::set<HalPreparedModelRole> roles, const Operand& operand);
+    // Prefer HalManagedBuffer::create.
+    HalManagedBuffer(std::unique_ptr<uint8_t[]> buffer, uint32_t size,
+                     std::set<HalPreparedModelRole> roles, const Operand& operand);
 
     RunTimePoolInfo createRunTimePoolInfo() const {
         return RunTimePoolInfo::createFromExistingBuffer(kBuffer.get(), kSize);
@@ -71,36 +71,38 @@ class ManagedBuffer {
     bool mInitialized = false;
 };
 
-// Keep track of all ManagedBuffers and assign each with a unique token.
-class BufferTracker : public std::enable_shared_from_this<BufferTracker> {
-    DISALLOW_COPY_AND_ASSIGN(BufferTracker);
+// Keep track of all HalManagedBuffers and assign each with a unique token.
+class HalBufferTracker : public std::enable_shared_from_this<HalBufferTracker> {
+    DISALLOW_COPY_AND_ASSIGN(HalBufferTracker);
 
    public:
     // A RAII class to help manage the lifetime of the token.
-    // It is only supposed to be constructed in BufferTracker::add.
+    // It is only supposed to be constructed in HalBufferTracker::add.
     class Token {
         DISALLOW_COPY_AND_ASSIGN(Token);
 
        public:
-        Token(uint32_t token, std::shared_ptr<BufferTracker> tracker)
-            : kToken(token), kBufferTracker(std::move(tracker)) {}
-        ~Token() { kBufferTracker->free(kToken); }
+        Token(uint32_t token, std::shared_ptr<HalBufferTracker> tracker)
+            : kToken(token), kHalBufferTracker(std::move(tracker)) {}
+        ~Token() { kHalBufferTracker->free(kToken); }
         uint32_t get() const { return kToken; }
 
        private:
         const uint32_t kToken;
-        const std::shared_ptr<BufferTracker> kBufferTracker;
+        const std::shared_ptr<HalBufferTracker> kHalBufferTracker;
     };
 
-    // The factory of BufferTracker. This ensures that the BufferTracker is always managed by a
-    // shared_ptr.
-    static std::shared_ptr<BufferTracker> create() { return std::make_shared<BufferTracker>(); }
+    // The factory of HalBufferTracker. This ensures that the HalBufferTracker is always managed by
+    // a shared_ptr.
+    static std::shared_ptr<HalBufferTracker> create() {
+        return std::make_shared<HalBufferTracker>();
+    }
 
-    // Prefer BufferTracker::create.
-    BufferTracker() : mTokenToBuffers(1) {}
+    // Prefer HalBufferTracker::create.
+    HalBufferTracker() : mTokenToBuffers(1) {}
 
-    std::unique_ptr<Token> add(std::shared_ptr<ManagedBuffer> buffer);
-    std::shared_ptr<ManagedBuffer> get(uint32_t token) const;
+    std::unique_ptr<Token> add(std::shared_ptr<HalManagedBuffer> buffer);
+    std::shared_ptr<HalManagedBuffer> get(uint32_t token) const;
 
    private:
     void free(uint32_t token);
@@ -111,9 +113,9 @@ class BufferTracker : public std::enable_shared_from_this<BufferTracker> {
     // Since the tokens are allocated in a non-sparse way, we use a vector to represent the mapping.
     // The index of the vector is the token. When the token gets freed, the corresponding entry is
     // set to nullptr. mTokenToBuffers[0] is always set to nullptr because 0 is an invalid token.
-    std::vector<std::shared_ptr<ManagedBuffer>> mTokenToBuffers;
+    std::vector<std::shared_ptr<HalManagedBuffer>> mTokenToBuffers;
 };
 
 }  // namespace android::nn
 
-#endif  // ANDROID_FRAMEWORKS_ML_NN_COMMON_BUFFER_TRACKER_H
+#endif  // ANDROID_FRAMEWORKS_ML_NN_COMMON_HAL_BUFFER_TRACKER_H
