@@ -128,7 +128,10 @@ cc_library_static {
     vendor_available: true,
     // b/109953668, disable OpenMP
     // openmp: true,
-    srcs: ["Canonical*.cpp"],
+    srcs: [
+        "Canonical*.cpp",
+        "LimitedSupportDevice.cpp",
+    ],
     header_libs: ["libneuralnetworks_headers"],
     export_include_dirs: ["."],
     static_libs: ["libneuralnetworks_common"],
