@@ -143,7 +143,7 @@ class TestDriverLatest : public sample_driver::SampleDriver {
 //               +--- SUB ---> temp    ---+
 //     input2 ---+
 //
-void createTestModel(test_wrapper::Model *model) {
+void createTestModel(test_wrapper::Model* model) {
     test_wrapper::OperandType tensorTypeFullySpecified(Type::TENSOR_FLOAT32, {1});
     test_wrapper::OperandType tensorTypeDynamicShape(Type::TENSOR_FLOAT32, {0});
     test_wrapper::OperandType actType(Type::INT32, {});

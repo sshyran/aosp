@@ -45,6 +45,7 @@ static int property_get(const char* key, char* value, const char* default_value)
 
 #include <algorithm>
 #include <chrono>
+#include <memory>
 
 namespace android {
 
@@ -214,8 +215,8 @@ size_t BlobCache::get(const void* key, size_t keySize, void** value,
 }
 
 static inline size_t align_sizet(size_t size) {
-  constexpr size_t alignment = alignof(size_t) - 1;
-  return (size + alignment) & ~alignment;
+    constexpr size_t alignment = alignof(size_t) - 1;
+    return (size + alignment) & ~alignment;
 }
 
 size_t BlobCache::getFlattenedSize() const {

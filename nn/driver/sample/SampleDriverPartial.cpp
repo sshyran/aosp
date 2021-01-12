@@ -19,9 +19,6 @@
 #include "SampleDriverPartial.h"
 
 #include <android-base/logging.h>
-#if !defined(NNAPI_CHROMEOS)
-#include <hidl/LegacySupport.h>
-#endif
 
 #include <thread>
 #include <vector>
