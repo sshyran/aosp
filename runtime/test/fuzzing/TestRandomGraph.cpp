@@ -32,11 +32,11 @@
 #include "fuzzing/RandomGraphGeneratorUtils.h"
 
 #ifndef NNTEST_CTS
+#include <HalInterfaces.h>
 #include <memunreachable/memunreachable.h>
 
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "HalUtils.h"
 #include "Manager.h"
 #include "SampleDriverFull.h"

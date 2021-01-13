@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+#include <Utils.h>
 #include <gtest/gtest.h>
 
 #include <algorithm>
@@ -27,7 +28,6 @@
 #include "Manager.h"
 #include "SampleDriverPartial.h"
 #include "TestNeuralNetworksWrapper.h"
-#include "Utils.h"
 
 namespace generated_tests::avg_pool_v1_2 {
 const test_helper::TestModel& get_test_model_nhwc();

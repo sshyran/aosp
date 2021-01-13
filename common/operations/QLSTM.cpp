@@ -20,6 +20,7 @@
 
 #include "CpuExecutor.h"
 #include "OperationsUtils.h"
+
 #ifndef NN_COMPATIBILITY_LIBRARY_BUILD
 #include "QuantUtils.h"
 #endif  // NN_COMPATIBILITY_LIBRARY_BUILD

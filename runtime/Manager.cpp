@@ -21,6 +21,8 @@
 #include <CpuExecutor.h>
 #include <ExecutionBurstController.h>
 #include <LegacyUtils.h>
+#include <MetaModel.h>
+#include <Tracing.h>
 #include <nnapi/IDevice.h>
 #include <nnapi/IPreparedModel.h>
 #include <nnapi/SharedMemory.h>
@@ -36,9 +38,7 @@
 
 #include "ExecutionCallback.h"
 #include "Memory.h"
-#include "MetaModel.h"
 #include "ModelArgumentInfo.h"
-#include "Tracing.h"
 #include "TypeManager.h"
 
 #ifndef NN_COMPATIBILITY_LIBRARY_BUILD

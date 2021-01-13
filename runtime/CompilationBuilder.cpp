@@ -18,6 +18,9 @@
 
 #include "CompilationBuilder.h"
 
+#include <ExecutionBurstController.h>
+#include <LegacyUtils.h>
+
 #include <algorithm>
 #include <limits>
 #include <memory>
@@ -27,9 +30,7 @@
 
 #include "BurstBuilder.h"
 #include "ExecutionBuilder.h"
-#include "ExecutionBurstController.h"
 #include "ExecutionPlan.h"
-#include "LegacyUtils.h"
 #include "Manager.h"
 #include "ModelBuilder.h"
 
