@@ -136,6 +136,7 @@ cc_library_shared {
     stubs: {
         versions: [
             "30",
+            "31",
         ],
         symbol_file: "libneuralnetworks.map.txt",
     },
