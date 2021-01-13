@@ -1,21 +1,13 @@
-// Copyright 2020 The Chromium OS Authors. All rights reserved.
+// Copyright 2021 The Chromium OS Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 #include <gtest/gtest.h>
 #include "TestHarness.h"
 
-// This exists to ensure that all of the tests in the generated test
-// suite get loaded into the system. Unless the symbols are referenced,
-// the linker will drop them and they won't get loaded or run. You could
-// use --whole-archive to prevent this, but the syntax is cumbersome and
-// gn doesn't support it well.
+// This file has been generated with the generated_tests_loader.py script.
+// DO NOT EDIT!
 
-// This file was produced by parsing the results of 'nm -C <lib>' and
-// looking for the 'dummy_test_model' symbol and then some find / replace
-// magic.
-
-// V1_1
 namespace generated_tests::add_relaxed { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::avg_pool_float_1_relaxed { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::avg_pool_float_2_relaxed { const test_helper::TestModel& get_test_model(); }
@@ -53,9 +45,9 @@ namespace generated_tests::depthwise_conv2d_float_relaxed { const test_helper::T
 namespace generated_tests::depthwise_conv2d_float_weights_as_inputs_relaxed { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::depthwise_conv_relaxed { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::dequantize_relaxed { const test_helper::TestModel& get_test_model(); }
+namespace generated_tests::div { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::div_broadcast_float { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::div_broadcast_float_relaxed { const test_helper::TestModel& get_test_model(); }
-namespace generated_tests::div { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::div_relaxed { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::embedding_lookup_relaxed { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::floor_relaxed { const test_helper::TestModel& get_test_model(); }
@@ -94,8 +86,8 @@ namespace generated_tests::max_pool_float_1_relaxed { const test_helper::TestMod
 namespace generated_tests::max_pool_float_2_relaxed { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::max_pool_float_3_relaxed { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::max_pool_float_4_relaxed { const test_helper::TestModel& get_test_model(); }
-namespace generated_tests::mean_b155508675 { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::mean { const test_helper::TestModel& get_test_model(); }
+namespace generated_tests::mean_b155508675 { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::mean_float_1 { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::mean_float_1_relaxed { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::mean_float_2 { const test_helper::TestModel& get_test_model(); }
@@ -103,7 +95,6 @@ namespace generated_tests::mean_float_2_relaxed { const test_helper::TestModel& 
 namespace generated_tests::mean_quant8_1 { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::mean_quant8_2 { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::mean_relaxed { const test_helper::TestModel& get_test_model(); }
-namespace generated_tests::mobilenet_224_gender_basic_fixed_relaxed { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::mul_relaxed { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::mul_relu_relaxed { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::pad { const test_helper::TestModel& get_test_model(); }
@@ -139,20 +130,20 @@ namespace generated_tests::space_to_batch_relaxed { const test_helper::TestModel
 namespace generated_tests::space_to_depth_float_1_relaxed { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::space_to_depth_float_2_relaxed { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::space_to_depth_float_3_relaxed { const test_helper::TestModel& get_test_model(); }
-namespace generated_tests::squeeze_b155238914 { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::squeeze { const test_helper::TestModel& get_test_model(); }
+namespace generated_tests::squeeze_b155238914 { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::squeeze_float_1 { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::squeeze_float_1_relaxed { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::squeeze_omitted { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::squeeze_quant8_1 { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::squeeze_relaxed { const test_helper::TestModel& get_test_model(); }
-namespace generated_tests::strided_slice_b155662254 { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::strided_slice { const test_helper::TestModel& get_test_model(); }
+namespace generated_tests::strided_slice_b155662254 { const test_helper::TestModel& get_test_model(); }
+namespace generated_tests::strided_slice_float_1 { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::strided_slice_float_10 { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::strided_slice_float_10_relaxed { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::strided_slice_float_11 { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::strided_slice_float_11_relaxed { const test_helper::TestModel& get_test_model(); }
-namespace generated_tests::strided_slice_float_1 { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::strided_slice_float_1_relaxed { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::strided_slice_float_2 { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::strided_slice_float_2_relaxed { const test_helper::TestModel& get_test_model(); }
@@ -182,9 +173,9 @@ namespace generated_tests::strided_slice_quant8_7 { const test_helper::TestModel
 namespace generated_tests::strided_slice_quant8_8 { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::strided_slice_quant8_9 { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::strided_slice_relaxed { const test_helper::TestModel& get_test_model(); }
+namespace generated_tests::sub { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::sub_broadcast_float { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::sub_broadcast_float_relaxed { const test_helper::TestModel& get_test_model(); }
-namespace generated_tests::sub { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::sub_relaxed { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::svdf2_relaxed { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::svdf_bias_present_relaxed { const test_helper::TestModel& get_test_model(); }
@@ -197,7 +188,7 @@ namespace generated_tests::transpose_float_1_relaxed { const test_helper::TestMo
 namespace generated_tests::transpose_quant8_1 { const test_helper::TestModel& get_test_model(); }
 namespace generated_tests::transpose_relaxed { const test_helper::TestModel& get_test_model(); }
 
-TEST(GeneratedTestsLoader, V1_1_Loader) {
+TEST(GeneratedTestsLoader, spec_V1_1) {
   generated_tests::add_relaxed::get_test_model();
   generated_tests::avg_pool_float_1_relaxed::get_test_model();
   generated_tests::avg_pool_float_2_relaxed::get_test_model();
@@ -235,9 +226,9 @@ TEST(GeneratedTestsLoader, V1_1_Loader) {
   generated_tests::depthwise_conv2d_float_weights_as_inputs_relaxed::get_test_model();
   generated_tests::depthwise_conv_relaxed::get_test_model();
   generated_tests::dequantize_relaxed::get_test_model();
+  generated_tests::div::get_test_model();
   generated_tests::div_broadcast_float::get_test_model();
   generated_tests::div_broadcast_float_relaxed::get_test_model();
-  generated_tests::div::get_test_model();
   generated_tests::div_relaxed::get_test_model();
   generated_tests::embedding_lookup_relaxed::get_test_model();
   generated_tests::floor_relaxed::get_test_model();
@@ -276,8 +267,8 @@ TEST(GeneratedTestsLoader, V1_1_Loader) {
   generated_tests::max_pool_float_2_relaxed::get_test_model();
   generated_tests::max_pool_float_3_relaxed::get_test_model();
   generated_tests::max_pool_float_4_relaxed::get_test_model();
-  generated_tests::mean_b155508675::get_test_model();
   generated_tests::mean::get_test_model();
+  generated_tests::mean_b155508675::get_test_model();
   generated_tests::mean_float_1::get_test_model();
   generated_tests::mean_float_1_relaxed::get_test_model();
   generated_tests::mean_float_2::get_test_model();
@@ -285,8 +276,6 @@ TEST(GeneratedTestsLoader, V1_1_Loader) {
   generated_tests::mean_quant8_1::get_test_model();
   generated_tests::mean_quant8_2::get_test_model();
   generated_tests::mean_relaxed::get_test_model();
-  // TODO(b/157388904): Hardware buffers not implemented on ChromeOS.
-  // generated_tests::mobilenet_224_gender_basic_fixed_relaxed::get_test_model();
   generated_tests::mul_relaxed::get_test_model();
   generated_tests::mul_relu_relaxed::get_test_model();
   generated_tests::pad::get_test_model();
@@ -322,20 +311,20 @@ TEST(GeneratedTestsLoader, V1_1_Loader) {
   generated_tests::space_to_depth_float_1_relaxed::get_test_model();
   generated_tests::space_to_depth_float_2_relaxed::get_test_model();
   generated_tests::space_to_depth_float_3_relaxed::get_test_model();
-  generated_tests::squeeze_b155238914::get_test_model();
   generated_tests::squeeze::get_test_model();
+  generated_tests::squeeze_b155238914::get_test_model();
   generated_tests::squeeze_float_1::get_test_model();
   generated_tests::squeeze_float_1_relaxed::get_test_model();
   generated_tests::squeeze_omitted::get_test_model();
   generated_tests::squeeze_quant8_1::get_test_model();
   generated_tests::squeeze_relaxed::get_test_model();
-  generated_tests::strided_slice_b155662254::get_test_model();
   generated_tests::strided_slice::get_test_model();
+  generated_tests::strided_slice_b155662254::get_test_model();
+  generated_tests::strided_slice_float_1::get_test_model();
   generated_tests::strided_slice_float_10::get_test_model();
   generated_tests::strided_slice_float_10_relaxed::get_test_model();
   generated_tests::strided_slice_float_11::get_test_model();
   generated_tests::strided_slice_float_11_relaxed::get_test_model();
-  generated_tests::strided_slice_float_1::get_test_model();
   generated_tests::strided_slice_float_1_relaxed::get_test_model();
   generated_tests::strided_slice_float_2::get_test_model();
   generated_tests::strided_slice_float_2_relaxed::get_test_model();
@@ -365,9 +354,9 @@ TEST(GeneratedTestsLoader, V1_1_Loader) {
   generated_tests::strided_slice_quant8_8::get_test_model();
   generated_tests::strided_slice_quant8_9::get_test_model();
   generated_tests::strided_slice_relaxed::get_test_model();
+  generated_tests::sub::get_test_model();
   generated_tests::sub_broadcast_float::get_test_model();
   generated_tests::sub_broadcast_float_relaxed::get_test_model();
-  generated_tests::sub::get_test_model();
   generated_tests::sub_relaxed::get_test_model();
   generated_tests::svdf2_relaxed::get_test_model();
   generated_tests::svdf_bias_present_relaxed::get_test_model();
