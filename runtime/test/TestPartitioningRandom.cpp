@@ -15,6 +15,7 @@
  */
 
 #include <HalInterfaces.h>
+#include <SampleDriver.h>
 #include <ValidateHal.h>
 #include <android-base/logging.h>
 #include <android/hardware/neuralnetworks/1.0/ADevice.h>
@@ -41,7 +42,6 @@
 #include "Manager.h"
 #include "ModelBuilder.h"
 #include "NeuralNetworks.h"
-#include "SampleDriver.h"
 #include "TestNeuralNetworksWrapper.h"
 
 // Uncomment the following line to generate some debugging output that

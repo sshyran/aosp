@@ -33,13 +33,13 @@
 
 #ifndef NNTEST_CTS
 #include <HalInterfaces.h>
+#include <SampleDriverFull.h>
 #include <memunreachable/memunreachable.h>
 
 #include <vector>
 
 #include "HalUtils.h"
 #include "Manager.h"
-#include "SampleDriverFull.h"
 
 using android::nn::sample_driver::SampleDriverFull;
 
