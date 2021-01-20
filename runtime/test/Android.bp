@@ -129,6 +129,7 @@ cc_defaults {
         "TestPartitioning.cpp",
         "TestPartitioningRandom.cpp",
         "TestRemoveDefaultArguments.cpp",
+        "TestVersionedInterfaces.cpp",
         "fibonacci_extension/FibonacciDriver.cpp",
         "fibonacci_extension/FibonacciExtensionTest.cpp",
 
@@ -183,11 +184,6 @@ cc_test {
         "libgmock",
         "libneuralnetworks_common",
         "libneuralnetworks_static",
-        "neuralnetworks_types",
-        "neuralnetworks_utils_hal_1_0",
-        "neuralnetworks_utils_hal_1_1",
-        "neuralnetworks_utils_hal_1_2",
-        "neuralnetworks_utils_hal_1_3",
     ],
     shared_libs: ["libmemunreachable"],
     header_libs: [
@@ -491,13 +487,13 @@ cc_test {
     srcs: [
         "GeneratedTestUtils.cpp",
         "SupportLibraryTestGenerated.cpp",
-        "SupportLibraryTestMain.cpp",
         "SupportLibraryTestWrapper.cpp",
+        "SupportLibraryTestMain.cpp",
     ],
     cflags: [
+        "-DNNTEST_SLTS",
         "-DNNTEST_COMPUTE_MODE",
         "-DNNTEST_ONLY_PUBLIC_API",
-        "-DNNTEST_SLTS",
         "-Wall",
         "-Werror",
     ],
