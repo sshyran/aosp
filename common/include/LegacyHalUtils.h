@@ -186,6 +186,12 @@ constexpr auto kHalVersionV1_2ToApi =
 constexpr auto kHalVersionV1_3ToApi =
         ApiVersion{.canonical = Version::ANDROID_R, .android = __ANDROID_API_R__};
 
+// Forward declaration for type defined in CpuExecutor.h.
+class RunTimePoolInfo;
+
+bool setRunTimePoolInfosFromHidlMemories(std::vector<RunTimePoolInfo>* poolInfos,
+                                         const hardware::hidl_vec<hardware::hidl_memory>& pools);
+
 // Versioning
 
 bool compliantWithV1_0(const V1_0::Capabilities& capabilities);
