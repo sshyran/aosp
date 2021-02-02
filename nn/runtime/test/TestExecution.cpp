@@ -29,6 +29,7 @@
 
 #include "Callbacks.h"
 #include "CompilationBuilder.h"
+#include "ExecutionBurstServer.h"
 #include "HalInterfaces.h"
 #include "Manager.h"
 #include "ModelBuilder.h"
@@ -172,9 +173,13 @@ class TestPreparedModelLatest : public IPreparedModel {
             const MQDescriptorSync<V1_2::FmqResultDatum>& resultChannel,
             configureExecutionBurst_cb cb) override {
         CHECK(mPreparedModelV1_2 != nullptr) << "V1_2 prepared model is nullptr.";
-        if (mErrorStatus == ErrorStatus::NONE) {
-            return mPreparedModelV1_2->configureExecutionBurst(callback, requestChannel,
-                                                               resultChannel, cb);
+        if (mErrorStatus == V1_3::ErrorStatus::NONE) {
+            const sp<V1_2::IBurstContext> burst = nn::ExecutionBurstServer::create(
+                    callback, requestChannel, resultChannel, this);
+
+            cb(burst == nullptr ? V1_0::ErrorStatus::GENERAL_FAILURE : V1_0::ErrorStatus::NONE,
+               burst);
+            return Void();
         } else {
             cb(convertToV1_0(mErrorStatus), nullptr);
             return Void();
@@ -213,13 +218,20 @@ class TestPreparedModelLatest : public IPreparedModel {
     static void pauseExecutions(bool v) { mPauseExecutions.store(v); }
 
     // This function is only guaranteed to work in the following pattern:
-    // - pauseExecutions(true);
-    // - // launch execution
-    // - // thread A: waitForExecutionToBegin()
-    // - // thread B: pauseExecutions(false);
+    // Consider thread A as primary thread
+    // - thread A: pauseExecutions(true);
+    // - thread A: launch execution (as thread B)
+    // - thread A: waitForExecutionToBegin(), block until call to dummyExecution by
+    //                                        thread B makes mExecutionsInFlight nonzero
+    // - thread B: dummyExecution(), which makes mExecutionsInFlight nonzero and blocks
+    //                               until thread A calls pauseExecutions(false)
+    // - thread A: waitForExecutionToBegin() returns
+    // - thread A: pauseExecutions(false), allowing dummyExecution() on thread B to continue
+    // - thread B: dummyExecution() zeroes mExecutionsInFlight and returns
+    // - thread B: thread exits
     static void waitForExecutionToBegin() {
         CHECK(mPauseExecutions.load());
-        while (mExecutionsInFlight.load()) {
+        while (mExecutionsInFlight.load() == 0) {
         }
     }
 
