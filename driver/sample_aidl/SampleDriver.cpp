@@ -191,8 +191,10 @@ ndk::ScopedAStatus SampleDriver::allocate(
                          "SampleDriver::allocate -- does not support dynamic output shape.");
     }
 
+    // An operand obtained from validateMemoryDesc is guaranteed to be representable in canonical
+    // types, so it safe to do an unvalidated conversion here.
     auto bufferWrapper =
-            AidlManagedBuffer::create(size, std::move(roles), convert(operand).value());
+            AidlManagedBuffer::create(size, std::move(roles), unvalidatedConvert(operand).value());
     if (bufferWrapper == nullptr) {
         LOG(ERROR) << "SampleDriver::allocate -- not enough memory.";
         return toAStatus(aidl_hal::ErrorStatus::GENERAL_FAILURE,
