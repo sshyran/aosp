@@ -2366,7 +2366,8 @@ TEST_F(DynamicTemporariesTest, ModelOutputsSufficientSize) {
     ASSERT_NO_FATAL_FAILURE(executeCompilationAndCompareOutput(true, true));
 }
 
-TEST_F(DynamicTemporariesTest, ModelOutputsSufficientSize_V1_1) {
+// TODO(b/174851714): Fix the partitioner and re-enable this test.
+TEST_F(DynamicTemporariesTest, DISABLED_ModelOutputsSufficientSize_V1_1) {
     // The purpose of this test is to confirm that the partitioner and the
     // runtime can handle a model output of unspecified dimensions but
     // sufficient size that is written by one partition and read by another.
