@@ -483,17 +483,17 @@ cc_library_static {
 }
 
 cc_test {
-    name: "SupportLibraryTest",
+    name: "NeuralNetworksSupportLibraryTest",
     srcs: [
         "GeneratedTestUtils.cpp",
         "SupportLibraryTestGenerated.cpp",
-        "SupportLibraryTestWrapper.cpp",
         "SupportLibraryTestMain.cpp",
+        "SupportLibraryTestWrapper.cpp",
     ],
     cflags: [
-        "-DNNTEST_SLTS",
         "-DNNTEST_COMPUTE_MODE",
         "-DNNTEST_ONLY_PUBLIC_API",
+        "-DNNTEST_SLTS",
         "-Wall",
         "-Werror",
     ],
