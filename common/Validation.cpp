@@ -713,34 +713,51 @@ Result<Version> validateOperations(const std::vector<Operation>& operations,
     return version;
 }
 
-Result<Version> validateSharedHandle(const SharedHandle& handle) {
-    NN_VALIDATE(handle != nullptr);
-    NN_VALIDATE(std::all_of(handle->fds.begin(), handle->fds.end(),
+Result<Version> validateHandle(const Handle& handle) {
+    NN_VALIDATE(std::all_of(handle.fds.begin(), handle.fds.end(),
                             [](const base::unique_fd& fd) { return fd.ok(); }));
     return Version::ANDROID_OC_MR1;
 }
 
+Result<Version> validateSharedHandle(const SharedHandle& handle) {
+    NN_VALIDATE(handle != nullptr);
+    return validateHandle(*handle);
+}
+
 Result<Version> validateSharedMemory(const SharedMemory& memory) {
     NN_VALIDATE(memory != nullptr);
-    NN_TRY(validateSharedHandle(memory->handle));
 
     if (memory->name == "ashmem") {
         NN_VALIDATE_NE(memory->size, 0u);
+        NN_VALIDATE(std::holds_alternative<Handle>(memory->handle));
+        NN_TRY(validateHandle(std::get<Handle>(memory->handle)));
         return Version::ANDROID_OC_MR1;
     }
     if (memory->name == "mmap_fd") {
         NN_VALIDATE_NE(memory->size, 0u);
+        NN_VALIDATE(std::holds_alternative<Handle>(memory->handle));
+        NN_TRY(validateHandle(std::get<Handle>(memory->handle)));
         return Version::ANDROID_OC_MR1;
     }
     if (memory->name == "hardware_buffer_blob") {
         NN_VALIDATE_NE(memory->size, 0u);
+        NN_VALIDATE(std::holds_alternative<HardwareBufferHandle>(memory->handle));
+        NN_VALIDATE(std::get<HardwareBufferHandle>(memory->handle).get() != nullptr);
         return Version::ANDROID_Q;
     }
     if (memory->name == "hardware_buffer") {
         // For hardware_buffer memory, all size information is bound to the AHardwareBuffer, so
         // memory.size must be 0.
         NN_VALIDATE_EQ(memory->size, 0u);
-        return Version::ANDROID_Q;
+        // hardware_buffer can be represented by either Handle or HardwareBufferHandle.
+        if (const auto* handle = std::get_if<Handle>(&memory->handle)) {
+            NN_TRY(validateHandle(*handle));
+            return Version::ANDROID_Q;
+        }
+        if (const auto* handle = std::get_if<HardwareBufferHandle>(&memory->handle)) {
+            NN_VALIDATE(handle->get() != nullptr);
+            return Version::ANDROID_Q;
+        }
     }
 
     NN_VALIDATE_FAIL() << "Unknown memory type " << memory->name;

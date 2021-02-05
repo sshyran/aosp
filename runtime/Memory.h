@@ -347,11 +347,9 @@ class MemoryRuntimeAHWB : public RuntimeMemory {
     }
 
     // prefer using MemoryRuntimeAHWB::create
-    MemoryRuntimeAHWB(SharedMemory memory, base::ScopeGuard<std::function<void()>> ahwbScopeGuard,
-                      Mapping mapping);
+    MemoryRuntimeAHWB(SharedMemory memory, Mapping mapping);
 
    private:
-    const base::ScopeGuard<std::function<void()>> kAhwbScopeGuard;
     const Mapping kMapping;
 };
 
