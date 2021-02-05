@@ -143,10 +143,10 @@ class IntrospectionControlTest : public ::testing::Test {
     // From a vector of DeviceSpecification, register new Devices.
     void registerDevices(std::vector<DeviceSpecification> specifications) {
         for (const auto& specification : specifications) {
-            DeviceManager::get()->forTest_registerDevice(
+            DeviceManager::get()->forTest_registerDevice(nn::makeSharedDevice(
                     specification.mName.c_str(),
                     new TestDriver(specification.mName.c_str(), specification.mCapabilities,
-                                   specification.mSupportedOps));
+                                   specification.mSupportedOps)));
         }
     }
 
@@ -851,13 +851,15 @@ TEST_P(TimingTest, Test) {
         }
         case DriverKind::OLD: {
             static const char name[] = "old";
-            DeviceManager::get()->forTest_registerDevice(name, new TestDriver11(name, kSuccess));
+            DeviceManager::get()->forTest_registerDevice(
+                    nn::makeSharedDevice(name, new TestDriver11(name, kSuccess)));
             ASSERT_TRUE(selectDeviceByName(name));
             break;
         }
         case DriverKind::NEW: {
             static const char name[] = "new";
-            DeviceManager::get()->forTest_registerDevice(name, new TestDriver13(name, kSuccess));
+            DeviceManager::get()->forTest_registerDevice(
+                    nn::makeSharedDevice(name, new TestDriver13(name, kSuccess)));
             ASSERT_TRUE(selectDeviceByName(name));
             break;
         }
@@ -1168,7 +1170,8 @@ TEST_F(IntrospectionControlTest, SlicingAddMax) {
     using namespace test_drivers;
 
     static const char name[] = "driver11";
-    DeviceManager::get()->forTest_registerDevice(name, new TestDriver11(name, Success::PASS_BOTH));
+    DeviceManager::get()->forTest_registerDevice(
+            nn::makeSharedDevice(name, new TestDriver11(name, Success::PASS_BOTH)));
     ASSERT_TRUE(selectDeviceByName(name));
 
     createAddMaxModel(&mModel, false);
@@ -1184,7 +1187,8 @@ TEST_F(IntrospectionControlTest, SlicingMaxAdd) {
     using namespace test_drivers;
 
     static const char name[] = "driver11";
-    DeviceManager::get()->forTest_registerDevice(name, new TestDriver11(name, Success::PASS_BOTH));
+    DeviceManager::get()->forTest_registerDevice(
+            nn::makeSharedDevice(name, new TestDriver11(name, Success::PASS_BOTH)));
     ASSERT_TRUE(selectDeviceByName(name));
 
     createAddMaxModel(&mModel, true);
@@ -1231,7 +1235,8 @@ TEST_F(IntrospectionControlTest, SlicingFullySupported) {
     using namespace test_drivers;
 
     static const char name[] = "driver11";
-    DeviceManager::get()->forTest_registerDevice(name, new TestDriver11(name, Success::PASS_BOTH));
+    DeviceManager::get()->forTest_registerDevice(
+            nn::makeSharedDevice(name, new TestDriver11(name, Success::PASS_BOTH)));
     ASSERT_TRUE(selectDeviceByName(name));
 
     createAddMulModel(&mModel, false);
@@ -1326,7 +1331,8 @@ TEST_F(IntrospectionControlTest, ControlFlowNotSupported) {
     using namespace test_drivers;
 
     static const char name[] = "driver11";
-    DeviceManager::get()->forTest_registerDevice(name, new TestDriver11(name, Success::PASS_BOTH));
+    DeviceManager::get()->forTest_registerDevice(
+            nn::makeSharedDevice(name, new TestDriver11(name, Success::PASS_BOTH)));
     ASSERT_TRUE(selectDeviceByName(name));
 
     std::vector<WrapperModel> extraModels;
@@ -1346,7 +1352,8 @@ TEST_F(IntrospectionControlTest, ControlFlowSupported) {
     using namespace test_drivers;
 
     static const char name[] = "driver13";
-    DeviceManager::get()->forTest_registerDevice(name, new TestDriver13(name, Success::PASS_BOTH));
+    DeviceManager::get()->forTest_registerDevice(
+            nn::makeSharedDevice(name, new TestDriver13(name, Success::PASS_BOTH)));
     ASSERT_TRUE(selectDeviceByName(name));
 
     std::vector<WrapperModel> extraModels;
@@ -1382,7 +1389,8 @@ TEST_F(IntrospectionControlTest, ControlFlowFailedToSlice) {
     using namespace test_drivers;
 
     static const char name[] = "driver13";
-    DeviceManager::get()->forTest_registerDevice(name, new TestDriver13(name, Success::PASS_BOTH));
+    DeviceManager::get()->forTest_registerDevice(
+            nn::makeSharedDevice(name, new TestDriver13(name, Success::PASS_BOTH)));
     ASSERT_TRUE(selectDeviceByName(name));
 
     std::vector<WrapperModel> extraModels;
