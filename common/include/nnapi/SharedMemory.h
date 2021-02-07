@@ -18,6 +18,7 @@
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_NNAPI_SHARED_MEMORY_H
 
 #include <any>
+#include <memory>
 #include <optional>
 #include <string>
 #include <variant>
@@ -36,6 +37,12 @@ struct hidl_memory;
 
 namespace android::nn {
 
+struct Memory {
+    SharedHandle handle;
+    size_t size = 0;
+    std::string name;
+};
+
 class MutableMemoryBuilder {
    public:
     explicit MutableMemoryBuilder(uint32_t poolIndex);
@@ -43,7 +50,7 @@ class MutableMemoryBuilder {
     DataLocation append(size_t length);
     bool empty() const;
 
-    GeneralResult<Memory> finish();
+    GeneralResult<SharedMemory> finish();
 
    private:
     uint32_t mPoolIndex;
@@ -57,7 +64,7 @@ class ConstantMemoryBuilder {
     DataLocation append(const void* data, size_t length);
     bool empty() const;
 
-    GeneralResult<Memory> finish();
+    GeneralResult<SharedMemory> finish();
 
    private:
     struct LazyCopy {
@@ -70,13 +77,13 @@ class ConstantMemoryBuilder {
     std::vector<LazyCopy> mSlices;
 };
 
-GeneralResult<Memory> createSharedMemory(size_t size);
+GeneralResult<SharedMemory> createSharedMemory(size_t size);
 
-GeneralResult<Memory> createSharedMemoryFromFd(size_t size, int prot, int fd, size_t offset);
+GeneralResult<SharedMemory> createSharedMemoryFromFd(size_t size, int prot, int fd, size_t offset);
 
-GeneralResult<Memory> createSharedMemoryFromHidlMemory(const hardware::hidl_memory& memory);
+GeneralResult<SharedMemory> createSharedMemoryFromHidlMemory(const hardware::hidl_memory& memory);
 
-GeneralResult<Memory> createSharedMemoryFromAHWB(const AHardwareBuffer& ahwb);
+GeneralResult<SharedMemory> createSharedMemoryFromAHWB(const AHardwareBuffer& ahwb);
 
 struct Mapping {
     std::variant<void*, const void*> pointer;
@@ -84,7 +91,7 @@ struct Mapping {
     std::any context;
 };
 
-GeneralResult<Mapping> map(const Memory& memory);
+GeneralResult<Mapping> map(const SharedMemory& memory);
 
 bool flush(const Mapping& mapping);
 

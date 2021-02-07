@@ -30,6 +30,7 @@
 #include "OperandTypes.h"
 #include "OperationTypes.h"
 #include "Result.h"
+#include "SharedMemory.h"
 #include "Types.h"
 
 namespace android::nn {
@@ -207,7 +208,7 @@ std::pair<size_t, std::vector<size_t>> getMemorySizes(const Model& model) {
     std::vector<size_t> poolSizes;
     poolSizes.reserve(model.pools.size());
     std::transform(model.pools.begin(), model.pools.end(), std::back_inserter(poolSizes),
-                   [](const Memory& memory) { return memory.size; });
+                   [](const SharedMemory& memory) { return memory->size; });
 
     return std::make_pair(operandValuesSize, std::move(poolSizes));
 }
@@ -712,6 +713,13 @@ std::ostream& operator<<(std::ostream& os, const Memory& memory) {
               << ", .name=" << memory.name << "}";
 }
 
+std::ostream& operator<<(std::ostream& os, const SharedMemory& memory) {
+    if (memory == nullptr) {
+        return os << "<empty memory>";
+    }
+    return os << *memory;
+}
+
 std::ostream& operator<<(std::ostream& os, const Model::Subgraph& subgraph) {
     std::vector<Operand> operands;
     std::vector<Operation> operations;
@@ -759,8 +767,8 @@ std::ostream& operator<<(std::ostream& os, const Request::Argument& requestArgum
 
 std::ostream& operator<<(std::ostream& os, const Request::MemoryPool& memoryPool) {
     os << "Request::MemoryPool{";
-    if (std::holds_alternative<Memory>(memoryPool)) {
-        os << std::get<Memory>(memoryPool);
+    if (std::holds_alternative<SharedMemory>(memoryPool)) {
+        os << std::get<SharedMemory>(memoryPool);
     } else if (std::holds_alternative<Request::MemoryDomainToken>(memoryPool)) {
         const auto& token = std::get<Request::MemoryDomainToken>(memoryPool);
         if (token == Request::MemoryDomainToken{}) {

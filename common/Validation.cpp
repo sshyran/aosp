@@ -38,6 +38,7 @@
 #include "OperationResolver.h"
 #include "OperationTypes.h"
 #include "Result.h"
+#include "SharedMemory.h"
 #include "TypeUtils.h"
 #include "Types.h"
 
@@ -719,29 +720,30 @@ Result<Version> validateSharedHandle(const SharedHandle& handle) {
     return Version::ANDROID_OC_MR1;
 }
 
-Result<Version> validateMemory(const Memory& memory) {
-    NN_TRY(validateSharedHandle(memory.handle));
+Result<Version> validateSharedMemory(const SharedMemory& memory) {
+    NN_VALIDATE(memory != nullptr);
+    NN_TRY(validateSharedHandle(memory->handle));
 
-    if (memory.name == "ashmem") {
-        NN_VALIDATE_NE(memory.size, 0u);
+    if (memory->name == "ashmem") {
+        NN_VALIDATE_NE(memory->size, 0u);
         return Version::ANDROID_OC_MR1;
     }
-    if (memory.name == "mmap_fd") {
-        NN_VALIDATE_NE(memory.size, 0u);
+    if (memory->name == "mmap_fd") {
+        NN_VALIDATE_NE(memory->size, 0u);
         return Version::ANDROID_OC_MR1;
     }
-    if (memory.name == "hardware_buffer_blob") {
-        NN_VALIDATE_NE(memory.size, 0u);
+    if (memory->name == "hardware_buffer_blob") {
+        NN_VALIDATE_NE(memory->size, 0u);
         return Version::ANDROID_Q;
     }
-    if (memory.name == "hardware_buffer") {
+    if (memory->name == "hardware_buffer") {
         // For hardware_buffer memory, all size information is bound to the AHardwareBuffer, so
         // memory.size must be 0.
-        NN_VALIDATE_EQ(memory.size, 0u);
+        NN_VALIDATE_EQ(memory->size, 0u);
         return Version::ANDROID_Q;
     }
 
-    NN_VALIDATE_FAIL() << "Unknown memory type " << memory.name;
+    NN_VALIDATE_FAIL() << "Unknown memory type " << memory->name;
 }
 
 Result<void> validateModelSubgraphInputOutputs(const std::vector<uint32_t>& indexes,
@@ -966,7 +968,7 @@ Result<void> checkNoReferenceCycles(const std::vector<Model::Subgraph>& referenc
 }
 
 Result<Version> validateModel(const Model& model) {
-    auto version = NN_TRY(validateVector(model.pools, validateMemory));
+    auto version = NN_TRY(validateVector(model.pools, validateSharedMemory));
     version = combineVersions(
             version, NN_TRY(validateModelExtensionNamesAndPrefixes(model.extensionNameToPrefix)));
 
@@ -1061,7 +1063,7 @@ Result<Version> validateRequestMemoryPool(const Request::MemoryPool& memoryPool)
         NN_VALIDATE(std::get<SharedBuffer>(memoryPool) != nullptr);
         return Version::ANDROID_R;
     }
-    return validateMemory(std::get<Memory>(memoryPool));
+    return validateSharedMemory(std::get<SharedMemory>(memoryPool));
 }
 
 Result<Version> validateRequest(const Request& request) {
@@ -1072,8 +1074,8 @@ Result<Version> validateRequest(const Request& request) {
     memorySizes.reserve(request.pools.size());
     std::transform(request.pools.begin(), request.pools.end(), std::back_inserter(memorySizes),
                    [](const Request::MemoryPool& memoryPool) {
-                       const auto* memory = std::get_if<Memory>(&memoryPool);
-                       return memory != nullptr ? memory->size : 0;
+                       const auto* memory = std::get_if<SharedMemory>(&memoryPool);
+                       return memory != nullptr ? (*memory)->size : 0;
                    });
 
     for (size_t i = 0; i < request.inputs.size(); ++i) {
@@ -2682,8 +2684,8 @@ Result<Version> validate(const SharedHandle& handle) {
     return validateSharedHandle(handle);
 }
 
-Result<Version> validate(const Memory& memory) {
-    return validateMemory(memory);
+Result<Version> validate(const SharedMemory& memory) {
+    return validateSharedMemory(memory);
 }
 
 Result<Version> validate(const Model& model) {
