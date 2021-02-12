@@ -22,6 +22,7 @@
 #include <ExecutionBurstController.h>
 #include <LegacyUtils.h>
 #include <android-base/scopeguard.h>
+#include <android/hardware_buffer.h>
 #include <nnapi/SharedMemory.h>
 #include <nnapi/TypeUtils.h>
 #include <nnapi/Types.h>
@@ -36,11 +37,6 @@
 #include "CompilationBuilder.h"
 #include "Manager.h"
 #include "TypeManager.h"
-
-#ifndef NN_NO_AHWB
-#include <android/hardware_buffer.h>
-#include <vndk/hardware_buffer.h>
-#endif  // NN_NO_AHWB
 
 namespace android {
 namespace nn {
@@ -472,13 +468,9 @@ int MemoryBuilder::finish() {
         LOG(INFO) << "MemoryBuilder::finish -- cannot handle multiple devices.";
         mAllocator = nullptr;
     }
-#ifndef NN_NO_AHWB
     mSupportsAhwb = std::all_of(devices.begin(), devices.end(), [](const auto* device) {
         return device->getFeatureLevel() >= kHalVersionV1_3ToApi.android;
     });
-#else
-    mSupportsAhwb = false;
-#endif  // NN_NO_AHWB
     mShouldFallback = std::none_of(mRoles.begin(), mRoles.end(), [](const auto& role) {
         const auto* cb = std::get<const CompilationBuilder*>(role);
         return cb->createdWithExplicitDeviceList();
