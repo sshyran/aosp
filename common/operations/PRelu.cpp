@@ -16,10 +16,6 @@
 
 #define LOG_TAG "Operations"
 
-#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
-#include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
-#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
-
 #include <algorithm>
 #include <vector>
 
@@ -27,6 +23,10 @@
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
+
+#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
+#include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
+#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
 
 namespace android {
 namespace nn {

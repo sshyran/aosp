@@ -19,6 +19,8 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_EXECUTION_PLAN_H
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_EXECUTION_PLAN_H
 
+#include <LegacyUtils.h>
+#include <TokenHasher.h>
 #include <android-base/logging.h>
 #include <nnapi/Types.h>
 
@@ -35,12 +37,10 @@
 #include <variant>
 #include <vector>
 
-#include "LegacyUtils.h"
 #include "Memory.h"
 #include "ModelArgumentInfo.h"
 #include "ModelBuilder.h"
 #include "NeuralNetworks.h"
-#include "TokenHasher.h"
 
 namespace android {
 namespace nn {

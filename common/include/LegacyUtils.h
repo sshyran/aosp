@@ -21,6 +21,8 @@
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_LEGACY_UTILS_H
 
 #include <android-base/logging.h>
+#include <nnapi/TypeUtils.h>
+#include <nnapi/Types.h>
 
 #include <string>
 #include <tuple>

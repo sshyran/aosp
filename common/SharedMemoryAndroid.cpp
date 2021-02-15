@@ -19,16 +19,6 @@
 #include <android-base/logging.h>
 #include <android-base/mapped_file.h>
 #include <android-base/scopeguard.h>
-#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
-#include <android/hidl/allocator/1.0/IAllocator.h>
-#include <hidl/HidlSupport.h>
-#include <hidlmemory/mapping.h>
-#include <sys/mman.h>
-#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
-#ifndef NN_NO_AHWB
-#include <android/hardware_buffer.h>
-#include <vndk/hardware_buffer.h>
-#endif  // NN_NO_AHWB
 
 #include <algorithm>
 #include <any>
@@ -43,6 +33,18 @@
 #include "SharedMemory.h"
 #include "TypeUtils.h"
 #include "Types.h"
+
+#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
+#include <android/hidl/allocator/1.0/IAllocator.h>
+#include <hidl/HidlSupport.h>
+#include <hidlmemory/mapping.h>
+#include <sys/mman.h>
+#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
+
+#ifndef NN_NO_AHWB
+#include <android/hardware_buffer.h>
+#include <vndk/hardware_buffer.h>
+#endif  // NN_NO_AHWB
 
 namespace android::nn {
 namespace {

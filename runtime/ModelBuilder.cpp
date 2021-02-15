@@ -18,6 +18,9 @@
 
 #include "ModelBuilder.h"
 
+#include <GraphDump.h>
+#include <LegacyUtils.h>
+
 #include <algorithm>
 #include <map>
 #include <memory>
@@ -26,8 +29,6 @@
 #include <vector>
 
 #include "CompilationBuilder.h"
-#include "GraphDump.h"
-#include "LegacyUtils.h"
 #include "Manager.h"
 #include "TypeManager.h"
 

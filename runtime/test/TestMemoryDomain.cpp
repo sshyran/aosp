@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+#include <HalInterfaces.h>
 #include <android/hardware/neuralnetworks/1.2/ADevice.h>
 #include <gtest/gtest.h>
 
@@ -25,7 +26,6 @@
 #include <utility>
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "HalUtils.h"
 #include "Manager.h"
 #include "Memory.h"

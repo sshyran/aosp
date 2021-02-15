@@ -17,10 +17,11 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MODEL_ARGUMENT_INFO_H
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MODEL_ARGUMENT_INFO_H
 
+#include <LegacyUtils.h>
+
 #include <utility>
 #include <vector>
 
-#include "LegacyUtils.h"
 #include "NeuralNetworks.h"
 
 namespace android {

@@ -19,6 +19,7 @@
 #include <android-base/logging.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+
 #include "LegacyUtils.h"
 
 namespace log_tag_test {
