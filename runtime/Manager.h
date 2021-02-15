@@ -17,6 +17,7 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MANAGER_H
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MANAGER_H
 
+#include <LegacyUtils.h>
 #include <android-base/macros.h>
 #include <nnapi/IDevice.h>
 #include <nnapi/IPreparedModel.h>
@@ -30,7 +31,6 @@
 #include <vector>
 
 #include "ExecutionCallback.h"
-#include "LegacyUtils.h"
 #include "Memory.h"
 
 namespace android {

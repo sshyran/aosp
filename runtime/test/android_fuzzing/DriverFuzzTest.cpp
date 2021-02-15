@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#include <MemoryUtils.h>
+#include <Utils.h>
 #include <android-base/logging.h>
 #include <android/hardware/neuralnetworks/1.3/IDevice.h>
 #include <android/hardware/neuralnetworks/1.3/IPreparedModel.h>
@@ -26,10 +28,8 @@
 #include <utility>
 #include <vector>
 
-#include "MemoryUtils.h"
 #include "SampleDriverFull.h"
 #include "TestHarness.h"
-#include "Utils.h"
 
 namespace {
 

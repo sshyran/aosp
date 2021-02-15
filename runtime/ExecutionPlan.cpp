@@ -18,6 +18,15 @@
 
 #include "ExecutionPlan.h"
 
+#include <ControlFlow.h>
+#include <CpuExecutor.h>
+#include <ExecutionBurstController.h>
+#include <GraphDump.h>
+#include <LegacyUtils.h>
+#include <MetaModel.h>
+#include <OperationsUtils.h>
+#include <TokenHasher.h>
+#include <Tracing.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -37,19 +46,10 @@
 
 #include "BurstBuilder.h"
 #include "CompilationBuilder.h"
-#include "ControlFlow.h"
-#include "CpuExecutor.h"
 #include "ExecutionBuilder.h"
-#include "ExecutionBurstController.h"
 #include "ExecutionCallback.h"
-#include "GraphDump.h"
-#include "LegacyUtils.h"
 #include "Manager.h"
-#include "MetaModel.h"
 #include "ModelBuilder.h"
-#include "OperationsUtils.h"
-#include "TokenHasher.h"
-#include "Tracing.h"
 #include "TypeManager.h"
 
 namespace android {

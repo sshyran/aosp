@@ -18,11 +18,12 @@
 
 #include "ModelArgumentInfo.h"
 
+#include <LegacyUtils.h>
+
 #include <algorithm>
 #include <utility>
 #include <vector>
 
-#include "LegacyUtils.h"
 #include "NeuralNetworks.h"
 #include "TypeManager.h"
 

@@ -18,6 +18,11 @@
 
 #include "ExecutionBuilder.h"
 
+#include <ControlFlow.h>
+#include <CpuExecutor.h>
+#include <ExecutionBurstController.h>
+#include <LegacyUtils.h>
+#include <Tracing.h>
 #include <android-base/logging.h>
 #include <nnapi/IPreparedModel.h>
 
@@ -34,14 +39,9 @@
 #include <vector>
 
 #include "CompilationBuilder.h"
-#include "ControlFlow.h"
-#include "CpuExecutor.h"
-#include "ExecutionBurstController.h"
-#include "LegacyUtils.h"
 #include "Manager.h"
 #include "ModelArgumentInfo.h"
 #include "ModelBuilder.h"
-#include "Tracing.h"
 #include "TypeManager.h"
 
 namespace android {

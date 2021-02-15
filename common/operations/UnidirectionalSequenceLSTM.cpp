@@ -19,11 +19,12 @@
 #include <vector>
 
 #include "IndexedShapeWrapper.h"
+#include "OperationResolver.h"
+#include "OperationsUtils.h"
+
 #ifndef NN_COMPATIBILITY_LIBRARY_BUILD
 #include "LSTM.h"
 #endif  // NN_COMPATIBILITY_LIBRARY_BUILD
-#include "OperationResolver.h"
-#include "OperationsUtils.h"
 
 namespace android {
 namespace nn {

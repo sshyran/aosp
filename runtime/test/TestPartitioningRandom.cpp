@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
+#include <HalInterfaces.h>
+#include <ValidateHal.h>
 #include <android-base/logging.h>
-#include <gtest/gtest.h>
-#include <unistd.h>
-
 #include <android/hardware/neuralnetworks/1.0/ADevice.h>
 #include <android/hardware/neuralnetworks/1.1/ADevice.h>
 #include <android/hardware/neuralnetworks/1.2/ADevice.h>
+#include <gtest/gtest.h>
+#include <unistd.h>
 
 #include <algorithm>
 #include <cassert>
@@ -36,14 +37,12 @@
 #include <vector>
 
 #include "CompilationBuilder.h"
-#include "HalInterfaces.h"
 #include "HalUtils.h"
 #include "Manager.h"
 #include "ModelBuilder.h"
 #include "NeuralNetworks.h"
 #include "SampleDriver.h"
 #include "TestNeuralNetworksWrapper.h"
-#include "ValidateHal.h"
 
 // Uncomment the following line to generate some debugging output that
 // may be useful when analyzing failures:
