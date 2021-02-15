@@ -29,9 +29,9 @@
 #include "ExecutionBuilder.h"
 #include "ExecutionBurstController.h"
 #include "ExecutionPlan.h"
+#include "LegacyUtils.h"
 #include "Manager.h"
 #include "ModelBuilder.h"
-#include "Utils.h"
 
 namespace android {
 namespace nn {

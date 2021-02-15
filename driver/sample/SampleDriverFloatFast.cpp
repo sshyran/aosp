@@ -25,7 +25,6 @@
 #include "HalInterfaces.h"
 #include "SampleDriverPartial.h"
 #include "Utils.h"
-#include "ValidateHal.h"
 
 namespace android {
 namespace nn {
