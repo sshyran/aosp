@@ -23,7 +23,6 @@
 #include <nnapi/SharedMemory.h>
 #include <nnapi/Validation.h>
 #include <sys/mman.h>
-#include <vndk/hardware_buffer.h>
 
 #include <algorithm>
 #include <map>
@@ -36,8 +35,8 @@
 #include <vector>
 
 #include "CpuExecutor.h"
+#include "LegacyUtils.h"
 #include "NeuralNetworks.h"
-#include "Utils.h"
 
 namespace android {
 namespace nn {

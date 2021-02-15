@@ -18,11 +18,13 @@
 
 #include "TypeManager.h"
 
+#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
 #include <PackageInfo.h>
-#include <android-base/file.h>
-#include <android-base/properties.h>
 #include <binder/IServiceManager.h>
 #include <procpartition/procpartition.h>
+#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
+#include <android-base/file.h>
+#include <android-base/properties.h>
 
 #include <algorithm>
 #include <limits>
@@ -31,8 +33,6 @@
 #include <string>
 #include <string_view>
 #include <vector>
-
-#include "Utils.h"
 
 namespace android {
 namespace nn {
@@ -58,6 +58,8 @@ bool equal(const Extension& a, const Extension& b) {
     NN_RET_CHECK(a.operandTypes == b.operandTypes);
     return true;
 }
+
+#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
 
 // Property for disabling NNAPI vendor extensions on product image (used on GSI /product image,
 // which can't use NNAPI vendor extensions).
@@ -110,17 +112,24 @@ static bool allowVendorExtensionsForAllNonSystemClients() {
 #endif  // __BIONIC__
 }
 
+#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
+
 }  // namespace
 
 TypeManager::TypeManager() {
     VLOG(MANAGER) << "TypeManager::TypeManager";
+#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
     mExtensionsAllowed = TypeManager::isExtensionsUseAllowed(
             AppInfoFetcher::get()->getAppInfo(), isNNAPIVendorExtensionsUseAllowedInProductImage(),
             getVendorExtensionAllowlistedApps());
+#else
+    mExtensionsAllowed = true;
+#endif
     VLOG(MANAGER) << "NNAPI Vendor extensions enabled: " << mExtensionsAllowed;
     findAvailableExtensions();
 }
 
+#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
 bool TypeManager::isExtensionsUseAllowed(const AppInfoFetcher::AppInfo& appPackageInfo,
                                          bool useOnProductImageEnabled,
                                          const std::vector<std::string>& allowlist) {
@@ -161,6 +170,7 @@ bool TypeManager::isExtensionsUseAllowed(const AppInfoFetcher::AppInfo& appPacka
     }
     return false;
 }
+#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
 
 void TypeManager::findAvailableExtensions() {
     for (const std::shared_ptr<Device>& device : mDeviceManager->getDrivers()) {

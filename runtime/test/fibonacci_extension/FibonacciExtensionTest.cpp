@@ -28,7 +28,6 @@
 #include "NeuralNetworksWrapperExtensions.h"
 #include "TestNeuralNetworksWrapper.h"
 #include "TypeManager.h"
-#include "Utils.h"
 #include "ValidateHal.h"
 
 namespace android {

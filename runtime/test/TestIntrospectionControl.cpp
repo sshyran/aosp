@@ -37,7 +37,6 @@
 #include "NeuralNetworksOEM.h"
 #include "SampleDriver.h"
 #include "TestNeuralNetworksWrapper.h"
-#include "Utils.h"
 #include "ValidateHal.h"
 
 namespace {
