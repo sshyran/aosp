@@ -15,6 +15,7 @@
  */
 
 #include <HalInterfaces.h>
+#include <SampleDriver.h>
 #include <ValidateHal.h>
 #include <gtest/gtest.h>
 
@@ -35,7 +36,6 @@
 #include "ModelBuilder.h"
 #include "NeuralNetworks.h"
 #include "PreparedModelCallback.h"
-#include "SampleDriver.h"
 #include "TestNeuralNetworksWrapper.h"
 
 namespace android {

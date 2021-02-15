@@ -19,8 +19,7 @@
 
 #include <HalInterfaces.h>
 #include <OperationResolver.h>
-
-#include "SampleDriver.h"
+#include <SampleDriver.h>
 
 namespace android {
 namespace nn {

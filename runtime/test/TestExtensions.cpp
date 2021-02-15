@@ -15,6 +15,7 @@
  */
 
 #include <HalInterfaces.h>
+#include <SampleDriver.h>
 #include <gtest/gtest.h>
 
 #include <string>
@@ -25,7 +26,6 @@
 #include "Manager.h"
 #include "NeuralNetworks.h"
 #include "NeuralNetworksExtensions.h"
-#include "SampleDriver.h"
 #include "TypeManager.h"
 
 namespace {

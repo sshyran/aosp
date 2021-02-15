@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+#include <SampleDriverPartial.h>
 #include <Utils.h>
 #include <gtest/gtest.h>
 
@@ -26,7 +27,6 @@
 #include "GeneratedTestUtils.h"
 #include "HalUtils.h"
 #include "Manager.h"
-#include "SampleDriverPartial.h"
 #include "TestNeuralNetworksWrapper.h"
 
 namespace generated_tests::avg_pool_v1_2 {
