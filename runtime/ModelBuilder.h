@@ -20,10 +20,11 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MODEL_BUILDER_H
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MODEL_BUILDER_H
 
+#include <LegacyUtils.h>
+
 #include <memory>
 #include <vector>
 
-#include "LegacyUtils.h"
 #include "Memory.h"
 #include "NeuralNetworks.h"
 

@@ -19,21 +19,13 @@
 #include "CpuExecutor.h"
 
 #include <android-base/scopeguard.h>
+#include <nnapi/SharedMemory.h>
+#include <nnapi/TypeUtils.h>
 
 #include <limits>
 #include <memory>
 #include <utility>
 #include <vector>
-
-// b/109953668, disable OpenMP
-#ifdef NNAPI_OPENMP
-#include <omp.h>
-
-#include <Eigen/Core>
-#endif  // NNAPI_OPENMP
-
-#include <nnapi/SharedMemory.h>
-#include <nnapi/TypeUtils.h>
 
 #include "ControlFlow.h"
 #include "NeuralNetworks.h"
@@ -41,6 +33,13 @@
 #include "Operations.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
+
+// b/109953668, disable OpenMP
+#ifdef NNAPI_OPENMP
+#include <omp.h>
+
+#include <Eigen/Core>
+#endif  // NNAPI_OPENMP
 
 namespace android {
 namespace nn {

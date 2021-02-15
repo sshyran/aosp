@@ -16,15 +16,15 @@
 
 #define LOG_TAG "SampleDriverQuant"
 
+#include <HalInterfaces.h>
+#include <Utils.h>
 #include <android-base/logging.h>
 #include <hidl/LegacySupport.h>
 
 #include <thread>
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "SampleDriverPartial.h"
-#include "Utils.h"
 
 namespace android {
 namespace nn {

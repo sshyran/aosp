@@ -16,15 +16,15 @@
 
 #define LOG_TAG "SampleDriverMinimal"
 
+#include <HalInterfaces.h>
+#include <Utils.h>
 #include <android-base/logging.h>
 
 #include <thread>
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "NeuralNetworksOEM.h"
 #include "SampleDriverPartial.h"
-#include "Utils.h"
 
 namespace android {
 namespace nn {

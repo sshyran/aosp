@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#include <HalInterfaces.h>
+#include <ValidateHal.h>
 #include <gtest/gtest.h>
 
 #include <algorithm>
@@ -28,7 +30,6 @@
 #include "CompilationBuilder.h"
 #include "ExecutionBurstServer.h"
 #include "ExecutionCallback.h"
-#include "HalInterfaces.h"
 #include "HalUtils.h"
 #include "Manager.h"
 #include "ModelBuilder.h"
@@ -36,7 +37,6 @@
 #include "PreparedModelCallback.h"
 #include "SampleDriver.h"
 #include "TestNeuralNetworksWrapper.h"
-#include "ValidateHal.h"
 
 namespace android {
 

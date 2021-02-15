@@ -18,11 +18,7 @@
 
 #include "TypeManager.h"
 
-#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
-#include <PackageInfo.h>
-#include <binder/IServiceManager.h>
-#include <procpartition/procpartition.h>
-#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
+#include <LegacyUtils.h>
 #include <android-base/file.h>
 #include <android-base/properties.h>
 
@@ -33,6 +29,12 @@
 #include <string>
 #include <string_view>
 #include <vector>
+
+#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
+#include <PackageInfo.h>
+#include <binder/IServiceManager.h>
+#include <procpartition/procpartition.h>
+#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
 
 namespace android {
 namespace nn {
@@ -124,7 +126,7 @@ TypeManager::TypeManager() {
             getVendorExtensionAllowlistedApps());
 #else
     mExtensionsAllowed = true;
-#endif
+#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
     VLOG(MANAGER) << "NNAPI Vendor extensions enabled: " << mExtensionsAllowed;
     findAvailableExtensions();
 }

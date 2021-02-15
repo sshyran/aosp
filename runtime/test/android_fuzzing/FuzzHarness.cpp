@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
+#include <LegacyUtils.h>
 #include <nnapi/TypeUtils.h>
 #include <src/libfuzzer/libfuzzer_macro.h>
 
 #include <algorithm>
 
 #include "Converter.h"
-#include "LegacyUtils.h"
 #include "Model.pb.h"
 #include "TestHarness.h"
 

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
+#include <HalInterfaces.h>
 #include <gtest/gtest.h>
 
 #include <string>
 #include <vector>
 
 #include "AppInfoFetcher.h"
-#include "HalInterfaces.h"
 #include "HalUtils.h"
 #include "Manager.h"
 #include "NeuralNetworks.h"
