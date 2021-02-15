@@ -15,6 +15,7 @@
  */
 
 #include <HalInterfaces.h>
+#include <SampleDriver.h>
 #include <android-base/scopeguard.h>
 #include <gtest/gtest.h>
 
@@ -28,7 +29,6 @@
 
 #include "HalUtils.h"
 #include "Manager.h"
-#include "SampleDriver.h"
 #include "TestNeuralNetworksWrapper.h"
 
 using namespace android::nn;

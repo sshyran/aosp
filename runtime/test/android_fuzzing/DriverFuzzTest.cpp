@@ -15,6 +15,7 @@
  */
 
 #include <MemoryUtils.h>
+#include <SampleDriverFull.h>
 #include <Utils.h>
 #include <android-base/logging.h>
 #include <android/hardware/neuralnetworks/1.3/IDevice.h>
@@ -28,7 +29,6 @@
 #include <utility>
 #include <vector>
 
-#include "SampleDriverFull.h"
 #include "TestHarness.h"
 
 namespace {
