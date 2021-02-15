@@ -16,6 +16,7 @@
 
 #include <ExecutionBurstServer.h>
 #include <HalInterfaces.h>
+#include <SampleDriver.h>
 #include <ValidateHal.h>
 #include <gtest/gtest.h>
 
@@ -36,7 +37,6 @@
 #include "Manager.h"
 #include "NeuralNetworks.h"
 #include "NeuralNetworksOEM.h"
-#include "SampleDriver.h"
 #include "TestNeuralNetworksWrapper.h"
 
 namespace {

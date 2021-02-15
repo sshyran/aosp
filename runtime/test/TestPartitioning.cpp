@@ -16,6 +16,7 @@
 
 #include <ControlFlow.h>
 #include <HalInterfaces.h>
+#include <SampleDriver.h>
 #include <Utils.h>
 #include <ValidateHal.h>
 #include <gtest/gtest.h>
@@ -40,7 +41,6 @@
 #include "ModelBuilder.h"
 #include "NeuralNetworks.h"
 #include "NeuralNetworksOEM.h"
-#include "SampleDriver.h"
 #include "TestNeuralNetworksWrapper.h"
 
 // Uncomment the following line to generate some debugging output that
