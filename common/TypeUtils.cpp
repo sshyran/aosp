@@ -704,8 +704,27 @@ std::ostream& operator<<(std::ostream& os, const Operation& operation) {
               << ", .outputs=" << operation.outputs << "}";
 }
 
+static std::ostream& operator<<(std::ostream& os, const Handle& handle) {
+    return os << "<handle with " << handle.fds.size() << " fds and " << handle.ints.size()
+              << " ints>";
+}
+
 std::ostream& operator<<(std::ostream& os, const SharedHandle& handle) {
-    return os << (handle != nullptr ? "<non-empty handle>" : "<empty handle>");
+    if (handle == nullptr) {
+        return os << "<empty handle>";
+    }
+    return os << *handle;
+}
+
+static std::ostream& operator<<(std::ostream& os, const HardwareBufferHandle& handle) {
+    return os << (handle.get() != nullptr ? "<non-empty HardwareBufferHandle>"
+                                          : "<empty HardwareBufferHandle>");
+}
+
+static std::ostream& operator<<(std::ostream& os,
+                                const std::variant<Handle, HardwareBufferHandle>& handle) {
+    std::visit([&os](const auto& x) { os << x; }, handle);
+    return os;
 }
 
 std::ostream& operator<<(std::ostream& os, const Memory& memory) {

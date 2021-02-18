@@ -560,7 +560,8 @@ std::pair<int, std::unique_ptr<MemoryFd>> MemoryFd::create(size_t size, int prot
 MemoryFd::MemoryFd(SharedMemory memory) : RuntimeMemory(std::move(memory)) {}
 
 std::pair<int, std::unique_ptr<MemoryAHWB>> MemoryAHWB::create(const AHardwareBuffer& ahwb) {
-    auto memory = createSharedMemoryFromAHWB(ahwb);
+    auto memory = createSharedMemoryFromAHWB(const_cast<AHardwareBuffer*>(&ahwb),
+                                             /*takeOwnership=*/false);
     if (!memory.has_value()) {
         LOG(ERROR) << "Failed to create memory from AHWB: " << memory.error().message;
         return {convertErrorStatusToResultCode(memory.error().code), nullptr};
@@ -593,9 +594,8 @@ std::pair<int, std::unique_ptr<MemoryRuntimeAHWB>> MemoryRuntimeAHWB::create(uin
         LOG(ERROR) << "Failed to allocate BLOB mode AHWB.";
         return {ANEURALNETWORKS_OP_FAILED, nullptr};
     }
-    auto ahwbGuard = base::make_scope_guard([ahwb]() { AHardwareBuffer_release(ahwb); });
 
-    auto memory = createSharedMemoryFromAHWB(*ahwb);
+    auto memory = createSharedMemoryFromAHWB(ahwb, /*takeOWnership=*/true);
     if (!memory.has_value()) {
         LOG(ERROR) << "Failed to allocate BLOB mode AHWB: " << memory.error().message;
         return {convertErrorStatusToResultCode(memory.error().code), nullptr};
@@ -605,8 +605,8 @@ std::pair<int, std::unique_ptr<MemoryRuntimeAHWB>> MemoryRuntimeAHWB::create(uin
         LOG(ERROR) << "Failed to map BLOB mode AHWB: " << mapping.error().message;
         return {convertErrorStatusToResultCode(mapping.error().code), nullptr};
     }
-    auto memoryAHWB = std::make_unique<MemoryRuntimeAHWB>(
-            std::move(memory).value(), std::move(ahwbGuard), std::move(mapping).value());
+    auto memoryAHWB = std::make_unique<MemoryRuntimeAHWB>(std::move(memory).value(),
+                                                          std::move(mapping).value());
     return {ANEURALNETWORKS_NO_ERROR, std::move(memoryAHWB)};
 }
 
@@ -614,12 +614,8 @@ uint8_t* MemoryRuntimeAHWB::getPointer() const {
     return static_cast<uint8_t*>(std::get<void*>(kMapping.pointer));
 }
 
-MemoryRuntimeAHWB::MemoryRuntimeAHWB(SharedMemory memory,
-                                     base::ScopeGuard<std::function<void()>> ahwbScopeGuard,
-                                     Mapping mapping)
-    : RuntimeMemory(std::move(memory)),
-      kAhwbScopeGuard(std::move(ahwbScopeGuard)),
-      kMapping(std::move(mapping)) {}
+MemoryRuntimeAHWB::MemoryRuntimeAHWB(SharedMemory memory, Mapping mapping)
+    : RuntimeMemory(std::move(memory)), kMapping(std::move(mapping)) {}
 
 std::pair<int, std::unique_ptr<MemoryFromDevice>> MemoryFromDevice::create(SharedBuffer buffer) {
     if (buffer == nullptr) {

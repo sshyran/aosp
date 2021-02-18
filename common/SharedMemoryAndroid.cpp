@@ -43,7 +43,6 @@
 
 #ifndef NN_NO_AHWB
 #include <android/hardware_buffer.h>
-#include <vndk/hardware_buffer.h>
 #endif  // NN_NO_AHWB
 
 namespace android::nn {
@@ -75,44 +74,44 @@ GeneralResult<hidl_memory> allocateSharedMemory(size_t size) {
     return maybeMemory;
 }
 
-GeneralResult<hardware::hidl_handle> hidlHandleFromSharedHandle(const SharedHandle& handle) {
-    if (handle == nullptr) {
-        return {};
-    }
-
+GeneralResult<hardware::hidl_handle> hidlHandleFromSharedHandle(const Handle& handle) {
     std::vector<base::unique_fd> fds;
-    fds.reserve(handle->fds.size());
-    for (const auto& fd : handle->fds) {
-        int dupFd = dup(fd);
+    fds.reserve(handle.fds.size());
+    for (const auto& fd : handle.fds) {
+        const int dupFd = dup(fd);
         if (dupFd == -1) {
             return NN_ERROR(ErrorStatus::GENERAL_FAILURE) << "Failed to dup the fd";
         }
         fds.emplace_back(dupFd);
     }
 
-    native_handle_t* nativeHandle = native_handle_create(handle->fds.size(), handle->ints.size());
+    constexpr size_t kMaxInt = std::numeric_limits<int>::max();
+    CHECK_LE(handle.fds.size(), kMaxInt);
+    CHECK_LE(handle.ints.size(), kMaxInt);
+    native_handle_t* nativeHandle = native_handle_create(static_cast<int>(handle.fds.size()),
+                                                         static_cast<int>(handle.ints.size()));
     if (nativeHandle == nullptr) {
         return NN_ERROR(ErrorStatus::GENERAL_FAILURE) << "Failed to create native_handle";
     }
     for (size_t i = 0; i < fds.size(); ++i) {
         nativeHandle->data[i] = fds[i].release();
     }
-    std::copy(handle->ints.begin(), handle->ints.end(), &nativeHandle->data[nativeHandle->numFds]);
+    std::copy(handle.ints.begin(), handle.ints.end(), &nativeHandle->data[nativeHandle->numFds]);
 
     hardware::hidl_handle hidlHandle;
     hidlHandle.setTo(nativeHandle, /*shouldOwn=*/true);
     return hidlHandle;
 }
 
-GeneralResult<SharedHandle> sharedHandleFromNativeHandle(const native_handle_t* handle) {
+GeneralResult<Handle> sharedHandleFromNativeHandle(const native_handle_t* handle) {
     if (handle == nullptr) {
-        return nullptr;
+        return NN_ERROR() << "sharedHandleFromNativeHandle was passed nullptr for handle";
     }
 
     std::vector<base::unique_fd> fds;
     fds.reserve(handle->numFds);
     for (int i = 0; i < handle->numFds; ++i) {
-        int dupFd = dup(handle->data[i]);
+        const int dupFd = dup(handle->data[i]);
         if (dupFd == -1) {
             return NN_ERROR(ErrorStatus::GENERAL_FAILURE) << "Failed to dup the fd";
         }
@@ -122,10 +121,7 @@ GeneralResult<SharedHandle> sharedHandleFromNativeHandle(const native_handle_t* 
     std::vector<int> ints(&handle->data[handle->numFds],
                           &handle->data[handle->numFds + handle->numInts]);
 
-    return std::make_shared<const Handle>(Handle{
-            .fds = std::move(fds),
-            .ints = std::move(ints),
-    });
+    return Handle{.fds = std::move(fds), .ints = std::move(ints)};
 }
 
 GeneralResult<SharedMemory> createMemory(const hidl_memory& memory) {
@@ -138,7 +134,9 @@ GeneralResult<SharedMemory> createMemory(const hidl_memory& memory) {
 }
 
 GeneralResult<hidl_memory> createHidlMemory(const Memory& memory) {
-    return hidl_memory(memory.name, NN_TRY(hidlHandleFromSharedHandle(memory.handle)), memory.size);
+    return hidl_memory(memory.name,
+                       NN_TRY(hidlHandleFromSharedHandle(std::get<Handle>(memory.handle))),
+                       memory.size);
 }
 
 GeneralResult<Mapping> mapAshmem(const Memory& memory) {
@@ -173,10 +171,10 @@ struct MmapFdMappingContext {
 
 GeneralResult<Mapping> mapMemFd(const Memory& memory) {
     const size_t size = memory.size;
-    const SharedHandle& handle = memory.handle;
-    const int fd = handle->fds[0];
-    const int prot = handle->ints[0];
-    const size_t offset = getOffsetFromInts(handle->ints[1], handle->ints[2]);
+    const Handle& handle = std::get<Handle>(memory.handle);
+    const int fd = handle.fds[0];
+    const int prot = handle.ints[0];
+    const size_t offset = getOffsetFromInts(handle.ints[1], handle.ints[2]);
 
     std::shared_ptr<base::MappedFile> mapping = base::MappedFile::FromFd(fd, offset, size, prot);
     if (mapping == nullptr) {
@@ -190,62 +188,23 @@ GeneralResult<Mapping> mapMemFd(const Memory& memory) {
 
 #ifndef NN_NO_AHWB
 
-static uint32_t roundUpToMultiple(uint32_t value, uint32_t multiple) {
-    return (value + multiple - 1) / multiple * multiple;
-}
+GeneralResult<Mapping> mapAhwbBlobMemory(const HardwareBufferHandle& memory) {
+    AHardwareBuffer_Desc desc;
+    AHardwareBuffer_describe(memory.get(), &desc);
 
-GeneralResult<Mapping> mapAhwbBlobMemory(const Memory& memory) {
-    const SharedHandle& handle = memory.handle;
-    const auto size = memory.size;
-    const auto format = AHARDWAREBUFFER_FORMAT_BLOB;
-    const auto usage = AHARDWAREBUFFER_USAGE_CPU_READ_OFTEN | AHARDWAREBUFFER_USAGE_CPU_WRITE_OFTEN;
-    const uint32_t width = size;
-    const uint32_t height = 1;  // height is always 1 for BLOB mode AHardwareBuffer.
-    const uint32_t layers = 1;  // layers is always 1 for BLOB mode AHardwareBuffer.
-
-    // AHardwareBuffer_createFromHandle() might fail because an allocator
-    // expects a specific stride value. In that case, we try to guess it by
-    // aligning the width to small powers of 2.
-    // TODO(b/174120849): Avoid stride assumptions.
-    AHardwareBuffer* hardwareBuffer = nullptr;
-    status_t status = UNKNOWN_ERROR;
-    for (uint32_t alignment : {1, 4, 32, 64, 128, 2, 8, 16}) {
-        const uint32_t stride = roundUpToMultiple(width, alignment);
-        AHardwareBuffer_Desc desc{
-                .width = width,
-                .height = height,
-                .layers = layers,
-                .format = format,
-                .usage = usage,
-                .stride = stride,
-        };
-        status = AHardwareBuffer_createFromHandle(&desc, NN_TRY(hidlHandleFromSharedHandle(handle)),
-                                                  AHARDWAREBUFFER_CREATE_FROM_HANDLE_METHOD_CLONE,
-                                                  &hardwareBuffer);
-        if (status == NO_ERROR) {
-            break;
-        }
-    }
-    if (status != NO_ERROR) {
-        return NN_ERROR(ErrorStatus::GENERAL_FAILURE)
-               << "Can't create AHardwareBuffer from handle. Error: " << status;
-    }
+    CHECK_EQ(desc.format, AHARDWAREBUFFER_FORMAT_BLOB);
+    const uint32_t size = desc.width;
 
     void* data = nullptr;
-    status = AHardwareBuffer_lock(hardwareBuffer, usage, -1, nullptr, &data);
+    const auto status = AHardwareBuffer_lock(memory.get(), desc.usage, -1, nullptr, &data);
     if (status != NO_ERROR) {
         return NN_ERROR(ErrorStatus::GENERAL_FAILURE)
                << "Can't lock the AHardwareBuffer. Error: " << status;
-        // TODO(b/169166682): do we need to call AHardwareBuffer_release?
     }
 
     // Create shared scoped object to munmap.
-    auto scoped = base::make_scope_guard([hardwareBuffer] {
-        AHardwareBuffer_unlock(hardwareBuffer, nullptr);
-        if (hardwareBuffer != nullptr) {
-            AHardwareBuffer_release(hardwareBuffer);
-        }
-    });
+    auto scoped = base::make_scope_guard(
+            [ahwb = memory.get()] { AHardwareBuffer_unlock(ahwb, nullptr); });
     auto sharedScoped = std::make_shared<decltype(scoped)>(std::move(scoped));
 
     return Mapping{.pointer = data, .size = size, .context = std::move(sharedScoped)};
@@ -256,14 +215,38 @@ GeneralResult<Mapping> mapAhwbMemory(const Memory& /*memory*/) {
            << "Unable to map non-BLOB AHardwareBuffer memory";
 }
 
+void freeHardwareBuffer(AHardwareBuffer* buffer) {
+    if (buffer) {
+        AHardwareBuffer_release(buffer);
+    }
+}
+
 #endif  // NN_NO_AHWB
 
+void freeNoop(AHardwareBuffer* /*buffer*/) {}
+
 }  // namespace
+
+#ifndef NN_NO_AHWB
+HardwareBufferHandle::HardwareBufferHandle(AHardwareBuffer* handle, bool takeOwnership)
+    : mHandle(handle, (takeOwnership ? freeHardwareBuffer : freeNoop)) {
+    CHECK(mHandle != nullptr);
+}
+#else
+HardwareBufferHandle::HardwareBufferHandle(AHardwareBuffer* handle, bool /*takeOwnership*/)
+    : mHandle(handle, freeNoop) {
+    CHECK(mHandle != nullptr);
+}
+#endif  // NN_NO_AHWB
+
+AHardwareBuffer* HardwareBufferHandle::get() const {
+    return mHandle.get();
+}
 
 GeneralResult<SharedMemory> createSharedMemory(size_t size) {
 #ifndef NN_COMPATIBILITY_LIBRARY_BUILD
     const auto memory = NN_TRY(allocateSharedMemory(size));
-    return createSharedMemoryFromHidlMemory(memory);
+    return createMemory(memory);
 #else
     (void)size;
     return NN_ERROR(ErrorStatus::INVALID_ARGUMENT) << "Unimplemented";
@@ -288,32 +271,22 @@ GeneralResult<SharedMemory> createSharedMemoryFromFd(size_t size, int prot, int 
     const auto [lowOffsetBits, highOffsetBits] = getIntsFromOffset(offset);
     std::vector<int> ints = {prot, lowOffsetBits, highOffsetBits};
 
-    SharedHandle handle = std::make_shared<const Handle>(Handle{
-            .fds = std::move(fds),
-            .ints = std::move(ints),
-    });
+    auto handle = Handle{.fds = std::move(fds), .ints = std::move(ints)};
     return std::make_shared<const Memory>(
             Memory{.handle = std::move(handle), .size = size, .name = "mmap_fd"});
 }
 
-GeneralResult<SharedMemory> createSharedMemoryFromHidlMemory(const hardware::hidl_memory& memory) {
+GeneralResult<SharedMemory> createSharedMemoryFromAHWB(AHardwareBuffer* ahwb, bool takeOwnership) {
 #ifndef NN_NO_AHWB
-    return createMemory(memory);
-#else
-    (void)memory;
-    return NN_ERROR(ErrorStatus::INVALID_ARGUMENT) << "hidl_memory not supported";
-#endif  // NN_NO_AHWB
-}
+    CHECK(ahwb != nullptr);
+    auto handle = HardwareBufferHandle(ahwb, takeOwnership);
 
-GeneralResult<SharedMemory> createSharedMemoryFromAHWB(const AHardwareBuffer& ahwb) {
-#ifndef NN_NO_AHWB
     AHardwareBuffer_Desc bufferDesc;
-    AHardwareBuffer_describe(&ahwb, &bufferDesc);
-    const native_handle_t* handle = AHardwareBuffer_getNativeHandle(&ahwb);
+    AHardwareBuffer_describe(ahwb, &bufferDesc);
 
     if (bufferDesc.format == AHARDWAREBUFFER_FORMAT_BLOB) {
         return std::make_shared<const Memory>(Memory{
-                .handle = NN_TRY(sharedHandleFromNativeHandle(handle)),
+                .handle = std::move(handle),
                 .size = bufferDesc.width,
                 .name = "hardware_buffer_blob",
         });
@@ -321,12 +294,13 @@ GeneralResult<SharedMemory> createSharedMemoryFromAHWB(const AHardwareBuffer& ah
 
     // memory size is not used for non-BLOB AHWB memory.
     return std::make_shared<const Memory>(Memory{
-            .handle = NN_TRY(sharedHandleFromNativeHandle(handle)),
+            .handle = std::move(handle),
             .size = 0,
             .name = "hardware_buffer",
     });
 #else
     (void)ahwb;
+    (void)takeOwnership;
     return NN_ERROR(ErrorStatus::INVALID_ARGUMENT)
            << "AHardwareBuffer memory not implemented for support library build yet";
 #endif  // NN_NO_AHWB
@@ -341,7 +315,7 @@ GeneralResult<Mapping> map(const SharedMemory& memory) {
         return mapAshmem(*memory);
     }
     if (memory->name == "hardware_buffer_blob") {
-        return mapAhwbBlobMemory(*memory);
+        return mapAhwbBlobMemory(std::get<HardwareBufferHandle>(memory->handle));
     }
     if (memory->name == "hardware_buffer") {
         return mapAhwbMemory(*memory);
