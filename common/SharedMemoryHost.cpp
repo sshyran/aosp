@@ -73,7 +73,7 @@ GeneralResult<Mapping> mapMemFd(const Memory& memory) {
 
 }  // namespace
 
-GeneralResult<Memory> createSharedMemory(size_t size) {
+GeneralResult<SharedMemory> createSharedMemory(size_t size) {
     int fd = ashmem_create_region("NnapiAshmem", size);
     if (fd < 0) {
         return NN_ERROR(ErrorStatus::GENERAL_FAILURE)
@@ -87,10 +87,11 @@ GeneralResult<Memory> createSharedMemory(size_t size) {
             .fds = std::move(fds),
             .ints = {},
     });
-    return Memory{.handle = std::move(handle), .size = size, .name = "ashmem"};
+    return std::make_shared<const Memory>(
+            Memory{.handle = std::move(handle), .size = size, .name = "ashmem"});
 }
 
-GeneralResult<Memory> createSharedMemoryFromFd(size_t size, int prot, int fd, size_t offset) {
+GeneralResult<SharedMemory> createSharedMemoryFromFd(size_t size, int prot, int fd, size_t offset) {
     if (size == 0 || fd < 0) {
         return NN_ERROR(ErrorStatus::INVALID_ARGUMENT) << "Invalid size or fd";
     }
@@ -112,26 +113,28 @@ GeneralResult<Memory> createSharedMemoryFromFd(size_t size, int prot, int fd, si
             .fds = std::move(fds),
             .ints = std::move(ints),
     });
-    return Memory{.handle = std::move(handle), .size = size, .name = "mmap_fd"};
+    return SharedMemory{.handle = std::move(handle), .size = size, .name = "mmap_fd"};
 }
 
-GeneralResult<Memory> createSharedMemoryFromHidlMemory(const hardware::hidl_memory& /*memory*/) {
+GeneralResult<SharedMemory> createSharedMemoryFromHidlMemory(
+        const hardware::hidl_memory& /*memory*/) {
     return NN_ERROR(ErrorStatus::INVALID_ARGUMENT) << "hidl_memory not supported on host";
 }
 
-GeneralResult<Memory> createSharedMemoryFromAHWB(const AHardwareBuffer& /*ahwb*/) {
+GeneralResult<SharedMemory> createSharedMemoryFromAHWB(const AHardwareBuffer& /*ahwb*/) {
     return NN_ERROR(ErrorStatus::INVALID_ARGUMENT)
            << "AHardwareBuffer memory not supported on host";
 }
 
-GeneralResult<Mapping> map(const Memory& memory) {
-    if (memory.name == "ashmem") {
-        return mapAshmem(memory);
+GeneralResult<Mapping> map(const SharedMemory& memory) {
+    CHECK(memory != nullptr);
+    if (memory->name == "ashmem") {
+        return mapAshmem(*memory);
     }
-    if (memory.name == "mmap_fd") {
-        return mapMemFd(memory);
+    if (memory->name == "mmap_fd") {
+        return mapMemFd(*memory);
     }
-    return NN_ERROR(ErrorStatus::INVALID_ARGUMENT) << "Cannot map unknown memory " << memory.name;
+    return NN_ERROR(ErrorStatus::INVALID_ARGUMENT) << "Cannot map unknown memory " << memory->name;
 }
 
 bool flush(const Mapping& mapping) {
