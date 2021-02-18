@@ -50,7 +50,7 @@ namespace {
 // The memory may be used for request inputs, request outputs, or model constants.
 class SizedMemoryValidator : public MemoryValidatorBase {
    public:
-    SizedMemoryValidator(uint32_t size) : kSize(size) {}
+    explicit SizedMemoryValidator(uint32_t size) : kSize(size) {}
 
     bool validate(const CompilationBuilder*, IOType, uint32_t, const ANeuralNetworksOperandType*,
                   uint32_t offset, uint32_t length) const override {
@@ -184,12 +184,15 @@ class DeviceMemoryValidator : public MemoryValidatorBase {
 
 }  // namespace
 
-RuntimeMemory::RuntimeMemory(Memory memory)
-    : kMemory(std::move(memory)),
-      mValidator(std::make_unique<SizedMemoryValidator>(kMemory.size)) {}
+RuntimeMemory::RuntimeMemory(SharedMemory memory) : kMemory(std::move(memory)) {
+    CHECK(kMemory != nullptr);
+    mValidator = std::make_unique<SizedMemoryValidator>(kMemory->size);
+}
 
-RuntimeMemory::RuntimeMemory(Memory memory, std::unique_ptr<MemoryValidatorBase> validator)
-    : kMemory(std::move(memory)), mValidator(std::move(validator)) {}
+RuntimeMemory::RuntimeMemory(SharedMemory memory, std::unique_ptr<MemoryValidatorBase> validator)
+    : kMemory(std::move(memory)), mValidator(std::move(validator)) {
+    CHECK(kMemory != nullptr);
+}
 
 RuntimeMemory::RuntimeMemory(SharedBuffer buffer) : kBuffer(std::move(buffer)) {}
 
@@ -245,7 +248,7 @@ static int copyHidlMemories(const std::optional<RunTimePoolInfo>& src,
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-int copyIBufferToMemory(const SharedBuffer& src, const Memory& dst) {
+int copyIBufferToMemory(const SharedBuffer& src, const SharedMemory& dst) {
     const auto ret = src->copyTo(dst);
     if (!ret.has_value()) {
         LOG(ERROR) << "ANeuralNetworksMemory_copy failure: " << ret.error().message;
@@ -254,7 +257,7 @@ int copyIBufferToMemory(const SharedBuffer& src, const Memory& dst) {
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-int copyMemoryToIBuffer(const Memory& src, const SharedBuffer& dst,
+int copyMemoryToIBuffer(const SharedMemory& src, const SharedBuffer& dst,
                         const std::vector<uint32_t>& dimensions) {
     const auto ret = dst->copyFrom(src, dimensions);
     if (!ret.has_value()) {
@@ -268,7 +271,7 @@ static int copyIBuffers(const SharedBuffer& src, const SharedBuffer& dst,
                         const MemoryValidatorBase::Metadata& srcMetadata) {
     const auto [n, memoryAHWB] = MemoryRuntimeAHWB::create(srcMetadata.logicalSize);
     NN_RETURN_IF_ERROR(n);
-    const Memory& memory = memoryAHWB->getMemory();
+    const SharedMemory& memory = memoryAHWB->getMemory();
     if (!validate(memory).ok()) return ANEURALNETWORKS_OUT_OF_MEMORY;
     NN_RETURN_IF_ERROR(copyIBufferToMemory(src, memory));
     NN_RETURN_IF_ERROR(copyMemoryToIBuffer(memory, dst, srcMetadata.dimensions));
@@ -541,7 +544,7 @@ uint8_t* MemoryAshmem::getPointer() const {
     return static_cast<uint8_t*>(std::get<void*>(kMapping.pointer));
 }
 
-MemoryAshmem::MemoryAshmem(Memory memory, Mapping mapping)
+MemoryAshmem::MemoryAshmem(SharedMemory memory, Mapping mapping)
     : RuntimeMemory(std::move(memory)), kMapping(std::move(mapping)) {}
 
 std::pair<int, std::unique_ptr<MemoryFd>> MemoryFd::create(size_t size, int prot, int fd,
@@ -554,7 +557,7 @@ std::pair<int, std::unique_ptr<MemoryFd>> MemoryFd::create(size_t size, int prot
     return {ANEURALNETWORKS_NO_ERROR, std::make_unique<MemoryFd>(std::move(memory).value())};
 }
 
-MemoryFd::MemoryFd(Memory memory) : RuntimeMemory(std::move(memory)) {}
+MemoryFd::MemoryFd(SharedMemory memory) : RuntimeMemory(std::move(memory)) {}
 
 std::pair<int, std::unique_ptr<MemoryAHWB>> MemoryAHWB::create(const AHardwareBuffer& ahwb) {
     auto memory = createSharedMemoryFromAHWB(ahwb);
@@ -564,8 +567,8 @@ std::pair<int, std::unique_ptr<MemoryAHWB>> MemoryAHWB::create(const AHardwareBu
     }
 
     std::unique_ptr<MemoryValidatorBase> validator;
-    if (memory.value().name == "hardware_buffer_blob") {
-        validator = std::make_unique<SizedMemoryValidator>(memory.value().size);
+    if (memory.value()->name == "hardware_buffer_blob") {
+        validator = std::make_unique<SizedMemoryValidator>(memory.value()->size);
     } else {
         validator = std::make_unique<AHardwareBufferNonBlobValidator>();
     }
@@ -611,7 +614,7 @@ uint8_t* MemoryRuntimeAHWB::getPointer() const {
     return static_cast<uint8_t*>(std::get<void*>(kMapping.pointer));
 }
 
-MemoryRuntimeAHWB::MemoryRuntimeAHWB(Memory memory,
+MemoryRuntimeAHWB::MemoryRuntimeAHWB(SharedMemory memory,
                                      base::ScopeGuard<std::function<void()>> ahwbScopeGuard,
                                      Mapping mapping)
     : RuntimeMemory(std::move(memory)),
