@@ -128,13 +128,13 @@ GeneralResult<SharedHandle> sharedHandleFromNativeHandle(const native_handle_t* 
     });
 }
 
-GeneralResult<Memory> createMemory(const hidl_memory& memory) {
+GeneralResult<SharedMemory> createMemory(const hidl_memory& memory) {
     CHECK_LE(memory.size(), std::numeric_limits<uint32_t>::max());
-    return Memory{
+    return std::make_shared<const Memory>(Memory{
             .handle = NN_TRY(sharedHandleFromNativeHandle(memory.handle())),
             .size = static_cast<uint32_t>(memory.size()),
             .name = memory.name(),
-    };
+    });
 }
 
 GeneralResult<hidl_memory> createHidlMemory(const Memory& memory) {
@@ -260,7 +260,7 @@ GeneralResult<Mapping> mapAhwbMemory(const Memory& /*memory*/) {
 
 }  // namespace
 
-GeneralResult<Memory> createSharedMemory(size_t size) {
+GeneralResult<SharedMemory> createSharedMemory(size_t size) {
 #ifndef NN_COMPATIBILITY_LIBRARY_BUILD
     const auto memory = NN_TRY(allocateSharedMemory(size));
     return createSharedMemoryFromHidlMemory(memory);
@@ -270,7 +270,7 @@ GeneralResult<Memory> createSharedMemory(size_t size) {
 #endif  // NN_COMPATIBILITY_LIBRARY_BUILD
 }
 
-GeneralResult<Memory> createSharedMemoryFromFd(size_t size, int prot, int fd, size_t offset) {
+GeneralResult<SharedMemory> createSharedMemoryFromFd(size_t size, int prot, int fd, size_t offset) {
     if (size == 0 || fd < 0) {
         return NN_ERROR(ErrorStatus::INVALID_ARGUMENT) << "Invalid size or fd";
     }
@@ -292,10 +292,11 @@ GeneralResult<Memory> createSharedMemoryFromFd(size_t size, int prot, int fd, si
             .fds = std::move(fds),
             .ints = std::move(ints),
     });
-    return Memory{.handle = std::move(handle), .size = size, .name = "mmap_fd"};
+    return std::make_shared<const Memory>(
+            Memory{.handle = std::move(handle), .size = size, .name = "mmap_fd"});
 }
 
-GeneralResult<Memory> createSharedMemoryFromHidlMemory(const hardware::hidl_memory& memory) {
+GeneralResult<SharedMemory> createSharedMemoryFromHidlMemory(const hardware::hidl_memory& memory) {
 #ifndef NN_NO_AHWB
     return createMemory(memory);
 #else
@@ -304,26 +305,26 @@ GeneralResult<Memory> createSharedMemoryFromHidlMemory(const hardware::hidl_memo
 #endif  // NN_NO_AHWB
 }
 
-GeneralResult<Memory> createSharedMemoryFromAHWB(const AHardwareBuffer& ahwb) {
+GeneralResult<SharedMemory> createSharedMemoryFromAHWB(const AHardwareBuffer& ahwb) {
 #ifndef NN_NO_AHWB
     AHardwareBuffer_Desc bufferDesc;
     AHardwareBuffer_describe(&ahwb, &bufferDesc);
     const native_handle_t* handle = AHardwareBuffer_getNativeHandle(&ahwb);
 
     if (bufferDesc.format == AHARDWAREBUFFER_FORMAT_BLOB) {
-        return Memory{
+        return std::make_shared<const Memory>(Memory{
                 .handle = NN_TRY(sharedHandleFromNativeHandle(handle)),
                 .size = bufferDesc.width,
                 .name = "hardware_buffer_blob",
-        };
+        });
     }
 
     // memory size is not used for non-BLOB AHWB memory.
-    return Memory{
+    return std::make_shared<const Memory>(Memory{
             .handle = NN_TRY(sharedHandleFromNativeHandle(handle)),
             .size = 0,
             .name = "hardware_buffer",
-    };
+    });
 #else
     (void)ahwb;
     return NN_ERROR(ErrorStatus::INVALID_ARGUMENT)
@@ -331,22 +332,22 @@ GeneralResult<Memory> createSharedMemoryFromAHWB(const AHardwareBuffer& ahwb) {
 #endif  // NN_NO_AHWB
 }
 
-GeneralResult<Mapping> map(const Memory& memory) {
-    if (memory.name == "mmap_fd") {
-        return mapMemFd(memory);
+GeneralResult<Mapping> map(const SharedMemory& memory) {
+    if (memory->name == "mmap_fd") {
+        return mapMemFd(*memory);
     }
 #ifndef NN_COMPATIBILITY_LIBRARY_BUILD
-    if (memory.name == "ashmem") {
-        return mapAshmem(memory);
+    if (memory->name == "ashmem") {
+        return mapAshmem(*memory);
     }
-    if (memory.name == "hardware_buffer_blob") {
-        return mapAhwbBlobMemory(memory);
+    if (memory->name == "hardware_buffer_blob") {
+        return mapAhwbBlobMemory(*memory);
     }
-    if (memory.name == "hardware_buffer") {
-        return mapAhwbMemory(memory);
+    if (memory->name == "hardware_buffer") {
+        return mapAhwbMemory(*memory);
     }
 #endif  // NN_COMPATIBILITY_LIBRARY_BUILD
-    return NN_ERROR(ErrorStatus::INVALID_ARGUMENT) << "Cannot map unknown memory " << memory.name;
+    return NN_ERROR(ErrorStatus::INVALID_ARGUMENT) << "Cannot map unknown memory " << memory->name;
 }
 
 bool flush(const Mapping& mapping) {
