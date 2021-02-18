@@ -214,8 +214,7 @@ int CompilationBuilder::createBurst(BurstBuilder** burst) {
         *burst = nullptr;
         return ANEURALNETWORKS_BAD_STATE;
     }
-    std::vector<std::shared_ptr<ExecutionBurstController>> burstControllers =
-            mPlan.makeBursts(mPreference);
+    std::vector<std::shared_ptr<ExecutionBurstController>> burstControllers = mPlan.makeBursts();
     *burst = new (std::nothrow) BurstBuilder(this, std::move(burstControllers));
     return (*burst ? ANEURALNETWORKS_NO_ERROR : ANEURALNETWORKS_OUT_OF_MEMORY);
 }
