@@ -30,15 +30,23 @@
 // Forward declare AHardwareBuffer
 extern "C" typedef struct AHardwareBuffer AHardwareBuffer;
 
-// Forward declare hidl_memory
-namespace android::hardware {
-struct hidl_memory;
-}  // namespace android::hardware
-
 namespace android::nn {
 
+// RAII wrapper for AHardwareBuffer
+class HardwareBufferHandle {
+   public:
+    // Precondition: handle != nullptr
+    HardwareBufferHandle(AHardwareBuffer* handle, bool takeOwnership);
+
+    AHardwareBuffer* get() const;
+
+   private:
+    using Deleter = std::add_pointer_t<void(AHardwareBuffer*)>;
+    std::unique_ptr<AHardwareBuffer, Deleter> mHandle;
+};
+
 struct Memory {
-    SharedHandle handle;
+    std::variant<Handle, HardwareBufferHandle> handle;
     size_t size = 0;
     std::string name;
 };
@@ -81,9 +89,8 @@ GeneralResult<SharedMemory> createSharedMemory(size_t size);
 
 GeneralResult<SharedMemory> createSharedMemoryFromFd(size_t size, int prot, int fd, size_t offset);
 
-GeneralResult<SharedMemory> createSharedMemoryFromHidlMemory(const hardware::hidl_memory& memory);
-
-GeneralResult<SharedMemory> createSharedMemoryFromAHWB(const AHardwareBuffer& ahwb);
+// Precondition: ahwb != nullptr
+GeneralResult<SharedMemory> createSharedMemoryFromAHWB(AHardwareBuffer* ahwb, bool takeOwnership);
 
 struct Mapping {
     std::variant<void*, const void*> pointer;
