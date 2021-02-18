@@ -17,6 +17,8 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_NNAPI_SHARED_MEMORY_H
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_NNAPI_SHARED_MEMORY_H
 
+#include <android-base/unique_fd.h>
+
 #include <any>
 #include <memory>
 #include <optional>
@@ -85,8 +87,25 @@ class ConstantMemoryBuilder {
     std::vector<LazyCopy> mSlices;
 };
 
+GeneralResult<base::unique_fd> dupFd(int fd);
+
+// Precondition: `*ForwardFdIt` must be convertible to `int`
+template <typename ForwardFdIt>
+GeneralResult<std::vector<base::unique_fd>> dupFds(ForwardFdIt first, ForwardFdIt last) {
+    std::vector<base::unique_fd> fds;
+    fds.reserve(std::distance(first, last));
+    for (; first != last; ++first) {
+        const int fd = *first;
+        fds.push_back(NN_TRY(dupFd(fd)));
+    }
+    return fds;
+}
+
+// Precondition: size > 0
 GeneralResult<SharedMemory> createSharedMemory(size_t size);
 
+// Duplicates `fd` and takes ownership of the duplicate.
+// Precondition: size > 0
 GeneralResult<SharedMemory> createSharedMemoryFromFd(size_t size, int prot, int fd, size_t offset);
 
 // Precondition: ahwb != nullptr
