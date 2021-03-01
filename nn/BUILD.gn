@@ -34,6 +34,7 @@ shared_library("libneuralnetworks") {
   ]
   sources = [
     "chromeos/startup.cpp",
+    "chromeos/logger.cpp",
   ]
   libs = [
     "pthread",
@@ -73,6 +74,7 @@ pkg_config("target_defaults") {
   pkg_deps = [
     "libnnapi-support",
     "openssl",
+    "libchrome",
   ]
 }
 
