@@ -7,14 +7,11 @@ import("//common-mk/pkg_config.gni")
 group("all") {
   deps = [
     ":libneuralnetworks",
-    ":driver_cache",
-    ":vendor-nn-hal",
   ]
   if (use.test) {
     deps += [
       ":chromeos_testrunner",
       ":common_testrunner",
-      ":driver_cache_testrunner",
       ":runtime_testrunner",
       ":runtime_generated_testrunner",
       "chromeos/tests:vts",
@@ -144,6 +141,8 @@ shared_library("nn-common") {
     "-Wno-unreachable-code-return",
   ]
   include_dirs = [
+    "driver/cache/BlobCache",
+    "driver/cache/nNCache",
     "runtime/include",
     "${sysroot}/usr/include/libtextclassifier",
   ]
@@ -232,19 +231,6 @@ shared_library("nn-common") {
     "common/random/guarded_philox_random.cc",
     "common/random/random.cc",
     "common/random/simple_philox.cc",
-  ]
-}
-
-static_library("driver_cache") {
-  configs += [
-    ":target_defaults",
-    "//common-mk:pic",
-  ]
-  include_dirs = [
-    "driver/cache/BlobCache",
-    "driver/cache/nnCache",
-  ]
-  sources = [
     "driver/cache/BlobCache/BlobCache.cpp",
     "driver/cache/nnCache/nnCache.cpp",
   ]
@@ -435,6 +421,8 @@ if (use.test) {
 
   executable("common_testrunner") {
     include_dirs = [
+      "driver/cache/BlobCache",
+      "driver/cache/nNCache",
       "runtime/include",
     ]
     configs += [
@@ -469,23 +457,6 @@ if (use.test) {
       "common/operations/QuantizedLSTMTest.cpp",
       "common/operations/RNNTest.cpp",
       "common/operations/SVDFTest.cpp",
-    ]
-  }
-
-  executable("driver_cache_testrunner") {
-    include_dirs = [
-      "driver/cache/BlobCache",
-      "driver/cache/nNCache"
-    ]
-    configs += [
-      ":target_defaults",
-      "//common-mk:test",
-    ]
-    deps = [
-      ":driver_cache",
-      ":nn_testrunner",
-    ]
-    sources = [
       "driver/cache/BlobCache/BlobCache_test.cpp",
       "driver/cache/nnCache/nnCache_test.cpp",
     ]
