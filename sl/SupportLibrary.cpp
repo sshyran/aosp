@@ -32,7 +32,7 @@ void* LoadFunction(void* handle, const char* name, bool optional) {
     }
     void* fn = dlsym(handle, name);
     if (fn == nullptr && !optional) {
-        NNAPI_LOG("nnapi error: unable to open function %s", name);
+        NNAPI_LOG("nnapi error: unable to open function %s: %s", name, dlerror());
     }
     return fn;
 }
@@ -53,7 +53,7 @@ std::unique_ptr<const NnApiSupportLibrary> LoadNnApiSupportLibrary(const std::st
     void* lib_handle = nullptr;
     lib_handle = dlopen(lib_name.c_str(), RTLD_LAZY | RTLD_LOCAL);
     if (lib_handle == nullptr) {
-        NNAPI_LOG("nnapi error: unable to open library %s", lib_name.c_str());
+        NNAPI_LOG("nnapi error: unable to open library %s: %s", lib_name.c_str(), dlerror());
     }
 
     return LoadNnApiSupportLibrary(lib_handle);
