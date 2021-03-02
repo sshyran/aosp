@@ -24,6 +24,10 @@ shared_library("libneuralnetworks") {
   configs += [
     ":target_defaults",
   ]
+  cflags_cc = [
+    # libchrome/base/stl_util.h:95:33: error: unused parameter 'array'
+    "-Wno-unused-parameter",
+  ]
   deps = [
     ":nn-common",
     ":runtime",
@@ -415,6 +419,7 @@ if (use.test) {
     ]
     sources = [
       "chromeos/tests/common/includes_test.cc",
+      "chromeos/tests/common/logger_enum_test.cc",
       "chromeos/tests/common/random_test.cc",
     ]
   }

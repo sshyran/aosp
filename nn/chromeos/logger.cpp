@@ -3,6 +3,8 @@
 // found in the LICENSE file.
 
 #include <base/logging.h>
+#include <base/strings/strcat.h>
+#include <base/strings/string_number_conversions.h>
 
 // Copied from aosp/system/core/base/include/android-base/logging.h
 enum AndroidLogSeverity {
@@ -15,17 +17,11 @@ enum AndroidLogSeverity {
   FATAL,
 };
 
-/**
-Maps the android log levels from android-base/logging.h into the equivalent from
-the Chrome logging library. This is useful, since when running from within a
-Chrome process, unless we use base/logging.h from libchrome then all our logs
-will not be visible anywhere.
-*/
 void ChromeLogger(int /*log_buffer_id*/, int severity, const char* tag,
                   const char* file, unsigned int line, const char* message) {
-  std::string logline = std::string(tag) + ":" + std::string(file) + ":" +
-                        std::to_string(line) + ": " + std::string(message);
-  switch (severity) {
+  std::string logline = base::StrCat(
+      {tag, ":", file, ":", base::NumberToString(line), ": ", message});
+  switch (static_cast<AndroidLogSeverity>(severity)) {
     case (AndroidLogSeverity::VERBOSE):
     case (AndroidLogSeverity::DEBUG):
     case (AndroidLogSeverity::INFO):
@@ -40,9 +36,6 @@ void ChromeLogger(int /*log_buffer_id*/, int severity, const char* tag,
       break;
     case (AndroidLogSeverity::FATAL):
       LOG(FATAL) << logline;
-      break;
-    default:
-      LOG(INFO) << logline;
       break;
   }
 }

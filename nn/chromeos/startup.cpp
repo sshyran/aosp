@@ -3,9 +3,7 @@
 // found in the LICENSE file.
 
 #include <android-base/logging.h>
-
-void ChromeLogger(int log_buffer_id, int severity, const char* tag,
-                  const char* file, unsigned int line, const char* message);
+#include "logger.h"
 
 // Called when the shared library is first loaded.
 __attribute__((constructor))
