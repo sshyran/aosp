@@ -14,8 +14,6 @@ group("all") {
       ":common_testrunner",
       ":runtime_testrunner",
       ":runtime_generated_testrunner",
-      "chromeos/tests:vts",
-      "chromeos/tests:cts",
     ]
   }
 }

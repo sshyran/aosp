@@ -98,10 +98,8 @@ Remember that the HAL will be loaded into the same process as NNAPI, so there wi
 We provide a set of tools to verify the correct functioning of a vendor HAL. To
 use them, follow these steps.
 
-1. Enable the testing tools by specifying the USE flag `nnapi_driver_tests`.
-
-1. Rebuild the image or use `cros deploy` to update the `aosp-frameworks-ml-nn`
-   package to get the tools onto your DUT.
+1. Build `chromeos-base/aosp-frameworks-ml-nn-vts` and `cros deploy` to your DUT.
+   You may need to use `--root=/usr/local` depending on disk space.
 
 1. Check that the following executables are now available on your DUT:
    * Vendor Test Suites. These test the HAL directly through the IDevice
