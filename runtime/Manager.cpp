@@ -193,8 +193,9 @@ int64_t DriverDevice::getFeatureLevel() const {
         case Version::ANDROID_R:
             return ANEURALNETWORKS_FEATURE_LEVEL_4;
         case Version::ANDROID_S:
-        case Version::CURRENT_RUNTIME:
             return ANEURALNETWORKS_FEATURE_LEVEL_5;
+        case Version::CURRENT_RUNTIME:
+            break;
     }
     LOG(FATAL) << "Unsupported driver feature level: " << featureLevel;
     return -1;
