@@ -73,8 +73,7 @@ class RuntimePreparedModel {
             const OptionalDuration& loopTimeoutDuration,
             const OptionalDuration& timeoutDurationAfterFence) const = 0;
 
-    virtual std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
-            bool preferPowerOverLatency) const = 0;
+    virtual std::shared_ptr<ExecutionBurstController> configureExecutionBurst() const = 0;
 };
 
 using ModelFactory = std::function<Model()>;
