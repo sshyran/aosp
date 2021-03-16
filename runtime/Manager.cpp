@@ -138,7 +138,7 @@ class DriverDevice : public Device {
 // the FMQ to see if it has data available before it should fall back to
 // waiting on the futex.
 static std::chrono::microseconds getPollingTimeWindow() {
-    constexpr int32_t defaultPollingTimeWindow = 50;
+    constexpr int32_t defaultPollingTimeWindow = 0;
 #ifdef NN_DEBUGGABLE
     constexpr int32_t minPollingTimeWindow = 0;
     const int32_t selectedPollingTimeWindow =
@@ -178,8 +178,7 @@ class DriverPreparedModel : public RuntimePreparedModel {
             const OptionalDuration& loopTimeoutDuration,
             const OptionalDuration& timeoutDurationAfterFence) const override;
 
-    std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
-            bool preferPowerOverLatency) const override {
+    std::shared_ptr<ExecutionBurstController> configureExecutionBurst() const override {
 #ifndef NN_NO_BURST
         std::any resource = mPreparedModel->getUnderlyingResource();
         sp<V1_2::IPreparedModel> preparedModel;
@@ -190,11 +189,9 @@ class DriverPreparedModel : public RuntimePreparedModel {
         } else {
             return nullptr;
         }
-        const auto pollingTimeWindow =
-                (preferPowerOverLatency ? std::chrono::microseconds{0} : getPollingTimeWindow());
+        const auto pollingTimeWindow = getPollingTimeWindow();
         return ExecutionBurstController::create(preparedModel, pollingTimeWindow);
 #else
-        (void)preferPowerOverLatency;
         LOG(ERROR) << "DriverPreparedModel::configureExecutionBurst: built without burst support";
         return nullptr;
 #endif  // NN_NO_BURST
@@ -833,8 +830,7 @@ class CpuPreparedModel : public RuntimePreparedModel {
             const OptionalTimePoint& deadline,
             const OptionalDuration& loopTimeoutDuration) const override;
 
-    std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
-            bool /*preferPowerOverLatency*/) const override {
+    std::shared_ptr<ExecutionBurstController> configureExecutionBurst() const override {
         return nullptr;
     }
 

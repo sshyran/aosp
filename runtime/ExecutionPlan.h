@@ -647,7 +647,7 @@ class ExecutionPlan {
         int mLastStepSyncFd;
     };
 
-    std::vector<std::shared_ptr<ExecutionBurstController>> makeBursts(int preference) const;
+    std::vector<std::shared_ptr<ExecutionBurstController>> makeBursts() const;
 
     std::shared_ptr<Controller> makeController(ExecutionBuilder* executionBuilder,
                                                const BurstBuilder* burstBuilder) const;
