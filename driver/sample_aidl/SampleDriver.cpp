@@ -26,6 +26,7 @@
 #include <android/binder_manager.h>
 #include <android/binder_process.h>
 #include <nnapi/Result.h>
+#include <nnapi/Types.h>
 #include <nnapi/Validation.h>
 #include <nnapi/hal/aidl/Conversions.h>
 #include <nnapi/hal/aidl/Utils.h>
@@ -55,10 +56,6 @@ namespace nn {
 namespace sample_driver {
 
 namespace {
-
-auto now() {
-    return std::chrono::steady_clock::now();
-};
 
 int64_t nanosecondsDuration(TimePoint end, TimePoint start) {
     return std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
@@ -395,7 +392,7 @@ ndk::ScopedAStatus SamplePreparedModel::executeSynchronously(
     VLOG(DRIVER) << "executeSynchronously(" << SHOW_IF_DEBUG(halRequest.toString()) << ")";
 
     TimePoint driverStart, driverEnd, deviceStart, deviceEnd;
-    if (measureTiming) driverStart = now();
+    if (measureTiming) driverStart = Clock::now();
 
     const auto model = convert(mModel).value();
 
@@ -441,9 +438,9 @@ ndk::ScopedAStatus SamplePreparedModel::executeSynchronously(
     if (deadline.has_value()) {
         executor.setDeadline(*deadline);
     }
-    if (measureTiming) deviceStart = now();
+    if (measureTiming) deviceStart = Clock::now();
     int n = executor.run(model, request, mPoolInfos, requestPoolInfos);
-    if (measureTiming) deviceEnd = now();
+    if (measureTiming) deviceEnd = Clock::now();
     VLOG(DRIVER) << "executor.run returned " << n;
     aidl_hal::ErrorStatus executionStatus = convertResultCodeToAidlErrorStatus(n);
     if (executionStatus != aidl_hal::ErrorStatus::NONE &&
@@ -464,7 +461,7 @@ ndk::ScopedAStatus SamplePreparedModel::executeSynchronously(
     executionResult->outputShapes = std::move(outputShapes);
     executionResult->timing = kNoTiming;
     if (measureTiming && executionStatus == aidl_hal::ErrorStatus::NONE) {
-        driverEnd = now();
+        driverEnd = Clock::now();
         aidl_hal::Timing timing = {.timeOnDevice = nanosecondsDuration(deviceEnd, deviceStart),
                                    .timeInDriver = nanosecondsDuration(driverEnd, driverStart)};
         VLOG(DRIVER) << "executeSynchronously timing = " << timing.toString();
@@ -484,7 +481,7 @@ ndk::ScopedAStatus SamplePreparedModel::executeFenced(
     VLOG(DRIVER) << "executeFenced(" << SHOW_IF_DEBUG(halRequest.toString()) << ")";
 
     TimePoint driverStart, driverEnd, deviceStart, deviceEnd;
-    if (measureTiming) driverStart = now();
+    if (measureTiming) driverStart = Clock::now();
 
     const auto model = convert(mModel).value();
 
@@ -537,7 +534,7 @@ ndk::ScopedAStatus SamplePreparedModel::executeFenced(
     }
 
     TimePoint driverStartAfterFence;
-    if (measureTiming) driverStartAfterFence = now();
+    if (measureTiming) driverStartAfterFence = Clock::now();
 
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INPUTS_AND_OUTPUTS,
                         "SamplePreparedModel::executeFenced");
@@ -556,9 +553,9 @@ ndk::ScopedAStatus SamplePreparedModel::executeFenced(
     if (closestDeadline.has_value()) {
         executor.setDeadline(*closestDeadline);
     }
-    if (measureTiming) deviceStart = now();
+    if (measureTiming) deviceStart = Clock::now();
     int n = executor.run(model, request, mPoolInfos, requestPoolInfos);
-    if (measureTiming) deviceEnd = now();
+    if (measureTiming) deviceEnd = Clock::now();
     VLOG(DRIVER) << "executor.run returned " << n;
     aidl_hal::ErrorStatus executionStatus = convertResultCodeToAidlErrorStatus(n);
     if (executionStatus != aidl_hal::ErrorStatus::NONE) {
@@ -579,7 +576,7 @@ ndk::ScopedAStatus SamplePreparedModel::executeFenced(
     aidl_hal::Timing timingSinceLaunch = kNoTiming;
     aidl_hal::Timing timingAfterFence = kNoTiming;
     if (measureTiming) {
-        driverEnd = now();
+        driverEnd = Clock::now();
         timingSinceLaunch = {.timeOnDevice = nanosecondsDuration(deviceEnd, deviceStart),
                              .timeInDriver = nanosecondsDuration(driverEnd, driverStart)};
         timingAfterFence = {.timeOnDevice = nanosecondsDuration(deviceEnd, deviceStart),
