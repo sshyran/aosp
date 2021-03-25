@@ -145,6 +145,7 @@ cc_library_static {
         "-Werror",
     ],
     apex_available: [
+        "//apex_available:platform",
         "com.android.neuralnetworks",
         "test_com.android.neuralnetworks",
     ],
