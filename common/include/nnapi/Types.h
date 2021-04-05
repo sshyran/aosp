@@ -56,6 +56,8 @@ constexpr uint32_t kDefaultRequestMemoryAlignment = 64;
 constexpr uint32_t kDefaultRequestMemoryPadding = 64;
 constexpr uint32_t kMinMemoryAlignment = alignof(std::max_align_t);
 constexpr uint32_t kMinMemoryPadding = 1;
+constexpr auto kLoopTimeoutDefault = std::chrono::seconds{2};
+constexpr auto kLoopTimeoutMaximum = std::chrono::seconds{15};
 
 // Aliases
 
