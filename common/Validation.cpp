@@ -1138,11 +1138,17 @@ Result<Version> validateRequest(const Request& request) {
 }
 
 Result<Version> validateOptionalTimePoint(const OptionalTimePoint& optionalTimePoint) {
+    if (optionalTimePoint.has_value()) {
+        NN_VALIDATE_GE(optionalTimePoint->time_since_epoch().count(), 0);
+    }
     // An omitted time point is the default value, so it is implicitly valid for all versions.
     return !optionalTimePoint.has_value() ? Version::ANDROID_OC_MR1 : Version::ANDROID_R;
 }
 
 Result<Version> validateOptionalTimeoutDuration(const OptionalDuration& optionalTimeoutDuration) {
+    if (optionalTimeoutDuration.has_value()) {
+        NN_VALIDATE_GE(optionalTimeoutDuration->count(), 0);
+    }
     // An omitted duration is the default value, so it is implicitly valid for all versions.
     return !optionalTimeoutDuration.has_value() ? Version::ANDROID_OC_MR1 : Version::ANDROID_R;
 }
