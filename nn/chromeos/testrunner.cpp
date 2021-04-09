@@ -2,13 +2,16 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <memory>
 #include <stdlib.h>
+
+#include <filesystem>
+#include <memory>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include "android-base/logging.h"
+#include "daemon_store.h"
 
 int main(int argc, char** argv) {
   // Our testrunners are invoked with platform_test, which doesn't
@@ -19,9 +22,26 @@ int main(int argc, char** argv) {
   setenv("ANDROID_LOG_TAGS", "*:f", 0);
 #endif
 
+  // For compilation caching, we expect that the directory
+  // /run/daemon-store/ml_service will exist, but in tests it will
+  // not, and DBus won't be available to query the current username
+  // hash. So we set up a fake cryptohome area here and mock the
+  // username hasher to simulate that environment for testing.
+  DaemonStore& ds = DaemonStore::Get();
+  ds.SetUserHasherForTesting(std::make_unique<MockUserHashForTesting>());
+  std::string base("/tmp/run/daemon-store/ml_service");
+  ds.SetDaemonStoreBaseForTesting(base);
+  std::string cacheDir = base + "/mock-user-hash/nnapi_compilations";
+  std::filesystem::create_directories(cacheDir);
+
   testing::InitGoogleTest(&argc, argv);
   android::base::InitLogging(argv, android::base::StderrLogger);
   testing::GTEST_FLAG(throw_on_failure) = true;
   testing::InitGoogleMock(&argc, argv);
-  return RUN_ALL_TESTS();
+
+  int test_result = RUN_ALL_TESTS();
+
+  // Clean up the fake cryptohome area
+  std::filesystem::remove_all(base);
+  return test_result;
 }
