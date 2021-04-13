@@ -18,14 +18,16 @@
 
 #include "ShimDeviceManager.h"
 
+#include <android-base/logging.h>
+#include <android/binder_process.h>
+
 #include <algorithm>
 #include <memory>
 #include <string>
 #include <string_view>
 #include <vector>
 
-#include <android-base/logging.h>
-#include <android/binder_process.h>
+#include "NeuralNetworksShim.h"
 #include "ShimDevice.h"
 #include "ShimUtils.h"
 #include "SupportLibrary.h"
@@ -35,16 +37,18 @@ namespace android::neuralnetworks::shim {
 using aidl::android::hardware::neuralnetworks::ShimDevice;
 using aidl::android::hardware::neuralnetworks::ShimDeviceInfo;
 
-ANeuralNetworksShimResultCode registerDevices(NnApiSLDriverImpl* nnapiSLImpl,
-                                              ANeuralNetworksShimDeviceInfo* devicesToRegister[],
-                                              int devicesToRegisterCount) {
+ANeuralNetworksShimResultCode registerDevices(
+        NnApiSLDriverImpl* nnapiSLImpl,
+        const std::vector<aidl::android::hardware::neuralnetworks::ShimDeviceInfo>&
+                devicesToRegister,
+        uint32_t /*numberOfListenerThreads*/, bool /*registerAsLazyService*/,
+        bool /*fallbackToInvalidDevice*/) {
     if (nnapiSLImpl == nullptr) {
         LOG(ERROR) << "Invalid arguments, nnapiSLImpl == nullptr ";
         return ANNSHIM_INVALID_ARGUMENT;
     }
-    if (devicesToRegister == nullptr || devicesToRegisterCount == 0) {
-        LOG(ERROR)
-                << "Invalid arguments, devicesToRegister == nullptr || devicesToRegisterCount == 0";
+    if (devicesToRegister.empty()) {
+        LOG(ERROR) << "Invalid arguments, devicesToRegister is empty";
         return ANNSHIM_INVALID_ARGUMENT;
     }
 
@@ -71,7 +75,7 @@ ANeuralNetworksShimResultCode registerDevices(NnApiSLDriverImpl* nnapiSLImpl,
     }
 
     std::vector<std::shared_ptr<ShimDevice>> devices;
-    int expectedDeviceCount = devicesToRegisterCount;
+    int expectedDeviceCount = devicesToRegister.size();
     devices.reserve(expectedDeviceCount);
 
     // The default is 15, use more only if there's more devices exposed.
@@ -80,12 +84,6 @@ ANeuralNetworksShimResultCode registerDevices(NnApiSLDriverImpl* nnapiSLImpl,
     // Set of devices is small enough that vector is sufficient.
     std::vector<size_t> registeredDevicesIndexes;
     registeredDevicesIndexes.reserve(expectedDeviceCount);
-
-    auto getDeviceInfoV1 = [&](size_t index) {
-        return reinterpret_cast<ShimDeviceInfo*>(devicesToRegister[index]);
-    };
-
-    auto getDeviceName = [&](size_t index) { return getDeviceInfoV1(index)->deviceName; };
 
     for (uint32_t i = 0; i < numDevices; ++i) {
         ANeuralNetworksDevice* device;
@@ -100,14 +98,14 @@ ANeuralNetworksShimResultCode registerDevices(NnApiSLDriverImpl* nnapiSLImpl,
             return ANNSHIM_GENERAL_ERROR;
         }
 
-        ShimDeviceInfo* toRegister = nullptr;
-        for (int j = 0; j < devicesToRegisterCount; j++) {
+        const ShimDeviceInfo* toRegister = nullptr;
+        for (int j = 0; j < devicesToRegister.size(); j++) {
             if (std::find(registeredDevicesIndexes.begin(), registeredDevicesIndexes.end(), j) !=
                 registeredDevicesIndexes.end()) {
                 continue;
             }
 
-            ShimDeviceInfo* info = getDeviceInfoV1(j);
+            const ShimDeviceInfo* info = &devicesToRegister[j];
             if (std::string_view(info->deviceName) == std::string_view(name)) {
                 toRegister = info;
                 registeredDevicesIndexes.push_back(j);
@@ -131,12 +129,12 @@ ANeuralNetworksShimResultCode registerDevices(NnApiSLDriverImpl* nnapiSLImpl,
         LOG(INFO) << "No devices registered, returning error";
         return ANNSHIM_FAILED_TO_REGISTER_SERVICE;
     }
-    if (registeredDevicesIndexes.size() < devicesToRegisterCount) {
+    if (registeredDevicesIndexes.size() < devicesToRegister.size()) {
         LOG(INFO) << "Some NNAPI devices listed for registration not found in SL Driver";
-        for (int j = 0; j < devicesToRegisterCount; ++j) {
+        for (int j = 0; j < devicesToRegister.size(); ++j) {
             if (std::find(registeredDevicesIndexes.begin(), registeredDevicesIndexes.end(), j) !=
                 registeredDevicesIndexes.end()) {
-                LOG(INFO) << "Failed to register NNAPI Device: " << getDeviceName(j);
+                LOG(INFO) << "Failed to register NNAPI Device: " << devicesToRegister[j].deviceName;
             }
         }
         return ANNSHIM_FAILED_TO_REGISTER_SERVICE;

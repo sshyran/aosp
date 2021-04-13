@@ -128,13 +128,17 @@ int main() {
             ANeuralNetworksShimPerformanceInfo{.execTime = 0.5, .powerUsage = 0.5},
             ANeuralNetworksShimPerformanceInfo{.execTime = 0.5, .powerUsage = 0.5}, operandsCount,
             operandPerformance);
-    ANeuralNetworksShimDeviceInfo* devices[] = {deviceInfo};
+
+    ANeuralNetworksShimRegistrationParams* params;
+    ANeuralNetworksShimRegistrationParams_create(impl, &params);
+    ANeuralNetworksShimRegistrationParams_addDeviceInfo(params, deviceInfo);
 
     // Register the support library as a binderized AIDL service.
-    auto result = ANeuralNetworksShim_registerSupportLibraryService(impl, devices, 1);
+    auto result = ANeuralNetworksShim_registerSupportLibraryService(params);
     LOG(ERROR) << "ANeuralNetworksShim_registerSupportLibraryService returned with error status: "
                << result;
 
+    ANeuralNetworksShimRegistrationParams_free(params);
     ANeuralNetworksShimDeviceInfo_free(deviceInfo);
     return EXIT_FAILURE;
 }
