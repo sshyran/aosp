@@ -34,7 +34,6 @@ pkg_config("vts_defaults") {
     "${vts_src}/1.0/vts/functional/include",
     "${nn_src}/common",
     "${nn_src}/common/include",
-    "${nn_src}/runtime",
     "${nn_src}/runtime/include",
     "${nn_src}/tools/test_generator/test_harness/include",
     "${sysroot}/usr/include/aosp",
@@ -62,8 +61,6 @@ static_library("vts_common") {
   sources = [
     "${vts_src}/1.0/vts/functional/Callbacks.cpp",
     "${vts_src}/1.0/vts/functional/Utils.cpp",
-    "${nn_src}/chromeos/compilation_caching.cpp",
-    "${nn_src}/chromeos/daemon_store.cpp",
     "${nn_src}/chromeos/testrunner.cpp",
     "${nn_src}/chromeos/versioned_drivers.cpp",
     "${nn_src}/common/ExecutionBurstController.cpp",

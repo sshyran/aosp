@@ -1189,9 +1189,6 @@ int ANeuralNetworksCompilation_setPreference(ANeuralNetworksCompilation* compila
     return c->setPreference(preference);
 }
 
-// A custom implementation that uses ChromeOS deamon storage is in
-// ml/nn/chromeos/compilation_caching.cpp
-#if !defined(NNAPI_CHROMEOS)
 int ANeuralNetworksCompilation_setCaching(ANeuralNetworksCompilation* compilation,
                                           const char* cacheDir, const uint8_t* token) {
     NNTRACE_RT(NNTRACE_PHASE_COMPILATION, "ANeuralNetworksCompilation_setCaching");
@@ -1202,7 +1199,6 @@ int ANeuralNetworksCompilation_setCaching(ANeuralNetworksCompilation* compilatio
     CompilationBuilder* c = reinterpret_cast<CompilationBuilder*>(compilation);
     return c->setCaching(cacheDir, token);
 }
-#endif
 
 int ANeuralNetworksCompilation_finish(ANeuralNetworksCompilation* compilation) {
     NNTRACE_RT(NNTRACE_PHASE_COMPILATION, "ANeuralNetworksCompilation_finish");

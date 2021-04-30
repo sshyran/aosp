@@ -73,9 +73,7 @@ pkg_config("target_defaults") {
   pkg_deps = [
     "libnnapi-support",
     "openssl",
-    "libbrillo",
     "libchrome",
-    "libsession_manager-client",
   ]
 }
 
@@ -112,12 +110,9 @@ static_library("runtime") {
   include_dirs = [
     "common/include",
     "driver/sample",
-    "runtime",
     "runtime/include",
   ]
   sources = [
-    "chromeos/compilation_caching.cpp",
-    "chromeos/daemon_store.cpp",
     "chromeos/versioned_drivers.cpp",
     "runtime/BurstBuilder.cpp",
     "runtime/Callbacks.cpp",
@@ -406,7 +401,6 @@ if (use.test) {
 
   executable("chromeos_testrunner") {
     include_dirs = [
-      "chromeos",
       "common/random",
     ]
     configs += [
@@ -420,10 +414,8 @@ if (use.test) {
     deps = [
       ":nn-common",
       ":nn_testrunner",
-      ":runtime",
     ]
     sources = [
-      "chromeos/tests/common/daemon_store_test.cc",
       "chromeos/tests/common/includes_test.cc",
       "chromeos/tests/common/logger_enum_test.cc",
       "chromeos/tests/common/random_test.cc",
