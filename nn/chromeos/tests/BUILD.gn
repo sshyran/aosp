@@ -188,6 +188,7 @@ executable("cros_nnapi_vts_1_3") {
 
 executable("cros_nnapi_cts") {
   configs += [
+    "//aosp/frameworks/ml/nn:disable_ndebug",
     "//aosp/frameworks/ml/nn:target_defaults",
     "//common-mk:test",
   ]

@@ -99,6 +99,26 @@ pkg_config("common_defaults") {
   pkg_deps = [ "libnnapi-support" ]
 }
 
+# Tests cannot be build with the NDEBUG flag set,
+# but we want to allow NDEBUG for the main lib.
+# Specifically, forcing NDEBUG to be always off
+# will cause issues in libchrome:
+# b/174605330#comment13
+# Using pkg_config forces the cflags to be put at
+# the end of the options string, which will allow it
+# to unset the NDEBUG flag setup by the global
+# cros-debug eclass. Just setting this in the
+# cflags of the executable() will put this before
+# the flags set by the ebuild, which will have no
+# effect.
+# See b/186996014 for the history on this issue.
+pkg_config("disable_ndebug") {
+  cflags_cc = [
+    "-UNDEBUG",
+  ]
+  pkg_deps = [ "libnnapi-support" ]
+}
+
 static_library("runtime") {
   configs += [
     ":target_defaults",
@@ -316,6 +336,7 @@ if (use.test) {
       "-Wno-pessimizing-move",
     ]
     configs += [
+      ":disable_ndebug",
       ":target_defaults",
       ":common_defaults",
       "//common-mk:test",
