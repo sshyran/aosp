@@ -183,22 +183,6 @@ executable("cros_nnapi_vts_1_3") {
   ]
 }
 
-pkg_config("cts_defaults") {
-  configs = [
-    ":target_defaults",
-  ]
-  include_dirs = [
-    "chromeos/includes",
-    "common",
-    "common/include",
-    "${sysroot}/usr/include/tensorflow",
-    "${sysroot}/usr/include/tensorflow/nnapi/include",
-    "${sysroot}/usr/include/tensorflow/nnapi/include/external/gemmlowp",
-    "common/random",
-  ]
-  pkg_deps = [ "libnnapi-support" ]
-}
-
 executable("cros_nnapi_cts") {
   configs += [
     "//aosp/frameworks/ml/nn:target_defaults",
