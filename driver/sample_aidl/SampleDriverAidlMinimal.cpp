@@ -25,6 +25,7 @@
 #include <vector>
 
 #include "SampleDriverAidlPartial.h"
+#include "SampleDriverAidlUtils.h"
 
 namespace android {
 namespace nn {
@@ -32,7 +33,7 @@ namespace sample_driver_aidl {
 
 class SampleDriverMinimal : public SampleDriverPartial {
    public:
-    SampleDriverMinimal() : SampleDriverPartial("nnapi-sample_minimal") {}
+    explicit SampleDriverMinimal(const std::string& name) : SampleDriverPartial(name.c_str()) {}
     ndk::ScopedAStatus getCapabilities(aidl_hal::Capabilities* capabilities) override;
 
    private:
@@ -88,6 +89,8 @@ std::vector<bool> SampleDriverMinimal::getSupportedOperationsImpl(const Model& m
 using android::nn::sample_driver_aidl::SampleDriverMinimal;
 
 int main() {
-    std::shared_ptr<SampleDriverMinimal> driver = ndk::SharedRefBase::make<SampleDriverMinimal>();
-    return driver->run();
+    const std::string name = "nnapi-sample_minimal";
+    const std::shared_ptr<SampleDriverMinimal> driver =
+            ndk::SharedRefBase::make<SampleDriverMinimal>(name);
+    return run(driver, name);
 }

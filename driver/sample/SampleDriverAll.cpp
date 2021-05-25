@@ -18,13 +18,18 @@
 
 #include <hidl/LegacySupport.h>
 
+#include <string>
+
 #include "SampleDriverFull.h"
+#include "SampleDriverUtils.h"
 
 using android::sp;
+using android::hardware::neuralnetworks::V1_0::PerformanceInfo;
 using android::nn::sample_driver::SampleDriverFull;
 
 int main() {
-    sp<SampleDriverFull> driver(
-            new SampleDriverFull("nnapi-sample_all", {.execTime = 1.1f, .powerUsage = 1.1f}));
-    return driver->run();
+    const std::string name = "nnapi-sample_all";
+    const auto perf = PerformanceInfo{.execTime = 1.1f, .powerUsage = 1.1f};
+    const auto driver = sp<SampleDriverFull>::make(name.c_str(), perf);
+    return run(driver, name);
 }

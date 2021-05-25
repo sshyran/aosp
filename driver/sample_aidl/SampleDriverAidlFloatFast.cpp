@@ -27,6 +27,7 @@
 #include <vector>
 
 #include "SampleDriverAidlPartial.h"
+#include "SampleDriverAidlUtils.h"
 
 namespace android {
 namespace nn {
@@ -34,7 +35,7 @@ namespace sample_driver_aidl {
 
 class SampleDriverFloatFast : public SampleDriverPartial {
    public:
-    SampleDriverFloatFast() : SampleDriverPartial("nnapi-sample_float_fast") {}
+    explicit SampleDriverFloatFast(const std::string& name) : SampleDriverPartial(name.c_str()) {}
     ndk::ScopedAStatus getCapabilities(aidl_hal::Capabilities* capabilities) override;
 
    private:
@@ -79,7 +80,8 @@ std::vector<bool> SampleDriverFloatFast::getSupportedOperationsImpl(const Model&
 using android::nn::sample_driver_aidl::SampleDriverFloatFast;
 
 int main() {
-    std::shared_ptr<SampleDriverFloatFast> driver =
-            ndk::SharedRefBase::make<SampleDriverFloatFast>();
-    return driver->run();
+    const std::string name = "nnapi-sample_float_fast";
+    const std::shared_ptr<SampleDriverFloatFast> driver =
+            ndk::SharedRefBase::make<SampleDriverFloatFast>(name);
+    return run(driver, name);
 }

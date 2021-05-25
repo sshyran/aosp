@@ -25,6 +25,7 @@
 #include <vector>
 
 #include "SampleDriverPartial.h"
+#include "SampleDriverUtils.h"
 
 namespace android {
 namespace nn {
@@ -32,7 +33,7 @@ namespace sample_driver {
 
 class SampleDriverQuant : public SampleDriverPartial {
    public:
-    SampleDriverQuant() : SampleDriverPartial("nnapi-sample_quant") {}
+    explicit SampleDriverQuant(const std::string& name) : SampleDriverPartial(name.c_str()) {}
     hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
 
    private:
@@ -84,6 +85,7 @@ using android::sp;
 using android::nn::sample_driver::SampleDriverQuant;
 
 int main() {
-    sp<SampleDriverQuant> driver(new SampleDriverQuant());
-    return driver->run();
+    const std::string name = "nnapi-sample_quant";
+    const auto driver = sp<SampleDriverQuant>::make(name);
+    return run(driver, name);
 }

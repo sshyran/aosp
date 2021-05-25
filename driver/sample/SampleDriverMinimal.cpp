@@ -20,11 +20,13 @@
 #include <Utils.h>
 #include <android-base/logging.h>
 
+#include <string>
 #include <thread>
 #include <vector>
 
 #include "NeuralNetworksOEM.h"
 #include "SampleDriverPartial.h"
+#include "SampleDriverUtils.h"
 
 namespace android {
 namespace nn {
@@ -32,7 +34,7 @@ namespace sample_driver {
 
 class SampleDriverMinimal : public SampleDriverPartial {
    public:
-    SampleDriverMinimal() : SampleDriverPartial("nnapi-sample_minimal") {}
+    explicit SampleDriverMinimal(const std::string& name) : SampleDriverPartial(name.c_str()) {}
     hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
 
    private:
@@ -90,6 +92,7 @@ using android::sp;
 using android::nn::sample_driver::SampleDriverMinimal;
 
 int main() {
-    sp<SampleDriverMinimal> driver(new SampleDriverMinimal());
-    return driver->run();
+    const std::string name = "nnapi-sample_minimal";
+    const auto driver = sp<SampleDriverMinimal>::make(name);
+    return run(driver, name);
 }

@@ -21,10 +21,12 @@
 #include <android-base/logging.h>
 #include <hidl/LegacySupport.h>
 
+#include <string>
 #include <thread>
 #include <vector>
 
 #include "SampleDriverPartial.h"
+#include "SampleDriverUtils.h"
 
 namespace android {
 namespace nn {
@@ -32,7 +34,7 @@ namespace sample_driver {
 
 class SampleDriverFloatFast : public SampleDriverPartial {
    public:
-    SampleDriverFloatFast() : SampleDriverPartial("nnapi-sample_float_fast") {}
+    explicit SampleDriverFloatFast(const std::string& name) : SampleDriverPartial(name.c_str()) {}
     hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
 
    private:
@@ -80,6 +82,7 @@ using android::sp;
 using android::nn::sample_driver::SampleDriverFloatFast;
 
 int main() {
-    sp<SampleDriverFloatFast> driver(new SampleDriverFloatFast());
-    return driver->run();
+    const std::string name = "nnapi-sample_float_fast";
+    const auto driver = sp<SampleDriverFloatFast>::make(name);
+    return run(driver, name);
 }

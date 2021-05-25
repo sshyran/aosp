@@ -25,6 +25,7 @@
 #include <vector>
 
 #include "SampleDriverAidlPartial.h"
+#include "SampleDriverAidlUtils.h"
 
 namespace android {
 namespace nn {
@@ -32,7 +33,7 @@ namespace sample_driver_aidl {
 
 class SampleDriverQuant : public SampleDriverPartial {
    public:
-    SampleDriverQuant() : SampleDriverPartial("nnapi-sample_quant") {}
+    explicit SampleDriverQuant(const std::string& name) : SampleDriverPartial(name.c_str()) {}
     ndk::ScopedAStatus getCapabilities(aidl_hal::Capabilities* capabilities) override;
 
    private:
@@ -82,6 +83,8 @@ std::vector<bool> SampleDriverQuant::getSupportedOperationsImpl(const Model& mod
 using android::nn::sample_driver_aidl::SampleDriverQuant;
 
 int main() {
-    std::shared_ptr<SampleDriverQuant> driver = ndk::SharedRefBase::make<SampleDriverQuant>();
-    return driver->run();
+    const std::string name = "nnapi-sample_quant";
+    const std::shared_ptr<SampleDriverQuant> driver =
+            ndk::SharedRefBase::make<SampleDriverQuant>(name);
+    return run(driver, name);
 }

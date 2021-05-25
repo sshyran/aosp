@@ -92,10 +92,6 @@ class SampleDriver : public aidl_hal::BnDevice {
             const std::vector<uint8_t>& token,
             const std::shared_ptr<aidl_hal::IPreparedModelCallback>& callback) override;
 
-    // Starts and runs the driver service.  Typically called from main().
-    // This will return only once the service shuts down.
-    int run();
-
     CpuExecutor getExecutor() const { return CpuExecutor(mOperationResolver); }
     const std::shared_ptr<AidlBufferTracker>& getBufferTracker() const { return mBufferTracker; }
 
