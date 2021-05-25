@@ -2,167 +2,167 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-using namespace test_helper;
+using namespace test_helper;  // NOLINT(google-build-using-namespace)
 
 namespace generated_tests::densify_bool8_1 {
 
 const TestModel& get_test_model() {
     static TestModel model = {
-        .expectFailure = false,
-        .expectedMultinomialDistributionTolerance = 0,
-        .isRelaxed = false,
         .main = {
-                .inputIndexes = {0},
                 .operands = {{ // sparseData
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<bool8>({true, false, false, true, true, true, false, false, false, false, false, false, true, false, false, true}),
-                            .dimensions = {16},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
-                            .numberOfConsumers = 1,
-                            .scale = 0.0f,
                             .type = TestOperandType::TENSOR_BOOL8,
-                            .zeroPoint = 0
+                            .dimensions = {16},
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<bool8>({true, false, false, true, true, true, false, false, false, false, false, false, true, false, false, true})
                         }, { // traversalOrder
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({0, 1, 2, 3}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {4},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({0, 1, 2, 3})
                         }, { // blockMap
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({0, 1}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {2},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({0, 1})
                         }, { // dimFormat
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({0, 0, 0, 0}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {4},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({0, 0, 0, 0})
                         }, { // dimensions
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({2, 2, 2, 2}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {4},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({2, 2, 2, 2})
                         }, { // d0ArrSegments
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {0},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({})
                         }, { // d0ArrIndices
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {0},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({})
                         }, { // d1ArrSegments
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {0},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({})
                         }, { // d1ArrIndices
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {0},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({})
                         }, { // d2ArrSegments
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {0},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({})
                         }, { // d2ArrIndices
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {0},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({})
                         }, { // d3ArrSegments
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {0},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({})
                         }, { // d3ArrIndices
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {0},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
-                        }, { // denseOut
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<bool8>({true, false, true, true, false, true, false, false, false, false, true, false, false, false, false, true}),
-                            .dimensions = {4, 4},
                             .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .data = TestBuffer::createFromVector<int32_t>({})
+                        }, { // denseOut
+                            .type = TestOperandType::TENSOR_BOOL8,
+                            .dimensions = {4, 4},
                             .numberOfConsumers = 0,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_BOOL8,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<bool8>({true, false, true, true, false, true, false, false, false, false, true, false, false, false, false, true})
                         }},
                 .operations = {{
+                            .type = TestOperationType::DENSIFY,
                             .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12},
-                            .outputs = {13},
-                            .type = TestOperationType::DENSIFY
+                            .outputs = {13}
                         }},
+                .inputIndexes = {0},
                 .outputIndexes = {13}
             },
-        .minSupportedVersion = TestHalVersion::UNKNOWN,
-        .referenced = {}
+        .referenced = {},
+        .isRelaxed = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .expectFailure = false,
+        .minSupportedVersion = TestHalVersion::UNKNOWN
     };
     return model;
 }
@@ -175,161 +175,161 @@ namespace generated_tests::densify_bool8_1 {
 
 const TestModel& get_test_model_all_tensors_as_inputs() {
     static TestModel model = {
-        .expectFailure = false,
-        .expectedMultinomialDistributionTolerance = 0,
-        .isRelaxed = false,
         .main = {
-                .inputIndexes = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12},
                 .operands = {{ // sparseData
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<bool8>({true, false, false, true, true, true, false, false, false, false, false, false, true, false, false, true}),
-                            .dimensions = {16},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
-                            .numberOfConsumers = 1,
-                            .scale = 0.0f,
                             .type = TestOperandType::TENSOR_BOOL8,
-                            .zeroPoint = 0
+                            .dimensions = {16},
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<bool8>({true, false, false, true, true, true, false, false, false, false, false, false, true, false, false, true})
                         }, { // traversalOrder
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({0, 1, 2, 3}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {4},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({0, 1, 2, 3})
                         }, { // blockMap
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({0, 1}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {2},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({0, 1})
                         }, { // dimFormat
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({0, 0, 0, 0}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {4},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({0, 0, 0, 0})
                         }, { // dimensions
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({2, 2, 2, 2}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {4},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({2, 2, 2, 2})
                         }, { // d0ArrSegments
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {0},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({})
                         }, { // d0ArrIndices
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {0},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({})
                         }, { // d1ArrSegments
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {0},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({})
                         }, { // d1ArrIndices
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {0},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({})
                         }, { // d2ArrSegments
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {0},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({})
                         }, { // d2ArrIndices
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {0},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({})
                         }, { // d3ArrSegments
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {0},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<int32_t>({})
                         }, { // d3ArrIndices
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({}),
+                            .type = TestOperandType::TENSOR_INT32,
                             .dimensions = {0},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_INT32,
-                            .zeroPoint = 0
-                        }, { // denseOut
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<bool8>({true, false, true, true, false, true, false, false, false, false, true, false, false, false, false, true}),
-                            .dimensions = {4, 4},
                             .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .data = TestBuffer::createFromVector<int32_t>({})
+                        }, { // denseOut
+                            .type = TestOperandType::TENSOR_BOOL8,
+                            .dimensions = {4, 4},
                             .numberOfConsumers = 0,
                             .scale = 0.0f,
-                            .type = TestOperandType::TENSOR_BOOL8,
-                            .zeroPoint = 0
+                            .zeroPoint = 0,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .channelQuant = {},
+                            .isIgnored = false,
+                            .data = TestBuffer::createFromVector<bool8>({true, false, true, true, false, true, false, false, false, false, true, false, false, false, false, true})
                         }},
                 .operations = {{
+                            .type = TestOperationType::DENSIFY,
                             .inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12},
-                            .outputs = {13},
-                            .type = TestOperationType::DENSIFY
+                            .outputs = {13}
                         }},
+                .inputIndexes = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12},
                 .outputIndexes = {13}
             },
-        .minSupportedVersion = TestHalVersion::UNKNOWN,
-        .referenced = {}
+        .referenced = {},
+        .isRelaxed = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .expectFailure = false,
+        .minSupportedVersion = TestHalVersion::UNKNOWN
     };
     return model;
 }
