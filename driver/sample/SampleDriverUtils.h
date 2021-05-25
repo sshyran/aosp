@@ -35,11 +35,6 @@ namespace sample_driver {
 // This will return only once the service shuts down.
 int run(const sp<V1_3::IDevice>& device, const std::string& name);
 
-// Starts and runs all provided driver services.  Typically called from main().
-// This will return only once the services shut down.
-int runAll(const std::vector<std::pair<sp<V1_3::IDevice>, std::string>>& namedDevices,
-           size_t numberOfThreads = 4);
-
 void notify(const sp<V1_0::IPreparedModelCallback>& callback, const V1_3::ErrorStatus& status,
             const sp<SamplePreparedModel>& preparedModel);
 

@@ -30,18 +30,12 @@ namespace nn {
 namespace sample_driver {
 
 int run(const sp<V1_3::IDevice>& device, const std::string& name) {
-    return runAll({{device, name}});
-}
+    constexpr size_t kNumberOfThreads = 4;
+    android::hardware::configureRpcThreadpool(kNumberOfThreads, true);
 
-int runAll(const std::vector<std::pair<sp<V1_3::IDevice>, std::string>>& namedDevices,
-           size_t numberOfThreads) {
-    android::hardware::configureRpcThreadpool(numberOfThreads, true);
-
-    for (const auto& [device, name] : namedDevices) {
-        if (device->registerAsService(name) != android::OK) {
-            LOG(ERROR) << "Could not register service " << name;
-            return 1;
-        }
+    if (device->registerAsService(name) != android::OK) {
+        LOG(ERROR) << "Could not register service " << name;
+        return 1;
     }
 
     android::hardware::joinRpcThreadpool();

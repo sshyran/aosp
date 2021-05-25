@@ -16,147 +16,135 @@
 
 #define LOG_TAG "SampleDriverLimited"
 
-#include <HalInterfaces.h>
-#include <Utils.h>
 #include <android-base/logging.h>
-#include <hidl/LegacySupport.h>
+#include <android/hardware/neuralnetworks/1.3/IDevice.h>
+#include <hidl/HidlTransportSupport.h>
+#include <nnapi/Types.h>
+#include <nnapi/hal/Adapter.h>
 
+#include <algorithm>
+#include <memory>
 #include <string>
-#include <thread>
+#include <utility>
 #include <vector>
 
-#include "SampleDriverPartial.h"
-#include "SampleDriverUtils.h"
+#include "CanonicalDevice.h"
+#include "LimitedSupportDevice.h"
 
-namespace android {
-namespace nn {
-namespace sample_driver {
+namespace android::nn::sample {
+namespace {
 
-class SampleDriverFloatFast : public SampleDriverPartial {
-   public:
-    explicit SampleDriverFloatFast(const std::string& name) : SampleDriverPartial(name.c_str()) {}
-    hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
+std::vector<Capabilities::OperandPerformance> makeOperandPerformance(
+        const Capabilities::PerformanceInfo& perfInfo) {
+    static constexpr OperandType kOperandTypes[] = {
+            OperandType::FLOAT32,
+            OperandType::INT32,
+            OperandType::UINT32,
+            OperandType::TENSOR_FLOAT32,
+            OperandType::TENSOR_INT32,
+            OperandType::TENSOR_QUANT8_ASYMM,
+            OperandType::BOOL,
+            OperandType::TENSOR_QUANT16_SYMM,
+            OperandType::TENSOR_FLOAT16,
+            OperandType::TENSOR_BOOL8,
+            OperandType::FLOAT16,
+            OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            OperandType::TENSOR_QUANT16_ASYMM,
+            OperandType::TENSOR_QUANT8_SYMM,
+            OperandType::TENSOR_QUANT8_ASYMM_SIGNED,
+            // OperandType::SUBGRAPH, OperandType::OEM, and OperandType::TENSOR_OEM_BYTE
+            // intentionally omitted.
+    };
 
-   private:
-    std::vector<bool> getSupportedOperationsImpl(const V1_3::Model& model) const override;
-};
-
-hardware::Return<void> SampleDriverFloatFast::getCapabilities_1_3(getCapabilities_1_3_cb cb) {
-    android::nn::initVLogMask();
-    VLOG(DRIVER) << "getCapabilities()";
-
-    V1_3::Capabilities capabilities = {
-            .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 0.7f, .powerUsage = 1.1f},
-            .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 0.7f, .powerUsage = 1.1f},
-            .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>({1.0f, 1.0f}),
-            .ifPerformance = {.execTime = 1.0f, .powerUsage = 1.0f},
-            .whilePerformance = {.execTime = 1.0f, .powerUsage = 1.0f}};
-    update(&capabilities.operandPerformance, V1_3::OperandType::TENSOR_FLOAT32,
-           {.execTime = 0.8f, .powerUsage = 1.2f});
-    update(&capabilities.operandPerformance, V1_3::OperandType::FLOAT32,
-           {.execTime = 0.8f, .powerUsage = 1.2f});
-
-    cb(V1_3::ErrorStatus::NONE, capabilities);
-    return hardware::Void();
+    std::vector<Capabilities::OperandPerformance> operandPerformance;
+    operandPerformance.reserve(std::size(kOperandTypes));
+    std::transform(std::begin(kOperandTypes), std::end(kOperandTypes),
+                   std::back_inserter(operandPerformance), [&perfInfo](OperandType op) {
+                       return Capabilities::OperandPerformance{.type = op, .info = perfInfo};
+                   });
+    return operandPerformance;
 }
 
-std::vector<bool> SampleDriverFloatFast::getSupportedOperationsImpl(
-        const V1_3::Model& model) const {
+void update(std::vector<Capabilities::OperandPerformance>* operandPerformance, OperandType type,
+            const Capabilities::PerformanceInfo& info) {
+    CHECK(operandPerformance != nullptr);
+    auto it = std::lower_bound(operandPerformance->begin(), operandPerformance->end(), type,
+                               [](const Capabilities::OperandPerformance& perf, OperandType type) {
+                                   return perf.type < type;
+                               });
+    CHECK(it != operandPerformance->end());
+    CHECK_EQ(it->type, type);
+    it->info = info;
+}
+
+Capabilities makeCapabilities(const Capabilities::PerformanceInfo& defaultInfo,
+                              const Capabilities::PerformanceInfo& float32Info,
+                              const Capabilities::PerformanceInfo& relaxedInfo) {
+    auto operandPerformance = makeOperandPerformance(defaultInfo);
+    update(&operandPerformance, OperandType::TENSOR_FLOAT32, float32Info);
+    update(&operandPerformance, OperandType::FLOAT32, float32Info);
+    auto table =
+            Capabilities::OperandPerformanceTable::create(std::move(operandPerformance)).value();
+
+    return {.relaxedFloat32toFloat16PerformanceScalar = relaxedInfo,
+            .relaxedFloat32toFloat16PerformanceTensor = relaxedInfo,
+            .operandPerformance = std::move(table),
+            .ifPerformance = defaultInfo,
+            .whilePerformance = defaultInfo};
+}
+
+Capabilities makeCapabilitiesFloatFast() {
+    const Capabilities::PerformanceInfo defaultInfo = {.execTime = 1.0f, .powerUsage = 1.0f};
+    const Capabilities::PerformanceInfo float32Info = {.execTime = 0.8f, .powerUsage = 1.2f};
+    const Capabilities::PerformanceInfo relaxedInfo = {.execTime = 0.7f, .powerUsage = 1.1f};
+    return makeCapabilities(defaultInfo, float32Info, relaxedInfo);
+}
+
+Capabilities makeCapabilitiesFloatSlow() {
+    const Capabilities::PerformanceInfo defaultInfo = {.execTime = 1.0f, .powerUsage = 1.0f};
+    const Capabilities::PerformanceInfo float32Info = {.execTime = 1.3f, .powerUsage = 0.7f};
+    const Capabilities::PerformanceInfo relaxedInfo = {.execTime = 1.2f, .powerUsage = 0.6f};
+    return makeCapabilities(defaultInfo, float32Info, relaxedInfo);
+}
+
+Capabilities makeCapabilitiesMinimal() {
+    const Capabilities::PerformanceInfo defaultInfo = {.execTime = 1.0f, .powerUsage = 1.0f};
+    const Capabilities::PerformanceInfo float32Info = {.execTime = 0.4f, .powerUsage = 0.5f};
+    const Capabilities::PerformanceInfo relaxedInfo = {.execTime = 0.4f, .powerUsage = 0.5f};
+    return makeCapabilities(defaultInfo, float32Info, relaxedInfo);
+}
+
+Capabilities makeCapabilitiesQuant() {
+    const Capabilities::PerformanceInfo info = {.execTime = 50.0f, .powerUsage = 1.0f};
+    return makeCapabilities(info, info, info);
+}
+
+GeneralResult<std::vector<bool>> getSupportedOperationsFloat(const Model& model) {
     const size_t count = model.main.operations.size();
     std::vector<bool> supported(count);
     for (size_t i = 0; i < count; i++) {
-        const V1_3::Operation& operation = model.main.operations[i];
-        if (!isExtensionOperationType(operation.type) && operation.inputs.size() > 0) {
-            const V1_3::Operand& firstOperand = model.main.operands[operation.inputs[0]];
-            supported[i] = firstOperand.type == V1_3::OperandType::TENSOR_FLOAT32;
+        const Operation& operation = model.main.operations[i];
+        if (!isExtension(operation.type) && !operation.inputs.empty()) {
+            const Operand& firstOperand = model.main.operands[operation.inputs[0]];
+            supported[i] = firstOperand.type == OperandType::TENSOR_FLOAT32;
         }
     }
     return supported;
 }
 
-class SampleDriverFloatSlow : public SampleDriverPartial {
-   public:
-    explicit SampleDriverFloatSlow(const std::string& name) : SampleDriverPartial(name.c_str()) {}
-    hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
-
-   private:
-    std::vector<bool> getSupportedOperationsImpl(const V1_3::Model& model) const override;
-};
-
-hardware::Return<void> SampleDriverFloatSlow::getCapabilities_1_3(getCapabilities_1_3_cb cb) {
-    android::nn::initVLogMask();
-    VLOG(DRIVER) << "getCapabilities()";
-
-    V1_3::Capabilities capabilities = {
-            .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 1.2f, .powerUsage = 0.6f},
-            .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 1.2f, .powerUsage = 0.6f},
-            .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>({1.0f, 1.0f}),
-            .ifPerformance = {.execTime = 1.0f, .powerUsage = 1.0f},
-            .whilePerformance = {.execTime = 1.0f, .powerUsage = 1.0f}};
-    update(&capabilities.operandPerformance, V1_3::OperandType::TENSOR_FLOAT32,
-           {.execTime = 1.3f, .powerUsage = 0.7f});
-    update(&capabilities.operandPerformance, V1_3::OperandType::FLOAT32,
-           {.execTime = 1.3f, .powerUsage = 0.7f});
-
-    cb(V1_3::ErrorStatus::NONE, capabilities);
-    return hardware::Void();
-}
-
-std::vector<bool> SampleDriverFloatSlow::getSupportedOperationsImpl(
-        const V1_3::Model& model) const {
-    const size_t count = model.main.operations.size();
-    std::vector<bool> supported(count);
-    for (size_t i = 0; i < count; i++) {
-        const V1_3::Operation& operation = model.main.operations[i];
-        if (!isExtensionOperationType(operation.type) && operation.inputs.size() > 0) {
-            const V1_3::Operand& firstOperand = model.main.operands[operation.inputs[0]];
-            supported[i] = firstOperand.type == V1_3::OperandType::TENSOR_FLOAT32;
-        }
-    }
-    return supported;
-}
-
-class SampleDriverMinimal : public SampleDriverPartial {
-   public:
-    explicit SampleDriverMinimal(const std::string& name) : SampleDriverPartial(name.c_str()) {}
-    hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
-
-   private:
-    std::vector<bool> getSupportedOperationsImpl(const V1_3::Model& model) const override;
-};
-
-hardware::Return<void> SampleDriverMinimal::getCapabilities_1_3(getCapabilities_1_3_cb cb) {
-    android::nn::initVLogMask();
-    VLOG(DRIVER) << "getCapabilities()";
-
-    V1_3::Capabilities capabilities = {
-            .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 0.4f, .powerUsage = 0.5f},
-            .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 0.4f, .powerUsage = 0.5f},
-            .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>({1.0f, 1.0f}),
-            .ifPerformance = {.execTime = 1.0f, .powerUsage = 1.0f},
-            .whilePerformance = {.execTime = 1.0f, .powerUsage = 1.0f}};
-    update(&capabilities.operandPerformance, V1_3::OperandType::TENSOR_FLOAT32,
-           {.execTime = 0.4f, .powerUsage = 0.5f});
-    update(&capabilities.operandPerformance, V1_3::OperandType::FLOAT32,
-           {.execTime = 0.4f, .powerUsage = 0.5f});
-
-    cb(V1_3::ErrorStatus::NONE, capabilities);
-    return hardware::Void();
-}
-
-std::vector<bool> SampleDriverMinimal::getSupportedOperationsImpl(const V1_3::Model& model) const {
+GeneralResult<std::vector<bool>> getSupportedOperationsMinimal(const Model& model) {
     const size_t count = model.main.operations.size();
     std::vector<bool> supported(count);
     // Simulate supporting just a few ops
     for (size_t i = 0; i < count; i++) {
         supported[i] = false;
-        const V1_3::Operation& operation = model.main.operations[i];
+        const Operation& operation = model.main.operations[i];
         switch (operation.type) {
-            case V1_3::OperationType::ADD:
-            case V1_3::OperationType::CONCATENATION:
-            case V1_3::OperationType::CONV_2D: {
-                const V1_3::Operand& firstOperand = model.main.operands[operation.inputs[0]];
-                if (firstOperand.type == V1_3::OperandType::TENSOR_FLOAT32) {
+            case OperationType::ADD:
+            case OperationType::CONCATENATION:
+            case OperationType::CONV_2D: {
+                const Operand& firstOperand = model.main.operands[operation.inputs[0]];
+                if (firstOperand.type == OperandType::TENSOR_FLOAT32) {
                     supported[i] = true;
                 }
                 break;
@@ -168,45 +156,21 @@ std::vector<bool> SampleDriverMinimal::getSupportedOperationsImpl(const V1_3::Mo
     return supported;
 }
 
-class SampleDriverQuant : public SampleDriverPartial {
-   public:
-    explicit SampleDriverQuant(const std::string& name) : SampleDriverPartial(name.c_str()) {}
-    hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
-
-   private:
-    std::vector<bool> getSupportedOperationsImpl(const V1_3::Model& model) const override;
-};
-
-hardware::Return<void> SampleDriverQuant::getCapabilities_1_3(getCapabilities_1_3_cb cb) {
-    android::nn::initVLogMask();
-    VLOG(DRIVER) << "getCapabilities()";
-
-    V1_3::Capabilities capabilities = {
-            .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 50.0f, .powerUsage = 1.0f},
-            .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 50.0f, .powerUsage = 1.0f},
-            .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>({50.0f, 1.0f}),
-            .ifPerformance = {.execTime = 50.0f, .powerUsage = 1.0f},
-            .whilePerformance = {.execTime = 50.0f, .powerUsage = 1.0f}};
-
-    cb(V1_3::ErrorStatus::NONE, capabilities);
-    return hardware::Void();
+bool isQuantized(OperandType opType) {
+    return opType == OperandType::TENSOR_QUANT8_ASYMM ||
+           opType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED;
 }
 
-static bool isQuantized(V1_3::OperandType opType) {
-    return opType == V1_3::OperandType::TENSOR_QUANT8_ASYMM ||
-           opType == V1_3::OperandType::TENSOR_QUANT8_ASYMM_SIGNED;
-}
-
-std::vector<bool> SampleDriverQuant::getSupportedOperationsImpl(const V1_3::Model& model) const {
+GeneralResult<std::vector<bool>> getSupportedOperationsQuant(const Model& model) {
     const size_t count = model.main.operations.size();
     std::vector<bool> supported(count);
     for (size_t i = 0; i < count; i++) {
-        const V1_3::Operation& operation = model.main.operations[i];
-        if (!isExtensionOperationType(operation.type) && operation.inputs.size() > 0) {
-            const V1_3::Operand& firstOperand = model.main.operands[operation.inputs[0]];
+        const Operation& operation = model.main.operations[i];
+        if (!isExtension(operation.type) && !operation.inputs.empty()) {
+            const Operand& firstOperand = model.main.operands[operation.inputs[0]];
             supported[i] = isQuantized(firstOperand.type);
-            if (operation.type == V1_3::OperationType::SELECT) {
-                const V1_3::Operand& secondOperand = model.main.operands[operation.inputs[1]];
+            if (operation.type == OperationType::SELECT) {
+                const Operand& secondOperand = model.main.operands[operation.inputs[1]];
                 supported[i] = isQuantized(secondOperand.type);
             }
         }
@@ -214,33 +178,68 @@ std::vector<bool> SampleDriverQuant::getSupportedOperationsImpl(const V1_3::Mode
     return supported;
 }
 
-}  // namespace sample_driver
-}  // namespace nn
-}  // namespace android
+SharedDevice makeDevice(std::string name, Capabilities capabilities,
+                        LimitedSupportDevice::SupportedOperationsFunction getSupportedOperations) {
+    auto device = std::make_shared<const Device>(std::move(name));
+    auto limitedDevice = std::make_shared<const LimitedSupportDevice>(
+            std::move(device), std::move(capabilities), std::move(getSupportedOperations));
+    return limitedDevice;
+}
 
-using android::sp;
-using android::hardware::neuralnetworks::V1_0::PerformanceInfo;
-using android::nn::sample_driver::runAll;
-using android::nn::sample_driver::SampleDriverFloatFast;
-using android::nn::sample_driver::SampleDriverFloatSlow;
-using android::nn::sample_driver::SampleDriverMinimal;
-using android::nn::sample_driver::SampleDriverQuant;
+std::vector<SharedDevice> getDevices() {
+    SharedDevice device;
+    std::vector<SharedDevice> devices;
+    devices.reserve(4);
+
+    device = makeDevice("nnapi-sample_float_fast", makeCapabilitiesFloatFast(),
+                        getSupportedOperationsFloat);
+    devices.push_back(std::move(device));
+
+    device = makeDevice("nnapi-sample_float_slow", makeCapabilitiesFloatSlow(),
+                        getSupportedOperationsFloat);
+    devices.push_back(std::move(device));
+
+    device = makeDevice("nnapi-sample_minimal", makeCapabilitiesMinimal(),
+                        getSupportedOperationsMinimal);
+    devices.push_back(std::move(device));
+
+    device = makeDevice("nnapi-sample_quant", makeCapabilitiesQuant(), getSupportedOperationsQuant);
+    devices.push_back(std::move(device));
+
+    return devices;
+}
 
 int main() {
-    const std::string nameFloatFast = "nnapi-sample_float_fast";
-    const auto driverFloatFast = sp<SampleDriverFloatFast>::make(nameFloatFast);
+    constexpr size_t kNumberOfThreads = 4;
+    hardware::configureRpcThreadpool(kNumberOfThreads, true);
 
-    const std::string nameFloatSlow = "nnapi-sample_float_slow";
-    const auto driverFloatSlow = sp<SampleDriverFloatSlow>::make(nameFloatSlow);
+    // Get the canonical interface objects.
+    const auto devices = getDevices();
 
-    const std::string nameMinimal = "nnapi-sample_minimal";
-    const auto driverMinimal = sp<SampleDriverMinimal>::make(nameMinimal);
+    // Adapt all canonical interface objects to HIDL interface objects.
+    std::vector<sp<hardware::neuralnetworks::V1_3::IDevice>> hidlDevices;
+    hidlDevices.reserve(devices.size());
+    std::transform(
+            devices.begin(), devices.end(), std::back_inserter(hidlDevices),
+            [](const auto& device) { return hardware::neuralnetworks::adapter::adapt(device); });
 
-    const std::string nameQuant = "nnapi-sample_quant";
-    const auto driverQuant = sp<SampleDriverQuant>::make(nameQuant);
+    // Register all HIDL interface objects.
+    CHECK_EQ(devices.size(), hidlDevices.size());
+    for (size_t i = 0; i < hidlDevices.size(); ++i) {
+        if (hidlDevices[i]->registerAsService(devices[i]->getName()) != android::OK) {
+            LOG(ERROR) << "Could not register service " << devices[i]->getName();
+            return 1;
+        }
+    }
 
-    return runAll({{driverFloatFast, nameFloatFast},
-                   {driverFloatSlow, nameFloatSlow},
-                   {driverMinimal, nameMinimal},
-                   {driverQuant, nameQuant}});
+    hardware::joinRpcThreadpool();
+    LOG(ERROR) << "Service exited!";
+    return 1;
+}
+
+}  // namespace
+}  // namespace android::nn::sample
+
+int main() {
+    return android::nn::sample::main();
 }
