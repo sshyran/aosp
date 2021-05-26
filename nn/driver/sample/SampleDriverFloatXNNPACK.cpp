@@ -1460,7 +1460,7 @@ class Subgraph {
                                            /*input1_id=*/xnnpackTensors[ins[0]],
                                            /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
             if (status != xnn_status_success) {
-                LOG(ERROR) << "XNNPACK xnn_define_bankers_rounding FAILED";
+                LOG(ERROR) << "XNNPACK xnn_define_square_root FAILED";
                 return ErrorStatus::GENERAL_FAILURE;
             }
         }
