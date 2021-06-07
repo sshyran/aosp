@@ -346,17 +346,12 @@ static GeneralResult<SharedHandle> createCacheHandle(const std::string& filename
                                                      bool createIfNotExist) {
     auto fd = base::unique_fd(open(filename.c_str(), createIfNotExist ? (O_RDWR | O_CREAT) : O_RDWR,
                                    S_IRUSR | S_IWUSR));
-    if (fd.get() == -1) {
+    if (!fd.ok()) {
         return NN_ERROR(ErrorStatus::GENERAL_FAILURE)
                << "Failed to " << (createIfNotExist ? "open or create" : "open") << " cache file "
                << filename;
     }
-    std::vector<base::unique_fd> fds;
-    fds.push_back(std::move(fd));
-    return std::make_shared<const Handle>(Handle{
-            .fds = std::move(fds),
-            .ints = {},
-    });
+    return std::make_shared<const Handle>(std::move(fd));
 }
 
 // Opens a list of cache files and returns a vector of shared handles. The files
