@@ -947,18 +947,19 @@ class GpuNnapiTest : public testing::TestWithParam<NameAndDevice> {
             auto [nnapiSuccess, nnapiSyncFd] = nnapi->run(gpuSyncFd);
             ASSERT_TRUE(nnapiSuccess);
 
-            checkResults<dataType>(nnapiSyncFd);
+            checkResults<dataType>(std::move(nnapiSyncFd));
         }
     }
 
     template <Type dataType>
-    void checkResults(const base::unique_fd& syncFd) {
+    void checkResults(base::unique_fd syncFd) {
         using ElementType = typename TestTypeHelper<dataType>::ElementType;
 
         // Lock the buffer with the sync fence
+        // AHardwareBuffer_lock will take the ownership and close the sync fence even on errors
         void* data;
         ASSERT_EQ(AHardwareBuffer_lock(mNnapiOutput, AHARDWAREBUFFER_USAGE_CPU_READ_OFTEN,
-                                       syncFd.get(), /*rect=*/nullptr, &data),
+                                       syncFd.release(), /*rect=*/nullptr, &data),
                   0);
 
         // Compare the actual results with the expect value
