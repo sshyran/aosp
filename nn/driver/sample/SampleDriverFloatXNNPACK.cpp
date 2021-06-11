@@ -459,6 +459,8 @@ class Subgraph {
                 return VisitAveragePool2DNode(subgraph, operation, operands, xnnpackTensors);
             case OperationType::CONV_2D:
                 return VisitConv2DNode(subgraph, operation, operands, xnnpackTensors);
+            case OperationType::DEPTH_TO_SPACE:
+                return VisitDepthToSpaceNode(subgraph, operation, operands, xnnpackTensors);
             case OperationType::DEPTHWISE_CONV_2D:
                 return VisitDepthwiseConv2DNode(subgraph, operation, operands, xnnpackTensors);
             case OperationType::DIV:
@@ -720,6 +722,38 @@ class Subgraph {
                     /*output_id=*/xnnpackTensors[outs[0]], flags);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_convolution_2d FAILED";
+                return ErrorStatus::GENERAL_FAILURE;
+            }
+        }
+        return ErrorStatus::NONE;
+    }
+    static ErrorStatus VisitDepthToSpaceNode(xnn_subgraph_t subgraph, const Operation& operation,
+                                            RunTimeOperandInfo* operands,
+                                            const std::vector<uint32_t>& xnnpackTensors) {
+        const hidl_vec<uint32_t>& ins = operation.inputs;
+        const hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[1]].lifetime));
+        int block_size = static_cast<uint32_t>(getScalarData<int32_t>(operands[ins[1]]));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        bool use_nchw = false;
+        if (ins.size() == 3 && operands[ins[2]].type == OperandType::BOOL) {
+            use_nchw = getScalarData<bool>(operands[2]);
+        }
+        if (use_nchw) {
+            VLOG(DRIVER)
+                    << "XNNPACK VisitDepthToSpaceNode FAILED: only NHWC layout is supported";
+            return ErrorStatus::INVALID_ARGUMENT;
+        }
+        if (subgraph != nullptr) {
+            const xnn_status status = xnn_define_depth_to_space(subgraph,
+                    /*input_id=*/xnnpackTensors[ins[0]],
+                    /*output_id=*/xnnpackTensors[outs[0]],
+                    block_size,
+                    /*flag=*/0
+            );
+            if (status != xnn_status_success) {
+                LOG(ERROR) << "XNNPACK xnn_define_depth_to_space FAILED";
                 return ErrorStatus::GENERAL_FAILURE;
             }
         }
