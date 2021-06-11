@@ -463,6 +463,8 @@ class Subgraph {
                 return VisitDepthwiseConv2DNode(subgraph, operation, operands, xnnpackTensors);
             case OperationType::DIV:
                 return VisitDivNode(subgraph, operation, operands, xnnpackTensors);
+            case OperationType::ELU:
+                return VisitEluNode(subgraph, operation, operands, xnnpackTensors);
             case OperationType::FLOOR:
                 return VisitFloorNode(subgraph, operation, operands, xnnpackTensors);
             case OperationType::FULLY_CONNECTED:
@@ -840,6 +842,29 @@ class Subgraph {
                                       /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_divide FAILED";
+                return ErrorStatus::GENERAL_FAILURE;
+            }
+        }
+        return ErrorStatus::NONE;
+    }
+    static ErrorStatus VisitEluNode(xnn_subgraph_t subgraph, const Operation& operation,
+                                               RunTimeOperandInfo* operands,
+                                               const std::vector<uint32_t>& xnnpackTensors) {
+        const hidl_vec<uint32_t>& ins = operation.inputs;
+        const hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[1]].lifetime));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+
+        float alpha = getScalarData<float>(operands[ins[1]]);
+
+         if (subgraph != nullptr) {
+            const xnn_status status =
+                    xnn_define_elu(subgraph, alpha,
+                                     /*input_id=*/xnnpackTensors[ins[0]],
+                                     /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
+            if (status != xnn_status_success) {
+                LOG(ERROR) << "XNNPACK xnn_define_elu FAILED";
                 return ErrorStatus::GENERAL_FAILURE;
             }
         }
