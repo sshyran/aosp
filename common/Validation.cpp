@@ -1252,7 +1252,6 @@ Result<Version> validateRequestArgumentsForModel(
 Result<Version> validateRequestForModelImpl(const Request& request, const Model& model,
                                             bool allowUnspecifiedOutput) {
     auto version = NN_TRY(validateRequest(request));
-    version = combineVersions(version, NN_TRY(validateModel(model)));
     version = combineVersions(version,
                               NN_TRY(validateRequestArgumentsForModel(
                                       request.inputs, model.main.inputIndexes, model.main.operands,
