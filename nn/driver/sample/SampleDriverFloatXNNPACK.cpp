@@ -458,6 +458,16 @@ class Subgraph {
         }
         return ErrorStatus::NONE;
     }
+    static ErrorStatus CheckTransposeConvolutionParams(int32_t stride_width,
+                                                       int32_t stride_height) {
+        if (stride_width <= 0) {
+            return ErrorStatus::INVALID_ARGUMENT;
+        }
+        if (stride_height <= 0) {
+            return ErrorStatus::INVALID_ARGUMENT;
+        }
+        return ErrorStatus::NONE;
+    }
     static ErrorStatus VisitNode(xnn_subgraph_t subgraph, const Operation& operation,
                                  RunTimeOperandInfo* operands,
                                  const std::vector<uint32_t>& xnnpackTensors) {
@@ -521,6 +531,8 @@ class Subgraph {
                 return VisitSubNode(subgraph, operation, operands, xnnpackTensors);
             case OperationType::SOFTMAX:
                 return VisitSoftmaxNode(subgraph, operation, operands, xnnpackTensors);
+            case OperationType::TRANSPOSE_CONV_2D:
+                return VisitTransposeConv2D(subgraph, operation, operands, xnnpackTensors);
             default:
                 return ErrorStatus::INVALID_ARGUMENT;
         }
@@ -1476,6 +1488,118 @@ class Subgraph {
                                        /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_softmax FAILED";
+                return ErrorStatus::GENERAL_FAILURE;
+            }
+        }
+        return ErrorStatus::NONE;
+    }
+    static ErrorStatus VisitTransposeConv2D(xnn_subgraph_t subgraph, const Operation& operation,
+                                        RunTimeOperandInfo* operands,
+                                        const std::vector<uint32_t>& xnnpackTensors) {
+        const hidl_vec<uint32_t>& ins = operation.inputs;
+        const hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[1]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[1]].lifetime));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[2]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[2]].lifetime));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
+        bool is_implicit = false;
+        if (operands[ins[3]].type == OperandType::TENSOR_INT32) {
+            is_implicit = true;
+        }
+        // Make sure all params are constant
+        for (uint32_t i = 3; i < ins.size(); i++) {
+            NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[i]].lifetime));
+        }
+        bool use_nchw = false;
+        if (ins.size() >= 9 && operands[ins[8]].type == OperandType::BOOL) {
+            use_nchw = getScalarData<bool>(operands[ins[8]]);
+        }
+        if (ins.size() >= 11) {
+            use_nchw = getScalarData<bool>(operands[ins[10]]);
+        }
+        if (use_nchw) {
+            VLOG(DRIVER) << "XNNPACK VisitTransposeConv2DNode FAILED: only NHWC layout is supported";
+            return ErrorStatus::INVALID_ARGUMENT;
+        }
+        const RunTimeOperandInfo& filter = operands[ins[1]];
+        const uint32_t output_channels = filter.dimensions[0];
+        const uint32_t kernel_height = filter.dimensions[1];
+        const uint32_t kernel_width = filter.dimensions[2];
+        const uint32_t input_channels = filter.dimensions[3];
+        int32_t stride_width, stride_height, activation;
+        uint32_t input_padding_top = 0;
+        uint32_t input_padding_right = 0;
+        uint32_t input_padding_bottom = 0;
+        uint32_t input_padding_left = 0;
+        uint32_t adjustment_height = 0;
+        uint32_t adjustment_width = 0;
+        uint32_t flags = 0;
+        if (is_implicit) {
+            // Implicit padding
+            stride_width = getScalarData<int32_t>(operands[ins[5]]);
+            stride_height = getScalarData<int32_t>(operands[ins[6]]);
+            activation = getScalarData<int32_t>(operands[ins[7]]);
+            const RunTimeOperandInfo& input_shape = operands[ins[0]];
+            const uint32_t input_height = input_shape.dimensions[1];
+            const uint32_t input_width = input_shape.dimensions[2];
+            const int32_t* output_shape_data =
+                                        reinterpret_cast<const int32_t*>(operands[ins[3]].buffer);
+            const uint32_t output_height = output_shape_data[1];
+            const uint32_t output_width = output_shape_data[2];
+
+            const int total_height_padding =
+                                stride_height * (input_height - 1) + kernel_height - output_height;
+
+            if (total_height_padding < 0) {
+                adjustment_height = abs(total_height_padding);
+            } else {
+                input_padding_top = (total_height_padding+1) / 2;
+                input_padding_bottom = total_height_padding - input_padding_top;
+            }
+
+            const int total_width_padding =
+                                    stride_width * (input_width - 1) + kernel_width - output_width;
+
+            if (total_width_padding < 0) {
+                adjustment_width = abs(total_width_padding);
+            } else {
+                input_padding_left = (total_width_padding+1) / 2;
+                input_padding_right = total_width_padding - input_padding_left;
+            }
+            // flag is not support for deconv
+            // getScalarData<int32_t>(operands[ins[3]]);
+        } else {
+            // Explicit padding
+            input_padding_left = static_cast<uint32_t>(getScalarData<int32_t>(operands[ins[3]]));
+            input_padding_right = static_cast<uint32_t>(getScalarData<int32_t>(operands[ins[4]]));
+            input_padding_top = static_cast<uint32_t>(getScalarData<int32_t>(operands[ins[5]]));
+            input_padding_bottom = static_cast<uint32_t>(getScalarData<int32_t>(operands[ins[6]]));
+            stride_width = getScalarData<int32_t>(operands[ins[7]]);
+            stride_height = getScalarData<int32_t>(operands[ins[8]]);
+            activation = getScalarData<int32_t>(operands[ins[9]]);
+        }
+        NN_DRIVER_RETURN_IF_ERROR(CheckTransposeConvolutionParams(stride_width, stride_height));
+        float output_min = -std::numeric_limits<float>::infinity();
+        float output_max = +std::numeric_limits<float>::infinity();
+        NN_DRIVER_RETURN_IF_ERROR(
+                ConvertActivationToOutputRange(activation, &output_min, &output_max));
+        if (subgraph != nullptr) {
+            const xnn_status status = xnn_define_deconvolution_2d(
+                subgraph, input_padding_top, input_padding_right, input_padding_bottom,
+                input_padding_left, adjustment_height, adjustment_width,
+                kernel_height, kernel_width,
+                stride_height, stride_width,
+                /*dilation_height=*/1, /*dilation_width=*/1,
+                /*groups=*/1, input_channels, output_channels,
+                output_min, output_max,
+                /*input_id=*/xnnpackTensors[ins[0]],
+                /*filter_id=*/xnnpackTensors[ins[1]],
+                /*bias_id=*/xnnpackTensors[ins[2]],
+                /*output_id=*/xnnpackTensors[outs[0]], flags);
+            if (status != xnn_status_success) {
+                LOG(ERROR) << "XNNPACK xnn_define_convolution_2d FAILED";
                 return ErrorStatus::GENERAL_FAILURE;
             }
         }
