@@ -199,8 +199,8 @@ class Subgraph {
         std::vector<uint32_t> xnnpackTensors(operands.size());
         for (int t : tensors) {
             if (t < 0) continue;
-            if (operands[tensors[t]].type != OperandType::TENSOR_FLOAT32) {
-                LOG(ERROR) << "XNNPACK only support FLOAT32 tensors";
+            if (CheckTensorForXNNType(operands[tensors[t]].type) == ErrorStatus::INVALID_ARGUMENT) {
+                LOG(ERROR) << "XNNPACK only support FLOAT32 and INT32 tensors";
                 return nullptr;
             }
             uint32_t flags = 0;
@@ -222,9 +222,19 @@ class Subgraph {
             for (size_t i = 0; i < dims.size(); i++) {
                 dims[i] = operands[tensors[t]].dimensions[i];
             }
-            const xnn_status status = xnn_define_tensor_value(
+            xnn_status status;
+            if (operands[tensors[t]].type == OperandType::TENSOR_INT32) {
+                status = xnn_define_quantized_tensor_value(
+                    subgraph.get(), xnn_datatype_qint32,
+                    /*zero_point=*/0, /*scale=*/1.0,
+                    dims.size(), dims.data(), data,
+                    static_cast<uint32_t>(t), flags, &xnnpackTensors[t]
+                );
+            } else {
+                status = xnn_define_tensor_value(
                     subgraph.get(), xnn_datatype_fp32, dims.size(), dims.data(), data,
                     static_cast<uint32_t>(t), flags, &xnnpackTensors[t]);
+            }
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_tensor_value failed";
                 return nullptr;
@@ -388,8 +398,9 @@ class Subgraph {
         }
         return ErrorStatus::NONE;
     }
-    static ErrorStatus CheckTensorFloatType(OperandType tensor_type) {
-        if (tensor_type != OperandType::TENSOR_FLOAT32) {
+    static ErrorStatus CheckTensorForXNNType(OperandType tensor_type) {
+        if (tensor_type != OperandType::TENSOR_FLOAT32 &&
+            tensor_type != OperandType::TENSOR_INT32) {
             return ErrorStatus::INVALID_ARGUMENT;
         }
         return ErrorStatus::NONE;
@@ -519,8 +530,8 @@ class Subgraph {
                                     const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         if (subgraph != nullptr) {
             const xnn_status status =
                     xnn_define_abs(subgraph, /*input_id=*/xnnpackTensors[ins[0]],
@@ -537,10 +548,10 @@ class Subgraph {
                                     const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[1]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[1]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[2]].lifetime));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         float outputMin = -std::numeric_limits<float>::infinity();
         float outputMax = +std::numeric_limits<float>::infinity();
         int activation = getScalarData<int32_t>(operands[ins[2]]);
@@ -564,8 +575,8 @@ class Subgraph {
                                               const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         // Make sure all scalar params are constant.
         for (uint32_t i = 1; i < ins.size(); i++) {
             NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[i]].lifetime));
@@ -641,12 +652,12 @@ class Subgraph {
                                        const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[1]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[1]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[1]].lifetime));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[2]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[2]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[2]].lifetime));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         // Make sure all scalar params are constant.
         for (uint32_t i = 3; i < ins.size(); i++) {
             NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[i]].lifetime));
@@ -732,10 +743,10 @@ class Subgraph {
                                             const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[1]].lifetime));
         int block_size = static_cast<uint32_t>(getScalarData<int32_t>(operands[ins[1]]));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         bool use_nchw = false;
         if (ins.size() == 3 && operands[ins[2]].type == OperandType::BOOL) {
             use_nchw = getScalarData<bool>(operands[2]);
@@ -764,12 +775,12 @@ class Subgraph {
                                                 const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[1]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[1]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[1]].lifetime));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[2]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[2]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[2]].lifetime));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         // Make sure all scalar params are constant.
         for (uint32_t i = 3; i < ins.size(); i++) {
             NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[i]].lifetime));
@@ -859,10 +870,10 @@ class Subgraph {
                                     const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[1]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[1]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[2]].lifetime));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         float outputMin = -std::numeric_limits<float>::infinity();
         float outputMax = +std::numeric_limits<float>::infinity();
         int activation = getScalarData<int32_t>(operands[ins[2]]);
@@ -886,9 +897,9 @@ class Subgraph {
                                                const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[1]].lifetime));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
 
         float alpha = getScalarData<float>(operands[ins[1]]);
 
@@ -909,13 +920,13 @@ class Subgraph {
                                                const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[1]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[1]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[1]].lifetime));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[2]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[2]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[2]].lifetime));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[3]].lifetime));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         float outputMin = -std::numeric_limits<float>::infinity();
         float outputMax = +std::numeric_limits<float>::infinity();
         int activation = getScalarData<int32_t>(operands[ins[3]]);
@@ -941,8 +952,8 @@ class Subgraph {
                                       const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         if (subgraph != nullptr) {
             const xnn_status status =
                     xnn_define_floor(subgraph,
@@ -960,8 +971,8 @@ class Subgraph {
                                           const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         if (subgraph != nullptr) {
             const xnn_status status =
                     xnn_define_hardswish(subgraph, /*input_id=*/xnnpackTensors[ins[0]],
@@ -978,8 +989,8 @@ class Subgraph {
                                          const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         if (subgraph != nullptr) {
             const xnn_status status =
                     xnn_define_sigmoid(subgraph, /*input_id=*/xnnpackTensors[ins[0]],
@@ -996,8 +1007,8 @@ class Subgraph {
                                           const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         // Make sure all scalar params are constant.
         for (uint32_t i = 1; i < ins.size(); i++) {
             NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[i]].lifetime));
@@ -1074,10 +1085,10 @@ class Subgraph {
                                         const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[1]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[1]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[2]].lifetime));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         float outputMin = -std::numeric_limits<float>::infinity();
         float outputMax = +std::numeric_limits<float>::infinity();
         int activation = getScalarData<int32_t>(operands[ins[2]]);
@@ -1101,12 +1112,12 @@ class Subgraph {
                                      const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorShape(operands[ins[0]].dimensions, 4));
         NN_DRIVER_RETURN_IF_ERROR(CheckAxesTensorShape(operands[ins[1]].dimensions));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[1]].lifetime));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[2]].lifetime));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorShape(operands[outs[0]].dimensions, 4));
         int keep_dims = getScalarData<int32_t>(operands[ins[2]]);
         if (keep_dims <= 0) {
@@ -1142,10 +1153,10 @@ class Subgraph {
                                         const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[1]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[1]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[2]].lifetime));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         float outputMin = -std::numeric_limits<float>::infinity();
         float outputMax = +std::numeric_limits<float>::infinity();
         int activation = getScalarData<int32_t>(operands[ins[2]]);
@@ -1169,10 +1180,10 @@ class Subgraph {
                                     const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[1]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[1]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[2]].lifetime));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         int activation = getScalarData<int32_t>(operands[ins[2]]);
         float outputMin = -std::numeric_limits<float>::infinity();
         float outputMax = +std::numeric_limits<float>::infinity();
@@ -1196,8 +1207,8 @@ class Subgraph {
                                     const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         if (subgraph != nullptr) {
             const xnn_status status =
                     xnn_define_negate(subgraph,
@@ -1215,12 +1226,12 @@ class Subgraph {
                                       const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
         NN_DRIVER_RETURN_IF_ERROR(
                 CheckTensorShape(operands[ins[0]].dimensions, 1, XNN_MAX_TENSOR_DIMS));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[1]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[1]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckSlopeTensorShape(operands[ins[1]].dimensions));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         NN_DRIVER_RETURN_IF_ERROR(
                 CheckTensorShape(operands[outs[0]].dimensions, 1, XNN_MAX_TENSOR_DIMS));
         if (subgraph != nullptr) {
@@ -1240,11 +1251,11 @@ class Subgraph {
                                     const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
         NN_DRIVER_RETURN_IF_ERROR(
                 CheckTensorShape(operands[ins[0]].dimensions, 1, XNN_MAX_TENSOR_DIMS));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[1]].lifetime));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         NN_DRIVER_RETURN_IF_ERROR(
                 CheckTensorShape(operands[outs[0]].dimensions, 1, XNN_MAX_TENSOR_DIMS));
         const int32_t* paddings_data = reinterpret_cast<const int32_t*>(operands[ins[1]].buffer);
@@ -1284,11 +1295,11 @@ class Subgraph {
                                         const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
         NN_DRIVER_RETURN_IF_ERROR(
                 CheckTensorShape(operands[ins[0]].dimensions, 0, XNN_MAX_TENSOR_DIMS));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[1]].lifetime));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         NN_DRIVER_RETURN_IF_ERROR(
                 CheckTensorShape(operands[outs[0]].dimensions, 0, XNN_MAX_TENSOR_DIMS));
         if (subgraph != nullptr) {
@@ -1313,9 +1324,9 @@ class Subgraph {
                                                const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorShape(operands[ins[0]].dimensions, 4));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorShape(operands[outs[0]].dimensions, 4));
         // Make sure all scalar params are constant.
         for (uint32_t i = 1; i < ins.size(); i++) {
@@ -1378,8 +1389,8 @@ class Subgraph {
                                      const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         if (subgraph != nullptr) {
             const xnn_status status =
                     xnn_define_clamp(subgraph, outputMin, outputMax,
@@ -1397,8 +1408,8 @@ class Subgraph {
                                      const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         if (subgraph != nullptr) {
             const xnn_status status =
                     xnn_define_square_root(subgraph,
@@ -1416,10 +1427,10 @@ class Subgraph {
                                     const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[1]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[1]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[2]].lifetime));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         float outputMin = -std::numeric_limits<float>::infinity();
         float outputMax = +std::numeric_limits<float>::infinity();
         int activation = getScalarData<int32_t>(operands[ins[2]]);
@@ -1443,9 +1454,9 @@ class Subgraph {
                                         const std::vector<uint32_t>& xnnpackTensors) {
         const hidl_vec<uint32_t>& ins = operation.inputs;
         const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[1]].lifetime));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         float beta = getScalarData<float>(operands[ins[1]]);
         if (beta != 1.0f) {
             LOG(ERROR) << "XNNPACK VisitSoftmaxNode FAILED, unsupported beta value: " << beta;
