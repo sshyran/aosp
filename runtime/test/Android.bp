@@ -229,9 +229,6 @@ cc_fuzz {
     owner: "google",
     fuzz_config: {
         cc: ["butlermichael@google.com"],
-        // Temporarily disabled due to b/151102177.
-        fuzz_on_haiku_host: false,
-        fuzz_on_haiku_device: false,
     },
     srcs: [
         "android_fuzzing/FuzzTest.cpp",
@@ -252,9 +249,6 @@ cc_fuzz {
     owner: "google",
     fuzz_config: {
         cc: ["butlermichael@google.com"],
-        // Temporarily disabled due to b/151102177.
-        fuzz_on_haiku_host: false,
-        fuzz_on_haiku_device: false,
     },
     srcs: [
         "android_fuzzing/DriverFuzzTest.cpp",
