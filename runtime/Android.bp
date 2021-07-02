@@ -100,12 +100,18 @@ cc_defaults {
         "Telemetry.cpp",
         "TypeManager.cpp",
     ],
-
     target: {
         android: {
             version_script: "libneuralnetworks.map.txt",
+            generated_sources: ["statslog_neuralnetworks.cpp"],
+            generated_headers: ["statslog_neuralnetworks.h"],
+            export_generated_headers: ["statslog_neuralnetworks.h"],
+            srcs: [
+                "TelemetryWestworld.cpp",
+            ],
             shared_libs: [
                 "libnativewindow",
+                "libstatssocket",
                 "libvndksupport",
             ],
             whole_static_libs: [
@@ -280,4 +286,22 @@ ndk_library {
     symbol_file: "libneuralnetworks.map.txt",
     // Android O-MR1
     first_version: "27",
+}
+
+genrule {
+    name: "statslog_neuralnetworks.h",
+    tools: ["stats-log-api-gen"],
+    cmd: "$(location stats-log-api-gen) --header $(genDir)/statslog_neuralnetworks.h --module neuralnetworks --namespace android,nn,stats",
+    out: [
+        "statslog_neuralnetworks.h",
+    ],
+}
+
+genrule {
+    name: "statslog_neuralnetworks.cpp",
+    tools: ["stats-log-api-gen"],
+    cmd: "$(location stats-log-api-gen) --cpp $(genDir)/statslog_neuralnetworks.cpp --module neuralnetworks --namespace android,nn,stats  --importHeader statslog_neuralnetworks.h",
+    out: [
+        "statslog_neuralnetworks.cpp",
+    ],
 }
