@@ -6,9 +6,70 @@
 #include "SampleDriverFull.h"
 #include "SampleDriverPartial.h"
 #include "SampleDriverFloatXNNPACK.h"
-#ifdef NNAPI_USE_XNNPACK_DRIVER
-#include <xnnpack.h>
-#endif
+#include <dlfcn.h>
+#include <string>
+#include "sampledriver_util.h"
+#include <unordered_map>
+#include <utility>
+#include <sstream>
+#include <vector>
+
+// type of function pointer
+typedef void* (*get_driver_func)();
+
+std::unordered_map<std::string, std::string> driverToLibFallback = {
+  {"default", "libfull-driver.so"},
+  {"xnnpack", "libxnn-driver.so"},
+  {"full", "libfull-driver.so"},
+  {"minimal", "libminimal-driver.so"}
+};
+std::unordered_map<std::string, std::string> driverToLib;
+std::string funcName = "get_driver";
+
+template <typename T>
+T getDriverInstance(std::string serviceName) {
+    // dynamically construct map via conf file; responsive to any config change during execution time
+    std::string content = "";
+    std::string filePath = "/etc/env.d/drivers";
+    bool readStatus = ReadFileTo(filePath, &content);
+    bool parseStatus = false;
+    if (readStatus) {
+      parseStatus = ParseConfigTo(content, driverToLib, filePath);
+    }
+
+    // will use default config if parse or read failed
+    if (!readStatus || !parseStatus) {
+      LOG(ERROR) << "Will use fallback config";
+      driverToLib = driverToLibFallback;
+    }
+
+    // if does not register any config use fallback one
+    if (driverToLib.size() == 0) {
+      LOG(ERROR) << "Got empty config!" << " ;Will use fallback config";
+      driverToLib = driverToLibFallback;
+    }
+
+    if (driverToLib.find(serviceName) == driverToLib.end()) {
+      LOG(ERROR) << "Cannot find " << serviceName << " in available driver list.";
+      return nullptr;
+    }
+
+    void *driverHandle = GetFunctionFrom(driverToLib[serviceName], funcName);
+
+    LOG(INFO) << "Loading " << serviceName << " from " << driverToLib[serviceName];
+    if (driverHandle == nullptr) {
+      LOG(ERROR) << driverToLib[serviceName] << " can not be loaded!";
+      return nullptr;
+    }
+    auto getDriverFunc = reinterpret_cast<get_driver_func>(driverHandle);
+
+    auto sampleDriverInsance = static_cast<T>(getDriverFunc());
+    if (sampleDriverInsance == nullptr) {
+      LOG(FATAL) << "Cannot create driver from " << driverToLib[serviceName];
+    }
+
+    return sampleDriverInsance;
+}
 
 namespace android {
 namespace hardware {
@@ -17,30 +78,13 @@ namespace V1_0 {
 
 // static
 // This registers the SampleDriverFull into the DeviceManager.
-::android::sp<IDevice> IDevice::getService(const std::string& /*serviceName*/,
+::android::sp<IDevice> IDevice::getService(const std::string& serviceName,
                                            bool /*dummy*/) {
-#ifdef NNAPI_USE_MINIMAL_DRIVER
-  LOG(INFO) << "Creating CPU Driver - Minimal";
-  return new nn::sample_driver::SampleDriverMinimal();
-#elif NNAPI_USE_XNNPACK_DRIVER
-  LOG(INFO) << "Creating CPU Driver - XNNPACK";
+    LOG(INFO) << "Creating " << serviceName << " driver";
 
-  sp<nn::sample_driver::SampleDriverFloatXNNPACK> driver(new nn::sample_driver::SampleDriverFloatXNNPACK("ChromeSampleDriverXNNPACK"));
-  xnn_status status = xnn_initialize(/*allocator=*/nullptr);
-  if (status != xnn_status_success) {
-      LOG(FATAL) << "xnn_initialize failed!";
-  }
+    auto sampleDriverInsance = getDriverInstance<IDevice*>(serviceName);
 
-  return driver;
-#else
-  LOG(INFO) << "Creating CPU Driver - Full";
-  return new nn::sample_driver::SampleDriverFull(
-      "ChromeSampleDriverFull",
-      // Lower is better, this will force the driver to be selected by the
-      // ExecutionPlan
-      {.execTime = 0.1f, .powerUsage = 0.1f}
-    );
-#endif
+    return sampleDriverInsance;
 }
 
 }  // namespace V1_0

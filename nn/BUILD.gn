@@ -121,6 +121,7 @@ pkg_config("disable_ndebug") {
 
 static_library("runtime") {
   configs += [
+    ":common_defaults",
     ":target_defaults",
     "//common-mk:pic",
     "//common-mk:visibility_default",
@@ -129,6 +130,9 @@ static_library("runtime") {
     # Stubbed out functions have unused parameters
     "-Wno-unused-parameter",
   ]
+  libs = [
+    "dl",
+  ]
   include_dirs = [
     "common/include",
     "driver/sample",
@@ -136,6 +140,8 @@ static_library("runtime") {
     "runtime/include",
   ]
   sources = [
+    "chromeos/sampledriver.cpp",
+    "chromeos/sampledriver_util.cpp",
     "chromeos/compilation_caching.cpp",
     "chromeos/daemon_store.cpp",
     "chromeos/versioned_drivers.cpp",
@@ -268,7 +274,8 @@ shared_library("vendor-nn-hal") {
     ":target_defaults",
   ]
   deps = [
-    ":sample_driver",
+    ":full-driver",
+    ":minimal-driver"
   ]
   libs = [
     "pthread",
@@ -278,11 +285,15 @@ shared_library("vendor-nn-hal") {
   ]
 }
 
-static_library("sample_driver") {
+shared_library("minimal-driver") {
   configs += [
     ":common_defaults",
-    "//common-mk:pic",
     "//common-mk:visibility_default",
+  ]
+  cflags_cc = [
+    "-Wno-unused-parameter",
+    "-Wno-unused-lambda-capture",
+    "-Wno-unused-function"
   ]
   deps = [
     ":nn-common",
@@ -292,13 +303,108 @@ static_library("sample_driver") {
     "runtime/include",
   ]
   sources = [
-    "chromeos/sampledriver.cpp",
     "driver/sample/SampleDriver.cpp",
-    "driver/sample/SampleDriverFull.cpp",
     "driver/sample/SampleDriverMinimal.cpp",
     "driver/sample/SampleDriverPartial.cpp",
     "driver/sample/SampleDriverUtils.cpp",
   ]
+  libs = [
+    "pthread",
+  ]
+}
+
+shared_library("full-driver") {
+  configs += [
+    ":common_defaults",
+    "//common-mk:visibility_default",
+  ]
+  cflags_cc = [
+    "-Wno-unused-parameter",
+    "-Wno-unused-lambda-capture",
+    "-Wno-unused-function"
+  ]
+  deps = [
+    ":nn-common",
+  ]
+  include_dirs = [
+    "driver/sample",
+    "runtime/include",
+  ]
+  sources = [
+    "driver/sample/SampleDriver.cpp",
+    "driver/sample/SampleDriverFull.cpp",
+    "driver/sample/SampleDriverPartial.cpp",
+    "driver/sample/SampleDriverUtils.cpp",
+  ]
+  libs = [
+    "pthread",
+  ]
+}
+
+shared_library("xnn-driver") {
+  configs += [
+    ":common_defaults",
+    "//common-mk:visibility_default",
+  ]
+  cflags_cc = [
+    "-Wno-unused-parameter",
+    "-Wno-unused-lambda-capture",
+    "-Wno-unused-function"
+  ]
+  deps = [
+    ":nn-common",
+  ]
+  include_dirs = [
+    "driver/sample",
+    "runtime/include",
+    "${sysroot}/usr/include/tensorflow/xnnpack",
+  ]
+  sources = [
+    "driver/sample/SampleDriver.cpp",
+    "driver/sample/SampleDriverFloatXNNPACK.cpp",
+    "driver/sample/SampleDriverPartial.cpp",
+    "driver/sample/SampleDriverUtils.cpp",
+  ]
+
+  # XNNPACK Libs
+  xnnpack_libs = [
+    "clog",
+    "cpuinfo_impl.pic",
+    "pthreadpool",
+    "xnnpack_for_tflite",
+    "scalar_ukernels",
+    "indirection",
+    "memory_planner",
+    "operators",
+    "operator_run",
+    "packing",
+    "tables"
+  ]
+
+  # platform specific libs
+  if (current_cpu == "arm" || current_cpu == "arm64") {
+    xnnpack_libs += [
+     "neon_ukernels",
+     "neondot_ukernels",
+     "neonfma_ukernels",
+     "neonv8_ukernels",
+     "asm_ukernels",
+    ]
+  } else if (current_cpu == "x64" || current_cpu == "x86")  {
+    xnnpack_libs += [
+      "avx_ukernels",
+      "avx2_ukernels",
+      "avx512f_ukernels",
+      "fma3_ukernels",
+      "sse2_ukernels",
+      "ssse3_ukernels",
+      "sse41_ukernels",
+    ]
+  }
+
+  libs = [
+    "pthread"
+  ] + xnnpack_libs
 }
 
 if (use.test) {
@@ -328,6 +434,7 @@ if (use.test) {
     include_dirs = [
       "driver/sample",
       "runtime",
+      "chromeos",
       "runtime/include",
       "tools/test_generator/test_harness/include",
     ]
@@ -346,11 +453,13 @@ if (use.test) {
       ":generated_test_harness",
       ":nn_testrunner",
       ":runtime",
-      ":sample_driver",
+      ":full-driver",
+      ":minimal-driver",
       "chromeos/tests/runtime/generated:all",
     ]
     libs = [
       "rt",              # For shm_*
+      "dl",
       "textclassifier",  # For Farmhash.
       "tensorflowlite",
     ]
@@ -388,6 +497,37 @@ if (use.test) {
     ]
   }
 
+  executable("runtime_xnn_testrunner") {
+    include_dirs = [
+      "driver/sample",
+      "runtime",
+      "chromeos",
+      "runtime/include",
+      "tools/test_generator/test_harness/include",
+      "${sysroot}/usr/include/tensorflow/xnnpack",
+    ]
+    cflags_cc = [
+      # TestPartitioning moving local object in return statements
+      "-Wno-pessimizing-move",
+    ]
+    configs += [
+      ":disable_ndebug",
+      ":target_defaults",
+      ":common_defaults",
+      "//common-mk:test",
+    ]
+    deps = [
+      ":generated_test_harness",
+      ":nn_testrunner",
+      ":runtime",
+      ":full-driver",
+      ":xnn-driver"
+    ]
+    sources = [
+      "chromeos/tests/runtime/sampledriver_xnn_test.cc"
+    ]
+  }
+
   executable("runtime_generated_testrunner") {
     include_dirs = [
       "driver/sample",
@@ -405,11 +545,12 @@ if (use.test) {
       ":generated_test_harness",
       ":nn_testrunner",
       ":runtime",
-      ":sample_driver",
+      ":full-driver",
       "chromeos/tests/runtime/generated:all",
     ]
     libs = [
       "rt",              # For shm_*
+      "dl",
       "textclassifier",  # For Farmhash.
       "tensorflowlite",
     ]
@@ -465,10 +606,11 @@ if (use.test) {
       ":nn-common",
       ":nn_testrunner",
       ":runtime",
-      ":sample_driver",
+      ":full-driver"
     ]
     libs = [
       "rt",
+      "dl",
       "tensorflowlite",
       "textclassifier",  # For Farmhash.
     ]

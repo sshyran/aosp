@@ -58,6 +58,7 @@ static_library("vts_common") {
   ]
   deps = [
     "${nn_src}:vendor-nn-hal",
+    "${nn_src}:runtime"
   ]
   sources = [
     "${vts_src}/1.0/vts/functional/Callbacks.cpp",

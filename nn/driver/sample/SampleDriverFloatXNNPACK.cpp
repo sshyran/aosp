@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #define LOG_TAG "SampleDriverFloatXNNPACK"
 #include <android-base/logging.h>
 #if !defined(NNAPI_CHROMEOS)
@@ -36,6 +37,21 @@
 #include "SampleDriverUtils.h"
 #include "Utils.h"
 #include "ValidateHal.h"
+#include <brillo/brillo_export.h>
+
+extern "C" BRILLO_EXPORT void* get_driver() {
+    LOG(INFO) << "Creating CPU Driver - XNNPACK";
+
+    android::nn::sample_driver::SampleDriverFloatXNNPACK* driver = new android::nn::sample_driver::SampleDriverFloatXNNPACK("ChromeSampleDriverXNNPACK");
+    xnn_status status = xnn_initialize(/*allocator=*/nullptr);
+    if (status != xnn_status_success) {
+        LOG(FATAL) << "xnn_initialize failed!";
+    }
+
+    return  static_cast<void*>(driver);
+}
+
+
 namespace android {
 namespace nn {
 namespace sample_driver {
@@ -62,6 +78,7 @@ bool isScalarType(OperandType type) {
             return false;
     }
 }
+
 void updateForArguments(const std::vector<uint32_t>& indexes,
                         const hidl_vec<RequestArgument>& arguments,
                         const std::vector<RunTimePoolInfo>& requestPoolInfos,
@@ -1919,15 +1936,15 @@ Return<void> SampleDriverFloatXNNPACK::getCapabilities_1_3(getCapabilities_1_3_c
     android::nn::initVLogMask();
     VLOG(DRIVER) << "SampleDriverFloatXNNPACK::getCapabilities()";
     Capabilities capabilities = {
-            .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 0.7f, .powerUsage = 1.1f},
-            .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 0.7f, .powerUsage = 1.1f},
+            .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 0.7f, .powerUsage = 0.7f},
+            .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 0.7f, .powerUsage = 0.7f},
             .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>({1.0f, 1.0f}),
             .ifPerformance = {.execTime = 1.0f, .powerUsage = 1.0f},
             .whilePerformance = {.execTime = 1.0f, .powerUsage = 1.0f}};
     update(&capabilities.operandPerformance, OperandType::TENSOR_FLOAT32,
-           {.execTime = 0.8f, .powerUsage = 1.2f});
+           {.execTime = 0.7f, .powerUsage = 0.7f});
     update(&capabilities.operandPerformance, OperandType::FLOAT32,
-           {.execTime = 0.8f, .powerUsage = 1.2f});
+           {.execTime = 0.7f, .powerUsage = 0.7f});
     cb(ErrorStatus::NONE, capabilities);
     return Void();
 }

@@ -26,6 +26,13 @@
 #include "SampleDriverMinimal.h"
 #include "Utils.h"
 #include "ValidateHal.h"
+#include <brillo/brillo_export.h>
+
+extern "C" BRILLO_EXPORT void* get_driver() {
+    auto driver = new android::nn::sample_driver::SampleDriverMinimal();
+
+    return static_cast<void*>(driver);
+}
 
 namespace android {
 namespace nn {
@@ -38,15 +45,15 @@ Return<void> SampleDriverMinimal::getCapabilities_1_3(getCapabilities_1_3_cb cb)
     VLOG(DRIVER) << "getCapabilities()";
 
     Capabilities capabilities = {
-            .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 0.4f, .powerUsage = 0.5f},
-            .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 0.4f, .powerUsage = 0.5f},
-            .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>({1.0f, 1.0f}),
-            .ifPerformance = {.execTime = 1.0f, .powerUsage = 1.0f},
-            .whilePerformance = {.execTime = 1.0f, .powerUsage = 1.0f}};
+            .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 0.8f, .powerUsage = 0.8f},
+            .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 0.8f, .powerUsage = 0.8f},
+            .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>({0.8f, 0.8f}),
+            .ifPerformance = {.execTime = 0.8f, .powerUsage = 0.8f},
+            .whilePerformance = {.execTime = 0.8f, .powerUsage = 0.8f}};
     update(&capabilities.operandPerformance, OperandType::TENSOR_FLOAT32,
-           {.execTime = 0.4f, .powerUsage = 0.5f});
+           {.execTime = 0.8f, .powerUsage = 0.8f});
     update(&capabilities.operandPerformance, OperandType::FLOAT32,
-           {.execTime = 0.4f, .powerUsage = 0.5f});
+           {.execTime = 0.8f, .powerUsage = 0.8f});
 
     cb(ErrorStatus::NONE, capabilities);
     return Void();

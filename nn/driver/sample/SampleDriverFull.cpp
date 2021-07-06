@@ -22,6 +22,18 @@
 
 #include "Utils.h"
 #include "ValidateHal.h"
+#include <brillo/brillo_export.h>
+
+extern "C" BRILLO_EXPORT void* get_driver() {
+    auto driver = new android::nn::sample_driver::SampleDriverFull (
+      "ChromeSampleDriverFull",
+      // Lower is better, this will force the driver to be selected by the
+      // ExecutionPlan
+      {.execTime = .9f, .powerUsage = .9f}
+    );
+
+    return static_cast<void*>(driver);
+}
 
 namespace android {
 namespace nn {

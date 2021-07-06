@@ -47,7 +47,8 @@
 #include "TypeManager.h"
 #include "Utils.h"
 #include "VersionedInterfaces.h"
-
+#include <cstdlib>
+#include <iostream>
 namespace android {
 namespace nn {
 
@@ -832,15 +833,47 @@ std::shared_ptr<Device> DeviceManager::forTest_makeDriverDevice(const std::strin
     return driverDevice;
 }
 
+#ifdef NNAPI_CHROMEOS
+
+bool getDriversFrom(char* content, std::vector<std::string>& serviceNames) {
+    if (content) {
+        std::string contentStr(content);
+        int idx = 0;
+        int len = 0;
+        int contentLength = contentStr.size();
+        while (idx < contentLength) {
+            while (idx+len < contentLength && contentStr[idx+len] != ':') len += 1;
+            if (len) serviceNames.push_back(contentStr.substr(idx, len));
+            idx = len + idx + 1;
+            len = 0;
+        }
+    } else {
+        // should return if nothing comes in
+        return false;
+    }
+    return true;
+}
+
+#endif
+
 void DeviceManager::findAvailableDevices() {
     VLOG(MANAGER) << "findAvailableDevices";
 
 #ifdef NNAPI_CHROMEOS
+    std::vector<std::string> serviceNames;
+    char* content = std::getenv("DRIVERS");
+    bool getStatus = getDriversFrom(content, serviceNames);
+    if (serviceNames.size() == 0 || !getStatus) {
+        serviceNames = fallbackServiceNames;
+    }
     // ChromeOS doesn't support HIDL service registeration and querying,
     // so just return a getService implementation here.
-    registerDevice("cros-nnapi-default", [](bool /*blocking*/) {
-        return V1_0::IDevice::getService("cros-nnapi-default");
-    });
+    for (auto serviceName : serviceNames) {
+        VLOG(MANAGER) << "Get service " << serviceName << " from env variable";
+        registerDevice(serviceName, [&serviceName](bool /*blocking*/) {
+            return V1_0::IDevice::getService(serviceName);
+        });
+    }
 #else
     // register driver devices
     const auto names = hardware::getAllHalInstanceNames(V1_0::IDevice::descriptor);
@@ -860,7 +893,7 @@ void DeviceManager::findAvailableDevices() {
 
 void DeviceManager::registerDevice(const std::string& name, const DeviceFactory& makeDevice) {
     if (auto device = DriverDevice::create(name, makeDevice)) {
-        mDevices.push_back(std::move(device));
+        if (device != nullptr) mDevices.push_back(std::move(device));
     }
 }
 
