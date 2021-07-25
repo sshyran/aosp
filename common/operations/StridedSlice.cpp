@@ -27,6 +27,7 @@
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
+#pragma clang diagnostic ignored "-Wsign-compare"
 #include <tensorflow/lite/kernels/internal/reference/legacy_reference_ops.h>
 #pragma clang diagnostic pop
 
@@ -135,7 +136,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
     const Shape& input = context->getInputShape(kInputTensor);
     if (hasKnownRank(input)) {
-        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
+        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4u);
     }
     return minSupportedVersion;
 }

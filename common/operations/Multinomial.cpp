@@ -108,8 +108,8 @@ bool Multinomial::Eval() {
 }
 
 void Multinomial::EvalFloat32(const float* inputData) {
-    const int batch_size = SizeOfDimension(input_, 0);
-    const int class_size = SizeOfDimension(input_, 1);
+    const uint32_t batch_size = SizeOfDimension(input_, 0);
+    const uint32_t class_size = SizeOfDimension(input_, 1);
 
     tensorflow::GuardedPhiloxRandom random_generator;
     int32_t* seeds = GetBuffer<int32_t>(random_seeds_);
@@ -143,7 +143,7 @@ void Multinomial::EvalFloat32(const float* inputData) {
         }
 
         auto* output_ptr_batch = GetBuffer<int32_t>(output_) + b * sample_count_;
-        for (uint64_t j = 0; j < sample_count_; ++j) {
+        for (uint64_t j = 0; j < static_cast<uint64_t>(sample_count_); ++j) {
             const double target = simple_philox.RandDouble() * total;
             auto found_iter = std::upper_bound(cdf.begin(), cdf.end(), target);
             output_ptr_batch[j] = std::distance(cdf.begin(), found_iter);

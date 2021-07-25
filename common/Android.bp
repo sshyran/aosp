@@ -165,7 +165,6 @@ cc_library_static {
         "-Wextra",
         "-Wno-extern-c-compat",
         "-Wno-invalid-partial-specialization",
-        "-Wno-sign-compare",
     ],
 }
 
@@ -290,7 +289,6 @@ cc_defaults {
         "-Wno-array-bounds",
         "-Wno-extern-c-compat",
         "-Wno-invalid-partial-specialization",
-        "-Wno-sign-compare",
     ],
 }
 
@@ -364,7 +362,6 @@ cc_defaults {
         "-Wno-array-bounds",
         "-Wno-extern-c-compat",
         "-Wno-invalid-partial-specialization",
-        "-Wno-sign-compare",
     ],
 }
 
@@ -426,7 +423,6 @@ cc_library_static {
         "-Wno-array-bounds",
         "-Wno-extern-c-compat",
         "-Wno-invalid-partial-specialization",
-        "-Wno-sign-compare",
     ],
 }
 

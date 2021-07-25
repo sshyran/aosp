@@ -25,6 +25,7 @@
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
+#pragma clang diagnostic ignored "-Wsign-compare"
 #include <tensorflow/lite/kernels/internal/optimized/optimized_ops.h>
 #pragma clang diagnostic pop
 
@@ -64,7 +65,7 @@ inline bool localResponseNormFloat32Impl(const float* inputData, const Shape& in
         const float* inputBase = inputData + outer * axisSize * innerSize;
         float* outputBase = outputData + outer * axisSize * innerSize;
         for (uint32_t inner = 0; inner < innerSize; ++inner, ++inputBase, ++outputBase) {
-            for (int32_t i = 0; i < axisSize; i++) {
+            for (int32_t i = 0; i < static_cast<int32_t>(axisSize); i++) {
                 const int32_t dBegin = std::max(0, i - radius);
                 // Add 1 on dEnd to comply with optimized_ops in TFLite
                 const int32_t dEnd = std::min(static_cast<int32_t>(axisSize), i + radius + 1);
@@ -175,7 +176,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
 
     const Shape& input = context->getInputShape(kInputTensor);
     if (hasKnownRank(input)) {
-        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
+        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4u);
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));

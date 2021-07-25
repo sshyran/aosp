@@ -28,6 +28,7 @@
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
+#pragma clang diagnostic ignored "-Wsign-compare"
 #include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
 #include <tensorflow/lite/kernels/internal/optimized/optimized_ops.h>
 #pragma clang diagnostic pop
@@ -256,7 +257,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
     }
     const auto inputRank = getNumberOfDimensions(context->getInputShape(kInputTensor));
     if (inputRank != 0) {
-        NN_RET_CHECK_LE(inputRank, 4);
+        NN_RET_CHECK_LE(inputRank, 4u);
     }
     if (context->getNumInputs() == kNumInputs) {
         minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_Q);
@@ -277,7 +278,7 @@ bool prepare(IOperationExecutionContext* context) {
     float beta = (input.type == OperandType::TENSOR_FLOAT16)
                          ? context->getInputValue<_Float16>(kBetaScalar)
                          : context->getInputValue<float>(kBetaScalar);
-    NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
+    NN_RET_CHECK_LE(getNumberOfDimensions(input), 4u);
     NN_RET_CHECK_GT(beta, 0.0f);
     Shape output = context->getOutputShape(kOutputTensor);
     output.dimensions = input.dimensions;

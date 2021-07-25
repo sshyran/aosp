@@ -24,6 +24,7 @@
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
+#pragma clang diagnostic ignored "-Wsign-compare"
 #include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
 #include <tensorflow/lite/kernels/internal/reference/integer_ops/fully_connected.h>
 #include <tensorflow/lite/kernels/internal/reference/reference_ops.h>
@@ -198,14 +199,14 @@ bool validateShapes(const Shape& input, const Shape& weights, const Shape& bias,
     }
     // The Tensorflow fully connected layer specification says that input should
     // be of at least rank 2, so we check. Tflite doesn't check.
-    NN_RET_CHECK_GE(getNumberOfDimensions(input), 2);
-    NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(weights), 2);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(bias), 1);
+    NN_RET_CHECK_GE(getNumberOfDimensions(input), 2u);
+    NN_RET_CHECK_LE(getNumberOfDimensions(input), 4u);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(weights), 2u);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(bias), 1u);
     uint32_t input_n_elements = getNumberOfElements(input);
-    uint32_t num_units = getSizeOfDimension(weights, 0);
-    uint32_t input_size = getSizeOfDimension(weights, 1);
-    uint32_t bias_len = getSizeOfDimension(bias, 0);
+    uint32_t num_units = getSizeOfDimension(weights, 0u);
+    uint32_t input_size = getSizeOfDimension(weights, 1u);
+    uint32_t bias_len = getSizeOfDimension(bias, 0u);
     uint32_t batch_size = input_size == 0 ? 0 : input_n_elements / input_size;
     if (batch_size != 0) {
         NN_RET_CHECK_EQ(input_size * batch_size, input_n_elements);
@@ -215,8 +216,8 @@ bool validateShapes(const Shape& input, const Shape& weights, const Shape& bias,
     }
     if (output != nullptr) {
         // Only batch_size can be 0.
-        NN_RET_CHECK_GT(num_units, 0);
-        NN_RET_CHECK_GT(input_size, 0);
+        NN_RET_CHECK_GT(num_units, 0u);
+        NN_RET_CHECK_GT(input_size, 0u);
         output->type = input.type;
         output->dimensions = {batch_size, num_units};
     }
