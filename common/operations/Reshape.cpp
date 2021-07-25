@@ -18,8 +18,11 @@
 
 #define LOG_TAG "Operations"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
 #include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
 #include <tensorflow/lite/kernels/internal/reference/reference_ops.h>
+#pragma clang diagnostic pop
 
 #include <vector>
 
@@ -32,7 +35,7 @@ namespace android {
 namespace nn {
 
 bool copyData(const void* inputData, const Shape& inputShape, void* outputData,
-              const Shape& outputShape) {
+              const Shape& /*outputShape*/) {
     NNTRACE_COMP("copyData");
     size_t count = nonExtensionOperandSizeOfData(inputShape.type, inputShape.dimensions);
     memcpy(outputData, inputData, count);

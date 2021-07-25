@@ -166,10 +166,6 @@ cc_library_static {
         "-Wno-extern-c-compat",
         "-Wno-invalid-partial-specialization",
         "-Wno-sign-compare",
-        "-Wno-unused-local-typedef",
-        "-Wno-unused-parameter",
-        "-Wno-unused-private-field",
-        "-Wno-unused-variable",
     ],
 }
 
@@ -295,10 +291,6 @@ cc_defaults {
         "-Wno-extern-c-compat",
         "-Wno-invalid-partial-specialization",
         "-Wno-sign-compare",
-        "-Wno-unused-local-typedef",
-        "-Wno-unused-parameter",
-        "-Wno-unused-private-field",
-        "-Wno-unused-variable",
     ],
 }
 
@@ -373,10 +365,6 @@ cc_defaults {
         "-Wno-extern-c-compat",
         "-Wno-invalid-partial-specialization",
         "-Wno-sign-compare",
-        "-Wno-unused-local-typedef",
-        "-Wno-unused-parameter",
-        "-Wno-unused-private-field",
-        "-Wno-unused-variable",
     ],
 }
 
@@ -439,10 +427,6 @@ cc_library_static {
         "-Wno-extern-c-compat",
         "-Wno-invalid-partial-specialization",
         "-Wno-sign-compare",
-        "-Wno-unused-local-typedef",
-        "-Wno-unused-parameter",
-        "-Wno-unused-private-field",
-        "-Wno-unused-variable",
     ],
 }
 
@@ -597,7 +581,6 @@ cc_test {
     ],
     cflags: [
         "-Wno-invalid-partial-specialization",
-        "-Wno-unused-parameter",
     ],
 }
 
@@ -611,10 +594,6 @@ cc_test {
         "gemmlowp_headers",
         "libeigen",
         "tensorflow_headers",
-    ],
-    cflags: [
-        "-Wno-unused-parameter",
-        "-Wno-unused-variable",
     ],
     test_suites: [
         "general-tests",

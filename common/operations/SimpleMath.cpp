@@ -18,8 +18,11 @@
 
 #define LOG_TAG "Operations"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
 #include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
 #include <tensorflow/lite/kernels/internal/reference/legacy_reference_ops.h>
+#pragma clang diagnostic pop
 
 #include <vector>
 

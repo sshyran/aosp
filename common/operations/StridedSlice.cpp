@@ -25,7 +25,10 @@
 #include "Tracing.h"
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
 #include <tensorflow/lite/kernels/internal/reference/legacy_reference_ops.h>
+#pragma clang diagnostic pop
 
 #include "CpuOperationUtils.h"
 #endif  // NN_INCLUDE_CPU_IMPLEMENTATION
@@ -36,15 +39,15 @@ namespace strided_slice {
 
 constexpr uint32_t kNumInputs = 7;
 constexpr uint32_t kInputTensor = 0;
-constexpr uint32_t kBeginTensor = 1;
-constexpr uint32_t kEndTensor = 2;
-constexpr uint32_t kStridesTensor = 3;
-constexpr uint32_t kBeginMask = 4;
-constexpr uint32_t kEndMask = 5;
-constexpr uint32_t kShrinkAxisMask = 6;
+[[maybe_unused]] constexpr uint32_t kBeginTensor = 1;
+[[maybe_unused]] constexpr uint32_t kEndTensor = 2;
+[[maybe_unused]] constexpr uint32_t kStridesTensor = 3;
+[[maybe_unused]] constexpr uint32_t kBeginMask = 4;
+[[maybe_unused]] constexpr uint32_t kEndMask = 5;
+[[maybe_unused]] constexpr uint32_t kShrinkAxisMask = 6;
 
 constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
+[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {

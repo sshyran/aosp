@@ -18,8 +18,11 @@
 
 #include "QuantizedLSTM.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
 #include <public/gemmlowp.h>
 #include <tensorflow/lite/kernels/internal/reference/legacy_reference_ops.h>
+#pragma clang diagnostic pop
 
 #include <algorithm>
 #include <vector>
