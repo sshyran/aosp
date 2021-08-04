@@ -275,7 +275,6 @@ shared_library("vendor-nn-hal") {
   ]
   deps = [
     ":full-driver",
-    ":minimal-driver"
   ]
   libs = [
     "pthread",
