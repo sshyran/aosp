@@ -1229,7 +1229,6 @@ std::shared_ptr<Device> DeviceManager::forTest_makeDriverDevice(const SharedDevi
 
 #ifndef NN_COMPATIBILITY_LIBRARY_BUILD
 std::vector<std::shared_ptr<DriverDevice>> getDriverDevices() {
-#ifdef __ANDROID__
     const auto& appInfo = AppInfoFetcher::get()->getAppInfo();
     const bool currentProcessIsOnThePlatform =
             appInfo.appIsSystemApp || appInfo.appIsOnVendorImage || appInfo.appIsOnProductImage;
@@ -1244,9 +1243,6 @@ std::vector<std::shared_ptr<DriverDevice>> getDriverDevices() {
         driverDevices.push_back(DriverDevice::create(std::move(device), isDeviceUpdatable));
     }
     return driverDevices;
-#else   // __ANDROID__
-    return {};
-#endif  // __ANDROID__
 }
 #else
 std::vector<std::shared_ptr<DriverDevice>> getDriverDevices() {

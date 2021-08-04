@@ -38,7 +38,6 @@
 #include "GeneratedTestUtils.h"
 #include "SupportLibraryTestUtils.h"
 #include "SupportLibraryWrapper.h"
-#include "TmpDirectoryUtils.h"
 
 // Systrace is not available from CTS tests due to platform layering
 // constraints. We reuse the NNTEST_ONLY_PUBLIC_API flag, as that should also be
@@ -528,7 +527,7 @@ void GeneratedTests::SetUp() {
         return;
     }
 
-    char cacheDirTemp[] = NN_TMP_DIR "/TestCompilationCachingXXXXXX";
+    char cacheDirTemp[] = "/data/local/tmp/TestCompilationCachingXXXXXX";
     char* cacheDir = mkdtemp(cacheDirTemp);
     ASSERT_NE(cacheDir, nullptr);
     mCacheDir = cacheDir;

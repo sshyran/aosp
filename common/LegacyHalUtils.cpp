@@ -41,9 +41,7 @@
 namespace android {
 namespace nn {
 
-constexpr V1_0::PerformanceInfo kNoPerformanceInfo = {
-        .execTime = std::numeric_limits<float>::max(),
-        .powerUsage = std::numeric_limits<float>::max()};
+constexpr V1_0::PerformanceInfo kNoPerformanceInfo = {.execTime = FLT_MAX, .powerUsage = FLT_MAX};
 
 template <typename Type>
 static Type handleError(GeneralResult<Type> result) {
