@@ -62,12 +62,10 @@ class Memory {
                  ANEURALNETWORKS_NO_ERROR;
     }
 
-#ifdef __ANDROID__
     Memory(AHardwareBuffer* buffer) {
         mValid = ANeuralNetworksMemory_createFromAHardwareBuffer(buffer, &mMemory) ==
                  ANEURALNETWORKS_NO_ERROR;
     }
-#endif  // __ANDROID__
 
     virtual ~Memory() { ANeuralNetworksMemory_free(mMemory); }
 
