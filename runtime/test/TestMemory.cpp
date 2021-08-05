@@ -23,11 +23,6 @@
 #include <unistd.h>
 
 #include "TestNeuralNetworksWrapper.h"
-#include "TmpDirectoryUtils.h"
-
-#ifdef __ANDROID__
-#include <android/hardware_buffer.h>
-#endif  // __ANDROID__
 
 using WrapperCompilation = ::android::nn::test_wrapper::Compilation;
 using WrapperExecution = ::android::nn::test_wrapper::Execution;
@@ -47,15 +42,15 @@ class MemoryTest : public ::testing::Test {
 
 TEST_F(MemoryTest, TestFd) {
     // Create a file that contains matrix2 and matrix3.
-    char path[] = NN_TMP_DIR "/TestMemoryXXXXXX";
+    char path[] = "/data/local/tmp/TestMemoryXXXXXX";
     int fd = mkstemp(path);
     const uint32_t offsetForMatrix2 = 20;
     const uint32_t offsetForMatrix3 = 200;
     static_assert(offsetForMatrix2 + sizeof(matrix2) < offsetForMatrix3, "matrices overlap");
     lseek(fd, offsetForMatrix2, SEEK_SET);
-    EXPECT_EQ(write(fd, matrix2, sizeof(matrix2)), static_cast<ssize_t>(sizeof(matrix2)));
+    write(fd, matrix2, sizeof(matrix2));
     lseek(fd, offsetForMatrix3, SEEK_SET);
-    EXPECT_EQ(write(fd, matrix3, sizeof(matrix3)), static_cast<ssize_t>(sizeof(matrix3)));
+    write(fd, matrix3, sizeof(matrix3));
     fsync(fd);
 
     WrapperMemory weights(offsetForMatrix3 + sizeof(matrix3), PROT_READ, fd, 0);

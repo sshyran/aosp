@@ -44,7 +44,6 @@
 #include "NeuralNetworks.h"
 #include "NeuralNetworksOEM.h"
 #include "TestNeuralNetworksWrapper.h"
-#include "TmpDirectoryUtils.h"
 
 // Uncomment the following line to generate some debugging output that
 // may be useful when analyzing failures:
@@ -2610,7 +2609,7 @@ class CacheTest : public PartitioningTest {
    protected:
     virtual void SetUp() override {
         PartitioningTest::SetUp();
-        char cacheDirTemp[] = NN_TMP_DIR "/TestCompilationCachingXXXXXX";
+        char cacheDirTemp[] = "/data/local/tmp/TestCompilationCachingXXXXXX";
         char* cacheDir = mkdtemp(cacheDirTemp);
         ASSERT_NE(cacheDir, nullptr);
         mCacheDir = cacheDir;
