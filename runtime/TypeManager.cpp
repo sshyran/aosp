@@ -17,7 +17,6 @@
 #define LOG_TAG "TypeManager"
 
 #include "TypeManager.h"
-#include "test/TmpDirectoryUtils.h"
 
 #include <LegacyUtils.h>
 #include <android-base/file.h>
@@ -32,11 +31,9 @@
 #include <vector>
 
 #ifndef NN_COMPATIBILITY_LIBRARY_BUILD
-#ifdef __ANDROID__
 #include <PackageInfo.h>
+#include <binder/IServiceManager.h>
 #include <procpartition/procpartition.h>
-#endif  // __ANDROID__
-
 #endif  // NN_COMPATIBILITY_LIBRARY_BUILD
 
 namespace android {
@@ -79,7 +76,7 @@ bool isNNAPIVendorExtensionsUseAllowedInProductImage() {
 // '/' slash, then it's a native binary path (e.g. '/data/foo'). If not, it's a name
 // of Android app package (e.g. 'com.foo.bar').
 const char kAppAllowlistPath[] = "/vendor/etc/nnapi_extensions_app_allowlist";
-const char kCtsAllowlist[] = NN_TMP_DIR "/CTSNNAPITestCases";
+const char kCtsAllowlist[] = "/data/local/tmp/CTSNNAPITestCases";
 std::vector<std::string> getVendorExtensionAllowlistedApps() {
     std::string data;
     // Allowlist CTS by default.
@@ -152,7 +149,7 @@ bool TypeManager::isExtensionsUseAllowed(const AppInfoFetcher::AppInfo& appPacka
         // When running tests with mma and adb push.
         if (StartsWith(appPackageInfo.binaryPath, "/data/nativetest") ||
             // When running tests with Atest.
-            StartsWith(appPackageInfo.binaryPath, NN_TMP_DIR "/NeuralNetworksTest_")) {
+            StartsWith(appPackageInfo.binaryPath, "/data/local/tmp/NeuralNetworksTest_")) {
             return true;
         }
 #endif  // NN_DEBUGGABLE

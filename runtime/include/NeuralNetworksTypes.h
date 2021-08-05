@@ -42,14 +42,11 @@
  *   - DO NOT CHANGE THE LAYOUT OR SIZE OF STRUCTURES
  */
 
+#include <android/hardware_buffer.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <sys/cdefs.h>
-
-#ifdef __ANDROID__
-#include <android/hardware_buffer.h>
-#endif  // __ANDROID__
 
 __BEGIN_DECLS
 
