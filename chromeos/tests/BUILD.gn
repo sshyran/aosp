@@ -4,7 +4,7 @@
 
 import("//common-mk/pkg_config.gni")
 
-nn_src = "//aosp/frameworks/ml/nn"
+nn_src = "//aosp/frameworks/ml"
 vts_src = "//aosp/hardware/interfaces/neuralnetworks"
 
 group("all") {
@@ -47,7 +47,7 @@ pkg_config("vts_defaults") {
 static_library("vts_common") {
   configs += [
     ":vts_defaults",
-    "//aosp/frameworks/ml/nn:target_defaults",
+    "//aosp/frameworks/ml:target_defaults",
     "//common-mk:test",
   ]
   cflags_cc = [
@@ -78,7 +78,7 @@ static_library("vts_common") {
 executable("cros_nnapi_vts_1_0") {
   configs += [
     ":vts_defaults",
-    "//aosp/frameworks/ml/nn:target_defaults",
+    "//aosp/frameworks/ml:target_defaults",
   ]
   deps = [
     ":vts_common",
@@ -101,7 +101,7 @@ executable("cros_nnapi_vts_1_1") {
   ]
   configs += [
     ":vts_defaults",
-    "//aosp/frameworks/ml/nn:target_defaults",
+    "//aosp/frameworks/ml:target_defaults",
   ]
   deps = [
     ":vts_common",
@@ -126,7 +126,7 @@ executable("cros_nnapi_vts_1_2") {
   ]
   configs += [
     ":vts_defaults",
-    "//aosp/frameworks/ml/nn:target_defaults",
+    "//aosp/frameworks/ml:target_defaults",
   ]
   deps = [
     ":vts_common",
@@ -158,7 +158,7 @@ executable("cros_nnapi_vts_1_3") {
   ]
   configs += [
     ":vts_defaults",
-    "//aosp/frameworks/ml/nn:target_defaults",
+    "//aosp/frameworks/ml:target_defaults",
   ]
   deps = [
     ":vts_common",
@@ -189,8 +189,8 @@ executable("cros_nnapi_vts_1_3") {
 
 executable("cros_nnapi_cts") {
   configs += [
-    "//aosp/frameworks/ml/nn:disable_ndebug",
-    "//aosp/frameworks/ml/nn:target_defaults",
+    "//aosp/frameworks/ml:disable_ndebug",
+    "//aosp/frameworks/ml:target_defaults",
     "//common-mk:test",
   ]
   defines = [

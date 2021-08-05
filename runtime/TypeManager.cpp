@@ -51,7 +51,6 @@ namespace {
 
 using namespace hal;
 
-
 const uint8_t kLowBitsType = static_cast<uint8_t>(ExtensionTypeEncoding::LOW_BITS_TYPE);
 const uint32_t kMaxPrefix =
         (1 << static_cast<uint8_t>(ExtensionTypeEncoding::HIGH_BITS_PREFIX)) - 1;

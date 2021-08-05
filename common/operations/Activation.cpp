@@ -258,6 +258,7 @@ bool tanhQuant8Signed(const int8_t* inputData, const Shape& inputShape, int8_t* 
         return false;
     }
 
+    int numElements = getNumberOfElements(inputShape);
     static constexpr int kInputIntegerBits = 4;
 
     const double input_real_multiplier =
@@ -276,7 +277,6 @@ bool tanhQuant8Signed(const int8_t* inputData, const Shape& inputShape, int8_t* 
                                         input_left_shift,
                                         convertShapeToTflshape(inputShape), inputData,
                                         convertShapeToTflshape(outputShape), outputData);
-
     return true;
 }
 

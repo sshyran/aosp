@@ -109,7 +109,7 @@ void initVLogMask();
     while (UNLIKELY(!(condition))) NN_RET_CHECK_FAIL() << #condition << " "
 
 // Helper for NN_CHECK_xx(x, y) macros.
-#define NN_RET_CHECK_OP(LHS, RHS, OP)                                   \
+#define NN_RET_CHECK_OP(LHS, RHS, OP)                                                       \
     for (auto _values = ::android::base::MakeEagerEvaluator(LHS, RHS);                      \
          UNLIKELY(!(_values.lhs.v OP _values.rhs.v));                                       \
          /* empty */)                                                                       \

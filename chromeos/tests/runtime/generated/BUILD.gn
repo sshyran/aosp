@@ -4,7 +4,7 @@
 
 import("//common-mk/pkg_config.gni")
 
-nn_src = "//aosp/frameworks/ml/nn"
+nn_src = "//aosp/frameworks/ml"
 generated_src = "${nn_src}/runtime/test/generated"
 
 group("all") {
