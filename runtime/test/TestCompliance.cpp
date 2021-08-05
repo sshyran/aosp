@@ -25,10 +25,6 @@
 #include "ModelBuilder.h"
 #include "TestNeuralNetworksWrapper.h"
 
-#ifdef __ANDROID__
-#include <android/hardware_buffer.h>
-#endif  // __ANDROID__
-
 namespace android::nn::compliance_test {
 
 using namespace test_helper;
@@ -76,7 +72,7 @@ static void testAvailableSinceV1_0(const WrapperModel& wrapperModel) {
     ASSERT_TRUE(compliantWithV1_0(hidlModel));
 }
 
-[[maybe_unused]] static void testAvailableSinceV1_2(const V1_3::Request& request) {
+static void testAvailableSinceV1_2(const V1_3::Request& request) {
     ASSERT_FALSE(compliantWithV1_0(request));
     ASSERT_TRUE(compliantWithV1_2(request));
 }
