@@ -20,7 +20,7 @@ set -Eeuo pipefail
 TEST_NAME=$1
 SPEC_NAME=${TEST_NAME//[\/.]/_}
 
-GENERATOR_DIR=$ANDROID_BUILD_TOP/frameworks/ml/nn/tools/test_generator
+GENERATOR_DIR=$ANDROID_BUILD_TOP/packages/modules/NeuralNetworks/tools/test_generator
 NNTEST_DIR=$ANDROID_PRODUCT_OUT/data/nativetest
 
 # Create tmp dir for spec dump.

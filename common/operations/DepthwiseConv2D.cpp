@@ -16,16 +16,19 @@
 
 #define LOG_TAG "Operations"
 
-#include <tensorflow/lite/kernels/internal/optimized/depthwiseconv_uint8.h>
-#include <tensorflow/lite/kernels/internal/reference/depthwiseconv_float.h>
-
 #include <algorithm>
 #include <vector>
 
-#include "CpuOperationUtils.h"
 #include "OperationResolver.h"
 #include "Operations.h"
 #include "Tracing.h"
+
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
+#include <tensorflow/lite/kernels/internal/optimized/depthwiseconv_uint8.h>
+#include <tensorflow/lite/kernels/internal/reference/depthwiseconv_float.h>
+
+#include "CpuOperationUtils.h"
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 namespace android {
 namespace nn {
@@ -40,9 +43,8 @@ constexpr uint32_t kBiasTensor = 2;
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
-
-using namespace hal;
 
 struct DepthwiseConv2dParam {
     int32_t padding_left, padding_right;
@@ -414,8 +416,9 @@ bool depthwiseConvQuant8PerChannel(const T* inputData, const Shape& inputShape,
 #undef ANDROID_NN_DEPTHWISE_CONV_PARAMETERS
 
 }  // namespace
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     const uint32_t numInputs = context->getNumInputs();
     NN_RET_CHECK(
             std::binary_search(std::begin(kNumInputsArray), std::end(kNumInputsArray), numInputs));
@@ -443,7 +446,9 @@ bool validate(const IOperationValidationContext* context) {
                      filterType == inputType)
                 << "Unsupported filter tensor type for operation " << kOperationName;
         if (filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
-            NN_RET_CHECK_EQ(context->getInputExtraParams(kFilterTensor).channelQuant().channelDim,
+            NN_RET_CHECK_EQ(std::get<Operand::SymmPerChannelQuantParams>(
+                                    context->getInputExtraParams(kFilterTensor))
+                                    .channelDim,
                             3)
                     << "Unsupported filter tensor channel dimension for operation "
                     << kOperationName;
@@ -495,19 +500,22 @@ bool validate(const IOperationValidationContext* context) {
         }
     }
 
+    auto minSupportedVersion = Version::ANDROID_OC_MR1;
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
+        minSupportedVersion = Version::ANDROID_R;
     } else if (inputType == OperandType::TENSOR_FLOAT16 ||
                filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL || withLayout ||
                withDilation || !meetsQuantizedScaleConstraintBeforeV1_2) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        minSupportedVersion = Version::ANDROID_Q;
     } else {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_0));
+        minSupportedVersion = Version::ANDROID_OC_MR1;
     }
-    return validateInputTypes(context, inExpectedTypes) &&
-           validateOutputTypes(context, {inputType});
+    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
+    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+    return minSupportedVersion;
 }
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
     Shape filter = context->getInputShape(kFilterTensor);
@@ -607,7 +615,9 @@ bool execute(IOperationExecutionContext* context) {
                         context->getInputShape(kInputTensor),
                         context->getInputBuffer<int8_t>(kFilterTensor),
                         context->getInputShape(kFilterTensor),
-                        context->getInputExtraParams(kFilterTensor).channelQuant().scales.data(),
+                        std::get<Operand::SymmPerChannelQuantParams>(
+                                context->getInputExtraParams(kFilterTensor))
+                                .scales.data(),
                         context->getInputBuffer<int32_t>(kBiasTensor),
                         context->getInputShape(kBiasTensor), param.padding_left,
                         param.padding_right, param.padding_top, param.padding_bottom,
@@ -639,7 +649,9 @@ bool execute(IOperationExecutionContext* context) {
                         context->getInputShape(kInputTensor),
                         context->getInputBuffer<int8_t>(kFilterTensor),
                         context->getInputShape(kFilterTensor),
-                        context->getInputExtraParams(kFilterTensor).channelQuant().scales.data(),
+                        std::get<Operand::SymmPerChannelQuantParams>(
+                                context->getInputExtraParams(kFilterTensor))
+                                .scales.data(),
                         context->getInputBuffer<int32_t>(kBiasTensor),
                         context->getInputShape(kBiasTensor), param.padding_left,
                         param.padding_right, param.padding_top, param.padding_bottom,
@@ -668,6 +680,7 @@ bool execute(IOperationExecutionContext* context) {
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
     }
 }
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 }  // namespace depthwise_conv_2d
 

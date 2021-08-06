@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_GENERATED_TEST_UTILS_H
-#define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_GENERATED_TEST_UTILS_H
+#ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_RUNTIME_TEST_GENERATED_TEST_UTILS_H
+#define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_RUNTIME_TEST_GENERATED_TEST_UTILS_H
 
 #include <gtest/gtest.h>
 
@@ -25,9 +25,18 @@
 #include <vector>
 
 #include "TestHarness.h"
+
+#ifdef NNTEST_SLTS
+#include "SupportLibraryWrapper.h"
+#else
 #include "TestNeuralNetworksWrapper.h"
+#endif
 
 namespace android::nn::generated_tests {
+
+#ifdef NNTEST_SLTS
+namespace test_wrapper = android::nn::sl_wrapper;
+#endif
 
 class GeneratedTestBase
     : public ::testing::TestWithParam<test_helper::TestModelManager::TestParam> {
@@ -45,6 +54,10 @@ class GeneratedTestBase
 // A generated NDK model.
 class GeneratedModel : public test_wrapper::Model {
    public:
+#ifdef NNTEST_SLTS
+    GeneratedModel(const NnApiSupportLibrary* nnapi) : sl_wrapper::Model(nnapi) {}
+#endif
+
     // A helper method to simplify referenced model lifetime management.
     //
     // Usage:
@@ -70,15 +83,24 @@ class GeneratedModel : public test_wrapper::Model {
 };
 
 // Convert TestModel to NDK model.
+#ifdef NNTEST_SLTS
+void createModel(const NnApiSupportLibrary* nnapi, const test_helper::TestModel& testModel,
+                 bool testDynamicOutputShape, GeneratedModel* model);
+inline void createModel(const NnApiSupportLibrary* nnapi, const test_helper::TestModel& testModel,
+                        GeneratedModel* model) {
+    createModel(nnapi, testModel, /*testDynamicOutputShape=*/false, model);
+}
+#else
 void createModel(const test_helper::TestModel& testModel, bool testDynamicOutputShape,
                  GeneratedModel* model);
 inline void createModel(const test_helper::TestModel& testModel, GeneratedModel* model) {
     createModel(testModel, /*testDynamicOutputShape=*/false, model);
 }
+#endif
 
 void createRequest(const test_helper::TestModel& testModel, test_wrapper::Execution* execution,
                    std::vector<test_helper::TestBuffer>* outputs);
 
 }  // namespace android::nn::generated_tests
 
-#endif  // ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_GENERATED_TEST_UTILS_H
+#endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_RUNTIME_TEST_GENERATED_TEST_UTILS_H

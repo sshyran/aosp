@@ -22,8 +22,11 @@
 #include <string>
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "Manager.h"
+
+#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
+#include "AppInfoFetcher.h"
+#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
 
 namespace android {
 namespace nn {
@@ -48,18 +51,18 @@ class TypeManager {
     // Looks up information about the extension corresponding to the given prefix
     //
     // Returns false if no extension corresponds to the given prefix.
-    bool getExtensionInfo(uint16_t prefix, const hal::Extension** extension) const;
+    bool getExtensionInfo(uint16_t prefix, const Extension** extension) const;
 
     // Looks up information about an extension operand type
     //
     // Returns false if the extension or type is unknown.
-    bool getExtensionOperandTypeInfo(hal::OperandType type,
-                                     const hal::Extension::OperandTypeInformation** info) const;
+    bool getExtensionOperandTypeInfo(OperandType type,
+                                     const Extension::OperandTypeInformation** info) const;
 
     // Returns true if an operand type is a tensor type.
     //
     // Aborts if the type is an unknown extension type.
-    bool isTensorType(hal::OperandType type) const;
+    bool isTensorType(OperandType type) const;
 
     // Returns the amount of space needed to store a value of the dimensions and
     // type of this operand. For a tensor with unspecified rank or at least one
@@ -67,7 +70,7 @@ class TypeManager {
     //
     // Aborts if the type is an unknown extension type.
     // Aborts if the size would overflow the return type.
-    uint32_t getSizeOfData(const hal::Operand& operand) const {
+    uint32_t getSizeOfData(const Operand& operand) const {
         return getSizeOfData(operand.type, operand.dimensions);
     }
 
@@ -76,14 +79,13 @@ class TypeManager {
     // unspecified dimension, returns zero.
     //
     // Aborts if the type is an unknown extension type.
-    uint32_t getSizeOfData(hal::OperandType type, const std::vector<uint32_t>& dimensions) const;
+    uint32_t getSizeOfData(OperandType type, const std::vector<uint32_t>& dimensions) const;
 
     // Returns true if the amount of space needed to store a value of the specified
     // dimensions and element size overflows the uint32_t type.
     //
     // See also TypeManager::sizeOfDataOverflowsUInt32().
-    bool sizeOfDataOverflowsUInt32(hal::OperandType type,
-                                   const std::vector<uint32_t>& dimensions) const;
+    bool sizeOfDataOverflowsUInt32(OperandType type, const std::vector<uint32_t>& dimensions) const;
 
     // Returns true if extensions usage is allowed in current process.
     bool areExtensionsAllowed() const { return mExtensionsAllowed; }
@@ -93,7 +95,7 @@ class TypeManager {
     // Registers an extension.
     //
     // Returns true if the registration was successful.
-    bool forTest_registerExtension(const hal::Extension& extension) {
+    bool forTest_registerExtension(const Extension& extension) {
         return registerExtension(extension, "INTERNAL TEST");
     }
 
@@ -108,34 +110,22 @@ class TypeManager {
     // available devices.
     void forTest_reset() { *this = TypeManager(); }
 
-    // Collection of app-related arguments for the isExtensionsUseAllowed method.
-    struct AppPackageInfo {
-        // Path of the binary (/proc/$PID/exe)
-        std::string binaryPath;
-        // Package name of the Android app (empty string if not Android app).
-        std::string appPackageName;
-        // Is the app a system app? (false if not an Android app)
-        bool appIsSystemApp;
-        // Is the app preinstalled on vendor image? (false if not an Android app)
-        bool appIsOnVendorImage;
-        // Is the app preinstalled on product image? (false if not an Android app)
-        bool appIsOnProductImage;
-    };
-
+#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
     // Check if NNAPI Vendor extensions are usable in the process with the given app
     // and supplemental infomation.
     //
     // useOnProductImageEnabled - whether apps/binaries preinstalled on /product partition
     // can be enabled for extensions use.
     // allowlist - list of apps/binaries which are allowed to use extensions.
-    static bool isExtensionsUseAllowed(const AppPackageInfo& appPackageInfo,
+    static bool isExtensionsUseAllowed(const AppInfoFetcher::AppInfo& appPackageInfo,
                                        bool useOnProductImageEnabled,
                                        const std::vector<std::string>& allowlist);
+#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
 
    private:
     TypeManager();
     void findAvailableExtensions();
-    bool registerExtension(hal::Extension extension, const std::string& deviceName);
+    bool registerExtension(Extension extension, const std::string& deviceName);
 
     // Returns the numeric "prefix" value corresponding to an extension.
     //
@@ -145,7 +135,7 @@ class TypeManager {
     const DeviceManager* mDeviceManager = DeviceManager::get();
 
     // Contains all registered extensions.
-    std::map<std::string, hal::Extension> mExtensionNameToExtension;
+    std::map<std::string, Extension> mExtensionNameToExtension;
 
     // Contains the name of the first discovered device that supports an
     // extension. Used for error reporting.
@@ -160,7 +150,7 @@ class TypeManager {
     std::map<std::string, uint16_t> mExtensionNameToPrefix;
     // Entries of mPrefixToExtension point into mExtensionNameToExtension.
     // prefix=0 corresponds to no extension and should never be looked up.
-    std::vector<hal::Extension*> mPrefixToExtension = {nullptr};
+    std::vector<Extension*> mPrefixToExtension = {nullptr};
 
     // True if Extensions can be used in current process.
     bool mExtensionsAllowed = false;

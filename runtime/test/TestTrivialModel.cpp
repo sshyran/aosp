@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-#include "TestNeuralNetworksWrapper.h"
-
-//#include <android-base/logging.h>
-#include <android/hardware_buffer.h>
+#include <android-base/scopeguard.h>
 #include <gtest/gtest.h>
+
+#include "TestNeuralNetworksWrapper.h"
 
 using namespace android::nn::test_wrapper;
 
@@ -32,6 +31,10 @@ const int32_t kNoActivation = ANEURALNETWORKS_FUSED_NONE;
 class TrivialTest : public ::testing::Test {
    protected:
     virtual void SetUp() {}
+
+#if defined(__ANDROID__)
+    void testAddTwoWithHardwareBufferInput(uint64_t additionalAhwbUsage);
+#endif
 
     const Matrix3x4 matrix1 = {{1.f, 2.f, 3.f, 4.f}, {5.f, 6.f, 7.f, 8.f}, {9.f, 10.f, 11.f, 12.f}};
     const Matrix3x4 matrix2 = {{100.f, 200.f, 300.f, 400.f},
@@ -123,20 +126,27 @@ TEST_F(TrivialTest, AddTwo) {
     ASSERT_EQ(CompareMatrices(expected2, actual), 0);
 }
 
-// TODO(b/157388904): Hardware buffer APIs are not implemented.
-TEST_F(TrivialTest, DISABLED_AddTwoWithHardwareBufferInput) {
+// Hardware buffers are an Android concept, which aren't necessarily
+// available on other platforms such as ChromeOS, which also build NNAPI.
+#if defined(__ANDROID__)
+void TrivialTest::testAddTwoWithHardwareBufferInput(uint64_t additionalAhwbUsage) {
     Model modelAdd2;
     CreateAddTwoTensorModel(&modelAdd2);
 
+    const uint64_t cpuUsage =
+            AHARDWAREBUFFER_USAGE_CPU_READ_OFTEN | AHARDWAREBUFFER_USAGE_CPU_WRITE_OFTEN;
     AHardwareBuffer_Desc desc{
             .width = sizeof(matrix1),
             .height = 1,
             .layers = 1,
             .format = AHARDWAREBUFFER_FORMAT_BLOB,
-            .usage = AHARDWAREBUFFER_USAGE_CPU_READ_OFTEN | AHARDWAREBUFFER_USAGE_CPU_WRITE_OFTEN,
+            .usage = cpuUsage | additionalAhwbUsage,
     };
     AHardwareBuffer* matrix1Buffer = nullptr;
     ASSERT_EQ(AHardwareBuffer_allocate(&desc, &matrix1Buffer), 0);
+    auto allocateGuard = android::base::make_scope_guard(
+            [matrix1Buffer]() { AHardwareBuffer_release(matrix1Buffer); });
+
     Memory matrix1Memory(matrix1Buffer);
     ASSERT_TRUE(matrix1Memory.isValid());
 
@@ -153,7 +163,7 @@ TEST_F(TrivialTest, DISABLED_AddTwoWithHardwareBufferInput) {
 
     // Set the value for matrix1Buffer.
     void* bufferPtr = nullptr;
-    ASSERT_EQ(AHardwareBuffer_lock(matrix1Buffer, desc.usage, -1, NULL, &bufferPtr), 0);
+    ASSERT_EQ(AHardwareBuffer_lock(matrix1Buffer, cpuUsage, -1, NULL, &bufferPtr), 0);
     memcpy((uint8_t*)bufferPtr, matrix1, sizeof(matrix1));
     int synFenceFd = -1;
     ASSERT_EQ(AHardwareBuffer_unlock(matrix1Buffer, &synFenceFd), 0);
@@ -177,8 +187,16 @@ TEST_F(TrivialTest, DISABLED_AddTwoWithHardwareBufferInput) {
     }
 
     ASSERT_EQ(CompareMatrices(expected2, actual), 0);
-    AHardwareBuffer_release(matrix1Buffer);
 }
+
+TEST_F(TrivialTest, AddTwoWithHardwareBufferInput) {
+    testAddTwoWithHardwareBufferInput(/* no additional usage */ 0u);
+}
+
+TEST_F(TrivialTest, AddTwoWithHardwareBufferInputWithGPUUsage) {
+    testAddTwoWithHardwareBufferInput(AHARDWAREBUFFER_USAGE_GPU_DATA_BUFFER);
+}
+#endif
 
 TEST_F(TrivialTest, AddThree) {
     Model modelAdd3;

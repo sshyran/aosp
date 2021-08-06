@@ -18,12 +18,13 @@
 
 #include "BidirectionalSequenceLSTM.h"
 
+#include <tensorflow/lite/kernels/internal/tensor_utils.h>
+
 #include <algorithm>
 #include <vector>
 
 #include "CpuExecutor.h"
 #include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
 
@@ -31,8 +32,6 @@ namespace android {
 namespace nn {
 
 namespace {
-
-using namespace hal;
 
 template <typename T>
 inline T* GetBuffer(RunTimeOperandInfo* operand) {

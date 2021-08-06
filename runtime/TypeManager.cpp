@@ -18,12 +18,9 @@
 
 #include "TypeManager.h"
 
-// NOTE(avg): Not required for ChromiumOS
-//#include <PackageInfo.h>
+#include <LegacyUtils.h>
 #include <android-base/file.h>
 #include <android-base/properties.h>
-//#include <binder/IServiceManager.h>
-//#include <procpartition/procpartition.h>
 
 #include <algorithm>
 #include <limits>
@@ -33,7 +30,11 @@
 #include <string_view>
 #include <vector>
 
-#include "Utils.h"
+#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
+#include <PackageInfo.h>
+#include <binder/IServiceManager.h>
+#include <procpartition/procpartition.h>
+#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
 
 namespace android {
 namespace nn {
@@ -49,11 +50,7 @@ inline bool StartsWith(std::string_view sv, std::string_view prefix) {
 
 namespace {
 
-using namespace hal;
-
-const uint8_t kLowBitsType = static_cast<uint8_t>(ExtensionTypeEncoding::LOW_BITS_TYPE);
-const uint32_t kMaxPrefix =
-        (1 << static_cast<uint8_t>(ExtensionTypeEncoding::HIGH_BITS_PREFIX)) - 1;
+constexpr uint32_t kMaxPrefix = (1 << kExtensionPrefixBits) - 1;
 
 // Checks if the two structures contain the same information. The order of
 // operand types within the structures does not matter.
@@ -64,8 +61,7 @@ bool equal(const Extension& a, const Extension& b) {
     return true;
 }
 
-// NOTE(avg): Removed functionality not used in cros
-#if 0
+#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
 
 // Property for disabling NNAPI vendor extensions on product image (used on GSI /product image,
 // which can't use NNAPI vendor extensions).
@@ -107,57 +103,37 @@ std::vector<std::string> getVendorExtensionAllowlistedApps() {
     return allowlist;
 }
 
-// Query PackageManagerNative service about Android app properties.
-// On success, it will populate appPackageInfo->app* fields.
-bool fetchAppPackageLocationInfo(uid_t uid, TypeManager::AppPackageInfo* appPackageInfo) {
-    ANeuralNetworks_PackageInfo packageInfo;
-    if (!ANeuralNetworks_fetch_PackageInfo(uid, &packageInfo)) {
-        return false;
-    }
-    appPackageInfo->appPackageName = packageInfo.appPackageName;
-    appPackageInfo->appIsSystemApp = packageInfo.appIsSystemApp;
-    appPackageInfo->appIsOnVendorImage = packageInfo.appIsOnVendorImage;
-    appPackageInfo->appIsOnProductImage = packageInfo.appIsOnProductImage;
-
-    ANeuralNetworks_free_PackageInfo(&packageInfo);
+// Since Android S we allow use of vendor extensions for all
+// non-system applications without need to put the binary
+// name on allowlist
+static bool allowVendorExtensionsForAllNonSystemClients() {
+#if defined(__BIONIC__)
+    return android_get_device_api_level() >= __ANDROID_API_S__;
+#else
     return true;
+#endif  // __BIONIC__
 }
 
-// Check if this process is allowed to use NNAPI Vendor extensions.
-bool isNNAPIVendorExtensionsUseAllowed(const std::vector<std::string>& allowlist) {
-    TypeManager::AppPackageInfo appPackageInfo = {
-            .binaryPath = ::android::procpartition::getExe(getpid()),
-            .appPackageName = "",
-            .appIsSystemApp = false,
-            .appIsOnVendorImage = false,
-            .appIsOnProductImage = false};
-
-    if (appPackageInfo.binaryPath == "/system/bin/app_process64" ||
-        appPackageInfo.binaryPath == "/system/bin/app_process32") {
-        if (!fetchAppPackageLocationInfo(getuid(), &appPackageInfo)) {
-            LOG(ERROR) << "Failed to get app information from package_manager_native";
-            return false;
-        }
-    }
-    return TypeManager::isExtensionsUseAllowed(
-            appPackageInfo, isNNAPIVendorExtensionsUseAllowedInProductImage(), allowlist);
-}
+#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
 
 #endif
 }  // namespace
 
 TypeManager::TypeManager() {
     VLOG(MANAGER) << "TypeManager::TypeManager";
-    // NOTE(avg): vendor extensions are never allowed under Cros
-    // TODO(avg): b/158632389 determine whether to allow extensions
-    mExtensionsAllowed = false;
-    //mExtensionsAllowed = isNNAPIVendorExtensionsUseAllowed(getVendorExtensionAllowlistedApps());
-    //VLOG(MANAGER) << "NNAPI Vendor extensions enabled: " << mExtensionsAllowed;
-    VLOG(MANAGER) << "NNAPI Vendor extensions disabled under ChromeOS";
+#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
+    mExtensionsAllowed = TypeManager::isExtensionsUseAllowed(
+            AppInfoFetcher::get()->getAppInfo(), isNNAPIVendorExtensionsUseAllowedInProductImage(),
+            getVendorExtensionAllowlistedApps());
+#else
+    mExtensionsAllowed = true;
+#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
+    VLOG(MANAGER) << "NNAPI Vendor extensions enabled: " << mExtensionsAllowed;
     findAvailableExtensions();
 }
 
-bool TypeManager::isExtensionsUseAllowed(const AppPackageInfo& appPackageInfo,
+#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
+bool TypeManager::isExtensionsUseAllowed(const AppInfoFetcher::AppInfo& appPackageInfo,
                                          bool useOnProductImageEnabled,
                                          const std::vector<std::string>& allowlist) {
     // NOTE(avg): extensions are never allowed under Cros
@@ -171,6 +147,9 @@ bool TypeManager::isExtensionsUseAllowed(const AppPackageInfo& appPackageInfo,
         StartsWith(appPackageInfo.binaryPath, "/odm/") ||
         StartsWith(appPackageInfo.binaryPath, "/data/") ||
         (StartsWith(appPackageInfo.binaryPath, "/product/") && useOnProductImageEnabled)) {
+        if (allowVendorExtensionsForAllNonSystemClients()) {
+            return true;
+        }
 #ifdef NN_DEBUGGABLE
         // Only on userdebug and eng builds.
         // When running tests with mma and adb push.
@@ -180,21 +159,27 @@ bool TypeManager::isExtensionsUseAllowed(const AppPackageInfo& appPackageInfo,
             return true;
         }
 #endif  // NN_DEBUGGABLE
-
         return std::find(allowlist.begin(), allowlist.end(), appPackageInfo.binaryPath) !=
                allowlist.end();
     } else if (appPackageInfo.binaryPath == "/system/bin/app_process64" ||
                appPackageInfo.binaryPath == "/system/bin/app_process32") {
-        // App is not system app OR vendor app OR (product app AND product enabled)
-        // AND app is on allowlist.
-        return (!appPackageInfo.appIsSystemApp || appPackageInfo.appIsOnVendorImage ||
-                (appPackageInfo.appIsOnProductImage && useOnProductImageEnabled)) &&
-               std::find(allowlist.begin(), allowlist.end(), appPackageInfo.appPackageName) !=
-                       allowlist.end();
+        // App is (not system app) OR (vendor app) OR (product app AND product enabled)
+        if (!appPackageInfo.appIsSystemApp || appPackageInfo.appIsOnVendorImage ||
+            (appPackageInfo.appIsOnProductImage && useOnProductImageEnabled)) {
+            if (allowVendorExtensionsForAllNonSystemClients()) {
+                // No need for allowlist
+                return true;
+            } else {
+                // Check if app is on allowlist.
+                return std::find(allowlist.begin(), allowlist.end(),
+                                 appPackageInfo.appPackageName) != allowlist.end();
+            }
+        }
     }
     return false;
 #endif
 }
+#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
 
 void TypeManager::findAvailableExtensions() {
     for (const std::shared_ptr<Device>& device : mDeviceManager->getDrivers()) {
@@ -250,7 +235,7 @@ bool TypeManager::getExtensionType(const char* extensionName, uint16_t typeWithi
                                    int32_t* type) {
     uint16_t prefix;
     NN_RET_CHECK(getExtensionPrefix(extensionName, &prefix));
-    *type = (prefix << kLowBitsType) | typeWithinExtension;
+    *type = (prefix << kExtensionTypeBits) | typeWithinExtension;
     return true;
 }
 
@@ -264,8 +249,8 @@ bool TypeManager::getExtensionInfo(uint16_t prefix, const Extension** extension)
 bool TypeManager::getExtensionOperandTypeInfo(
         OperandType type, const Extension::OperandTypeInformation** info) const {
     uint32_t operandType = static_cast<uint32_t>(type);
-    uint16_t prefix = operandType >> kLowBitsType;
-    uint16_t typeWithinExtension = operandType & ((1 << kLowBitsType) - 1);
+    uint16_t prefix = operandType >> kExtensionTypeBits;
+    uint16_t typeWithinExtension = operandType & ((1 << kExtensionTypeBits) - 1);
     const Extension* extension;
     NN_RET_CHECK(getExtensionInfo(prefix, &extension))
             << "Cannot find extension corresponding to prefix " << prefix;
@@ -283,7 +268,7 @@ bool TypeManager::getExtensionOperandTypeInfo(
 }
 
 bool TypeManager::isTensorType(OperandType type) const {
-    if (!isExtensionOperandType(type)) {
+    if (!isExtension(type)) {
         return !nonExtensionOperandTypeIsScalar(static_cast<int>(type));
     }
     const Extension::OperandTypeInformation* info;
@@ -293,7 +278,7 @@ bool TypeManager::isTensorType(OperandType type) const {
 
 uint32_t TypeManager::getSizeOfData(OperandType type,
                                     const std::vector<uint32_t>& dimensions) const {
-    if (!isExtensionOperandType(type)) {
+    if (!isExtension(type)) {
         return nonExtensionOperandSizeOfData(type, dimensions);
     }
     const Extension::OperandTypeInformation* info;
@@ -301,9 +286,9 @@ uint32_t TypeManager::getSizeOfData(OperandType type,
     return info->isTensor ? sizeOfTensorData(info->byteSize, dimensions) : info->byteSize;
 }
 
-bool TypeManager::sizeOfDataOverflowsUInt32(hal::OperandType type,
+bool TypeManager::sizeOfDataOverflowsUInt32(OperandType type,
                                             const std::vector<uint32_t>& dimensions) const {
-    if (!isExtensionOperandType(type)) {
+    if (!isExtension(type)) {
         return nonExtensionOperandSizeOfDataOverflowsUInt32(type, dimensions);
     }
     const Extension::OperandTypeInformation* info;

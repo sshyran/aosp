@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 
+#include <HalInterfaces.h>
+#include <SampleDriver.h>
 #include <gtest/gtest.h>
 
 #include <string>
 #include <vector>
 
-#include "HalInterfaces.h"
+#include "AppInfoFetcher.h"
+#include "HalUtils.h"
 #include "Manager.h"
 #include "NeuralNetworks.h"
 #include "NeuralNetworksExtensions.h"
-#include "SampleDriver.h"
 #include "TypeManager.h"
 
 namespace {
@@ -32,7 +34,9 @@ using DeviceManager = ::android::nn::DeviceManager;
 using SampleDriver = ::android::nn::sample_driver::SampleDriver;
 using TypeManager = ::android::nn::TypeManager;
 
-using namespace android::nn::hal;
+namespace hardware = ::android::hardware;
+namespace V1_0 = ::android::hardware::neuralnetworks::V1_0;
+namespace V1_3 = ::android::hardware::neuralnetworks::V1_3;
 
 const char* kTestDriverName = "extensions-test-driver";
 const char* kTestExtension1 = "vendor.test.one";
@@ -44,23 +48,24 @@ class TestDriver : public SampleDriver {
     TestDriver() : SampleDriver(kTestDriverName) {}
     ~TestDriver() override {}
 
-    Return<void> getSupportedExtensions(getSupportedExtensions_cb cb) override {
+    hardware::Return<void> getSupportedExtensions(getSupportedExtensions_cb cb) override {
         cb(V1_0::ErrorStatus::NONE, {
                                             {.name = kTestExtension1},
                                             {.name = kTestExtension2},
                                             {.name = kTestExtension3},
                                     });
-        return Void();
+        return hardware::Void();
     }
 
-    Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
-        cb(V1_3::ErrorStatus::NONE, {/* Placeholder zero-filled capabilities. */});
-        return Void();
+    hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
+        cb(V1_3::ErrorStatus::NONE, ::android::nn::makeCapabilities(1.0));
+        return hardware::Void();
     }
 
-    Return<void> getSupportedOperations_1_3(const Model&, getSupportedOperations_1_3_cb) override {
+    hardware::Return<void> getSupportedOperations_1_3(const V1_3::Model&,
+                                                      getSupportedOperations_1_3_cb) override {
         CHECK(false) << "not implemented";
-        return Void();
+        return hardware::Void();
     }
 };
 
@@ -72,7 +77,8 @@ class ExtensionsTest : public ::testing::Test {
             GTEST_SKIP();
         }
 
-        DeviceManager::get()->forTest_registerDevice(kTestDriverName, new TestDriver());
+        DeviceManager::get()->forTest_registerDevice(
+                android::nn::makeSharedDevice(kTestDriverName, new TestDriver()));
         // Discover extensions provided by registered devices.
         TypeManager::get()->forTest_reset();
         mDevice = getDeviceByName(kTestDriverName);
@@ -126,8 +132,7 @@ TEST_F(ExtensionsTest, DISABLED_TestAllowedNativeBinaries) {
     std::vector<std::string> allowlist = {"/data/foo",    "/vendor/foo",         "/odm/foo",
                                           "/product/foo", "/system/allowlisted", "/foobar/foo"};
 
-    auto native_info =
-            [&](const std::string& binaryPath) -> android::nn::TypeManager::AppPackageInfo {
+    auto native_info = [&](const std::string& binaryPath) -> android::nn::AppInfoFetcher::AppInfo {
         return {.binaryPath = binaryPath,
                 .appPackageName = "",
                 .appIsSystemApp = false,
@@ -171,22 +176,30 @@ TEST_F(ExtensionsTest, DISABLED_TestAllowedNativeBinaries) {
     EXPECT_TRUE(TypeManager::isExtensionsUseAllowed(native_info("/product/foo"),
                                                     /* useOnProductImageEnabled = */ true,
                                                     allowlist));
+
+    // Allowlist for vendor/data partiion is not present on Android S.
+    // Before S, checks below will fail. On S and later they will succeed.
+    bool disableProductAllowlist = android_get_device_api_level() >= __ANDROID_API_S__;
+
     // Non-allowlisted /product binary, product enabled
-    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(native_info("/product/foo_not_allowlisted"),
-                                                     /* useOnProductImageEnabled = */ true,
-                                                     allowlist));
+    EXPECT_EQ(TypeManager::isExtensionsUseAllowed(native_info("/product/foo_not_allowlisted"),
+                                                  /* useOnProductImageEnabled = */ true, allowlist),
+              disableProductAllowlist);
     // Non-allowlisted /odm binary
-    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(native_info("/odm/foo_not_allowlisted"),
-                                                     /* useOnProductImageEnabled = */ false,
-                                                     allowlist));
+    EXPECT_EQ(
+            TypeManager::isExtensionsUseAllowed(native_info("/odm/foo_not_allowlisted"),
+                                                /* useOnProductImageEnabled = */ false, allowlist),
+            disableProductAllowlist);
     // Non-allowlisted /vendor binary
-    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(native_info("/vendor/foo_not_allowlisted"),
-                                                     /* useOnProductImageEnabled = */ false,
-                                                     allowlist));
+    EXPECT_EQ(
+            TypeManager::isExtensionsUseAllowed(native_info("/vendor/foo_not_allowlisted"),
+                                                /* useOnProductImageEnabled = */ false, allowlist),
+            disableProductAllowlist);
     // Non-allowlisted /data binary
-    EXPECT_FALSE(TypeManager::isExtensionsUseAllowed(native_info("/data/foo_not_allowlisted"),
-                                                     /* useOnProductImageEnabled = */ false,
-                                                     allowlist));
+    EXPECT_EQ(
+            TypeManager::isExtensionsUseAllowed(native_info("/data/foo_not_allowlisted"),
+                                                /* useOnProductImageEnabled = */ false, allowlist),
+            disableProductAllowlist);
 }
 
 // TODO(b/158632389): Determine whether NNAPI extensions should be allowed.
@@ -199,6 +212,10 @@ TEST_F(ExtensionsTest, DISABLED_TestAllowedApps) {
     std::string package_non_allowlisted = "com.foo2";
 
     std::vector<std::string> allowlist = {"com.foo"};
+
+    // Allowlist for vendor/data partiion is not present on Android S.
+    // Before S, checks below will fail. On S and later they will succeed.
+    bool disableProductAllowlist = android_get_device_api_level() >= __ANDROID_API_S__;
 
     auto test_app_process = [&](const std::string& binary) {
         // /data app
@@ -247,31 +264,34 @@ TEST_F(ExtensionsTest, DISABLED_TestAllowedApps) {
                                                         allowlist));
 
         // /product app, enabled, package name not on allowlist
-        EXPECT_FALSE(TypeManager::isExtensionsUseAllowed({.binaryPath = binary,
-                                                          .appPackageName = package_non_allowlisted,
-                                                          .appIsSystemApp = true,
-                                                          .appIsOnVendorImage = false,
-                                                          .appIsOnProductImage = true},
-                                                         /* useOnProductImageEnabled = */ true,
-                                                         allowlist));
+        EXPECT_EQ(TypeManager::isExtensionsUseAllowed({.binaryPath = binary,
+                                                       .appPackageName = package_non_allowlisted,
+                                                       .appIsSystemApp = true,
+                                                       .appIsOnVendorImage = false,
+                                                       .appIsOnProductImage = true},
+                                                      /* useOnProductImageEnabled = */ true,
+                                                      allowlist),
+                  disableProductAllowlist);
 
         // /data app, package name not on allowlist
-        EXPECT_FALSE(TypeManager::isExtensionsUseAllowed({.binaryPath = binary,
-                                                          .appPackageName = package_non_allowlisted,
-                                                          .appIsSystemApp = false,
-                                                          .appIsOnVendorImage = false,
-                                                          .appIsOnProductImage = false},
-                                                         /* useOnProductImageEnabled = */ false,
-                                                         allowlist));
+        EXPECT_EQ(TypeManager::isExtensionsUseAllowed({.binaryPath = binary,
+                                                       .appPackageName = package_non_allowlisted,
+                                                       .appIsSystemApp = false,
+                                                       .appIsOnVendorImage = false,
+                                                       .appIsOnProductImage = false},
+                                                      /* useOnProductImageEnabled = */ false,
+                                                      allowlist),
+                  disableProductAllowlist);
 
         // /vendor || /odm app, package name not on allowlist
-        EXPECT_FALSE(TypeManager::isExtensionsUseAllowed({.binaryPath = binary,
-                                                          .appPackageName = package_non_allowlisted,
-                                                          .appIsSystemApp = true,
-                                                          .appIsOnVendorImage = true,
-                                                          .appIsOnProductImage = false},
-                                                         /* useOnProductImageEnabled = */ false,
-                                                         allowlist));
+        EXPECT_EQ(TypeManager::isExtensionsUseAllowed({.binaryPath = binary,
+                                                       .appPackageName = package_non_allowlisted,
+                                                       .appIsSystemApp = true,
+                                                       .appIsOnVendorImage = true,
+                                                       .appIsOnProductImage = false},
+                                                      /* useOnProductImageEnabled = */ false,
+                                                      allowlist),
+                  disableProductAllowlist);
     };
     test_app_process(app_process64);
     test_app_process(app_process32);

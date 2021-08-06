@@ -18,15 +18,17 @@
 
 #define LOG_TAG "Operations"
 
-#include <tensorflow/lite/kernels/internal/reference/legacy_reference_ops.h>
-
 #include <vector>
 
-#include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "Operations.h"
 #include "Tracing.h"
+
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
+#include <tensorflow/lite/kernels/internal/reference/legacy_reference_ops.h>
+
+#include "CpuOperationUtils.h"
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 namespace android {
 namespace nn {
@@ -44,9 +46,8 @@ constexpr uint32_t kShrinkAxisMask = 6;
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
-
-using namespace hal;
 
 template <typename T>
 bool compute(const T* inputData, const Shape& inputShape, const int32_t* beginData,
@@ -98,8 +99,9 @@ bool executeTyped(IOperationExecutionContext* context) {
 }
 
 }  // namespace
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor);
@@ -107,15 +109,15 @@ bool validate(const IOperationValidationContext* context) {
                  inputType == OperandType::TENSOR_FLOAT32 ||
                  inputType == OperandType::TENSOR_QUANT8_ASYMM ||
                  inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
-            << "Unsupported input operand type for STRIDED_SLICE op: " << toString(inputType);
+            << "Unsupported input operand type for STRIDED_SLICE op: " << inputType;
 
-    HalVersion minSupportedHalVersion;
+    Version minSupportedVersion;
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedHalVersion = HalVersion::V1_3;
+        minSupportedVersion = Version::ANDROID_R;
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        minSupportedHalVersion = HalVersion::V1_2;
+        minSupportedVersion = Version::ANDROID_Q;
     } else {
-        minSupportedHalVersion = HalVersion::V1_1;
+        minSupportedVersion = Version::ANDROID_P;
     }
 
     NN_RET_CHECK(validateInputTypes(context, {
@@ -132,9 +134,10 @@ bool validate(const IOperationValidationContext* context) {
     if (hasKnownRank(input)) {
         NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
     }
-    return validateHalVersion(context, minSupportedHalVersion);
+    return minSupportedVersion;
 }
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     // StridedSlice op only supports 1D-4D input arrays.
     const Shape& inputShape = context->getInputShape(kInputTensor);
@@ -216,6 +219,8 @@ bool execute(IOperationExecutionContext* context) {
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for STRIDED_SLICE op.";
     }
 }
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
+
 }  // namespace strided_slice
 
 NN_REGISTER_OPERATION(STRIDED_SLICE, "STRIDED_SLICE", strided_slice::validate,

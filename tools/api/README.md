@@ -1,31 +1,37 @@
 # API File Generation
 
-There are certain pieces of `NeuralNetworks.h` and of our various `*.hal` files
-that ought to be kept in sync -- most notably the operand type and operation
-type definitions and descriptions in our `NeuralNetworks.h` and `types.hal`
-files.  To avoid having to do this manually, a tool `generate_api.py` is
-employed to combine a single *specification file* with one *template file* per
-API file (`NeuralNetworks.h` or `types.hal`) to produce that API file.  The
-script `generate_api.sh` invokes `generate_api.py` once per API file, passing
-appropriate arguments.
+There are certain pieces of `NeuralNetworksTypes.h`, `Types.h`,
+`OperandTypes.h`, `OperationTypes.h`, and of our various `*.hal` files that
+ought to be kept in sync -- most notably the operand type and operation type
+definitions and descriptions.  To avoid having to do this manually, a tool
+`generate_api.py` is employed to combine a single *specification file* with one
+*template file* per API file (`NeuralNetworksTypes.h`, `Types.h`,
+`OperandTypes.h`, `OperationTypes.h`, or `types.hal`) to produce that API file.
+The script `generate_api.sh` invokes `generate_api.py` once per API file,
+passing appropriate arguments.
 
 ## `generate_api.sh`
 
 The environment variable `ANDROID_BUILD_TOP` must be set.
 
-Invoked with no arguments, this script regenerates the `NeuralNetworks.h` file
-and every `types.hal` file in place, by invoking `generate_api.py` once per
+Invoked with no arguments or with the `--mode=update` argument, this script
+regenerates each API file in place, by invoking `generate_api.py` once per
 generated file.
 
-Invoked with the `--dryrun` argument, this script instead shows how it would
-invoke `generate_api.py`.
+Invoked with the `--mode=hook` argument, this script checks whether
+`NeuralNetworksTypes.h`, `Types.h`, `OperandTypes.h`, or `OperationTypes.h`
+needs to be regenerated.
+
+When the `--dryrun` argument is present, this script shows how it would invoke
+`generate_api.py` but does not actually regenerate files or check whether they
+need to be regenerated.
 
 ## `generate_api.py`
 
 This tool generates a single output file from an input specification file and an
 input template file.  It takes the following mandatory arguments:
 
-* `--output OUTPUT` path to generated output file (such as `NeuralNetworks.h`)
+* `--output OUTPUT` path to generated output file (such as `Types.h`)
 * `--specification SPECIFICATION` path to input specification file
 * `--template TEMPLATE` path to input template file
 * `--kind KIND` token identifying kind of file to generate
@@ -33,8 +39,9 @@ input template file.  It takes the following mandatory arguments:
 The "kind" is an arbitrary token that the specification file can reference with
 the `%kind` directive to help generate different text in different situations.
 It has no meaning to the tool itself.  Today, the following kinds are used:
-`ndk` (when generating `NeuralNetworks.h`), `hal_1.0` (when generating
-`1.0/types.hal`), `hal_1.1`, `hal_1.2` and `hal_1.3`.
+`ndk` (when generating `NeuralNetworksTypes.h`), `canonical` (when generating
+`Types.h`, `OperandTypes.h`, and `OperationTypes.h`), `hal_1.0` (when generating
+`1.0/types.hal`), `hal_1.1`, `hal_1.2`, and `hal_1.3`.
 
 ## Template File Syntax
 
@@ -52,6 +59,11 @@ A line that begins with `%` and is not a comment is a *directive*.
 Copy the *section* with the specified *name* from the specification file to the
 output file.  The section is defined by a `%section` directive in the
 specification file.
+
+#### `%insert-indented *count* *name*`
+
+Similar to `%insert *name*`, but each non-empty copied line is prefixed with
+*count* space characters.  *count* must be a non-negative integer.
 
 ## Specification File Syntax
 
@@ -71,15 +83,14 @@ delimited by certain directives.
 
 Certain regions can enclose certain other regions, but this is very limited:
 
-* A conditional region can enclose a definition region.
-* A section region can enclose a conditional region or a definition region.
+* A conditional region can enclose a section region.
+* A section region can enclose a conditional region.
 
 Equivalently:
 
 * A conditional region can be enclosed by a section region.
-* A definition region can be enclosed by a conditional region or a section
-  region.
-  
+* A section region can be enclosed by a conditional region.
+
 #### null region
 
 A *null region* is a sequence of lines that is not part of any other region.
@@ -101,23 +112,16 @@ any).  When the condition is **off**, lines in the region other than the `%else`
 directive are ignored *except* that even ignored directives undergo some level
 of syntactic and semantic checking.
 
-#### definition region
-
-A *definition region* is a sequence of lines immediately preceded by the
-`%define-lines *name*` directive and immediately followed by the
-`%/define-lines` directive.  Every non-comment line in the sequence undergoes
-macro substitution, and the resulting lines are associated with the region name.
-They can later be added to a section region with the `%insert-lines` directive.
-
-This can be thought of as a multi-line macro facility.
-
 #### section region
 
 A *section region* is a sequence of lines immediately preceded by the `%section
 *name*` directive and immediately followed by the `%/section` directive.  Every
-non-comment line in the sequence undergoes macro substitution, and the resulting
-lines are associated with the section name.  They can be inserted into the
-generated output file as directed by the template file's `%insert` directive.
+line in the sequence that doesn't begin with `%` undergoes macro substitution,
+and the resulting lines are associated with the section name.  They can be
+inserted into the generated output file as directed by the template file's
+`%insert` and `%insert-indented` directives.  They can be added to another
+section region with the with the specification file's `%insert` and
+`%insert-indented` directives.
 
 This is the mechanism by which a specification file contributes text to the
 generated output file.
@@ -132,10 +136,10 @@ line -- it may contain whitespace itself. For example,
 
   %define test  this body begins and ends with a space character 
 
-Macro substitution occurs within a definition region or a section region: a
-substring `%{*name*}` is replaced with the corresponding *body*.  Macro
-substitution is *not* recursive: A substring `%{*name2*}` in *body* will not
-undergo macro substitution, except as discussed for *macro arguments* below.
+Macro substitution occurs within a section region: a substring `%{*name*}` is
+replaced with the corresponding *body*.  Macro substitution is *not* recursive:
+A substring `%{*name2*}` in *body* will not undergo macro substitution, except
+as discussed for *macro arguments* below.
 
 Permitted in regions: null, conditional, section
 
@@ -146,31 +150,37 @@ The more general form of a macro invocation is `%{*name* *arglist*}`, where
 substring of the form `%{argnum}` will be replaced by the corresponding argument
 from *arglist*.  For example, if the definition is
 
-  %define test second is %{2}, first is %{1}
-  
+```
+%define test second is %{2}, first is %{1}
+```
+
 then the macro invocation
 
-  %{test alpha beta}
-  
+```
+%{test alpha beta}
+```
+
 is expanded to
 
-  second is beta, first is alpha
+```
+second is beta, first is alpha
+```
 
 The only check on the number of arguments supplied at macro invocation time is
 that there must be at least as many arguments as the highest `%{argnum}`
 reference in the macro body.  In the example above, `%{test alpha}` would be an
 error, but `%{test alpha beta gamma}` would not.
 
-#### `%define-lines *name*`, `%/define-lines`
+#### `%insert *name*`
 
-`%define-lines *name*` creates a *definition region* terminated by
-`%/define-lines`.
+Adds all lines from the named section region to the current section region.
 
-Permitted in regions: null, conditional, section
+Permitted in regions: section
 
-#### `%insert-lines *name*`
+#### `%insert-indented *count* *name*`
 
-Adds all lines from the named definition region to the current section region.
+Similar to `%insert *name*`, but each non-empty added line is prefixed
+with *count* space characters.  *count* must be a non-negative integer.
 
 Permitted in regions: section
 
@@ -212,4 +222,4 @@ Permitted in regions: null, section
 
 `%section *name*` creates a *section region* terminated by `%/section`.
 
-Permitted in regions: null
+Permitted in regions: null, conditional

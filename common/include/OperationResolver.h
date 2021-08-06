@@ -17,7 +17,8 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATION_RESOLVER_H
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATION_RESOLVER_H
 
-#include "HalInterfaces.h"
+#include <utility>
+
 #include "OperationsUtils.h"
 
 namespace android {
@@ -25,11 +26,11 @@ namespace nn {
 
 // Encapsulates an operation implementation.
 struct OperationRegistration {
-    hal::OperationType type;
+    OperationType type;
     const char* name;
 
     // Validates operand types, shapes, and any values known during graph creation.
-    std::function<bool(const IOperationValidationContext*)> validate;
+    std::function<Result<Version>(const IOperationValidationContext*)> validate;
 
     // prepare is called when the inputs this operation depends on have been
     // computed. Typically, prepare does any remaining validation and sets
@@ -47,22 +48,23 @@ struct OperationRegistration {
         bool allowZeroSizedInput = false;
     } flags;
 
-    OperationRegistration(hal::OperationType type, const char* name,
-                          std::function<bool(const IOperationValidationContext*)> validate,
-                          std::function<bool(IOperationExecutionContext*)> prepare,
-                          std::function<bool(IOperationExecutionContext*)> execute, Flag flags)
+    OperationRegistration(
+            OperationType type, const char* name,
+            std::function<Result<Version>(const IOperationValidationContext*)> validate,
+            std::function<bool(IOperationExecutionContext*)> prepare,
+            std::function<bool(IOperationExecutionContext*)> execute, Flag flags)
         : type(type),
           name(name),
-          validate(validate),
-          prepare(prepare),
-          execute(execute),
+          validate(std::move(validate)),
+          prepare(std::move(prepare)),
+          execute(std::move(execute)),
           flags(flags) {}
 };
 
 // A registry of operation implementations.
 class IOperationResolver {
    public:
-    virtual const OperationRegistration* findOperation(hal::OperationType operationType) const = 0;
+    virtual const OperationRegistration* findOperation(OperationType operationType) const = 0;
     virtual ~IOperationResolver() {}
 };
 
@@ -86,7 +88,10 @@ class BuiltinOperationResolver : public IOperationResolver {
         return &instance;
     }
 
-    const OperationRegistration* findOperation(hal::OperationType operationType) const override;
+    const OperationRegistration* findOperation(OperationType operationType) const override;
+
+    // The number of operation types (OperationCode) defined in NeuralNetworks.h.
+    static constexpr int kNumberOfOperationTypes = 102;
 
    private:
     BuiltinOperationResolver();
@@ -116,11 +121,11 @@ class BuiltinOperationResolver : public IOperationResolver {
 //                         .allowZeroSizedInput = true);
 //
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
-#define NN_REGISTER_OPERATION(identifier, operationName, validate, prepare, execute, ...)        \
-    const OperationRegistration* register_##identifier() {                                       \
-        static OperationRegistration registration(hal::OperationType::identifier, operationName, \
-                                                  validate, prepare, execute, {__VA_ARGS__});    \
-        return &registration;                                                                    \
+#define NN_REGISTER_OPERATION(identifier, operationName, validate, prepare, execute, ...)     \
+    const OperationRegistration* register_##identifier() {                                    \
+        static OperationRegistration registration(OperationType::identifier, operationName,   \
+                                                  validate, prepare, execute, {__VA_ARGS__}); \
+        return &registration;                                                                 \
     }
 #else
 // This version ignores CPU execution logic (prepare and execute).
@@ -129,7 +134,7 @@ class BuiltinOperationResolver : public IOperationResolver {
 #define NN_REGISTER_OPERATION(identifier, operationName, validate, unused_prepare, unused_execute, \
                               ...)                                                                 \
     const OperationRegistration* register_##identifier() {                                         \
-        static OperationRegistration registration(hal::OperationType::identifier, operationName,   \
+        static OperationRegistration registration(OperationType::identifier, operationName,        \
                                                   validate, nullptr, nullptr, {__VA_ARGS__});      \
         return &registration;                                                                      \
     }

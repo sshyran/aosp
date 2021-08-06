@@ -17,42 +17,52 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_EVENT_H
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_EVENT_H
 
+#include <android-base/logging.h>
+#include <nnapi/Types.h>
+
+#include <memory>
+#include <mutex>
 #include <utility>
 
-#include "Callbacks.h"
-#include "HalInterfaces.h"
+#include "ExecutionCallback.h"
 
 namespace android::nn {
 
 class IEvent {
    public:
     virtual ~IEvent() = default;
-    virtual void wait() const = 0;
-    virtual hal::ErrorStatus getStatus() const = 0;
+    virtual ErrorStatus wait() const = 0;
     virtual int getSyncFenceFd(bool shouldDup) const = 0;
 };
 
 // The CallbackEvent wraps ExecutionCallback
 class CallbackEvent : public IEvent {
    public:
-    CallbackEvent(sp<ExecutionCallback> callback) : kExecutionCallback(std::move(callback)) {
+    CallbackEvent(std::shared_ptr<ExecutionCallback> callback)
+        : kExecutionCallback(std::move(callback)) {
         CHECK(kExecutionCallback != nullptr);
     }
 
-    void wait() const override { kExecutionCallback->wait(); }
-    hal::ErrorStatus getStatus() const override { return kExecutionCallback->getStatus(); }
+    ErrorStatus wait() const override {
+        kExecutionCallback->wait();
+        return kExecutionCallback->getStatus();
+    }
+
     // Always return -1 as this is not backed by a sync fence.
     int getSyncFenceFd(bool /*should_dup*/) const override { return -1; }
 
    private:
-    const sp<ExecutionCallback> kExecutionCallback;
+    const std::shared_ptr<ExecutionCallback> kExecutionCallback;
 };
 
-// The SyncFenceEvent wraps sync fence and IFencedExecutionCallback
+// The SyncFenceEvent wraps sync fence and ExecuteFencedInfoCallback
 class SyncFenceEvent : public IEvent {
+    using ExecutionFinishCallback = std::function<ErrorStatus(ErrorStatus)>;
+
    public:
-    SyncFenceEvent(int sync_fence_fd, const sp<hal::IFencedExecutionCallback>& callback)
-        : kFencedExecutionCallback(callback) {
+    SyncFenceEvent(int sync_fence_fd, const ExecuteFencedInfoCallback& callback,
+                   const ExecutionFinishCallback& finish)
+        : kFencedExecutionCallback(callback), kFinishCallback(finish) {
         if (sync_fence_fd > 0) {
             // Dup the provided file descriptor
             mSyncFenceFd = dup(sync_fence_fd);
@@ -64,27 +74,29 @@ class SyncFenceEvent : public IEvent {
     ~SyncFenceEvent() { close(mSyncFenceFd); }
 
     // Use syncWait to wait for the sync fence until the status change.
-    void wait() const override { syncWait(mSyncFenceFd, -1); }
+    // In case of syncWait error, query the dispatch callback for detailed error status.
+    // This method maps to the NDK ANeuralNetworksEvent_wait, which must be thread-safe.
+    ErrorStatus wait() const override {
+        std::lock_guard<std::mutex> lock(mMutex);
+        if (mFinished) return mError;
 
-    // Get the status of the event.
-    // In case of syncWait error, query the dispatch callback for detailed
-    // error status.
-    hal::ErrorStatus getStatus() const override {
-        auto error = hal::ErrorStatus::NONE;
         if (mSyncFenceFd > 0 && syncWait(mSyncFenceFd, -1) != FenceState::SIGNALED) {
-            error = hal::ErrorStatus::GENERAL_FAILURE;
+            mError = ErrorStatus::GENERAL_FAILURE;
             // If there is a callback available, use the callback to get the error code.
             if (kFencedExecutionCallback != nullptr) {
-                const hal::Return<void> ret = kFencedExecutionCallback->getExecutionInfo(
-                        [&error](hal::ErrorStatus status, hal::Timing, hal::Timing) {
-                            error = status;
-                        });
-                if (!ret.isOk()) {
-                    error = hal::ErrorStatus::GENERAL_FAILURE;
+                auto result = kFencedExecutionCallback();
+                if (!result.has_value()) {
+                    LOG(ERROR) << "Fenced execution callback failed: " << result.error().message;
+                    mError = result.error().code;
+                    CHECK_NE(mError, ErrorStatus::NONE);
                 }
             }
         }
-        return error;
+        if (kFinishCallback != nullptr) {
+            mError = kFinishCallback(mError);
+        }
+        mFinished = true;
+        return mError;
     }
 
     // Return the sync fence fd.
@@ -102,7 +114,12 @@ class SyncFenceEvent : public IEvent {
    private:
     // TODO(b/148423931): used android::base::unique_fd instead.
     int mSyncFenceFd = -1;
-    const sp<hal::IFencedExecutionCallback> kFencedExecutionCallback;
+    const ExecuteFencedInfoCallback kFencedExecutionCallback;
+    const ExecutionFinishCallback kFinishCallback;
+
+    mutable std::mutex mMutex;
+    mutable bool mFinished GUARDED_BY(mMutex) = false;
+    mutable ErrorStatus mError GUARDED_BY(mMutex) = ErrorStatus::NONE;
 };
 
 }  // namespace android::nn

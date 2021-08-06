@@ -16,7 +16,9 @@
 
 #define LOG_TAG "Operations"
 
-#include "HalInterfaces.h"
+#include <functional>
+#include <vector>
+
 #include "IndexedShapeWrapper.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
@@ -33,8 +35,6 @@ constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
 namespace {
-
-using namespace hal;
 
 bool compute(const std::function<bool(bool, bool)>& func, const bool8* aData, const Shape& aShape,
              const bool8* bData, const Shape& bShape, bool8* outputData, const Shape& outputShape) {
@@ -60,7 +60,7 @@ bool compute(const std::function<bool(bool, bool)>& func, const bool8* aData, co
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor1);
@@ -68,7 +68,7 @@ bool validate(const IOperationValidationContext* context) {
             << "Unsupported tensor type for a logical operation";
     NN_RET_CHECK(validateInputTypes(context, {inputType, inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateHalVersion(context, HalVersion::V1_2);
+    return Version::ANDROID_Q;
 }
 
 bool prepare(IOperationExecutionContext* context) {

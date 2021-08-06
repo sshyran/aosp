@@ -16,20 +16,16 @@
 
 #define LOG_TAG "Operations"
 
-#include <vector>
-
 #include "RNN.h"
+
+#include <vector>
 
 #include "CpuExecutor.h"
 #include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
-
 #include "Tracing.h"
 
 namespace android {
 namespace nn {
-
-using namespace hal;
 
 RNN::RNN(const Operation& operation, RunTimeOperandInfo* operands) {
     NNTRACE_TRANS("RNN::RNN");

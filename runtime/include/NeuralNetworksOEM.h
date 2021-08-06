@@ -36,8 +36,6 @@
  *   - DO NOT CHANGE THE LAYOUT OR SIZE OF STRUCTURES
  */
 
-#if __ANDROID_API__ >= 27
-
 enum {
     /**
      * DEPRECATED. Use Extensions instead.
@@ -55,9 +53,10 @@ enum {
 };  // extends OperandCode
 
 /**
- * If a model contains an {@link ANEURALNETWORKS_OEM_OPERATION}, then
- * either the model must contain only a single operation, or every
- * tensor operand type in the model must be fully specified.
+ * Before API level 30, if a model contains an
+ * {@link ANEURALNETWORKS_OEM_OPERATION}, then either the model must contain
+ * only a single operation, or every tensor operand type in the model must be
+ * fully specified.
  */
 enum {
     /**
@@ -67,7 +66,5 @@ enum {
      */
     ANEURALNETWORKS_OEM_OPERATION = 10000,
 };  // extends OperationCode
-
-#endif  //  __ANDROID_API__ >= 27
 
 #endif  // ANDROID_FRAMEWORKS_ML_NN_RUNTIME_NEURAL_NETWORKS_OEM_H

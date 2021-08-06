@@ -16,20 +16,21 @@
 
 #define LOG_TAG "Operations"
 
+#include <vector>
+
+#include "OperationResolver.h"
+#include "Tracing.h"
+#include "nnapi/Validation.h"
+
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 #include <tensorflow/lite/kernels/internal/optimized/optimized_ops.h>
 #include <tensorflow/lite/kernels/internal/reference/integer_ops/pooling.h>
 
-#include <vector>
-
 #include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
-#include "OperationResolver.h"
-#include "Tracing.h"
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 namespace android {
 namespace nn {
-
-using namespace hal;
 
 namespace pooling {
 
@@ -38,6 +39,7 @@ constexpr uint32_t kInputTensor = 0;
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
 
 struct PoolingParam {
@@ -289,21 +291,23 @@ bool maxPool(const T* inputData, const Shape& inputShape, const PoolingParam& pa
 }
 
 }  // namespace
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-bool validate(OperationType opType, const IOperationValidationContext* context) {
+Result<Version> validate(OperationType opType, const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     auto inputCount = context->getNumInputs();
     NN_RET_CHECK(inputCount == 11 || inputCount == 10 || inputCount == 8 || inputCount == 7);
     auto inputType = context->getInputType(kInputTensor);
     std::vector<OperandType> inExpectedTypes;
+    auto minSupportedVersion = Version::ANDROID_OC_MR1;
     if (inputType == OperandType::TENSOR_FLOAT32) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_0));
+        minSupportedVersion = Version::ANDROID_OC_MR1;
         inExpectedTypes = {
                 inputType,          OperandType::INT32, OperandType::INT32, OperandType::INT32,
                 OperandType::INT32, OperandType::INT32, OperandType::INT32,
         };
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        minSupportedVersion = Version::ANDROID_Q;
         inExpectedTypes = {
                 OperandType::TENSOR_FLOAT16, OperandType::INT32, OperandType::INT32,
                 OperandType::INT32,          OperandType::INT32, OperandType::INT32,
@@ -311,7 +315,7 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
         };
     } else if (opType != OperationType::L2_POOL_2D &&
                inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_0));
+        minSupportedVersion = Version::ANDROID_OC_MR1;
         inExpectedTypes = {
                 OperandType::TENSOR_QUANT8_ASYMM,
                 OperandType::INT32,
@@ -323,7 +327,7 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
         };
     } else if (opType != OperationType::L2_POOL_2D &&
                inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
+        minSupportedVersion = Version::ANDROID_R;
         inExpectedTypes = {
                 OperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                 OperandType::INT32,
@@ -334,8 +338,7 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
                 OperandType::INT32,
         };
     } else {
-        NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
-                            << getOperationName(opType);
+        NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation " << opType;
     }
 
     if (inputCount >= 10) {
@@ -345,14 +348,16 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
     }
     if (inputCount == 11 || inputCount == 8) {
         inExpectedTypes.push_back(OperandType::BOOL);
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_Q);
     } else {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_0));
+        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_OC_MR1);
     }
-    return validateInputTypes(context, inExpectedTypes) &&
-           validateOutputTypes(context, {inputType});
+    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
+    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+    return minSupportedVersion;
 }
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
     NN_RET_CHECK_EQ(getNumberOfDimensions(input), 4);
@@ -432,6 +437,7 @@ bool executeMaxPool(IOperationExecutionContext* context) {
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation MAX_POOL_2D";
     }
 }
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 #undef POOLING_DISPATCH_INPUT_TYPE
 

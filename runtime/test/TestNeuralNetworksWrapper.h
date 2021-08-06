@@ -33,6 +33,10 @@
 #include "NeuralNetworksWrapper.h"
 #include "NeuralNetworksWrapperExtensions.h"
 
+#ifndef __NNAPI_FL5_MIN_ANDROID_API__
+#define __NNAPI_FL5_MIN_ANDROID_API__ __ANDROID_API_FUTURE__
+#endif
+
 namespace android {
 namespace nn {
 namespace test_wrapper {
@@ -308,6 +312,46 @@ class Compilation {
 
     Result finish() { return static_cast<Result>(ANeuralNetworksCompilation_finish(mCompilation)); }
 
+    Result getPreferredMemoryAlignmentForInput(uint32_t index, uint32_t* alignment) const {
+        if (__builtin_available(android __NNAPI_FL5_MIN_ANDROID_API__, *)) {
+            return static_cast<Result>(
+                    NNAPI_CALL(ANeuralNetworksCompilation_getPreferredMemoryAlignmentForInput(
+                            mCompilation, index, alignment)));
+        } else {
+            return Result::FEATURE_LEVEL_TOO_LOW;
+        }
+    };
+
+    Result getPreferredMemoryPaddingForInput(uint32_t index, uint32_t* padding) const {
+        if (__builtin_available(android __NNAPI_FL5_MIN_ANDROID_API__, *)) {
+            return static_cast<Result>(
+                    NNAPI_CALL(ANeuralNetworksCompilation_getPreferredMemoryPaddingForInput(
+                            mCompilation, index, padding)));
+        } else {
+            return Result::FEATURE_LEVEL_TOO_LOW;
+        }
+    };
+
+    Result getPreferredMemoryAlignmentForOutput(uint32_t index, uint32_t* alignment) const {
+        if (__builtin_available(android __NNAPI_FL5_MIN_ANDROID_API__, *)) {
+            return static_cast<Result>(
+                    NNAPI_CALL(ANeuralNetworksCompilation_getPreferredMemoryAlignmentForOutput(
+                            mCompilation, index, alignment)));
+        } else {
+            return Result::FEATURE_LEVEL_TOO_LOW;
+        }
+    };
+
+    Result getPreferredMemoryPaddingForOutput(uint32_t index, uint32_t* padding) const {
+        if (__builtin_available(android __NNAPI_FL5_MIN_ANDROID_API__, *)) {
+            return static_cast<Result>(
+                    NNAPI_CALL(ANeuralNetworksCompilation_getPreferredMemoryPaddingForOutput(
+                            mCompilation, index, padding)));
+        } else {
+            return Result::FEATURE_LEVEL_TOO_LOW;
+        }
+    };
+
     ANeuralNetworksCompilation* getHandle() const { return mCompilation; }
 
    protected:
@@ -390,6 +434,24 @@ class Execution {
         return static_cast<Result>(ANeuralNetworksExecution_setLoopTimeout(mExecution, duration));
     }
 
+    Result enableInputAndOutputPadding(bool enable) {
+        if (__builtin_available(android __NNAPI_FL5_MIN_ANDROID_API__, *)) {
+            return static_cast<Result>(
+                    ANeuralNetworksExecution_enableInputAndOutputPadding(mExecution, enable));
+        } else {
+            return Result::FEATURE_LEVEL_TOO_LOW;
+        }
+    }
+
+    Result setReusable(bool reusable) {
+        if (__builtin_available(android __NNAPI_FL5_MIN_ANDROID_API__, *)) {
+            return static_cast<Result>(
+                    NNAPI_CALL(ANeuralNetworksExecution_setReusable(mExecution, reusable)));
+        } else {
+            return Result::FEATURE_LEVEL_TOO_LOW;
+        }
+    }
+
     Result startCompute(Event* event) {
         ANeuralNetworksEvent* ev = nullptr;
         Result result = static_cast<Result>(ANeuralNetworksExecution_startCompute(mExecution, &ev));
@@ -409,8 +471,23 @@ class Execution {
         return result;
     }
 
-    Result compute() {
-        switch (mComputeMode) {
+    // By default, compute() uses the synchronous API. Either an argument or
+    // setComputeMode() can be used to change the behavior of compute() to
+    // either:
+    // - use the asynchronous or fenced API and then wait for computation to complete
+    // or
+    // - use the burst API
+    // Returns the previous ComputeMode.
+    enum class ComputeMode { SYNC, ASYNC, BURST, FENCED };
+    static ComputeMode setComputeMode(ComputeMode mode) {
+        ComputeMode oldComputeMode = mComputeMode;
+        mComputeMode = mode;
+        return oldComputeMode;
+    }
+    static ComputeMode getComputeMode() { return mComputeMode; }
+
+    Result compute(ComputeMode computeMode = mComputeMode) {
+        switch (computeMode) {
             case ComputeMode::SYNC: {
                 return static_cast<Result>(ANeuralNetworksExecution_compute(mExecution));
             }
@@ -453,19 +530,6 @@ class Execution {
             }
         }
         return Result::BAD_DATA;
-    }
-
-    // By default, compute() uses the synchronous API. setComputeMode() can be
-    // used to change the behavior of compute() to either:
-    // - use the asynchronous API and then wait for computation to complete
-    // or
-    // - use the burst API
-    // Returns the previous ComputeMode.
-    enum class ComputeMode { SYNC, ASYNC, BURST, FENCED };
-    static ComputeMode setComputeMode(ComputeMode mode) {
-        ComputeMode oldComputeMode = mComputeMode;
-        mComputeMode = mode;
-        return oldComputeMode;
     }
 
     Result getOutputOperandDimensions(uint32_t index, std::vector<uint32_t>* dimensions) {

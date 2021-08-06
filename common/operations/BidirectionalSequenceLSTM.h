@@ -17,8 +17,6 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_BIDIRECTIONAL_SEQUENCE_LSTM_H
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_BIDIRECTIONAL_SEQUENCE_LSTM_H
 
-#include <tensorflow/lite/kernels/internal/tensor_utils.h>
-
 #include <algorithm>
 #include <cmath>
 #include <vector>
@@ -34,12 +32,11 @@ struct RunTimeOperandInfo;
 
 class BidirectionalSequenceLSTM {
    public:
-    BidirectionalSequenceLSTM(const hal::Operation& operation, RunTimeOperandInfo* operands);
+    BidirectionalSequenceLSTM(const Operation& operation, RunTimeOperandInfo* operands);
 
-    bool Prepare(const hal::Operation& operation, RunTimeOperandInfo* operands,
-                 Shape* fwOutputShape, Shape* bwOutputShape, Shape* fwOutputActivationState,
-                 Shape* fwOutputCellState, Shape* bwOutputActivationState,
-                 Shape* bwOutputCellState);
+    bool Prepare(const Operation& operation, RunTimeOperandInfo* operands, Shape* fwOutputShape,
+                 Shape* bwOutputShape, Shape* fwOutputActivationState, Shape* fwOutputCellState,
+                 Shape* bwOutputActivationState, Shape* bwOutputCellState);
     bool Eval();
 
     // Input Tensors of size {max_time, n_batch, n_input}

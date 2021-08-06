@@ -18,21 +18,21 @@
 
 #include "LSTM.h"
 
+#include <tensorflow/lite/kernels/internal/reference/portable_tensor_utils.h>
+
 #include <vector>
 
 #include "CpuExecutor.h"
 #include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
+#include "LegacyUtils.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
-#include "Utils.h"
+#include "nnapi/Types.h"
 
 namespace android {
 namespace nn {
 
 namespace {
-
-using namespace hal;
 
 template <typename T>
 inline T* GetBuffer(RunTimeOperandInfo* operand) {
@@ -113,7 +113,7 @@ LSTMCell::LSTMCell(const Operation& operation, RunTimeOperandInfo* operands) {
     } else {
         // For LSTM from HAL v1.0 assign operands with no values
         static RunTimeOperandInfo no_value;
-        no_value.lifetime = OperandLifeTime::NO_VALUE;
+        no_value.lifetime = Operand::LifeTime::NO_VALUE;
 
         input_layer_norm_weights_ = &no_value;
         forget_layer_norm_weights_ = &no_value;
@@ -221,8 +221,8 @@ bool LSTMCell::CheckInputTensorDimensions(
     // omitted ones can be omited in case CIFG LSTM is used.
     params->use_layer_norm = !IsNullInput(output_layer_norm_weights);
 
-    params->use_projection_weight = (projection_weights->lifetime != OperandLifeTime::NO_VALUE);
-    params->use_projection_bias = (projection_bias->lifetime != OperandLifeTime::NO_VALUE);
+    params->use_projection_weight = (projection_weights->lifetime != Operand::LifeTime::NO_VALUE);
+    params->use_projection_bias = (projection_bias->lifetime != Operand::LifeTime::NO_VALUE);
 
     // Make sure the input gate bias is present only when not a CIFG-LSTM.
     if (params->use_cifg) {
@@ -832,19 +832,18 @@ bool LSTMCell::LSTMStep(
 
     // For each batch and cell: compute input_weight * input.
     if (!params.use_cifg) {
-        tflite::tensor_utils::MatrixBatchVectorMultiplyAccumulate(
-                input_to_input_weights_buffer, n_cell, n_input, input_buffer, n_batch,
-                input_gate_scratch);
+        tflite::tensor_utils::MatrixBatchVectorMultiplyAccumulate(input_to_input_weights_buffer,
+                                                                  n_cell, n_input, input_buffer,
+                                                                  n_batch, input_gate_scratch);
     }
+    tflite::tensor_utils::MatrixBatchVectorMultiplyAccumulate(input_to_forget_weights_buffer,
+                                                              n_cell, n_input, input_buffer,
+                                                              n_batch, forget_gate_scratch);
     tflite::tensor_utils::MatrixBatchVectorMultiplyAccumulate(
-            input_to_forget_weights_buffer, n_cell, n_input, input_buffer, n_batch,
-            forget_gate_scratch);
-    tflite::tensor_utils::MatrixBatchVectorMultiplyAccumulate(input_to_cell_weights_buffer, n_cell,
-                                                              n_input, input_buffer, n_batch,
-                                                              cell_scratch);
-    tflite::tensor_utils::MatrixBatchVectorMultiplyAccumulate(
-            input_to_output_weights_buffer, n_cell, n_input, input_buffer, n_batch,
-            output_gate_scratch);
+            input_to_cell_weights_buffer, n_cell, n_input, input_buffer, n_batch, cell_scratch);
+    tflite::tensor_utils::MatrixBatchVectorMultiplyAccumulate(input_to_output_weights_buffer,
+                                                              n_cell, n_input, input_buffer,
+                                                              n_batch, output_gate_scratch);
 
     // If auxiliary input is available then compute aux_input_weight * aux_input
     if (aux_input_buffer != nullptr) {
@@ -940,7 +939,8 @@ bool LSTMCell::LSTMStep(
                 cell_scratch, input_gate_scratch, n_batch * n_cell, cell_state_out_buffer);
     }
     if (params.cell_clip > 0.0) {
-        tflite::tensor_utils::CwiseClipping(cell_state_out_buffer, n_batch * n_cell, params.cell_clip);
+        tflite::tensor_utils::CwiseClipping(cell_state_out_buffer, n_batch * n_cell,
+                                            params.cell_clip);
     }
 
     // For each batch and cell: update the output gate.
@@ -977,7 +977,8 @@ bool LSTMCell::LSTMStep(
                 projection_weights_buffer, n_output, n_cell, output_gate_scratch, n_batch,
                 output_buffer);
         if (params.proj_clip > 0.0) {
-            tflite::tensor_utils::CwiseClipping(output_buffer, n_batch * n_output, params.proj_clip);
+            tflite::tensor_utils::CwiseClipping(output_buffer, n_batch * n_output,
+                                                params.proj_clip);
         }
     } else {
         std::copy_n(output_gate_scratch, n_batch * n_output, output_buffer);

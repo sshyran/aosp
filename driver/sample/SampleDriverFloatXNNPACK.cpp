@@ -15,6 +15,11 @@
  */
 
 #define LOG_TAG "SampleDriverFloatXNNPACK"
+
+#include <CpuExecutor.h>
+#include <HalInterfaces.h>
+#include <Utils.h>
+#include <ValidateHal.h>
 #include <android-base/logging.h>
 #if !defined(NNAPI_CHROMEOS)
 #include <hidl/LegacySupport.h>
@@ -55,17 +60,19 @@ extern "C" BRILLO_EXPORT void* get_driver() {
 namespace android {
 namespace nn {
 namespace sample_driver {
-using namespace hal;
+
 namespace {
-#define NN_DRIVER_RETURN_IF_ERROR(expr)        \
-    do {                                       \
-        ErrorStatus _errorCode = (expr);       \
-        if (_errorCode != ErrorStatus::NONE) { \
-            return _errorCode;                 \
-        }                                      \
+
+#define NN_DRIVER_RETURN_IF_ERROR(expr)              \
+    do {                                             \
+        V1_3::ErrorStatus _errorCode = (expr);       \
+        if (_errorCode != V1_3::ErrorStatus::NONE) { \
+            return _errorCode;                       \
+        }                                            \
     } while (0)
 const size_t kNumOfWorkerThreads = 1;
-static const Timing kNoTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
+static const V1_2::Timing kNoTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
+
 bool isScalarType(OperandType type) {
     switch (type) {
         case OperandType::FLOAT16:
@@ -80,13 +87,13 @@ bool isScalarType(OperandType type) {
 }
 
 void updateForArguments(const std::vector<uint32_t>& indexes,
-                        const hidl_vec<RequestArgument>& arguments,
+                        const hardware::hidl_vec<V1_0::RequestArgument>& arguments,
                         const std::vector<RunTimePoolInfo>& requestPoolInfos,
                         RunTimeOperandInfo* operands) {
     CHECK_EQ(indexes.size(), arguments.size());
     for (size_t i = 0; i < indexes.size(); i++) {
         const uint32_t operandIndex = indexes[i];
-        const RequestArgument& from = arguments[i];
+        const V1_0::RequestArgument& from = arguments[i];
         RunTimeOperandInfo& to = operands[operandIndex];
         if (from.dimensions.size() > 0) {
             // It's the responsibility of the caller to validate that
@@ -97,7 +104,7 @@ void updateForArguments(const std::vector<uint32_t>& indexes,
             to.dimensions = from.dimensions;
         }
         if (from.hasNoValue) {
-            to.lifetime = OperandLifeTime::NO_VALUE;
+            to.lifetime = Operand::LifeTime::NO_VALUE;
             CHECK(to.buffer == nullptr);
             to.length = 0;
         } else {
@@ -115,30 +122,30 @@ void updateForArguments(const std::vector<uint32_t>& indexes,
     }
 }
 std::vector<RunTimeOperandInfo> initializeRunTimeInfo(
-        const Subgraph& subgraph, const std::vector<RunTimePoolInfo>& modelPoolInfos,
-        const hidl_vec<uint8_t>* mModelOperandValues) {
+        const V1_3::Subgraph& subgraph, const std::vector<RunTimePoolInfo>& modelPoolInfos,
+        const hardware::hidl_vec<uint8_t>* mModelOperandValues) {
     const size_t count = subgraph.operands.size();
     std::vector<RunTimeOperandInfo> operands(count);
     for (size_t i = 0; i < count; i++) {
-        const Operand& from = subgraph.operands[i];
+        const V1_3::Operand& from = subgraph.operands[i];
         RunTimeOperandInfo& to = operands[i];
-        to.type = from.type;
+        to.type = uncheckedConvert(from.type);
         to.dimensions = from.dimensions;
         to.scale = from.scale;
         to.zeroPoint = from.zeroPoint;
         to.length = from.location.length;
-        to.lifetime = from.lifetime;
-        to.extraParams = from.extraParams;
+        to.lifetime = uncheckedConvert(from.lifetime);
+        to.extraParams = uncheckedConvert(from.extraParams);
         switch (from.lifetime) {
-            case OperandLifeTime::TEMPORARY_VARIABLE:
+            case V1_3::OperandLifeTime::TEMPORARY_VARIABLE:
                 to.buffer = nullptr;
                 to.numberOfUsesLeft = from.numberOfConsumers;
                 break;
-            case OperandLifeTime::CONSTANT_COPY:
+            case V1_3::OperandLifeTime::CONSTANT_COPY:
                 to.buffer = const_cast<uint8_t*>(&(*mModelOperandValues)[from.location.offset]);
                 to.numberOfUsesLeft = 0;
                 break;
-            case OperandLifeTime::CONSTANT_REFERENCE: {
+            case V1_3::OperandLifeTime::CONSTANT_REFERENCE: {
                 auto poolIndex = from.location.poolIndex;
                 CHECK_LT(poolIndex, modelPoolInfos.size());
                 auto& r = modelPoolInfos[poolIndex];
@@ -146,10 +153,10 @@ std::vector<RunTimeOperandInfo> initializeRunTimeInfo(
                 to.numberOfUsesLeft = 0;
                 break;
             }
-            case OperandLifeTime::SUBGRAPH:
-            case OperandLifeTime::SUBGRAPH_INPUT:
-            case OperandLifeTime::SUBGRAPH_OUTPUT:
-            case OperandLifeTime::NO_VALUE:
+            case V1_3::OperandLifeTime::SUBGRAPH:
+            case V1_3::OperandLifeTime::SUBGRAPH_INPUT:
+            case V1_3::OperandLifeTime::SUBGRAPH_OUTPUT:
+            case V1_3::OperandLifeTime::NO_VALUE:
                 to.buffer = nullptr;
                 to.numberOfUsesLeft = 0;
                 break;
@@ -160,7 +167,7 @@ std::vector<RunTimeOperandInfo> initializeRunTimeInfo(
 }  // namespace
 class Subgraph {
    public:
-    static Subgraph* Create(const hidl_vec<Operation>& operations,
+    static Subgraph* Create(const hardware::hidl_vec<V1_3::Operation>& operations,
                             std::vector<RunTimeOperandInfo>& operands,
                             const std::vector<uint32_t>& inputIndexes,
                             const std::vector<uint32_t>& outputIndexes, pthreadpool_t threadpool,
@@ -183,13 +190,13 @@ class Subgraph {
         // -1 denotes tensor not used in the subgraph.
         std::vector<int> tensors(operands.size(), -1);
         for (const auto& operation : operations) {
-            const hidl_vec<uint32_t>& ins = operation.inputs;
-            const hidl_vec<uint32_t>& outs = operation.outputs;
+            const std::vector<uint32_t>& ins = operation.inputs;
+            const std::vector<uint32_t>& outs = operation.outputs;
             switch (operation.type) {
-                case OperationType::MEAN:
-                case OperationType::PAD:
-                case OperationType::RESHAPE:
-                case OperationType::RESIZE_BILINEAR:
+                case V1_3::OperationType::MEAN:
+                case V1_3::OperationType::PAD:
+                case V1_3::OperationType::RESHAPE:
+                case V1_3::OperationType::RESIZE_BILINEAR:
                     // Ignore the second input (axes, static padding, or new shape),
                     // because it is represented as parameters of the XNNPACK operator
                     // rather than extra input.
@@ -222,8 +229,9 @@ class Subgraph {
             }
             uint32_t flags = 0;
             const void* data = nullptr;
-            if (operands[tensors[t]].lifetime == OperandLifeTime::CONSTANT_COPY ||
-                operands[tensors[t]].lifetime == OperandLifeTime::CONSTANT_REFERENCE) {
+            if (operands[tensors[t]].lifetime == Operand::LifeTime::CONSTANT_COPY ||
+                operands[tensors[t]].lifetime == Operand::LifeTime::CONSTANT_REFERENCE ||
+                operands[tensors[t]].lifetime == Operand::LifeTime::POINTER) {
                 data = operands[tensors[t]].buffer;
             }
             if (inputs.count(t) != 0) {
@@ -260,7 +268,7 @@ class Subgraph {
         // Create XNNPACK nodes for NNAPI Operations
         for (const auto& operation : operations) {
             if (VisitNode(subgraph.get(), operation, operands.data(), xnnpackTensors) !=
-                ErrorStatus::NONE) {
+                V1_3::ErrorStatus::NONE) {
                 LOG(ERROR) << "XNNPACK add op failed";
                 return nullptr;
             }
@@ -273,9 +281,11 @@ class Subgraph {
         }
         return new Subgraph(runtimePtr, std::move(externals), useStaticBuffer);
     }
-    ErrorStatus Prepare() { return ErrorStatus::NONE; }
-    ErrorStatus Invoke(RunTimeOperandInfo* operands) {
-        VLOG(DRIVER) << "Subgraph::Invoke() start. (this): " << this;
+
+    V1_3::ErrorStatus Prepare() { return V1_3::ErrorStatus::NONE; }
+
+    V1_3::ErrorStatus Invoke(RunTimeOperandInfo* operands) {
+        VLOG(DRIVER) << "Subgraph::Invoke() start";
         if (!mUseStaticBuffer || mFirstRun) {
             VLOG(DRIVER) << "Setup buffer for Subgraph";
             std::vector<xnn_external_value> externalValues;
@@ -289,7 +299,7 @@ class Subgraph {
                     xnn_setup_runtime(mRuntime.get(), externalValues.size(), externalValues.data());
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_setup_runtime FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
             mFirstRun = false;
         }
@@ -297,288 +307,295 @@ class Subgraph {
         const xnn_status status = xnn_invoke_runtime(mRuntime.get());
         if (status != xnn_status_success) {
             LOG(ERROR) << "XNNPACK xnn_invoke_runtime FAILED";
-            return ErrorStatus::GENERAL_FAILURE;
+            return V1_3::ErrorStatus::GENERAL_FAILURE;
         }
-        return ErrorStatus::NONE;
+
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus CalculatePadding(int padding, uint32_t* flags) {
+
+    static V1_3::ErrorStatus CalculatePadding(int padding, uint32_t* flags) {
         switch (padding) {
             case ANEURALNETWORKS_PADDING_SAME:
                 *flags = XNN_FLAG_TENSORFLOW_SAME_PADDING;
-                return ErrorStatus::NONE;
+                return V1_3::ErrorStatus::NONE;
             case ANEURALNETWORKS_PADDING_VALID:
                 *flags = 0;
-                return ErrorStatus::NONE;
+                return V1_3::ErrorStatus::NONE;
             default:
                 LOG(ERROR) << "invalid padding mode";
-                return ErrorStatus::INVALID_ARGUMENT;
+                return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
     }
-    static ErrorStatus ConvertActivationToOutputRange(int activation, float* outputMin,
-                                                      float* outputMax) {
+
+    static V1_3::ErrorStatus ConvertActivationToOutputRange(int activation, float* outputMin,
+                                                            float* outputMax) {
         switch (activation) {
             case ANEURALNETWORKS_FUSED_NONE:
                 *outputMin = -std::numeric_limits<float>::infinity();
                 *outputMax = +std::numeric_limits<float>::infinity();
-                return ErrorStatus::NONE;
+                return V1_3::ErrorStatus::NONE;
             case ANEURALNETWORKS_FUSED_RELU:
                 *outputMin = 0.0f;
                 *outputMax = +std::numeric_limits<float>::infinity();
-                return ErrorStatus::NONE;
+                return V1_3::ErrorStatus::NONE;
             case ANEURALNETWORKS_FUSED_RELU1:
                 *outputMin = -1.0f;
                 *outputMax = +1.0f;
-                return ErrorStatus::NONE;
+                return V1_3::ErrorStatus::NONE;
             case ANEURALNETWORKS_FUSED_RELU6:
                 *outputMin = 0.0f;
                 *outputMax = 6.0f;
-                return ErrorStatus::NONE;
+                return V1_3::ErrorStatus::NONE;
             default:
-                return ErrorStatus::INVALID_ARGUMENT;
+                return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
     }
-    static ErrorStatus CheckConvolutionParams(int32_t stride_width, int32_t stride_height,
-                                              int32_t dilation_width_factor,
-                                              int32_t dilation_height_factor) {
+
+    static V1_3::ErrorStatus CheckConvolutionParams(int32_t stride_width, int32_t stride_height,
+                                                    int32_t dilation_width_factor,
+                                                    int32_t dilation_height_factor) {
         if (stride_width <= 0) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         if (stride_height <= 0) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         if (dilation_width_factor <= 0) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         if (dilation_height_factor <= 0) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus CheckDepthwiseConvolutionParams(int32_t stride_width, int32_t stride_height,
-                                                       int32_t dilation_width_factor,
-                                                       int32_t dilation_height_factor,
-                                                       int32_t depth_multiplier,
-                                                       uint32_t output_channels) {
+
+    static V1_3::ErrorStatus CheckDepthwiseConvolutionParams(
+            int32_t stride_width, int32_t stride_height, int32_t dilation_width_factor,
+            int32_t dilation_height_factor, int32_t depth_multiplier, uint32_t output_channels) {
         if (stride_width <= 0) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         if (stride_height <= 0) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         if (depth_multiplier <= 0) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         if (output_channels % depth_multiplier != 0) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         if (dilation_width_factor <= 0) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         if (dilation_height_factor <= 0) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
-        return ErrorStatus::NONE;
+
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus CheckPoolingParams(int32_t stride_width, int32_t stride_height,
-                                          int32_t filter_width, int32_t filter_height) {
+
+    static V1_3::ErrorStatus CheckPoolingParams(int32_t stride_width, int32_t stride_height,
+                                                int32_t filter_width, int32_t filter_height) {
         if (stride_width <= 0) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         if (stride_height <= 0) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         if (filter_width <= 0) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         if (filter_height <= 0) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         if (filter_width == 1 && filter_height == 1 && std::max(stride_width, stride_height) > 1) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus CheckNumInputsAndOutputs(const Operation& operation,
-                                                uint32_t expected_num_inputs,
-                                                uint32_t expected_num_outputs) {
+
+    static V1_3::ErrorStatus CheckNumInputsAndOutputs(const V1_3::Operation& operation,
+                                                      uint32_t expected_num_inputs,
+                                                      uint32_t expected_num_outputs) {
         if (operation.inputs.size() != expected_num_inputs) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         if (operation.outputs.size() != expected_num_outputs) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus CheckTensorType(OperandType tensor_type, OperandType expected_type) {
+
+    static V1_3::ErrorStatus CheckTensorType(OperandType tensor_type, OperandType expected_type) {
         if (tensor_type != expected_type) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus CheckTensorForXNNType(OperandType tensor_type) {
+    static V1_3::ErrorStatus CheckTensorForXNNType(OperandType tensor_type) {
         if (tensor_type != OperandType::TENSOR_FLOAT32 &&
             tensor_type != OperandType::TENSOR_INT32) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus CheckTensorShape(std::vector<uint32_t>& dimensions, uint32_t min_num_dims,
-                                        uint32_t max_num_dims) {
+
+    static V1_3::ErrorStatus CheckTensorShape(std::vector<uint32_t>& dimensions,
+                                              uint32_t min_num_dims, uint32_t max_num_dims) {
         if (min_num_dims == max_num_dims) {
             if (dimensions.size() != min_num_dims) {
-                return ErrorStatus::INVALID_ARGUMENT;
+                return V1_3::ErrorStatus::INVALID_ARGUMENT;
             }
         } else {
             if (dimensions.size() < min_num_dims || dimensions.size() > max_num_dims) {
-                return ErrorStatus::INVALID_ARGUMENT;
+                return V1_3::ErrorStatus::INVALID_ARGUMENT;
             }
         }
         for (size_t i = 0; i < dimensions.size(); i++) {
             if (dimensions[i] <= 0) {
-                return ErrorStatus::INVALID_ARGUMENT;
+                return V1_3::ErrorStatus::INVALID_ARGUMENT;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus CheckTensorShape(std::vector<uint32_t>& dimensions, int expected_num_dims) {
+
+    static V1_3::ErrorStatus CheckTensorShape(std::vector<uint32_t>& dimensions,
+                                              int expected_num_dims) {
         return CheckTensorShape(dimensions, expected_num_dims, expected_num_dims);
     }
-    static ErrorStatus CheckSlopeTensorShape(std::vector<uint32_t>& dimensions) {
+
+    static V1_3::ErrorStatus CheckSlopeTensorShape(std::vector<uint32_t>& dimensions) {
         if (dimensions.size() < 1) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         // Validate that all non-channel dimensions (if any) are exactly 1.
         for (size_t i = 0; i < dimensions.size() - 1; i++) {
             if (dimensions[i] != 1) {
-                return ErrorStatus::INVALID_ARGUMENT;
+                return V1_3::ErrorStatus::INVALID_ARGUMENT;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus CheckAxesTensorShape(std::vector<uint32_t>& dimensions) {
+
+    static V1_3::ErrorStatus CheckAxesTensorShape(std::vector<uint32_t>& dimensions) {
         if (dimensions.size() != 1) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus CheckShapeTensorShape(std::vector<uint32_t>& dimensions) {
+
+    static V1_3::ErrorStatus CheckShapeTensorShape(std::vector<uint32_t>& dimensions) {
         if (dimensions.size() != 1) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus CheckTensorStaticAllocation(OperandLifeTime lifetime) {
-        if (lifetime != OperandLifeTime::CONSTANT_COPY &&
-            lifetime != OperandLifeTime::CONSTANT_REFERENCE) {
-            VLOG(DRIVER) << "CheckTensorStaticAllocation: " << toString(lifetime);
-            return ErrorStatus::INVALID_ARGUMENT;
+
+    static V1_3::ErrorStatus CheckTensorStaticAllocation(Operand::LifeTime lifetime) {
+        if (lifetime != Operand::LifeTime::CONSTANT_COPY &&
+            lifetime != Operand::LifeTime::CONSTANT_REFERENCE &&
+            lifetime != Operand::LifeTime::POINTER) {
+            VLOG(DRIVER) << "CheckTensorStaticAllocation: " << toString(convertToV1_3(lifetime));
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus CheckTransposeConvolutionParams(int32_t stride_width,
-                                                       int32_t stride_height) {
-        if (stride_width <= 0) {
-            return ErrorStatus::INVALID_ARGUMENT;
-        }
-        if (stride_height <= 0) {
-            return ErrorStatus::INVALID_ARGUMENT;
-        }
-        return ErrorStatus::NONE;
-    }
-    static ErrorStatus VisitNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                 RunTimeOperandInfo* operands,
-                                 const std::vector<uint32_t>& xnnpackTensors) {
+
+    static V1_3::ErrorStatus VisitNode(xnn_subgraph_t subgraph, const V1_3::Operation& operation,
+                                       RunTimeOperandInfo* operands,
+                                       const std::vector<uint32_t>& xnnpackTensors) {
         switch (operation.type) {
-            case OperationType::ABS:
+            case V1_3::OperationType::ABS:
                 return VisitAbsNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::ADD:
+            case V1_3::OperationType::ADD:
                 return VisitAddNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::AVERAGE_POOL_2D:
+            case V1_3::OperationType::AVERAGE_POOL_2D:
                 return VisitAveragePool2DNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::CONV_2D:
+            case V1_3::OperationType::CONV_2D:
                 return VisitConv2DNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::DEPTH_TO_SPACE:
-                return VisitDepthToSpaceNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::DEPTHWISE_CONV_2D:
+            case V1_3::OperationType::DEPTHWISE_CONV_2D:
                 return VisitDepthwiseConv2DNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::DIV:
+            case V1_3::OperationType::DIV:
                 return VisitDivNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::ELU:
+            case V1_3::OperationType::ELU:
                 return VisitEluNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::FLOOR:
+            case V1_3::OperationType::FLOOR:
                 return VisitFloorNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::FULLY_CONNECTED:
+            case V1_3::OperationType::FULLY_CONNECTED:
                 return VisitFullyConnectedNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::HARD_SWISH:
+            case V1_3::OperationType::HARD_SWISH:
                 return VisitHardSwishNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::LOGISTIC:
+            case V1_3::OperationType::LOGISTIC:
                 return VisitLogisticNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::MAX_POOL_2D:
+            case V1_3::OperationType::MAX_POOL_2D:
                 return VisitMaxPool2DNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::MAXIMUM:
+            case V1_3::OperationType::MAXIMUM:
                 return VisitMaximumNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::MEAN:
+            case V1_3::OperationType::MEAN:
                 return VisitMeanNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::MINIMUM:
+            case V1_3::OperationType::MINIMUM:
                 return VisitMinimumNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::MUL:
+            case V1_3::OperationType::MUL:
                 return VisitMulNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::NEG:
+            case V1_3::OperationType::NEG:
                 return VisitNegNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::PAD:
+            case V1_3::OperationType::PAD:
                 return VisitPadNode(subgraph, operation, operands, 0.0f, xnnpackTensors);
-            case OperationType::PAD_V2:
+            case V1_3::OperationType::PAD_V2:
                 return VisitPadV2Node(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::RESHAPE:
+            case V1_3::OperationType::RESHAPE:
                 return VisitReshapeNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::RESIZE_BILINEAR:
+            case V1_3::OperationType::RESIZE_BILINEAR:
                 return VisitResizeBilinearNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::PRELU:
+            case V1_3::OperationType::PRELU:
                 return VisitPreluNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::RELU:
+            case V1_3::OperationType::RELU:
                 return VisitReluNode(subgraph, operation, operands, 0.0f,
                                      std::numeric_limits<float>::infinity(), xnnpackTensors);
-            case OperationType::RELU1:
+            case V1_3::OperationType::RELU1:
                 return VisitReluNode(subgraph, operation, operands, -1.0f, 1.0f, xnnpackTensors);
-            case OperationType::RELU6:
+            case V1_3::OperationType::RELU6:
                 return VisitReluNode(subgraph, operation, operands, 0.0f, 6.0f, xnnpackTensors);
-            case OperationType::SQRT:
+            case V1_3::OperationType::SQRT:
                 return VisitSqrtNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::SUB:
+            case V1_3::OperationType::SUB:
                 return VisitSubNode(subgraph, operation, operands, xnnpackTensors);
-            case OperationType::SOFTMAX:
+            case V1_3::OperationType::SOFTMAX:
                 return VisitSoftmaxNode(subgraph, operation, operands, xnnpackTensors);
             case OperationType::TRANSPOSE_CONV_2D:
                 return VisitTransposeConv2D(subgraph, operation, operands, xnnpackTensors);
             default:
-                return ErrorStatus::INVALID_ARGUMENT;
+                return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
     }
-    static ErrorStatus VisitAbsNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                    RunTimeOperandInfo* operands,
-                                    const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
+
+    static V1_3::ErrorStatus VisitAbsNode(xnn_subgraph_t subgraph, const V1_3::Operation& operation,
+                                          RunTimeOperandInfo* operands,
+                                          const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+
         if (subgraph != nullptr) {
             const xnn_status status =
                     xnn_define_abs(subgraph, /*input_id=*/xnnpackTensors[ins[0]],
                                    /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_abs FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitAddNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                    RunTimeOperandInfo* operands,
-                                    const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[1]].type));
+
+    static V1_3::ErrorStatus VisitAddNode(xnn_subgraph_t subgraph, const V1_3::Operation& operation,
+                                          RunTimeOperandInfo* operands,
+                                          const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[1]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[2]].lifetime));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         float outputMin = -std::numeric_limits<float>::infinity();
@@ -594,18 +611,20 @@ class Subgraph {
                                     /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_add2 FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitAveragePool2DNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                              RunTimeOperandInfo* operands,
-                                              const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
+
+    static V1_3::ErrorStatus VisitAveragePool2DNode(xnn_subgraph_t subgraph,
+                                                    const V1_3::Operation& operation,
+                                                    RunTimeOperandInfo* operands,
+                                                    const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
         // Make sure all scalar params are constant.
         for (uint32_t i = 1; i < ins.size(); i++) {
             NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[i]].lifetime));
@@ -619,7 +638,7 @@ class Subgraph {
         }
         if (use_nchw) {
             VLOG(DRIVER) << "XNNPACK VisitAveragePool2DNode FAILED: only NHWC layout is supported";
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         int32_t stride_width, stride_height, filter_width, filter_height, activation;
         uint32_t input_padding_top = 0;
@@ -671,18 +690,20 @@ class Subgraph {
             }
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_average_pooling_2d FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitConv2DNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                       RunTimeOperandInfo* operands,
-                                       const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[1]].type));
+
+    static V1_3::ErrorStatus VisitConv2DNode(xnn_subgraph_t subgraph,
+                                             const V1_3::Operation& operation,
+                                             RunTimeOperandInfo* operands,
+                                             const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[1]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[1]].lifetime));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[2]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[2]].lifetime));
@@ -700,7 +721,7 @@ class Subgraph {
         }
         if (use_nchw) {
             VLOG(DRIVER) << "XNNPACK VisitConv2DNode FAILED: only NHWC layout is supported";
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         int32_t stride_width, stride_height, activation;
         int32_t dilation_width_factor = 1;
@@ -762,50 +783,21 @@ class Subgraph {
                     /*output_id=*/xnnpackTensors[outs[0]], flags);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_convolution_2d FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitDepthToSpaceNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                            RunTimeOperandInfo* operands,
-                                            const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[1]].lifetime));
-        int block_size = static_cast<uint32_t>(getScalarData<int32_t>(operands[ins[1]]));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
-        bool use_nchw = false;
-        if (ins.size() == 3 && operands[ins[2]].type == OperandType::BOOL) {
-            use_nchw = getScalarData<bool>(operands[2]);
-        }
-        if (use_nchw) {
-            VLOG(DRIVER)
-                    << "XNNPACK VisitDepthToSpaceNode FAILED: only NHWC layout is supported";
-            return ErrorStatus::INVALID_ARGUMENT;
-        }
-        if (subgraph != nullptr) {
-            const xnn_status status = xnn_define_depth_to_space(subgraph,
-                    /*input_id=*/xnnpackTensors[ins[0]],
-                    /*output_id=*/xnnpackTensors[outs[0]],
-                    block_size,
-                    /*flag=*/0
-            );
-            if (status != xnn_status_success) {
-                LOG(ERROR) << "XNNPACK xnn_define_depth_to_space FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
-            }
-        }
-        return ErrorStatus::NONE;
-    }
-    static ErrorStatus VisitDepthwiseConv2DNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                                RunTimeOperandInfo* operands,
-                                                const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[1]].type));
+
+    static V1_3::ErrorStatus VisitDepthwiseConv2DNode(xnn_subgraph_t subgraph,
+                                                      const V1_3::Operation& operation,
+                                                      RunTimeOperandInfo* operands,
+                                                      const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[1]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[1]].lifetime));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[2]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[2]].lifetime));
@@ -824,7 +816,7 @@ class Subgraph {
         if (use_nchw) {
             VLOG(DRIVER)
                     << "XNNPACK VisitDepthwiseConv2DNode FAILED: only NHWC layout is supported";
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         int32_t stride_width, stride_height, depth_multiplier, activation;
         int32_t dilation_width_factor = 1;
@@ -889,18 +881,19 @@ class Subgraph {
                     /*output_id=*/xnnpackTensors[outs[0]], flags);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_depthwise_convolution_2d FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitDivNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                    RunTimeOperandInfo* operands,
-                                    const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[1]].type));
+
+    static V1_3::ErrorStatus VisitDivNode(xnn_subgraph_t subgraph, const V1_3::Operation& operation,
+                                          RunTimeOperandInfo* operands,
+                                          const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[1]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[2]].lifetime));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         float outputMin = -std::numeric_limits<float>::infinity();
@@ -916,10 +909,10 @@ class Subgraph {
                                       /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_divide FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
     static ErrorStatus VisitEluNode(xnn_subgraph_t subgraph, const Operation& operation,
                                                RunTimeOperandInfo* operands,
@@ -930,27 +923,14 @@ class Subgraph {
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[1]].lifetime));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
 
-        float alpha = getScalarData<float>(operands[ins[1]]);
-
-         if (subgraph != nullptr) {
-            const xnn_status status =
-                    xnn_define_elu(subgraph, alpha,
-                                     /*input_id=*/xnnpackTensors[ins[0]],
-                                     /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
-            if (status != xnn_status_success) {
-                LOG(ERROR) << "XNNPACK xnn_define_elu FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
-            }
-        }
-        return ErrorStatus::NONE;
-    }
-    static ErrorStatus VisitFullyConnectedNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                               RunTimeOperandInfo* operands,
-                                               const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[1]].type));
+    static V1_3::ErrorStatus VisitFullyConnectedNode(xnn_subgraph_t subgraph,
+                                                     const V1_3::Operation& operation,
+                                                     RunTimeOperandInfo* operands,
+                                                     const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[1]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[1]].lifetime));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[2]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[2]].lifetime));
@@ -971,18 +951,21 @@ class Subgraph {
                                                /*flags=*/XNN_FLAG_TENSORFLOW_RESHAPE_2D);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_fully_connected FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitFloorNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                      RunTimeOperandInfo* operands,
-                                      const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
+
+    static V1_3::ErrorStatus VisitFloorNode(xnn_subgraph_t subgraph,
+                                            const V1_3::Operation& operation,
+                                            RunTimeOperandInfo* operands,
+                                            const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+
         if (subgraph != nullptr) {
             const xnn_status status =
                     xnn_define_floor(subgraph,
@@ -990,54 +973,62 @@ class Subgraph {
                                      /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_floor FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitHardSwishNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                          RunTimeOperandInfo* operands,
-                                          const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
+
+    static V1_3::ErrorStatus VisitHardSwishNode(xnn_subgraph_t subgraph,
+                                                const V1_3::Operation& operation,
+                                                RunTimeOperandInfo* operands,
+                                                const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+
         if (subgraph != nullptr) {
             const xnn_status status =
                     xnn_define_hardswish(subgraph, /*input_id=*/xnnpackTensors[ins[0]],
                                          /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_hardswish FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitLogisticNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                         RunTimeOperandInfo* operands,
-                                         const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
+
+    static V1_3::ErrorStatus VisitLogisticNode(xnn_subgraph_t subgraph,
+                                               const V1_3::Operation& operation,
+                                               RunTimeOperandInfo* operands,
+                                               const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+
         if (subgraph != nullptr) {
             const xnn_status status =
                     xnn_define_sigmoid(subgraph, /*input_id=*/xnnpackTensors[ins[0]],
                                        /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_sigmoid FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitMaxPool2DNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                          RunTimeOperandInfo* operands,
-                                          const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
+
+    static V1_3::ErrorStatus VisitMaxPool2DNode(xnn_subgraph_t subgraph,
+                                                const V1_3::Operation& operation,
+                                                RunTimeOperandInfo* operands,
+                                                const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
         // Make sure all scalar params are constant.
         for (uint32_t i = 1; i < ins.size(); i++) {
             NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[i]].lifetime));
@@ -1051,7 +1042,7 @@ class Subgraph {
         }
         if (use_nchw) {
             VLOG(DRIVER) << "XNNPACK VisitMaxPool2DNode FAILED: only NHWC layout is supported";
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         int32_t stride_width, stride_height, filter_width, filter_height, activation;
         uint32_t input_padding_top = 0;
@@ -1104,18 +1095,20 @@ class Subgraph {
             }
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_max_pooling_2d FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitMaximumNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                        RunTimeOperandInfo* operands,
-                                        const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[1]].type));
+
+    static V1_3::ErrorStatus VisitMaximumNode(xnn_subgraph_t subgraph,
+                                              const V1_3::Operation& operation,
+                                              RunTimeOperandInfo* operands,
+                                              const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[1]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[2]].lifetime));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         float outputMin = -std::numeric_limits<float>::infinity();
@@ -1131,17 +1124,19 @@ class Subgraph {
                                         /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_maximum2 FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitMeanNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                     RunTimeOperandInfo* operands,
-                                     const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+
+    static V1_3::ErrorStatus VisitMeanNode(xnn_subgraph_t subgraph,
+                                           const V1_3::Operation& operation,
+                                           RunTimeOperandInfo* operands,
+                                           const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorShape(operands[ins[0]].dimensions, 4));
         NN_DRIVER_RETURN_IF_ERROR(CheckAxesTensorShape(operands[ins[1]].dimensions));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[1]].lifetime));
@@ -1151,17 +1146,17 @@ class Subgraph {
         int keep_dims = getScalarData<int32_t>(operands[ins[2]]);
         if (keep_dims <= 0) {
             LOG(ERROR) << "XNNPACK VisitMeanNode FAILED: only support keep_dims";
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         const int32_t* axes_buffer = reinterpret_cast<const int32_t*>(operands[ins[1]].buffer);
         if (operands[ins[1]].dimensions[0] != 2) {
             LOG(ERROR) << "XNNPACK VisitMeanNode FAILED: unsupported axes";
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         if (std::min(axes_buffer[0], axes_buffer[1]) != 1 ||
             std::max(axes_buffer[0], axes_buffer[1]) != 2) {
             LOG(ERROR) << "XNNPACK VisitMeanNode FAILED: unsupported axes";
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         if (subgraph != nullptr) {
             const xnn_status status = xnn_define_global_average_pooling_2d(
@@ -1172,18 +1167,20 @@ class Subgraph {
                     /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_global_average_pooling_2d FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitMinimumNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                        RunTimeOperandInfo* operands,
-                                        const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[1]].type));
+
+    static V1_3::ErrorStatus VisitMinimumNode(xnn_subgraph_t subgraph,
+                                              const V1_3::Operation& operation,
+                                              RunTimeOperandInfo* operands,
+                                              const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[1]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[2]].lifetime));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         float outputMin = -std::numeric_limits<float>::infinity();
@@ -1199,18 +1196,19 @@ class Subgraph {
                                         /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_minimum2 FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitMulNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                    RunTimeOperandInfo* operands,
-                                    const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[1]].type));
+
+    static V1_3::ErrorStatus VisitMulNode(xnn_subgraph_t subgraph, const V1_3::Operation& operation,
+                                          RunTimeOperandInfo* operands,
+                                          const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[1]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[2]].lifetime));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         int activation = getScalarData<int32_t>(operands[ins[2]]);
@@ -1226,18 +1224,20 @@ class Subgraph {
                                          /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_multiply2 FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitNegNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                    RunTimeOperandInfo* operands,
-                                    const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
+
+    static V1_3::ErrorStatus VisitNegNode(xnn_subgraph_t subgraph, const V1_3::Operation& operation,
+                                          RunTimeOperandInfo* operands,
+                                          const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+
         if (subgraph != nullptr) {
             const xnn_status status =
                     xnn_define_negate(subgraph,
@@ -1245,17 +1245,19 @@ class Subgraph {
                                       /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_negate FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitPreluNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                      RunTimeOperandInfo* operands,
-                                      const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+
+    static V1_3::ErrorStatus VisitPreluNode(xnn_subgraph_t subgraph,
+                                            const V1_3::Operation& operation,
+                                            RunTimeOperandInfo* operands,
+                                            const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
         NN_DRIVER_RETURN_IF_ERROR(
                 CheckTensorShape(operands[ins[0]].dimensions, 1, XNN_MAX_TENSOR_DIMS));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[1]].type));
@@ -1270,17 +1272,18 @@ class Subgraph {
                                      /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_prelu FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitPadNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                    RunTimeOperandInfo* operands, float padding_value,
-                                    const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+
+    static V1_3::ErrorStatus VisitPadNode(xnn_subgraph_t subgraph, const V1_3::Operation& operation,
+                                          RunTimeOperandInfo* operands, float padding_value,
+                                          const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
         NN_DRIVER_RETURN_IF_ERROR(
                 CheckTensorShape(operands[ins[0]].dimensions, 1, XNN_MAX_TENSOR_DIMS));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[1]].lifetime));
@@ -1289,7 +1292,7 @@ class Subgraph {
                 CheckTensorShape(operands[outs[0]].dimensions, 1, XNN_MAX_TENSOR_DIMS));
         const int32_t* paddings_data = reinterpret_cast<const int32_t*>(operands[ins[1]].buffer);
         for (size_t i = 0; i < operands[ins[1]].dimensions.size() * 2; i++) {
-            if (paddings_data[i] < 0) return ErrorStatus::INVALID_ARGUMENT;
+            if (paddings_data[i] < 0) return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         if (subgraph != nullptr) {
             std::array<size_t, XNN_MAX_TENSOR_DIMS> pre_paddings{};
@@ -1304,27 +1307,31 @@ class Subgraph {
                     /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_static_constant_pad FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitPadV2Node(xnn_subgraph_t subgraph, const Operation& operation,
-                                      RunTimeOperandInfo* operands,
-                                      const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
+
+    static V1_3::ErrorStatus VisitPadV2Node(xnn_subgraph_t subgraph,
+                                            const V1_3::Operation& operation,
+                                            RunTimeOperandInfo* operands,
+                                            const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
         if (operands[ins[2]].type != OperandType::FLOAT32) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         float padding_value = getScalarData<float>(operands[ins[2]]);
         return VisitPadNode(subgraph, operation, operands, padding_value, xnnpackTensors);
     }
-    static ErrorStatus VisitReshapeNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                        RunTimeOperandInfo* operands,
-                                        const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+
+    static V1_3::ErrorStatus VisitReshapeNode(xnn_subgraph_t subgraph,
+                                              const V1_3::Operation& operation,
+                                              RunTimeOperandInfo* operands,
+                                              const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
         NN_DRIVER_RETURN_IF_ERROR(
                 CheckTensorShape(operands[ins[0]].dimensions, 0, XNN_MAX_TENSOR_DIMS));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[1]].lifetime));
@@ -1343,17 +1350,19 @@ class Subgraph {
                     /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_static_reshape FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitResizeBilinearNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                               RunTimeOperandInfo* operands,
-                                               const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+
+    static V1_3::ErrorStatus VisitResizeBilinearNode(xnn_subgraph_t subgraph,
+                                                     const V1_3::Operation& operation,
+                                                     RunTimeOperandInfo* operands,
+                                                     const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorShape(operands[ins[0]].dimensions, 4));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorShape(operands[outs[0]].dimensions, 4));
@@ -1366,7 +1375,7 @@ class Subgraph {
             if (use_nchw) {
                 VLOG(DRIVER)
                         << "XNNPACK VisitResizeBilinearNode FAILED: only NHWC layout is supported";
-                return ErrorStatus::INVALID_ARGUMENT;
+                return V1_3::ErrorStatus::INVALID_ARGUMENT;
             }
         }
         size_t new_height, new_width;
@@ -1379,12 +1388,12 @@ class Subgraph {
             float width_scale = getScalarData<float>(operands[ins[1]]);
             float height_scale = getScalarData<float>(operands[ins[2]]);
             if (width_scale <= 0 || height_scale <= 0) {
-                return ErrorStatus::INVALID_ARGUMENT;
+                return V1_3::ErrorStatus::INVALID_ARGUMENT;
             }
             new_height = static_cast<size_t>(operands[ins[0]].dimensions[1] * height_scale);
             new_width = static_cast<size_t>(operands[ins[0]].dimensions[2] * width_scale);
         } else {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         bool align_corners = false;
         bool half_pixel_centers = false;
@@ -1393,7 +1402,7 @@ class Subgraph {
             half_pixel_centers = getScalarData<bool>(operands[ins[5]]);
         }
         if (align_corners && !half_pixel_centers) {
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         if (subgraph != nullptr) {
             uint32_t flags = 0;
@@ -1408,18 +1417,22 @@ class Subgraph {
                     /*output_id=*/xnnpackTensors[outs[0]], flags);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_static_resize_bilinear_2d FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitReluNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                     RunTimeOperandInfo* operands, float outputMin, float outputMax,
-                                     const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
+
+    static V1_3::ErrorStatus VisitReluNode(xnn_subgraph_t subgraph,
+                                           const V1_3::Operation& operation,
+                                           RunTimeOperandInfo* operands, float outputMin,
+                                           float outputMax,
+                                           const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+
         if (subgraph != nullptr) {
             const xnn_status status =
                     xnn_define_clamp(subgraph, outputMin, outputMax,
@@ -1427,18 +1440,21 @@ class Subgraph {
                                      /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_clamp FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitSqrtNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                     RunTimeOperandInfo* operands,
-                                     const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
+
+    static V1_3::ErrorStatus VisitSqrtNode(xnn_subgraph_t subgraph,
+                                           const V1_3::Operation& operation,
+                                           RunTimeOperandInfo* operands,
+                                           const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[outs[0]].type));
+
         if (subgraph != nullptr) {
             const xnn_status status =
                     xnn_define_square_root(subgraph,
@@ -1446,18 +1462,19 @@ class Subgraph {
                                            /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_square_root FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitSubNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                    RunTimeOperandInfo* operands,
-                                    const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[1]].type));
+
+    static V1_3::ErrorStatus VisitSubNode(xnn_subgraph_t subgraph, const V1_3::Operation& operation,
+                                          RunTimeOperandInfo* operands,
+                                          const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[1]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[2]].lifetime));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         float outputMin = -std::numeric_limits<float>::infinity();
@@ -1473,30 +1490,32 @@ class Subgraph {
                                         /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_subtract FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     }
-    static ErrorStatus VisitSoftmaxNode(xnn_subgraph_t subgraph, const Operation& operation,
-                                        RunTimeOperandInfo* operands,
-                                        const std::vector<uint32_t>& xnnpackTensors) {
-        const hidl_vec<uint32_t>& ins = operation.inputs;
-        const hidl_vec<uint32_t>& outs = operation.outputs;
-        NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[ins[0]].type));
+
+    static V1_3::ErrorStatus VisitSoftmaxNode(xnn_subgraph_t subgraph,
+                                              const V1_3::Operation& operation,
+                                              RunTimeOperandInfo* operands,
+                                              const std::vector<uint32_t>& xnnpackTensors) {
+        const hardware::hidl_vec<uint32_t>& ins = operation.inputs;
+        const hardware::hidl_vec<uint32_t>& outs = operation.outputs;
+        NN_DRIVER_RETURN_IF_ERROR(CheckTensorFloatType(operands[ins[0]].type));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[1]].lifetime));
         NN_DRIVER_RETURN_IF_ERROR(CheckTensorForXNNType(operands[outs[0]].type));
         float beta = getScalarData<float>(operands[ins[1]]);
         if (beta != 1.0f) {
             LOG(ERROR) << "XNNPACK VisitSoftmaxNode FAILED, unsupported beta value: " << beta;
-            return ErrorStatus::INVALID_ARGUMENT;
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
         if (ins.size() >= 3) {
             NN_DRIVER_RETURN_IF_ERROR(CheckTensorStaticAllocation(operands[ins[2]].lifetime));
             int axis = getScalarData<int32_t>(operands[ins[2]]);
             if (axis != -1) {
                 LOG(ERROR) << "XNNPACK VisitSoftmaxNode FAILED, unsupported axis value: " << axis;
-                return ErrorStatus::INVALID_ARGUMENT;
+                return V1_3::ErrorStatus::INVALID_ARGUMENT;
             }
         }
         if (subgraph != nullptr) {
@@ -1505,10 +1524,11 @@ class Subgraph {
                                        /*output_id=*/xnnpackTensors[outs[0]], /*flags=*/0);
             if (status != xnn_status_success) {
                 LOG(ERROR) << "XNNPACK xnn_define_softmax FAILED";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_3::ErrorStatus::GENERAL_FAILURE;
             }
         }
-        return ErrorStatus::NONE;
+
+        return V1_3::ErrorStatus::NONE;
     }
     static ErrorStatus VisitTransposeConv2D(xnn_subgraph_t subgraph, const Operation& operation,
                                         RunTimeOperandInfo* operands,
@@ -1638,51 +1658,62 @@ class Subgraph {
 };
 class SamplePreparedModelXNNPACK : public SamplePreparedModel {
    public:
-    SamplePreparedModelXNNPACK(const Model& model, const SampleDriver* driver,
-                               ExecutionPreference preference, uid_t userId, Priority priority)
-        : SamplePreparedModel(model, driver, preference, userId, priority) {}
+    SamplePreparedModelXNNPACK(const V1_3::Model& model, const SampleDriver* driver,
+                               V1_1::ExecutionPreference preference, uid_t userId,
+                               V1_3::Priority priority)
+        : SamplePreparedModel(model, driver, preference, userId, priority),
+          mSubgraph(nullptr),
+          mThreadpool(nullptr) {}
     ~SamplePreparedModelXNNPACK() {
         delete mSubgraph;
         pthreadpool_destroy(mThreadpool);
     };
     bool initialize();
-    Return<V1_0::ErrorStatus> execute(const V1_0::Request& request,
-                                      const sp<V1_0::IExecutionCallback>& callback) override;
-    Return<V1_0::ErrorStatus> execute_1_2(const V1_0::Request& request, MeasureTiming measure,
-                                          const sp<V1_2::IExecutionCallback>& callback) override;
-    Return<V1_3::ErrorStatus> execute_1_3(const V1_3::Request& request, MeasureTiming measure,
-                                          const OptionalTimePoint& deadline,
-                                          const OptionalTimeoutDuration& loopTimeoutDuration,
-                                          const sp<V1_3::IExecutionCallback>& callback) override;
-    Return<void> executeSynchronously(const V1_0::Request& request, MeasureTiming measure,
-                                      executeSynchronously_cb cb) override;
-    Return<void> executeSynchronously_1_3(const Request& request, MeasureTiming measure,
-                                          const OptionalTimePoint& deadline,
-                                          const OptionalTimeoutDuration& loopTimeoutDuration,
-                                          executeSynchronously_1_3_cb cb) override;
-    Return<void> configureExecutionBurst(
+    hardware::Return<V1_0::ErrorStatus> execute(
+            const V1_0::Request& request, const sp<V1_0::IExecutionCallback>& callback) override;
+    hardware::Return<V1_0::ErrorStatus> execute_1_2(
+            const V1_0::Request& request, V1_2::MeasureTiming measure,
+            const sp<V1_2::IExecutionCallback>& callback) override;
+    hardware::Return<V1_3::ErrorStatus> execute_1_3(
+            const V1_3::Request& request, V1_2::MeasureTiming measure,
+            const V1_3::OptionalTimePoint& deadline,
+            const V1_3::OptionalTimeoutDuration& loopTimeoutDuration,
+            const sp<V1_3::IExecutionCallback>& callback) override;
+    hardware::Return<void> executeSynchronously(const V1_0::Request& request,
+                                                V1_2::MeasureTiming measure,
+                                                executeSynchronously_cb cb) override;
+    hardware::Return<void> executeSynchronously_1_3(
+            const V1_3::Request& request, V1_2::MeasureTiming measure,
+            const V1_3::OptionalTimePoint& deadline,
+            const V1_3::OptionalTimeoutDuration& loopTimeoutDuration,
+            executeSynchronously_1_3_cb cb) override;
+    hardware::Return<void> configureExecutionBurst(
             const sp<V1_2::IBurstCallback>& callback,
             const MQDescriptorSync<V1_2::FmqRequestDatum>& requestChannel,
             const MQDescriptorSync<V1_2::FmqResultDatum>& resultChannel,
             configureExecutionBurst_cb cb) override;
-    Return<void> executeFenced(const Request& request, const hidl_vec<hidl_handle>& wait_for,
-                               MeasureTiming measure, const OptionalTimePoint& deadline,
-                               const OptionalTimeoutDuration& loopTimeoutDuration,
-                               const OptionalTimeoutDuration& duration,
-                               executeFenced_cb callback) override;
+    hardware::Return<void> executeFenced(const V1_3::Request& request,
+                                         const hardware::hidl_vec<hardware::hidl_handle>& wait_for,
+                                         V1_2::MeasureTiming measure,
+                                         const V1_3::OptionalTimePoint& deadline,
+                                         const V1_3::OptionalTimeoutDuration& loopTimeoutDuration,
+                                         const V1_3::OptionalTimeoutDuration& duration,
+                                         executeFenced_cb callback) override;
+
    private:
     Subgraph* mSubgraph;
     std::vector<RunTimeOperandInfo> mOperands;
     pthreadpool* mThreadpool;
 };
-Return<void> SamplePreparedModelXNNPACK::configureExecutionBurst(
+
+hardware::Return<void> SamplePreparedModelXNNPACK::configureExecutionBurst(
         const sp<V1_2::IBurstCallback>& callback,
         const MQDescriptorSync<V1_2::FmqRequestDatum>& requestChannel,
         const MQDescriptorSync<V1_2::FmqResultDatum>& resultChannel,
         configureExecutionBurst_cb cb) {
     VLOG(DRIVER) << "SamplePreparedModelXNNPACK::configureExecutionBurst not supported";
     cb(V1_0::ErrorStatus::GENERAL_FAILURE, {});
-    return Void();
+    return hardware::Void();
 }
 bool SamplePreparedModelXNNPACK::initialize() {
     auto status = SamplePreparedModel::initialize();
@@ -1691,27 +1722,27 @@ bool SamplePreparedModelXNNPACK::initialize() {
         VLOG(DRIVER) << "SamplePreparedModelXNNPACK::initialize failed to create pthreadpool, "
                         "fallback to single threaded execution";
     }
-    const Model* model = getModel();
+    const V1_3::Model* model = getModel();
     mOperands = initializeRunTimeInfo(model->main, mPoolInfos, &model->operandValues);
     mSubgraph = Subgraph::Create(model->main.operations, mOperands, model->main.inputIndexes,
                                  model->main.outputIndexes, mThreadpool);
     return status;
 }
 template <typename T_IExecutionCallback>
-void asyncExecuteXNNPACK(Subgraph* subgraph, RunTimeOperandInfo* operands, const Request& request,
-                         MeasureTiming measure, const Model& model,
-                         const std::optional<Deadline>& deadline,
-                         const OptionalTimeoutDuration& loopTimeoutDuration,
+void asyncExecuteXNNPACK(Subgraph* subgraph, RunTimeOperandInfo* operands,
+                         const V1_3::Request& request, V1_2::MeasureTiming measure,
+                         const V1_3::Model& model, const LegacyOptionalTimePoint& deadline,
+                         const V1_3::OptionalTimeoutDuration& loopTimeoutDuration,
                          const sp<T_IExecutionCallback>& callback) {
     std::vector<RunTimePoolInfo> requestPoolInfos;
-    if (!setRunTimePoolInfosFromMemoryPools(&requestPoolInfos, request.pools)) {
-        notify(callback, ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
+    if (!setRunTimePoolInfosFromMemoryPools(&requestPoolInfos, uncheckedConvert(request.pools))) {
+        notify(callback, V1_3::ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
     }
     updateForArguments(model.main.inputIndexes, request.inputs, requestPoolInfos, operands);
     updateForArguments(model.main.outputIndexes, request.outputs, requestPoolInfos, operands);
     auto status = subgraph->Invoke(operands);
     VLOG(DRIVER) << "XNNPACK subgraph invoke returned " << toString(status);
-    if (status == ErrorStatus::NONE) {
+    if (status == V1_3::ErrorStatus::NONE) {
         VLOG(DRIVER) << "Completed run normally";
         for (auto& runtimeInfo : requestPoolInfos) {
             runtimeInfo.flush();
@@ -1720,24 +1751,25 @@ void asyncExecuteXNNPACK(Subgraph* subgraph, RunTimeOperandInfo* operands, const
     notify(callback, status, {}, kNoTiming);
 }
 template <typename T_IExecutionCallback>
-ErrorStatus executeXNNPACKBase(Subgraph* subgraph, RunTimeOperandInfo* operands,
-                               const Request& request, MeasureTiming measure, const Model& model,
-                               const OptionalTimePoint& halDeadline,
-                               const OptionalTimeoutDuration& loopTimeoutDuration,
-                               const sp<T_IExecutionCallback>& callback) {
+V1_3::ErrorStatus executeXNNPACKBase(Subgraph* subgraph, RunTimeOperandInfo* operands,
+                                     const V1_3::Request& request, V1_2::MeasureTiming measure,
+                                     const V1_3::Model& model,
+                                     const V1_3::OptionalTimePoint& halDeadline,
+                                     const V1_3::OptionalTimeoutDuration& loopTimeoutDuration,
+                                     const sp<T_IExecutionCallback>& callback) {
     VLOG(DRIVER) << "executeXNNPACKBase(" << SHOW_IF_DEBUG(toString(request)) << ")";
     if (callback.get() == nullptr) {
         LOG(ERROR) << "invalid callback passed to executeXNNPACKBase";
-        return ErrorStatus::INVALID_ARGUMENT;
+        return V1_3::ErrorStatus::INVALID_ARGUMENT;
     }
     if (!validateRequest(request, model, /*allowUnspecifiedOutput=*/false)) {
-        notify(callback, ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming);
-        return ErrorStatus::INVALID_ARGUMENT;
+        notify(callback, V1_3::ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming);
+        return V1_3::ErrorStatus::INVALID_ARGUMENT;
     }
     const auto deadline = makeDeadline(halDeadline);
     if (hasDeadlinePassed(deadline)) {
-        notify(callback, ErrorStatus::MISSED_DEADLINE_PERSISTENT, {}, kNoTiming);
-        return ErrorStatus::NONE;
+        notify(callback, V1_3::ErrorStatus::MISSED_DEADLINE_PERSISTENT, {}, kNoTiming);
+        return V1_3::ErrorStatus::NONE;
     }
     // This thread is intentionally detached because the sample driver service
     // is expected to live forever.
@@ -1746,54 +1778,62 @@ ErrorStatus executeXNNPACKBase(Subgraph* subgraph, RunTimeOperandInfo* operands,
         asyncExecuteXNNPACK(subgraph, operands, request, measure, model, deadline,
                             loopTimeoutDuration, callback);
     }).detach();
-    return ErrorStatus::NONE;
+
+    return V1_3::ErrorStatus::NONE;
 }
-Return<V1_0::ErrorStatus> SamplePreparedModelXNNPACK::execute(
+
+hardware::Return<V1_0::ErrorStatus> SamplePreparedModelXNNPACK::execute(
         const V1_0::Request& request, const sp<V1_0::IExecutionCallback>& callback) {
-    const Model* model = getModel();
-    const ErrorStatus status =
+    const V1_3::Model* model = getModel();
+    const V1_3::ErrorStatus status =
             executeXNNPACKBase(mSubgraph, mOperands.data(), convertToV1_3(request),
-                               MeasureTiming::NO, *model, {}, {}, callback);
+                               V1_2::MeasureTiming::NO, *model, {}, {}, callback);
     return convertToV1_0(status);
 }
-Return<V1_0::ErrorStatus> SamplePreparedModelXNNPACK::execute_1_2(
-        const V1_0::Request& request, MeasureTiming measure,
+
+hardware::Return<V1_0::ErrorStatus> SamplePreparedModelXNNPACK::execute_1_2(
+        const V1_0::Request& request, V1_2::MeasureTiming measure,
         const sp<V1_2::IExecutionCallback>& callback) {
-    const Model* model = getModel();
-    const ErrorStatus status = executeXNNPACKBase(
+    const V1_3::Model* model = getModel();
+    const V1_3::ErrorStatus status = executeXNNPACKBase(
             mSubgraph, mOperands.data(), convertToV1_3(request), measure, *model, {}, {}, callback);
     return convertToV1_0(status);
 }
-Return<V1_3::ErrorStatus> SamplePreparedModelXNNPACK::execute_1_3(
-        const V1_3::Request& request, MeasureTiming measure, const OptionalTimePoint& deadline,
-        const OptionalTimeoutDuration& loopTimeoutDuration,
+
+hardware::Return<V1_3::ErrorStatus> SamplePreparedModelXNNPACK::execute_1_3(
+        const V1_3::Request& request, V1_2::MeasureTiming measure,
+        const V1_3::OptionalTimePoint& deadline,
+        const V1_3::OptionalTimeoutDuration& loopTimeoutDuration,
         const sp<V1_3::IExecutionCallback>& callback) {
-    const Model* model = getModel();
+    const V1_3::Model* model = getModel();
     return executeXNNPACKBase(mSubgraph, mOperands.data(), request, measure, *model, deadline,
                               loopTimeoutDuration, callback);
 }
-static std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> executeSynchronouslyXNNPACKBase(
-        Subgraph* subgraph, RunTimeOperandInfo* operands, const Request& request,
-        MeasureTiming measure, const Model& model, const OptionalTimePoint& halDeadline,
-        const OptionalTimeoutDuration& loopTimeoutDuration) {
+
+static std::tuple<V1_3::ErrorStatus, hardware::hidl_vec<V1_2::OutputShape>, V1_2::Timing>
+executeSynchronouslyXNNPACKBase(Subgraph* subgraph, RunTimeOperandInfo* operands,
+                                const V1_3::Request& request, V1_2::MeasureTiming measure,
+                                const V1_3::Model& model,
+                                const V1_3::OptionalTimePoint& halDeadline,
+                                const V1_3::OptionalTimeoutDuration& loopTimeoutDuration) {
     VLOG(DRIVER) << "executeSynchronouslyXNNPACKBase(" << SHOW_IF_DEBUG(toString(request)) << ")";
     if (!validateRequest(request, model, /*allowUnspecifiedOutput=*/false)) {
-        return {ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming};
+        return {V1_3::ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming};
     }
     const auto deadline = makeDeadline(halDeadline);
     if (hasDeadlinePassed(deadline)) {
-        return {ErrorStatus::MISSED_DEADLINE_PERSISTENT, {}, kNoTiming};
+        return {V1_3::ErrorStatus::MISSED_DEADLINE_PERSISTENT, {}, kNoTiming};
     }
     std::vector<RunTimePoolInfo> requestPoolInfos;
-    if (!setRunTimePoolInfosFromMemoryPools(&requestPoolInfos, request.pools)) {
-        return {ErrorStatus::GENERAL_FAILURE, {}, kNoTiming};
+    if (!setRunTimePoolInfosFromMemoryPools(&requestPoolInfos, uncheckedConvert(request.pools))) {
+        return {V1_3::ErrorStatus::GENERAL_FAILURE, {}, kNoTiming};
     }
     updateForArguments(model.main.inputIndexes, request.inputs, requestPoolInfos, operands);
     updateForArguments(model.main.outputIndexes, request.outputs, requestPoolInfos, operands);
     VLOG(DRIVER) << "XNNPACK subgraph invoke started";
     auto status = subgraph->Invoke(operands);
     VLOG(DRIVER) << "XNNPACK subgraph invoke returned " << toString(status);
-    if (status == ErrorStatus::NONE) {
+    if (status == V1_3::ErrorStatus::NONE) {
         VLOG(DRIVER) << "Completed run normally";
         for (auto& runtimeInfo : requestPoolInfos) {
             runtimeInfo.flush();
@@ -1801,56 +1841,59 @@ static std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> executeSynchronous
     }
     return {status, {}, kNoTiming};
 }
-Return<void> SamplePreparedModelXNNPACK::executeSynchronously(const V1_0::Request& request,
-                                                              MeasureTiming measure,
-                                                              executeSynchronously_cb cb) {
-    const Model* model = getModel();
+
+hardware::Return<void> SamplePreparedModelXNNPACK::executeSynchronously(
+        const V1_0::Request& request, V1_2::MeasureTiming measure, executeSynchronously_cb cb) {
+    const V1_3::Model* model = getModel();
     auto [status, outputShapes, timing] = executeSynchronouslyXNNPACKBase(
             mSubgraph, mOperands.data(), convertToV1_3(request), measure, *model, {}, {});
     cb(convertToV1_0(status), std::move(outputShapes), timing);
-    return Void();
+    return hardware::Void();
 }
-Return<void> SamplePreparedModelXNNPACK::executeSynchronously_1_3(
-        const Request& request, MeasureTiming measure, const OptionalTimePoint& deadline,
-        const OptionalTimeoutDuration& loopTimeoutDuration, executeSynchronously_1_3_cb cb) {
-    const Model* model = getModel();
+
+hardware::Return<void> SamplePreparedModelXNNPACK::executeSynchronously_1_3(
+        const V1_3::Request& request, V1_2::MeasureTiming measure,
+        const V1_3::OptionalTimePoint& deadline,
+        const V1_3::OptionalTimeoutDuration& loopTimeoutDuration, executeSynchronously_1_3_cb cb) {
+    const V1_3::Model* model = getModel();
     auto [status, outputShapes, timing] = executeSynchronouslyXNNPACKBase(
             mSubgraph, mOperands.data(), request, measure, *model, deadline, loopTimeoutDuration);
     cb(status, std::move(outputShapes), timing);
-    return Void();
+    return hardware::Void();
 }
 // The sample driver will finish the execution and then return.
-Return<void> SamplePreparedModelXNNPACK::executeFenced(
-        const Request& request, const hidl_vec<hidl_handle>& waitFor, MeasureTiming measure,
-        const OptionalTimePoint& halDeadline, const OptionalTimeoutDuration& loopTimeoutDuration,
-        const OptionalTimeoutDuration& duration, executeFenced_cb cb) {
+hardware::Return<void> SamplePreparedModelXNNPACK::executeFenced(
+        const V1_3::Request& request, const hardware::hidl_vec<hardware::hidl_handle>& waitFor,
+        V1_2::MeasureTiming measure, const V1_3::OptionalTimePoint& halDeadline,
+        const V1_3::OptionalTimeoutDuration& loopTimeoutDuration,
+        const V1_3::OptionalTimeoutDuration& duration, executeFenced_cb cb) {
     VLOG(DRIVER) << "executeFenced(" << SHOW_IF_DEBUG(toString(request)) << ")";
-    const Model* model = getModel();
+    const V1_3::Model* model = getModel();
     if (!validateRequest(request, *model, /*allowUnspecifiedOutput=*/false)) {
-        cb(ErrorStatus::INVALID_ARGUMENT, hidl_handle(nullptr), nullptr);
-        return Void();
+        cb(V1_3::ErrorStatus::INVALID_ARGUMENT, hardware::hidl_handle(nullptr), nullptr);
+        return hardware::Void();
     }
     const auto deadline = makeDeadline(halDeadline);
     if (hasDeadlinePassed(deadline)) {
-        cb(ErrorStatus::MISSED_DEADLINE_PERSISTENT, hidl_handle(nullptr), nullptr);
-        return Void();
+        cb(V1_3::ErrorStatus::MISSED_DEADLINE_PERSISTENT, hardware::hidl_handle(nullptr), nullptr);
+        return hardware::Void();
     }
     // Wait for the dependent events to signal
     for (const auto& fenceHandle : waitFor) {
         if (!fenceHandle.getNativeHandle()) {
-            cb(ErrorStatus::INVALID_ARGUMENT, hidl_handle(nullptr), nullptr);
-            return Void();
+            cb(V1_3::ErrorStatus::INVALID_ARGUMENT, hardware::hidl_handle(nullptr), nullptr);
+            return hardware::Void();
         }
         int syncFenceFd = fenceHandle.getNativeHandle()->data[0];
         if (syncWait(syncFenceFd, -1) != FenceState::SIGNALED) {
             LOG(ERROR) << "syncWait failed";
-            cb(ErrorStatus::GENERAL_FAILURE, hidl_handle(nullptr), nullptr);
-            return Void();
+            cb(V1_3::ErrorStatus::GENERAL_FAILURE, hardware::hidl_handle(nullptr), nullptr);
+            return hardware::Void();
         }
     }
     std::vector<RunTimePoolInfo> requestPoolInfos;
-    if (!setRunTimePoolInfosFromMemoryPools(&requestPoolInfos, request.pools)) {
-        cb(ErrorStatus::GENERAL_FAILURE, hidl_handle(nullptr), nullptr);
+    if (!setRunTimePoolInfosFromMemoryPools(&requestPoolInfos, uncheckedConvert(request.pools))) {
+        cb(V1_3::ErrorStatus::GENERAL_FAILURE, hardware::hidl_handle(nullptr), nullptr);
     }
     updateForArguments(model->main.inputIndexes, request.inputs, requestPoolInfos,
                        mOperands.data());
@@ -1858,7 +1901,7 @@ Return<void> SamplePreparedModelXNNPACK::executeFenced(
                        mOperands.data());
     auto status = mSubgraph->Invoke(mOperands.data());
     VLOG(DRIVER) << "XNNPACK subgraph invoke returned " << toString(status);
-    if (status == ErrorStatus::NONE) {
+    if (status == V1_3::ErrorStatus::NONE) {
         VLOG(DRIVER) << "Completed run normally";
         for (auto& runtimeInfo : requestPoolInfos) {
             runtimeInfo.flush();
@@ -1866,22 +1909,22 @@ Return<void> SamplePreparedModelXNNPACK::executeFenced(
     }
     sp<SampleFencedExecutionCallback> fencedExecutionCallback =
             new SampleFencedExecutionCallback(kNoTiming, kNoTiming, status);
-    cb(status, hidl_handle(nullptr), fencedExecutionCallback);
-    return Void();
+    cb(status, hardware::hidl_handle(nullptr), fencedExecutionCallback);
+    return hardware::Void();
 }
+
 template <typename T_Model, typename T_IPreparedModelCallback>
-ErrorStatus prepareModelXNNPACK(const T_Model& model, const SampleDriver* driver,
-                                ExecutionPreference preference, Priority priority,
-                                const OptionalTimePoint& deadline,
-                                const sp<T_IPreparedModelCallback>& callback) {
-#if !defined(NNAPI_CHROMEOS)
+V1_3::ErrorStatus prepareModelXNNPACK(const T_Model& model, const SampleDriver* driver,
+                                      V1_1::ExecutionPreference preference, V1_3::Priority priority,
+                                      const V1_3::OptionalTimePoint& deadline,
+                                      const sp<T_IPreparedModelCallback>& callback) {
     const uid_t userId = hardware::IPCThreadState::self()->getCallingUid();
 #else
     const uid_t userId = getuid();
 #endif
     if (callback.get() == nullptr) {
         LOG(ERROR) << "invalid callback passed to prepareModelBase";
-        return ErrorStatus::INVALID_ARGUMENT;
+        return V1_3::ErrorStatus::INVALID_ARGUMENT;
     }
     if (VLOG_IS_ON(DRIVER)) {
         VLOG(DRIVER) << "prepareModelBase";
@@ -1889,53 +1932,63 @@ ErrorStatus prepareModelXNNPACK(const T_Model& model, const SampleDriver* driver
     }
     if (!validateModel(model) || !validateExecutionPreference(preference) ||
         !validatePriority(priority)) {
-        notify(callback, ErrorStatus::INVALID_ARGUMENT, nullptr);
-        return ErrorStatus::INVALID_ARGUMENT;
+        notify(callback, V1_3::ErrorStatus::INVALID_ARGUMENT, nullptr);
+        return V1_3::ErrorStatus::INVALID_ARGUMENT;
     }
     // asynchronously prepare the model from a new, detached thread
     std::thread([model, driver, preference, userId, priority, callback] {
         sp<SamplePreparedModelXNNPACK> preparedModel = new SamplePreparedModelXNNPACK(
                 convertToV1_3(model), driver, preference, userId, priority);
         if (!preparedModel->initialize()) {
-            notify(callback, ErrorStatus::INVALID_ARGUMENT, nullptr);
+            notify(callback, V1_3::ErrorStatus::INVALID_ARGUMENT, nullptr);
             return;
         }
-        notify(callback, ErrorStatus::NONE, preparedModel);
+        notify(callback, V1_3::ErrorStatus::NONE, preparedModel);
     }).detach();
-    return ErrorStatus::NONE;
+
+    return V1_3::ErrorStatus::NONE;
 }
-Return<V1_0::ErrorStatus> SampleDriverFloatXNNPACK::prepareModel(
+
+hardware::Return<V1_0::ErrorStatus> SampleDriverFloatXNNPACK::prepareModel(
         const V1_0::Model& model, const sp<V1_0::IPreparedModelCallback>& callback) {
-    const ErrorStatus status = prepareModelXNNPACK(
-            model, this, ExecutionPreference::FAST_SINGLE_ANSWER, kDefaultPriority, {}, callback);
+    const V1_3::ErrorStatus status =
+            prepareModelXNNPACK(model, this, V1_1::ExecutionPreference::FAST_SINGLE_ANSWER,
+                                kDefaultPriority13, {}, callback);
     return convertToV1_0(status);
 }
-Return<V1_0::ErrorStatus> SampleDriverFloatXNNPACK::prepareModel_1_1(
-        const V1_1::Model& model, ExecutionPreference preference,
+
+hardware::Return<V1_0::ErrorStatus> SampleDriverFloatXNNPACK::prepareModel_1_1(
+        const V1_1::Model& model, V1_1::ExecutionPreference preference,
         const sp<V1_0::IPreparedModelCallback>& callback) {
-    const ErrorStatus status =
-            prepareModelXNNPACK(model, this, preference, kDefaultPriority, {}, callback);
+    const V1_3::ErrorStatus status =
+            prepareModelXNNPACK(model, this, preference, kDefaultPriority13, {}, callback);
     return convertToV1_0(status);
 }
-Return<V1_0::ErrorStatus> SampleDriverFloatXNNPACK::prepareModel_1_2(
-        const V1_2::Model& model, ExecutionPreference preference, const hidl_vec<hidl_handle>&,
-        const hidl_vec<hidl_handle>&, const CacheToken&,
+
+hardware::Return<V1_0::ErrorStatus> SampleDriverFloatXNNPACK::prepareModel_1_2(
+        const V1_2::Model& model, V1_1::ExecutionPreference preference,
+        const hardware::hidl_vec<hardware::hidl_handle>&,
+        const hardware::hidl_vec<hardware::hidl_handle>&, const HalCacheToken&,
         const sp<V1_2::IPreparedModelCallback>& callback) {
-    const ErrorStatus status =
-            prepareModelXNNPACK(model, this, preference, kDefaultPriority, {}, callback);
+    const V1_3::ErrorStatus status =
+            prepareModelXNNPACK(model, this, preference, kDefaultPriority13, {}, callback);
     return convertToV1_0(status);
 }
-Return<ErrorStatus> SampleDriverFloatXNNPACK::prepareModel_1_3(
-        const Model& model, ExecutionPreference preference, Priority priority,
-        const OptionalTimePoint& deadline, const hidl_vec<hidl_handle>& modelCache,
-        const hidl_vec<hidl_handle>& dataCache, const CacheToken& token,
-        const sp<IPreparedModelCallback>& callback) {
+
+hardware::Return<V1_3::ErrorStatus> SampleDriverFloatXNNPACK::prepareModel_1_3(
+        const V1_3::Model& model, V1_1::ExecutionPreference preference, V1_3::Priority priority,
+        const V1_3::OptionalTimePoint& deadline,
+        const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+        const hardware::hidl_vec<hardware::hidl_handle>& dataCache, const HalCacheToken& token,
+        const sp<V1_3::IPreparedModelCallback>& callback) {
     return prepareModelXNNPACK(model, this, preference, priority, deadline, callback);
 }
-Return<void> SampleDriverFloatXNNPACK::getCapabilities_1_3(getCapabilities_1_3_cb cb) {
+
+hardware::Return<void> SampleDriverFloatXNNPACK::getCapabilities_1_3(getCapabilities_1_3_cb cb) {
     android::nn::initVLogMask();
     VLOG(DRIVER) << "SampleDriverFloatXNNPACK::getCapabilities()";
-    Capabilities capabilities = {
+
+    V1_3::Capabilities capabilities = {
             .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 0.7f, .powerUsage = 0.7f},
             .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 0.7f, .powerUsage = 0.7f},
             .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>({1.0f, 1.0f}),
@@ -1945,34 +1998,39 @@ Return<void> SampleDriverFloatXNNPACK::getCapabilities_1_3(getCapabilities_1_3_c
            {.execTime = 0.7f, .powerUsage = 0.7f});
     update(&capabilities.operandPerformance, OperandType::FLOAT32,
            {.execTime = 0.7f, .powerUsage = 0.7f});
-    cb(ErrorStatus::NONE, capabilities);
-    return Void();
+
+    cb(V1_3::ErrorStatus::NONE, capabilities);
+    return hardware::Void();
 }
-std::vector<bool> SampleDriverFloatXNNPACK::getSupportedOperationsImpl(const Model& model) const {
+
+std::vector<bool> SampleDriverFloatXNNPACK::getSupportedOperationsImpl(
+        const V1_3::Model& model) const {
     std::vector<RunTimePoolInfo> poolInfos;
-    setRunTimePoolInfosFromHidlMemories(&poolInfos, model.pools);
+    setRunTimePoolInfosFromCanonicalMemories(&poolInfos, uncheckedConvert(model.pools));
     auto operands = initializeRunTimeInfo(model.main, poolInfos, &model.operandValues);
     const size_t count = model.main.operations.size();
     std::vector<bool> supported(count);
     for (size_t i = 0; i < count; i++) {
         bool isSupportedOp = false;
-        const Operation& operation = model.main.operations[i];
+        const V1_3::Operation& operation = model.main.operations[i];
         if (Subgraph::VisitNode(/*subgraph=*/nullptr, operation, operands.data(), {}) ==
-            ErrorStatus::NONE) {
+            V1_3::ErrorStatus::NONE) {
             isSupportedOp = true;
         }
         supported[i] = isSupportedOp;
     }
     return supported;
 }
-Return<void> SampleDriverFloatXNNPACK::allocate(
-        const V1_3::BufferDesc& desc, const hidl_vec<sp<V1_3::IPreparedModel>>& preparedModels,
-        const hidl_vec<V1_3::BufferRole>& inputRoles, const hidl_vec<V1_3::BufferRole>& outputRoles,
-        allocate_cb cb) {
+
+hardware::Return<void> SampleDriverFloatXNNPACK::allocate(
+        const V1_3::BufferDesc& desc,
+        const hardware::hidl_vec<sp<V1_3::IPreparedModel>>& preparedModels,
+        const hardware::hidl_vec<V1_3::BufferRole>& inputRoles,
+        const hardware::hidl_vec<V1_3::BufferRole>& outputRoles, allocate_cb cb) {
     VLOG(DRIVER) << "SampleDriverFloatXNNPACK::allocate not supported";
     constexpr uint32_t kInvalidBufferToken = 0;
-    cb(ErrorStatus::INVALID_ARGUMENT, nullptr, kInvalidBufferToken);
-    return Void();
+    cb(V1_3::ErrorStatus::INVALID_ARGUMENT, nullptr, kInvalidBufferToken);
+    return hardware::Void();
 }
 }  // namespace sample_driver
 }  // namespace nn

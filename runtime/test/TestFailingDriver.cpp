@@ -14,21 +14,22 @@
  * limitations under the License.
  */
 
+#include <SampleDriverPartial.h>
 #include <gtest/gtest.h>
 
+#include <algorithm>
 #include <memory>
 #include <vector>
 
 #include "CompilationBuilder.h"
 #include "ExecutionPlan.h"
+#include "HalUtils.h"
 #include "Manager.h"
-#include "SampleDriverPartial.h"
 #include "TestNeuralNetworksWrapper.h"
 
 namespace android::nn {
 namespace {
 
-using namespace hal;
 using sample_driver::SampleDriverPartial;
 using Result = test_wrapper::Result;
 using WrapperOperandType = test_wrapper::OperandType;
@@ -50,20 +51,18 @@ class FailingTestDriver : public SampleDriverPartial {
     // EmptyOperationResolver causes execution to fail.
     FailingTestDriver() : SampleDriverPartial(kTestDriverName, &mEmptyOperationResolver) {}
 
-    Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
-        cb(V1_3::ErrorStatus::NONE,
-           {.operandPerformance = {{.type = OperandType::TENSOR_FLOAT32,
-                                    .info = {.execTime = 0.1,  // Faster than CPU.
-                                             .powerUsage = 0.1}}}});
-        return Void();
+    hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
+        cb(V1_3::ErrorStatus::NONE, makeCapabilities(0.1));  // Faster than CPU.
+        return hardware::Void();
     }
 
    private:
-    std::vector<bool> getSupportedOperationsImpl(const Model& model) const override {
+    std::vector<bool> getSupportedOperationsImpl(const V1_3::Model& model) const override {
         std::vector<bool> supported(model.main.operations.size());
-        std::transform(
-                model.main.operations.begin(), model.main.operations.end(), supported.begin(),
-                [](const Operation& operation) { return operation.type == OperationType::SQRT; });
+        std::transform(model.main.operations.begin(), model.main.operations.end(),
+                       supported.begin(), [](const V1_3::Operation& operation) {
+                           return operation.type == V1_3::OperationType::SQRT;
+                       });
         return supported;
     }
 
@@ -77,8 +76,8 @@ class FailingDriverTest : public ::testing::Test {
             !DeviceManager::partitioningAllowsFallback(deviceManager->getPartitioning())) {
             GTEST_SKIP();
         }
-        mTestDevice =
-                DeviceManager::forTest_makeDriverDevice(kTestDriverName, new FailingTestDriver());
+        mTestDevice = DeviceManager::forTest_makeDriverDevice(
+                makeSharedDevice(kTestDriverName, new FailingTestDriver()));
         deviceManager->forTest_setDevices({
                 mTestDevice,
                 DeviceManager::getCpuDevice(),

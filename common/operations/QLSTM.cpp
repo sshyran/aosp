@@ -20,7 +20,10 @@
 
 #include "CpuExecutor.h"
 #include "OperationsUtils.h"
+
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 #include "QuantUtils.h"
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 namespace android {
 namespace nn {
@@ -101,9 +104,7 @@ inline bool hasTensor(IOperationExecutionContext* context, const uint32_t tensor
 
 }  // namespace
 
-using hal::OperandType;
-
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
 
@@ -151,7 +152,7 @@ bool validate(const IOperationValidationContext* context) {
     outExpectedTypes.push_back(OperandType::TENSOR_QUANT8_ASYMM_SIGNED);
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
 
-    return validateHalVersion(context, HalVersion::V1_3);
+    return Version::ANDROID_R;
 }
 
 bool prepare(IOperationExecutionContext* context) {
@@ -362,6 +363,7 @@ bool prepare(IOperationExecutionContext* context) {
            context->setOutputShape(kOutputTensor, outputShape);
 }
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool execute(IOperationExecutionContext* context) {
     // Gets the inputs.
     const Shape inputShape = context->getInputShape(kInputTensor);
@@ -794,6 +796,7 @@ bool execute(IOperationExecutionContext* context) {
 
     return true;
 }
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 }  // namespace qlstm
 

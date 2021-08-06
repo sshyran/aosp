@@ -16,16 +16,17 @@
 
 #define LOG_TAG "Operations"
 
-#include <tensorflow/lite/kernels/internal/reference/reference_ops.h>
-
 #include <algorithm>
 #include <limits>
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
+
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
+#include <tensorflow/lite/kernels/internal/reference/reference_ops.h>
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 namespace android {
 namespace nn {
@@ -44,9 +45,8 @@ constexpr uint32_t kOutputTensor = 0;
 constexpr _Float16 kFloat16Max = 65504;
 constexpr _Float16 kFloat16Lowest = -kFloat16Max;
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
-
-using namespace hal;
 
 template <typename T>
 inline bool compute(IOperationExecutionContext* context, T init, T func(T, T)) {
@@ -68,8 +68,9 @@ inline bool compute(IOperationExecutionContext* context, T init, T func(T, T)) {
 }
 
 }  // namespace
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-bool validateProdSum(const IOperationValidationContext* context) {
+Result<Version> validateProdSum(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor);
@@ -83,10 +84,10 @@ bool validateProdSum(const IOperationValidationContext* context) {
     if (hasKnownRank(input)) {
         NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
     }
-    return validateHalVersion(context, HalVersion::V1_2);
+    return Version::ANDROID_Q;
 }
 
-bool validateMaxMin(const IOperationValidationContext* context) {
+Result<Version> validateMaxMin(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor);
@@ -98,18 +99,18 @@ bool validateMaxMin(const IOperationValidationContext* context) {
     NN_RET_CHECK(
             validateInputTypes(context, {inputType, OperandType::TENSOR_INT32, OperandType::BOOL}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    auto minHalVersion = HalVersion::V1_2;
+    auto minVersion = Version::ANDROID_Q;
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minHalVersion = HalVersion::V1_3;
+        minVersion = Version::ANDROID_R;
     }
     const Shape& input = context->getInputShape(kInputTensor);
     if (hasKnownRank(input)) {
         NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
     }
-    return validateHalVersion(context, minHalVersion);
+    return minVersion;
 }
 
-bool validateLogical(const IOperationValidationContext* context) {
+Result<Version> validateLogical(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor);
@@ -122,9 +123,10 @@ bool validateLogical(const IOperationValidationContext* context) {
     if (hasKnownRank(input)) {
         NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
     }
-    return validateHalVersion(context, HalVersion::V1_2);
+    return Version::ANDROID_Q;
 }
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape inputShape = context->getInputShape(kInputTensor);
     const uint32_t inputRank = getNumberOfDimensions(inputShape);
@@ -250,6 +252,7 @@ bool executeAll(IOperationExecutionContext* context) {
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation REDUCE_ALL";
     }
 }
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 }  // namespace reduce
 

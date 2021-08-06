@@ -20,7 +20,6 @@
 #include <utility>
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 
@@ -37,8 +36,6 @@ constexpr uint32_t kOutputValuesTensor = 0;
 constexpr uint32_t kOutputIndicesTensor = 1;
 
 namespace {
-
-using namespace hal;
 
 template <typename T>
 bool evalGeneric(const T* inputData, const Shape& inputShape, const int32_t k, T* valuesData,
@@ -76,7 +73,7 @@ bool executeTyped(IOperationExecutionContext* context) {
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor);
@@ -85,14 +82,14 @@ bool validate(const IOperationValidationContext* context) {
                  inputType == OperandType::TENSOR_INT32 ||
                  inputType == OperandType::TENSOR_QUANT8_ASYMM ||
                  inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
-            << "Unsupported input operand type for select op: " << toString(inputType);
+            << "Unsupported input operand type for select op: " << inputType;
     NN_RET_CHECK(validateInputTypes(context, {inputType, OperandType::INT32}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType, OperandType::TENSOR_INT32}));
-    HalVersion minSupportedHalVersion = HalVersion::V1_2;
+    Version minSupportedVersion = Version::ANDROID_Q;
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedHalVersion = HalVersion::V1_3;
+        minSupportedVersion = Version::ANDROID_R;
     }
-    return validateHalVersion(context, minSupportedHalVersion);
+    return minSupportedVersion;
 }
 
 bool prepare(IOperationExecutionContext* context) {
@@ -132,7 +129,7 @@ bool execute(IOperationExecutionContext* context) {
             return executeTyped<int8_t>(context);
         } break;
         default: {
-            LOG(ERROR) << "Unsupported data type: " << toString(inputShape.type);
+            LOG(ERROR) << "Unsupported data type: " << inputShape.type;
             return false;
         }
     }

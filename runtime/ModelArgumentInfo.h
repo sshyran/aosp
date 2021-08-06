@@ -17,12 +17,12 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MODEL_ARGUMENT_INFO_H
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MODEL_ARGUMENT_INFO_H
 
+#include <LegacyUtils.h>
+
 #include <utility>
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "NeuralNetworks.h"
-#include "Utils.h"
 
 namespace android {
 namespace nn {
@@ -38,11 +38,12 @@ class ModelArgumentInfo {
     ModelArgumentInfo() {}
 
     static std::pair<int, ModelArgumentInfo> createFromPointer(
-            const hal::Operand& operand, const ANeuralNetworksOperandType* type,
-            void* data /* nullptr means HAS_NO_VALUE */, uint32_t length);
+            const Operand& operand, const ANeuralNetworksOperandType* type,
+            void* data /* nullptr means HAS_NO_VALUE */, uint32_t length,
+            bool paddingEnabled = true);
     static std::pair<int, ModelArgumentInfo> createFromMemory(
-            const hal::Operand& operand, const ANeuralNetworksOperandType* type, uint32_t poolIndex,
-            uint32_t offset, uint32_t length);
+            const Operand& operand, const ANeuralNetworksOperandType* type, uint32_t poolIndex,
+            uint32_t offset, uint32_t length, bool paddingEnabled = true);
 
     enum State { POINTER, MEMORY, HAS_NO_VALUE, UNSPECIFIED };
 
@@ -55,6 +56,10 @@ class ModelArgumentInfo {
         return mBuffer;
     }
 
+    const std::vector<uint32_t>& initialDimensions() const {
+        CHECK(mState == POINTER || mState == MEMORY);
+        return mInitialDimensions;
+    }
     const std::vector<uint32_t>& dimensions() const {
         CHECK(mState == POINTER || mState == MEMORY);
         return mDimensions;
@@ -78,39 +83,64 @@ class ModelArgumentInfo {
         return mLocationAndLength.length;
     }
 
-    const hal::DataLocation& locationAndLength() const {
+    uint32_t padding() const {
+        CHECK(mState == POINTER || mState == MEMORY);
+        return mLocationAndLength.padding;
+    }
+
+    const DataLocation& locationAndLength() const {
         CHECK_EQ(mState, MEMORY);
         return mLocationAndLength;
     }
-    hal::DataLocation& locationAndLength() {
+    DataLocation& locationAndLength() {
         CHECK_EQ(mState, MEMORY);
         return mLocationAndLength;
     }
 
+    // Restore updatable properties to creation-time values.
+    void reset() {
+        mDimensions = mInitialDimensions;
+        mIsSufficient = true;
+    }
+
+    // Convert ModelArgumentInfo to canonical Request::Argument. Unlike createRequestArguments,
+    // this method will keep the pointer type in the canonical type.
+    Request::Argument createRequestArgument() const;
+
    private:
-    int updateDimensionInfo(const hal::Operand& operand, const ANeuralNetworksOperandType* newType);
+    int updateDimensionInfo(const Operand& operand, const ANeuralNetworksOperandType* newType);
 
     // Whether the argument was specified as being in a Memory, as a pointer,
     // has no value, or has not been specified.
     // If POINTER then:
     //   mLocationAndLength.length is valid.
-    //   mDimensions is valid.
     //   mBuffer is valid.
     // If MEMORY then:
     //   mLocationAndLength.{poolIndex, offset, length} is valid.
+    // In both MEMORY and POINTER cases:
+    //   mInitialDimensions is valid.
     //   mDimensions is valid.
-    State mState = UNSPECIFIED;            // fixed at creation
-    void* mBuffer = nullptr;               // fixed at creation
-    hal::DataLocation mLocationAndLength;  // can be updated after creation
-    std::vector<uint32_t> mDimensions;     // can be updated after creation
-    bool mIsSufficient = true;             // can be updated after creation
+    //   mIsSufficient is valid.
+
+    // Properties that are fixed at creation.
+    State mState = UNSPECIFIED;
+    void* mBuffer = nullptr;
+    std::vector<uint32_t> mInitialDimensions;
+    // TODO(b/183021356): This field is logically fixed at creation, but actually updated in
+    // StepExecutor::mapInputOrOutput when constructing StepExecutor ModelArgumentInfos from
+    // ExecutionBuilder ModelArgumentInfos. We should find a way to avoid this update.
+    DataLocation mLocationAndLength;
+
+    // Properties that are updatable after creation.
+    std::vector<uint32_t> mDimensions;
+    bool mIsSufficient = true;
 };
 
-// Convert ModelArgumentInfo to HIDL RequestArgument. For pointer arguments, use the location
+// Convert ModelArgumentInfo to canonical Request::Argument. For pointer arguments, use the location
 // information in ptrArgsLocations.
-hal::hidl_vec<hal::RequestArgument> createRequestArguments(
+std::vector<Request::Argument> createRequestArguments(
         const std::vector<ModelArgumentInfo>& argumentInfos,
-        const std::vector<hal::DataLocation>& ptrArgsLocations);
+        const std::vector<DataLocation>& ptrArgsLocations);
 
 }  // namespace nn
 }  // namespace android

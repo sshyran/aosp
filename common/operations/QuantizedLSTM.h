@@ -28,9 +28,9 @@ struct RunTimeOperandInfo;
 
 class QuantizedLSTMCell {
    public:
-    QuantizedLSTMCell(const hal::Operation& operation, RunTimeOperandInfo* operands);
+    QuantizedLSTMCell(const Operation& operation, RunTimeOperandInfo* operands);
 
-    static bool prepare(const hal::Operation& operation, RunTimeOperandInfo* operands,
+    static bool prepare(const Operation& operation, RunTimeOperandInfo* operands,
                         Shape* cellStateShape, Shape* outputShape);
     bool eval();
 

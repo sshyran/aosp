@@ -24,15 +24,13 @@
 #include <sstream>
 #include <vector>
 
+#include "LegacyUtils.h"
 #include "Operations.h"
-#include "Utils.h"
 
 namespace android {
 namespace nn {
 
 namespace {
-
-using namespace hal;
 
 bool validateOperandTypes(const std::vector<OperandType>& expectedTypes, const char* tag,
                           uint32_t operandCount,
@@ -41,8 +39,8 @@ bool validateOperandTypes(const std::vector<OperandType>& expectedTypes, const c
     for (uint32_t i = 0; i < operandCount; ++i) {
         OperandType type = getOperandType(i);
         NN_RET_CHECK(type == expectedTypes[i])
-                << "Invalid " << tag << " tensor type " << toString(type) << " for " << tag << " "
-                << i << ", expected " << toString(expectedTypes[i]);
+                << "Invalid " << tag << " tensor type " << type << " for " << tag << " " << i
+                << ", expected " << expectedTypes[i];
     }
     return true;
 }
@@ -88,26 +86,26 @@ bool validateOutputTypes(const IOperationValidationContext* context,
             [context](uint32_t index) { return context->getOutputType(index); });
 }
 
-bool validateHalVersion(const IOperationValidationContext* context,
-                        HalVersion minSupportedHalVersion) {
-    if (context->getHalVersion() < minSupportedHalVersion) {
+bool validateVersion(const IOperationValidationContext* context, Version contextVersion,
+                     Version minSupportedVersion) {
+    if (contextVersion < minSupportedVersion) {
         std::ostringstream message;
         message << "Operation " << context->getOperationName() << " with inputs {";
         for (uint32_t i = 0, n = context->getNumInputs(); i < n; ++i) {
             if (i != 0) {
                 message << ", ";
             }
-            message << toString(context->getInputType(i));
+            message << context->getInputType(i);
         }
         message << "} and outputs {";
         for (uint32_t i = 0, n = context->getNumOutputs(); i < n; ++i) {
             if (i != 0) {
                 message << ", ";
             }
-            message << toString(context->getOutputType(i));
+            message << context->getOutputType(i);
         }
-        message << "} is only supported since " << toString(minSupportedHalVersion)
-                << " (validating using " << toString(context->getHalVersion()) << ")";
+        message << "} is only supported since " << minSupportedVersion << " (validating using "
+                << contextVersion << ")";
         NN_RET_CHECK_FAIL() << message.str();
     }
     return true;
@@ -356,7 +354,7 @@ bool calculateBroadcastedShape(const Shape& in1, const Shape& in2, Shape* out) {
         if (dim1 != dim2 && dim1 != 1 && dim2 != 1) {
             LOG(ERROR) << "Dimensions mismatch for broadcast:\n"
                        << "First tensor: dimension " << numberOfDims1 - i << " of size " << dim1
-                       << "\nSecond tensor: dimension " << numberOfDims2 - i << "of size " << dim2;
+                       << "\nSecond tensor: dimension " << numberOfDims2 - i << " of size " << dim2;
             return false;
         }
         out->dimensions[maxDims - i] = (dim1 == 1) ? dim2 : dim1;

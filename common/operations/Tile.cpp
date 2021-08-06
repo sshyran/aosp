@@ -16,11 +16,11 @@
 
 #define LOG_TAG "Operations"
 
+#include "Tile.h"
+
 #include <algorithm>
 #include <utility>
 
-#include "Tile.h"
-#include "HalInterfaces.h"
 #include "Tracing.h"
 
 namespace android {
@@ -28,8 +28,6 @@ namespace nn {
 namespace tile {
 
 namespace {
-
-using namespace hal;
 
 template <typename T>
 void CopyMultipleTimes(const T* in_data, int32_t in_size, int32_t multiplier, T* out_data) {

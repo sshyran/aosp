@@ -20,7 +20,6 @@
 
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "Operations.h"
 #include "Tracing.h"
@@ -36,9 +35,7 @@ constexpr uint32_t kSqueezeDims = 1;
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
-using namespace hal;
-
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor);
@@ -46,15 +43,15 @@ bool validate(const IOperationValidationContext* context) {
                  inputType == OperandType::TENSOR_FLOAT32 ||
                  inputType == OperandType::TENSOR_QUANT8_ASYMM ||
                  inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
-            << "Unsupported input operand type for SQUEEZE op: " << toString(inputType);
+            << "Unsupported input operand type for SQUEEZE op: " << inputType;
 
-    HalVersion minSupportedHalVersion;
+    Version minSupportedVersion;
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedHalVersion = HalVersion::V1_3;
+        minSupportedVersion = Version::ANDROID_R;
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        minSupportedHalVersion = HalVersion::V1_2;
+        minSupportedVersion = Version::ANDROID_Q;
     } else {
-        minSupportedHalVersion = HalVersion::V1_1;
+        minSupportedVersion = Version::ANDROID_P;
     }
 
     NN_RET_CHECK(validateInputTypes(context, {
@@ -66,9 +63,10 @@ bool validate(const IOperationValidationContext* context) {
     if (hasKnownRank(input)) {
         NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
     }
-    return validateHalVersion(context, minSupportedHalVersion);
+    return minSupportedVersion;
 }
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     // Only the squeeze dims tensor can be omitted.
     NN_RET_CHECK(!context->isOmittedInput(kInputTensor));
@@ -140,6 +138,8 @@ bool execute(IOperationExecutionContext* context) {
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for SQUEEZE op.";
     }
 }
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
+
 }  // namespace squeeze
 
 NN_REGISTER_OPERATION(SQUEEZE, "SQUEEZE", squeeze::validate, squeeze::prepare, squeeze::execute,

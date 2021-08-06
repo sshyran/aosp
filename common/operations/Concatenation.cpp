@@ -14,22 +14,25 @@
  * limitations under the License.
  */
 
-#include "OperationsUtils.h"
 #define LOG_TAG "Operations"
-
-#include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
-#include <tensorflow/lite/kernels/internal/reference/legacy_reference_ops.h>
-#include <tensorflow/lite/kernels/internal/reference/reference_ops.h>
-#include <tensorflow/lite/kernels/internal/types.h>
 
 #include <algorithm>
 #include <iterator>
 #include <vector>
 
-#include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
+#include "OperationsUtils.h"
 #include "Tracing.h"
+#include "nnapi/Validation.h"
+
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
+#include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
+#include <tensorflow/lite/kernels/internal/reference/legacy_reference_ops.h>
+#include <tensorflow/lite/kernels/internal/reference/reference_ops.h>
+#include <tensorflow/lite/kernels/internal/types.h>
+
+#include "CpuOperationUtils.h"
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 namespace android {
 namespace nn {
@@ -40,9 +43,8 @@ constexpr char kOperationName[] = "CONCATENATION";
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
-
-using namespace hal;
 
 template <typename T>
 bool concatenation(const std::vector<const T*>& inputDataPtrs,
@@ -137,30 +139,32 @@ inline bool concatenation<int8_t>(IOperationExecutionContext* context) {
 }
 
 }  // namespace
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     uint32_t inputCount = context->getNumInputs();
     NN_RET_CHECK_GE(inputCount, 2);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     const OperandType inputType = context->getInputType(0);
+    auto minSupportedVersion = Version::ANDROID_OC_MR1;
     if (inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_0));
+        minSupportedVersion = Version::ANDROID_OC_MR1;
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        minSupportedVersion = Version::ANDROID_Q;
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
+        minSupportedVersion = Version::ANDROID_R;
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
     }
     std::vector<OperandType> inExpectedTypes(inputCount - 1, inputType);
     inExpectedTypes.push_back(OperandType::INT32);
-    if (context->getHalVersion() < HalVersion::V1_2 &&
-        inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+    if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
         const Shape& output = context->getOutputShape(kOutputTensor);
         for (uint32_t i = 0; i < inputCount - 1; ++i) {
             const Shape& input = context->getInputShape(i);
-            NN_RET_CHECK_EQ(input.scale, output.scale);
-            NN_RET_CHECK_EQ(input.offset, output.offset);
+            if (input.scale != output.scale || input.offset != output.offset) {
+                minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_Q);
+            }
         }
     }
     for (uint32_t i = 0; i < inputCount - 1; ++i) {
@@ -169,10 +173,12 @@ bool validate(const IOperationValidationContext* context) {
             NN_RET_CHECK_LE(inputRank, 4);
         }
     }
-    return validateInputTypes(context, inExpectedTypes) &&
-           validateOutputTypes(context, {inputType});
+    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
+    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+    return minSupportedVersion;
 }
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     uint32_t numInputs = context->getNumInputs();
     NN_RET_CHECK_GE(numInputs, 2);
@@ -220,6 +226,7 @@ bool execute(IOperationExecutionContext* context) {
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
     }
 }
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 }  // namespace concatenation
 

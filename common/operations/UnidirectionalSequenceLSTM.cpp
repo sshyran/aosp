@@ -18,11 +18,13 @@
 
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "IndexedShapeWrapper.h"
-#include "LSTM.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
+
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
+#include "LSTM.h"
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 namespace android {
 namespace nn {
@@ -86,9 +88,8 @@ constexpr uint32_t kOutputTensor = 0;
 constexpr uint32_t kOutputStateOutTensor = 1;
 constexpr uint32_t kCellStateOutTensor = 2;
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
-
-using namespace hal;
 
 inline bool hasTensor(IOperationExecutionContext* context, const uint32_t tensor) {
     return context->getInputBuffer(tensor) != nullptr;
@@ -114,8 +115,9 @@ inline LSTMParams getLSTMParams(IOperationExecutionContext* context) {
 }
 
 }  // namespace
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     const uint32_t numOutputs = context->getNumOutputs();
     NN_RET_CHECK(numOutputs == kNumOutputs || numOutputs == kNumOutputsWithState);
@@ -157,18 +159,19 @@ bool validate(const IOperationValidationContext* context) {
     } else {
         NN_RET_CHECK_FAIL()
                 << "Unsupported input operand type for UNIDIRECTIONAL_SEQUENCE_LSTM op: "
-                << toString(inputType);
+                << inputType;
     }
-    HalVersion minHalVersionSupported = HalVersion::V1_2;
+    Version minVersionSupported = Version::ANDROID_Q;
     if (context->getNumOutputs() == kNumOutputsWithState) {
-        minHalVersionSupported = HalVersion::V1_3;
+        minVersionSupported = Version::ANDROID_R;
         outExpectedTypes.insert(outExpectedTypes.end(), {inputType, inputType});
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
-    return validateHalVersion(context, minHalVersionSupported);
+    return minVersionSupported;
 }
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     // Check that none of the required inputs are omitted
     const std::vector<int> requiredInputs = {
@@ -515,6 +518,7 @@ bool execute(IOperationExecutionContext* context) {
     }
     return true;
 }
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 }  // namespace unidirectional_sequence_lstm
 

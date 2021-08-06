@@ -16,17 +16,21 @@
 
 #define LOG_TAG "TestControlFlow"
 
+#include <ControlFlow.h>
 #include <android-base/logging.h>
 #include <gtest/gtest.h>
 
-#include "ControlFlow.h"
 #include "TestNeuralNetworksWrapper.h"
 
-namespace android {
-namespace nn {
+namespace android::nn {
 namespace {
 
-using namespace test_wrapper;
+using test_wrapper::Compilation;
+using test_wrapper::Execution;
+using test_wrapper::Model;
+using test_wrapper::OperandType;
+using test_wrapper::Result;
+using test_wrapper::Type;
 
 constexpr uint64_t kMillisecondsInNanosecond = 1'000'000;
 constexpr int32_t kNoActivation = ANEURALNETWORKS_FUSED_NONE;
@@ -106,5 +110,4 @@ TEST_F(ControlFlowTest, GetLoopTimeouts) {
 }
 
 }  // end namespace
-}  // namespace nn
-}  // namespace android
+}  // namespace android::nn

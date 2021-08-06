@@ -18,21 +18,14 @@
 
 #include "CpuExecutor.h"
 
-#include <android/hardware_buffer.h>
 #include <android-base/scopeguard.h>
+#include <nnapi/SharedMemory.h>
+#include <nnapi/TypeUtils.h>
 
-#include <sys/mman.h>
-#include <vndk/hardware_buffer.h>
-
-#include <Eigen/Core>
+#include <limits>
 #include <memory>
 #include <utility>
 #include <vector>
-
-// b/109953668, disable OpenMP
-#ifdef NNAPI_OPENMP
-#include <omp.h>
-#endif  // NNAPI_OPENMP
 
 #include "ControlFlow.h"
 #include "NeuralNetworks.h"
@@ -41,12 +34,33 @@
 #include "OperationsUtils.h"
 #include "Tracing.h"
 
+// b/109953668, disable OpenMP
+#ifdef NNAPI_OPENMP
+#include <omp.h>
+
+#include <Eigen/Core>
+#endif  // NNAPI_OPENMP
+
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
+#include "operations/BidirectionalSequenceLSTM.h"
+#include "operations/Cast.h"
+#include "operations/EmbeddingLookup.h"
+#include "operations/ExpandDims.h"
+#include "operations/HashtableLookup.h"
+#include "operations/LSHProjection.h"
+#include "operations/LSTM.h"
+#include "operations/MaximumMinimum.h"
+#include "operations/Multinomial.h"
+#include "operations/Pow.h"
+#include "operations/QuantizedLSTM.h"
+#include "operations/RNN.h"
+#include "operations/SVDF.h"
+#include "operations/Tile.h"
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
+
 namespace android {
 namespace nn {
-
 namespace {
-
-using namespace hal;
 
 class OperationExecutionContext : public IOperationExecutionContext {
     DISALLOW_IMPLICIT_CONSTRUCTORS(OperationExecutionContext);
@@ -59,7 +73,7 @@ class OperationExecutionContext : public IOperationExecutionContext {
     OperandType getInputType(uint32_t index) const override;
     Shape getInputShape(uint32_t index) const override;
     const void* getInputBuffer(uint32_t index) const override;
-    const OperandExtraParams getInputExtraParams(uint32_t index) const override;
+    const Operand::ExtraParams& getInputExtraParams(uint32_t index) const override;
 
     uint32_t getNumOutputs() const override;
     OperandType getOutputType(uint32_t index) const override;
@@ -117,7 +131,7 @@ const void* OperationExecutionContext::getInputBuffer(uint32_t index) const {
     return getInputInfo(index)->buffer;
 }
 
-const OperandExtraParams OperationExecutionContext::getInputExtraParams(uint32_t index) const {
+const Operand::ExtraParams& OperationExecutionContext::getInputExtraParams(uint32_t index) const {
     return getInputInfo(index)->extraParams;
 }
 
@@ -154,7 +168,7 @@ int OperationExecutionContext::getResultCode() const {
 bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& shape, int* result) {
     // For user-provided model output operands, the parameters must match the Shape
     // calculated from the preparation step.
-    if (info->lifetime == OperandLifeTime::SUBGRAPH_OUTPUT) {
+    if (info->lifetime == Operand::LifeTime::SUBGRAPH_OUTPUT) {
         if (info->type != shape.type) {
             LOG(ERROR) << "Invalid type for model output";
             *result = ANEURALNETWORKS_OP_FAILED;
@@ -179,7 +193,7 @@ bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& shape, in
 
     auto combined = combineDimensions(shape.dimensions, info->dimensions);
     if (!combined.has_value()) {
-        LOG(ERROR) << "Invalid dimensions for model operand";
+        LOG(ERROR) << "Invalid dimensions for model operand: " << combined.error();
         *result = ANEURALNETWORKS_OP_FAILED;
         return false;
     }
@@ -191,7 +205,7 @@ bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& shape, in
 
     // TODO(b/153081229): We bypass the overflow check on extension operands because we do not know
     //                    the sizes of extension types.
-    if (!isExtensionOperandType(info->type) &&
+    if (!isExtension(info->type) &&
         nonExtensionOperandSizeOfDataOverflowsUInt32(info->type, info->dimensions)) {
         LOG(ERROR) << "Operand data size overflows uint32_t";
         *result = ANEURALNETWORKS_OP_FAILED;
@@ -199,9 +213,9 @@ bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& shape, in
     }
 
     // Allocate the buffer only if the combined dimension is fully specified
-    if (info->buffer == nullptr && (info->lifetime == OperandLifeTime::TEMPORARY_VARIABLE ||
-                                    info->lifetime == OperandLifeTime::SUBGRAPH_OUTPUT)) {
-        if (isExtensionOperandType(info->type)) {
+    if (info->buffer == nullptr && (info->lifetime == Operand::LifeTime::TEMPORARY_VARIABLE ||
+                                    info->lifetime == Operand::LifeTime::SUBGRAPH_OUTPUT)) {
+        if (isExtension(info->type)) {
             LOG(ERROR) << "Cannot allocate a variable of an extension type";
             *result = ANEURALNETWORKS_OP_FAILED;
             return false;
@@ -232,21 +246,21 @@ bool OperationExecutionContext::setOutputShape(uint32_t index, const Shape& shap
 }
 
 bool OperationExecutionContext::isOmittedInput(uint32_t index) const {
-    return getInputInfo(index)->lifetime == OperandLifeTime::NO_VALUE;
+    return getInputInfo(index)->lifetime == Operand::LifeTime::NO_VALUE;
 }
 
 bool OperationExecutionContext::isOmittedOutput(uint32_t index) const {
-    return getOutputInfo(index)->lifetime == OperandLifeTime::NO_VALUE;
+    return getOutputInfo(index)->lifetime == Operand::LifeTime::NO_VALUE;
 }
 
 bool OperationExecutionContext::checkNoOmittedOperand() const {
     for (uint32_t i = 0; i < operation->inputs.size(); i++) {
-        NN_RET_CHECK(!isOmittedInput(i)) << getOperationName(operation->type) << " input operand "
-                                         << i << " is required but missing.";
+        NN_RET_CHECK(!isOmittedInput(i))
+                << operation->type << " input operand " << i << " is required but missing.";
     }
     for (uint32_t i = 0; i < operation->outputs.size(); i++) {
-        NN_RET_CHECK(!isOmittedOutput(i)) << getOperationName(operation->type) << " output operand "
-                                          << i << " is required but missing.";
+        NN_RET_CHECK(!isOmittedOutput(i))
+                << operation->type << " output operand " << i << " is required but missing.";
     }
     return true;
 }
@@ -256,9 +270,8 @@ bool OperationExecutionContext::checkNoZeroSizedInput() const {
         if (isOmittedInput(i)) continue;
         for (uint32_t j = 0; j < getInputInfo(i)->dimensions.size(); j++) {
             NN_RET_CHECK_NE(getInputInfo(i)->dimensions[j], 0)
-                    << getOperationName(operation->type)
-                    << " does not support zero-sized tensor, but input " << i << " dimension " << j
-                    << " is 0.";
+                    << operation->type << " does not support zero-sized tensor, but input " << i
+                    << " dimension " << j << " is 0.";
         }
     }
     return true;
@@ -273,158 +286,61 @@ bool OperationExecutionContext::checkNoZeroSizedInput() const {
 // when the RunTimePoolInfo is destroyed or is assigned to.
 class RunTimePoolInfo::RunTimePoolInfoImpl {
    public:
-    RunTimePoolInfoImpl(const hidl_memory& hidlMemory, uint8_t* buffer, const sp<IMemory>& memory,
-                        AHardwareBuffer* hardwareBuffer, uint32_t size);
+    RunTimePoolInfoImpl(SharedMemory memory, Mapping mapping);
 
-    // rule of five...
-    ~RunTimePoolInfoImpl();
-    RunTimePoolInfoImpl(const RunTimePoolInfoImpl&) = delete;
-    RunTimePoolInfoImpl(RunTimePoolInfoImpl&&) noexcept = delete;
-    RunTimePoolInfoImpl& operator=(const RunTimePoolInfoImpl&) = delete;
-    RunTimePoolInfoImpl& operator=(RunTimePoolInfoImpl&&) noexcept = delete;
-
-    uint8_t* getBuffer() const { return mBuffer; }
-    uint32_t getSize() const { return mSize; }
+    uint8_t* getBuffer() const;
+    uint32_t getSize() const;
 
     bool flush() const;
 
-    const hidl_memory& getHidlMemory() const { return mHidlMemory; }
+    const SharedMemory& getMemory() const { return mMemory; }
 
    private:
-    const hidl_memory mHidlMemory;     // always used
-    uint8_t* const mBuffer = nullptr;  // always used
-    const sp<IMemory> mMemory;         // only used when hidlMemory.name() == "ashmem"
-    AHardwareBuffer*
-            mAHardwareBuffer;  // only used when hidlMemory.name() == "hardware_buffer_blob"
-    const uint32_t mSize;
+    const SharedMemory mMemory;
+    const Mapping mMapping;
 };
 
-RunTimePoolInfo::RunTimePoolInfoImpl::RunTimePoolInfoImpl(const hidl_memory& hidlMemory,
-                                                          uint8_t* buffer,
-                                                          const sp<IMemory>& memory,
-                                                          AHardwareBuffer* hardwareBuffer,
-                                                          uint32_t size)
-    : mHidlMemory(hidlMemory),
-      mBuffer(buffer),
-      mMemory(memory),
-      mAHardwareBuffer(hardwareBuffer),
-      mSize(size) {}
+RunTimePoolInfo::RunTimePoolInfoImpl::RunTimePoolInfoImpl(SharedMemory memory, Mapping mapping)
+    : mMemory(std::move(memory)), mMapping(std::move(mapping)) {}
 
-RunTimePoolInfo::RunTimePoolInfoImpl::~RunTimePoolInfoImpl() {
-    if (mBuffer == nullptr) {
-        return;
-    }
+uint8_t* RunTimePoolInfo::RunTimePoolInfoImpl::getBuffer() const {
+    return std::visit(
+            [](auto* pointer) {
+                // Writing to a const buffer may lead to undefined behavior.
+                // TODO: Refactor the code to avoid the const_cast.
+                return static_cast<uint8_t*>(const_cast<void*>(pointer));
+            },
+            mMapping.pointer);
+}
 
-    const auto& memType = mHidlMemory.name();
-    if (memType == "ashmem") {
-        // nothing to do
-    } else if (memType == "mmap_fd") {
-        const size_t size = mHidlMemory.size();
-        if (munmap(mBuffer, size)) {
-            LOG(ERROR) << "RunTimePoolInfoImpl::~RunTimePoolInfo(): Can't munmap";
-        }
-    } else if (memType == "hardware_buffer_blob") {
-        AHardwareBuffer_unlock(mAHardwareBuffer, nullptr);
-    } else if (memType == "") {
-        // Represents a POINTER argument; nothing to do
-    } else {
-        LOG(ERROR) << "RunTimePoolInfoImpl::~RunTimePoolInfoImpl(): unsupported hidl_memory type";
-    }
-
-    if (mAHardwareBuffer != nullptr) {
-        AHardwareBuffer_release(mAHardwareBuffer);
-    }
+uint32_t RunTimePoolInfo::RunTimePoolInfoImpl::getSize() const {
+    CHECK_LE(mMapping.size, std::numeric_limits<uint32_t>::max());
+    return static_cast<uint32_t>(mMapping.size);
 }
 
 // Making sure the output data are correctly updated after execution.
 bool RunTimePoolInfo::RunTimePoolInfoImpl::flush() const {
-    const auto& memType = mHidlMemory.name();
-    if (memType == "mmap_fd") {
-        const int prot = mHidlMemory.handle()->data[1];
-        if (prot & PROT_WRITE) {
-            const size_t size = mHidlMemory.size();
-            return msync(mBuffer, size, MS_SYNC) == 0;
-        }
-    }
-    // No-op for other types of memory.
-    return true;
+    return nn::flush(mMapping);
 }
 
 // TODO: short term, make share memory mapping and updating a utility function.
 // TODO: long term, implement mmap_fd as a hidl IMemory service.
-std::optional<RunTimePoolInfo> RunTimePoolInfo::createFromHidlMemory(
-        const hidl_memory& hidlMemory) {
-    uint8_t* buffer = nullptr;
-    sp<IMemory> memory;
-    AHardwareBuffer* hardwareBuffer = nullptr;
-
-    const auto& memType = hidlMemory.name();
-    if (memType == "ashmem") {
-        memory = mapMemory(hidlMemory);
-        if (memory == nullptr) {
-            LOG(ERROR) << "Can't map shared memory.";
-            return std::nullopt;
-        }
-        buffer = static_cast<uint8_t*>(static_cast<void*>(memory->getPointer()));
-        if (buffer == nullptr) {
-            LOG(ERROR) << "Can't access shared memory.";
-            return std::nullopt;
-        }
-    } else if (memType == "mmap_fd") {
-        size_t size = hidlMemory.size();
-        int fd = hidlMemory.handle()->data[0];
-        int prot = hidlMemory.handle()->data[1];
-        size_t offset = getSizeFromInts(hidlMemory.handle()->data[2], hidlMemory.handle()->data[3]);
-        buffer = static_cast<uint8_t*>(mmap(nullptr, size, prot, MAP_SHARED, fd, offset));
-        if (buffer == MAP_FAILED) {
-            LOG(ERROR) << "RunTimePoolInfo::set(): Can't mmap the file descriptor.";
-            return std::nullopt;
-        }
-    } else if (memType == "hardware_buffer_blob") {
-        auto handle = hidlMemory.handle();
-        auto format = AHARDWAREBUFFER_FORMAT_BLOB;
-        auto usage = AHARDWAREBUFFER_USAGE_CPU_READ_OFTEN | AHARDWAREBUFFER_USAGE_CPU_WRITE_OFTEN;
-        const uint32_t width = hidlMemory.size();
-        const uint32_t height = 1;  // height is always 1 for BLOB mode AHardwareBuffer.
-        const uint32_t layers = 1;  // layers is always 1 for BLOB mode AHardwareBuffer.
-        const uint32_t stride = hidlMemory.size();
-
-        AHardwareBuffer_Desc desc{
-                .width = width,
-                .height = height,
-                .layers = layers,
-                .format = format,
-                .usage = usage,
-                .stride = stride,
-        };
-        status_t status = AHardwareBuffer_createFromHandle(
-                &desc, handle, AHARDWAREBUFFER_CREATE_FROM_HANDLE_METHOD_CLONE, &hardwareBuffer);
-        if (status != NO_ERROR) {
-            LOG(ERROR) << "RunTimePoolInfo Can't create AHardwareBuffer from handle. Error: "
-                       << status;
-            return std::nullopt;
-        }
-        void* gBuffer = nullptr;
-        status = AHardwareBuffer_lock(hardwareBuffer, usage, -1, nullptr, &gBuffer);
-        if (status != NO_ERROR) {
-            LOG(ERROR) << "RunTimePoolInfo Can't lock the AHardwareBuffer. Error: " << status;
-            return std::nullopt;
-        }
-        buffer = static_cast<uint8_t*>(gBuffer);
-    } else {
-        LOG(ERROR) << "RunTimePoolInfo::set(): unsupported hidl_memory type";
+std::optional<RunTimePoolInfo> RunTimePoolInfo::createFromMemory(const SharedMemory& memory) {
+    auto mapping = map(memory);
+    if (!mapping.has_value()) {
+        LOG(ERROR) << "Can't map shared memory: " << mapping.error().message;
         return std::nullopt;
     }
-
-    const auto impl = std::make_shared<const RunTimePoolInfoImpl>(
-            hidlMemory, buffer, memory, hardwareBuffer, hidlMemory.size());
-    return {RunTimePoolInfo(impl)};
+    const auto impl =
+            std::make_shared<const RunTimePoolInfoImpl>(memory, std::move(mapping).value());
+    return RunTimePoolInfo(impl);
 }
 
 RunTimePoolInfo RunTimePoolInfo::createFromExistingBuffer(uint8_t* buffer, uint32_t size) {
-    const auto impl = std::make_shared<const RunTimePoolInfoImpl>(hidl_memory{}, buffer, nullptr,
-                                                                  nullptr, size);
-    return {impl};
+    auto mapping = Mapping{.pointer = buffer, .size = size};
+    const auto impl = std::make_shared<const RunTimePoolInfoImpl>(std::make_shared<const Memory>(),
+                                                                  std::move(mapping));
+    return RunTimePoolInfo(impl);
 }
 
 RunTimePoolInfo::RunTimePoolInfo(const std::shared_ptr<const RunTimePoolInfoImpl>& impl)
@@ -442,17 +358,17 @@ bool RunTimePoolInfo::flush() const {
     return mImpl->flush();
 }
 
-const hidl_memory& RunTimePoolInfo::getHidlMemory() const {
-    return mImpl->getHidlMemory();
+const SharedMemory& RunTimePoolInfo::getMemory() const {
+    return mImpl->getMemory();
 }
 
-bool setRunTimePoolInfosFromHidlMemories(std::vector<RunTimePoolInfo>* poolInfos,
-                                         const hidl_vec<hidl_memory>& pools) {
+bool setRunTimePoolInfosFromCanonicalMemories(std::vector<RunTimePoolInfo>* poolInfos,
+                                              const std::vector<SharedMemory>& pools) {
     CHECK(poolInfos != nullptr);
     poolInfos->clear();
     poolInfos->reserve(pools.size());
     for (const auto& pool : pools) {
-        if (std::optional<RunTimePoolInfo> poolInfo = RunTimePoolInfo::createFromHidlMemory(pool)) {
+        if (std::optional<RunTimePoolInfo> poolInfo = RunTimePoolInfo::createFromMemory(pool)) {
             poolInfos->push_back(*poolInfo);
         } else {
             LOG(ERROR) << "Could not map pools";
@@ -464,18 +380,18 @@ bool setRunTimePoolInfosFromHidlMemories(std::vector<RunTimePoolInfo>* poolInfos
 }
 
 bool setRunTimePoolInfosFromMemoryPools(std::vector<RunTimePoolInfo>* poolInfos,
-                                        const hidl_vec<Request::MemoryPool>& pools) {
+                                        const std::vector<Request::MemoryPool>& pools) {
     CHECK(poolInfos != nullptr);
     poolInfos->clear();
     poolInfos->reserve(pools.size());
     for (const auto& pool : pools) {
-        if (pool.getDiscriminator() != Request::MemoryPool::hidl_discriminator::hidlMemory) {
+        if (!std::holds_alternative<SharedMemory>(pool)) {
             LOG(ERROR) << "Unknown memory token";
             poolInfos->clear();
             return false;
         }
         if (std::optional<RunTimePoolInfo> poolInfo =
-                    RunTimePoolInfo::createFromHidlMemory(pool.hidlMemory())) {
+                    RunTimePoolInfo::createFromMemory(std::get<SharedMemory>(pool))) {
             poolInfos->push_back(*poolInfo);
         } else {
             LOG(ERROR) << "Could not map pools";
@@ -486,6 +402,7 @@ bool setRunTimePoolInfosFromMemoryPools(std::vector<RunTimePoolInfo>* poolInfos,
     return true;
 }
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 template <typename T>
 inline bool convertToNhwcImpl(T* to, const T* from, const std::vector<uint32_t>& fromDim) {
     uint32_t spatialSize = fromDim[2] * fromDim[3];
@@ -521,7 +438,7 @@ static bool convertToNhwc(RunTimeOperandInfo& to, const RunTimeOperandInfo& from
         LOG(ERROR) << "Error converting a non-4-D tensor to NHWC layout";
         return false;
     }
-    to.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
+    to.lifetime = Operand::LifeTime::TEMPORARY_VARIABLE;
     if (data_layout) {
         // convert dimensions
         Shape inShape = from.shape();
@@ -603,6 +520,7 @@ static bool convertFromNhwc(RunTimeOperandInfo& to, const RunTimeOperandInfo& fr
     }
     return true;
 }
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 // Decrements the usage count for the operands listed.  Frees the memory
 // allocated for any temporary variable with a count of zero.
@@ -627,7 +545,7 @@ static void consumeOperationInputs(const std::vector<uint32_t>& inputs,
 // that are inputs to an operation.
 static void freeUnusedSubgraphOperands(std::vector<RunTimeOperandInfo>* operands) {
     for (auto& info : *operands) {
-        if (info.lifetime == OperandLifeTime::TEMPORARY_VARIABLE && info.numberOfUsesLeft == 0 &&
+        if (info.lifetime == Operand::LifeTime::TEMPORARY_VARIABLE && info.numberOfUsesLeft == 0 &&
             info.buffer != nullptr) {
             delete[] info.buffer;
             info.buffer = nullptr;
@@ -641,8 +559,8 @@ int CpuExecutor::run(const Model& model, const Request& request,
                      const std::vector<RunTimePoolInfo>& modelPoolInfos,
                      const std::vector<RunTimePoolInfo>& requestPoolInfos) {
     NNTRACE_CPU(NNTRACE_PHASE_EXECUTION, "run");
-    VLOG(CPUEXE) << "CpuExecutor::run() with request(" << SHOW_IF_DEBUG(toString(request)) << ")";
-    mModelOperandValues = &model.operandValues;
+    VLOG(CPUEXE) << "CpuExecutor::run() with request(" << SHOW_IF_DEBUG(request) << ")";
+    mModelOperandValues = model.operandValues.data();
     mModelPoolInfos = &modelPoolInfos;
     mReferencedSubgraphs = &model.referenced;
 
@@ -679,8 +597,8 @@ int CpuExecutor::run(const Model& model, const Request& request,
     return result;
 }
 
-int CpuExecutor::executeSubgraph(const Subgraph& subgraph, RunTimeOperandInfo* operands) {
-    VLOG(CPUEXE) << "CpuExecutor::executeSubgraph " << toString(subgraph);
+int CpuExecutor::executeSubgraph(const Model::Subgraph& subgraph, RunTimeOperandInfo* operands) {
+    VLOG(CPUEXE) << "CpuExecutor::executeSubgraph " << subgraph;
     // The graph has serialized the operation in execution order.
     for (const auto& operation : subgraph.operations) {
         NN_RETURN_IF_ERROR(executeOperation(operation, operands));
@@ -688,10 +606,13 @@ int CpuExecutor::executeSubgraph(const Subgraph& subgraph, RunTimeOperandInfo* o
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-std::vector<RunTimeOperandInfo> CpuExecutor::initializeRunTimeInfo(const Subgraph& subgraph) {
+std::vector<RunTimeOperandInfo> CpuExecutor::initializeRunTimeInfo(
+        const Model::Subgraph& subgraph) {
     VLOG(CPUEXE) << "CpuExecutor::initializeRunTimeInfo";
     const size_t count = subgraph.operands.size();
     std::vector<RunTimeOperandInfo> operands(count);
+    std::vector<uint32_t> numberOfConsumers =
+            countNumberOfConsumers(count, subgraph.operations).value();
     for (size_t i = 0; i < count; i++) {
         const Operand& from = subgraph.operands[i];
         RunTimeOperandInfo& to = operands[i];
@@ -703,15 +624,15 @@ std::vector<RunTimeOperandInfo> CpuExecutor::initializeRunTimeInfo(const Subgrap
         to.lifetime = from.lifetime;
         to.extraParams = from.extraParams;
         switch (from.lifetime) {
-            case OperandLifeTime::TEMPORARY_VARIABLE:
+            case Operand::LifeTime::TEMPORARY_VARIABLE:
                 to.buffer = nullptr;
-                to.numberOfUsesLeft = from.numberOfConsumers;
+                to.numberOfUsesLeft = numberOfConsumers[i];
                 break;
-            case OperandLifeTime::CONSTANT_COPY:
-                to.buffer = const_cast<uint8_t*>(&(*mModelOperandValues)[from.location.offset]);
+            case Operand::LifeTime::CONSTANT_COPY:
+                to.buffer = const_cast<uint8_t*>(mModelOperandValues + from.location.offset);
                 to.numberOfUsesLeft = 0;
                 break;
-            case OperandLifeTime::CONSTANT_REFERENCE: {
+            case Operand::LifeTime::CONSTANT_REFERENCE: {
                 auto poolIndex = from.location.poolIndex;
                 CHECK_LT(poolIndex, mModelPoolInfos->size());
                 auto& r = (*mModelPoolInfos)[poolIndex];
@@ -719,16 +640,21 @@ std::vector<RunTimeOperandInfo> CpuExecutor::initializeRunTimeInfo(const Subgrap
                 to.numberOfUsesLeft = 0;
                 break;
             }
-            case OperandLifeTime::SUBGRAPH: {
+            case Operand::LifeTime::SUBGRAPH: {
                 auto subgraphIndex = from.location.offset;
                 CHECK_LT(subgraphIndex, mReferencedSubgraphs->size());
                 to.buffer = reinterpret_cast<uint8_t*>(
-                        const_cast<Subgraph*>(&(*mReferencedSubgraphs)[subgraphIndex]));
+                        const_cast<Model::Subgraph*>(&(*mReferencedSubgraphs)[subgraphIndex]));
                 to.numberOfUsesLeft = 0;
             } break;
-            case OperandLifeTime::SUBGRAPH_INPUT:
-            case OperandLifeTime::SUBGRAPH_OUTPUT:
-            case OperandLifeTime::NO_VALUE:
+            case Operand::LifeTime::POINTER: {
+                to.buffer = reinterpret_cast<uint8_t*>(
+                        const_cast<void*>(std::get<const void*>(from.location.pointer)));
+                to.numberOfUsesLeft = 0;
+            } break;
+            case Operand::LifeTime::SUBGRAPH_INPUT:
+            case Operand::LifeTime::SUBGRAPH_OUTPUT:
+            case Operand::LifeTime::NO_VALUE:
                 to.buffer = nullptr;
                 to.numberOfUsesLeft = 0;
                 break;
@@ -738,15 +664,15 @@ std::vector<RunTimeOperandInfo> CpuExecutor::initializeRunTimeInfo(const Subgrap
 }
 
 void CpuExecutor::updateForArguments(const std::vector<uint32_t>& indexes,
-                                     const hal::hidl_vec<hal::RequestArgument>& arguments,
+                                     const std::vector<Request::Argument>& arguments,
                                      const std::vector<RunTimePoolInfo>& requestPoolInfos,
                                      RunTimeOperandInfo* operands) {
     CHECK_EQ(indexes.size(), arguments.size());
     for (size_t i = 0; i < indexes.size(); i++) {
         const uint32_t operandIndex = indexes[i];
-        const RequestArgument& from = arguments[i];
+        const Request::Argument& from = arguments[i];
         RunTimeOperandInfo& to = operands[operandIndex];
-        if (from.dimensions.size() > 0) {
+        if (!from.dimensions.empty()) {
             // It's the responsibility of the caller to validate that
             // from.dimensions only modifies the dimensions that were
             // unspecified in the model.  That's the case in SampleDriver.cpp
@@ -754,26 +680,43 @@ void CpuExecutor::updateForArguments(const std::vector<uint32_t>& indexes,
             // TODO make sure that's the case for the default CPU path.
             to.dimensions = from.dimensions;
         }
-        if (from.hasNoValue) {
-            to.lifetime = OperandLifeTime::NO_VALUE;
-            CHECK(to.buffer == nullptr);
-            to.length = 0;
-        } else {
-            auto poolIndex = from.location.poolIndex;
-            CHECK_LT(poolIndex, requestPoolInfos.size());
-            auto& r = requestPoolInfos[poolIndex];
-            to.buffer = r.getBuffer() + from.location.offset;
-            if (from.location.offset == 0 && from.location.length == 0) {
-                // Use the entire memory region.
-                to.length = r.getSize();
-            } else {
+        switch (from.lifetime) {
+            case Request::Argument::LifeTime::NO_VALUE: {
+                to.lifetime = Operand::LifeTime::NO_VALUE;
+                CHECK(to.buffer == nullptr);
+                to.length = 0;
+                break;
+            }
+            case Request::Argument::LifeTime::POOL: {
+                auto poolIndex = from.location.poolIndex;
+                CHECK_LT(poolIndex, requestPoolInfos.size());
+                auto& r = requestPoolInfos[poolIndex];
+                to.buffer = r.getBuffer() + from.location.offset;
+                if (from.location.offset == 0 && from.location.length == 0) {
+                    // Use the entire memory region.
+                    to.length = r.getSize();
+                } else {
+                    to.length = from.location.length;
+                }
+                break;
+            }
+            case Request::Argument::LifeTime::POINTER: {
+                constexpr auto fn = [](const void* ptr) {
+                    return static_cast<const uint8_t*>(ptr);
+                };
+                auto ptr = std::visit(fn, from.location.pointer);
+                // Writing to a const buffer may lead to undefined behavior.
+                // TODO: Refactor the code to avoid the const_cast.
+                to.buffer = const_cast<uint8_t*>(ptr);
                 to.length = from.location.length;
+                break;
             }
         }
     }
 }
 
 int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo* operands) {
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
     if (hasDeadlinePassed(mDeadline)) {
         return ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT;
     }
@@ -792,9 +735,9 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
         return result;
     }
 
-    // VLOG(CPUEXE) << "CpuExecutor::executeOperation(" << toString(operation) << ")";
-    const hidl_vec<uint32_t>& ins = operation.inputs;
-    const hidl_vec<uint32_t>& outs = operation.outputs;
+    // VLOG(CPUEXE) << "CpuExecutor::executeOperation(" << operation << ")";
+    const std::vector<uint32_t>& ins = operation.inputs;
+    const std::vector<uint32_t>& outs = operation.outputs;
     bool success = false;
     int result = ANEURALNETWORKS_NO_ERROR;
 
@@ -806,29 +749,30 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
     auto allParametersPresent = [&operation, &operands, &ins, &outs](size_t requiredIns,
                                                                      size_t requiredOuts) -> bool {
         auto verify = [&operation, &operands](size_t requiredCount,
-                                              const hidl_vec<uint32_t>& indexes,
+                                              const std::vector<uint32_t>& indexes,
                                               const char* type) -> bool {
             size_t actualCount = indexes.size();
             if (actualCount != requiredCount) {
-                LOG(ERROR) << getOperationName(operation.type) << ": Invalid number of " << type
-                           << " operands. Got " << actualCount << " of " << requiredCount;
+                LOG(ERROR) << operation.type << ": Invalid number of " << type << " operands. Got "
+                           << actualCount << " of " << requiredCount;
                 return false;
             }
             for (size_t i = 0; i < actualCount; i++) {
-                if (operands[indexes[i]].lifetime == OperandLifeTime::NO_VALUE) {
-                    LOG(ERROR) << getOperationName(operation.type) << " " << type << " operand "
-                               << i << " is required but missing.";
+                if (operands[indexes[i]].lifetime == Operand::LifeTime::NO_VALUE) {
+                    LOG(ERROR) << operation.type << " " << type << " operand " << i
+                               << " is required but missing.";
                     return false;
                 }
             }
             return true;
         };
 
-        auto verifyNoZeroSizedInputs = [&operation, &operands](const hidl_vec<uint32_t>& indexes) {
+        auto verifyNoZeroSizedInputs = [&operation,
+                                        &operands](const std::vector<uint32_t>& indexes) {
             for (size_t i = 0; i < indexes.size(); i++) {
                 for (size_t j = 0; j < operands[indexes[i]].dimensions.size(); j++) {
                     if (operands[indexes[i]].dimensions[j] == 0) {
-                        LOG(ERROR) << getOperationName(operation.type)
+                        LOG(ERROR) << operation.type
                                    << " does not support zero-sized tensor, but input " << i
                                    << " dimension " << j << " is zero.";
                         return false;
@@ -881,7 +825,7 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                 success = false;
                 break;
             }
-            output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
+            output_tmp.lifetime = Operand::LifeTime::TEMPORARY_VARIABLE;
             output_tmp.buffer = data_layout ? nullptr : output.buffer;
             output_tmp.length = data_layout ? 0 : output.length;
             if (!depthToSpacePrepare(input_tmp.shape(), blockSize, &outShape) ||
@@ -945,7 +889,7 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                 success = false;
                 break;
             }
-            output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
+            output_tmp.lifetime = Operand::LifeTime::TEMPORARY_VARIABLE;
             output_tmp.buffer = data_layout ? nullptr : output.buffer;
             output_tmp.length = data_layout ? 0 : output.length;
 
@@ -1166,7 +1110,7 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                 success = false;
                 break;
             }
-            output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
+            output_tmp.lifetime = Operand::LifeTime::TEMPORARY_VARIABLE;
             output_tmp.buffer = data_layout ? nullptr : output.buffer;
             output_tmp.length = data_layout ? 0 : output.length;
 
@@ -1238,7 +1182,7 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                 success = false;
                 break;
             }
-            output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
+            output_tmp.lifetime = Operand::LifeTime::TEMPORARY_VARIABLE;
             output_tmp.buffer = data_layout ? nullptr : output.buffer;
             output_tmp.length = data_layout ? 0 : output.length;
 
@@ -1557,7 +1501,7 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                 success = false;
                 break;
             }
-            output_tmp.lifetime = OperandLifeTime::TEMPORARY_VARIABLE;
+            output_tmp.lifetime = Operand::LifeTime::TEMPORARY_VARIABLE;
             output_tmp.buffer = data_layout ? nullptr : output.buffer;
             output_tmp.length = data_layout ? 0 : output.length;
 
@@ -1604,7 +1548,8 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                     success = groupedConvQuant8PerChannel(
                             reinterpret_cast<const uint8_t*>(input_tmp.buffer), input_tmp.shape(),
                             reinterpret_cast<const int8_t*>(filter.buffer), filter.shape(),
-                            filter.extraParams.channelQuant().scales.data(),
+                            std::get<Operand::SymmPerChannelQuantParams>(filter.extraParams)
+                                    .scales.data(),
                             reinterpret_cast<const int32_t*>(bias.buffer), bias.shape(),
                             padding_left, padding_right, padding_top, padding_bottom, stride_width,
                             stride_height, numGroups, activation,
@@ -1623,7 +1568,8 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                     success = groupedConvQuant8PerChannel(
                             reinterpret_cast<const int8_t*>(input_tmp.buffer), input_tmp.shape(),
                             reinterpret_cast<const int8_t*>(filter.buffer), filter.shape(),
-                            filter.extraParams.channelQuant().scales.data(),
+                            std::get<Operand::SymmPerChannelQuantParams>(filter.extraParams)
+                                    .scales.data(),
                             reinterpret_cast<const int32_t*>(bias.buffer), bias.shape(),
                             padding_left, padding_right, padding_top, padding_bottom, stride_width,
                             stride_height, numGroups, activation,
@@ -1702,11 +1648,10 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
             const OperationRegistration* operationRegistration =
                     mOperationResolver->findOperation(operation.type);
             if (operationRegistration == nullptr) {
-                LOG(ERROR) << getOperationName(operation.type) << " not registered";
+                LOG(ERROR) << operation.type << " not registered";
             } else if (operationRegistration->prepare == nullptr ||
                        operationRegistration->execute == nullptr) {
-                LOG(ERROR) << "Incomplete operation registration: "
-                           << getOperationName(operation.type);
+                LOG(ERROR) << "Incomplete operation registration: " << operation.type;
             } else {
                 OperationExecutionContext context(&operation, operands);
                 success = operationRegistration->flags.allowOmittedOperand ||
@@ -1723,11 +1668,15 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
         result = ANEURALNETWORKS_OP_FAILED;
     }
     if (result != ANEURALNETWORKS_NO_ERROR) {
-        LOG(ERROR) << getOperationName(operation.type) << " failed.";
+        LOG(ERROR) << operation.type << " failed.";
     }
 
     consumeOperationInputs(ins, operands);
     return result;
+#else
+    LOG(ERROR) << "Built without CPU execution support";
+    return ANEURALNETWORKS_OP_FAILED;
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 }
 
 // Copies RunTimeOperandInfo, preserving the original lifetime and numberOfUsesLeft
@@ -1752,7 +1701,8 @@ int CpuExecutor::executeIfOperation(const Operation& operation, RunTimeOperandIn
 
     const uint32_t branchInputIndex = condValue ? op::kThenModelOperand : op::kElseModelOperand;
     const RunTimeOperandInfo& branchOperand = operands[operation.inputs[branchInputIndex]];
-    const Subgraph& branchSubgraph = *reinterpret_cast<const Subgraph*>(branchOperand.buffer);
+    const Model::Subgraph& branchSubgraph =
+            *reinterpret_cast<const Model::Subgraph*>(branchOperand.buffer);
     std::vector<RunTimeOperandInfo> branchOperands = initializeRunTimeInfo(branchSubgraph);
 
     // Initialize inner input and output operands from outer operands.
@@ -1782,8 +1732,10 @@ int CpuExecutor::executeWhileOperation(const Operation& operation, RunTimeOperan
     namespace op = operation_while;
     const RunTimeOperandInfo& condModelOperand = operands[operation.inputs[op::kCondModelOperand]];
     const RunTimeOperandInfo& bodyModelOperand = operands[operation.inputs[op::kBodyModelOperand]];
-    const Subgraph& condSubgraph = *reinterpret_cast<const Subgraph*>(condModelOperand.buffer);
-    const Subgraph& bodySubgraph = *reinterpret_cast<const Subgraph*>(bodyModelOperand.buffer);
+    const Model::Subgraph& condSubgraph =
+            *reinterpret_cast<const Model::Subgraph*>(condModelOperand.buffer);
+    const Model::Subgraph& bodySubgraph =
+            *reinterpret_cast<const Model::Subgraph*>(bodyModelOperand.buffer);
     std::vector<RunTimeOperandInfo> condOperands = initializeRunTimeInfo(condSubgraph);
     std::vector<RunTimeOperandInfo> bodyOperands = initializeRunTimeInfo(bodySubgraph);
 
@@ -1800,22 +1752,21 @@ int CpuExecutor::executeWhileOperation(const Operation& operation, RunTimeOperan
 
     // Ensure objects are freed
     auto cleanupGuard = base::make_scope_guard(
-        [&tmp1, &tmp2, &condOperands, &bodyOperands, &operation, &operands] {
-            auto freeLoopOutputs = [](const std::vector<uint8_t*>& tmp) {
-                for (auto buffer : tmp) {
-                    if (buffer != nullptr) {
-                        delete[] buffer;
+            [&tmp1, &tmp2, &condOperands, &bodyOperands, &operation, &operands] {
+                auto freeLoopOutputs = [](const std::vector<uint8_t*>& tmp) {
+                    for (auto buffer : tmp) {
+                        if (buffer != nullptr) {
+                            delete[] buffer;
+                        }
                     }
-                }
-            };
+                };
 
-            freeLoopOutputs(tmp1);
-            freeLoopOutputs(tmp2);
-            freeUnusedSubgraphOperands(&condOperands);
-            freeUnusedSubgraphOperands(&bodyOperands);
-            consumeOperationInputs(operation.inputs, operands);
-        }
-    );
+                freeLoopOutputs(tmp1);
+                freeLoopOutputs(tmp2);
+                freeUnusedSubgraphOperands(&condOperands);
+                freeUnusedSubgraphOperands(&bodyOperands);
+                consumeOperationInputs(operation.inputs, operands);
+            });
 
     // For body outputs with unknown shape, we skip double buffering and
     // allocate on each iteration instead. This allows growing output tensors
@@ -1839,7 +1790,7 @@ int CpuExecutor::executeWhileOperation(const Operation& operation, RunTimeOperan
     condOutput.length = sizeof(condValue);
 
     std::chrono::nanoseconds timeoutDuration(mLoopTimeoutDuration);
-    const auto startTime = std::chrono::steady_clock::now();
+    const auto startTime = Clock::now();
     for (uint32_t iteration = 0;; ++iteration) {
         VLOG(CPUEXE) << "CpuExecutor::executeWhileOperation: iteration " << iteration;
         if (iteration != 0) {
@@ -1856,7 +1807,7 @@ int CpuExecutor::executeWhileOperation(const Operation& operation, RunTimeOperan
             break;
         }
 
-        const auto duration = std::chrono::steady_clock::now() - startTime;
+        const auto duration = Clock::now() - startTime;
         if (duration > timeoutDuration) {
             LOG(ERROR) << "CpuExecutor::executeWhileOperation: timed out after "
                        << std::chrono::duration_cast<std::chrono::milliseconds>(duration).count()
@@ -1914,6 +1865,8 @@ void CpuExecutor::setOutputShapes(const std::vector<uint32_t>& outputIndexes,
         const RunTimeOperandInfo& from = operands[operandIndex];
         mOutputShapes[i].dimensions = from.dimensions;
         mOutputShapes[i].isSufficient = from.isSufficient();
+        VLOG(EXECUTION) << "CpuExecutor::setOutputShapes: mOutputShapes[" << i
+                        << "] = " << mOutputShapes[i];
     }
 }
 

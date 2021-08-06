@@ -20,7 +20,6 @@
 #include <utility>
 #include <vector>
 
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "RNN.h"
 
@@ -59,9 +58,8 @@ constexpr uint32_t kBwOutputTensor = 1;  // Only if mergeOutputs parameter is fa
 constexpr uint32_t kFwOutputHiddenStateTensor = 2;
 constexpr uint32_t kBwOutputHiddenStateTensor = 3;
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
-
-using namespace hal;
 
 template <typename T>
 void transposeFirstTwoDims(const T* input, const Shape& inputShape, T* output) {
@@ -315,8 +313,9 @@ bool executeTyped(IOperationExecutionContext* context) {
 }
 
 }  // namespace
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     // Exact number is dependent on the mergeOutputs parameter and checked
     // during preparation.
@@ -326,9 +325,8 @@ bool validate(const IOperationValidationContext* context) {
 
     OperandType inputType = context->getInputType(kInputTensor);
     if (inputType != OperandType::TENSOR_FLOAT16 && inputType != OperandType::TENSOR_FLOAT32) {
-        LOG(ERROR) << "Unsupported input operand type for UNIDIRECTIONAL_SEQUENCE_RNN op: "
-                   << toString(inputType);
-        return false;
+        return NN_ERROR() << "Unsupported input operand type for UNIDIRECTIONAL_SEQUENCE_RNN op: "
+                          << inputType;
     }
     NN_RET_CHECK(validateInputTypes(
             context, {inputType, inputType, inputType, inputType, inputType, inputType, inputType,
@@ -338,13 +336,14 @@ bool validate(const IOperationValidationContext* context) {
     std::vector<OperandType> outExpectedTypes(numOutputs, inputType);
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
 
-    HalVersion minSupportedHalVersion = HalVersion::V1_2;
+    Version minSupportedVersion = Version::ANDROID_Q;
     if (numOutputs == kNumOutputsWithState || numOutputs == kNumOutputsMergedWithState) {
-        minSupportedHalVersion = HalVersion::V1_3;
+        minSupportedVersion = Version::ANDROID_R;
     }
-    return validateHalVersion(context, minSupportedHalVersion);
+    return minSupportedVersion;
 }
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     const bool mergeOutputs = context->getInputValue<bool>(kMergeOutputsParam);
     const int32_t numOutputs = context->getNumOutputs();
@@ -472,6 +471,7 @@ bool execute(IOperationExecutionContext* context) {
     }
     return true;
 }
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 }  // namespace bidirectional_sequence_rnn
 

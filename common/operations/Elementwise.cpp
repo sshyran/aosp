@@ -18,7 +18,6 @@
 
 #include <cmath>
 
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
@@ -34,8 +33,6 @@ constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
 namespace {
-
-using namespace hal;
 
 template <typename IntermediateType, typename T>
 inline bool compute(IntermediateType func(IntermediateType), const T* input, const Shape& shape,
@@ -85,7 +82,7 @@ bool executeAbs(IOperationExecutionContext* context) {
     }
 }
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor);
@@ -94,10 +91,10 @@ bool validate(const IOperationValidationContext* context) {
             << "Unsupported tensor type for elementwise operation";
     NN_RET_CHECK(validateInputTypes(context, {inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateHalVersion(context, HalVersion::V1_2);
+    return Version::ANDROID_Q;
 }
 
-bool validateAbs(const IOperationValidationContext* context) {
+Result<Version> validateAbs(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor);
@@ -106,11 +103,10 @@ bool validateAbs(const IOperationValidationContext* context) {
             << "Unsupported tensor type for operation ABS";
     NN_RET_CHECK(validateInputTypes(context, {inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateHalVersion(context, (inputType == OperandType::TENSOR_INT32 ? HalVersion::V1_3
-                                                                               : HalVersion::V1_2));
+    return inputType == OperandType::TENSOR_INT32 ? Version::ANDROID_R : Version::ANDROID_Q;
 }
 
-bool validateFloor(const IOperationValidationContext* context) {
+Result<Version> validateFloor(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
 
@@ -126,9 +122,7 @@ bool validateFloor(const IOperationValidationContext* context) {
         NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
     }
 
-    return validateHalVersion(
-            context,
-            (inputType == OperandType::TENSOR_FLOAT16 ? HalVersion::V1_2 : HalVersion::V1_0));
+    return inputType == OperandType::TENSOR_FLOAT16 ? Version::ANDROID_Q : Version::ANDROID_OC_MR1;
 }
 
 bool prepare(IOperationExecutionContext* context) {

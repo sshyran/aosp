@@ -18,14 +18,14 @@
 
 #define LOG_TAG "Operations"
 
-#include <vector>
-
-#include "CpuOperationUtils.h"
-#include "Operations.h"
-
 #include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
 #include <tensorflow/lite/kernels/internal/reference/reference_ops.h>
 
+#include <vector>
+
+#include "CpuOperationUtils.h"
+#include "LegacyUtils.h"
+#include "Operations.h"
 #include "Tracing.h"
 
 namespace android {

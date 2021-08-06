@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+package {
+    default_applicable_licenses: ["Android-Apache-2.0"],
+}
+
 cc_defaults {
     name: "NeuralNetworksSampleDriver_defaults",
     defaults: ["neuralnetworks_defaults"],
@@ -29,6 +33,7 @@ cc_defaults {
         "libneuralnetworks_headers",
     ],
     shared_libs: [
+        "android.hardware.neuralnetworks-V1-ndk",
         "android.hardware.neuralnetworks@1.0",
         "android.hardware.neuralnetworks@1.1",
         "android.hardware.neuralnetworks@1.2",
@@ -120,4 +125,51 @@ cc_library_static {
     name: "libSampleDriver",
     defaults: ["NeuralNetworksSampleDriver_defaults"],
     export_include_dirs: ["."],
+}
+
+cc_library_static {
+    name: "neuralnetworks_canonical_sample_driver",
+    defaults: ["neuralnetworks_defaults"],
+    vendor_available: true,
+    // b/109953668, disable OpenMP
+    // openmp: true,
+    srcs: [
+        "Canonical*.cpp",
+        "LimitedSupportDevice.cpp",
+    ],
+    header_libs: ["libneuralnetworks_headers"],
+    export_include_dirs: ["."],
+    static_libs: ["libneuralnetworks_common"],
+    shared_libs: [
+        "libbase",
+        "libnativewindow",
+    ],
+}
+
+cc_library_shared {
+    name: "neuralnetworks_sample_sl_driver",
+    defaults: ["neuralnetworks_defaults"],
+    srcs: ["SampleDriverSL.cpp"],
+    shared_libs: [
+        "libbase",
+        "libcutils",
+        "liblog",
+        "libnativewindow",
+    ],
+    // Change the soname, this library will be added as cc_prebuilt_library_shared
+    // with different name to android.hardware.neuralnetworks-shim-service-sample
+    ldflags: [
+        "-Wl,-soname,neuralnetworks_sample_sl_driver_prebuilt.so",
+    ],
+    static_libs: [
+        "libbase_ndk",
+        "libcrypto_static",
+        "libneuralnetworks_common_cl_cpu",
+        "libtflite_static",
+        "neuralnetworks_canonical_sample_driver",
+        "neuralnetworks_types_cl",
+    ],
+    whole_static_libs: [
+        "libneuralnetworks_cl",
+    ],
 }

@@ -16,12 +16,11 @@
 
 #define LOG_TAG "Operations"
 
-#include "HalInterfaces.h"
+#include <cmath>
+
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
-
-#include <cmath>
 
 namespace android {
 namespace nn {
@@ -37,8 +36,6 @@ constexpr uint32_t kOutputTensor = 0;
 
 namespace {
 
-using namespace hal;
-
 template <typename T>
 inline bool compute(const T* input, const Shape& shape, T* output) {
     const auto size = getNumberOfElements(shape);
@@ -50,7 +47,7 @@ inline bool compute(const T* input, const Shape& shape, T* output) {
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor);
@@ -59,7 +56,7 @@ bool validate(const IOperationValidationContext* context) {
             << "Unsupported tensor type for operation " << kOperationName;
     NN_RET_CHECK(validateInputTypes(context, {inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateHalVersion(context, HalVersion::V1_2);
+    return Version::ANDROID_Q;
 }
 
 bool prepare(IOperationExecutionContext* context) {

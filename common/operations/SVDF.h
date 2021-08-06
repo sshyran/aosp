@@ -23,7 +23,7 @@
 #include <cmath>
 #include <vector>
 
-#include "HalInterfaces.h"
+#include "nnapi/Types.h"
 
 namespace android {
 namespace nn {
@@ -38,10 +38,10 @@ struct Shape;
 
 class SVDF {
    public:
-    SVDF(const hal::Operation& operation, RunTimeOperandInfo* operands);
+    SVDF(const Operation& operation, RunTimeOperandInfo* operands);
 
-    static bool Prepare(const hal::Operation& operation, RunTimeOperandInfo* operands,
-                        Shape* stateShape, Shape* outputShape);
+    static bool Prepare(const Operation& operation, RunTimeOperandInfo* operands, Shape* stateShape,
+                        Shape* outputShape);
     bool Eval();
 
     static constexpr int kInputTensor = 0;

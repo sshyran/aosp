@@ -16,12 +16,14 @@
 
 #define LOG_TAG "Operations"
 
-#include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
+#include <vector>
+
 #include "IndexedShapeWrapper.h"
 #include "OperationResolver.h"
 
-#include <vector>
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
+#include "CpuOperationUtils.h"
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 namespace android {
 namespace nn {
@@ -37,8 +39,7 @@ constexpr uint32_t kSizeTensor = 2;
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
-using namespace hal;
-
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
 
 template <typename T>
@@ -80,8 +81,9 @@ bool evalGeneric(const T* inputData, const Shape& inputShape, const int32_t* beg
 }
 
 }  // namespace
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
 
@@ -92,16 +94,19 @@ bool validate(const IOperationValidationContext* context) {
                  inputType == OperandType::TENSOR_QUANT8_ASYMM ||
                  inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
             << "Unsupported tensor type for operation " << kOperationName;
+    auto minSupportedVersion = Version::ANDROID_OC_MR1;
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
+        minSupportedVersion = Version::ANDROID_R;
     } else {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+        minSupportedVersion = Version::ANDROID_Q;
     }
-    return validateInputTypes(context,
-                              {inputType, OperandType::TENSOR_INT32, OperandType::TENSOR_INT32}) &&
-           validateOutputTypes(context, {inputType});
+    NN_RET_CHECK(validateInputTypes(
+            context, {inputType, OperandType::TENSOR_INT32, OperandType::TENSOR_INT32}));
+    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+    return minSupportedVersion;
 }
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     const Shape& inputShape = context->getInputShape(kInputTensor);
     const int32_t n_dims = getNumberOfDimensions(inputShape);
@@ -187,6 +192,7 @@ bool execute(IOperationExecutionContext* context) {
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
     }
 }
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 }  // namespace slice
 

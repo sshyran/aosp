@@ -18,6 +18,11 @@
 
 #include "CompilationBuilder.h"
 
+#include <LegacyUtils.h>
+#include <nnapi/IBurst.h>
+#include <nnapi/SharedMemory.h>
+#include <nnapi/Types.h>
+
 #include <algorithm>
 #include <limits>
 #include <memory>
@@ -27,16 +32,12 @@
 
 #include "BurstBuilder.h"
 #include "ExecutionBuilder.h"
-#include "ExecutionBurstController.h"
 #include "ExecutionPlan.h"
 #include "Manager.h"
 #include "ModelBuilder.h"
-#include "Utils.h"
 
 namespace android {
 namespace nn {
-
-using namespace hal;
 
 CompilationBuilder::CompilationBuilder(const ModelBuilder* model,
                                        const std::vector<std::shared_ptr<Device>>& devices,
@@ -60,10 +61,11 @@ int CompilationBuilder::finish() {
 
     mFinished = true;
     if (mIsCacheInfoProvided) {
-        mPlan.setCaching(&mCacheDir, mToken);
+        mPlan.setCaching(&mCacheInfo, mToken);
     }
     if (mPartitioning) {
-        int n = mModel->partitionTheWork(mDevices, mPreference, mPriority, deadline, &mPlan);
+        int n = mModel->partitionTheWork(mDevices, mPreference, mPriority, deadline, &mPlan,
+                                         mFailPartitioning);
         switch (n) {
             case ANEURALNETWORKS_NO_ERROR:
                 return n;
@@ -96,7 +98,7 @@ int CompilationBuilder::finish() {
     VLOG(COMPILATION) << "CompilationBuilder::finish with CPU fallback";
     mPlan.reset();
     mPlan.becomeSingleStep(DeviceManager::getCpuDevice(), mModel);
-    return mPlan.finish(mPreference, mPriority, deadline);
+    return mPlan.finish(mPreference, mPriority, deadline, ANEURALNETWORKS_NO_ERROR);
 }
 
 int CompilationBuilder::setPreference(int32_t preference) {
@@ -120,11 +122,59 @@ int CompilationBuilder::setCaching(const std::string& cacheDir, const uint8_t* t
                 << "ANeuralNetworksCompilation_setCaching can't modify after compilation finished";
         return ANEURALNETWORKS_BAD_STATE;
     }
-    mCacheDir = cacheDir;
+    std::string path = cacheDir;
     // Make sure the cache dir can concat with the filename.
-    if (!mCacheDir.empty() && mCacheDir.back() != '/') {
-        mCacheDir.push_back('/');
+    if (!path.empty() && path.back() != '/') {
+        path.push_back('/');
     }
+    mCacheInfo.variant = std::move(path);
+    std::copy(token, token + ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, mToken);
+    mIsCacheInfoProvided = true;
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+static GeneralResult<SharedHandle> createCacheHandle(int fd) {
+    base::unique_fd duplicatedFd = NN_TRY(dupFd(fd));
+    return std::make_shared<const Handle>(std::move(duplicatedFd));
+}
+
+static GeneralResult<std::vector<SharedHandle>> createCacheHandleVec(const int* fds,
+                                                                     uint32_t numFds) {
+    std::vector<SharedHandle> handles;
+    handles.reserve(numFds);
+    for (uint32_t i = 0; i < numFds; i++) {
+        handles.push_back(NN_TRY(createCacheHandle(fds[i])));
+    }
+    return handles;
+}
+
+int CompilationBuilder::setCachingFromFds(const int* modelCacheFds,
+                                          const uint32_t numModelCacheFiles,
+                                          const int* dataCacheFds, const uint32_t numDataCacheFiles,
+                                          const uint8_t* token) {
+    if (mFinished) {
+        LOG(ERROR) << "SL_ANeuralNetworksCompilation_setCachingFromFds can't modify after "
+                      "compilation finished";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    auto modelCache = createCacheHandleVec(modelCacheFds, numModelCacheFiles);
+    if (!modelCache.has_value()) {
+        LOG(ERROR) << "SL_ANeuralNetworksCompilation_setCachingFromFds can't duplicate model cache "
+                      "fds: "
+                   << modelCache.error().message;
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    auto dataCache = createCacheHandleVec(dataCacheFds, numDataCacheFiles);
+    if (!dataCache.has_value()) {
+        LOG(ERROR) << "SL_ANeuralNetworksCompilation_setCachingFromFds can't duplicate data cache "
+                      "fds: "
+                   << dataCache.error().message;
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    mCacheInfo.variant = CacheHandles{
+            .modelCache = std::move(modelCache).value(),
+            .dataCache = std::move(dataCache).value(),
+    };
     std::copy(token, token + ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, mToken);
     mIsCacheInfoProvided = true;
     return ANEURALNETWORKS_NO_ERROR;
@@ -166,14 +216,116 @@ int CompilationBuilder::setTimeoutDuration(uint64_t duration) {
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-int CompilationBuilder::setPartitioning(uint32_t partitioning) {
+int CompilationBuilder::forTest_setPartitioning(uint32_t partitioning) {
     if (mFinished) {
-        LOG(ERROR) << "ANeuralNetworksCompilation_setPartitioning can't modify after compilation "
+        LOG(ERROR) << "CompilationBuilder::forTest_setPartitioning can't modify after compilation "
                       "finished";
         return ANEURALNETWORKS_BAD_STATE;
     }
 
     mPartitioning = partitioning;
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+int CompilationBuilder::forTest_failPartitioning(int fail) {
+    if (mFinished) {
+        LOG(ERROR) << "CompilationBuilder::forTest_failPartitioning can't modify after compilation "
+                      "finished";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+
+    mFailPartitioning = fail;
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+int CompilationBuilder::getPreferredMemoryAlignmentForInput(uint32_t index,
+                                                            uint32_t* alignment) const {
+    CHECK(alignment != nullptr);
+    if (!mFinished) {
+        LOG(ERROR) << "ANeuralNetworksCompilation_getPreferredMemoryAlignmentForInput passed an "
+                      "unfinished compilation";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    if (!mPlan.isValid()) {
+        LOG(ERROR) << "ANeuralNetworksCompilation_getPreferredMemoryAlignmentForInput passed an "
+                      "invalid compilation";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    if (index >= mModel->inputCount()) {
+        LOG(ERROR) << "ANeuralNetworksCompilation_getPreferredMemoryAlignmentForInput passed an "
+                      "invalid input index "
+                   << index;
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    *alignment = mPlan.getMemoryPreference(IOType::INPUT, index).alignment;
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+int CompilationBuilder::getPreferredMemoryPaddingForInput(uint32_t index, uint32_t* padding) const {
+    CHECK(padding != nullptr);
+    if (!mFinished) {
+        LOG(ERROR) << "ANeuralNetworksCompilation_getPreferredMemoryPaddingForInput passed an "
+                      "unfinished compilation";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    if (!mPlan.isValid()) {
+        LOG(ERROR) << "ANeuralNetworksCompilation_getPreferredMemoryPaddingForInput passed an "
+                      "invalid compilation";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    if (index >= mModel->inputCount()) {
+        LOG(ERROR) << "ANeuralNetworksCompilation_getPreferredMemoryPaddingForInput passed an "
+                      "invalid input index "
+                   << index;
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    *padding = mPlan.getMemoryPreference(IOType::INPUT, index).padding;
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+int CompilationBuilder::getPreferredMemoryAlignmentForOutput(uint32_t index,
+                                                             uint32_t* alignment) const {
+    CHECK(alignment != nullptr);
+    if (!mFinished) {
+        LOG(ERROR) << "ANeuralNetworksCompilation_getPreferredMemoryAlignmentForOutput passed an "
+                      "unfinished compilation";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    if (!mPlan.isValid()) {
+        LOG(ERROR) << "ANeuralNetworksCompilation_getPreferredMemoryAlignmentForOutput passed an "
+                      "invalid compilation";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    if (index >= mModel->outputCount()) {
+        LOG(ERROR) << "ANeuralNetworksCompilation_getPreferredMemoryAlignmentForOutput passed an "
+                      "invalid output index "
+                   << index;
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    *alignment = mPlan.getMemoryPreference(IOType::OUTPUT, index).alignment;
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+int CompilationBuilder::getPreferredMemoryPaddingForOutput(uint32_t index,
+                                                           uint32_t* padding) const {
+    CHECK(padding != nullptr);
+    if (!mFinished) {
+        LOG(ERROR) << "ANeuralNetworksCompilation_getPreferredMemoryPaddingForOutput passed an "
+                      "unfinished compilation";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    if (!mPlan.isValid()) {
+        LOG(ERROR) << "ANeuralNetworksCompilation_getPreferredMemoryPaddingForOutput passed an "
+                      "invalid compilation";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    if (index >= mModel->outputCount()) {
+        LOG(ERROR) << "ANeuralNetworksCompilation_getPreferredMemoryPaddingForOutput passed an "
+                      "invalid output index "
+                   << index;
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    *padding = mPlan.getMemoryPreference(IOType::OUTPUT, index).padding;
     return ANEURALNETWORKS_NO_ERROR;
 }
 
@@ -188,7 +340,11 @@ int CompilationBuilder::createExecution(ExecutionBuilder** execution) {
         *execution = nullptr;
         return ANEURALNETWORKS_BAD_STATE;
     }
-    *execution = new (std::nothrow) ExecutionBuilder(this);
+    if (mPlan.isSimple()) {
+        *execution = new (std::nothrow) SimpleExecutionBuilder(this);
+    } else {
+        *execution = new (std::nothrow) CompoundExecutionBuilder(this);
+    }
     return (*execution ? ANEURALNETWORKS_NO_ERROR : ANEURALNETWORKS_OUT_OF_MEMORY);
 }
 
@@ -203,8 +359,7 @@ int CompilationBuilder::createBurst(BurstBuilder** burst) {
         *burst = nullptr;
         return ANEURALNETWORKS_BAD_STATE;
     }
-    std::vector<std::shared_ptr<ExecutionBurstController>> burstControllers =
-            mPlan.makeBursts(mPreference);
+    std::vector<SharedBurst> burstControllers = mPlan.makeBursts();
     *burst = new (std::nothrow) BurstBuilder(this, std::move(burstControllers));
     return (*burst ? ANEURALNETWORKS_NO_ERROR : ANEURALNETWORKS_OUT_OF_MEMORY);
 }

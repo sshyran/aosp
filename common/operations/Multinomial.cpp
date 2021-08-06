@@ -18,26 +18,28 @@
 
 #include "Multinomial.h"
 
+#include <algorithm>
+#include <limits>
+#include <vector>
+
 #include "CpuExecutor.h"
-#include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
 #include "Tracing.h"
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
+#include <tensorflow/lite/kernels/internal/tensor_utils.h>
+
+#include <unsupported/Eigen/CXX11/Tensor>
+
+#include "CpuOperationUtils.h"
 #include "guarded_philox_random.h"
 #include "philox_random.h"
 #include "simple_philox.h"
-
-#include <algorithm>
-#include <limits>
-#include <unsupported/Eigen/CXX11/Tensor>
-#include <vector>
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 namespace android {
 namespace nn {
 
 namespace {
-
-using namespace hal;
 
 template <typename T>
 inline T* GetBuffer(RunTimeOperandInfo* operand) {

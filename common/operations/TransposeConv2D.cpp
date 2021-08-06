@@ -16,18 +16,20 @@
 
 #define LOG_TAG "Operations"
 
-#include <tensorflow/lite/kernels/internal/common.h>
-
 #include <algorithm>
 #include <cfloat>
 #include <cmath>
 #include <memory>
 #include <vector>
 
-#include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "Tracing.h"
+
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
+#include <tensorflow/lite/kernels/internal/common.h>
+
+#include "CpuOperationUtils.h"
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 namespace android {
 namespace nn {
@@ -45,8 +47,6 @@ constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
 namespace {
-
-using namespace hal;
 
 // If possible we will use this static buffer for the tensor.
 constexpr size_t kStaticBufferSize = 1605632;
@@ -107,6 +107,7 @@ struct TransposeConv2dParam {
     }
 };
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 #define ANDROID_NN_TRANSPOSE_CONV_PARAMETERS                                    \
     uint32_t numBatches = getSizeOfDimension(inputShape, 0);                    \
     uint32_t inputHeight = getSizeOfDimension(inputShape, 1);                   \
@@ -433,17 +434,18 @@ bool transposeConvQuant8PerChannel(const T* inputData, const Shape& inputShape,
 }
 
 #undef ANDROID_NN_TRANSPOSE_CONV_PARAMETERS
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     const uint32_t inputCount = context->getNumInputs();
     NN_RET_CHECK(inputCount == kNumInputs1 || inputCount == kNumInputs2);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     const auto inputType = context->getInputType(kInputTensor);
     const auto filterType = context->getInputType(kFilterTensor);
     std::vector<OperandType> inExpectedTypes;
-    HalVersion minSupportedHalVersion = HalVersion::V1_2;
+    Version minSupportedVersion = Version::ANDROID_Q;
     if (inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_FLOAT16) {
         inExpectedTypes = {inputType, inputType, inputType};
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM ||
@@ -452,14 +454,16 @@ bool validate(const IOperationValidationContext* context) {
                      filterType == inputType)
                 << "Unsupported filter tensor type for operation " << kOperationName;
         if (filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
-            NN_RET_CHECK_EQ(context->getInputExtraParams(kFilterTensor).channelQuant().channelDim,
+            NN_RET_CHECK_EQ(std::get<Operand::SymmPerChannelQuantParams>(
+                                    context->getInputExtraParams(kFilterTensor))
+                                    .channelDim,
                             0)
                     << "Unsupported filter tensor channel dimension for operation "
                     << kOperationName;
         }
         inExpectedTypes = {inputType, filterType, OperandType::TENSOR_INT32};
         if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-            minSupportedHalVersion = HalVersion::V1_3;
+            minSupportedVersion = Version::ANDROID_R;
         }
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation " << kOperationName;
@@ -475,11 +479,12 @@ bool validate(const IOperationValidationContext* context) {
                             OperandType::INT32,        OperandType::INT32, OperandType::BOOL};
     }
     inExpectedTypes.insert(inExpectedTypes.end(), argExpectedTypes.begin(), argExpectedTypes.end());
-    NN_RET_CHECK(validateHalVersion(context, minSupportedHalVersion));
-    return validateInputTypes(context, inExpectedTypes) &&
-           validateOutputTypes(context, {inputType});
+    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
+    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+    return minSupportedVersion;
 }
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
     Shape filter = context->getInputShape(kFilterTensor);
@@ -570,7 +575,9 @@ bool execute(IOperationExecutionContext* context) {
                         context->getInputShape(kInputTensor),
                         context->getInputBuffer<int8_t>(kFilterTensor),
                         context->getInputShape(kFilterTensor),
-                        context->getInputExtraParams(kFilterTensor).channelQuant().scales.data(),
+                        std::get<Operand::SymmPerChannelQuantParams>(
+                                context->getInputExtraParams(kFilterTensor))
+                                .scales.data(),
                         context->getInputBuffer<int32_t>(kBiasTensor),
                         context->getInputShape(kBiasTensor), param,
                         context->getOutputBuffer<uint8_t>(kOutputTensor),
@@ -595,7 +602,9 @@ bool execute(IOperationExecutionContext* context) {
                         context->getInputShape(kInputTensor),
                         context->getInputBuffer<int8_t>(kFilterTensor),
                         context->getInputShape(kFilterTensor),
-                        context->getInputExtraParams(kFilterTensor).channelQuant().scales.data(),
+                        std::get<Operand::SymmPerChannelQuantParams>(
+                                context->getInputExtraParams(kFilterTensor))
+                                .scales.data(),
                         context->getInputBuffer<int32_t>(kBiasTensor),
                         context->getInputShape(kBiasTensor), param,
                         context->getOutputBuffer<int8_t>(kOutputTensor),
@@ -617,6 +626,7 @@ bool execute(IOperationExecutionContext* context) {
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
     }
 }
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 }  // namespace transpose_conv_2d
 

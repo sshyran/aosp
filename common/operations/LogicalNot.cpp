@@ -16,7 +16,6 @@
 
 #define LOG_TAG "Operations"
 
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 
@@ -32,8 +31,6 @@ constexpr uint32_t kOutputTensor = 0;
 
 namespace {
 
-using namespace hal;
-
 bool compute(const bool8* input, const Shape& shape, bool8* output) {
     const auto size = getNumberOfElements(shape);
     for (uint32_t i = 0; i < size; ++i) {
@@ -44,7 +41,7 @@ bool compute(const bool8* input, const Shape& shape, bool8* output) {
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor);
@@ -52,7 +49,7 @@ bool validate(const IOperationValidationContext* context) {
             << "Unsupported tensor type for LOGICAL_NOT";
     NN_RET_CHECK(validateInputTypes(context, {inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateHalVersion(context, HalVersion::V1_2);
+    return Version::ANDROID_Q;
 }
 
 bool prepare(IOperationExecutionContext* context) {

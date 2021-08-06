@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-#include "OperationsUtils.h"
 #define LOG_TAG "Operations"
 
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
+#include "OperationsUtils.h"
 
 namespace android {
 namespace nn {
@@ -32,8 +31,6 @@ constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
 namespace {
-
-using namespace hal;
 
 template <typename T>
 bool executeTyped(IOperationExecutionContext* context) {
@@ -58,13 +55,13 @@ bool getValueType(OperandType outputType, OperandType* valueType) {
             *valueType = OperandType::INT32;
             return true;
         default:
-            NN_RET_CHECK_FAIL() << "Unsupported value type for fill op: " << toString(outputType);
+            NN_RET_CHECK_FAIL() << "Unsupported value type for fill op: " << outputType;
     }
 }
 
 }  // namespace
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     // Check output type first because input value type is dependent on the
@@ -73,14 +70,14 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(outputType == OperandType::TENSOR_FLOAT16 ||
                  outputType == OperandType::TENSOR_FLOAT32 ||
                  outputType == OperandType::TENSOR_INT32)
-            << "Unsupported output type for fill op: " << toString(outputType);
+            << "Unsupported output type for fill op: " << outputType;
     NN_RET_CHECK(validateOutputTypes(context, {outputType}));
 
     OperandType valueType;
     NN_RET_CHECK(getValueType(outputType, &valueType));
     NN_RET_CHECK(validateInputTypes(context, {OperandType::TENSOR_INT32, valueType}));
 
-    return validateHalVersion(context, HalVersion::V1_3);
+    return Version::ANDROID_R;
 }
 
 bool prepare(IOperationExecutionContext* context) {

@@ -18,6 +18,16 @@
 
 #define LOG_TAG "Operations"
 
+#include <algorithm>
+#include <vector>
+
+#include "IndexedShapeWrapper.h"
+#include "OperationResolver.h"
+#include "Tracing.h"
+#include "nnapi/Types.h"
+#include "nnapi/Validation.h"
+
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 #include <tensorflow/lite/kernels/internal/optimized/integer_ops/add.h>
 #include <tensorflow/lite/kernels/internal/optimized/integer_ops/mul.h>
 #include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
@@ -25,19 +35,11 @@
 #include <tensorflow/lite/kernels/internal/reference/integer_ops/mul.h>
 #include <tensorflow/lite/kernels/internal/types.h>
 
-#include <algorithm>
-#include <vector>
-
 #include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
-#include "IndexedShapeWrapper.h"
-#include "OperationResolver.h"
-#include "Tracing.h"
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 namespace android {
 namespace nn {
-
-using namespace hal;
 
 namespace broadcast {
 
@@ -49,20 +51,21 @@ constexpr uint32_t kActivationScalar = 2;
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
 
 #define ANDROID_NN_MACRO_DISPATCH(macro)                                \
     switch (activation) {                                               \
-        case (int32_t)FusedActivationFunc::NONE:                        \
+        case static_cast<int32_t>(FusedActivationFunc::NONE):           \
             macro(kNone);                                               \
             break;                                                      \
-        case (int32_t)FusedActivationFunc::RELU:                        \
+        case static_cast<int32_t>(FusedActivationFunc::RELU):           \
             macro(kRelu);                                               \
             break;                                                      \
-        case (int32_t)FusedActivationFunc::RELU1:                       \
+        case static_cast<int32_t>(FusedActivationFunc::RELU1):          \
             macro(kRelu1);                                              \
             break;                                                      \
-        case (int32_t)FusedActivationFunc::RELU6:                       \
+        case static_cast<int32_t>(FusedActivationFunc::RELU6):          \
             macro(kRelu6);                                              \
             break;                                                      \
         default:                                                        \
@@ -208,7 +211,7 @@ bool addQuant8(const T* in1, const Shape& shape1, const T* in2, const Shape& sha
 bool executeInt32(const int32_t* aData, const Shape& aShape, const int32_t* bData,
                   const Shape& bShape, int32_t activation, int32_t* outputData,
                   const Shape& outputShape, int32_t func(int32_t, int32_t)) {
-    NN_RET_CHECK_EQ(activation, ANEURALNETWORKS_FUSED_NONE);
+    NN_RET_CHECK_EQ(static_cast<FusedActivationFunc>(activation), FusedActivationFunc::NONE);
     IndexedShapeWrapper aShapeIndexed(aShape);
     IndexedShapeWrapper bShapeIndexed(bShape);
     IndexedShapeWrapper outputShapeIndexed(outputShape);
@@ -434,48 +437,54 @@ bool divFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, c
 }
 
 }  // namespace
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-bool validate(OperationType opType, const IOperationValidationContext* context) {
-    const HalVersion opIntroducedAt = (opType == OperationType::DIV || opType == OperationType::SUB)
-                                              ? HalVersion::V1_1
-                                              : HalVersion::V1_0;
+Result<Version> validate(OperationType opType, const IOperationValidationContext* context) {
+    auto minSupportedVersion = (opType == OperationType::DIV || opType == OperationType::SUB)
+                                       ? Version::ANDROID_P
+                                       : Version::ANDROID_OC_MR1;
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     auto inputType = context->getInputType(kInputTensor1);
+    const Shape& input1 = context->getInputShape(kInputTensor1);
+    const Shape& input2 = context->getInputShape(kInputTensor2);
+    const Shape& output = context->getOutputShape(kOutputTensor);
     if (inputType == OperandType::TENSOR_FLOAT32) {
-        NN_RET_CHECK(validateHalVersion(context, std::max(HalVersion::V1_0, opIntroducedAt)));
+        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_OC_MR1);
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        NN_RET_CHECK(validateHalVersion(context, std::max(HalVersion::V1_2, opIntroducedAt)));
+        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_Q);
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
         if (opType == OperationType::SUB) {
-            NN_RET_CHECK(validateHalVersion(context, std::max(HalVersion::V1_2, opIntroducedAt)));
+            minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_Q);
         } else if (opType == OperationType::DIV) {
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation DIV";
         } else if (opType == OperationType::MUL) {
-            Shape output = context->getOutputShape(kOutputTensor);
-            Shape input1 = context->getInputShape(kInputTensor1);
-            Shape input2 = context->getInputShape(kInputTensor2);
             NN_RET_CHECK_GT(output.scale, input1.scale * input2.scale);
-            NN_RET_CHECK(validateHalVersion(context, std::max(HalVersion::V1_0, opIntroducedAt)));
+            minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_OC_MR1);
         } else {
-            NN_RET_CHECK(validateHalVersion(context, std::max(HalVersion::V1_0, opIntroducedAt)));
+            minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_OC_MR1);
         }
-    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED ||
-               inputType == OperandType::TENSOR_INT32) {
-        NN_RET_CHECK(validateHalVersion(context, std::max(HalVersion::V1_3, opIntroducedAt)));
+    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        if (opType == OperationType::MUL) {
+            NN_RET_CHECK_GT(output.scale, input1.scale * input2.scale);
+        }
+        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_R);
+    } else if (inputType == OperandType::TENSOR_INT32) {
+        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_R);
     } else {
-        NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << getOperationName(opType);
+        NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << opType;
     }
-    const Shape& input1 = context->getInputShape(kInputTensor1);
-    const Shape& input2 = context->getInputShape(kInputTensor2);
+
     if (hasKnownRank(input1) && hasKnownRank(input2)) {
         NN_RET_CHECK_LE(getNumberOfDimensions(input1), 4);
         NN_RET_CHECK_LE(getNumberOfDimensions(input2), 4);
     }
-    return validateInputTypes(context, {inputType, inputType, OperandType::INT32}) &&
-           validateOutputTypes(context, {inputType});
+    NN_RET_CHECK(validateInputTypes(context, {inputType, inputType, OperandType::INT32}));
+    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+    return minSupportedVersion;
 }
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape input1 = context->getInputShape(kInputTensor1);
     Shape input2 = context->getInputShape(kInputTensor2);
@@ -677,6 +686,7 @@ bool executeDiv(IOperationExecutionContext* context) {
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation DIV";
     }
 }
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 }  // namespace broadcast
 

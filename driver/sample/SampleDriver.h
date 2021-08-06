@@ -18,6 +18,9 @@
 #define ANDROID_FRAMEWORKS_ML_NN_DRIVER_SAMPLE_SAMPLE_DRIVER_H
 
 #if !defined(NNAPI_CHROMEOS)
+#include <CpuExecutor.h>
+#include <HalBufferTracker.h>
+#include <HalInterfaces.h>
 #include <hwbinder/IPCThreadState.h>
 #endif
 
@@ -26,9 +29,6 @@
 #include <utility>
 #include <vector>
 
-#include "BufferTracker.h"
-#include "CpuExecutor.h"
-#include "HalInterfaces.h"
 #include "NeuralNetworks.h"
 
 namespace android {
@@ -38,20 +38,22 @@ namespace sample_driver {
 using hardware::MQDescriptorSync;
 
 // Manages the data buffer for an operand.
-class SampleBuffer : public hal::IBuffer {
+class SampleBuffer : public V1_3::IBuffer {
    public:
-    SampleBuffer(std::shared_ptr<ManagedBuffer> buffer, std::unique_ptr<BufferTracker::Token> token)
+    SampleBuffer(std::shared_ptr<HalManagedBuffer> buffer,
+                 std::unique_ptr<HalBufferTracker::Token> token)
         : kBuffer(std::move(buffer)), kToken(std::move(token)) {
         CHECK(kBuffer != nullptr);
         CHECK(kToken != nullptr);
     }
-    hal::Return<hal::ErrorStatus> copyTo(const hal::hidl_memory& dst) override;
-    hal::Return<hal::ErrorStatus> copyFrom(const hal::hidl_memory& src,
-                                           const hal::hidl_vec<uint32_t>& dimensions) override;
+    hardware::Return<V1_3::ErrorStatus> copyTo(const hardware::hidl_memory& dst) override;
+    hardware::Return<V1_3::ErrorStatus> copyFrom(
+            const hardware::hidl_memory& src,
+            const hardware::hidl_vec<uint32_t>& dimensions) override;
 
    private:
-    const std::shared_ptr<ManagedBuffer> kBuffer;
-    const std::unique_ptr<BufferTracker::Token> kToken;
+    const std::shared_ptr<HalManagedBuffer> kBuffer;
+    const std::unique_ptr<HalBufferTracker::Token> kToken;
 };
 
 // Base class used to create sample drivers for the NN HAL.  This class
@@ -59,78 +61,79 @@ class SampleBuffer : public hal::IBuffer {
 //
 // Since these drivers simulate hardware, they must run the computations
 // on the CPU.  An actual driver would not do that.
-class SampleDriver : public hal::IDevice {
+class SampleDriver : public V1_3::IDevice {
    public:
     SampleDriver(const char* name,
                  const IOperationResolver* operationResolver = BuiltinOperationResolver::get())
         : mName(name),
           mOperationResolver(operationResolver),
-          mBufferTracker(BufferTracker::create()) {
+          mHalBufferTracker(HalBufferTracker::create()) {
         android::nn::initVLogMask();
     }
-    hal::Return<void> getCapabilities(getCapabilities_cb cb) override;
-    hal::Return<void> getCapabilities_1_1(getCapabilities_1_1_cb cb) override;
-    hal::Return<void> getCapabilities_1_2(getCapabilities_1_2_cb cb) override;
-    hal::Return<void> getVersionString(getVersionString_cb cb) override;
-    hal::Return<void> getType(getType_cb cb) override;
-    hal::Return<void> getSupportedExtensions(getSupportedExtensions_cb) override;
-    hal::Return<void> getSupportedOperations(const hal::V1_0::Model& model,
-                                             getSupportedOperations_cb cb) override;
-    hal::Return<void> getSupportedOperations_1_1(const hal::V1_1::Model& model,
-                                                 getSupportedOperations_1_1_cb cb) override;
-    hal::Return<void> getSupportedOperations_1_2(const hal::V1_2::Model& model,
-                                                 getSupportedOperations_1_2_cb cb) override;
-    hal::Return<void> getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb cb) override;
-    hal::Return<hal::V1_0::ErrorStatus> prepareModel(
-            const hal::V1_0::Model& model,
-            const sp<hal::V1_0::IPreparedModelCallback>& callback) override;
-    hal::Return<hal::V1_0::ErrorStatus> prepareModel_1_1(
-            const hal::V1_1::Model& model, hal::ExecutionPreference preference,
-            const sp<hal::V1_0::IPreparedModelCallback>& callback) override;
-    hal::Return<hal::V1_0::ErrorStatus> prepareModel_1_2(
-            const hal::V1_2::Model& model, hal::ExecutionPreference preference,
-            const hal::hidl_vec<hal::hidl_handle>& modelCache,
-            const hal::hidl_vec<hal::hidl_handle>& dataCache, const hal::CacheToken& token,
-            const sp<hal::V1_2::IPreparedModelCallback>& callback) override;
-    hal::Return<hal::V1_3::ErrorStatus> prepareModel_1_3(
-            const hal::V1_3::Model& model, hal::ExecutionPreference preference,
-            hal::Priority priority, const hal::OptionalTimePoint& deadline,
-            const hal::hidl_vec<hal::hidl_handle>& modelCache,
-            const hal::hidl_vec<hal::hidl_handle>& dataCache, const hal::CacheToken& token,
-            const sp<hal::V1_3::IPreparedModelCallback>& callback) override;
-    hal::Return<hal::V1_0::ErrorStatus> prepareModelFromCache(
-            const hal::hidl_vec<hal::hidl_handle>& modelCache,
-            const hal::hidl_vec<hal::hidl_handle>& dataCache, const hal::CacheToken& token,
-            const sp<hal::V1_2::IPreparedModelCallback>& callback) override;
-    hal::Return<hal::V1_3::ErrorStatus> prepareModelFromCache_1_3(
-            const hal::OptionalTimePoint& deadline,
-            const hal::hidl_vec<hal::hidl_handle>& modelCache,
-            const hal::hidl_vec<hal::hidl_handle>& dataCache, const hal::CacheToken& token,
-            const sp<hal::V1_3::IPreparedModelCallback>& callback) override;
-    hal::Return<hal::DeviceStatus> getStatus() override;
-    hal::Return<void> allocate(const hal::V1_3::BufferDesc& desc,
-                               const hal::hidl_vec<sp<hal::V1_3::IPreparedModel>>& preparedModels,
-                               const hal::hidl_vec<hal::V1_3::BufferRole>& inputRoles,
-                               const hal::hidl_vec<hal::V1_3::BufferRole>& outputRoles,
-                               allocate_cb cb) override;
+    hardware::Return<void> getCapabilities(getCapabilities_cb cb) override;
+    hardware::Return<void> getCapabilities_1_1(getCapabilities_1_1_cb cb) override;
+    hardware::Return<void> getCapabilities_1_2(getCapabilities_1_2_cb cb) override;
+    hardware::Return<void> getVersionString(getVersionString_cb cb) override;
+    hardware::Return<void> getType(getType_cb cb) override;
+    hardware::Return<void> getSupportedExtensions(getSupportedExtensions_cb) override;
+    hardware::Return<void> getSupportedOperations(const V1_0::Model& model,
+                                                  getSupportedOperations_cb cb) override;
+    hardware::Return<void> getSupportedOperations_1_1(const V1_1::Model& model,
+                                                      getSupportedOperations_1_1_cb cb) override;
+    hardware::Return<void> getSupportedOperations_1_2(const V1_2::Model& model,
+                                                      getSupportedOperations_1_2_cb cb) override;
+    hardware::Return<void> getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb cb) override;
+    hardware::Return<V1_0::ErrorStatus> prepareModel(
+            const V1_0::Model& model, const sp<V1_0::IPreparedModelCallback>& callback) override;
+    hardware::Return<V1_0::ErrorStatus> prepareModel_1_1(
+            const V1_1::Model& model, V1_1::ExecutionPreference preference,
+            const sp<V1_0::IPreparedModelCallback>& callback) override;
+    hardware::Return<V1_0::ErrorStatus> prepareModel_1_2(
+            const V1_2::Model& model, V1_1::ExecutionPreference preference,
+            const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+            const hardware::hidl_vec<hardware::hidl_handle>& dataCache, const HalCacheToken& token,
+            const sp<V1_2::IPreparedModelCallback>& callback) override;
+    hardware::Return<V1_3::ErrorStatus> prepareModel_1_3(
+            const V1_3::Model& model, V1_1::ExecutionPreference preference, V1_3::Priority priority,
+            const V1_3::OptionalTimePoint& deadline,
+            const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+            const hardware::hidl_vec<hardware::hidl_handle>& dataCache, const HalCacheToken& token,
+            const sp<V1_3::IPreparedModelCallback>& callback) override;
+    hardware::Return<V1_0::ErrorStatus> prepareModelFromCache(
+            const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+            const hardware::hidl_vec<hardware::hidl_handle>& dataCache, const HalCacheToken& token,
+            const sp<V1_2::IPreparedModelCallback>& callback) override;
+    hardware::Return<V1_3::ErrorStatus> prepareModelFromCache_1_3(
+            const V1_3::OptionalTimePoint& deadline,
+            const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+            const hardware::hidl_vec<hardware::hidl_handle>& dataCache, const HalCacheToken& token,
+            const sp<V1_3::IPreparedModelCallback>& callback) override;
+    hardware::Return<V1_0::DeviceStatus> getStatus() override;
+    hardware::Return<void> allocate(
+            const V1_3::BufferDesc& desc,
+            const hardware::hidl_vec<sp<V1_3::IPreparedModel>>& preparedModels,
+            const hardware::hidl_vec<V1_3::BufferRole>& inputRoles,
+            const hardware::hidl_vec<V1_3::BufferRole>& outputRoles, allocate_cb cb) override;
 
     // Starts and runs the driver service.  Typically called from main().
     // This will return only once the service shuts down.
     int run();
 
     CpuExecutor getExecutor() const { return CpuExecutor(mOperationResolver); }
-    const std::shared_ptr<BufferTracker>& getBufferTracker() const { return mBufferTracker; }
+    const std::shared_ptr<HalBufferTracker>& getHalBufferTracker() const {
+        return mHalBufferTracker;
+    }
 
    protected:
     std::string mName;
     const IOperationResolver* mOperationResolver;
-    const std::shared_ptr<BufferTracker> mBufferTracker;
+    const std::shared_ptr<HalBufferTracker> mHalBufferTracker;
 };
 
-class SamplePreparedModel : public hal::IPreparedModel {
+class SamplePreparedModel : public V1_3::IPreparedModel {
    public:
-    SamplePreparedModel(const hal::Model& model, const SampleDriver* driver,
-                        hal::ExecutionPreference preference, uid_t userId, hal::Priority priority)
+    SamplePreparedModel(const V1_3::Model& model, const SampleDriver* driver,
+                        V1_1::ExecutionPreference preference, uid_t userId, V1_3::Priority priority)
         : mModel(model),
           mDriver(driver),
           kPreference(preference),
@@ -140,64 +143,63 @@ class SamplePreparedModel : public hal::IPreparedModel {
         (void)kPriority;
     }
     bool initialize();
-    hal::Return<hal::V1_0::ErrorStatus> execute(
-            const hal::V1_0::Request& request,
-            const sp<hal::V1_0::IExecutionCallback>& callback) override;
-    hal::Return<hal::V1_0::ErrorStatus> execute_1_2(
-            const hal::V1_0::Request& request, hal::MeasureTiming measure,
-            const sp<hal::V1_2::IExecutionCallback>& callback) override;
-    hal::Return<hal::V1_3::ErrorStatus> execute_1_3(
-            const hal::V1_3::Request& request, hal::MeasureTiming measure,
-            const hal::OptionalTimePoint& deadline,
-            const hal::OptionalTimeoutDuration& loopTimeoutDuration,
-            const sp<hal::V1_3::IExecutionCallback>& callback) override;
-    hal::Return<void> executeSynchronously(const hal::V1_0::Request& request,
-                                           hal::MeasureTiming measure,
-                                           executeSynchronously_cb cb) override;
-    hal::Return<void> executeSynchronously_1_3(
-            const hal::V1_3::Request& request, hal::MeasureTiming measure,
-            const hal::OptionalTimePoint& deadline,
-            const hal::OptionalTimeoutDuration& loopTimeoutDuration,
+    hardware::Return<V1_0::ErrorStatus> execute(
+            const V1_0::Request& request, const sp<V1_0::IExecutionCallback>& callback) override;
+    hardware::Return<V1_0::ErrorStatus> execute_1_2(
+            const V1_0::Request& request, V1_2::MeasureTiming measure,
+            const sp<V1_2::IExecutionCallback>& callback) override;
+    hardware::Return<V1_3::ErrorStatus> execute_1_3(
+            const V1_3::Request& request, V1_2::MeasureTiming measure,
+            const V1_3::OptionalTimePoint& deadline,
+            const V1_3::OptionalTimeoutDuration& loopTimeoutDuration,
+            const sp<V1_3::IExecutionCallback>& callback) override;
+    hardware::Return<void> executeSynchronously(const V1_0::Request& request,
+                                                V1_2::MeasureTiming measure,
+                                                executeSynchronously_cb cb) override;
+    hardware::Return<void> executeSynchronously_1_3(
+            const V1_3::Request& request, V1_2::MeasureTiming measure,
+            const V1_3::OptionalTimePoint& deadline,
+            const V1_3::OptionalTimeoutDuration& loopTimeoutDuration,
             executeSynchronously_1_3_cb cb) override;
-    hal::Return<void> configureExecutionBurst(
-            const sp<hal::V1_2::IBurstCallback>& callback,
-            const MQDescriptorSync<hal::V1_2::FmqRequestDatum>& requestChannel,
-            const MQDescriptorSync<hal::V1_2::FmqResultDatum>& resultChannel,
+    hardware::Return<void> configureExecutionBurst(
+            const sp<V1_2::IBurstCallback>& callback,
+            const MQDescriptorSync<V1_2::FmqRequestDatum>& requestChannel,
+            const MQDescriptorSync<V1_2::FmqResultDatum>& resultChannel,
             configureExecutionBurst_cb cb) override;
-    hal::Return<void> executeFenced(const hal::Request& request,
-                                    const hal::hidl_vec<hal::hidl_handle>& wait_for,
-                                    hal::MeasureTiming measure,
-                                    const hal::OptionalTimePoint& deadline,
-                                    const hal::OptionalTimeoutDuration& loopTimeoutDuration,
-                                    const hal::OptionalTimeoutDuration& duration,
-                                    executeFenced_cb callback) override;
-    const hal::Model* getModel() const { return &mModel; }
+    hardware::Return<void> executeFenced(const V1_3::Request& request,
+                                         const hardware::hidl_vec<hardware::hidl_handle>& wait_for,
+                                         V1_2::MeasureTiming measure,
+                                         const V1_3::OptionalTimePoint& deadline,
+                                         const V1_3::OptionalTimeoutDuration& loopTimeoutDuration,
+                                         const V1_3::OptionalTimeoutDuration& duration,
+                                         executeFenced_cb callback) override;
+    const V1_3::Model* getModel() const { return &mModel; }
 
    protected:
-    hal::Model mModel;
+    V1_3::Model mModel;
     const SampleDriver* mDriver;
     std::vector<RunTimePoolInfo> mPoolInfos;
-    const hal::ExecutionPreference kPreference;
+    const V1_1::ExecutionPreference kPreference;
     const uid_t kUserId;
-    const hal::Priority kPriority;
+    const V1_3::Priority kPriority;
 };
 
-class SampleFencedExecutionCallback : public hal::IFencedExecutionCallback {
+class SampleFencedExecutionCallback : public V1_3::IFencedExecutionCallback {
    public:
-    SampleFencedExecutionCallback(hal::Timing timingSinceLaunch, hal::Timing timingAfterFence,
-                                  hal::ErrorStatus error)
+    SampleFencedExecutionCallback(V1_2::Timing timingSinceLaunch, V1_2::Timing timingAfterFence,
+                                  V1_3::ErrorStatus error)
         : kTimingSinceLaunch(timingSinceLaunch),
           kTimingAfterFence(timingAfterFence),
           kErrorStatus(error) {}
-    hal::Return<void> getExecutionInfo(getExecutionInfo_cb callback) override {
+    hardware::Return<void> getExecutionInfo(getExecutionInfo_cb callback) override {
         callback(kErrorStatus, kTimingSinceLaunch, kTimingAfterFence);
-        return hal::Void();
+        return hardware::Void();
     }
 
    private:
-    const hal::Timing kTimingSinceLaunch;
-    const hal::Timing kTimingAfterFence;
-    const hal::ErrorStatus kErrorStatus;
+    const V1_2::Timing kTimingSinceLaunch;
+    const V1_2::Timing kTimingAfterFence;
+    const V1_3::ErrorStatus kErrorStatus;
 };
 
 }  // namespace sample_driver

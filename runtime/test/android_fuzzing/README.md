@@ -298,12 +298,12 @@ input is large. For the fuzz tests, the contents of the operand data are not as
 interesting as the structure of the graph itself, so the data was replaced by
 a seed to a random number generator instead.
 
-[1]: https://cs.android.com/android/platform/superproject/+/master:frameworks/ml/nn/runtime/test/android_fuzzing/DriverFuzzTest.cpp;l=307-324;drc=34aee872d5dc317ad8a32377e9114c0c606d8afe
-[2]: https://cs.android.com/android/platform/superproject/+/master:frameworks/ml/nn/runtime/test/android_fuzzing/FuzzTest.cpp;l=130-151;drc=34aee872d5dc317ad8a32377e9114c0c606d8afe
-[3]: https://cs.android.com/android/platform/superproject/+/master:frameworks/ml/nn/runtime/test/Android.bp;l=195-216;drc=60823f07172e6b5bbc06b2fac25a15ab91c80b25
-[4]: https://cs.android.com/android/platform/superproject/+/master:frameworks/ml/nn/runtime/test/Android.bp;l=218-240;drc=60823f07172e6b5bbc06b2fac25a15ab91c80b25
-[5]: https://cs.android.com/android/platform/superproject/+/master:frameworks/ml/nn/runtime/test/android_fuzzing/DriverFuzzTest.cpp;l=48-52;drc=34aee872d5dc317ad8a32377e9114c0c606d8afe
-[6]: https://cs.android.com/android/platform/superproject/+/master:frameworks/ml/nn/runtime/test/android_fuzzing/DriverFuzzTest.cpp;l=291-292,302;drc=34aee872d5dc317ad8a32377e9114c0c606d8afe
+[1]: https://cs.android.com/android/platform/superproject/+/master:packages/modules/NeuralNetworks/runtime/test/android_fuzzing/DriverFuzzTest.cpp;l=307-324;drc=34aee872d5dc317ad8a32377e9114c0c606d8afe
+[2]: https://cs.android.com/android/platform/superproject/+/master:packages/modules/NeuralNetworks/runtime/test/android_fuzzing/FuzzTest.cpp;l=130-151;drc=34aee872d5dc317ad8a32377e9114c0c606d8afe
+[3]: https://cs.android.com/android/platform/superproject/+/master:packages/modules/NeuralNetworks/runtime/test/Android.bp;l=195-216;drc=60823f07172e6b5bbc06b2fac25a15ab91c80b25
+[4]: https://cs.android.com/android/platform/superproject/+/master:packages/modules/NeuralNetworks/runtime/test/Android.bp;l=218-240;drc=60823f07172e6b5bbc06b2fac25a15ab91c80b25
+[5]: https://cs.android.com/android/platform/superproject/+/master:packages/modules/NeuralNetworks/runtime/test/android_fuzzing/DriverFuzzTest.cpp;l=48-52;drc=34aee872d5dc317ad8a32377e9114c0c606d8afe
+[6]: https://cs.android.com/android/platform/superproject/+/master:packages/modules/NeuralNetworks/runtime/test/android_fuzzing/DriverFuzzTest.cpp;l=291-292,302;drc=34aee872d5dc317ad8a32377e9114c0c606d8afe
 [7]: https://cs.android.com/android/platform/superproject/+/master:build/soong/cc/sanitize.go;l=140-187;drc=b5b2aba43b5bb6305ea69d60f9bf580f711d7c96
 [8]: https://source.android.com/devices/tech/debug/libfuzzer
 [9]: https://cs.android.com/android/platform/superproject/+/master:external/libprotobuf-mutator/

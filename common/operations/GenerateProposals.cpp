@@ -23,19 +23,20 @@
 #include <utility>
 #include <vector>
 
-#include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
+
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
+#include "CpuOperationUtils.h"
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 namespace android {
 namespace nn {
 namespace bbox_ops {
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
-
-using namespace hal;
 
 struct BoxEncodingCorner {
     float x1, y1, x2, y2;
@@ -186,6 +187,7 @@ float getIoUAxisAligned(const float* roi1, const float* roi2) {
 }
 
 }  // namespace
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 namespace axis_aligned_bbox_transform {
 
@@ -200,7 +202,7 @@ constexpr uint32_t kImageInfoTensor = 3;
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     std::vector<OperandType> inExpectedTypes;
@@ -214,18 +216,17 @@ bool validate(const IOperationValidationContext* context) {
             inExpectedTypes = {OperandType::TENSOR_QUANT16_ASYMM, deltaInputType,
                                OperandType::TENSOR_INT32, OperandType::TENSOR_QUANT16_ASYMM};
         } else {
-            LOG(ERROR) << "Unsupported input tensor type for operation " << kOperationName;
-            return false;
+            return NN_ERROR() << "Unsupported input tensor type for operation " << kOperationName;
         }
     } else {
-        LOG(ERROR) << "Unsupported input tensor type for operation " << kOperationName;
-        return false;
+        return NN_ERROR() << "Unsupported input tensor type for operation " << kOperationName;
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateHalVersion(context, HalVersion::V1_2);
+    return Version::ANDROID_Q;
 }
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape roiShape = context->getInputShape(kRoiTensor);
     Shape bboxDeltasShape = context->getInputShape(kDeltaTensor);
@@ -327,6 +328,7 @@ bool execute(IOperationExecutionContext* context) {
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
     }
 }
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 }  // namespace axis_aligned_bbox_transform
 
@@ -351,6 +353,7 @@ constexpr uint32_t kOutputRoiTensor = 1;
 constexpr uint32_t kOutputClassTensor = 2;
 constexpr uint32_t kOutputBatchesTensor = 3;
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
 
 // TODO(xusongw): Reduce code duplication with hard/soft nms path.
@@ -705,8 +708,9 @@ bool boxWithNmsLimitQuant(const int8_t* scoresData, const Shape& scoresShape,
 }
 
 }  // namespace
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     std::vector<OperandType> inExpectedTypes;
@@ -745,12 +749,13 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return validateHalVersion(context, HalVersion::V1_3);
+        return Version::ANDROID_R;
     } else {
-        return validateHalVersion(context, HalVersion::V1_2);
+        return Version::ANDROID_Q;
     }
 }
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape scoreShape = context->getInputShape(kScoreTensor);
     Shape roiShape = context->getInputShape(kRoiTensor);
@@ -903,6 +908,7 @@ bool execute(IOperationExecutionContext* context) {
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
     }
 }
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 }  // namespace box_with_nms_limit
 
@@ -928,6 +934,7 @@ constexpr uint32_t kOutputScoreTensor = 0;
 constexpr uint32_t kOutputRoiTensor = 1;
 constexpr uint32_t kOutputBatchesTensor = 2;
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
 
 void filterBoxes(const float* roiBase, const float* imageInfoBase, float minSize,
@@ -1215,8 +1222,9 @@ bool generateProposalsQuant(const T_8QInput* scoresData, const Shape& scoresShap
 }
 
 }  // namespace
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     std::vector<OperandType> inExpectedTypes;
@@ -1271,12 +1279,13 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return validateHalVersion(context, HalVersion::V1_3);
+        return Version::ANDROID_R;
     } else {
-        return validateHalVersion(context, HalVersion::V1_2);
+        return Version::ANDROID_Q;
     }
 }
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     bool useNchw = context->getInputValue<bool>(kLayoutScalar);
     Shape scoreShape = context->getInputShape(kScoreTensor);
@@ -1406,6 +1415,7 @@ bool execute(IOperationExecutionContext* context) {
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
     }
 }
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 }  // namespace generate_proposals
 
@@ -1435,6 +1445,7 @@ constexpr uint32_t kOutputRoiTensor = 1;
 constexpr uint32_t kOutputClassTensor = 2;
 constexpr uint32_t kOutputDetectionTensor = 3;
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
 
 bool detectionPostprocessFloat32(
@@ -1571,8 +1582,9 @@ bool detectionPostprocessFloat16(
 }
 
 }  // namespace
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-bool validate(const IOperationValidationContext* context) {
+Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     std::vector<OperandType> inExpectedTypes;
@@ -1600,9 +1612,10 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(
             context, {inputType, inputType, OperandType::TENSOR_INT32, OperandType::TENSOR_INT32}));
-    return validateHalVersion(context, HalVersion::V1_2);
+    return Version::ANDROID_Q;
 }
 
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape scoreShape = context->getInputShape(kScoreTensor);
     Shape deltasShape = context->getInputShape(kDeltaTensor);
@@ -1739,6 +1752,7 @@ bool execute(IOperationExecutionContext* context) {
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
     }
 }
+#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 }  // namespace detection_postprocess
 

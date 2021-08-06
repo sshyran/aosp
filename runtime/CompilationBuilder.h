@@ -24,6 +24,7 @@
 #include <vector>
 
 #include "ExecutionPlan.h"
+#include "Manager.h"
 #include "NeuralNetworks.h"
 
 namespace android {
@@ -47,15 +48,22 @@ class CompilationBuilder {
 
     int setPreference(int32_t preference);
 
-    int setPartitioning(uint32_t partitioning);
-
     int setCaching(const std::string& cacheDir, const uint8_t* token);
+    // Dups the fds
+    int setCachingFromFds(const int* modelCacheFds, const uint32_t numModelCacheFiles,
+                          const int* dataCacheFds, const uint32_t numDataCacheFiles,
+                          const uint8_t* token);
 
     int setPriority(int32_t priority);
 
     int setTimeoutDuration(uint64_t duration);
 
     int finish();
+
+    int getPreferredMemoryAlignmentForInput(uint32_t index, uint32_t* alignment) const;
+    int getPreferredMemoryPaddingForInput(uint32_t index, uint32_t* padding) const;
+    int getPreferredMemoryAlignmentForOutput(uint32_t index, uint32_t* alignment) const;
+    int getPreferredMemoryPaddingForOutput(uint32_t index, uint32_t* padding) const;
 
     int createExecution(ExecutionBuilder** execution);
 
@@ -66,9 +74,16 @@ class CompilationBuilder {
     int forEachStepRoleOfInput(uint32_t index, const StepRoleCallback& callback) const;
     int forEachStepRoleOfOutput(uint32_t index, const StepRoleCallback& callback) const;
 
-    const ExecutionPlan& forTest_getExecutionPlan() const { return mPlan; }
-
     bool createdWithExplicitDeviceList() const { return mExplicitDeviceList; }
+
+    bool hasDynamicTemporaries() const { return mPlan.hasDynamicTemporaries(); }
+
+    // These functions are solely intended for use by unit tests of the
+    // partitioning algorithm.
+    const ExecutionPlan& forTest_getExecutionPlan() const { return mPlan; }
+    int forTest_setPartitioning(uint32_t partitioning);
+    int forTest_failPartitioning(
+            int resultCode);  // If not ANEURALNETWORKS_NO_ERROR, then simulate partitioning failure
 
    private:
     const ModelBuilder* mModel;
@@ -82,6 +97,9 @@ class CompilationBuilder {
     // instantiated, we capture partitioning from DeviceManager; but
     // we can override this later.
     uint32_t mPartitioning;
+
+    // For testing purposes, simulate partitioning failure.
+    int mFailPartitioning = ANEURALNETWORKS_NO_ERROR;
 
     // Once the compilation has been finished, we should not allow further
     // modifications to the compilation.
@@ -97,7 +115,7 @@ class CompilationBuilder {
     bool mExplicitDeviceList;
 
     // Compilation caching information.
-    std::string mCacheDir;
+    CacheInfo mCacheInfo;
     uint8_t mToken[ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN];
     bool mIsCacheInfoProvided = false;
 
