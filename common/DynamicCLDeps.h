@@ -18,6 +18,7 @@
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_DYNAMIC_CL_DEPS_H
 
 #include <cstdint>
+#include <stddef.h>
 
 namespace android::nn {
 

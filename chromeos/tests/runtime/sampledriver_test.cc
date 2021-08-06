@@ -20,7 +20,7 @@ bool instanceof(const T *ptr) {
 }
 
 TEST(ChromeSampleDriver, RegistrationDefault) {
-  auto device = android::nn::hal::V1_0::IDevice::getService("default");
+  auto device = android::nn::V1_0::IDevice::getService("default");
   EXPECT_EQ(device->getStatus(),
             ::android::hardware::neuralnetworks::V1_0::DeviceStatus::AVAILABLE);
 
@@ -30,7 +30,7 @@ TEST(ChromeSampleDriver, RegistrationDefault) {
 }
 
 TEST(ChromeSampleDriver, RegistrationFull) {
-  auto device = android::nn::hal::V1_0::IDevice::getService("full");
+  auto device = android::nn::V1_0::IDevice::getService("full");
   EXPECT_EQ(device->getStatus(),
             ::android::hardware::neuralnetworks::V1_0::DeviceStatus::AVAILABLE);
   // Should return an instance of fulldriver
@@ -40,7 +40,7 @@ TEST(ChromeSampleDriver, RegistrationFull) {
 
 #ifdef NNAPI_USE_MINIMAL_DRIVER
 TEST(ChromeSampleDriver, RegistrationMinimal) {
-  auto device = android::nn::hal::V1_0::IDevice::getService("minimal");
+  auto device = android::nn::V1_0::IDevice::getService("minimal");
   EXPECT_EQ(device->getStatus(),
             ::android::hardware::neuralnetworks::V1_0::DeviceStatus::AVAILABLE);
   // Should return an instance of minimal
@@ -51,7 +51,7 @@ TEST(ChromeSampleDriver, RegistrationMinimal) {
 
 TEST(ChromeSampleDriver, RegistrationFailure) {
   // Should return null if service is not in the config file
-  auto device = android::nn::hal::V1_0::IDevice::getService("Failure");
+  auto device = android::nn::V1_0::IDevice::getService("Failure");
   EXPECT_EQ(device, nullptr);
 }
 

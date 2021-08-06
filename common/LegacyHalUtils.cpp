@@ -23,7 +23,11 @@
 #include <nnapi/hal/1.1/Conversions.h>
 #include <nnapi/hal/1.2/Conversions.h>
 #include <nnapi/hal/1.3/Conversions.h>
+#if !defined(NNAPI_CHROMEOS)
 #include <nnapi/hal/aidl/Conversions.h>
+#endif
+
+#include <float.h>
 
 #include <algorithm>
 #include <limits>

@@ -19,7 +19,10 @@
 #include <android-base/logging.h>
 #include <android-base/mapped_file.h>
 #include <android-base/scopeguard.h>
+
+#if !defined(NNAPI_CHROMEOS)
 #include <android/hardware_buffer.h>
+#endif
 
 #include <algorithm>
 #include <any>
@@ -43,6 +46,7 @@
 #include <sys/mman.h>
 #else
 #include "DynamicCLDeps.h"
+#include <cutils/ashmem.h>
 #endif  // NN_COMPATIBILITY_LIBRARY_BUILD
 
 namespace android::nn {
@@ -146,6 +150,7 @@ GeneralResult<Mapping> map(const Memory::Ashmem& memory) {
 GeneralResult<SharedMemory> allocateSharedMemory(size_t size) {
     CHECK_GT(size, 0u);
 
+#if !defined(NNAPI_CHROMEOS)
     const CompatibilityLayerMemory& memory = loadCompatibilityLayerMemory();
     auto fd = base::unique_fd(memory.create(nullptr, size));
     if (!fd.ok()) {
@@ -154,6 +159,15 @@ GeneralResult<SharedMemory> allocateSharedMemory(size_t size) {
 
     const size_t readSize = memory.getSize(fd.get());
     CHECK_GE(readSize, size);
+#else
+    auto fd = base::unique_fd(ashmem_create_region(nullptr, size));
+    if (!fd.ok()) {
+        return NN_ERROR() << "ashmem_create_region failed";
+    }
+
+    const size_t readSize = ashmem_get_size_region(fd.get());
+    CHECK_GE(readSize, size);
+#endif  // NNAPI_CHROMEOS
 
     constexpr int prot = PROT_READ | PROT_WRITE;
     constexpr size_t offset = 0;
@@ -175,9 +189,13 @@ size_t getSize(const Memory::Fd& memory) {
 }
 
 size_t getSize(const Memory::HardwareBuffer& memory) {
+#if !defined(NNAPI_CHROMEOS)
     AHardwareBuffer_Desc desc;
     AHardwareBuffer_describe(memory.handle.get(), &desc);
     return desc.format == AHARDWAREBUFFER_FORMAT_BLOB ? desc.width : 0;
+#else
+    return 0;
+#endif  // NNAPI_CHROMEOS
 }
 
 size_t getSize(const Memory::Unknown& memory) {
@@ -210,6 +228,7 @@ GeneralResult<Mapping> map(const Memory::Fd& memory) {
 }
 
 GeneralResult<Mapping> map(const Memory::HardwareBuffer& memory) {
+#if !defined(NNAPI_CHROMEOS)
     AHardwareBuffer_Desc desc;
     AHardwareBuffer_describe(memory.handle.get(), &desc);
 
@@ -233,6 +252,9 @@ GeneralResult<Mapping> map(const Memory::HardwareBuffer& memory) {
     auto sharedScoped = std::make_shared<decltype(scoped)>(std::move(scoped));
 
     return Mapping{.pointer = data, .size = size, .context = std::move(sharedScoped)};
+#else
+    return NN_ERROR() << "map(): ChromeOS doesn't support AHardwareBuffer memory";
+#endif  // NNAPI_CHROMEOS
 }
 
 GeneralResult<Mapping> map(const Memory::Unknown& /*memory*/) {
@@ -240,9 +262,11 @@ GeneralResult<Mapping> map(const Memory::Unknown& /*memory*/) {
 }
 
 void freeHardwareBuffer(AHardwareBuffer* buffer) {
+#if !defined(NNAPI_CHROMEOS)
     if (buffer) {
         AHardwareBuffer_release(buffer);
     }
+#endif  // NNAPI_CHROMEOS
 }
 
 void freeNoop(AHardwareBuffer* /*buffer*/) {}
@@ -282,10 +306,14 @@ size_t getSize(const SharedMemory& memory) {
 }
 
 bool isAhwbBlob(const Memory::HardwareBuffer& memory) {
+#if !defined(NNAPI_CHROMEOS)
     AHardwareBuffer* ahwb = memory.handle.get();
     AHardwareBuffer_Desc desc;
     AHardwareBuffer_describe(ahwb, &desc);
     return desc.format == AHARDWAREBUFFER_FORMAT_BLOB;
+#else
+    return false;
+#endif  // NNAPI_CHROMEOS
 }
 
 bool isAhwbBlob(const SharedMemory& memory) {

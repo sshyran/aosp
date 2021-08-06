@@ -8,7 +8,6 @@
 #include "daemon_store.h"
 
 using namespace android::nn;
-using namespace android::nn::hal;
 
 // The Android NNAPI documentation recommends store compilation
 // cache files in a secure location. See:

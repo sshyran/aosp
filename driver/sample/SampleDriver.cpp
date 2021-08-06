@@ -26,7 +26,6 @@
 #include <ValidateHal.h>
 #include <android-base/logging.h>
 #include <android-base/properties.h>
-#include <hidl/LegacySupport.h>
 #include <nnapi/Types.h>
 #include <nnapi/hal/1.3/Conversions.h>
 

@@ -16,7 +16,7 @@ bool instanceof(const T *ptr) {
 }
 
 TEST(ChromeSampleDriver, RegistrationXNNPACK) {
-  auto device = android::nn::hal::V1_0::IDevice::getService("xnnpack");
+  auto device = android::nn::V1_0::IDevice::getService("xnnpack");
   EXPECT_EQ(device->getStatus(),
             ::android::hardware::neuralnetworks::V1_0::DeviceStatus::AVAILABLE);
 

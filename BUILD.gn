@@ -64,6 +64,7 @@ pkg_config("target_defaults") {
     "__ANDROID_API_P__=28",
     "__ANDROID_API_Q__=29",
     "__ANDROID_API_R__=30",
+    "__ANDROID_API_S__=31",
     "__ANDROID_API_FUTURE__=10000",
     "NNAPI_CHROMEOS",
   ]
@@ -87,10 +88,17 @@ pkg_config("common_defaults") {
     "chromeos/includes",
     "common",
     "common/include",
+    "common/include/nnapi",
+    "common/random",
+    "shim_and_sl/public/",
     "${sysroot}/usr/include/tensorflow",
     "${sysroot}/usr/include/tensorflow/nnapi/include",
     "${sysroot}/usr/include/tensorflow/nnapi/include/external/gemmlowp",
-    "common/random",
+    "//aosp/hardware/interfaces/neuralnetworks/1.0/utils/include/",
+    "//aosp/hardware/interfaces/neuralnetworks/1.1/utils/include/",
+    "//aosp/hardware/interfaces/neuralnetworks/1.2/utils/include/",
+    "//aosp/hardware/interfaces/neuralnetworks/1.3/utils/include/",
+    "//aosp/hardware/interfaces/neuralnetworks/utils/common/include/"
   ]
   defines = [
     "NN_INCLUDE_CPU_IMPLEMENTATION",
@@ -129,6 +137,7 @@ static_library("runtime") {
   cflags_cc = [
     # Stubbed out functions have unused parameters
     "-Wno-unused-parameter",
+    "-Wno-unused-function",
   ]
   libs = [
     "dl",
@@ -140,15 +149,13 @@ static_library("runtime") {
     "runtime/include",
   ]
   sources = [
-    "chromeos/sampledriver.cpp",
-    "chromeos/sampledriver_util.cpp",
     "chromeos/compilation_caching.cpp",
     "chromeos/daemon_store.cpp",
-    "chromeos/versioned_drivers.cpp",
+    "chromeos/driver_loader.cpp",
     "runtime/BurstBuilder.cpp",
-    "runtime/Callbacks.cpp",
     "runtime/CompilationBuilder.cpp",
     "runtime/ExecutionBuilder.cpp",
+    "runtime/ExecutionCallback.cpp",
     "runtime/ExecutionPlan.cpp",
     "runtime/Manager.cpp",
     "runtime/Memory.cpp",
@@ -156,7 +163,6 @@ static_library("runtime") {
     "runtime/ModelBuilder.cpp",
     "runtime/NeuralNetworks.cpp",
     "runtime/TypeManager.cpp",
-    "runtime/VersionedInterfaces.cpp",
   ]
 }
 
@@ -173,6 +179,12 @@ shared_library("nn-common") {
     "-Wno-deprecated-copy",
     "-Wno-unreachable-code-return",
   ]
+  deps = [
+    ":utils_1_0",
+    ":utils_1_1",
+    ":utils_1_2",
+    ":utils_1_3",
+  ]
   include_dirs = [
     "driver/cache/BlobCache",
     "driver/cache/nNCache",
@@ -180,6 +192,7 @@ shared_library("nn-common") {
     "${sysroot}/usr/include/libtextclassifier",
   ]
   libs = [
+    "dl",
     "pthread",
     "rt",
     "tensorflowlite",
@@ -191,15 +204,21 @@ shared_library("nn-common") {
     "common/ExecutionBurstController.cpp",
     "common/ExecutionBurstServer.cpp",
     "common/GraphDump.cpp",
+    "common/HalBufferTracker.cpp",
     "common/IndexedShapeWrapper.cpp",
+    "common/LegacyHalUtils.cpp",
+    "common/LegacyUtils.cpp",
     "common/MemoryUtils.cpp",
     "common/MetaModel.cpp",
     "common/OperationResolver.cpp",
     "common/OperationsUtils.cpp",
     "common/QuantUtils.cpp",
+    "common/SharedMemoryAndroid.cpp",
     "common/TokenHasher.cpp",
-    "common/Utils.cpp",
+    "common/TypeUtils.cpp",
+    "common/Types.cpp",
     "common/ValidateHal.cpp",
+    "common/Validation.cpp",
     "common/operations/Activation.cpp",
     "common/operations/ArgMinMax.cpp",
     "common/operations/BidirectionalSequenceLSTM.cpp",
@@ -269,19 +288,151 @@ shared_library("nn-common") {
   ]
 }
 
+static_library("utils_common") {
+  configs += [
+    ":common_defaults",
+    "//common-mk:pic",
+    "//common-mk:visibility_default",
+  ]
+  cflags_cc = [
+    "-Wno-unused-function"
+  ]
+  include_dirs = [
+    "//aosp/hardware/interfaces/neuralnetworks/utils/common/include/nnapi/hal",
+  ]
+  sources = [
+    "common/SharedMemory.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/utils/common/src/CommonUtils.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/utils/common/src/InvalidBuffer.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/utils/common/src/InvalidBurst.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/utils/common/src/InvalidDevice.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/utils/common/src/InvalidExecution.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/utils/common/src/InvalidPreparedModel.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/utils/common/src/ProtectCallback.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/utils/common/src/ResilientBuffer.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/utils/common/src/ResilientBurst.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/utils/common/src/ResilientDevice.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/utils/common/src/ResilientExecution.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/utils/common/src/ResilientPreparedModel.cpp",
+  ]
+}
+
+static_library("utils_1_0") {
+  configs += [
+    ":common_defaults",
+    "//common-mk:pic",
+    "//common-mk:visibility_default",
+  ]
+  deps = [
+    ":utils_common",
+  ]
+  include_dirs = [
+    "//aosp/hardware/interfaces/neuralnetworks/1.0/utils/include/nnapi/hal/1.0",
+  ]
+  sources = [
+    "//aosp/hardware/interfaces/neuralnetworks/1.0/utils/src/Assertions.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.0/utils/src/Burst.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.0/utils/src/Callbacks.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.0/utils/src/Conversions.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.0/utils/src/Device.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.0/utils/src/Execution.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.0/utils/src/PreparedModel.cpp",
+  ]
+}
+
+static_library("utils_1_1") {
+  configs += [
+    ":common_defaults",
+    "//common-mk:pic",
+    "//common-mk:visibility_default",
+  ]
+  deps = [
+    ":utils_common",
+  ]
+  include_dirs = [
+    "//aosp/hardware/interfaces/neuralnetworks/1.1/utils/include/nnapi/hal/1.1",
+  ]
+  sources = [
+    "//aosp/hardware/interfaces/neuralnetworks/1.1/utils/src/Assertions.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.1/utils/src/Conversions.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.1/utils/src/Device.cpp",
+  ]
+}
+
+static_library("utils_1_2") {
+  configs += [
+    ":common_defaults",
+    "//common-mk:pic",
+    "//common-mk:visibility_default",
+  ]
+  deps = [
+    ":utils_common",
+  ]
+  include_dirs = [
+    "//aosp/hardware/interfaces/neuralnetworks/1.2/utils/include/nnapi/hal/1.2",
+  ]
+  sources = [
+    "//aosp/hardware/interfaces/neuralnetworks/1.2/utils/src/Assertions.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.2/utils/src/Callbacks.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.2/utils/src/Conversions.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.2/utils/src/Device.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.2/utils/src/Execution.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.2/utils/src/ExecutionBurstController.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.2/utils/src/ExecutionBurstServer.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.2/utils/src/ExecutionBurstUtils.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.2/utils/src/PreparedModel.cpp",
+  ]
+}
+
+static_library("utils_1_3") {
+  configs += [
+    ":common_defaults",
+    "//common-mk:pic",
+    "//common-mk:visibility_default",
+  ]
+  deps = [
+    ":utils_common",
+  ]
+  include_dirs = [
+    "//aosp/hardware/interfaces/neuralnetworks/1.3/utils/include/nnapi/hal/1.3",
+  ]
+  sources = [
+    "//aosp/hardware/interfaces/neuralnetworks/1.3/utils/src/Assertions.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.3/utils/src/Buffer.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.3/utils/src/Callbacks.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.3/utils/src/Conversions.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.3/utils/src/Device.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.3/utils/src/Execution.cpp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.3/utils/src/PreparedModel.cpp",
+  ]
+}
+
 shared_library("vendor-nn-hal") {
   configs += [
+    ":common_defaults",
     ":target_defaults",
+    "//common-mk:visibility_default",
+  ]
+  cflags_cc = [
+    "-Wno-unused-parameter",
   ]
   deps = [
     ":full-driver",
-    ":minimal-driver"
+    ":nn-common"
+  ]
+  include_dirs = [
+    "driver/sample",
+    "runtime/include",
   ]
   libs = [
     "pthread",
     "rt",
     "tensorflowlite",
     "textclassifier",  # For Farmhash.
+  ]
+  sources = [
+    "chromeos/sampledriver.cpp",
+    "chromeos/sampledriver_util.cpp",
   ]
 }
 
@@ -441,6 +592,7 @@ if (use.test) {
     cflags_cc = [
       # TestPartitioning moving local object in return statements
       "-Wno-pessimizing-move",
+      "-Wno-unused-function"
     ]
     configs += [
       ":disable_ndebug",
@@ -454,7 +606,7 @@ if (use.test) {
       ":nn_testrunner",
       ":runtime",
       ":full-driver",
-      ":minimal-driver",
+      ":vendor-nn-hal",
       "chromeos/tests/runtime/generated:all",
     ]
     libs = [
@@ -464,16 +616,16 @@ if (use.test) {
       "tensorflowlite",
     ]
     sources = [
-      "chromeos/tests/runtime/sampledriver_test.cc",
-      "runtime/test/Bridge.cpp",
+      # "chromeos/tests/runtime/sampledriver_test.cc",
       "runtime/test/GeneratedTestUtils.cpp",
+      "runtime/test/PreparedModelCallback.cpp",
       "runtime/test/RequireDebug.cpp",
       "runtime/test/TestAssertions.cpp",
       "runtime/test/TestCompilationCaching.cpp",
       "runtime/test/TestCompliance.cpp",
       "runtime/test/TestControlFlow.cpp",
       "runtime/test/TestExecution.cpp",
-      "runtime/test/TestExtensions.cpp",
+      # "runtime/test/TestExtensions.cpp",            # Not supported on ChromeOS
       "runtime/test/TestFailingDriver.cpp",
       "runtime/test/TestFree.cpp",
       "runtime/test/TestIntrospectionControl.cpp",
@@ -481,7 +633,7 @@ if (use.test) {
       "runtime/test/TestMemoryDomain.cpp",
       "runtime/test/TestMemoryInternal.cpp",
       "runtime/test/TestNeuralNetworksWrapper.cpp",
-      # "runtime/test/TestOpenmpSettings.cpp",          # not needed
+      # "runtime/test/TestOpenmpSettings.cpp",        # not needed
       "runtime/test/TestOperandExtraParams.cpp",
       "runtime/test/TestPartitioning.cpp",
       "runtime/test/TestPartitioningRandom.cpp",
@@ -492,7 +644,6 @@ if (use.test) {
       "runtime/test/TestValidateModel.cpp",
       "runtime/test/TestValidateOperations.cpp",
       "runtime/test/TestValidation.cpp",
-      "runtime/test/TestVersionedInterfaces.cpp",
       "runtime/test/TestWrapper.cpp",
     ]
   }
@@ -533,6 +684,7 @@ if (use.test) {
       "driver/sample",
       "runtime",
       "runtime/include",
+      "shim_and_sl/include",
       "tools/test_generator/test_harness/include",
     ]
     configs += [
@@ -546,6 +698,7 @@ if (use.test) {
       ":nn_testrunner",
       ":runtime",
       ":full-driver",
+      ":vendor-nn-hal",
       "chromeos/tests/runtime/generated:all",
     ]
     libs = [
@@ -606,7 +759,8 @@ if (use.test) {
       ":nn-common",
       ":nn_testrunner",
       ":runtime",
-      ":full-driver"
+      ":full-driver",
+      ":vendor-nn-hal",
     ]
     libs = [
       "rt",

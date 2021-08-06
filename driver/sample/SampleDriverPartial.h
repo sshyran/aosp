@@ -30,8 +30,6 @@ namespace android {
 namespace nn {
 namespace sample_driver {
 
-using namespace hal;
-
 // A base class for sample drivers that support only a subset of NNAPI
 // operations. Classes of such drivers should inherit from this class and
 // implement getSupportedOperationsImpl function which is used for filtering out

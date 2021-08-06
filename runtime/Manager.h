@@ -250,13 +250,6 @@ class DeviceManager {
     uint32_t mPartitioning = kPartitioningDefault;
 
     bool mStrictSlicing = false;
-
-#ifdef NNAPI_CHROMEOS
-    // NNAPI_CHROMEOS default driver list for fallback
-    std::vector<std::string> fallbackServiceNames = {
-        "default"
-    };
-#endif
 };
 
 std::vector<SharedDevice> getDevices();

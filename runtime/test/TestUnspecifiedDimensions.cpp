@@ -15,6 +15,7 @@
  */
 
 #include <android-base/macros.h>
+#include <android/log.h>  // Required for __INTRODUCED_IN(x)
 #include <android/sharedmem.h>
 #include <gtest/gtest.h>
 #include <sys/mman.h>

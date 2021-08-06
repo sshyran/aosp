@@ -22,7 +22,6 @@
 #include <ValidateHal.h>
 #include <android-base/logging.h>
 #if !defined(NNAPI_CHROMEOS)
-#include <hidl/LegacySupport.h>
 #include <hwbinder/IPCThreadState.h>
 #endif
 #include <xnnpack.h>
@@ -1918,6 +1917,8 @@ V1_3::ErrorStatus prepareModelXNNPACK(const T_Model& model, const SampleDriver* 
                                       V1_1::ExecutionPreference preference, V1_3::Priority priority,
                                       const V1_3::OptionalTimePoint& deadline,
                                       const sp<T_IPreparedModelCallback>& callback) {
+
+#if !defined(NNAPI_CHROMEOS)
     const uid_t userId = hardware::IPCThreadState::self()->getCallingUid();
 #else
     const uid_t userId = getuid();

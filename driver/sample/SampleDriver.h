@@ -17,10 +17,11 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_DRIVER_SAMPLE_SAMPLE_DRIVER_H
 #define ANDROID_FRAMEWORKS_ML_NN_DRIVER_SAMPLE_SAMPLE_DRIVER_H
 
-#if !defined(NNAPI_CHROMEOS)
 #include <CpuExecutor.h>
 #include <HalBufferTracker.h>
 #include <HalInterfaces.h>
+
+#if !defined(NNAPI_CHROMEOS)
 #include <hwbinder/IPCThreadState.h>
 #endif
 

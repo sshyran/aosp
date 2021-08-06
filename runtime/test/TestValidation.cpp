@@ -666,7 +666,8 @@ TEST_F(ValidationTestModel, SetOperandValueFromMemory) {
     close(memoryFd);
 }
 
-TEST_F(ValidationTestModel, SetOperandValueFromAHardwareBuffer) {
+// Uses hardware buffers which are unsupported (b/157388904)
+TEST_F(ValidationTestModel, DISABLED_SetOperandValueFromAHardwareBuffer) {
     uint32_t dimensions[]{1};
     ANeuralNetworksOperandType quant8Type{.type = ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
                                           .dimensionCount = 1,
@@ -699,7 +700,8 @@ TEST_F(ValidationTestModel, SetOperandValueFromAHardwareBuffer) {
     AHardwareBuffer_release(buffer);
 }
 
-TEST_F(ValidationTestModel, SetOperandValueFromAHardwareBufferBlob) {
+// Uses hardware buffers which are unsupported (b/157388904)
+TEST_F(ValidationTestModel, DISABLED_SetOperandValueFromAHardwareBufferBlob) {
     uint32_t dimensions[]{1};
     ANeuralNetworksOperandType floatType{
             .type = ANEURALNETWORKS_TENSOR_FLOAT32, .dimensionCount = 1, .dimensions = dimensions};
@@ -1773,7 +1775,8 @@ TEST_F(ValidationTestExecution, SetInputFromMemoryEnablePadding) {
     }
 }
 
-TEST_F(ValidationTestExecution, SetInputFromAHardwareBufferBlob) {
+// Uses hardware buffers which are unsupported (b/157388904)
+TEST_F(ValidationTestExecution, DISABLED_SetInputFromAHardwareBufferBlob) {
     const size_t memorySize = 20;
 
     AHardwareBuffer_Desc desc{
@@ -1818,7 +1821,8 @@ TEST_F(ValidationTestExecution, SetInputFromAHardwareBufferBlob) {
     AHardwareBuffer_release(buffer);
 }
 
-TEST_F(ValidationTestExecution, SetInputFromAHardwareBufferBlobEnablePadding) {
+// Uses hardware buffers which are unsupported (b/157388904)
+TEST_F(ValidationTestExecution, DISABLED_SetInputFromAHardwareBufferBlobEnablePadding) {
     if (__builtin_available(android __NNAPI_FL5_MIN_ANDROID_API__, *)) {
         const size_t memorySize = 20;
 
@@ -1954,7 +1958,8 @@ TEST_F(ValidationTestExecution, SetOutputFromMemoryEnablePadding) {
     }
 }
 
-TEST_F(ValidationTestExecution, SetOutputFromAHardwareBufferBlob) {
+// Uses hardware buffers which are unsupported (b/157388904)
+TEST_F(ValidationTestExecution, DISABLED_SetOutputFromAHardwareBufferBlob) {
     const size_t memorySize = 20;
 
     AHardwareBuffer_Desc desc{
@@ -2000,7 +2005,8 @@ TEST_F(ValidationTestExecution, SetOutputFromAHardwareBufferBlob) {
     AHardwareBuffer_release(buffer);
 }
 
-TEST_F(ValidationTestExecution, SetOutputFromAHardwareBufferBlobEnablePadding) {
+// Uses hardware buffers which are unsupported (b/157388904)
+TEST_F(ValidationTestExecution, DISABLED_SetOutputFromAHardwareBufferBlobEnablePadding) {
     if (__builtin_available(android __NNAPI_FL5_MIN_ANDROID_API__, *)) {
         const size_t memorySize = 20;
 
@@ -3776,7 +3782,8 @@ TEST(ValidationTestMemory, CreateFromFd) {
     close(memoryFd);
 }
 
-TEST(ValidationTestMemory, CreateFromAHardwareBuffer) {
+// Uses hardware buffers which are unsupported (b/157388904)
+TEST(ValidationTestMemory, DISABLED_CreateFromAHardwareBuffer) {
     const size_t memorySize = 20;
     AHardwareBuffer_Desc desc{
             .width = memorySize,

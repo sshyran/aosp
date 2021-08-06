@@ -26,10 +26,10 @@ namespace sample_driver {
 class SampleDriverMinimal : public SampleDriverPartial {
    public:
     SampleDriverMinimal() : SampleDriverPartial("nnapi-sample_minimal") {}
-    hal::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
+    hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
 
    private:
-    std::vector<bool> getSupportedOperationsImpl(const hal::V1_3::Model& model) const override;
+    std::vector<bool> getSupportedOperationsImpl(const V1_3::Model& model) const override;
 };
 
 }  // namespace sample_driver

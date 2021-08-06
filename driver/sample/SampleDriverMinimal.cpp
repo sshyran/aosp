@@ -16,7 +16,6 @@
 
 #define LOG_TAG "SampleDriverMinimal"
 
-#include <HalInterfaces.h>
 #include <Utils.h>
 #include <android-base/logging.h>
 
@@ -38,15 +37,6 @@ extern "C" BRILLO_EXPORT void* get_driver() {
 namespace android {
 namespace nn {
 namespace sample_driver {
-
-class SampleDriverMinimal : public SampleDriverPartial {
-   public:
-    SampleDriverMinimal() : SampleDriverPartial("nnapi-sample_minimal") {}
-    hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
-
-   private:
-    std::vector<bool> getSupportedOperationsImpl(const V1_3::Model& model) const override;
-};
 
 hardware::Return<void> SampleDriverMinimal::getCapabilities_1_3(getCapabilities_1_3_cb cb) {
     android::nn::initVLogMask();

@@ -31,9 +31,11 @@
 #include <vector>
 
 #ifndef NN_COMPATIBILITY_LIBRARY_BUILD
+#if !defined(NNAPI_CHROMEOS)
 #include <PackageInfo.h>
 #include <binder/IServiceManager.h>
 #include <procpartition/procpartition.h>
+#endif  // NNAPI_CHROMEOS
 #endif  // NN_COMPATIBILITY_LIBRARY_BUILD
 
 namespace android {
@@ -116,18 +118,17 @@ static bool allowVendorExtensionsForAllNonSystemClients() {
 
 #endif  // NN_COMPATIBILITY_LIBRARY_BUILD
 
-#endif
 }  // namespace
 
 TypeManager::TypeManager() {
     VLOG(MANAGER) << "TypeManager::TypeManager";
-#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
+#if !defined(NN_COMPATIBILITY_LIBRARY_BUILD) && !defined(NNAPI_CHROMEOS)
     mExtensionsAllowed = TypeManager::isExtensionsUseAllowed(
             AppInfoFetcher::get()->getAppInfo(), isNNAPIVendorExtensionsUseAllowedInProductImage(),
             getVendorExtensionAllowlistedApps());
 #else
     mExtensionsAllowed = true;
-#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
+#endif  // !NN_COMPATIBILITY_LIBRARY_BUILD && !NNAPI_CHROMEOS
     VLOG(MANAGER) << "NNAPI Vendor extensions enabled: " << mExtensionsAllowed;
     findAvailableExtensions();
 }

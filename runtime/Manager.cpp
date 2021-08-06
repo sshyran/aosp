@@ -47,12 +47,14 @@
 #include "TypeManager.h"
 
 #ifndef NN_COMPATIBILITY_LIBRARY_BUILD
+#ifndef NNAPI_CHROMEOS
 #include <build/version.h>
 #include <cutils/native_handle.h>
 #include <nnapi/hal/1.3/Buffer.h>
 #include <nnapi/hal/Service.h>
 
 #include "AppInfoFetcher.h"
+#endif  // NNAPI_CHROMEOS
 #endif  // NN_COMPATIBILITY_LIBRARY_BUILD
 
 namespace android {
@@ -1227,29 +1229,7 @@ std::shared_ptr<Device> DeviceManager::forTest_makeDriverDevice(const SharedDevi
     return driverDevice;
 }
 
-#ifdef NNAPI_CHROMEOS
-bool getDriversFrom(char* content, std::vector<std::string>& serviceNames) {
-    if (content) {
-        std::string contentStr(content);
-        int idx = 0;
-        int len = 0;
-        int contentLength = contentStr.size();
-        while (idx < contentLength) {
-            while (idx+len < contentLength && contentStr[idx+len] != ':') len += 1;
-            if (len) serviceNames.push_back(contentStr.substr(idx, len));
-            idx = len + idx + 1;
-            len = 0;
-        }
-    } else {
-        // should return if nothing comes in
-        return false;
-    }
-    return true;
-}
-
-#endif
-
-#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
+#if !defined(NN_COMPATIBILITY_LIBRARY_BUILD) && !defined(NNAPI_CHROMEOS)
 std::vector<std::shared_ptr<DriverDevice>> getDriverDevices() {
     const auto& appInfo = AppInfoFetcher::get()->getAppInfo();
     const bool currentProcessIsOnThePlatform =
@@ -1276,34 +1256,17 @@ std::vector<std::shared_ptr<DriverDevice>> getDriverDevices() {
     }
     return driverDevices;
 }
-#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
+#endif  // !NN_COMPATIBILITY_LIBRARY_BUILD && !NNAPI_CHROMEOS
 
 void DeviceManager::findAvailableDevices() {
     VLOG(MANAGER) << "findAvailableDevices";
 
-#ifdef NNAPI_CHROMEOS
-    std::vector<std::string> serviceNames;
-    char* content = std::getenv("DRIVERS");
-    bool getStatus = getDriversFrom(content, serviceNames);
-    if (serviceNames.size() == 0 || !getStatus) {
-        serviceNames = fallbackServiceNames;
-    }
-    // ChromeOS doesn't support HIDL service registeration and querying,
-    // so just return a getService implementation here.
-    for (auto serviceName : serviceNames) {
-        VLOG(MANAGER) << "Get service " << serviceName << " from env variable";
-        registerDevice(serviceName, [&serviceName](bool /*blocking*/) {
-            return V1_0::IDevice::getService(serviceName);
-        });
-    }
-#else
     // register driver devices
     auto driverDevices = getDriverDevices();
     for (auto& driverDevice : driverDevices) {
         VLOG(MANAGER) << "Found interface " << driverDevice->getName();
         mDevices.push_back(std::move(driverDevice));
     }
-#endif
 
 #ifndef NN_COMPATIBILITY_LIBRARY_BUILD
     // register CPU fallback device

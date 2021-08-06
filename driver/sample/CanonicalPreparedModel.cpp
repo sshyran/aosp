@@ -84,18 +84,22 @@ ErrorStatus updateDeviceMemories(ErrorStatus status, const Request& request,
     if (status == ErrorStatus::NONE) {
         for (uint32_t i = 0; i < request.outputs.size(); i++) {
             const uint32_t poolIndex = request.outputs[i].location.poolIndex;
-            const auto& pool = request.pools[poolIndex];
-            if (std::holds_alternative<Request::MemoryDomainToken>(pool)) {
-                if (!bufferWrappers[poolIndex]->updateDimensions(outputShapes[i].dimensions)) {
-                    return ErrorStatus::GENERAL_FAILURE;
+            if(poolIndex < request.pools.size()) {
+                const auto& pool = request.pools[poolIndex];
+                if (std::holds_alternative<Request::MemoryDomainToken>(pool)) {
+                    if (!bufferWrappers[poolIndex]->updateDimensions(outputShapes[i].dimensions)) {
+                        return ErrorStatus::GENERAL_FAILURE;
+                    }
                 }
             }
         }
         for (uint32_t i = 0; i < request.outputs.size(); i++) {
             const uint32_t poolIndex = request.outputs[i].location.poolIndex;
-            const auto& pool = request.pools[poolIndex];
-            if (std::holds_alternative<Request::MemoryDomainToken>(pool)) {
-                bufferWrappers[poolIndex]->setInitialized(true);
+            if(poolIndex < request.pools.size()) {
+                const auto& pool = request.pools[poolIndex];
+                if (std::holds_alternative<Request::MemoryDomainToken>(pool)) {
+                    bufferWrappers[poolIndex]->setInitialized(true);
+                }
             }
         }
     } else if (status == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
@@ -104,12 +108,14 @@ ErrorStatus updateDeviceMemories(ErrorStatus status, const Request& request,
         // GENERAL_FAILURE instead in this case.
         for (uint32_t i = 0; i < request.outputs.size(); i++) {
             const uint32_t poolIndex = request.outputs[i].location.poolIndex;
-            const auto& pool = request.pools[poolIndex];
-            if (std::holds_alternative<Request::MemoryDomainToken>(pool)) {
-                if (!outputShapes[i].isSufficient) {
-                    LOG(ERROR) << "Invalid dimensions for output " << i
-                               << ": actual shape = " << toString(outputShapes[i].dimensions);
-                    return ErrorStatus::GENERAL_FAILURE;
+            if(poolIndex < request.pools.size()) {
+                const auto& pool = request.pools[poolIndex];
+                if (std::holds_alternative<Request::MemoryDomainToken>(pool)) {
+                    if (!outputShapes[i].isSufficient) {
+                        LOG(ERROR) << "Invalid dimensions for output " << i
+                                << ": actual shape = " << toString(outputShapes[i].dimensions);
+                        return ErrorStatus::GENERAL_FAILURE;
+                    }
                 }
             }
         }
@@ -257,9 +263,11 @@ GeneralResult<std::pair<SyncFence, ExecuteFencedInfoCallback>> PreparedModel::ex
     // Set output memories to the initialized state.
     for (const auto& output : request.outputs) {
         const uint32_t poolIndex = output.location.poolIndex;
-        const auto& pool = request.pools[poolIndex];
-        if (std::holds_alternative<Request::MemoryDomainToken>(pool)) {
-            bufferWrappers[poolIndex]->setInitialized(true);
+        if(poolIndex < request.pools.size()) {
+            const auto& pool = request.pools[poolIndex];
+            if (std::holds_alternative<Request::MemoryDomainToken>(pool)) {
+                bufferWrappers[poolIndex]->setInitialized(true);
+            }
         }
     }
 

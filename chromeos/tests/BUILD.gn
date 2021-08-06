@@ -32,12 +32,17 @@ group("cts") {
 pkg_config("vts_defaults") {
   include_dirs = [
     "${vts_src}/1.0/vts/functional/include",
-    "${nn_src}/common",
     "${nn_src}/common/include",
+    "${nn_src}/common/include/nnapi",
     "${nn_src}/runtime",
     "${nn_src}/runtime/include",
     "${nn_src}/tools/test_generator/test_harness/include",
     "${sysroot}/usr/include/aosp",
+    "//aosp/hardware/interfaces/neuralnetworks/1.0/utils/include/",
+    "//aosp/hardware/interfaces/neuralnetworks/1.1/utils/include/",
+    "//aosp/hardware/interfaces/neuralnetworks/1.2/utils/include/",
+    "//aosp/hardware/interfaces/neuralnetworks/1.3/utils/include/",
+    "//aosp/hardware/interfaces/neuralnetworks/utils/common/include/"
   ]
   pkg_deps = [
     "libnnapi-support",
@@ -57,8 +62,14 @@ static_library("vts_common") {
     "-Wno-unused-parameter",
   ]
   deps = [
+    "${nn_src}:nn-common",
+    "${nn_src}:runtime",
+    "${nn_src}:utils_common",
+    "${nn_src}:utils_1_0",
+    "${nn_src}:utils_1_1",
+    "${nn_src}:utils_1_2",
+    "${nn_src}:utils_1_3",
     "${nn_src}:vendor-nn-hal",
-    "${nn_src}:runtime"
   ]
   sources = [
     "${vts_src}/1.0/vts/functional/Callbacks.cpp",
@@ -66,11 +77,16 @@ static_library("vts_common") {
     "${nn_src}/chromeos/compilation_caching.cpp",
     "${nn_src}/chromeos/daemon_store.cpp",
     "${nn_src}/chromeos/testrunner.cpp",
-    "${nn_src}/chromeos/versioned_drivers.cpp",
+    "${nn_src}/chromeos/driver_loader.cpp",
     "${nn_src}/common/ExecutionBurstController.cpp",
     "${nn_src}/common/ExecutionBurstServer.cpp",
+    "${nn_src}/common/LegacyHalUtils.cpp",
+    "${nn_src}/common/LegacyUtils.cpp",
     "${nn_src}/common/MemoryUtils.cpp",
-    "${nn_src}/common/Utils.cpp",
+    "${nn_src}/common/SharedMemoryAndroid.cpp",
+    "${nn_src}/common/TypeUtils.cpp",
+    "${nn_src}/common/Types.cpp",
+    "${nn_src}/common/Validation.cpp",
     "${nn_src}/tools/test_generator/test_harness/TestHarness.cpp",
   ]
 }

@@ -17,7 +17,7 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_DRIVER_SAMPLE_SAMPLE_DRIVER_UTILS_H
 #define ANDROID_FRAMEWORKS_ML_NN_DRIVER_SAMPLE_SAMPLE_DRIVER_UTILS_H
 
-#include <HalInterfaces.h>
+#if !defined(NNAPI_CHROMEOS)
 #include <hwbinder/IPCThreadState.h>
 #endif
 
@@ -53,6 +53,7 @@ V1_3::ErrorStatus prepareModelBase(const T_Model& model, const SampleDriver* dri
                                    const V1_3::OptionalTimePoint& halDeadline,
                                    const sp<T_IPreparedModelCallback>& callback,
                                    bool isFullModelSupported = true) {
+#if !defined(NNAPI_CHROMEOS)
     const uid_t userId = hardware::IPCThreadState::self()->getCallingUid();
 #else
     const uid_t userId = getuid();

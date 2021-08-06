@@ -18,6 +18,7 @@
 // files, including NN API HIDL definitions.
 // It is not part of CTS.
 
+#include <android/log.h>  // Required for __INTRODUCED_IN(x)
 #include <android/sharedmem.h>
 #include <gtest/gtest.h>
 
@@ -179,7 +180,7 @@ TEST_F(MemoryLeakTest, TestASharedMemory) {
 
 #ifndef NNTEST_ONLY_PUBLIC_API
 // Regression test for http://b/73663843, conv_2d trying to allocate too much memory.
-TEST_F(MemoryLeakTest, convTooLarge) {
+TEST_F(MemoryLeakTest, DISABLED_convTooLarge) {
     android::nn::DeviceManager::get()->setUseCpuOnly(true);
     WrapperModel model;
 

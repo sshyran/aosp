@@ -2,22 +2,25 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "SampleDriverMinimal.h"
-#include "SampleDriverFull.h"
-#include "SampleDriverPartial.h"
-#include "SampleDriverFloatXNNPACK.h"
-#include <dlfcn.h>
+#include <android-base/logging.h>
+
 #include <string>
-#include "sampledriver_util.h"
 #include <unordered_map>
 #include <utility>
 #include <sstream>
 #include <vector>
 
+#include <nnapi/IDevice.h>
+
+#include "HalInterfaces.h"
+#include "sampledriver_util.h"
+
+
 // type of function pointer
 typedef void* (*get_driver_func)();
 
 std::unordered_map<std::string, std::string> driverToLibFallback = {
+  {"cros-default", "libfull-driver.so"},
   {"default", "libfull-driver.so"},
   {"xnnpack", "libxnn-driver.so"},
   {"full", "libfull-driver.so"},
