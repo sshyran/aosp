@@ -2,17 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "SampleDriverMinimal.h"
-#include "SampleDriverFull.h"
-#include "SampleDriverPartial.h"
-#include "SampleDriverFloatXNNPACK.h"
+#include <android-base/logging.h>
+
 #include <dlfcn.h>
 #include <string>
-#include "sampledriver_util.h"
 #include <unordered_map>
 #include <utility>
 #include <sstream>
 #include <vector>
+
+#include "HalInterfaces.h"
+#include "sampledriver_util.h"
 
 // type of function pointer
 typedef void* (*get_driver_func)();

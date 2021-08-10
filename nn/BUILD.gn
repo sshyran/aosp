@@ -140,8 +140,6 @@ static_library("runtime") {
     "runtime/include",
   ]
   sources = [
-    "chromeos/sampledriver.cpp",
-    "chromeos/sampledriver_util.cpp",
     "chromeos/compilation_caching.cpp",
     "chromeos/daemon_store.cpp",
     "chromeos/versioned_drivers.cpp",
@@ -271,7 +269,12 @@ shared_library("nn-common") {
 
 shared_library("vendor-nn-hal") {
   configs += [
+    ":common_defaults",
     ":target_defaults",
+    "//common-mk:visibility_default",
+  ]
+  cflags_cc = [
+    "-Wno-unused-parameter",
   ]
   deps = [
     ":full-driver",
@@ -281,6 +284,10 @@ shared_library("vendor-nn-hal") {
     "rt",
     "tensorflowlite",
     "textclassifier",  # For Farmhash.
+  ]
+  sources = [
+    "chromeos/sampledriver.cpp",
+    "chromeos/sampledriver_util.cpp",
   ]
 }
 
@@ -448,12 +455,12 @@ if (use.test) {
       "//common-mk:test",
     ]
     deps = [
-      ":nn-common",
+      ":full-driver",
       ":generated_test_harness",
+      ":nn-common",
       ":nn_testrunner",
       ":runtime",
-      ":full-driver",
-      ":minimal-driver",
+      ":vendor-nn-hal",
       "chromeos/tests/runtime/generated:all",
     ]
     libs = [
@@ -544,7 +551,7 @@ if (use.test) {
       ":generated_test_harness",
       ":nn_testrunner",
       ":runtime",
-      ":full-driver",
+      ":vendor-nn-hal",
       "chromeos/tests/runtime/generated:all",
     ]
     libs = [
@@ -605,7 +612,7 @@ if (use.test) {
       ":nn-common",
       ":nn_testrunner",
       ":runtime",
-      ":full-driver"
+      ":vendor-nn-hal",
     ]
     libs = [
       "rt",
