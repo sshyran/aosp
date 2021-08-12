@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The Android Open Source Project
+ * Copyright (C) 2021 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,13 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "MemoryUtils"
+#ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_TMP_DIRECTORY_UTILS_H
+#define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_TMP_DIRECTORY_UTILS_H
 
-#include "MemoryUtils.h"
+#ifdef __ANDROID__
+#define NN_TMP_DIR "/data/local/tmp"
+#else  // __ANDROID__
+#define NN_TMP_DIR "/tmp"
+#endif  // __ANDROID__
 
-#include <nnapi/SharedMemory.h>
-#include <nnapi/hal/1.3/Conversions.h>
-
-using ::android::hardware::hidl_memory;
-
-namespace android {
-namespace nn {
-
-hidl_memory allocateSharedMemory(int64_t size) {
-    return hardware::neuralnetworks::V1_3::utils::convert(createSharedMemory(size).value()).value();
-}
-
-}  // namespace nn
-}  // namespace android
+#endif  // ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_TMP_DIRECTORY_UTILS_H
