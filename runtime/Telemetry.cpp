@@ -168,15 +168,13 @@ void onCompilationFinish(CompilationBuilder* c, int resultCode) {
         return;
     }
 
-    const std::array<uint8_t, 32> hashPlaceholder{};
     const std::string deviceId = makeDeviceId(c->getDevices());
 
     const DiagnosticCompilationInfo info{
             .sessionId = getSessionId(),
             .packageName = getPackageName(),
             .versionNnapiModule = kNnapiApexVersion,
-            // TODO(b/191366627): Generate model hash when model is generated
-            .modelArchHash = hashPlaceholder.data(),  // TODO(b/191366627): Fetch this
+            .modelArchHash = c->getModel()->getModelArchHash(),
             .deviceCount = static_cast<int32_t>(c->getDevices().size()),
             .deviceId = deviceId.c_str(),
             .errorCode = resultCode,
@@ -220,14 +218,13 @@ void onExecutionFinish(ExecutionBuilder* e, ExecutionMode executionMode, int res
         duration_runtime_ns = TimeNanoMeasurer::currentDuration(e->getComputeStartTimePoint());
     }
 
-    const std::array<uint8_t, 32> hashPlaceholder{};
     const std::string deviceId = makeDeviceId(compilation->getDevices());
 
     const DiagnosticExecutionInfo info{
             .sessionId = getSessionId(),
             .packageName = getPackageName(),
             .versionNnapiModule = kNnapiApexVersion,
-            .modelArchHash = hashPlaceholder.data(),  // TODO(b/191366627): Fetch this
+            .modelArchHash = e->getModel()->getModelArchHash(),
             .deviceCount = static_cast<int32_t>(compilation->getDevices().size()),
             .deviceId = deviceId.c_str(),
             .executionMode = executionMode,
