@@ -88,6 +88,12 @@ class CompilationBuilder {
     int forTest_failPartitioning(
             int resultCode);  // If not ANEURALNETWORKS_NO_ERROR, then simulate partitioning failure
 
+    struct TelemetryInfo {
+        uint64_t compilationTimeNanos;
+        bool fallbackToCpuFromError;
+    };
+    const std::optional<TelemetryInfo>& getTelemetryInfo() const { return mTelemetryInfo; }
+
    private:
     const ModelBuilder* mModel;
 
@@ -127,6 +133,9 @@ class CompilationBuilder {
 
     // Amount of time to complete or abort the execution.
     std::optional<uint64_t> mTimeoutDuration;
+
+    // Supplementary compilation info for Telemetry use
+    std::optional<TelemetryInfo> mTelemetryInfo;
 };
 
 }  // namespace nn
