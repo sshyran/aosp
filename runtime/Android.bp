@@ -94,6 +94,7 @@ cc_defaults {
         "ModelArgumentInfo.cpp",
         "ModelBuilder.cpp",
         "NeuralNetworks.cpp",
+        "Telemetry.cpp",
         "TypeManager.cpp",
     ],
 
@@ -217,6 +218,7 @@ cc_library_static {
         "ModelArgumentInfo.cpp",
         "ModelBuilder.cpp",
         "NeuralNetworks.cpp",
+        "Telemetry.cpp",
         "TypeManager.cpp",
     ],
     static_libs: [

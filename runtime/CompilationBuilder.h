@@ -70,6 +70,7 @@ class CompilationBuilder {
     int createBurst(BurstBuilder** burst);
 
     const ModelBuilder* getModel() const { return mModel; }
+    const std::vector<std::shared_ptr<Device>>& getDevices() const { return mDevices; }
 
     int forEachStepRoleOfInput(uint32_t index, const StepRoleCallback& callback) const;
     int forEachStepRoleOfOutput(uint32_t index, const StepRoleCallback& callback) const;
@@ -77,6 +78,8 @@ class CompilationBuilder {
     bool createdWithExplicitDeviceList() const { return mExplicitDeviceList; }
 
     bool hasDynamicTemporaries() const { return mPlan.hasDynamicTemporaries(); }
+    bool isCacheInfoProvided() const { return mIsCacheInfoProvided; }
+    bool isFinished() const { return mFinished; }
 
     // These functions are solely intended for use by unit tests of the
     // partitioning algorithm.
