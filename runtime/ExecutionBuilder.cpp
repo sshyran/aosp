@@ -437,6 +437,12 @@ std::optional<uint64_t> ExecutionBuilder::getTimeoutDuration() const {
     return mTimeoutDuration;
 }
 
+TimePoint ExecutionBuilder::getComputeStartTimePoint() const {
+    CHECK(computationStarted()) << "getComputeStartTimePoint called before "
+                                << "execution has started.";
+    return mComputeStartTimePoint;
+}
+
 int ExecutionBuilder::setLoopTimeout(uint64_t duration) {
     if (computationStarted()) {
         LOG(ERROR) << "ANeuralNetworksExecution_setLoopTimeout called after the "
@@ -994,6 +1000,7 @@ int ExecutionBuilder::computeFenced(const std::vector<int>& waitFor,
     // Unlike ExecutionBuilder::compute, we do not need to reset output dimensions here because
     // fenced executions do not support dynamic output shape.
 
+    mComputeStartTimePoint = Clock::now();
     VLOG(EXECUTION) << "ExecutionBuilder::computeFenced";
     int result;
     const auto deadline = makeDeadline(mTimeoutDuration);
@@ -1044,6 +1051,7 @@ int ExecutionBuilder::compute(std::shared_ptr<ExecutionCallback>* synchronizatio
     }
 
     const auto deadline = makeDeadline(mTimeoutDuration);
+    mComputeStartTimePoint = Clock::now();
     if (synchronous) {
         if (burstBuilder) {
             VLOG(EXECUTION) << "ExecutionBuilder::compute (synchronous API, burst)";

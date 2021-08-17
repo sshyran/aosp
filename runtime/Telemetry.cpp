@@ -27,6 +27,7 @@
 
 #include "FeatureLevel.h"
 #include "Manager.h"
+#include "NeuralNetworks.h"
 
 #ifndef NN_COMPATIBILITY_LIBRARY_BUILD
 #include "AppInfoFetcher.h"
@@ -181,8 +182,8 @@ void onCompilationFinish(CompilationBuilder* c, int resultCode) {
             .errorCode = resultCode,
             .inputDataClass = evalInputDataClass(c->getModel()),
             .outputDataClass = evalOutputDataClass(c->getModel()),
-            .compilationTimeNanos = kNoTimeReported,  // TODO(b/191366627): Measure this
-            .fallbackToCpuFromError = false,          // TODO(b/191366627): Measure this
+            .compilationTimeNanos = c->getTelemetryInfo()->compilationTimeNanos,
+            .fallbackToCpuFromError = c->getTelemetryInfo()->fallbackToCpuFromError,
             .introspectionEnabled = c->createdWithExplicitDeviceList(),
             .cacheEnabled = c->isCacheInfoProvided(),
             .hasControlFlow = c->getModel()->hasControlFlow(),
@@ -204,6 +205,20 @@ void onExecutionFinish(ExecutionBuilder* e, ExecutionMode executionMode, int res
     }
 
     auto compilation = e->getCompilation();
+    uint64_t duration_driver_ns = kNoTimeReported;
+    uint64_t duration_hardware_ns = kNoTimeReported;
+    uint64_t duration_runtime_ns = kNoTimeReported;
+
+    if (e->measureTiming()) {
+        e->getDuration(ANEURALNETWORKS_DURATION_ON_HARDWARE, &duration_hardware_ns);
+        e->getDuration(ANEURALNETWORKS_DURATION_IN_DRIVER, &duration_driver_ns);
+    }
+
+    // Ignore runtime execution time if the call was async with dependencies, because waiting for
+    // the result may have been much later than when the execution actually finished.
+    if (executionMode != ExecutionMode::ASYNC_WITH_DEPS) {
+        duration_runtime_ns = TimeNanoMeasurer::currentDuration(e->getComputeStartTimePoint());
+    }
 
     const std::array<uint8_t, 32> hashPlaceholder{};
     const std::string deviceId = makeDeviceId(compilation->getDevices());
@@ -219,9 +234,9 @@ void onExecutionFinish(ExecutionBuilder* e, ExecutionMode executionMode, int res
             .inputDataClass = evalInputDataClass(e->getModel()),
             .outputDataClass = evalOutputDataClass(e->getModel()),
             .errorCode = resultCode,
-            .durationRuntimeNanos = kNoTimeReported,   // TODO(b/191366627): Measure this
-            .durationDriverNanos = kNoTimeReported,    // TODO(b/191366627): Measure this
-            .durationHardwareNanos = kNoTimeReported,  // TODO(b/191366627): Measure this
+            .durationRuntimeNanos = duration_runtime_ns,
+            .durationDriverNanos = duration_driver_ns,
+            .durationHardwareNanos = duration_hardware_ns,
             .introspectionEnabled = compilation->createdWithExplicitDeviceList(),
             .cacheEnabled = compilation->isCacheInfoProvided(),
             .hasControlFlow = compilation->getModel()->hasControlFlow(),
