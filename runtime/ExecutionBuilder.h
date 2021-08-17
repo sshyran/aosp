@@ -140,6 +140,9 @@ class ExecutionBuilder {
         return mState == State::COMPLETED;
     }
 
+    // Retrieve a computation start point
+    TimePoint getComputeStartTimePoint() const;
+
     const ModelArgumentInfo& getInputInfo(uint32_t index) const { return mInputs[index]; }
     const ModelArgumentInfo& getOutputInfo(uint32_t index) const { return mOutputs[index]; }
 
@@ -199,6 +202,10 @@ class ExecutionBuilder {
 
     // Do we ask the driver to measure timing?
     bool mMeasureTiming = false;
+
+    // Timepoint of computation start, used to evaluate timing
+    // from runtime perspective
+    TimePoint mComputeStartTimePoint;
 
     // Timing reported from the driver.  This field is only used if
     // mFencedExecutionCallback is nullptr.
