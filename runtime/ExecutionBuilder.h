@@ -52,6 +52,9 @@ class RuntimePreparedModel;
 class RuntimeExecution;
 class StepExecutor;
 
+// Execution modes
+enum class ExecutionMode { ASYNC, SYNC, BURST, ASYNC_WITH_DEPS };
+
 class ExecutionBuilder {
     friend class StepExecutor;
 
@@ -115,9 +118,12 @@ class ExecutionBuilder {
 
     // This method will be called at the end of all computation paths to change the state
     // of the execution object and update output shapes / memories.
-    int finishComputation(int result, const std::vector<OutputShape>& outputShapes);
-    ErrorStatus finishComputation(ErrorStatus error, const std::vector<OutputShape>& outputShapes) {
-        const int result = finishComputation(convertErrorStatusToResultCode(error), outputShapes);
+    int finishComputation(int result, const std::vector<OutputShape>& outputShapes,
+                          ExecutionMode mode);
+    ErrorStatus finishComputation(ErrorStatus error, const std::vector<OutputShape>& outputShapes,
+                                  ExecutionMode mode) {
+        const int result =
+                finishComputation(convertErrorStatusToResultCode(error), outputShapes, mode);
         return convertResultCodeToErrorStatus(result);
     }
 
@@ -128,6 +134,10 @@ class ExecutionBuilder {
     bool inFlight() const {
         std::lock_guard<std::mutex> lock(mStateMutex);
         return mState == State::COMPUTATION;
+    }
+    bool completed() const {
+        std::lock_guard<std::mutex> lock(mStateMutex);
+        return mState == State::COMPLETED;
     }
 
     const ModelArgumentInfo& getInputInfo(uint32_t index) const { return mInputs[index]; }
@@ -157,7 +167,7 @@ class ExecutionBuilder {
 
     // This method handles the common preparation and validation logic of compute and computeFenced.
     // It will be called at the start of every computation.
-    int prepareForCompute(const char* name);
+    int prepareForCompute(const char* name, ExecutionMode mode);
 
     const CompilationBuilder* mCompilation;
 
@@ -209,10 +219,6 @@ class ExecutionBuilder {
     bool computationStarted() const {
         std::lock_guard<std::mutex> lock(mStateMutex);
         return mState != State::PREPARATION;
-    }
-    bool completed() const {
-        std::lock_guard<std::mutex> lock(mStateMutex);
-        return mState == State::COMPLETED;
     }
 
     // Mutex to guard mState. Note that this not strictly needed because we provide
