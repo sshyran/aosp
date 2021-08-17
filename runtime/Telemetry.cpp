@@ -28,6 +28,10 @@
 #include "FeatureLevel.h"
 #include "Manager.h"
 
+#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
+#include "AppInfoFetcher.h"
+#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
+
 namespace android::nn::telemetry {
 namespace {
 
@@ -119,6 +123,17 @@ DataClass evalOutputDataClass(const ModelBuilder* m) {
     return result;
 }
 
+const char* getPackageName() {
+#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
+    auto& appInfo = AppInfoFetcher::get()->getAppInfo();
+    // If no package, return binary name
+    return appInfo.appPackageName.empty() ? appInfo.binaryPath.c_str()
+                                          : appInfo.appPackageName.c_str();
+#else   // NN_COMPATIBILITY_LIBRARY_BUILD
+    return "<package info not available>";
+#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
+}
+
 }  // namespace
 
 // Infer a data class from an operand type. Call iteratievly on operands set, previousDataClass is
@@ -157,7 +172,7 @@ void onCompilationFinish(CompilationBuilder* c, int resultCode) {
 
     const DiagnosticCompilationInfo info{
             .sessionId = getSessionId(),
-            .packageName = "",  // TODO(b/191366627): Fetch this
+            .packageName = getPackageName(),
             .versionNnapiModule = kNnapiApexVersion,
             // TODO(b/191366627): Generate model hash when model is generated
             .modelArchHash = hashPlaceholder.data(),  // TODO(b/191366627): Fetch this
@@ -195,7 +210,7 @@ void onExecutionFinish(ExecutionBuilder* e, ExecutionMode executionMode, int res
 
     const DiagnosticExecutionInfo info{
             .sessionId = getSessionId(),
-            .packageName = "",  // TODO(b/191366627): Fetch this
+            .packageName = getPackageName(),
             .versionNnapiModule = kNnapiApexVersion,
             .modelArchHash = hashPlaceholder.data(),  // TODO(b/191366627): Fetch this
             .deviceCount = static_cast<int32_t>(compilation->getDevices().size()),
