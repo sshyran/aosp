@@ -4,17 +4,15 @@
 
 #include <android-base/logging.h>
 
+#include <dlfcn.h>
 #include <string>
 #include <unordered_map>
 #include <utility>
 #include <sstream>
 #include <vector>
 
-#include <nnapi/IDevice.h>
-
 #include "HalInterfaces.h"
 #include "sampledriver_util.h"
-
 
 // type of function pointer
 typedef void* (*get_driver_func)();

@@ -82,14 +82,31 @@ The basics of authoring a vendor HAL require 4 things.
 1. Disable the in built sample CPU HAL, by specifying the USE flag
 `vendor-nnhal`.
 
-1. The vendor HAL must install a shared library named `libvendor-nn-hal.so` to
-the board image. The NNAPI implementation `libneuralnetworks.so` is configured
+1. The `aosp-frameworks-ml-nn` will install `libvendor-nn-hal.so` and it will load the HAL provided by the vendor. The `libvendor-nn-hal.so` is the entry for loading different drivers in system, default implementation will try to require `libfull-driver.so`; Other drivers like `libxnn-driver.so` and `libminimal-driver.so` are available when passing `USE=xnnpack` and `USE=minimal` while building;
+The NNAPI implementation `libneuralnetworks.so` is configured
 to load a shared library with this name.
 
 1. The entry point for the vendor NN HAL will be the symbol
-[android::hardware::neuralnetworks::V1_0::IDevice::getService](https://chromium.googlesource.com/aosp/platform/frameworks/ml/+/refs/heads/master/nn/chromeos/sampledriver.cpp#14), which will be called to register the HAL.
+[android::hardware::neuralnetworks::V1_0::IDevice::getService](https://chromium.googlesource.com/aosp/platform/frameworks/ml/+/refs/heads/master/nn/chromeos/sampledriver.cpp#81), which will be called to register the HAL.
+
+1. For each driver's implementation, you need to inherit from `hal::IDevice` and implemente a class that contains the driver logic (See [SampleDriverFull.cpp](https://chromium.googlesource.com/aosp/platform/frameworks/ml/+/refs/heads/master/nn/driver/sample/SampleDriverFull.cpp) for a better understanding), and export a function named `[get_driver]`(https://chromium.googlesource.com/aosp/platform/frameworks/ml/+/refs/heads/master/nn/driver/sample/SampleDriverFull.cpp#27) that will handle the logic of initialization of a driver and return a `void *`; This function will be used in `getService` that will handle the register driver logic.
 
 1. Successful execution of the supplied test suites (See [Testing an NN HAL](#testing-an-nn-hal)).
+
+1. The default NN HAL provides a set of drivers (`full driver`, `minimal driver` and `xnnpack driver`) and the availability depends on the host.
+
+1. By default, the system will only enable `full driver` and if you want to specify any other drivers, you can set an environmental variable `DRIVERS` to change this behavior (Seperated by ":"):
+```bash
+export DRIVERS="xnnpack:minimal"
+```
+
+1. The mapping for each driver's shared library and its name are stored at `/etc/env.d/drivers` by default; You can modify it in case you want to install a new driver / change a driver name. The default config is (Seperated by `\n` and `:`):
+```
+full:libfull-driver.so
+default:libfull-driver.so
+xnnpack:libxnn-driver.so
+minimal:libminimal-driver.so
+```
 
 Remember that the HAL will be loaded into the same process as NNAPI, so there will be no use of HardwareBuffers or Android IPC.
 
