@@ -1707,6 +1707,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since NNAPI feature level 4)
+     * * {@link ANEURALNETWORKS_TENSOR_INT32} (since NNAPI feature level 6)
      *
      * Supported tensor rank: up to 4.
      *
@@ -5658,6 +5659,46 @@ typedef enum {
      * Available since NNAPI feature level 4.
      */
     ANEURALNETWORKS_RANK = 101,
+
+    // Operations below are available since NNAPI feature level 6.
+
+    /**
+     * Performs multiplication of two tensors in batches.
+     *
+     * Multiplies all slices of two input tensors and arranges the individual
+     * results in a single output tensor of the same batch size. Each pair of
+     * slices in the same batch have identical {@link OperandCode}. Each
+     * slice can optionally be adjointed (transpose and conjugate) before
+     * multiplication.
+     *
+     * The two input tensors and the output tensor must be 2-D or higher and
+     * have the same batch size.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     *
+     * Supported tensor rank: at least 2 and up to 4
+     *
+     * Inputs:
+     * * 0: A tensor with 2-D or higher shape [..., r_x, c_x].
+     * * 1: A tensor with 2-D or higher shape [..., r_y, c_y]. It has the same
+     *      {@link OperandCode} and batch size as input0.
+     * * 2: An optional {@link ANEURALNETWORKS_BOOL} scalar adj_x, default
+     *      to false. Set to true to adjoint the slices of input0.
+     * * 3: An optional {@link ANEURALNETWORKS_BOOL} scalar adj_y, default
+     *      to false. Set to true to adjoint the slices of input1.
+     *
+     * Outputs:
+     * * 0: A tensor with 2-D or higher shape [..., r_o, c_o], where
+     *      r_o = c_x if adj_x else r_x
+     *      c_o = r_y if adj_y else c_y
+     *
+     * Available since NNAPI feature level 6.
+     */
+    ANEURALNETWORKS_BATCH_MATMUL = 102,
 } OperationCode;
 
 /**
@@ -5783,6 +5824,8 @@ typedef enum {
      * API releases.
      */
     ANEURALNETWORKS_FEATURE_LEVEL_5 = 31,
+    /** Android NNAPI feature level 6 */
+    ANEURALNETWORKS_FEATURE_LEVEL_6 = 1000006,
 } FeatureLevelCode;
 
 /**

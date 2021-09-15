@@ -28,6 +28,7 @@ const OperationRegistration* register_ABS();
 const OperationRegistration* register_ADD();
 const OperationRegistration* register_AVERAGE_POOL_2D();
 const OperationRegistration* register_AXIS_ALIGNED_BBOX_TRANSFORM();
+const OperationRegistration* register_BATCH_MATMUL();
 const OperationRegistration* register_BIDIRECTIONAL_SEQUENCE_RNN();
 const OperationRegistration* register_BOX_WITH_NMS_LIMIT();
 const OperationRegistration* register_CHANNEL_SHUFFLE();
@@ -106,6 +107,7 @@ BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_ADD());
     registerOperation(register_AVERAGE_POOL_2D());
     registerOperation(register_AXIS_ALIGNED_BBOX_TRANSFORM());
+    registerOperation(register_BATCH_MATMUL());
     registerOperation(register_BIDIRECTIONAL_SEQUENCE_RNN());
     registerOperation(register_BOX_WITH_NMS_LIMIT());
     registerOperation(register_CHANNEL_SHUFFLE());
