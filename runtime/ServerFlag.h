@@ -25,20 +25,28 @@
 namespace android::nn {
 
 // Keep these values consistent with server side configuration in
-// google3/googledata/experiments/mobile/android_platform/nnapi_native/features/feature_level.gcl.
+// google3/googledata/experiments/mobile/android_platform/nnapi_native/features/
+//   feature_level.gcl and telemetry.gcl.
 constexpr char kExprCategoryName[] = "nnapi_native";
 constexpr char kCurrentFeatureLevelFlagName[] = "current_feature_level";
+constexpr char kTelemetryEnableFlagName[] = "telemetry_enable";
 constexpr int64_t kDefaultFeatureLevelNum = 5;
 // When this value is updated, update kMinFeatureLevelCode in runtime/test/TestUpdatability.cpp with
 // the corresponding ANEURALNETWORKS_FEATURE_LEVEL_* version.
 constexpr int64_t kMinFeatureLevelNum = 5;
 constexpr int64_t kMaxFeatureLevelNum = 7;
+constexpr bool kDefaultTelemetryEnableValue = false;
 
+#if !defined(NN_COMPATIBILITY_LIBRARY_BUILD) && !defined(NN_EXPERIMENTAL_FEATURE)
 // Function to get server feature level flag. Note that this function should NOT be used directly.
 // Instead, clients are expected to use DeviceManager::getRuntimeVersion or
 // DeviceManager::getRuntimeFeatureLevel in runtime/Manager.h.
-#if !defined(NN_COMPATIBILITY_LIBRARY_BUILD) && !defined(NN_EXPERIMENTAL_FEATURE)
 int64_t getServerFeatureLevelFlag();
+
+// Function to get server telemetry enable flag. Note that this function should NOT be used
+// directly. Instead, clients are expected to use DeviceManager::isPlatformTelemetryEnabled in
+// runtime/Manager.h.
+bool getServerTelemetryEnableFlag();
 #endif  // !defined(NN_COMPATIBILITY_LIBRARY_BUILD) && !defined(NN_EXPERIMENTAL_FEATURE)
 
 // Get the runtime version corresponding to the server feature flag value.

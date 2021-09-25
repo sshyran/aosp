@@ -178,6 +178,9 @@ class DeviceManager {
     // Convert the internal Version level representation to the NDK representation.
     static int64_t versionToFeatureLevel(Version::Level versionLevel);
 
+    // Returns whether platform telemetry is enabled.
+    bool isPlatformTelemetryEnabled() const { return mIsPlatformTelemetryEnabled; }
+
     // For testing only:
     void setUseCpuOnly(bool useCpuOnly) { mSetCpuOnly = useCpuOnly; }
     bool getUseCpuOnly() const { return mSetCpuOnly; }
@@ -242,6 +245,10 @@ class DeviceManager {
 
     // Runtime version corresponding to getServerFeatureLevelFlag (in ServerFlag.h).
     Version mRuntimeVersion;
+
+    // Holds whether platform telemetry is enabled, as indicated by getServerTelemetryEnableFlag (in
+    // ServerFlag.h).
+    bool mIsPlatformTelemetryEnabled;
 
     // List of all the devices we discovered (including CpuDevice).
     std::vector<std::shared_ptr<Device>> mDevices;

@@ -19,6 +19,7 @@
 #include "ServerFlag.h"
 
 #include <android-base/logging.h>
+#include <android-base/parsebool.h>
 #include <android-base/parseint.h>
 #include <nnapi/Types.h>
 #include <stdint.h>
@@ -44,6 +45,26 @@ int64_t getServerFeatureLevelFlag() {
         LOG(WARNING) << "Failed to parse result of GetServerConfigurableFlag, errno=" << errno;
     }
     return featureLevel;
+}
+
+bool getServerTelemetryEnableFlag() {
+    const std::string telemetryEnabledString = server_configurable_flags::GetServerConfigurableFlag(
+            kExprCategoryName, kTelemetryEnableFlagName,
+            std::to_string(kDefaultTelemetryEnableValue));
+
+    const auto parseBoolResult = base::ParseBool(telemetryEnabledString);
+    switch (parseBoolResult) {
+        case base::ParseBoolResult::kError:
+            LOG(WARNING) << "Failed to parse result of GetServerConfigurableFlag";
+            return kDefaultTelemetryEnableValue;
+        case base::ParseBoolResult::kFalse:
+            return false;
+        case base::ParseBoolResult::kTrue:
+            return true;
+    }
+    LOG(WARNING) << "Unrecognized return from base::ParseBool: "
+                 << static_cast<int32_t>(parseBoolResult);
+    return kDefaultTelemetryEnableValue;
 }
 #endif  // !defined(NN_COMPATIBILITY_LIBRARY_BUILD) && !defined(NN_EXPERIMENTAL_FEATURE)
 
