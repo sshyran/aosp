@@ -30,6 +30,7 @@
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
+#pragma clang diagnostic ignored "-Wsign-compare"
 #include <tensorflow/lite/kernels/internal/optimized/integer_ops/add.h>
 #include <tensorflow/lite/kernels/internal/optimized/integer_ops/mul.h>
 #include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
@@ -479,8 +480,8 @@ Result<Version> validate(OperationType opType, const IOperationValidationContext
     }
 
     if (hasKnownRank(input1) && hasKnownRank(input2)) {
-        NN_RET_CHECK_LE(getNumberOfDimensions(input1), 4);
-        NN_RET_CHECK_LE(getNumberOfDimensions(input2), 4);
+        NN_RET_CHECK_LE(getNumberOfDimensions(input1), 4u);
+        NN_RET_CHECK_LE(getNumberOfDimensions(input2), 4u);
     }
     NN_RET_CHECK(validateInputTypes(context, {inputType, inputType, OperandType::INT32}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
@@ -492,8 +493,8 @@ bool prepare(IOperationExecutionContext* context) {
     Shape input1 = context->getInputShape(kInputTensor1);
     Shape input2 = context->getInputShape(kInputTensor2);
     Shape output = context->getOutputShape(kOutputTensor);
-    NN_RET_CHECK_LE(getNumberOfDimensions(input1), 4);
-    NN_RET_CHECK_LE(getNumberOfDimensions(input2), 4);
+    NN_RET_CHECK_LE(getNumberOfDimensions(input1), 4u);
+    NN_RET_CHECK_LE(getNumberOfDimensions(input2), 4u);
     NN_RET_CHECK(calculateBroadcastedShape(input1, input2, &output));
     return context->setOutputShape(kOutputTensor, output);
 }

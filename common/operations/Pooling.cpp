@@ -25,6 +25,7 @@
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
+#pragma clang diagnostic ignored "-Wsign-compare"
 #include <tensorflow/lite/kernels/internal/optimized/optimized_ops.h>
 #include <tensorflow/lite/kernels/internal/reference/integer_ops/pooling.h>
 #pragma clang diagnostic pop
@@ -363,7 +364,7 @@ Result<Version> validate(OperationType opType, const IOperationValidationContext
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(input), 4);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(input), 4u);
 
     PoolingParam param;
     NN_RET_CHECK(param.initialize(context));
@@ -373,9 +374,9 @@ bool prepare(IOperationExecutionContext* context) {
     uint32_t height = getSizeOfDimension(input, param.useNchw ? 2 : 1);
     uint32_t width = getSizeOfDimension(input, param.useNchw ? 3 : 2);
     uint32_t channels = getSizeOfDimension(input, param.useNchw ? 1 : 3);
-    NN_RET_CHECK_GT(height, 0);
-    NN_RET_CHECK_GT(width, 0);
-    NN_RET_CHECK_GT(channels, 0);
+    NN_RET_CHECK_GT(height, 0u);
+    NN_RET_CHECK_GT(width, 0u);
+    NN_RET_CHECK_GT(channels, 0u);
 
     uint32_t outWidth = computeOutSize(width, param.filter_width, param.stride_width,
                                        param.padding_left, param.padding_right);

@@ -43,7 +43,7 @@ template <typename T, typename M>
 std::pair<int, int> TileOneDimension(const Shape& input_shape, const T* in_data,
                                      const M* multipliers, T* out_data, int dimension) {
     const int dimension_size = input_shape.dimensions[dimension];
-    if (dimension == input_shape.dimensions.size() - 1) {
+    if (static_cast<size_t>(dimension) == input_shape.dimensions.size() - 1) {
         CopyMultipleTimes(in_data, dimension_size, multipliers[dimension], out_data);
         return std::make_pair(dimension_size,
                               dimension_size * static_cast<int>(multipliers[dimension]));

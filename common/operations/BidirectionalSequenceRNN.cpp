@@ -66,9 +66,9 @@ void transposeFirstTwoDims(const T* input, const Shape& inputShape, T* output) {
     const uint32_t firstDimSize = getSizeOfDimension(inputShape, 0);
     const uint32_t secondDimSize = getSizeOfDimension(inputShape, 1);
     const uint32_t inputSize = getSizeOfDimension(inputShape, 2);
-    for (int f = 0; f < firstDimSize; ++f) {
-        for (int s = 0; s < secondDimSize; ++s) {
-            for (int i = 0; i < inputSize; ++i) {
+    for (uint32_t f = 0; f < firstDimSize; ++f) {
+        for (uint32_t s = 0; s < secondDimSize; ++s) {
+            for (uint32_t i = 0; i < inputSize; ++i) {
                 const uint32_t inputIndex = f * secondDimSize * inputSize + s * inputSize + i;
                 const uint32_t outputIndex = s * firstDimSize * inputSize + f * inputSize + i;
                 output[outputIndex] = input[inputIndex];
@@ -80,7 +80,7 @@ void transposeFirstTwoDims(const T* input, const Shape& inputShape, T* output) {
 Shape removeFirstDim(const Shape& input) {
     Shape output = input;
     output.dimensions.resize(input.dimensions.size() - 1);
-    for (int i = 0; i < input.dimensions.size() - 1; ++i) {
+    for (size_t i = 0; i < input.dimensions.size() - 1; ++i) {
         output.dimensions[i] = input.dimensions[i + 1];
     }
     return output;
@@ -253,7 +253,7 @@ bool executeTyped(IOperationExecutionContext* context) {
     }
 
     // Forward pass
-    for (int i = 0; i < maxTime; ++i) {
+    for (uint32_t i = 0; i < maxTime; ++i) {
         const T* inputBatchPtr = input + i * batchSize * inputSize;
         const T* auxInputBatchPtr = nullptr;
         if (hasAuxWeights) {
@@ -390,15 +390,15 @@ bool prepare(IOperationExecutionContext* context) {
     const uint32_t bwNumUnits = getSizeOfDimension(bwWeights, 0);
     const uint32_t inputSize = getSizeOfDimension(input, 2);
 
-    NN_RET_CHECK_EQ(getNumberOfDimensions(input), 3);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(fwWeights), 2);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(fwRecurrentWeights), 2);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(fwBias), 1);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(fwHiddenState), 2);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(bwWeights), 2);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(bwRecurrentWeights), 2);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(bwBias), 1);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(bwHiddenState), 2);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(input), 3u);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(fwWeights), 2u);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(fwRecurrentWeights), 2u);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(fwBias), 1u);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(fwHiddenState), 2u);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(bwWeights), 2u);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(bwRecurrentWeights), 2u);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(bwBias), 1u);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(bwHiddenState), 2u);
 
     NN_RET_CHECK_EQ(inputSize, getSizeOfDimension(fwWeights, 1));
     NN_RET_CHECK_EQ(fwNumUnits, getSizeOfDimension(fwBias, 0));
@@ -417,9 +417,9 @@ bool prepare(IOperationExecutionContext* context) {
     NN_RET_CHECK_EQ(bwNumUnits, getSizeOfDimension(bwHiddenState, 1));
 
     if (linkingMode == LinkingMode::CROSS_LINKING) {
-        NN_RET_CHECK_EQ(getNumberOfDimensions(auxInput), 3);
-        NN_RET_CHECK_EQ(getNumberOfDimensions(fwAuxWeights), 2);
-        NN_RET_CHECK_EQ(getNumberOfDimensions(bwAuxWeights), 2);
+        NN_RET_CHECK_EQ(getNumberOfDimensions(auxInput), 3u);
+        NN_RET_CHECK_EQ(getNumberOfDimensions(fwAuxWeights), 2u);
+        NN_RET_CHECK_EQ(getNumberOfDimensions(bwAuxWeights), 2u);
 
         NN_RET_CHECK_EQ(getSizeOfDimension(auxInput, 0), getSizeOfDimension(input, 0));
         NN_RET_CHECK_EQ(getSizeOfDimension(auxInput, 1), getSizeOfDimension(input, 1));
@@ -428,7 +428,7 @@ bool prepare(IOperationExecutionContext* context) {
         NN_RET_CHECK_EQ(getSizeOfDimension(bwAuxWeights, 0), bwNumUnits);
         NN_RET_CHECK_EQ(getSizeOfDimension(bwAuxWeights, 1), getSizeOfDimension(auxInput, 2));
     } else if (linkingMode == LinkingMode::PARALLEL_LINKING) {
-        NN_RET_CHECK_EQ(getNumberOfDimensions(auxInput), 3);
+        NN_RET_CHECK_EQ(getNumberOfDimensions(auxInput), 3u);
 
         NN_RET_CHECK_EQ(getSizeOfDimension(auxInput, 0), getSizeOfDimension(input, 0));
         NN_RET_CHECK_EQ(getSizeOfDimension(auxInput, 1), getSizeOfDimension(input, 1));
