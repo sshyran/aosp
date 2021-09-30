@@ -49,7 +49,7 @@ constexpr uint32_t kInputArrIdx = 6;
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 constexpr int32_t DENSE = 0;
-constexpr int32_t SPARSE_CSR = 1;
+[[maybe_unused]] constexpr int32_t SPARSE_CSR = 1;
 
 uint64_t getFlattenedIndex(const std::vector<int32_t>& indices, const std::vector<uint32_t>& shape,
                            const int origRank) {

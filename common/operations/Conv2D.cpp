@@ -28,9 +28,12 @@
 #include "Tracing.h"
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
 #include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
 #include <tensorflow/lite/kernels/internal/reference/integer_ops/conv.h>
 #include <tensorflow/lite/kernels/internal/types.h>
+#pragma clang diagnostic pop
 
 #include "CpuOperationUtils.h"
 #endif  // NN_INCLUDE_CPU_IMPLEMENTATION
@@ -44,7 +47,7 @@ constexpr char kOperationName[] = "CONV_2D";
 constexpr uint32_t kNumInputsArray[] = {7, 8, 10, 11, 13};
 constexpr uint32_t kInputTensor = 0;
 constexpr uint32_t kFilterTensor = 1;
-constexpr uint32_t kBiasTensor = 2;
+[[maybe_unused]] constexpr uint32_t kBiasTensor = 2;
 
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
@@ -53,7 +56,7 @@ namespace {
 
 // If possible we will use this static buffer for the tensor.
 constexpr size_t kStaticBufferSize = 1605632;
-char static_scratch_buffer[kStaticBufferSize];
+[[maybe_unused]] char static_scratch_buffer[kStaticBufferSize];
 
 // executionMutex is used to protect concurrent access of the static_scratch_buffer
 // and other non-threadsafe resources like gemmlowp::GemmContext.
@@ -131,12 +134,12 @@ struct Conv2dParam {
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 #define ANDROID_NN_CONV_PARAMETERS(Type)                                          \
-    uint32_t height = getSizeOfDimension(inputShape, 1);                          \
-    uint32_t width = getSizeOfDimension(inputShape, 2);                           \
+    [[maybe_unused]] uint32_t height = getSizeOfDimension(inputShape, 1);         \
+    [[maybe_unused]] uint32_t width = getSizeOfDimension(inputShape, 2);          \
     uint32_t filterHeight = getSizeOfDimension(filterShape, 1);                   \
     uint32_t filterWidth = getSizeOfDimension(filterShape, 2);                    \
-    uint32_t outHeight = getSizeOfDimension(outputShape, 1);                      \
-    uint32_t outWidth = getSizeOfDimension(outputShape, 2);                       \
+    [[maybe_unused]] uint32_t outHeight = getSizeOfDimension(outputShape, 1);     \
+    [[maybe_unused]] uint32_t outWidth = getSizeOfDimension(outputShape, 2);      \
     uint32_t inDepth = getSizeOfDimension(inputShape, 3);                         \
                                                                                   \
     uint32_t paddingHeight = (uint32_t)padding_top;                               \
@@ -193,8 +196,8 @@ bool needim2colData(const Shape& filterShape, int32_t stride_width, int32_t stri
 
 bool convNhwc(const float* inputData, const Shape& inputShape, const float* filterData,
               const Shape& filterShape, const float* biasData, const Shape& biasShape,
-              int32_t padding_left, int32_t padding_right, int32_t padding_top,
-              int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
+              int32_t padding_left, int32_t /*padding_right*/, int32_t padding_top,
+              int32_t /*padding_bottom*/, int32_t stride_width, int32_t stride_height,
               int32_t dilation_width_factor, int32_t dilation_height_factor, int32_t activation,
               float* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("convFloat32");
@@ -222,8 +225,8 @@ bool convNhwc(const float* inputData, const Shape& inputShape, const float* filt
 
 bool convNhwc(const uint8_t* inputData, const Shape& inputShape, const uint8_t* filterData,
               const Shape& filterShape, const int32_t* biasData, const Shape& biasShape,
-              int32_t padding_left, int32_t padding_right, int32_t padding_top,
-              int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
+              int32_t padding_left, int32_t /*padding_right*/, int32_t padding_top,
+              int32_t /*padding_bottom*/, int32_t stride_width, int32_t stride_height,
               int32_t dilation_width_factor, int32_t dilation_height_factor, int32_t activation,
               uint8_t* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("convQuant8");
@@ -352,8 +355,8 @@ bool conv(const T_Input* inputData, const Shape& inputShape, const T_Filter* fil
 bool convQuant8PerChannelNhwc(const uint8_t* inputData, const Shape& inputShape,
                               const int8_t* filterData, const Shape& filterShape,
                               const float* filterScales, const int32_t* biasData,
-                              const Shape& biasShape, int32_t paddingLeft, int32_t paddingRight,
-                              int32_t paddingTop, int32_t paddingBottom, int32_t strideWidth,
+                              const Shape& biasShape, int32_t paddingLeft, int32_t /*paddingRight*/,
+                              int32_t paddingTop, int32_t /*paddingBottom*/, int32_t strideWidth,
                               int32_t strideHeight, int32_t dilationWidthFactor,
                               int32_t dilationHeightFactor, int32_t activation, uint8_t* outputData,
                               const Shape& outputShape) {
@@ -445,26 +448,26 @@ bool convQuant8PerChannelNhwc(const uint8_t* inputData, const Shape& inputShape,
 bool convQuant8PerChannelNhwc(const int8_t* inputData, const Shape& inputShape,
                               const int8_t* filterData, const Shape& filterShape,
                               const float* filterScales, const int32_t* biasData,
-                              const Shape& biasShape, int32_t paddingLeft, int32_t paddingRight,
-                              int32_t paddingTop, int32_t paddingBottom, int32_t strideWidth,
+                              const Shape& biasShape, int32_t paddingLeft, int32_t /*paddingRight*/,
+                              int32_t paddingTop, int32_t /*paddingBottom*/, int32_t strideWidth,
                               int32_t strideHeight, int32_t dilationWidthFactor,
                               int32_t dilationHeightFactor, int32_t activation, int8_t* outputData,
                               const Shape& outputShape) {
     NNTRACE_TRANS("convQuant8SignedPerChannel");
 
-    uint32_t numBatches = getSizeOfDimension(inputShape, 0);
-    uint32_t inputHeight = getSizeOfDimension(inputShape, 1);
-    uint32_t inputWidth = getSizeOfDimension(inputShape, 2);
-    uint32_t inputDepth = getSizeOfDimension(inputShape, 3);
-    uint32_t filterHeight = getSizeOfDimension(filterShape, 1);
-    uint32_t filterWidth = getSizeOfDimension(filterShape, 2);
-    uint32_t filterDepth = getSizeOfDimension(filterShape, 3);
-    uint32_t outputHeight = getSizeOfDimension(outputShape, 1);
-    uint32_t outputWidth = getSizeOfDimension(outputShape, 2);
+    [[maybe_unused]] uint32_t numBatches = getSizeOfDimension(inputShape, 0);
+    [[maybe_unused]] uint32_t inputHeight = getSizeOfDimension(inputShape, 1);
+    [[maybe_unused]] uint32_t inputWidth = getSizeOfDimension(inputShape, 2);
+    [[maybe_unused]] uint32_t inputDepth = getSizeOfDimension(inputShape, 3);
+    [[maybe_unused]] uint32_t filterHeight = getSizeOfDimension(filterShape, 1);
+    [[maybe_unused]] uint32_t filterWidth = getSizeOfDimension(filterShape, 2);
+    [[maybe_unused]] uint32_t filterDepth = getSizeOfDimension(filterShape, 3);
+    [[maybe_unused]] uint32_t outputHeight = getSizeOfDimension(outputShape, 1);
+    [[maybe_unused]] uint32_t outputWidth = getSizeOfDimension(outputShape, 2);
     uint32_t outputDepth = getSizeOfDimension(outputShape, 3);
 
-    int32_t inputOffset = -inputShape.offset;
-    int32_t outputOffset = outputShape.offset;
+    [[maybe_unused]] int32_t inputOffset = -inputShape.offset;
+    [[maybe_unused]] int32_t outputOffset = outputShape.offset;
 
     auto realMultiplier = std::vector<double>(outputDepth, .0f);
     auto outputMultiplier = std::vector<int32_t>(outputDepth, 0);

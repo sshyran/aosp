@@ -26,8 +26,11 @@
 #include "nnapi/Validation.h"
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
 #include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
 #include <tensorflow/lite/kernels/internal/optimized/optimized_ops.h>
+#pragma clang diagnostic pop
 
 #include "CpuOperationUtils.h"
 #endif  // NN_INCLUDE_CPU_IMPLEMENTATION
@@ -41,17 +44,17 @@ constexpr char kOperationName[] = "SOFTMAX";
 
 constexpr uint32_t kNumInputs = 3;
 constexpr uint32_t kInputTensor = 0;
-constexpr uint32_t kBetaScalar = 1;
-constexpr uint32_t kAxisScalar = 2;
+[[maybe_unused]] constexpr uint32_t kBetaScalar = 1;
+[[maybe_unused]] constexpr uint32_t kAxisScalar = 2;
 
 constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
+[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
 
 inline bool softmaxSlowFloat32(const float* inputData, const Shape& inputShape, const float beta,
-                               int32_t axis, float* outputData, const Shape& outputShape) {
+                               int32_t axis, float* outputData, const Shape& /*outputShape*/) {
     NNTRACE_TRANS("softmaxFloatSlow32");
     const uint32_t outerSize = getNumberOfElements(inputShape, 0, axis);
     const uint32_t axisSize = getSizeOfDimension(inputShape, axis);
@@ -113,9 +116,9 @@ bool softmaxFloat16(const _Float16* inputData, const Shape& inputShape, const fl
 }
 
 template <typename T>
-bool softmaxQuant8Impl(const T* inputData, const Shape& inputShape, const float beta, int32_t axis,
-                       int32_t inputMultiplier, int32_t inputLeftShift, float diffMin,
-                       T* outputData, const Shape& outputShape) {
+bool softmaxQuant8Impl(const T* inputData, const Shape& inputShape, const float /*beta*/,
+                       int32_t axis, int32_t inputMultiplier, int32_t inputLeftShift, float diffMin,
+                       T* outputData, const Shape& /*outputShape*/) {
     NNTRACE_TRANS("softmaxQuant8");
     // The representation chosen for the input to the exp() function is Q5.26.
     // We need to leave extra space since values that we skip might be as large as
@@ -202,7 +205,7 @@ bool softmaxQuant8Impl(const T* inputData, const Shape& inputShape, const float 
 template <typename T>
 bool softmaxQuant8(const T* inputData, const Shape& inputShape, const float beta, int32_t axis,
                    T* outputData, const Shape& outputShape) {
-    int32_t ndim = getNumberOfDimensions(inputShape);
+    [[maybe_unused]] int32_t ndim = getNumberOfDimensions(inputShape);
     NN_CHECK(handleNegativeAxis(inputShape, &axis));
 
     if ((inputShape.type == OperandType::TENSOR_QUANT8_ASYMM && outputShape.offset != 0) ||

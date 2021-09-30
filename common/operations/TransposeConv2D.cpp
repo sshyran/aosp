@@ -26,7 +26,10 @@
 #include "Tracing.h"
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
 #include <tensorflow/lite/kernels/internal/common.h>
+#pragma clang diagnostic pop
 
 #include "CpuOperationUtils.h"
 #endif  // NN_INCLUDE_CPU_IMPLEMENTATION
@@ -39,18 +42,18 @@ constexpr char kOperationName[] = "TRANSPOSE_CONV_2D";
 
 constexpr uint32_t kInputTensor = 0;
 constexpr uint32_t kFilterTensor = 1;
-constexpr uint32_t kBiasTensor = 2;
+[[maybe_unused]] constexpr uint32_t kBiasTensor = 2;
 
 constexpr uint32_t kNumInputs1 = 9;
 constexpr uint32_t kNumInputs2 = 11;
 constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
+[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
 
 namespace {
 
 // If possible we will use this static buffer for the tensor.
 constexpr size_t kStaticBufferSize = 1605632;
-char static_scratch_buffer[kStaticBufferSize];
+[[maybe_unused]] char static_scratch_buffer[kStaticBufferSize];
 
 // executionMutex is used to protect concurrent access of the static_scratch_buffer.
 // std::mutex is safe for pthreads on Android.
@@ -118,13 +121,15 @@ struct TransposeConv2dParam {
     uint32_t outputHeight = getSizeOfDimension(outputShape, 1);                 \
     uint32_t outputWidth = getSizeOfDimension(outputShape, 2);                  \
     uint32_t outputDepth = getSizeOfDimension(outputShape, 3);                  \
-    int32_t paddingLeft = param.paddingLeft, paddingRight = param.paddingRight; \
-    int32_t paddingTop = param.paddingTop, paddingBottom = param.paddingBottom; \
+    int32_t paddingLeft = param.paddingLeft;                                    \
+    [[maybe_unused]] int32_t paddingRight = param.paddingRight;                 \
+    int32_t paddingTop = param.paddingTop;                                      \
+    [[maybe_unused]] int32_t paddingBottom = param.paddingBottom;               \
     int32_t strideWidth = param.strideWidth, strideHeight = param.strideHeight; \
     int32_t activation = param.activation;
 
 bool transposeConvNhwc(const float* inputData, const Shape& inputShape, const float* filterData,
-                       const Shape& filterShape, const float* biasData, const Shape& biasShape,
+                       const Shape& filterShape, const float* biasData, const Shape& /*biasShape*/,
                        const TransposeConv2dParam& param, float* outputData,
                        const Shape& outputShape) {
     NNTRACE_TRANS("transposeConvFloat32");

@@ -67,13 +67,13 @@ std::pair<int, int> TileOneDimension(const Shape& input_shape, const T* in_data,
 
 template <typename T>
 void tileImpl(const T* inputData, const Shape& inputShape, const int32_t* multiples, T* outputData,
-              const Shape& outputShape) {
+              const Shape& /*outputShape*/) {
     TileOneDimension(inputShape, inputData, multiples, outputData, 0);
 }
 
 }  // namespace
 
-bool prepare(const Shape& input, const int32_t* multiples, const Shape& multiplesShape,
+bool prepare(const Shape& input, const int32_t* multiples, const Shape& /*multiplesShape*/,
              Shape* output) {
     output->type = input.type;
     output->offset = input.offset;

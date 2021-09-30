@@ -25,7 +25,10 @@
 #include "Tracing.h"
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
 #include <tensorflow/lite/kernels/internal/reference/reference_ops.h>
+#pragma clang diagnostic pop
 #endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 namespace android {
@@ -34,16 +37,16 @@ namespace reduce {
 
 constexpr uint32_t kNumInputs = 3;
 constexpr uint32_t kInputTensor = 0;
-constexpr uint32_t kInputAxes = 1;
-constexpr uint32_t kInputKeepDims = 2;
+[[maybe_unused]] constexpr uint32_t kInputAxes = 1;
+[[maybe_unused]] constexpr uint32_t kInputKeepDims = 2;
 
 constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
+[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
 
 // Values from
 // https://en.wikipedia.org/wiki/Half-precision_floating-point_format#IEEE_754_half-precision_binary_floating-point_format:_binary16
 constexpr _Float16 kFloat16Max = 65504;
-constexpr _Float16 kFloat16Lowest = -kFloat16Max;
+[[maybe_unused]] constexpr _Float16 kFloat16Lowest = -kFloat16Max;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {

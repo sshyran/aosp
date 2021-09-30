@@ -28,12 +28,15 @@
 #include "nnapi/Validation.h"
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
 #include <tensorflow/lite/kernels/internal/optimized/integer_ops/add.h>
 #include <tensorflow/lite/kernels/internal/optimized/integer_ops/mul.h>
 #include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
 #include <tensorflow/lite/kernels/internal/reference/integer_ops/add.h>
 #include <tensorflow/lite/kernels/internal/reference/integer_ops/mul.h>
 #include <tensorflow/lite/kernels/internal/types.h>
+#pragma clang diagnostic pop
 
 #include "CpuOperationUtils.h"
 #endif  // NN_INCLUDE_CPU_IMPLEMENTATION
@@ -46,7 +49,7 @@ namespace broadcast {
 constexpr uint32_t kNumInputs = 3;
 constexpr uint32_t kInputTensor1 = 0;
 constexpr uint32_t kInputTensor2 = 1;
-constexpr uint32_t kActivationScalar = 2;
+[[maybe_unused]] constexpr uint32_t kActivationScalar = 2;
 
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;

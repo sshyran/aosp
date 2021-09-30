@@ -18,7 +18,10 @@
 
 #include "LSTM.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
 #include <tensorflow/lite/kernels/internal/reference/portable_tensor_utils.h>
+#pragma clang diagnostic pop
 
 #include <vector>
 
@@ -130,14 +133,14 @@ LSTMCell::LSTMCell(const Operation& operation, RunTimeOperandInfo* operands) {
 
 // static
 bool LSTMCell::CheckInputTensorDimensions(
-        const RunTimeOperandInfo* input_, const RunTimeOperandInfo* input_to_input_weights,
+        const RunTimeOperandInfo* /*input_*/, const RunTimeOperandInfo* input_to_input_weights,
         const RunTimeOperandInfo* input_to_forget_weights,
         const RunTimeOperandInfo* input_to_cell_weights,
-        const RunTimeOperandInfo* input_to_output_weights,
+        const RunTimeOperandInfo* /*input_to_output_weights*/,
         const RunTimeOperandInfo* recurrent_to_input_weights,
         const RunTimeOperandInfo* recurrent_to_forget_weights,
         const RunTimeOperandInfo* recurrent_to_cell_weights,
-        const RunTimeOperandInfo* recurrent_to_output_weights,
+        const RunTimeOperandInfo* /*recurrent_to_output_weights*/,
         const RunTimeOperandInfo* cell_to_input_weights,
         const RunTimeOperandInfo* cell_to_forget_weights,
         const RunTimeOperandInfo* cell_to_output_weights, const RunTimeOperandInfo* input_gate_bias,

@@ -28,7 +28,10 @@
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 #include <tensorflow/lite/kernels/internal/tensor_utils.h>
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
 #include <unsupported/Eigen/CXX11/Tensor>
+#pragma clang diagnostic pop
 
 #include "CpuOperationUtils.h"
 #include "guarded_philox_random.h"
