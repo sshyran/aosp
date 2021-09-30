@@ -126,7 +126,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(input), 4);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(input), 4u);
     return context->setOutputShape(kOutputTensor, input);
 }
 

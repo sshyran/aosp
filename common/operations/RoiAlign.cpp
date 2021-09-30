@@ -88,7 +88,7 @@ inline bool roiAlignNhwc(const T_Input* inputData, const Shape& inputShape, cons
         // 1. invalid batch id
         // 2. Region out of bound: x1|x2|y1|y2 < 0 || x1|x2 > inWidth || y1|y2 > inHeight
         // 3. Invalid region: x2 < x1 || y2 < y1
-        NN_RET_CHECK_GE(batchId, 0);
+        NN_RET_CHECK_GE(batchId, 0u);
         NN_RET_CHECK_LT(batchId, numBatches);
         NN_RET_CHECK(roiInfo[0] >= 0);
         NN_RET_CHECK(roiInfo[1] >= 0);
@@ -220,7 +220,7 @@ inline bool roiAlignQuantNhwc(const T_Input* inputData, const Shape& inputShape,
         // 1. invalid batch id
         // 2. Region out of bound: x1|x2|y1|y2 < 0 || x1|x2 > inWidth || y1|y2 > inHeight
         // 3. Invalid region: x2 < x1 || y2 < y1
-        NN_RET_CHECK_GE(batchId, 0);
+        NN_RET_CHECK_GE(batchId, 0u);
         NN_RET_CHECK_LT(batchId, numBatches);
         NN_RET_CHECK(wRoiStart <= inWidth);
         NN_RET_CHECK(hRoiStart <= inHeight);
@@ -392,8 +392,8 @@ bool prepare(IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
     Shape roiShape = context->getInputShape(kRoiTensor);
     Shape batchSplitShape = context->getInputShape(kBatchSplitTensor);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(input), 4);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(roiShape), 2);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(input), 4u);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(roiShape), 2u);
 
     uint32_t numBatches = getSizeOfDimension(input, 0);
     uint32_t inHeight = getSizeOfDimension(input, useNchw ? 2 : 1);
@@ -401,11 +401,11 @@ bool prepare(IOperationExecutionContext* context) {
     uint32_t inDepth = getSizeOfDimension(input, useNchw ? 1 : 3);
     uint32_t numRois = getSizeOfDimension(roiShape, 0);
     // Every dimension must be positive except for numRois.
-    NN_RET_CHECK_GT(numBatches, 0);
-    NN_RET_CHECK_GT(inHeight, 0);
-    NN_RET_CHECK_GT(inWidth, 0);
-    NN_RET_CHECK_GT(inDepth, 0);
-    NN_RET_CHECK_EQ(getSizeOfDimension(roiShape, 1), 4);
+    NN_RET_CHECK_GT(numBatches, 0u);
+    NN_RET_CHECK_GT(inHeight, 0u);
+    NN_RET_CHECK_GT(inWidth, 0u);
+    NN_RET_CHECK_GT(inDepth, 0u);
+    NN_RET_CHECK_EQ(getSizeOfDimension(roiShape, 1), 4u);
     NN_RET_CHECK_EQ(getSizeOfDimension(batchSplitShape, 0), numRois);
 
     int32_t outputHeight = context->getInputValue<int32_t>(kOutputHeightScalar);

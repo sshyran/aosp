@@ -64,7 +64,7 @@ bool groupedConvFloat32(const float* inputData, const Shape& inputShape, const f
         for (uint32_t h = 0; h < outputHeight; h++) {
             for (uint32_t w = 0; w < outputWidth; w++) {
                 const float* filterBase = filterData;
-                for (uint32_t g = 0; g < numGroups; g++) {
+                for (int32_t g = 0; g < numGroups; g++) {
                     for (uint32_t d = 0; d < outputGroupDepth; d++) {
                         int32_t wInputOrigin =
                                 static_cast<int32_t>(w) * stride_width - padding_left;
@@ -136,7 +136,7 @@ bool groupedConvQuant8(const T* inputData, const Shape& inputShape, const T* fil
         for (uint32_t h = 0; h < outputHeight; h++) {
             for (uint32_t w = 0; w < outputWidth; w++) {
                 const T* filterBase = filterData;
-                for (uint32_t g = 0; g < numGroups; g++) {
+                for (int32_t g = 0; g < numGroups; g++) {
                     for (uint32_t d = 0; d < outputGroupDepth; d++) {
                         int32_t wInputOrigin =
                                 static_cast<int32_t>(w) * stride_width - padding_left;
@@ -218,7 +218,7 @@ bool groupedConvQuant8PerChannel(const T* inputData, const Shape& inputShape,
     auto outputMultiplier = std::vector<int32_t>(outputDepth, 0);
     auto outputShift = std::vector<int32_t>(outputDepth, 0);
 
-    for (int i = 0; i < outputDepth; ++i) {
+    for (uint32_t i = 0; i < outputDepth; ++i) {
         Shape filterChannelShape = filterShape;
         filterChannelShape.scale = filterScales[i];
         Shape biasChannelShape = biasShape;
@@ -241,7 +241,7 @@ bool groupedConvQuant8PerChannel(const T* inputData, const Shape& inputShape,
         for (uint32_t h = 0; h < outputHeight; h++) {
             for (uint32_t w = 0; w < outputWidth; w++) {
                 const int8_t* filterBase = filterData;
-                for (uint32_t g = 0; g < numGroups; g++) {
+                for (int32_t g = 0; g < numGroups; g++) {
                     for (uint32_t d = 0; d < outputGroupDepth; d++) {
                         int32_t wInputOrigin =
                                 static_cast<int32_t>(w) * stride_width - padding_left;
