@@ -307,7 +307,7 @@ bool depthwiseConvQuant8PerChannelNhwc(
     auto outputMultiplier = std::vector<int32_t>(outputDepth, 0);
     auto outputShift = std::vector<int32_t>(outputDepth, .0f);
 
-    for (int i = 0; i < outputDepth; ++i) {
+    for (uint32_t i = 0; i < outputDepth; ++i) {
         Shape filterChannelShape = filterShape;
         filterChannelShape.scale = filterScales[i];
         Shape biasChannelShape = biasShape;
@@ -329,7 +329,7 @@ bool depthwiseConvQuant8PerChannelNhwc(
         for (uint32_t h = 0; h < outputHeight; h++) {
             for (uint32_t w = 0; w < outputWidth; w++) {
                 for (uint32_t ic = 0; ic < inputDepth; ic++) {
-                    for (uint32_t m = 0; m < depthMultiplier; m++) {
+                    for (int32_t m = 0; m < depthMultiplier; m++) {
                         int32_t wInputOrigin = static_cast<int32_t>(w) * strideWidth - paddingLeft;
                         int32_t hInputOrigin = static_cast<int32_t>(h) * strideHeight - paddingTop;
                         const int oc = m + ic * depthMultiplier;
@@ -452,7 +452,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
             NN_RET_CHECK_EQ(std::get<Operand::SymmPerChannelQuantParams>(
                                     context->getInputExtraParams(kFilterTensor))
                                     .channelDim,
-                            3)
+                            3u)
                     << "Unsupported filter tensor channel dimension for operation "
                     << kOperationName;
         }
@@ -489,14 +489,14 @@ Result<Version> validate(const IOperationValidationContext* context) {
             withExplicitPadding = true;
         }
         int inputOffset = withExplicitPadding ? 3 : 0;
-        if (numInputs >= 9 + inputOffset) {
+        if (numInputs >= 9u + inputOffset) {
             inExpectedTypes.push_back(OperandType::BOOL);
             withLayout = true;
         }
-        NN_RET_CHECK_NE(numInputs, 10 + inputOffset)
+        NN_RET_CHECK_NE(numInputs, 10u + inputOffset)
                 << "Provided only one dilation factor value, two values are required for operation "
                 << kOperationName;
-        if (numInputs == 11 + inputOffset) {
+        if (numInputs == 11u + inputOffset) {
             inExpectedTypes.push_back(OperandType::INT32);
             inExpectedTypes.push_back(OperandType::INT32);
             withDilation = true;
@@ -536,10 +536,10 @@ bool prepare(IOperationExecutionContext* context) {
     } else {
         NN_RET_CHECK(input.type == bias.type);
     }
-    NN_RET_CHECK_EQ(getNumberOfDimensions(input), 4);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(filter), 4);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(bias), 1);
-    NN_RET_CHECK_EQ(getSizeOfDimension(filter, 0), 1);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(input), 4u);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(filter), 4u);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(bias), 1u);
+    NN_RET_CHECK_EQ(getSizeOfDimension(filter, 0), 1u);
     NN_RET_CHECK_EQ(getSizeOfDimension(filter, 3), getSizeOfDimension(bias, 0));
 
     DepthwiseConv2dParam param;

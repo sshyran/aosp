@@ -27,6 +27,7 @@
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
+#pragma clang diagnostic ignored "-Wsign-compare"
 #include <tensorflow/lite/kernels/internal/reference/reference_ops.h>
 #pragma clang diagnostic pop
 #endif  // NN_INCLUDE_CPU_IMPLEMENTATION
@@ -85,7 +86,7 @@ Result<Version> validateProdSum(const IOperationValidationContext* context) {
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
     const Shape& input = context->getInputShape(kInputTensor);
     if (hasKnownRank(input)) {
-        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
+        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4u);
     }
     return Version::ANDROID_Q;
 }
@@ -108,7 +109,7 @@ Result<Version> validateMaxMin(const IOperationValidationContext* context) {
     }
     const Shape& input = context->getInputShape(kInputTensor);
     if (hasKnownRank(input)) {
-        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
+        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4u);
     }
     return minVersion;
 }
@@ -124,7 +125,7 @@ Result<Version> validateLogical(const IOperationValidationContext* context) {
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
     const Shape& input = context->getInputShape(kInputTensor);
     if (hasKnownRank(input)) {
-        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
+        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4u);
     }
     return Version::ANDROID_Q;
 }
@@ -133,7 +134,7 @@ Result<Version> validateLogical(const IOperationValidationContext* context) {
 bool prepare(IOperationExecutionContext* context) {
     Shape inputShape = context->getInputShape(kInputTensor);
     const uint32_t inputRank = getNumberOfDimensions(inputShape);
-    NN_RET_CHECK_LE(inputRank, 4);
+    NN_RET_CHECK_LE(inputRank, 4u);
 
     std::vector<bool> shouldReduce(inputRank);
     const int32_t* axes = context->getInputBuffer<int32_t>(kInputAxes);
