@@ -30,6 +30,7 @@
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
+#pragma clang diagnostic ignored "-Wsign-compare"
 #include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
 #include <tensorflow/lite/kernels/internal/reference/integer_ops/conv.h>
 #include <tensorflow/lite/kernels/internal/types.h>
@@ -380,7 +381,7 @@ bool convQuant8PerChannelNhwc(const uint8_t* inputData, const Shape& inputShape,
     auto outputMultiplier = std::vector<int32_t>(outputDepth, 0);
     auto outputShift = std::vector<int32_t>(outputDepth, .0f);
 
-    for (int i = 0; i < outputDepth; ++i) {
+    for (uint32_t i = 0; i < outputDepth; ++i) {
         Shape filterChannelShape = filterShape;
         filterChannelShape.scale = filterScales[i];
         Shape biasChannelShape = biasShape;
@@ -473,7 +474,7 @@ bool convQuant8PerChannelNhwc(const int8_t* inputData, const Shape& inputShape,
     auto outputMultiplier = std::vector<int32_t>(outputDepth, 0);
     auto outputShift = std::vector<int32_t>(outputDepth, .0f);
 
-    for (int i = 0; i < outputDepth; ++i) {
+    for (uint32_t i = 0; i < outputDepth; ++i) {
         Shape filterChannelShape = filterShape;
         filterChannelShape.scale = filterScales[i];
         Shape biasChannelShape = biasShape;
@@ -542,10 +543,10 @@ Result<Version> validate(const IOperationValidationContext* context) {
     const auto inputRank = getNumberOfDimensions(context->getInputShape(kInputTensor));
     const auto filterRank = getNumberOfDimensions(context->getInputShape(kFilterTensor));
     if (inputRank != 0) {
-        NN_RET_CHECK_EQ(inputRank, 4);
+        NN_RET_CHECK_EQ(inputRank, 4u);
     }
     if (filterRank != 0) {
-        NN_RET_CHECK_EQ(filterRank, 4);
+        NN_RET_CHECK_EQ(filterRank, 4u);
     }
     auto inputCount = context->getNumInputs();
     auto inputType = context->getInputType(kInputTensor);
@@ -574,7 +575,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
             NN_RET_CHECK_EQ(std::get<Operand::SymmPerChannelQuantParams>(
                                     context->getInputExtraParams(kFilterTensor))
                                     .channelDim,
-                            0)
+                            0u)
                     << "Unsupported filter tensor channel dimension for operation "
                     << kOperationName;
         }
@@ -606,14 +607,14 @@ Result<Version> validate(const IOperationValidationContext* context) {
             withExplicitPadding = true;
         }
         int inputOffset = withExplicitPadding ? 3 : 0;
-        if (inputCount >= 8 + inputOffset) {
+        if (inputCount >= 8u + inputOffset) {
             inExpectedTypes.push_back(OperandType::BOOL);
             withLayout = true;
         }
-        NN_RET_CHECK_NE(inputCount, 9 + inputOffset)
+        NN_RET_CHECK_NE(inputCount, 9u + inputOffset)
                 << "Provided only one dilation factor value, two values are requred for operation "
                 << kOperationName;
-        if (inputCount == 10 + inputOffset) {
+        if (inputCount == 10u + inputOffset) {
             inExpectedTypes.push_back(OperandType::INT32);
             inExpectedTypes.push_back(OperandType::INT32);
             withDilation = true;
@@ -653,9 +654,9 @@ bool prepare(IOperationExecutionContext* context) {
     } else {
         NN_RET_CHECK(input.type == bias.type);
     }
-    NN_RET_CHECK_EQ(getNumberOfDimensions(input), 4);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(filter), 4);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(bias), 1);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(input), 4u);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(filter), 4u);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(bias), 1u);
 
     Conv2dParam param;
     NN_RET_CHECK(param.initialize(context));
@@ -670,10 +671,10 @@ bool prepare(IOperationExecutionContext* context) {
     // Only batches can be zero.
     NN_RET_CHECK_EQ(channels_in, getSizeOfDimension(filter, 3));
     NN_RET_CHECK_EQ(channels_out, getSizeOfDimension(bias, 0));
-    NN_RET_CHECK_GT(height, 0);
-    NN_RET_CHECK_GT(width, 0);
-    NN_RET_CHECK_GT(channels_in, 0);
-    NN_RET_CHECK_GT(channels_out, 0);
+    NN_RET_CHECK_GT(height, 0u);
+    NN_RET_CHECK_GT(width, 0u);
+    NN_RET_CHECK_GT(channels_in, 0u);
+    NN_RET_CHECK_GT(channels_out, 0u);
 
     int32_t effectiveFilterWidth = (filterWidth - 1) * param.dilation_width_factor + 1;
     int32_t effectiveFilterHeight = (filterHeight - 1) * param.dilation_height_factor + 1;

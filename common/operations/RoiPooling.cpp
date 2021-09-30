@@ -80,7 +80,7 @@ inline bool roiPoolingNhwc(const T_Input* inputData, const Shape& inputShape, co
         // 1. invalid batch id
         // 2. Region out of bound: x1|x2|y1|y2 < 0 || x1|x2 > inWidth || y1|y2 > inHeight
         // 3. Invalid region: x2 < x1 || y2 < y1
-        NN_RET_CHECK_GE(batchId, 0);
+        NN_RET_CHECK_GE(batchId, 0u);
         NN_RET_CHECK_LT(batchId, numBatches);
         NN_RET_CHECK(roiInfo[0] >= 0);
         NN_RET_CHECK(roiInfo[1] >= 0);
@@ -232,15 +232,15 @@ bool prepare(IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
     Shape roiShape = context->getInputShape(kRoiTensor);
     Shape batchSplitShape = context->getInputShape(kBatchSplitTensor);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(input), 4);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(roiShape), 2);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(input), 4u);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(roiShape), 2u);
 
     [[maybe_unused]] uint32_t numBatches = getSizeOfDimension(input, 0);
     [[maybe_unused]] uint32_t inHeight = getSizeOfDimension(input, useNchw ? 2 : 1);
     [[maybe_unused]] uint32_t inWidth = getSizeOfDimension(input, useNchw ? 3 : 2);
     uint32_t inDepth = getSizeOfDimension(input, useNchw ? 1 : 3);
     uint32_t numRois = getSizeOfDimension(roiShape, 0);
-    NN_RET_CHECK_EQ(getSizeOfDimension(roiShape, 1), 4);
+    NN_RET_CHECK_EQ(getSizeOfDimension(roiShape, 1), 4u);
     NN_RET_CHECK_EQ(getSizeOfDimension(batchSplitShape, 0), numRois);
 
     auto outputHeight = context->getInputValue<int32_t>(kOutputHeightScalar);
