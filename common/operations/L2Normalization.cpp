@@ -23,8 +23,11 @@
 #include "Tracing.h"
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
 #include <tensorflow/lite/kernels/internal/optimized/optimized_ops.h>
 #include <tensorflow/lite/kernels/internal/reference/integer_ops/l2normalization.h>
+#pragma clang diagnostic pop
 
 #include "CpuOperationUtils.h"
 #endif  // NN_INCLUDE_CPU_IMPLEMENTATION
@@ -37,16 +40,16 @@ constexpr char kOperationName[] = "L2_NORMALIZATION";
 
 constexpr uint32_t kNumInputs = 2;
 constexpr uint32_t kInputTensor = 0;
-constexpr uint32_t kAxisScalar = 1;
+[[maybe_unused]] constexpr uint32_t kAxisScalar = 1;
 
 constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
+[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
 
 inline bool l2normFloat32Impl(const float* inputData, const Shape& inputShape, int32_t axis,
-                              float* outputData, const Shape& outputShape) {
+                              float* outputData, const Shape& /*outputShape*/) {
     NNTRACE_TRANS("l2normFloat32");
     constexpr float kEpsilon = 1e-6f;
     const uint32_t outerSize = getNumberOfElements(inputShape, 0, axis);
@@ -74,7 +77,7 @@ inline bool l2normFloat32Impl(const float* inputData, const Shape& inputShape, i
 }
 
 inline bool l2normQuant8Impl(const uint8_t* inputData, const Shape& inputShape, int32_t axis,
-                             uint8_t* outputData, const Shape& outputShape) {
+                             uint8_t* outputData, const Shape& /*outputShape*/) {
     NNTRACE_TRANS("l2normQuant8");
     const uint32_t outerSize = getNumberOfElements(inputShape, 0, axis);
     const uint32_t axisSize = getSizeOfDimension(inputShape, axis);
@@ -106,7 +109,7 @@ inline bool l2normQuant8Impl(const uint8_t* inputData, const Shape& inputShape, 
 }
 
 inline bool l2normQuant8SignedImpl(const int8_t* inputData, const Shape& inputShape, int32_t axis,
-                                   int8_t* outputData, const Shape& outputShape) {
+                                   int8_t* outputData, const Shape& /*outputShape*/) {
     NNTRACE_TRANS("l2normQuant8Signed");
     const uint32_t outerSize = getNumberOfElements(inputShape, 0, axis);
     const uint32_t axisSize = getSizeOfDimension(inputShape, axis);

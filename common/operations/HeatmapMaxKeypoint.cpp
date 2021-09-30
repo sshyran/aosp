@@ -37,12 +37,12 @@ constexpr char kOperationName[] = "HEATMAP_MAX_KEYPOINT";
 
 constexpr uint32_t kNumInputs = 3;
 constexpr uint32_t kHeatmapTensor = 0;
-constexpr uint32_t kBoxesTensor = 1;
-constexpr uint32_t kLayoutScalar = 2;
+[[maybe_unused]] constexpr uint32_t kBoxesTensor = 1;
+[[maybe_unused]] constexpr uint32_t kLayoutScalar = 2;
 
 constexpr uint32_t kNumOutputs = 2;
-constexpr uint32_t kOutputScoreTensor = 0;
-constexpr uint32_t kOutputKeypointTensor = 1;
+[[maybe_unused]] constexpr uint32_t kOutputScoreTensor = 0;
+[[maybe_unused]] constexpr uint32_t kOutputKeypointTensor = 1;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -88,9 +88,9 @@ static void solveForDelta(const float grid[3][3], float* delta, float* deltaScor
 
 inline bool heatmapMaxKeypointFloat32Nhwc(const float* heatmap, const Shape& heatmapShape,
                                           const float* boxes, const Shape& boxesShape,
-                                          float* outputScoreData, const Shape& outputScoreShape,
+                                          float* outputScoreData, const Shape& /*outputScoreShape*/,
                                           float* outputKeypointData,
-                                          const Shape& outputKeypointShape, float fpAtol,
+                                          const Shape& /*outputKeypointShape*/, float fpAtol,
                                           float fpRtol) {
     NNTRACE_TRANS("HeatmapMaxKeypoint");
 

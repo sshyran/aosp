@@ -23,7 +23,10 @@
 #include "Tracing.h"
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
 #include <tensorflow/lite/kernels/internal/optimized/optimized_ops.h>
+#pragma clang diagnostic pop
 
 #include "CpuOperationUtils.h"
 #endif  // NN_INCLUDE_CPU_IMPLEMENTATION
@@ -36,14 +39,14 @@ constexpr char kOperationName[] = "LOCAL_RESPONSE_NORMALIZATION";
 
 constexpr uint32_t kNumInputs = 6;
 constexpr uint32_t kInputTensor = 0;
-constexpr uint32_t kRadiusScalar = 1;
-constexpr uint32_t kBiasScalar = 2;
-constexpr uint32_t kAlphaScalar = 3;
-constexpr uint32_t kBetaScalar = 4;
-constexpr uint32_t kAxisScalar = 5;
+[[maybe_unused]] constexpr uint32_t kRadiusScalar = 1;
+[[maybe_unused]] constexpr uint32_t kBiasScalar = 2;
+[[maybe_unused]] constexpr uint32_t kAlphaScalar = 3;
+[[maybe_unused]] constexpr uint32_t kBetaScalar = 4;
+[[maybe_unused]] constexpr uint32_t kAxisScalar = 5;
 
 constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
+[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -51,7 +54,7 @@ namespace {
 inline bool localResponseNormFloat32Impl(const float* inputData, const Shape& inputShape,
                                          int32_t radius, float bias, float alpha, float beta,
                                          int32_t axis, float* outputData,
-                                         const Shape& outputShape) {
+                                         const Shape& /*outputShape*/) {
     NNTRACE_TRANS("localResponseNormFloat32");
     const uint32_t outerSize = getNumberOfElements(inputShape, 0, axis);
     const uint32_t axisSize = getSizeOfDimension(inputShape, axis);

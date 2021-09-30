@@ -79,18 +79,18 @@ constexpr uint32_t kCellLayerNormTensor = 22;
 constexpr uint32_t kOutputLayerNormTensor = 23;
 
 // Clipping.
-constexpr uint32_t kCellClip = 24;
-constexpr uint32_t kProjectionClip = 25;
+[[maybe_unused]] constexpr uint32_t kCellClip = 24;
+[[maybe_unused]] constexpr uint32_t kProjectionClip = 25;
 
 // Scales of the result of matmul, i.e. input to layer normalization.
-constexpr uint32_t kInputIntermediateScale = 26;
-constexpr uint32_t kForgetIntermediateScale = 27;
-constexpr uint32_t kCellIntermediateScale = 28;
-constexpr uint32_t kOutputIntermediateScale = 29;
+[[maybe_unused]] constexpr uint32_t kInputIntermediateScale = 26;
+[[maybe_unused]] constexpr uint32_t kForgetIntermediateScale = 27;
+[[maybe_unused]] constexpr uint32_t kCellIntermediateScale = 28;
+[[maybe_unused]] constexpr uint32_t kOutputIntermediateScale = 29;
 
 // Zero point and scale of hidden state.
-constexpr uint32_t kHiddenStateZeroPoint = 30;
-constexpr uint32_t kHiddenStateScale = 31;
+[[maybe_unused]] constexpr uint32_t kHiddenStateZeroPoint = 30;
+[[maybe_unused]] constexpr uint32_t kHiddenStateScale = 31;
 
 // Outputs:
 constexpr uint32_t kNumOutputs = 3;

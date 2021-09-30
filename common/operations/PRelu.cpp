@@ -25,7 +25,10 @@
 #include "Tracing.h"
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
 #include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
+#pragma clang diagnostic pop
 #endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 namespace android {
@@ -36,10 +39,10 @@ constexpr char kOperationName[] = "PRELU";
 
 constexpr uint32_t kNumInputs = 2;
 constexpr uint32_t kInputTensor = 0;
-constexpr uint32_t kAlphaTensor = 1;
+[[maybe_unused]] constexpr uint32_t kAlphaTensor = 1;
 
 constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
+[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 template <typename T>

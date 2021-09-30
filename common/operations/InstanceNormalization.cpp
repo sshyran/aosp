@@ -34,20 +34,20 @@ constexpr char kOperationName[] = "INSTANCE_NORMALIZATION";
 
 constexpr uint32_t kNumInputs = 5;
 constexpr uint32_t kInputTensor = 0;
-constexpr uint32_t kGammaScalar = 1;
-constexpr uint32_t kBetaScalar = 2;
-constexpr uint32_t kEpsilonScalar = 3;
-constexpr uint32_t kLayoutScalar = 4;
+[[maybe_unused]] constexpr uint32_t kGammaScalar = 1;
+[[maybe_unused]] constexpr uint32_t kBetaScalar = 2;
+[[maybe_unused]] constexpr uint32_t kEpsilonScalar = 3;
+[[maybe_unused]] constexpr uint32_t kLayoutScalar = 4;
 
 constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
+[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
 
 template <typename T>
 inline bool instanceNormNhwc(const T* inputData, const Shape& inputShape, T gamma, T beta,
-                             T epsilon, T* outputData, const Shape& outputShape) {
+                             T epsilon, T* outputData, const Shape& /*outputShape*/) {
     NNTRACE_TRANS("InstanceNormalizationNhwc");
     uint32_t numBatches = getSizeOfDimension(inputShape, 0);
     uint32_t height = getSizeOfDimension(inputShape, 1);
