@@ -26,10 +26,13 @@
 #include "nnapi/Validation.h"
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
 #include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
 #include <tensorflow/lite/kernels/internal/reference/legacy_reference_ops.h>
 #include <tensorflow/lite/kernels/internal/reference/reference_ops.h>
 #include <tensorflow/lite/kernels/internal/types.h>
+#pragma clang diagnostic pop
 
 #include "CpuOperationUtils.h"
 #endif  // NN_INCLUDE_CPU_IMPLEMENTATION

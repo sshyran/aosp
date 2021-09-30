@@ -30,17 +30,17 @@ namespace unidirectional_sequence_rnn {
 
 constexpr uint32_t kNumInputs = 7;
 constexpr uint32_t kInputTensor = 0;
-constexpr uint32_t kWeightsTensor = 1;
-constexpr uint32_t kRecurrentWeightsTensor = 2;
-constexpr uint32_t kBiasTensor = 3;
-constexpr uint32_t kHiddenStateTensor = 4;
-constexpr uint32_t kActivationParam = 5;
-constexpr uint32_t kTimeMajorParam = 6;
+[[maybe_unused]] constexpr uint32_t kWeightsTensor = 1;
+[[maybe_unused]] constexpr uint32_t kRecurrentWeightsTensor = 2;
+[[maybe_unused]] constexpr uint32_t kBiasTensor = 3;
+[[maybe_unused]] constexpr uint32_t kHiddenStateTensor = 4;
+[[maybe_unused]] constexpr uint32_t kActivationParam = 5;
+[[maybe_unused]] constexpr uint32_t kTimeMajorParam = 6;
 
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kNumOutputsWithState = 2;
-constexpr uint32_t kOutputTensor = 0;
-constexpr uint32_t kStateOutputTensor = 1;
+[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
+[[maybe_unused]] constexpr uint32_t kStateOutputTensor = 1;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {

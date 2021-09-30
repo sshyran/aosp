@@ -715,7 +715,8 @@ void CpuExecutor::updateForArguments(const std::vector<uint32_t>& indexes,
     }
 }
 
-int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo* operands) {
+int CpuExecutor::executeOperation([[maybe_unused]] const Operation& operation,
+                                  [[maybe_unused]] RunTimeOperandInfo* operands) {
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
     if (hasDeadlinePassed(mDeadline)) {
         return ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT;

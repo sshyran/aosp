@@ -16,7 +16,10 @@
 
 #define LOG_TAG "Operations"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
 #include <tensorflow/lite/kernels/internal/common.h>
+#pragma clang diagnostic pop
 
 #include <algorithm>
 #include <cfloat>
@@ -44,9 +47,9 @@ namespace nn {
     uint32_t outputGroupDepth = outputDepth / numGroups;
 
 bool groupedConvFloat32(const float* inputData, const Shape& inputShape, const float* filterData,
-                        const Shape& filterShape, const float* biasData, const Shape& biasShape,
-                        int32_t padding_left, int32_t padding_right, int32_t padding_top,
-                        int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
+                        const Shape& filterShape, const float* biasData, const Shape& /*biasShape*/,
+                        int32_t padding_left, int32_t /*padding_right*/, int32_t padding_top,
+                        int32_t /*padding_bottom*/, int32_t stride_width, int32_t stride_height,
                         int32_t numGroups, int32_t activation, float* outputData,
                         const Shape& outputShape) {
     NNTRACE_TRANS("groupConvFloat32");
@@ -103,8 +106,8 @@ bool groupedConvFloat32(const float* inputData, const Shape& inputShape, const f
 template <typename T>
 bool groupedConvQuant8(const T* inputData, const Shape& inputShape, const T* filterData,
                        const Shape& filterShape, const int32_t* biasData, const Shape& biasShape,
-                       int32_t padding_left, int32_t padding_right, int32_t padding_top,
-                       int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
+                       int32_t padding_left, int32_t /*padding_right*/, int32_t padding_top,
+                       int32_t /*padding_bottom*/, int32_t stride_width, int32_t stride_height,
                        int32_t numGroups, int32_t activation, T* outputData,
                        const Shape& outputShape) {
     NNTRACE_TRANS("groupConvQuant8");
@@ -201,9 +204,10 @@ bool groupedConvQuant8PerChannel(const T* inputData, const Shape& inputShape,
                                  const int8_t* filterData, const Shape& filterShape,
                                  const float* filterScales, const int32_t* biasData,
                                  const Shape& biasShape, int32_t padding_left,
-                                 int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
-                                 int32_t stride_width, int32_t stride_height, int32_t numGroups,
-                                 int32_t activation, T* outputData, const Shape& outputShape) {
+                                 int32_t /*padding_right*/, int32_t padding_top,
+                                 int32_t /*padding_bottom*/, int32_t stride_width,
+                                 int32_t stride_height, int32_t numGroups, int32_t activation,
+                                 T* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("groupConvQuant8");
     ANDROID_NN_GROUPED_CONV_PARAMETERS
 
