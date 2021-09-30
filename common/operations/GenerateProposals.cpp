@@ -59,9 +59,9 @@ BoxEncodingCenter toBoxEncodingCenter(const BoxEncodingCorner& cnr) {
 
 inline bool bboxTransformFloat32(const float* roiData, const Shape& roiShape,
                                  const float* bboxDeltasData, const Shape& bboxDeltasShape,
-                                 const int32_t* batchesData, const Shape& batchesShape,
+                                 const int32_t* batchesData, const Shape& /*batchesShape*/,
                                  const float* imageInfoData, const Shape& imageInfoDataShape,
-                                 float* outputData, const Shape& outputShape) {
+                                 float* outputData, const Shape& /*outputShape*/) {
     const uint32_t roiLength = 4;
     const uint32_t imageLength = 2;
 
@@ -196,11 +196,11 @@ constexpr char kOperationName[] = "AXIS_ALIGNED_BBOX_TRANSFORM";
 constexpr uint32_t kNumInputs = 4;
 constexpr uint32_t kRoiTensor = 0;
 constexpr uint32_t kDeltaTensor = 1;
-constexpr uint32_t kBatchesTensor = 2;
-constexpr uint32_t kImageInfoTensor = 3;
+[[maybe_unused]] constexpr uint32_t kBatchesTensor = 2;
+[[maybe_unused]] constexpr uint32_t kImageInfoTensor = 3;
 
 constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
+[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -338,20 +338,20 @@ constexpr char kOperationName[] = "BOX_WITH_NMS_LIMIT";
 
 constexpr uint32_t kNumInputs = 9;
 constexpr uint32_t kScoreTensor = 0;
-constexpr uint32_t kRoiTensor = 1;
-constexpr uint32_t kBatchesTensor = 2;
-constexpr uint32_t kScoreThresholdScalar = 3;
-constexpr uint32_t kMaxNumDetectionScalar = 4;
-constexpr uint32_t kNmsKernelScalar = 5;
-constexpr uint32_t kIoUThresholdScalar = 6;
-constexpr uint32_t kSigmaScalar = 7;
-constexpr uint32_t kNmsScoreThresholdScalar = 8;
+[[maybe_unused]] constexpr uint32_t kRoiTensor = 1;
+[[maybe_unused]] constexpr uint32_t kBatchesTensor = 2;
+[[maybe_unused]] constexpr uint32_t kScoreThresholdScalar = 3;
+[[maybe_unused]] constexpr uint32_t kMaxNumDetectionScalar = 4;
+[[maybe_unused]] constexpr uint32_t kNmsKernelScalar = 5;
+[[maybe_unused]] constexpr uint32_t kIoUThresholdScalar = 6;
+[[maybe_unused]] constexpr uint32_t kSigmaScalar = 7;
+[[maybe_unused]] constexpr uint32_t kNmsScoreThresholdScalar = 8;
 
 constexpr uint32_t kNumOutputs = 4;
-constexpr uint32_t kOutputScoreTensor = 0;
-constexpr uint32_t kOutputRoiTensor = 1;
-constexpr uint32_t kOutputClassTensor = 2;
-constexpr uint32_t kOutputBatchesTensor = 3;
+[[maybe_unused]] constexpr uint32_t kOutputScoreTensor = 0;
+[[maybe_unused]] constexpr uint32_t kOutputRoiTensor = 1;
+[[maybe_unused]] constexpr uint32_t kOutputClassTensor = 2;
+[[maybe_unused]] constexpr uint32_t kOutputBatchesTensor = 3;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -486,8 +486,8 @@ void softNmsMultiClass(float* scoresData, uint32_t numClasses, uint32_t numRois,
 }
 
 bool boxWithNmsLimitFloat32Compute(float* scoresData, const Shape& scoresShape,
-                                   const float* roiData, const Shape& roiShape,
-                                   const int32_t* batchesData, const Shape& batchesShape,
+                                   const float* roiData, const Shape& /*roiShape*/,
+                                   const int32_t* batchesData, const Shape& /*batchesShape*/,
                                    float scoreThreshold, int32_t maxNumDetections,
                                    int32_t softNmsKernel, float iouThreshold, float sigma,
                                    float nmsScoreThreshold, std::vector<uint32_t>* batchSplitIn,
@@ -621,10 +621,11 @@ bool boxWithNmsLimitFloat32(const float* scoresData, const Shape& scoresShape, c
                             const Shape& roiShape, const int32_t* batchesData,
                             const Shape& batchesShape, float scoreThreshold,
                             int32_t maxNumDetections, int32_t softNmsKernel, float iouThreshold,
-                            float sigma, float nmsScoreThreshold, float* scoresOutData,
-                            Shape scoresOutShape, float* roiOutData, Shape roiOutShape,
-                            int32_t* classesOutData, Shape classesOutShape, int32_t* batchesOutData,
-                            const Shape& batchSplitOutShape, IOperationExecutionContext* context) {
+                            float sigma, float nmsScoreThreshold, float* /*scoresOutData*/,
+                            Shape /*scoresOutShape*/, float* /*roiOutData*/, Shape /*roiOutShape*/,
+                            int32_t* /*classesOutData*/, Shape /*classesOutShape*/,
+                            int32_t* /*batchesOutData*/, const Shape& /*batchSplitOutShape*/,
+                            IOperationExecutionContext* context) {
     NNTRACE_TRANS("boxWithNmsLimit");
     std::vector<float> scores_float32(getNumberOfElements(scoresShape));
     for (uint32_t i = 0; i < scores_float32.size(); i++) {
@@ -644,11 +645,12 @@ bool boxWithNmsLimitFloat16(const _Float16* scoresData, const Shape& scoresShape
                             const int32_t* batchesData, const Shape& batchesShape,
                             _Float16 scoreThreshold, int32_t maxNumDetections,
                             int32_t softNmsKernel, _Float16 iouThreshold, _Float16 sigma,
-                            _Float16 nmsScoreThreshold, _Float16* scoresOutData,
-                            const Shape& scoresOutShape, _Float16* roiOutData,
-                            const Shape& roiOutShape, int32_t* classesOutData,
-                            const Shape& classesOutShape, int32_t* batchesOutData,
-                            const Shape& batchSplitOutShape, IOperationExecutionContext* context) {
+                            _Float16 nmsScoreThreshold, _Float16* /*scoresOutData*/,
+                            const Shape& /*scoresOutShape*/, _Float16* /*roiOutData*/,
+                            const Shape& /*roiOutShape*/, int32_t* /*classesOutData*/,
+                            const Shape& /*classesOutShape*/, int32_t* /*batchesOutData*/,
+                            const Shape& /*batchSplitOutShape*/,
+                            IOperationExecutionContext* context) {
     std::vector<float> scores_float32(getNumberOfElements(scoresShape));
     convertFloat16ToFloat32(scoresData, &scores_float32);
     std::vector<float> roi_float32(getNumberOfElements(roiShape));
@@ -667,10 +669,11 @@ bool boxWithNmsLimitQuant(const uint8_t* scoresData, const Shape& scoresShape,
                           const int32_t* batchesData, const Shape& batchesShape,
                           float scoreThreshold, int32_t maxNumDetections, int32_t softNmsKernel,
                           float iouThreshold, float sigma, float nmsScoreThreshold,
-                          uint8_t* scoresOutData, const Shape& scoresOutShape, uint16_t* roiOutData,
-                          const Shape& roiOutShape, int32_t* classesOutData,
-                          const Shape& classesOutShape, int32_t* batchesOutData,
-                          const Shape& batchSplitOutShape, IOperationExecutionContext* context) {
+                          uint8_t* /*scoresOutData*/, const Shape& /*scoresOutShape*/,
+                          uint16_t* /*roiOutData*/, const Shape& /*roiOutShape*/,
+                          int32_t* /*classesOutData*/, const Shape& /*classesOutShape*/,
+                          int32_t* /*batchesOutData*/, const Shape& /*batchSplitOutShape*/,
+                          IOperationExecutionContext* context) {
     std::vector<float> scores_float32(getNumberOfElements(scoresShape));
     convertQuantToFloat32(scoresData, scoresShape.scale, scoresShape.offset, &scores_float32);
     std::vector<float> roi_float32(getNumberOfElements(roiShape));
@@ -689,10 +692,11 @@ bool boxWithNmsLimitQuant(const int8_t* scoresData, const Shape& scoresShape,
                           const int32_t* batchesData, const Shape& batchesShape,
                           float scoreThreshold, int32_t maxNumDetections, int32_t softNmsKernel,
                           float iouThreshold, float sigma, float nmsScoreThreshold,
-                          int8_t* scoresOutData, const Shape& scoresOutShape, uint16_t* roiOutData,
-                          const Shape& roiOutShape, int32_t* classesOutData,
-                          const Shape& classesOutShape, int32_t* batchesOutData,
-                          const Shape& batchSplitOutShape, IOperationExecutionContext* context) {
+                          int8_t* /*scoresOutData*/, const Shape& /*scoresOutShape*/,
+                          uint16_t* /*roiOutData*/, const Shape& /*roiOutShape*/,
+                          int32_t* /*classesOutData*/, const Shape& /*classesOutShape*/,
+                          int32_t* /*batchesOutData*/, const Shape& /*batchSplitOutShape*/,
+                          IOperationExecutionContext* context) {
     std::vector<float> scores_float32(getNumberOfElements(scoresShape));
     convertQuantToFloat32<int8_t>(scoresData, scoresShape.scale, scoresShape.offset,
                                   &scores_float32);
@@ -918,21 +922,21 @@ constexpr char kOperationName[] = "GENERATE_PROPOSALS";
 
 constexpr uint32_t kNumInputs = 11;
 constexpr uint32_t kScoreTensor = 0;
-constexpr uint32_t kDeltaTensor = 1;
-constexpr uint32_t kAnchorTensor = 2;
-constexpr uint32_t kImageInfoTensor = 3;
-constexpr uint32_t kHeightStrideSalar = 4;
-constexpr uint32_t kWidthStrideScalar = 5;
-constexpr uint32_t kPreNmsMaxScalar = 6;
-constexpr uint32_t kPostNmsMaxScalar = 7;
-constexpr uint32_t kIoUThresholdScalar = 8;
-constexpr uint32_t kMinSizeScalar = 9;
-constexpr uint32_t kLayoutScalar = 10;
+[[maybe_unused]] constexpr uint32_t kDeltaTensor = 1;
+[[maybe_unused]] constexpr uint32_t kAnchorTensor = 2;
+[[maybe_unused]] constexpr uint32_t kImageInfoTensor = 3;
+[[maybe_unused]] constexpr uint32_t kHeightStrideSalar = 4;
+[[maybe_unused]] constexpr uint32_t kWidthStrideScalar = 5;
+[[maybe_unused]] constexpr uint32_t kPreNmsMaxScalar = 6;
+[[maybe_unused]] constexpr uint32_t kPostNmsMaxScalar = 7;
+[[maybe_unused]] constexpr uint32_t kIoUThresholdScalar = 8;
+[[maybe_unused]] constexpr uint32_t kMinSizeScalar = 9;
+[[maybe_unused]] constexpr uint32_t kLayoutScalar = 10;
 
 constexpr uint32_t kNumOutputs = 3;
-constexpr uint32_t kOutputScoreTensor = 0;
-constexpr uint32_t kOutputRoiTensor = 1;
-constexpr uint32_t kOutputBatchesTensor = 2;
+[[maybe_unused]] constexpr uint32_t kOutputScoreTensor = 0;
+[[maybe_unused]] constexpr uint32_t kOutputRoiTensor = 1;
+[[maybe_unused]] constexpr uint32_t kOutputBatchesTensor = 2;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -1425,37 +1429,40 @@ constexpr char kOperationName[] = "DETECTION_POSTPROCESS";
 
 constexpr uint32_t kNumInputs = 14;
 constexpr uint32_t kScoreTensor = 0;
-constexpr uint32_t kDeltaTensor = 1;
-constexpr uint32_t kAnchorTensor = 2;
-constexpr uint32_t kScaleYScalar = 3;
-constexpr uint32_t kScaleXScalar = 4;
-constexpr uint32_t kScaleHScalar = 5;
-constexpr uint32_t kScaleWScalar = 6;
-constexpr uint32_t kUseRegularNmsScalar = 7;
-constexpr uint32_t kMaxNumDetectionScalar = 8;
-constexpr uint32_t kMaxClassesPerDetectionScalar = 9;
-constexpr uint32_t kMaxNumDetectionPerClassScalar = 10;
-constexpr uint32_t kScoreThresholdScalar = 11;
-constexpr uint32_t kIoUThresholdScalar = 12;
-constexpr uint32_t kIsBGInLabelScalar = 13;
+[[maybe_unused]] constexpr uint32_t kDeltaTensor = 1;
+[[maybe_unused]] constexpr uint32_t kAnchorTensor = 2;
+[[maybe_unused]] constexpr uint32_t kScaleYScalar = 3;
+[[maybe_unused]] constexpr uint32_t kScaleXScalar = 4;
+[[maybe_unused]] constexpr uint32_t kScaleHScalar = 5;
+[[maybe_unused]] constexpr uint32_t kScaleWScalar = 6;
+[[maybe_unused]] constexpr uint32_t kUseRegularNmsScalar = 7;
+[[maybe_unused]] constexpr uint32_t kMaxNumDetectionScalar = 8;
+[[maybe_unused]] constexpr uint32_t kMaxClassesPerDetectionScalar = 9;
+[[maybe_unused]] constexpr uint32_t kMaxNumDetectionPerClassScalar = 10;
+[[maybe_unused]] constexpr uint32_t kScoreThresholdScalar = 11;
+[[maybe_unused]] constexpr uint32_t kIoUThresholdScalar = 12;
+[[maybe_unused]] constexpr uint32_t kIsBGInLabelScalar = 13;
 
 constexpr uint32_t kNumOutputs = 4;
-constexpr uint32_t kOutputScoreTensor = 0;
-constexpr uint32_t kOutputRoiTensor = 1;
-constexpr uint32_t kOutputClassTensor = 2;
-constexpr uint32_t kOutputDetectionTensor = 3;
+[[maybe_unused]] constexpr uint32_t kOutputScoreTensor = 0;
+[[maybe_unused]] constexpr uint32_t kOutputRoiTensor = 1;
+[[maybe_unused]] constexpr uint32_t kOutputClassTensor = 2;
+[[maybe_unused]] constexpr uint32_t kOutputDetectionTensor = 3;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
 
-bool detectionPostprocessFloat32(
-        const float* scoreData, const Shape& scoreShape, const float* deltaData,
-        const Shape& deltaShape, const float* anchorData, const Shape& anchorShape, float scaleY,
-        float scaleX, float scaleH, float scaleW, bool useRegularNms, int32_t maxNumDetections,
-        int32_t maxClassesPerDetection, int32_t maxNumDetectionsPerClass, float iouThreshold,
-        float scoreThreshold, bool isBGInLabel, float* scoreOutData, const Shape& scoreOutShape,
-        float* roiOutData, const Shape& roiOutShape, int32_t* classOutData,
-        const Shape& classOutShape, int32_t* detectionOutData, const Shape& detectionOutShape) {
+bool detectionPostprocessFloat32(const float* scoreData, const Shape& scoreShape,
+                                 const float* deltaData, const Shape& deltaShape,
+                                 const float* anchorData, const Shape& /*anchorShape*/,
+                                 float scaleY, float scaleX, float scaleH, float scaleW,
+                                 bool useRegularNms, int32_t maxNumDetections,
+                                 int32_t maxClassesPerDetection, int32_t maxNumDetectionsPerClass,
+                                 float iouThreshold, float scoreThreshold, bool isBGInLabel,
+                                 float* scoreOutData, const Shape& scoreOutShape, float* roiOutData,
+                                 const Shape& roiOutShape, int32_t* classOutData,
+                                 const Shape& classOutShape, int32_t* detectionOutData,
+                                 const Shape& detectionOutShape) {
     const uint32_t kRoiDim = 4;
     uint32_t numBatches = getSizeOfDimension(scoreShape, 0);
     uint32_t numAnchors = getSizeOfDimension(scoreShape, 1);

@@ -25,9 +25,13 @@ limitations under the License.
 #include <string.h>
 #include <tensorflow/core/lib/bfloat16/bfloat16.h>
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-parameter"
+#include <unsupported/Eigen/CXX11/Tensor>
+#pragma clang diagnostic pop
+
 #include <algorithm>
 #include <type_traits>
-#include <unsupported/Eigen/CXX11/Tensor>
 
 #include "philox_random.h"
 

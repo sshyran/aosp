@@ -33,11 +33,11 @@ constexpr char kOperationName[] = "SLICE";
 
 constexpr uint32_t kNumInputs = 3;
 constexpr uint32_t kInputTensor = 0;
-constexpr uint32_t kBeginTensor = 1;
-constexpr uint32_t kSizeTensor = 2;
+[[maybe_unused]] constexpr uint32_t kBeginTensor = 1;
+[[maybe_unused]] constexpr uint32_t kSizeTensor = 2;
 
 constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
+[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -51,9 +51,9 @@ void addVectors(const std::vector<T>& a, const std::vector<T>& b, std::vector<T>
 
 template <typename T>
 bool evalGeneric(const T* inputData, const Shape& inputShape, const int32_t* beginData,
-                 const Shape& beginShape, const int32_t* sizeData, const Shape& sizeShape,
+                 const Shape& beginShape, const int32_t* /*sizeData*/, const Shape& /*sizeShape*/,
                  T* outputData, const Shape& outputShape) {
-    const int outputSize = getNumberOfElements(outputShape);
+    [[maybe_unused]] const int outputSize = getNumberOfElements(outputShape);
     const IndexedShapeWrapper indexedOutput = IndexedShapeWrapper(outputShape);
     const IndexedShapeWrapper indexedInput = IndexedShapeWrapper(inputShape);
     std::vector<uint32_t> outputIndex(getNumberOfDimensions(outputShape), 0);
