@@ -19,6 +19,7 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
+#pragma clang diagnostic ignored "-Winvalid-partial-specialization"
 #include <unsupported/Eigen/CXX11/Tensor>
 #pragma clang diagnostic pop
 
