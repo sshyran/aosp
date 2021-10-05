@@ -125,6 +125,9 @@ class SamplePreparedModel : public aidl_hal::BnPreparedModel {
                                      int64_t loopTimeoutDurationNs, int64_t durationNs,
                                      aidl_hal::FencedExecutionResult* executionResult) override;
     ndk::ScopedAStatus configureExecutionBurst(std::shared_ptr<aidl_hal::IBurst>* burst) override;
+    ndk::ScopedAStatus createReusableExecution(
+            const aidl_hal::Request& request, bool measureTiming, int64_t loopTimeoutDurationNs,
+            std::shared_ptr<aidl_hal::IExecution>* execution) override;
     const aidl_hal::Model* getModel() const { return &mModel; }
 
    protected:
@@ -173,6 +176,33 @@ class SampleBurst : public aidl_hal::BnBurst {
    protected:
     std::atomic_flag mExecutionInFlight = ATOMIC_FLAG_INIT;
     const std::shared_ptr<SamplePreparedModel> kPreparedModel;
+};
+
+class SampleExecution : public aidl_hal::BnExecution {
+   public:
+    SampleExecution(std::shared_ptr<SamplePreparedModel> preparedModel, aidl_hal::Request request,
+                    bool measureTiming, int64_t loopTimeoutDurationNs)
+        : kPreparedModel(std::move(preparedModel)),
+          kHalRequest(std::move(request)),
+          kMeasureTiming(measureTiming),
+          kLoopTimeoutDurationNs(loopTimeoutDurationNs) {
+        CHECK(kPreparedModel != nullptr);
+    }
+
+    ndk::ScopedAStatus executeSynchronously(int64_t deadlineNs,
+                                            aidl_hal::ExecutionResult* executionResult) override;
+
+    ndk::ScopedAStatus executeFenced(const std::vector<ndk::ScopedFileDescriptor>& waitFor,
+                                     int64_t deadlineNs, int64_t durationNs,
+                                     aidl_hal::FencedExecutionResult* executionResult) override;
+
+   private:
+    std::atomic_flag mComputationInFlight = ATOMIC_FLAG_INIT;
+    const std::shared_ptr<SamplePreparedModel> kPreparedModel;
+
+    const aidl_hal::Request kHalRequest;
+    const bool kMeasureTiming;
+    const int64_t kLoopTimeoutDurationNs;
 };
 
 }  // namespace sample_driver_aidl

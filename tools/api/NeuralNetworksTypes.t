@@ -164,6 +164,8 @@ typedef enum {
     ANEURALNETWORKS_FEATURE_LEVEL_6 = 1000006,
     /** Android NNAPI feature level 7 */
     ANEURALNETWORKS_FEATURE_LEVEL_7 = 1000007,
+    /** Android NNAPI feature level 8 */
+    ANEURALNETWORKS_FEATURE_LEVEL_8 = 1000008,
 } FeatureLevelCode;
 
 /**
