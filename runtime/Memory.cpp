@@ -456,9 +456,13 @@ int MemoryBuilder::finish() {
         LOG(INFO) << "MemoryBuilder::finish -- cannot handle multiple devices.";
         mAllocator = nullptr;
     }
+#if !defined(NNAPI_CHROMEOS)
+    // Uses hardware buffers which are unsupported (b/157388904)
+    // mSupportsAhwb defaults to false (Memory.h)
     mSupportsAhwb = std::all_of(devices.begin(), devices.end(), [](const auto* device) {
         return device->getFeatureLevel() >= kHalVersionV1_3ToApi.featureLevel;
     });
+#endif
     mShouldFallback = std::none_of(mRoles.begin(), mRoles.end(), [](const auto& role) {
         const auto* cb = std::get<const CompilationBuilder*>(role);
         return cb->createdWithExplicitDeviceList();
