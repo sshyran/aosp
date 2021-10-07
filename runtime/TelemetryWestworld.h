@@ -17,11 +17,16 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TELEMETRY_WESTWORLD_H
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TELEMETRY_WESTWORLD_H
 
+#include <android-base/thread_annotations.h>
+
 #include <array>
+#include <condition_variable>
 #include <limits>
 #include <map>
+#include <mutex>
 #include <queue>
 #include <string>
+#include <thread>
 #include <utility>
 #include <vector>
 
@@ -112,21 +117,38 @@ class AtomAggregator {
 
 using LoggerFn = std::function<void(Atom&&)>;
 
-// LoggerWithQuietPeriod aggregates atoms locally, and sends aggregated atoms to `logger` when not
-// in a quiet period. A logging quiet period starts once `logger` is called, and lasts for
-// `duration` time.
-class LoggerWithQuietPeriod {
+// AsyncLogger minimizes the call to `write`, so that the calling thread which handles the
+// compilation or execution is not slowed down by writing to WestWorld. Instead, AsyncLogger
+// contains a dedicated thread that will handle logging to WestWorld in the background.
+// This class is thread-safe.
+class AsyncLogger {
    public:
-    LoggerWithQuietPeriod(Duration duration, LoggerFn logger, AtomAggregator data = {},
-                          TimePoint safeToLogTimepoint = TimePoint{});
+    AsyncLogger(LoggerFn logger, Duration loggingQuietPeriodDuration);
+    AsyncLogger(const AsyncLogger&) = delete;
+    AsyncLogger(AsyncLogger&&) = delete;
+    AsyncLogger& operator=(const AsyncLogger&) = delete;
+    AsyncLogger& operator=(AsyncLogger&&) = delete;
+    ~AsyncLogger();
 
     void write(Atom&& atom);
 
    private:
-    const Duration kQuietPeriodDuration;
-    const LoggerFn kLogger;
-    AtomAggregator mData;
-    TimePoint mSafeToLogTimepoint;
+    enum class Result {
+        SUCCESS,
+        TEARDOWN,
+    };
+
+    // Precondition: output != nullptr
+    // Precondition: output->empty()
+    Result takeAll(std::vector<Atom>* output, bool blockUntilDataIsAvailable);
+
+    Result sleepFor(Duration duration);
+
+    mutable std::mutex mMutex;
+    mutable std::condition_variable mNotEmptyOrTeardown;
+    mutable std::vector<Atom> mChannel GUARDED_BY(mMutex);
+    mutable bool mTeardown GUARDED_BY(mMutex) = false;
+    std::thread mThread;
 };
 
 // Create an Atom from a diagnostic info object.
