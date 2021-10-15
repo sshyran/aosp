@@ -16,7 +16,7 @@
 
 #include <LegacyUtils.h>
 #include <nnapi/TypeUtils.h>
-#include <src/libfuzzer/libfuzzer_macro.h>
+#include <libprotobuf-mutator/src/libfuzzer/libfuzzer_macro.h>
 
 #include <algorithm>
 

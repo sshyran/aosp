@@ -15,7 +15,6 @@
  */
 
 #include <MemoryUtils.h>
-#include <SampleDriverFull.h>
 #include <Utils.h>
 #include <android-base/logging.h>
 #include <android/hardware/neuralnetworks/1.3/IDevice.h>
@@ -45,11 +44,7 @@ namespace V1_3 = neuralnetworks::V1_3;
 using V1_0::DataLocation;
 
 sp<V1_3::IDevice> getDevice() {
-    /**
-     * TODO: INSERT CUSTOM DEVICE HERE
-     */
-    static const sp<V1_3::IDevice> device = new nn::sample_driver::SampleDriverFull(
-            "example-driver", V1_0::PerformanceInfo{.execTime = 1.0f, .powerUsage = 1.0f});
+    static const sp<V1_3::IDevice> device = V1_3::IDevice::getService("default");
     return device;
 }
 

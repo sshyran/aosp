@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import("//common-mk/pkg_config.gni")
+import("//common-mk/proto_library.gni")
 
 group("all") {
   deps = [
@@ -14,6 +15,12 @@ group("all") {
       ":common_testrunner",
       ":runtime_testrunner",
       ":runtime_generated_testrunner",
+    ]
+  }
+  if (use.fuzzer) {
+    deps += [
+      ":runtime_fuzzer",
+      ":driver_fuzzer",
     ]
   }
 }
@@ -780,6 +787,73 @@ if (use.test) {
       "common/operations/SVDFTest.cpp",
       "driver/cache/BlobCache/BlobCache_test.cpp",
       "driver/cache/nnCache/nnCache_test.cpp",
+    ]
+  }
+}
+
+if (use.fuzzer) {
+  pkg_config("fuzzer_defaults") {
+    include_dirs = [
+      "common/include",
+      "runtime/include",
+      "tools/test_generator/test_harness/include",
+    ]
+    pkg_deps = [
+      "libprotobuf-mutator",
+      "protobuf",
+    ]
+  }
+
+  proto_library("fuzzer_proto") {
+    proto_in_dir = "runtime/test/android_fuzzing"
+    proto_out_dir = "include"
+    sources = [ "${proto_in_dir}/Model.proto" ]
+  }
+
+  static_library("fuzzer_lib") {
+    configs += [
+      ":fuzzer_defaults",
+      ":target_defaults",
+    ]
+    sources = [
+      "runtime/test/android_fuzzing/Converter.cpp",
+      "runtime/test/android_fuzzing/FuzzHarness.cpp",
+      "runtime/test/android_fuzzing/StaticAssert.cpp",
+    ]
+    deps = [
+      ":fuzzer_proto"
+    ]
+  }
+
+  executable("runtime_fuzzer") {
+    configs += [
+      "//common-mk/common_fuzzer",
+      ":fuzzer_defaults",
+      ":target_defaults",
+    ]
+    deps = [
+      ":fuzzer_lib",
+      ":libneuralnetworks",
+      ":nn-common",
+    ]
+    sources = [
+      "runtime/test/android_fuzzing/FuzzTest.cpp",
+    ]
+  }
+
+  executable("driver_fuzzer") {
+    configs += [
+      "//common-mk/common_fuzzer",
+      ":fuzzer_defaults",
+      ":target_defaults",
+    ]
+    deps = [
+      ":fuzzer_lib",
+      ":libneuralnetworks",
+      ":nn-common",
+    ]
+    sources = [
+      "runtime/test/android_fuzzing/DriverFuzzTest.cpp",
     ]
   }
 }
