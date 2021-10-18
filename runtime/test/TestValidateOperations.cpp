@@ -1672,6 +1672,7 @@ TEST(OperationValidationTest, RESHAPE) {
     reshapeOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
     reshapeOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
     reshapeOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+    reshapeOpTest(ANEURALNETWORKS_TENSOR_INT32);
 }
 
 void logSoftmaxOpTest(int32_t inputOperandCode) {
@@ -4460,6 +4461,36 @@ TEST(OperationValidationTest, RANK_quant8) {
 
 TEST(OperationValidationTest, RANK_quant8_signed) {
     rankTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
+void batchMatmulTest(int32_t operandType) {
+    uint32_t inputLHSDimensions[3] = {1, 2, 3};
+    ANeuralNetworksOperandType input0 = getOpType(operandType, 3, inputLHSDimensions);
+    uint32_t inputRHSDimensions[3] = {1, 3, 4};
+    ANeuralNetworksOperandType input1 = getOpType(operandType, 3, inputRHSDimensions);
+    ANeuralNetworksOperandType input2 = getOpType(ANEURALNETWORKS_BOOL);
+    ANeuralNetworksOperandType input3 = getOpType(ANEURALNETWORKS_BOOL);
+    uint32_t outputDimensions[3] = {1, 2, 4};
+    ANeuralNetworksOperandType output = getOpType(operandType, 3, outputDimensions);
+    OperationTestBase test(ANEURALNETWORKS_BATCH_MATMUL, {input0, input1, input2, input3},
+                           {output});
+    test.testOpsValidations();
+}
+
+TEST(OperationValidationTest, BATCH_MATMUL_float16) {
+    batchMatmulTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
+TEST(OperationValidationTest, BATCH_MATMUL_float32) {
+    batchMatmulTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, BATCH_MATMUL_int32) {
+    batchMatmulTest(ANEURALNETWORKS_TENSOR_INT32);
+}
+
+TEST(OperationValidationTest, BATCH_MATMUL_quant8_signed) {
+    batchMatmulTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
 ANeuralNetworksModel* makeIdentityModel(const ANeuralNetworksOperandType* type) {
