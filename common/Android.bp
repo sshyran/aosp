@@ -72,6 +72,7 @@ cc_defaults {
         "operations/LogicalNot.cpp",
         "operations/Neg.cpp",
         "operations/PRelu.cpp",
+        "operations/Pack.cpp",
         "operations/Pooling.cpp",
         "operations/QLSTM.cpp",
         "operations/Quantize.cpp",
