@@ -131,7 +131,7 @@ struct OperandTypeWithExtraParams {
         if (operandType.dimensionCount < that.operandType.dimensionCount) return true;
         return false;
     }
-};  // namespace
+};
 
 // Generates valid and invalid mutations of given OperandTypeWithParams
 // instances.
@@ -4674,6 +4674,210 @@ TEST(OperationValidationTest, WHILE) {
             }
         }
     }
+}
+
+constexpr ANeuralNetworksOperandType packAxisType = {.type = ANEURALNETWORKS_INT32,
+                                                     .dimensionCount = 0,
+                                                     .dimensions = nullptr,
+                                                     .scale = 0.0f,
+                                                     .zeroPoint = 0};
+
+void packTest(int32_t operandCode) {
+    const uint32_t inputDimensions[3] = {4, 5, 6};
+    constexpr size_t inputRank = sizeof(inputDimensions) / sizeof(inputDimensions[0]);
+    const ANeuralNetworksOperandType inputTensorType =
+            getOpType(operandCode, inputRank, inputDimensions);
+
+    constexpr uint32_t outputRank = inputRank + 1;
+
+    for (uint32_t axis = 0; axis < outputRank; ++axis) {
+        SCOPED_TRACE(axis);
+        for (uint32_t inputTensorCount : {1, 2}) {
+            SCOPED_TRACE(inputTensorCount);
+            uint32_t outputDimensions[outputRank];
+            for (uint32_t inDim = 0, outDim = 0; outDim < outputRank; ++outDim) {
+                if (outDim == axis) {
+                    outputDimensions[outDim] = inputTensorCount;
+                } else {
+                    outputDimensions[outDim] = inputDimensions[inDim++];
+                }
+            }
+            const ANeuralNetworksOperandType outputTensorType =
+                    getOpType(operandCode, outputRank, outputDimensions);
+
+            std::vector<ANeuralNetworksOperandType> validInputs = {packAxisType};
+            validInputs.insert(validInputs.end(), inputTensorCount, inputTensorType);
+
+            OperationTestBase packTest(ANEURALNETWORKS_PACK, validInputs, {outputTensorType});
+            packTest.testOpsValidations();
+        }
+    }
+}
+
+TEST(OperationValidationTest, PACK_float16) {
+    packTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+TEST(OperationValidationTest, PACK_float32) {
+    packTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, PACK_quant8) {
+    packTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+TEST(OperationValidationTest, PACK_quant8_signed) {
+    packTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
+TEST(OperationValidationTest, PACK_int32) {
+    packTest(ANEURALNETWORKS_TENSOR_INT32);
+}
+
+// Test quantization parameters that are inconsistent among operands.
+enum class PackBadQuantization { NONE, zeroPoint, scale };
+void packTestBadQuantization(int32_t operandCode, PackBadQuantization bad) {
+    auto scramble = [bad](ANeuralNetworksOperandType* type) {
+        if (bad == PackBadQuantization::zeroPoint) {
+            type->zeroPoint = 1;
+        } else if (bad == PackBadQuantization::scale) {
+            type->scale *= 2;
+        }
+    };
+
+    constexpr uint32_t inputTensorCount = 2;
+    const uint32_t inputDimensions[3] = {4, 5, 6};
+    constexpr size_t inputRank = sizeof(inputDimensions) / sizeof(inputDimensions[0]);
+    const ANeuralNetworksOperandType inputTensorType =
+            getOpType(operandCode, inputRank, inputDimensions);
+
+    // Behave as if the axis equals inputRank.
+    constexpr uint32_t outputRank = inputRank + 1;
+    uint32_t outputDimensions[outputRank];
+    std::copy(std::begin(inputDimensions), std::end(inputDimensions), std::begin(outputDimensions));
+    outputDimensions[inputRank] = inputTensorCount;
+
+    // The "deviant" is the operand whose quantization parameters are to be made
+    // inconsistent with those of the other operands.
+    // inputTensorCount = Change the output tensor.
+    // [0, inputTensorCount) = Change the corresponding input tensor.
+    for (uint32_t deviant = 0; deviant <= inputTensorCount; ++deviant) {
+        SCOPED_TRACE(deviant);
+        std::vector<ANeuralNetworksOperandType> inputTypes = {packAxisType};
+        inputTypes.insert(inputTypes.end(), inputTensorCount, inputTensorType);
+        ANeuralNetworksOperandType outputType =
+                getOpType(operandCode, outputRank, outputDimensions);
+        if (deviant == inputTensorCount) {
+            scramble(&outputType);
+        } else {
+            scramble(&inputTypes[1 + deviant]);
+        }
+        OperationTestBase packTest(ANEURALNETWORKS_PACK, inputTypes, {outputType});
+        if (bad == PackBadQuantization::NONE) {
+            packTest.testSuccess();
+            return;
+        } else {
+            packTest.testFailure(ANEURALNETWORKS_BAD_DATA);
+        }
+    }
+}
+
+TEST(OperationValidationTest, PACK_quant8_bad_none) {
+    // Make sure packTestBadQuantization starts with a valid operation and only corrupts what it
+    // intends to.
+    packTestBadQuantization(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, PackBadQuantization::NONE);
+}
+
+TEST(OperationValidationTest, PACK_quant8_bad_zeroPoint) {
+    packTestBadQuantization(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, PackBadQuantization::zeroPoint);
+}
+
+TEST(OperationValidationTest, PACK_quant8_bad_scale) {
+    packTestBadQuantization(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, PackBadQuantization::scale);
+}
+
+TEST(OperationValidationTest, PACK_quant8_signed_bad_zeroPoint) {
+    packTestBadQuantization(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED,
+                            PackBadQuantization::zeroPoint);
+}
+
+TEST(OperationValidationTest, PACK_quant8_signed_bad_scale) {
+    packTestBadQuantization(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED, PackBadQuantization::scale);
+}
+
+// Test ranks that are inconsistent among operands.
+void packTestBadRank(uint32_t operandCode, int adjustRank) {
+    constexpr uint32_t inputTensorCount = 2;
+    const uint32_t inputDimensions[3] = {4, 5, 6};
+    constexpr size_t inputRank = sizeof(inputDimensions) / sizeof(inputDimensions[0]);
+    const ANeuralNetworksOperandType inputTensorType =
+            getOpType(operandCode, inputRank, inputDimensions);
+
+    // Behave as if the axis equals 0.
+    constexpr uint32_t outputRank = inputRank + 1;
+    uint32_t outputDimensions[outputRank];
+    std::copy(std::begin(inputDimensions), std::end(inputDimensions),
+              std::begin(outputDimensions) + 1);
+    outputDimensions[0] = inputTensorCount;
+
+    // The "deviant" is the operand whose rank is to be made inconsistent with
+    // those of other operands.
+    // inputTensorCount = Change the output tensor.
+    // [0, inputTensorCount) = Change the corresponding input tensor.
+    for (uint32_t deviant = 0; deviant <= inputTensorCount; ++deviant) {
+        SCOPED_TRACE(deviant);
+
+        std::vector<uint32_t> scrambledDimensions;
+        auto scramble = [adjustRank, &scrambledDimensions](ANeuralNetworksOperandType* type) {
+            if (!adjustRank) {
+                return;
+            }
+            if (adjustRank < 0) {
+                ASSERT_GT(type->dimensionCount, uint32_t(-adjustRank));
+                type->dimensionCount += adjustRank;
+                return;
+            }
+            const uint32_t oldRank = type->dimensionCount;
+            const uint32_t newRank = oldRank + adjustRank;
+            ASSERT_EQ(scrambledDimensions.size(), size_t(0));  // only use this vector once
+            scrambledDimensions.resize(newRank);
+            std::copy(&type->dimensions[0], &type->dimensions[oldRank], &scrambledDimensions[0]);
+            std::fill(&scrambledDimensions[oldRank], &scrambledDimensions[newRank],
+                      /* arbitrary choice */ 7);
+            type->dimensionCount = newRank;
+            type->dimensions = &scrambledDimensions[0];
+        };
+
+        std::vector<ANeuralNetworksOperandType> inputTypes = {packAxisType};
+        inputTypes.insert(inputTypes.end(), inputTensorCount, inputTensorType);
+        ANeuralNetworksOperandType outputType =
+                getOpType(operandCode, outputRank, outputDimensions);
+        if (deviant == inputTensorCount) {
+            scramble(&outputType);
+        } else {
+            scramble(&inputTypes[1 + deviant]);
+        }
+        OperationTestBase packTest(ANEURALNETWORKS_PACK, inputTypes, {outputType});
+        if (adjustRank) {
+            packTest.testFailure(ANEURALNETWORKS_BAD_DATA);
+        } else {
+            packTest.testSuccess();
+            return;
+        }
+    }
+}
+
+TEST(OperationValidationTest, PACK_float32_rank_good) {
+    // Make sure packTestBadRank starts with a valid operation and only corrupts it when it intends
+    // to.
+    packTestBadRank(ANEURALNETWORKS_TENSOR_FLOAT32, 0);
+}
+
+TEST(OperationValidationTest, PACK_float32_rank_lo) {
+    packTestBadRank(ANEURALNETWORKS_TENSOR_FLOAT32, -1);
+}
+
+TEST(OperationValidationTest, PACK_float32_rank_hi) {
+    packTestBadRank(ANEURALNETWORKS_TENSOR_FLOAT32, 1);
 }
 
 }  // end namespace
