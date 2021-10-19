@@ -66,6 +66,7 @@ const OperationRegistration* register_MAX_POOL_2D();
 const OperationRegistration* register_MUL();
 const OperationRegistration* register_NEG();
 const OperationRegistration* register_NOT_EQUAL();
+const OperationRegistration* register_PACK();
 const OperationRegistration* register_PRELU();
 const OperationRegistration* register_QUANTIZE();
 const OperationRegistration* register_QUANTIZED_LSTM();
@@ -145,6 +146,7 @@ BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_MUL());
     registerOperation(register_NEG());
     registerOperation(register_NOT_EQUAL());
+    registerOperation(register_PACK());
     registerOperation(register_PRELU());
     registerOperation(register_QUANTIZE());
     registerOperation(register_QUANTIZED_LSTM());

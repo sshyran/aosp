@@ -195,6 +195,7 @@ enum class TestOperationType {
     FILL = 100,
     RANK = 101,
     BATCH_MATMUL = 102,
+    PACK = 103,
 #ifdef NN_EXPERIMENTAL_FEATURE
     DENSIFY = 20000,
 #endif  // NN_EXPERIMENTAL_FEATURE
