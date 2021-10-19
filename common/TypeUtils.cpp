@@ -555,6 +555,8 @@ std::ostream& operator<<(std::ostream& os, const OperationType& operationType) {
             return os << "RANK";
         case OperationType::BATCH_MATMUL:
             return os << "BATCH_MATMUL";
+        case OperationType::PACK:
+            return os << "PACK";
         case OperationType::OEM_OPERATION:
             return os << "OEM_OPERATION";
 #ifdef NN_EXPERIMENTAL_FEATURE
