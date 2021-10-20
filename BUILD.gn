@@ -671,9 +671,10 @@ if (use.test) {
     ]
     deps = [
       ":generated_test_harness",
+      ":nn-common",
       ":nn_testrunner",
       ":runtime",
-      ":full-driver",
+      ":vendor-nn-hal",
       ":xnn-driver"
     ]
     sources = [
