@@ -227,6 +227,25 @@ bool TypeManager::getExtensionPrefix(const std::string& extensionName, uint16_t*
     return true;
 }
 
+std::vector<ExtensionNameAndPrefix> TypeManager::getExtensionNameAndPrefix(
+        const std::vector<TokenValuePair>& metaData) {
+    std::vector<ExtensionNameAndPrefix> extensionNameAndPrefix;
+    std::set<uint16_t> prefixSet;
+    for (auto p : metaData) {
+        uint16_t prefix = static_cast<uint32_t>(p.token) >> kExtensionTypeBits;
+        if (!prefixSet.insert(prefix).second) {
+            continue;
+        }
+        const Extension* extension;
+        CHECK(getExtensionInfo(prefix, &extension));
+        extensionNameAndPrefix.push_back({
+                .name = extension->name,
+                .prefix = prefix,
+        });
+    }
+    return extensionNameAndPrefix;
+}
+
 bool TypeManager::getExtensionType(const char* extensionName, uint16_t typeWithinExtension,
                                    int32_t* type) {
     uint16_t prefix;

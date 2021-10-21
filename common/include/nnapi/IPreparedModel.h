@@ -71,6 +71,10 @@ class IPreparedModel {
      *     this duration, the execution must be aborted. If no loop timeout duration is provided,
      *     the maximum amount of time is {@link kControlFlowTimeoutDefault}. When provided, the
      *     duration must not exceed {@link kControlFlowTimeoutMaximum}.
+     * @param hints Specifies the optional device specific execution hints. The same token must not
+     *     be repeated. It is allowed for the driver to ignore the user-provided hints.
+     * @param extensionNameToPrefix The mapping between extension names and prefixes of token
+     *.    values.
      * @return A pair consisting of:
      *     - A list of shape information of model output operands. The index into "outputShapes"
      *       corresponds to the index of the output operand in the Request outputs vector.
@@ -87,7 +91,9 @@ class IPreparedModel {
      */
     virtual ExecutionResult<std::pair<std::vector<OutputShape>, Timing>> execute(
             const Request& request, MeasureTiming measure, const OptionalTimePoint& deadline,
-            const OptionalDuration& loopTimeoutDuration) const = 0;
+            const OptionalDuration& loopTimeoutDuration,
+            const std::vector<nn::TokenValuePair>& hints,
+            const std::vector<nn::ExtensionNameAndPrefix>& extensionNameToPrefix) const = 0;
 
     /**
      * Launch a fenced asynchronous execution on a prepared model.
@@ -136,6 +142,10 @@ class IPreparedModel {
      *     duration must not exceed {@link kControlFlowTimeoutMaximum}.
      * @param timeoutDurationAfterFence The timeout duration within which the execution is expected
      *     to complete after all sync fences in waitFor are signaled.
+     * @param hints Specifies the optional device specific execution hints. The same token must not
+     *     be repeated. It is allowed for the driver to ignore the user-provided hints.
+     * @param extensionNameToPrefix The mapping between extension names and prefixes of token
+     *.    values.
      * @return A pair consisting of:
      *     - A syncFence that will be triggered when the task is completed. The syncFence will be
      *       set to error if critical error occurs when doing actual evaluation.
@@ -145,7 +155,9 @@ class IPreparedModel {
     virtual GeneralResult<std::pair<SyncFence, ExecuteFencedInfoCallback>> executeFenced(
             const Request& request, const std::vector<SyncFence>& waitFor, MeasureTiming measure,
             const OptionalTimePoint& deadline, const OptionalDuration& loopTimeoutDuration,
-            const OptionalDuration& timeoutDurationAfterFence) const = 0;
+            const OptionalDuration& timeoutDurationAfterFence,
+            const std::vector<nn::TokenValuePair>& hints,
+            const std::vector<nn::ExtensionNameAndPrefix>& extensionNameToPrefix) const = 0;
 
     /**
      * Create a reusable execution from a request and execution configurations.
@@ -166,12 +178,18 @@ class IPreparedModel {
      *     be aborted. If no loop timeout duration is provided, the maximum amount of time is
      *     {@link LoopTimeoutDurationNs::DEFAULT}. When provided, the duration must not exceed
      *     {@link LoopTimeoutDurationNs::MAXIMUM}.
+     * @param hints Specifies the optional device specific execution hints. It is allowed for the
+     *     driver to ignore the user-provided hints.
+     * @param extensionNameToPrefix The mapping between extension names and prefixes of token
+     *.    values.
      * @return execution An IExecution object representing a reusable execution that has been
      *     specialized for a fixed request, otherwise GeneralError.
      */
     virtual GeneralResult<SharedExecution> createReusableExecution(
             const Request& request, MeasureTiming measure,
-            const OptionalDuration& loopTimeoutDuration) const = 0;
+            const OptionalDuration& loopTimeoutDuration,
+            const std::vector<nn::TokenValuePair>& hints,
+            const std::vector<nn::ExtensionNameAndPrefix>& extensionNameToPrefix) const = 0;
 
     /**
      * Creates a burst controller on a prepared model.

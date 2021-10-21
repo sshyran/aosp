@@ -90,14 +90,16 @@ GeneralResult<std::vector<bool>> LimitedSupportDevice::getSupportedOperations(
 GeneralResult<SharedPreparedModel> LimitedSupportDevice::prepareModel(
         const Model& model, ExecutionPreference preference, Priority priority,
         OptionalTimePoint deadline, const std::vector<SharedHandle>& modelCache,
-        const std::vector<SharedHandle>& dataCache, const CacheToken& token) const {
+        const std::vector<SharedHandle>& dataCache, const CacheToken& token,
+        const std::vector<TokenValuePair>& /*hints*/,
+        const std::vector<ExtensionNameAndPrefix>& /*extensionNameToPrefix*/) const {
     const auto supportedOperations = NN_TRY(kSupportedOperationsFunction(model));
     constexpr auto id = [](auto v) { return v; };
     if (!std::all_of(supportedOperations.begin(), supportedOperations.end(), id)) {
         return NN_ERROR(nn::ErrorStatus::INVALID_ARGUMENT) << "Not all operations are supported";
     }
     return kDevice->prepareModel(model, preference, priority, deadline, modelCache, dataCache,
-                                 token);
+                                 token, {}, {});
 }
 
 GeneralResult<SharedPreparedModel> LimitedSupportDevice::prepareModelFromCache(

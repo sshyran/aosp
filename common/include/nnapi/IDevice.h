@@ -242,13 +242,19 @@ class IDevice {
      *     a collision will result in a failed execution or in a successful execution that produces
      *     incorrect output values. If both modelCache and dataCache are empty indicating that
      *     caching information is not provided, this token must be ignored.
+     * @param hints Specifies the optional device specific compilation hints. The same token must
+     *     not be repeated. It is allowed for the driver to ignore the user-provided hints.
+     * @param extensionNameToPrefix The mapping between extension names and prefixes of token
+     *.    values.
      * @return preparedModel An IPreparedModel object representing a model that has been prepared
      *     for execution, otherwise GeneralError.
      */
     virtual GeneralResult<SharedPreparedModel> prepareModel(
             const Model& model, ExecutionPreference preference, Priority priority,
             OptionalTimePoint deadline, const std::vector<SharedHandle>& modelCache,
-            const std::vector<SharedHandle>& dataCache, const CacheToken& token) const = 0;
+            const std::vector<SharedHandle>& dataCache, const CacheToken& token,
+            const std::vector<nn::TokenValuePair>& hints,
+            const std::vector<nn::ExtensionNameAndPrefix>& extensionNameToPrefix) const = 0;
 
     /**
      * Creates a prepared model from cache files for execution.

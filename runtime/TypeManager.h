@@ -81,6 +81,10 @@ class TypeManager {
     // Aborts if the type is an unknown extension type.
     uint32_t getSizeOfData(OperandType type, const std::vector<uint32_t>& dimensions) const;
 
+    // Returns the ExtensionNameAndPrefix mapping from metaData.
+    std::vector<ExtensionNameAndPrefix> getExtensionNameAndPrefix(
+            const std::vector<TokenValuePair>& metaData);
+
     // Returns true if the amount of space needed to store a value of the specified
     // dimensions and element size overflows the uint32_t type.
     //

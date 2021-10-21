@@ -118,6 +118,18 @@ ndk::ScopedAStatus SampleDriver::prepareModel(
     return prepareModelBase(std::move(copiedModel).value(), this, preference, priority, deadlineNs,
                             callback);
 }
+ndk::ScopedAStatus SampleDriver::prepareModelWithConfig(
+        const aidl_hal::Model& model, const aidl_hal::PrepareModelConfig& config,
+        const std::shared_ptr<aidl_hal::IPreparedModelCallback>& callback) {
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION,
+                 "SampleDriver::prepareModelWithConfig");
+    auto copiedModel = aidl_hal::utils::clone(model);
+    if (!copiedModel.has_value()) {
+        return toAStatus(aidl_hal::ErrorStatus::GENERAL_FAILURE, copiedModel.error().message);
+    }
+    return prepareModelBase(std::move(copiedModel).value(), this, config.preference,
+                            config.priority, config.deadlineNs, callback);
+}
 
 ndk::ScopedAStatus SampleDriver::prepareModelFromCache(
         int64_t /*deadlineNs*/, const std::vector<ndk::ScopedFileDescriptor>& /*modelCache*/,
@@ -602,6 +614,20 @@ ndk::ScopedAStatus SamplePreparedModel::executeFenced(
     return ndk::ScopedAStatus::ok();
 }
 
+ndk::ScopedAStatus SamplePreparedModel::executeSynchronouslyWithConfig(
+        const aidl_hal::Request& request, const aidl_hal::ExecutionConfig& config,
+        int64_t deadlineNs, aidl_hal::ExecutionResult* executionResult) {
+    return executeSynchronously(request, config.measureTiming, deadlineNs,
+                                config.loopTimeoutDurationNs, executionResult);
+}
+ndk::ScopedAStatus SamplePreparedModel::executeFencedWithConfig(
+        const aidl_hal::Request& request, const std::vector<ndk::ScopedFileDescriptor>& waitFor,
+        const aidl_hal::ExecutionConfig& config, int64_t deadlineNs, int64_t durationNs,
+        aidl_hal::FencedExecutionResult* executionResult) {
+    return executeFenced(request, waitFor, config.measureTiming, deadlineNs,
+                         config.loopTimeoutDurationNs, durationNs, executionResult);
+}
+
 ndk::ScopedAStatus SamplePreparedModel::configureExecutionBurst(
         std::shared_ptr<aidl_hal::IBurst>* burst) {
     std::shared_ptr<SamplePreparedModel> self = this->template ref<SamplePreparedModel>();
@@ -639,6 +665,14 @@ ndk::ScopedAStatus SampleBurst::executeSynchronously(
                                                 loopTimeoutDurationNs, executionResult);
 }
 
+ndk::ScopedAStatus SampleBurst::executeSynchronouslyWithConfig(
+        const aidl_hal::Request& request, const std::vector<int64_t>& memoryIdentifierTokens,
+        const aidl_hal::ExecutionConfig& config, int64_t deadlineNs,
+        aidl_hal::ExecutionResult* executionResult) {
+    return executeSynchronously(request, memoryIdentifierTokens, config.measureTiming, deadlineNs,
+                                config.loopTimeoutDurationNs, executionResult);
+}
+
 ndk::ScopedAStatus SampleBurst::releaseMemoryResource(int64_t memoryIdentifierToken) {
     if (memoryIdentifierToken < -1) {
         return toAStatus(aidl_hal::ErrorStatus::INVALID_ARGUMENT, "Invalid memoryIdentifierToken");
@@ -647,7 +681,7 @@ ndk::ScopedAStatus SampleBurst::releaseMemoryResource(int64_t memoryIdentifierTo
 }
 
 ndk::ScopedAStatus SamplePreparedModel::createReusableExecution(
-        const aidl_hal::Request& halRequest, bool measureTiming, int64_t loopTimeoutDurationNs,
+        const aidl_hal::Request& halRequest, const aidl_hal::ExecutionConfig& config,
         std::shared_ptr<aidl_hal::IExecution>* execution) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                  "SamplePreparedModel::createReusableExecution");
@@ -660,9 +694,9 @@ ndk::ScopedAStatus SamplePreparedModel::createReusableExecution(
     }
 
     std::shared_ptr<SamplePreparedModel> self = this->template ref<SamplePreparedModel>();
-    *execution = ndk::SharedRefBase::make<SampleExecution>(std::move(self),
-                                                           std::move(maybeClonedRequest).value(),
-                                                           measureTiming, loopTimeoutDurationNs);
+    *execution = ndk::SharedRefBase::make<SampleExecution>(
+            std::move(self), std::move(maybeClonedRequest).value(), config.measureTiming,
+            config.loopTimeoutDurationNs);
     return ndk::ScopedAStatus::ok();
 }
 

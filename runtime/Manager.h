@@ -80,7 +80,8 @@ class RuntimePreparedModel {
             const std::vector<ModelArgumentInfo>& outputs,
             const std::vector<const RuntimeMemory*>& memories, const SharedBurst& burstController,
             MeasureTiming measure, const OptionalTimePoint& deadline,
-            const OptionalDuration& loopTimeoutDuration) const = 0;
+            const OptionalDuration& loopTimeoutDuration,
+            const std::vector<TokenValuePair>& metaData) const = 0;
 
     // Perform fenced computation with given input/output argument info and memory pools.
     // The returned timing information is only valid if the callback is nullptr.
@@ -91,14 +92,16 @@ class RuntimePreparedModel {
             const std::vector<const RuntimeMemory*>& memories, const std::vector<int>& waitFor,
             MeasureTiming measure, const OptionalTimePoint& deadline,
             const OptionalDuration& loopTimeoutDuration,
-            const OptionalDuration& timeoutDurationAfterFence) const = 0;
+            const OptionalDuration& timeoutDurationAfterFence,
+            const std::vector<TokenValuePair>& metaData) const = 0;
 
     // Create a reusable execution with given input/output argument info and memory pools.
     virtual std::pair<int, std::shared_ptr<RuntimeExecution>> createReusableExecution(
             const std::vector<ModelArgumentInfo>& inputs,
             const std::vector<ModelArgumentInfo>& outputs,
             const std::vector<const RuntimeMemory*>& memories, MeasureTiming measure,
-            const OptionalDuration& loopTimeoutDuration) const = 0;
+            const OptionalDuration& loopTimeoutDuration,
+            const std::vector<TokenValuePair>& metaData) const = 0;
 
     virtual GeneralResult<SharedBurst> configureExecutionBurst() const = 0;
 
@@ -150,7 +153,9 @@ class Device {
     virtual std::pair<int, std::shared_ptr<RuntimePreparedModel>> prepareModel(
             const ModelFactory& makeModel, ExecutionPreference preference, Priority priority,
             const OptionalTimePoint& deadline, const CacheInfo& cacheInfo,
-            const std::optional<CacheToken>& maybeToken) const = 0;
+            const std::optional<CacheToken>& maybeToken,
+            const std::vector<TokenValuePair>& metaData,
+            const std::vector<ExtensionNameAndPrefix>& extensionNameAndPrefix) const = 0;
 
     // The caller is responsible for making sure the MemoryDescriptor only contains
     // PreparedModels from the same Device.

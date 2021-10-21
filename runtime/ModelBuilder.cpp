@@ -908,7 +908,7 @@ class ModelBuilder::ModelMaker {
     std::vector<Model::Subgraph> mRefSubgraphs;
     Model::OperandValues mOperandValues;
     MemoryTracker mMemories;
-    std::vector<Model::ExtensionNameAndPrefix> mExtensionNameToPrefix;
+    std::vector<ExtensionNameAndPrefix> mExtensionNameToPrefix;
     std::set<uint16_t> mPrefixSet;
 };
 

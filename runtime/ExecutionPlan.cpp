@@ -63,6 +63,40 @@ constexpr uint32_t kMainModelInSourceModels = 0;
 
 constexpr uint32_t kNoPadding = 1;
 
+static bool updateTokenFromMetaData(TokenHasher* token,
+                                    const std::vector<TokenValuePair>& metaData) {
+    // Combines the TokenValuePair and corresponding extension name.
+    std::vector<std::tuple<const char*, uint16_t, const uint8_t*, size_t>> metaDataWithExtension;
+    for (auto p : metaData) {
+        uint16_t prefix = static_cast<uint32_t>(p.token) >> kExtensionTypeBits;
+        uint16_t extensionEnum = static_cast<uint32_t>(p.token) & kTypeWithinExtensionMask;
+        const Extension* extension;
+        if (!TypeManager::get()->getExtensionInfo(prefix, &extension)) {
+            LOG(ERROR) << "Prefix " << prefix << " could not be found";
+            return false;
+        }
+        metaDataWithExtension.push_back(std::make_tuple(extension->name.c_str(), extensionEnum,
+                                                        p.value.data(), p.value.size()));
+    }
+    // Sort with extension name and extension enum.
+    std::sort(metaDataWithExtension.begin(), metaDataWithExtension.end(),
+              [](const auto& a, const auto& b) {
+                  if (int r = strcmp(std::get<0>(a), std::get<0>(b))) {
+                      return r < 0;
+                  } else {
+                      return std::get<1>(a) < std::get<1>(b);
+                  }
+              });
+    // Update the cache token with the sorted array.
+    for (auto [extensionName, extensionEnum, value, valueSize] : metaDataWithExtension) {
+        if (!token->updateFromString(extensionName) ||
+            !token->update(&extensionEnum, sizeof(uint16_t)) || !token->update(value, valueSize)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 // Compiles the model on device.
 // If compilation caching is available, depending on ExecutionPlan::mState, the token may only have
 // been initialized by the user provided token (SIMPLE body), or is already re-hashed by the
@@ -70,7 +104,8 @@ constexpr uint32_t kNoPadding = 1;
 // device name, device version string, and the execution preference in this function.
 int compile(const Device& device, const ModelBuilder& model, int executionPreference,
             int compilationPriority, const OptionalTimePoint& deadline, const CacheInfo& cacheInfo,
-            TokenHasher* token, std::shared_ptr<RuntimePreparedModel>* preparedModel) {
+            TokenHasher* token, const std::vector<TokenValuePair>& metaData,
+            std::shared_ptr<RuntimePreparedModel>* preparedModel) {
     CHECK(token != nullptr);
     CHECK(preparedModel != nullptr);
     *preparedModel = nullptr;
@@ -80,7 +115,8 @@ int compile(const Device& device, const ModelBuilder& model, int executionPrefer
         token->updateFromString(device.getName().c_str()) &&
         token->updateFromString(device.getVersionString().c_str()) &&
         token->update(&executionPreference, sizeof(executionPreference)) &&
-        token->update(&compilationPriority, sizeof(compilationPriority)) && token->finish()) {
+        token->update(&compilationPriority, sizeof(compilationPriority)) &&
+        updateTokenFromMetaData(token, metaData) && token->finish()) {
         cacheToken = CacheToken{};
         const uint8_t* tokenPtr = token->getCacheToken();
         std::copy(tokenPtr, tokenPtr + cacheToken->size(), cacheToken->begin());
@@ -89,8 +125,11 @@ int compile(const Device& device, const ModelBuilder& model, int executionPrefer
     const ModelFactory makeModel = [&model] { return model.makeModel(); };
     const ExecutionPreference preference = static_cast<ExecutionPreference>(executionPreference);
     const Priority priority = convertToCanonicalPriority(compilationPriority);
+    std::vector<ExtensionNameAndPrefix> extensionNameAndPrefix =
+            TypeManager::get()->getExtensionNameAndPrefix(metaData);
     const auto [n, returnedPreparedModel] =
-            device.prepareModel(makeModel, preference, priority, deadline, cacheInfo, cacheToken);
+            device.prepareModel(makeModel, preference, priority, deadline, cacheInfo, cacheToken,
+                                metaData, extensionNameAndPrefix);
     *preparedModel = returnedPreparedModel;
     return n;
 }
@@ -834,7 +873,7 @@ int ExecutionStep::finishStepModel(const ModelBuilder* mainModel, bool* hasOutpu
     // TODO: Move compilation elsewhere?
     VLOG(COMPILATION) << "ExecutionStep::finishStepModel, compilation on " << mDevice->getName();
     return compile(*mDevice, mStepModel, executionPreference, priority, {}, *mPlan->getCacheInfo(),
-                   &mToken, &mPreparedStepModel);
+                   &mToken, {}, &mPreparedStepModel);
 }
 
 void ExecutionStep::dump() const {
@@ -875,9 +914,12 @@ void LogicalStep::dump() const {
 int ExecutionPlan::CompoundBody::finish(const SourceModels* sourceModels,
                                         int32_t executionPreference, int32_t priority,
                                         const OptionalTimePoint& deadline,
+                                        const std::vector<TokenValuePair>& metadata,
                                         int simulateFailureResultCode) {
     CHECK(!mSuccessfulFinish);
     CHECK(!deadline.has_value());
+    CHECK(metadata.empty());
+
     const ModelBuilder* mainModel = sourceModels->getModel(kMainModelInSourceModels);
 
     auto containsUnknownSize = [sourceModels](const std::vector<SourceOperandIndex>& operands) {
@@ -1095,12 +1137,13 @@ void ExecutionPlan::CompoundBody::findMemoryStepRoles() {
 
 int ExecutionPlan::SimpleBody::finish(const SourceModels*, int32_t executionPreference,
                                       int32_t priority, const OptionalTimePoint& deadline,
+                                      const std::vector<TokenValuePair>& metadata,
                                       int simulateFailureResultCode) {
     CHECK(!mSuccessfulFinish);
     CHECK(mDevice != nullptr);
     VLOG(COMPILATION) << "ExecutionPlan::SimpleBody::finish, compilation";
     int n = compile(*mDevice, *mModel, executionPreference, priority, deadline, *mCacheInfo,
-                    &mToken, &mPreparedModel);
+                    &mToken, metadata, &mPreparedModel);
     if (n == ANEURALNETWORKS_NO_ERROR && simulateFailureResultCode != ANEURALNETWORKS_NO_ERROR) {
         VLOG(COMPILATION) << "ExecutionPlan::SimpleBody::finish: simulating failure, ResultCode "
                           << simulateFailureResultCode;
@@ -1115,9 +1158,11 @@ int ExecutionPlan::SimpleBody::finish(const SourceModels*, int32_t executionPref
 }
 
 int ExecutionPlan::finish(int32_t executionPreference, int32_t priority,
-                          const OptionalTimePoint& deadline, int simulateFailureResultCode) {
+                          const OptionalTimePoint& deadline,
+                          const std::vector<TokenValuePair>& metadata,
+                          int simulateFailureResultCode) {
     CHECK(mBody != nullptr);
-    return mBody->finish(&getSourceModels(), executionPreference, priority, deadline,
+    return mBody->finish(&getSourceModels(), executionPreference, priority, deadline, metadata,
                          simulateFailureResultCode);
 }
 
@@ -2090,11 +2135,12 @@ void ExecutionPlan::forEachDynamicTemporary(
 int ModelBuilder::partitionTheWork(const std::vector<std::shared_ptr<Device>>& devices,
                                    uint32_t preference, uint32_t priority,
                                    const OptionalTimePoint& deadline, ExecutionPlan* plan,
+                                   const std::vector<TokenValuePair>& metaData,
                                    int simulateFailureResultCode) const {
     uint32_t sourceModelIndex = plan->getSourceModels().addModel(this);
     NN_RETURN_IF_ERROR(partitionTheWorkInternal(sourceModelIndex, devices, preference, priority,
                                                 deadline, plan));
-    int n = plan->finish(preference, priority, deadline, simulateFailureResultCode);
+    int n = plan->finish(preference, priority, deadline, metaData, simulateFailureResultCode);
     if (VLOG_IS_ON(COMPILATION)) {
         VLOG(COMPILATION) << "ModelBuilder::partitionTheWork: source model: ";
         logModelToInfo(makeModel());

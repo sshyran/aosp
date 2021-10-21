@@ -26,6 +26,7 @@
 #include <nnapi/Validation.h>
 
 #include <memory>
+#include <set>
 #include <string>
 #include <tuple>
 #include <utility>
@@ -86,6 +87,9 @@ class ExecutionBuilder {
     int enableInputAndOutputPadding(bool enable);
 
     int setReusable(bool reusable);
+
+    int addExtensionAttribute(const char* extensionName, uint16_t attributeCodeWithinExtension,
+                              const void* data, size_t length);
 
     int computeFenced(const std::vector<int>& wait_for, uint64_t timeoutDurationAfterFence,
                       int* sync_fence);
@@ -149,6 +153,8 @@ class ExecutionBuilder {
     std::optional<RunTimePoolInfo> getRunTimePoolInfo(uint32_t poolIndex) const {
         return mMemories[poolIndex]->getRunTimePoolInfo();
     }
+
+    const std::vector<TokenValuePair>& getMetadata() const { return mMetadata; }
 
    protected:
     // If a callback is provided, then this is asynchronous. If a callback is
@@ -271,6 +277,9 @@ class ExecutionBuilder {
 
     // Can compute APIs be invoked multiple times on the execution object?
     bool mReusable = false;
+
+    // Vendor specific metadata
+    std::vector<TokenValuePair> mMetadata;
 };
 
 // For execution plan with a SIMPLE body, i.e. the whole model will be executed on a single device.

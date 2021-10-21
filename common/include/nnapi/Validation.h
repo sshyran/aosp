@@ -64,12 +64,15 @@ Result<Version> validate(const OptionalTimePoint& optionalTimePoint);
 Result<Version> validate(const OptionalDuration& optionalTimeoutDuration);
 Result<Version> validate(const CacheToken& cacheToken);
 Result<Version> validate(const SyncFence& syncFence);
+Result<Version> validate(const TokenValuePair& tokenValuePair);
 
 Result<Version> validate(const std::vector<OutputShape>& outputShapes);
 Result<Version> validate(const std::vector<Extension>& extensions);
 Result<Version> validate(const std::vector<SharedHandle>& handles);
 Result<Version> validate(const std::vector<BufferRole>& bufferRoles);
 Result<Version> validate(const std::vector<SyncFence>& syncFences);
+Result<Version> validate(const std::vector<TokenValuePair>& metaData);
+Result<Version> validate(const std::vector<ExtensionNameAndPrefix>& extensionNamesAndPrefixes);
 
 // Validate request applied to model.
 // This function assumes that `model` has already been validated, and the returned Version does not

@@ -879,8 +879,8 @@ Result<Version> validateModelSubgraph(const Model::Subgraph& subgraph,
     return version;
 }
 
-Result<Version> validateModelExtensionNamesAndPrefixes(
-        const std::vector<Model::ExtensionNameAndPrefix>& extensionNamesAndPrefixes) {
+Result<Version> validateExtensionNamesAndPrefixes(
+        const std::vector<ExtensionNameAndPrefix>& extensionNamesAndPrefixes) {
     for (const auto& extensionNameAndPrefix : extensionNamesAndPrefixes) {
         NN_RET_CHECK(isValidExtensionName(extensionNameAndPrefix.name));
     }
@@ -889,7 +889,7 @@ Result<Version> validateModelExtensionNamesAndPrefixes(
     names.reserve(extensionNamesAndPrefixes.size());
     std::transform(extensionNamesAndPrefixes.begin(), extensionNamesAndPrefixes.end(),
                    std::back_inserter(names),
-                   [](const Model::ExtensionNameAndPrefix& extensionNameAndPrefix) {
+                   [](const ExtensionNameAndPrefix& extensionNameAndPrefix) {
                        return std::cref(extensionNameAndPrefix.name);
                    });
     std::sort(names.begin(), names.end(), std::less<std::string>{});
@@ -902,7 +902,7 @@ Result<Version> validateModelExtensionNamesAndPrefixes(
     types.reserve(extensionNamesAndPrefixes.size());
     std::transform(extensionNamesAndPrefixes.begin(), extensionNamesAndPrefixes.end(),
                    std::back_inserter(types),
-                   [](const Model::ExtensionNameAndPrefix& extensionNameAndPrefix) {
+                   [](const ExtensionNameAndPrefix& extensionNameAndPrefix) {
                        return extensionNameAndPrefix.prefix;
                    });
     std::sort(types.begin(), types.end());
@@ -971,7 +971,7 @@ Result<void> checkNoReferenceCycles(const std::vector<Model::Subgraph>& referenc
 Result<Version> validateModel(const Model& model) {
     auto version = NN_TRY(validateVector(model.pools, validateSharedMemory));
     version = combineVersions(
-            version, NN_TRY(validateModelExtensionNamesAndPrefixes(model.extensionNameToPrefix)));
+            version, NN_TRY(validateExtensionNamesAndPrefixes(model.extensionNameToPrefix)));
 
     // Ignore relaxComputationFloat32toFloat16 version because in the worst case it makes the
     // execution stricter.
@@ -1136,6 +1136,10 @@ Result<Version> validateSyncFence(const SyncFence& syncFence) {
     }
     NN_RET_CHECK_GE(syncFence.getFd(), 0);
     return kVersionFeatureLevel4;
+}
+
+Result<Version> validateTokenValuePair(const TokenValuePair& /*tokenValuePair*/) {
+    return kVersionFeatureLevel8;
 }
 
 Result<Version> validateRequestArgumentsForModel(
@@ -1906,6 +1910,10 @@ Result<Version> validate(const SyncFence& syncFence) {
     return validateSyncFence(syncFence);
 }
 
+Result<Version> validate(const TokenValuePair& tokenValuePair) {
+    return validateTokenValuePair(tokenValuePair);
+}
+
 Result<Version> validate(const std::vector<OutputShape>& outputShapes) {
     return validateVector(outputShapes, validateOutputShape);
 }
@@ -1924,6 +1932,20 @@ Result<Version> validate(const std::vector<BufferRole>& bufferRoles) {
 
 Result<Version> validate(const std::vector<SyncFence>& syncFences) {
     return validateVector(syncFences, validateSyncFence);
+}
+
+Result<Version> validate(const std::vector<TokenValuePair>& metaData) {
+    std::set<int32_t> tokenSet;
+    for (const auto& p : metaData) {
+        if (!tokenSet.insert(p.token).second) {
+            NN_RET_CHECK_FAIL() << "Token added more than once " << p.token;
+        }
+    }
+    return validateVector(metaData, validateTokenValuePair);
+}
+
+Result<Version> validate(const std::vector<ExtensionNameAndPrefix>& extensionNamesAndPrefixes) {
+    return validateExtensionNamesAndPrefixes(extensionNamesAndPrefixes);
 }
 
 Result<Version> validateRequestForModel(const Request& request, const Model& model,
