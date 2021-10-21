@@ -19,8 +19,8 @@ group("all") {
   }
   if (use.fuzzer) {
     deps += [
-      ":runtime_fuzzer",
-      ":driver_fuzzer",
+      ":nnapi_runtime_fuzzer",
+      ":nnapi_driver_fuzzer",
     ]
   }
 }
@@ -826,7 +826,7 @@ if (use.fuzzer) {
     ]
   }
 
-  executable("runtime_fuzzer") {
+  executable("nnapi_runtime_fuzzer") {
     configs += [
       "//common-mk/common_fuzzer",
       ":fuzzer_defaults",
@@ -842,7 +842,7 @@ if (use.fuzzer) {
     ]
   }
 
-  executable("driver_fuzzer") {
+  executable("nnapi_driver_fuzzer") {
     configs += [
       "//common-mk/common_fuzzer",
       ":fuzzer_defaults",
