@@ -998,10 +998,10 @@ enum class Version {
     ANDROID_R,
     ANDROID_S,
     FEATURE_LEVEL_6,
+    CURRENT_RUNTIME,
 #ifdef NN_EXPERIMENTAL_FEATURE
     EXPERIMENTAL,
 #endif  // NN_EXPERIMENTAL_FEATURE
-    CURRENT_RUNTIME,
 };
 
 // Describes the memory preference of an operand.
