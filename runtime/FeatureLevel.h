@@ -19,19 +19,11 @@
 
 #include "NeuralNetworks.h"
 
-#ifdef NN_EXPERIMENTAL_FEATURE
-#include "NeuralNetworksExperimentalFeatures.h"
-#endif  // NN_EXPERIMENTAL_FEATURE
-
 namespace android {
 namespace nn {
 
 // The current feature level of the NNAPI Runtime
-#ifdef NN_EXPERIMENTAL_FEATURE
-constexpr int64_t kCurrentNNAPIRuntimeFeatureLevel = ANEURALNETWORKS_FEATURE_LEVEL_EXPERIMENTAL;
-#else   // NN_EXPERIMENTAL_FEATURE
-constexpr int64_t kCurrentNNAPIRuntimeFeatureLevel = ANEURALNETWORKS_FEATURE_LEVEL_6;
-#endif  // NN_EXPERIMENTAL_FEATURE
+constexpr FeatureLevelCode kCurrentNNAPIRuntimeFeatureLevel = ANEURALNETWORKS_FEATURE_LEVEL_6;
 
 // The current version of the NNAPI APEX module.
 // Keep this value in sync with packages/modules/NeuralNetworks/apex/manifest.json.
