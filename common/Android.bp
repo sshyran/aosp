@@ -136,6 +136,7 @@ cc_defaults {
         "CpuExecutor.cpp",
         "ExecutionBurstController.cpp",
         "ExecutionBurstServer.cpp",
+        "FlagUtils.cpp",
         "GraphDump.cpp",
         "HalBufferTracker.cpp",
         "IndexedShapeWrapper.cpp",
@@ -319,6 +320,7 @@ cc_defaults {
     srcs: [
         "BufferTracker.cpp",
         "CpuExecutor.cpp",
+        "FlagUtils.cpp",
         "GraphDump.cpp",
         "IndexedShapeWrapper.cpp",
         "LegacyUtils.cpp",
