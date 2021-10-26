@@ -95,25 +95,78 @@ cc_defaults {
     tidy_disabled_srcs: tidy_disabled_common_operations_files,
 }
 
-// libneuralnetworks_common* provides common utilities for the NNAPI runtime, drivers, and tests to
-// use. Multiple variants of the common library are provided:
-// - libneuralnetworks_common_hidl: the common library without any AIDL dependencies, used by
-//   NNAPI HIDL drivers and tests.
-// - libneuralnetworks_common_aidl_vx: explicitly versioned common libraries linking against the
-//   corresponding version of the NNAPI sAIDL library, used by NNAPI sAIDL drivers.
-//   We need a variant for every frozen AIDL version because it is not allowed for a build target
-//   to depend on multiple versions of the NNAPI sAIDL library.
-// - libneuralnetworks_common: the common library that links against the latest stable version of
-//   the NNAPI sAIDL library, used by NNAPI runtime and tests.
-// - libneuralnetworks_common_experimental: the common library that links against the "current"
-//   version of the NNAPI sAIDL library with NN_EXPERIMENTAL_FEATURE flag turned on, used by NNAPI
-//   drivers and tests for experimental features.
-//
-// In addition to the AIDL dependencies, all variants of the common library also link against all
-// versions (1.0-3) of the NNAPI HIDL library.
-//
+cc_library_static {
+    name: "libneuralnetworks_utils",
+    defaults: [
+        "neuralnetworks_defaults",
+        "neuralnetworks_operations",
+    ],
+    host_supported: true,
+    vendor_available: true,
+    apex_available: [
+        "//apex_available:platform",
+        "com.android.neuralnetworks",
+        "test_com.android.neuralnetworks",
+    ],
+    export_include_dirs: ["include"],
+    srcs: [
+        "AidlHalUtils.cpp",
+        "ExecutionBurstController.cpp",
+        "ExecutionBurstServer.cpp",
+        "LegacyHalUtils.cpp",
+        "LegacyUtils.cpp",
+        "MemoryUtils.cpp",
+    ],
+    header_libs: [
+        "gemmlowp_headers",
+        "libeigen",
+        "libneuralnetworks_headers",
+        "libruy_headers",
+        "tensorflow_headers",
+    ],
+    shared_libs: [
+        "android.hardware.neuralnetworks-V2-ndk",
+        "android.hardware.neuralnetworks@1.0",
+        "android.hardware.neuralnetworks@1.1",
+        "android.hardware.neuralnetworks@1.2",
+        "android.hardware.neuralnetworks@1.3",
+        "android.hidl.allocator@1.0",
+        "android.hidl.memory@1.0",
+        "libfmq",
+        "libhidlbase",
+        "libhidlmemory",
+    ],
+    whole_static_libs: [
+        "libarect",
+        "neuralnetworks_types",
+        "neuralnetworks_utils_hal_1_0", // TODO(b/160669116): Remove VNDK dependencies.
+        "neuralnetworks_utils_hal_1_1",
+        "neuralnetworks_utils_hal_1_2",
+        "neuralnetworks_utils_hal_1_3",
+        "neuralnetworks_utils_hal_aidl",
+        "neuralnetworks_utils_hal_common",
+    ],
+    target: {
+        android: {
+            shared_libs: [
+                "libnativewindow",
+            ],
+        },
+        host: {
+            cflags: [
+                "-D__ANDROID_API__=10000",
+                "-D__INTRODUCED_IN(n)=",
+                "-D__assert(a,b,c)=",
+            ],
+        },
+    },
+    cflags: [
+        "-DTF_LITE_DISABLE_X86_NEON",
+    ],
+}
+
 cc_defaults {
-    name: "libneuralnetworks_common_hidl_defaults",
+    name: "libneuralnetworks_common_defaults",
     defaults: [
         "neuralnetworks_defaults",
         "neuralnetworks_operations",
@@ -131,6 +184,9 @@ cc_defaults {
         "include",
     ],
     srcs: [
+        "AidlBufferTracker.cpp",
+        "AidlHalUtils.cpp",
+        "AidlValidateHal.cpp",
         "BufferTracker.cpp",
         "CpuExecutor.cpp",
         "ExecutionBurstController.cpp",
@@ -167,6 +223,7 @@ cc_defaults {
         "operations/Tile.cpp",
     ],
     shared_libs: [
+        "android.hardware.neuralnetworks-V2-ndk",
         "android.hardware.neuralnetworks@1.0",
         "android.hardware.neuralnetworks@1.1",
         "android.hardware.neuralnetworks@1.2",
@@ -209,7 +266,9 @@ cc_defaults {
         "neuralnetworks_utils_hal_1_1",
         "neuralnetworks_utils_hal_1_2",
         "neuralnetworks_utils_hal_1_3",
+        "neuralnetworks_utils_hal_aidl",
         "neuralnetworks_utils_hal_common",
+        "neuralnetworks_utils_hal_service",
         "philox_random",
     ],
     static_libs: [
@@ -225,64 +284,14 @@ cc_defaults {
 }
 
 cc_library_static {
-    name: "libneuralnetworks_common_hidl",
-    defaults: [
-        "libneuralnetworks_common_hidl_defaults",
-    ],
-}
-
-cc_defaults {
-    name: "libneuralnetworks_common_aidl_defaults",
-    defaults: [
-        "libneuralnetworks_common_hidl_defaults",
-    ],
-    srcs: [
-        "AidlBufferTracker.cpp",
-        "AidlHalUtils.cpp",
-        "AidlValidateHal.cpp",
-    ],
-}
-
-cc_library_static {
-    name: "libneuralnetworks_common_aidl_v1",
-    defaults: [
-        "libneuralnetworks_common_aidl_defaults",
-    ],
-    shared_libs: [
-        "android.hardware.neuralnetworks-V1-ndk",
-    ],
-    whole_static_libs: [
-        "neuralnetworks_utils_hal_aidl_v1",
-    ],
-}
-
-cc_library_static {
     name: "libneuralnetworks_common",
-    defaults: [
-        "libneuralnetworks_common_aidl_defaults",
-    ],
-    shared_libs: [
-        "android.hardware.neuralnetworks-V2-ndk",
-    ],
-    whole_static_libs: [
-        "neuralnetworks_utils_hal_aidl_v2",
-    ],
+    defaults: ["libneuralnetworks_common_defaults"],
 }
 
 cc_library_static {
     name: "libneuralnetworks_common_experimental",
-    defaults: [
-        "libneuralnetworks_common_aidl_defaults",
-    ],
-    shared_libs: [
-        "android.hardware.neuralnetworks-V2-ndk",
-    ],
-    whole_static_libs: [
-        "neuralnetworks_utils_hal_aidl_v2",
-    ],
-    cflags: [
-        "-DNN_EXPERIMENTAL_FEATURE",
-    ],
+    defaults: ["libneuralnetworks_common_defaults"],
+    cflags: ["-DNN_EXPERIMENTAL_FEATURE"],
 }
 
 cc_defaults {
