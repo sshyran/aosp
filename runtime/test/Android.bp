@@ -57,7 +57,6 @@ cc_defaults {
         "libc++fs",
         "libneuralnetworks_generated_test_harness",
         "libtextclassifier_hash_static",
-        "neuralnetworks_utils_hal_service",
     ],
     whole_static_libs: [
         "libcrypto_static",
