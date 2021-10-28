@@ -28,7 +28,10 @@ package {
 
 cc_defaults {
     name: "NeuralNetworksTest_default_libs",
-    defaults: ["neuralnetworks_defaults"],
+    defaults: [
+        "neuralnetworks_defaults",
+        "neuralnetworks_use_latest_utils_hal_aidl",
+    ],
     host_supported: true,
     // b/109953668, disable OpenMP
     // openmp: true,
@@ -46,9 +49,6 @@ cc_defaults {
         "libutils",
     ],
     static_libs: [
-        "android.hardware.common-V2-ndk",
-        "android.hardware.graphics.common-V2-ndk",
-        "android.hardware.neuralnetworks-V2-ndk",
         "android.hardware.neuralnetworks@1.0",
         "android.hardware.neuralnetworks@1.1",
         "android.hardware.neuralnetworks@1.2",
@@ -57,6 +57,7 @@ cc_defaults {
         "libc++fs",
         "libneuralnetworks_generated_test_harness",
         "libtextclassifier_hash_static",
+        "neuralnetworks_utils_hal_service",
     ],
     whole_static_libs: [
         "libcrypto_static",
