@@ -34,7 +34,6 @@ cc_defaults {
         "libneuralnetworks_headers",
     ],
     shared_libs: [
-        "android.hardware.neuralnetworks-V2-ndk",
         "android.hardware.neuralnetworks@1.0",
         "android.hardware.neuralnetworks@1.1",
         "android.hardware.neuralnetworks@1.2",
@@ -51,7 +50,7 @@ cc_defaults {
         "libutils",
     ],
     static_libs: [
-        "libneuralnetworks_common",
+        "libneuralnetworks_common_hidl",
     ],
     target: {
         android: {
@@ -153,7 +152,7 @@ cc_library_static {
     ],
     header_libs: ["libneuralnetworks_headers"],
     export_include_dirs: ["."],
-    static_libs: ["libneuralnetworks_common"],
+    static_libs: ["libneuralnetworks_common_hidl"],
     shared_libs: [
         "libbase",
     ],
