@@ -398,6 +398,7 @@ cc_defaults {
         "libneuralnetworks_static",
     ],
     whole_static_libs: [
+        "neuralnetworks_generated_AIDL_V2_example",
         "neuralnetworks_generated_V1_0_example",
         "neuralnetworks_generated_V1_1_example",
         "neuralnetworks_generated_V1_2_example",
@@ -455,11 +456,13 @@ cc_library_static {
         "fuzzing/RandomVariable.cpp",
         "fuzzing/TestRandomGraph.cpp",
         "fuzzing/operation_signatures/*.cpp",
+        "generated/spec_AIDL_V*/*.example.cpp",
         "generated/spec_V1_*/*.example.cpp",
     ],
     // generated code are too big to run with clang-tidy
     tidy_disabled_srcs: [
         "TestValidateModel.cpp", // includes large generated code
+        "generated/spec_AIDL_V*/*.example.cpp",
         "generated/spec_V1_*/*.example.cpp",
     ] + tidy_disabled_operation_signatures_files,
     include_dirs: [
