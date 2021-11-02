@@ -28,7 +28,7 @@
 #include <vector>
 
 #include "AidlHalInterfaces.h"
-#include "LegacyUtils.h"
+#include "nnapi/TypeUtils.h"
 
 namespace android::nn {
 
@@ -62,14 +62,11 @@ void update(std::vector<aidl_hal::OperandPerformance>* operandPerformance,
 }
 
 bool isExtensionOperandType(aidl_hal::OperandType type) {
-    return isExtensionOperandType(convert(type).value());
+    return isExtension(convert(type).value());
 }
 
-aidl_hal::ErrorStatus convertResultCodeToAidlErrorStatus(int resultCode) {
-    const auto errorStatus = aidl_hal::utils::convert(convertResultCodeToErrorStatus(resultCode));
-    CHECK(errorStatus.has_value()) << "Unhandled error (" << errorStatus.error().code
-                                   << "): " << errorStatus.error().message;
-    return errorStatus.value();
+bool isNonExtensionScalar(aidl_hal::OperandType type) {
+    return isNonExtensionScalar(convert(type).value());
 }
 
 }  // namespace android::nn

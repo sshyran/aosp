@@ -27,7 +27,7 @@
 #include <utility>
 #include <vector>
 
-#include "LegacyUtils.h"
+#include "AidlHalUtils.h"
 #include "nnapi/TypeUtils.h"
 
 namespace android {
@@ -116,8 +116,7 @@ bool validateMemoryDesc(
 
     // NOTE: validateMemoryDesc cannot validate scalar dimensions with extension operand type.
     if (!isExtensionOperand) {
-        NN_RET_CHECK(!nonExtensionOperandTypeIsScalar(static_cast<int>(opType)) ||
-                     dimensions.empty())
+        NN_RET_CHECK(!isNonExtensionScalar(opType) || dimensions.empty())
                 << "invalid dimensions with scalar operand type.";
     }
 
