@@ -96,6 +96,7 @@ cc_defaults {
         "ModelArgumentInfo.cpp",
         "ModelBuilder.cpp",
         "NeuralNetworks.cpp",
+        "ServerFlag.cpp",
         "Telemetry.cpp",
         "TypeManager.cpp",
     ],
@@ -142,6 +143,7 @@ cc_defaults {
         "libutils",
         "neuralnetworks_types",
         "neuralnetworks_utils_hal_service",
+        "server_configurable_flags",
     ],
 
     stl: "libc++_static",
