@@ -63,6 +63,13 @@ int64_t nanosecondsDuration(TimePoint end, TimePoint start) {
 
 constexpr aidl_hal::Timing kNoTiming = {.timeOnDeviceNs = -1, .timeInDriverNs = -1};
 
+aidl_hal::ErrorStatus convertResultCodeToAidlErrorStatus(int resultCode) {
+    const auto errorStatus = aidl_hal::utils::convert(convertResultCodeToErrorStatus(resultCode));
+    CHECK(errorStatus.has_value()) << "Unhandled error (" << errorStatus.error().code
+                                   << "): " << errorStatus.error().message;
+    return errorStatus.value();
+}
+
 }  // namespace
 
 ndk::ScopedAStatus SampleDriver::getVersionString(std::string* versionString) {
@@ -249,7 +256,8 @@ ndk::ScopedAStatus SampleBuffer::copyTo(const aidl_hal::Memory& dst) {
     if (validationStatus != aidl_hal::ErrorStatus::NONE) {
         return toAStatus(validationStatus);
     }
-    const auto srcPool = kBuffer->createRunTimePoolInfo();
+    const auto srcPool =
+            RunTimePoolInfo::createFromExistingBuffer(kBuffer->getPointer(), kBuffer->getSize());
     copyRunTimePoolInfos(srcPool, dstPool.value());
     return ndk::ScopedAStatus::ok();
 }
@@ -273,7 +281,8 @@ static aidl_hal::ErrorStatus copyFromInternal(
     if (validationStatus != aidl_hal::ErrorStatus::NONE) {
         return validationStatus;
     }
-    const auto dstPool = bufferWrapper->createRunTimePoolInfo();
+    const auto dstPool = RunTimePoolInfo::createFromExistingBuffer(bufferWrapper->getPointer(),
+                                                                   bufferWrapper->getSize());
     copyRunTimePoolInfos(srcPool.value(), dstPool);
     return aidl_hal::ErrorStatus::NONE;
 }
@@ -333,7 +342,8 @@ createRunTimePoolInfos(const Request& request, const SampleDriver& driver,
             if (validationStatus != aidl_hal::ErrorStatus::NONE) {
                 return {validationStatus, {}, {}};
             }
-            requestPoolInfos.push_back(bufferWrapper->createRunTimePoolInfo());
+            requestPoolInfos.push_back(RunTimePoolInfo::createFromExistingBuffer(
+                    bufferWrapper->getPointer(), bufferWrapper->getSize()));
             bufferWrappers.push_back(std::move(bufferWrapper));
         } else {
             // If the pool is not a Memory or a token, the input is invalid.
