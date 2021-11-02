@@ -59,6 +59,7 @@ cc_defaults {
     static_libs: [
         "libaidlcommonsupport",
         "libneuralnetworks_common",
+        "neuralnetworks_utils_hal_aidl",
         "neuralnetworks_utils_hal_common",
     ],
 }
