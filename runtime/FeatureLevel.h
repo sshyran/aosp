@@ -26,6 +26,7 @@
 namespace android {
 namespace nn {
 
+// TODO(b/201399117): Set this value based on feature level flag.
 // The current feature level of the NNAPI Runtime
 #ifdef NN_EXPERIMENTAL_FEATURE
 constexpr int64_t kCurrentNNAPIRuntimeFeatureLevel = ANEURALNETWORKS_FEATURE_LEVEL_EXPERIMENTAL;
