@@ -26,7 +26,6 @@
 #include <vector>
 
 #include "AidlHalInterfaces.h"
-#include "CpuExecutor.h"
 #include "nnapi/TypeUtils.h"
 
 namespace android::nn {
@@ -120,7 +119,7 @@ ErrorStatus AidlManagedBuffer::validateCopyFrom(const std::vector<uint32_t>& dim
         return ErrorStatus::INVALID_ARGUMENT;
     }
 
-    if (nonExtensionOperandTypeIsScalar(static_cast<int>(kOperandType))) {
+    if (isNonExtensionScalar(kOperandType)) {
         if (!dimensions.empty()) {
             LOG(ERROR) << "AidlManagedBuffer::validateCopyFrom -- invalid dimensions for scalar "
                           "operand: "

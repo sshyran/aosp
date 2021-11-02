@@ -43,7 +43,8 @@ void update(std::vector<aidl_hal::OperandPerformance>* operandPerformance,
 // Returns true if an operand type is an extension type.
 bool isExtensionOperandType(aidl_hal::OperandType type);
 
-aidl_hal::ErrorStatus convertResultCodeToAidlErrorStatus(int resultCode);
+// Returns true if an operand type is a scalar type.
+bool isNonExtensionScalar(aidl_hal::OperandType type);
 
 }  // namespace nn
 }  // namespace android
