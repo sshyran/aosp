@@ -30,7 +30,6 @@
 
 #include "AidlHalInterfaces.h"
 #include "AidlValidateHal.h"
-#include "CpuExecutor.h"
 
 namespace android::nn {
 
@@ -45,9 +44,8 @@ class AidlManagedBuffer {
     AidlManagedBuffer(std::unique_ptr<uint8_t[]> buffer, uint32_t size,
                       std::set<AidlHalPreparedModelRole> roles, const Operand& operand);
 
-    RunTimePoolInfo createRunTimePoolInfo() const {
-        return RunTimePoolInfo::createFromExistingBuffer(kBuffer.get(), kSize);
-    }
+    uint8_t* getPointer() const { return kBuffer.get(); }
+    uint32_t getSize() const { return kSize; }
 
     // "poolIndex" is the index of this buffer in the request.pools.
     ErrorStatus validateRequest(uint32_t poolIndex, const Request& request,
