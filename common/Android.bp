@@ -114,7 +114,7 @@ cc_defaults {
 // versions (1.0-3) of the NNAPI HIDL library.
 //
 cc_defaults {
-    name: "libneuralnetworks_common_hidl_defaults",
+    name: "libneuralnetworks_common_defaults",
     defaults: [
         "neuralnetworks_defaults",
         "neuralnetworks_operations",
@@ -227,28 +227,9 @@ cc_defaults {
 }
 
 cc_library_static {
-    name: "libneuralnetworks_common_hidl",
-    defaults: [
-        "libneuralnetworks_common_hidl_defaults",
-    ],
-}
-
-cc_defaults {
-    name: "libneuralnetworks_common_aidl_defaults",
-    defaults: [
-        "libneuralnetworks_common_hidl_defaults",
-    ],
-    srcs: [
-        "AidlBufferTracker.cpp",
-        "AidlHalUtils.cpp",
-        "AidlValidateHal.cpp",
-    ],
-}
-
-cc_library_static {
     name: "libneuralnetworks_common_aidl_v1",
     defaults: [
-        "libneuralnetworks_common_aidl_defaults",
+        "libneuralnetworks_common_defaults",
     ],
     shared_libs: [
         "android.hardware.neuralnetworks-V1-ndk",
@@ -261,7 +242,7 @@ cc_library_static {
 cc_library_static {
     name: "libneuralnetworks_common",
     defaults: [
-        "libneuralnetworks_common_aidl_defaults",
+        "libneuralnetworks_common_defaults",
     ],
     shared_libs: [
         "android.hardware.neuralnetworks-V2-ndk",
@@ -274,13 +255,7 @@ cc_library_static {
 cc_library_static {
     name: "libneuralnetworks_common_experimental",
     defaults: [
-        "libneuralnetworks_common_aidl_defaults",
-    ],
-    shared_libs: [
-        "android.hardware.neuralnetworks-V2-ndk",
-    ],
-    whole_static_libs: [
-        "neuralnetworks_utils_hal_aidl",
+        "libneuralnetworks_common_defaults",
     ],
     cflags: [
         "-DNN_EXPERIMENTAL_FEATURE",
