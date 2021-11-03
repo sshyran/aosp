@@ -25,6 +25,7 @@
 #include <nnapi/SharedMemory.h>
 #include <nnapi/TypeUtils.h>
 #include <nnapi/Types.h>
+#include <nnapi/Validation.h>
 
 #include <algorithm>
 #include <memory>
@@ -465,7 +466,7 @@ int MemoryBuilder::finish() {
     }
 #ifdef __ANDROID__
     mSupportsAhwb = std::all_of(devices.begin(), devices.end(), [](const auto* device) {
-        return device->getFeatureLevel() >= kHalVersionV1_3ToApi.featureLevel;
+        return isCompliantVersion(kHalVersionV1_3ToApi.canonical, device->getFeatureLevel());
     });
 #else   // __ANDROID__
     mSupportsAhwb = false;

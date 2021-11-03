@@ -25,7 +25,6 @@
 #include <utility>
 #include <vector>
 
-#include "FeatureLevel.h"
 #include "Manager.h"
 #include "NeuralNetworks.h"
 

@@ -39,7 +39,6 @@
 #include "Event.h"
 #include "ExecutionBuilder.h"
 #include "ExecutionCallback.h"
-#include "FeatureLevel.h"
 #include "Manager.h"
 #include "Memory.h"
 #include "ModelBuilder.h"
@@ -722,7 +721,7 @@ int ANeuralNetworksDevice_getFeatureLevel(const ANeuralNetworksDevice* device,
         return ANEURALNETWORKS_UNEXPECTED_NULL;
     }
     Device* d = reinterpret_cast<Device*>(const_cast<ANeuralNetworksDevice*>(device));
-    int64_t dFeatureLevel = d->getFeatureLevel();
+    int64_t dFeatureLevel = DeviceManager::versionToFeatureLevel(d->getFeatureLevel().level);
     if (dFeatureLevel < 0) {
         return ANEURALNETWORKS_BAD_STATE;
     }
@@ -1651,7 +1650,7 @@ int64_t ANeuralNetworks_getRuntimeFeatureLevel() {
         return sRuntimeFeatureLevel;
     }
 #endif
-    return kCurrentNNAPIRuntimeFeatureLevel;
+    return DeviceManager::get()->getRuntimeFeatureLevel();
 }
 
 int ANeuralNetworksExecution_enableInputAndOutputPadding(ANeuralNetworksExecution* execution,

@@ -1122,7 +1122,8 @@ TEST_P(RandomPartitioningTest, Test) {
             compilationResult == Result::OP_FAILED && hasUnknownDimensions &&
             cNoFallback.getExecutionPlan().hasDynamicTemporaries() &&
             std::any_of(devices.begin(), devices.end(), [](const std::shared_ptr<Device>& device) {
-                return device->getFeatureLevel() < nn::kHalVersionV1_2ToApi.featureLevel;
+                return !isCompliantVersion(nn::kHalVersionV1_2ToApi.canonical,
+                                           device->getFeatureLevel());
             });
     const bool fallbackNeededForStepModelWithNoInputsOrNoOutputs =
             cNoFallback.getExecutionPlan().forTest_hasStepModelWithNoInputsOrNoOutputs();
