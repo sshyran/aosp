@@ -28,7 +28,9 @@
 #include <nnapi/Result.h>
 #include <nnapi/Types.h>
 #include <nnapi/Validation.h>
+#include <nnapi/hal/aidl/BufferTracker.h>
 #include <nnapi/hal/aidl/Conversions.h>
+#include <nnapi/hal/aidl/HalUtils.h>
 #include <nnapi/hal/aidl/Utils.h>
 
 #include <algorithm>
@@ -44,8 +46,6 @@
 #include <variant>
 #include <vector>
 
-#include "AidlBufferTracker.h"
-#include "AidlHalUtils.h"
 #include "CpuExecutor.h"
 #include "SampleDriverUtils.h"
 #include "Tracing.h"

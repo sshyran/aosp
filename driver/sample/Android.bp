@@ -50,7 +50,7 @@ cc_defaults {
         "libutils",
     ],
     static_libs: [
-        "libneuralnetworks_common_hidl",
+        "libneuralnetworks_common",
     ],
     target: {
         android: {
@@ -152,7 +152,7 @@ cc_library_static {
     ],
     header_libs: ["libneuralnetworks_headers"],
     export_include_dirs: ["."],
-    static_libs: ["libneuralnetworks_common_hidl"],
+    static_libs: ["libneuralnetworks_common"],
     shared_libs: [
         "libbase",
     ],
