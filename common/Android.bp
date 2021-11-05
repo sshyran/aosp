@@ -238,6 +238,12 @@ cc_library_static {
     defaults: [
         "libneuralnetworks_common_defaults",
     ],
+    exclude_static_libs: [
+        "neuralnetworks_types",
+    ],
+    static_libs: [
+        "neuralnetworks_types_experimental",
+    ],
     cflags: [
         "-DNN_EXPERIMENTAL_FEATURE",
     ],
@@ -381,8 +387,8 @@ cc_defaults {
     },
 }
 
-cc_library_static {
-    name: "neuralnetworks_types",
+cc_defaults {
+    name: "neuralnetworks_types_defaults",
     defaults: ["neuralnetworks_utils_defaults"],
     srcs: [
         "SharedMemory.cpp",
@@ -411,6 +417,17 @@ cc_library_static {
         "libcutils",
         "libutils",
     ],
+}
+
+cc_library_static {
+    name: "neuralnetworks_types",
+    defaults: ["neuralnetworks_types_defaults"],
+}
+
+cc_library_static {
+    name: "neuralnetworks_types_experimental",
+    defaults: ["neuralnetworks_types_defaults"],
+    cflags: ["-DNN_EXPERIMENTAL_FEATURE"],
 }
 
 cc_library_static {
