@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "Concatenation.h"
+
 #include <algorithm>
 #include <iterator>
 #include <vector>
@@ -42,11 +44,6 @@
 namespace android {
 namespace nn {
 namespace concatenation {
-
-constexpr char kOperationName[] = "CONCATENATION";
-
-constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -144,46 +141,7 @@ inline bool concatenation<int8_t>(IOperationExecutionContext* context) {
 }
 
 }  // namespace
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-Result<Version> validate(const IOperationValidationContext* context) {
-    uint32_t inputCount = context->getNumInputs();
-    NN_RET_CHECK_GE(inputCount, 2u);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    const OperandType inputType = context->getInputType(0);
-    auto minSupportedVersion = kVersionFeatureLevel1;
-    if (inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        minSupportedVersion = kVersionFeatureLevel1;
-    } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        minSupportedVersion = kVersionFeatureLevel3;
-    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = kVersionFeatureLevel4;
-    } else {
-        NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
-    }
-    std::vector<OperandType> inExpectedTypes(inputCount - 1, inputType);
-    inExpectedTypes.push_back(OperandType::INT32);
-    if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        const Shape& output = context->getOutputShape(kOutputTensor);
-        for (uint32_t i = 0; i < inputCount - 1; ++i) {
-            const Shape& input = context->getInputShape(i);
-            if (input.scale != output.scale || input.offset != output.offset) {
-                minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel3);
-            }
-        }
-    }
-    for (uint32_t i = 0; i < inputCount - 1; ++i) {
-        const uint32_t inputRank = getNumberOfDimensions(context->getInputShape(i));
-        if (inputRank != 0) {
-            NN_RET_CHECK_LE(inputRank, 4u);
-        }
-    }
-    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return minSupportedVersion;
-}
-
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     uint32_t numInputs = context->getNumInputs();
     NN_RET_CHECK_GE(numInputs, 2u);

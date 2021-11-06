@@ -14,32 +14,10 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "Operations"
-
-#include "OperationResolver.h"
+#include "LogicalNot.h"
 #include "OperationsUtils.h"
 
-namespace android {
-namespace nn {
-namespace logical_not {
-
-constexpr uint32_t kNumInputs = 1;
-constexpr uint32_t kInputTensor = 0;
-
-constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
-
-namespace {
-
-bool compute(const bool8* input, const Shape& shape, bool8* output) {
-    const auto size = getNumberOfElements(shape);
-    for (uint32_t i = 0; i < size; ++i) {
-        output[i] = input[i] == 0;
-    }
-    return true;
-}
-
-}  // namespace
+namespace android::nn::logical_not {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -52,23 +30,4 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevel3;
 }
 
-bool prepare(IOperationExecutionContext* context) {
-    Shape input = context->getInputShape(kInputTensor);
-    Shape output = context->getOutputShape(kOutputTensor);
-    NN_RET_CHECK(SetShape(input, &output));
-    return context->setOutputShape(kOutputTensor, output);
-}
-
-bool execute(IOperationExecutionContext* context) {
-    return compute(context->getInputBuffer<bool8>(kInputTensor),
-                   context->getInputShape(kInputTensor),
-                   context->getOutputBuffer<bool8>(kOutputTensor));
-}
-
-}  // namespace logical_not
-
-NN_REGISTER_OPERATION(LOGICAL_NOT, "LOGICAL_NOT", logical_not::validate, logical_not::prepare,
-                      logical_not::execute);
-
-}  // namespace nn
-}  // namespace android
+}  // namespace android::nn::logical_not

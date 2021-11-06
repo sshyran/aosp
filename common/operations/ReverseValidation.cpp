@@ -16,35 +16,10 @@
 
 #define LOG_TAG "Operations"
 
-#include "OperationResolver.h"
 #include "OperationsUtils.h"
+#include "Reverse.h"
 
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
-
-#if 0
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-parameter"
-#pragma clang diagnostic ignored "-Wsign-compare"
-#include <tensorflow/lite/kernels/internal/reference/reference_ops.h>
-#pragma clang diagnostic pop
-#endif
-
-#include "CpuOperationUtils.h"
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
-
-namespace android {
-namespace nn {
-namespace reverse_op {
-
-constexpr char kOperationName[] = "REVERSE";
-
-// inputs consist of tensor to be reversed and a shape [1] axis tensor
-constexpr uint32_t kNumInputs = 2;
-constexpr uint32_t kInputTensor = 0;
-constexpr uint32_t kInputAxisTensor = 1;
-
-constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
+namespace android::nn::reverse_op {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -93,20 +68,4 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevel7;
 }
 
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
-bool prepare(IOperationExecutionContext* /*context*/) {
-    return false;
-}
-
-bool execute(IOperationExecutionContext* /*context*/) {
-    return false;
-}
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
-
-}  // namespace reverse_op
-
-NN_REGISTER_OPERATION(REVERSE, reverse_op::kOperationName, reverse_op::validate,
-                      reverse_op::prepare, reverse_op::execute);
-
-}  // namespace nn
-}  // namespace android
+}  // namespace android::nn::reverse_op

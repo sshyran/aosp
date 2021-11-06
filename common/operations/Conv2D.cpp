@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "Conv2D.h"
+
 #include <algorithm>
 #include <iterator>
 #include <memory>
@@ -44,16 +46,7 @@ namespace android {
 namespace nn {
 namespace conv_2d {
 
-constexpr char kOperationName[] = "CONV_2D";
-
-constexpr uint32_t kNumInputsArray[] = {7, 8, 10, 11, 13};
-constexpr uint32_t kInputTensor = 0;
-constexpr uint32_t kFilterTensor = 1;
-[[maybe_unused]] constexpr uint32_t kBiasTensor = 2;
-
-constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
-
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
 
 // If possible we will use this static buffer for the tensor.
@@ -134,7 +127,6 @@ struct Conv2dParam {
     }
 };
 
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 #define ANDROID_NN_CONV_PARAMETERS(Type)                                          \
     [[maybe_unused]] uint32_t height = getSizeOfDimension(inputShape, 1);         \
     [[maybe_unused]] uint32_t width = getSizeOfDimension(inputShape, 2);          \
@@ -532,112 +524,9 @@ bool convQuant8PerChannel(const T* inputData, const Shape& inputShape, const int
 }
 
 #undef ANDROID_NN_CONV_PARAMETERS
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 }  // namespace
 
-Result<Version> validate(const IOperationValidationContext* context) {
-    const uint32_t numInputs = context->getNumInputs();
-    NN_RET_CHECK(
-            std::binary_search(std::begin(kNumInputsArray), std::end(kNumInputsArray), numInputs));
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    const auto inputRank = getNumberOfDimensions(context->getInputShape(kInputTensor));
-    const auto filterRank = getNumberOfDimensions(context->getInputShape(kFilterTensor));
-    if (inputRank != 0) {
-        NN_RET_CHECK_EQ(inputRank, 4u);
-    }
-    if (filterRank != 0) {
-        NN_RET_CHECK_EQ(filterRank, 4u);
-    }
-    auto inputCount = context->getNumInputs();
-    auto inputType = context->getInputType(kInputTensor);
-    auto filterType = context->getInputType(kFilterTensor);
-    std::vector<OperandType> inExpectedTypes;
-    if (inputType == OperandType::TENSOR_FLOAT32) {
-        inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
-                           OperandType::TENSOR_FLOAT32, OperandType::INT32,
-                           OperandType::INT32,          OperandType::INT32,
-                           OperandType::INT32};
-    } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        inExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::TENSOR_FLOAT16,
-                           OperandType::TENSOR_FLOAT16, OperandType::INT32,
-                           OperandType::INT32,          OperandType::INT32,
-                           OperandType::INT32};
-    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-               inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK(filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL ||
-                     filterType == inputType)
-                << "Unsupported filter tensor type for operation " << kOperationName;
-        inExpectedTypes = {inputType,          filterType,         OperandType::TENSOR_INT32,
-                           OperandType::INT32, OperandType::INT32, OperandType::INT32,
-                           OperandType::INT32};
-
-        if (filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
-            NN_RET_CHECK_EQ(std::get<Operand::SymmPerChannelQuantParams>(
-                                    context->getInputExtraParams(kFilterTensor))
-                                    .channelDim,
-                            0u)
-                    << "Unsupported filter tensor channel dimension for operation "
-                    << kOperationName;
-        }
-    } else {
-        NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation " << kOperationName;
-    }
-
-    // NeuralNetworks.h specifies that ANEURALNETWORKS_CONV_2D's output must
-    // meet "outputScale > inputScale * filterScale" for the operand type
-    // ANEURALNETWORKS_TENSOR_QUANT8_ASYMM before API level 29. For other
-    // operand types (e.g., ANEURALNETWORKS_TENSOR_FLOAT32), this constraint
-    // does not apply, so by default the constraint is met.
-    bool meetsQuantizedScaleConstraintBeforeV1_2 = true;
-    if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        const float inputScale = context->getInputShape(kInputTensor).scale;
-        const float filterScale = context->getInputShape(kFilterTensor).scale;
-        const float outputScale = context->getInputShape(kOutputTensor).scale;
-        meetsQuantizedScaleConstraintBeforeV1_2 = (outputScale > inputScale * filterScale);
-    }
-
-    bool withExplicitPadding = false;
-    bool withLayout = false;
-    bool withDilation = false;
-    if (inputCount >= 8) {
-        if (context->getInputType(7) == OperandType::INT32 && inputCount >= 10) {
-            std::vector<OperandType> explicitScalarTypes(3, OperandType::INT32);
-            inExpectedTypes.insert(inExpectedTypes.end(), explicitScalarTypes.begin(),
-                                   explicitScalarTypes.end());
-            withExplicitPadding = true;
-        }
-        int inputOffset = withExplicitPadding ? 3 : 0;
-        if (inputCount >= 8u + inputOffset) {
-            inExpectedTypes.push_back(OperandType::BOOL);
-            withLayout = true;
-        }
-        NN_RET_CHECK_NE(inputCount, 9u + inputOffset)
-                << "Provided only one dilation factor value, two values are requred for operation "
-                << kOperationName;
-        if (inputCount == 10u + inputOffset) {
-            inExpectedTypes.push_back(OperandType::INT32);
-            inExpectedTypes.push_back(OperandType::INT32);
-            withDilation = true;
-        }
-    }
-
-    auto minSupportedVersion = kVersionFeatureLevel1;
-    if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = kVersionFeatureLevel4;
-    } else if (inputType == OperandType::TENSOR_FLOAT16 ||
-               filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL || withLayout ||
-               withDilation || !meetsQuantizedScaleConstraintBeforeV1_2) {
-        minSupportedVersion = kVersionFeatureLevel3;
-    } else {
-        minSupportedVersion = kVersionFeatureLevel1;
-    }
-    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return minSupportedVersion;
-}
-
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
     Shape filter = context->getInputShape(kFilterTensor);

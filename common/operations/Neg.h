@@ -14,17 +14,12 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "Operations"
+#ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_NEG_H
+#define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_NEG_H
 
-#include <cmath>
-
-#include "OperationResolver.h"
 #include "OperationsUtils.h"
-#include "Tracing.h"
 
-namespace android {
-namespace nn {
-namespace neg {
+namespace android::nn::neg {
 
 constexpr char kOperationName[] = "NEG";
 
@@ -34,60 +29,8 @@ constexpr uint32_t kInputTensor = 0;
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
-namespace {
+Result<Version> validate(const IOperationValidationContext* context);
 
-template <typename T>
-inline bool compute(const T* input, const Shape& shape, T* output) {
-    const auto size = getNumberOfElements(shape);
-    for (uint32_t i = 0; i < size; ++i) {
-        output[i] = -input[i];
-    }
-    return true;
-}
+}  // namespace android::nn::neg
 
-}  // namespace
-
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    OperandType inputType = context->getInputType(kInputTensor);
-    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
-                 inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_INT32)
-            << "Unsupported tensor type for operation " << kOperationName;
-    NN_RET_CHECK(validateInputTypes(context, {inputType}));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return kVersionFeatureLevel3;
-}
-
-bool prepare(IOperationExecutionContext* context) {
-    Shape input = context->getInputShape(kInputTensor);
-    Shape output = context->getOutputShape(kOutputTensor);
-    NN_RET_CHECK(SetShape(input, &output));
-    return context->setOutputShape(kOutputTensor, output);
-}
-
-bool execute(IOperationExecutionContext* context) {
-    switch (context->getInputType(kInputTensor)) {
-        case OperandType::TENSOR_FLOAT16:
-            return compute(context->getInputBuffer<_Float16>(kInputTensor),
-                           context->getInputShape(kInputTensor),
-                           context->getOutputBuffer<_Float16>(kOutputTensor));
-        case OperandType::TENSOR_FLOAT32:
-            return compute(context->getInputBuffer<float>(kInputTensor),
-                           context->getInputShape(kInputTensor),
-                           context->getOutputBuffer<float>(kOutputTensor));
-        case OperandType::TENSOR_INT32:
-            return compute(context->getInputBuffer<int32_t>(kInputTensor),
-                           context->getInputShape(kInputTensor),
-                           context->getOutputBuffer<int32_t>(kOutputTensor));
-        default:
-            NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
-    }
-}
-
-}  // namespace neg
-
-NN_REGISTER_OPERATION(NEG, neg::kOperationName, neg::validate, neg::prepare, neg::execute);
-
-}  // namespace nn
-}  // namespace android
+#endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_NEG_H

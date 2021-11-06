@@ -30,6 +30,7 @@
 
 #include "CpuOperationUtils.h"
 #include "Operations.h"
+#include "SimpleMath.h"
 #include "Tracing.h"
 
 namespace android {

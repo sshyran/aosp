@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "Operations"
+#ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_LOGICAL_NOT_H
+#define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_LOGICAL_NOT_H
 
-#include "OperationResolver.h"
 #include "OperationsUtils.h"
 
-namespace android {
-namespace nn {
-namespace logical_not {
+namespace android::nn::logical_not {
 
 constexpr uint32_t kNumInputs = 1;
 constexpr uint32_t kInputTensor = 0;
@@ -29,46 +27,8 @@ constexpr uint32_t kInputTensor = 0;
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
-namespace {
+Result<Version> validate(const IOperationValidationContext* context);
 
-bool compute(const bool8* input, const Shape& shape, bool8* output) {
-    const auto size = getNumberOfElements(shape);
-    for (uint32_t i = 0; i < size; ++i) {
-        output[i] = input[i] == 0;
-    }
-    return true;
-}
+}  // namespace android::nn::logical_not
 
-}  // namespace
-
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    OperandType inputType = context->getInputType(kInputTensor);
-    NN_RET_CHECK(inputType == OperandType::TENSOR_BOOL8)
-            << "Unsupported tensor type for LOGICAL_NOT";
-    NN_RET_CHECK(validateInputTypes(context, {inputType}));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return kVersionFeatureLevel3;
-}
-
-bool prepare(IOperationExecutionContext* context) {
-    Shape input = context->getInputShape(kInputTensor);
-    Shape output = context->getOutputShape(kOutputTensor);
-    NN_RET_CHECK(SetShape(input, &output));
-    return context->setOutputShape(kOutputTensor, output);
-}
-
-bool execute(IOperationExecutionContext* context) {
-    return compute(context->getInputBuffer<bool8>(kInputTensor),
-                   context->getInputShape(kInputTensor),
-                   context->getOutputBuffer<bool8>(kOutputTensor));
-}
-
-}  // namespace logical_not
-
-NN_REGISTER_OPERATION(LOGICAL_NOT, "LOGICAL_NOT", logical_not::validate, logical_not::prepare,
-                      logical_not::execute);
-
-}  // namespace nn
-}  // namespace android
+#endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_LOGICAL_NOT_H

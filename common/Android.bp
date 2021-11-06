@@ -46,6 +46,7 @@ cc_defaults {
     host_supported: true,
     srcs: [
         "OperationResolver.cpp",
+        "operations/*Validation.cpp",
         "operations/Activation.cpp",
         "operations/BatchMatmul.cpp",
         "operations/BidirectionalSequenceRNN.cpp",
