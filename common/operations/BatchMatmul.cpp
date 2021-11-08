@@ -69,16 +69,16 @@ bool canMatrixMul(uint32_t LHSRow, uint32_t LHSCol, uint32_t RHSRow, uint32_t RH
     return LHSCol == RHSRow;
 }
 
-// Computes the shape of output tensor.
-Shape computeOutputShape(const Shape& LHSTensorShape, const Shape& RHSTensorShape, bool adjX,
-                         bool adjY) {
+// Computes the dimensions of output tensor.
+std::vector<uint32_t> computeOutputDimensions(const Shape& LHSTensorShape,
+                                              const Shape& RHSTensorShape, bool adjX, bool adjY) {
     uint32_t numDims = getNumberOfDimensions(LHSTensorShape);
-    Shape outputTensorShape = LHSTensorShape;
-    outputTensorShape.dimensions[numDims - 2] =
+    auto outputTensorDimensions = LHSTensorShape.dimensions;
+    outputTensorDimensions[numDims - 2] =
             adjX ? LHSTensorShape.dimensions[numDims - 1] : LHSTensorShape.dimensions[numDims - 2];
-    outputTensorShape.dimensions[numDims - 1] =
+    outputTensorDimensions[numDims - 1] =
             adjY ? RHSTensorShape.dimensions[numDims - 2] : RHSTensorShape.dimensions[numDims - 1];
-    return outputTensorShape;
+    return outputTensorDimensions;
 }
 
 // Swaps row and column dimensions for a shape.
@@ -262,9 +262,10 @@ bool prepare(IOperationExecutionContext* context) {
                               getSizeOfDimension(inputRHSTensorShape, numDims - 1), adjX, adjY))
             << "Input tensors are not able to perform matrix multiplication.";
 
-    return context->setOutputShape(
-            kOutputTensor,
-            computeOutputShape(inputLHSTensorShape, inputRHSTensorShape, adjX, adjY));
+    Shape outputTensorShape = context->getOutputShape(kOutputTensor);
+    outputTensorShape.dimensions =
+            computeOutputDimensions(inputLHSTensorShape, inputRHSTensorShape, adjX, adjY);
+    return context->setOutputShape(kOutputTensor, outputTensorShape);
 }
 
 bool execute(IOperationExecutionContext* context) {

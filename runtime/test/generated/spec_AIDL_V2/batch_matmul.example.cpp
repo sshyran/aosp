@@ -536,24 +536,24 @@ const TestModel& get_test_model_Simple_quant8_signed() {
                 .inputIndexes = {0, 1},
                 .operands = {{ // op1
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-127, -126, -125, -124, -123, -122}),
+                            .data = TestBuffer::createFromVector<int8_t>({4, 8, 12, 16, 20, 24}),
                             .dimensions = {1, 2, 3},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.25f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = 0
                         }, { // op2
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-121, -120, -119, -118, -117, -116, -115, -114, -113, -112, -111, -110}),
+                            .data = TestBuffer::createFromVector<int8_t>({-50, -48, -46, -44, -42, -40, -38, -36, -34, -32, -30, -28}),
                             .dimensions = {1, 3, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = -64
                         }, { // adj0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
@@ -618,9 +618,9 @@ const TestModel& get_test_model_Simple_quant8_signed_all_inputs_as_internal() {
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.25f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = 0
                         }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({}),
@@ -628,9 +628,9 @@ const TestModel& get_test_model_Simple_quant8_signed_all_inputs_as_internal() {
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = -64
                         }, { // adj0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
@@ -663,24 +663,24 @@ const TestModel& get_test_model_Simple_quant8_signed_all_inputs_as_internal() {
                             .zeroPoint = -128
                         }, { // op1_new
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-127, -126, -125, -124, -123, -122}),
+                            .data = TestBuffer::createFromVector<int8_t>({4, 8, 12, 16, 20, 24}),
                             .dimensions = {1, 2, 3},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.25f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = 0
                         }, { // placeholder4
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-128}),
+                            .data = TestBuffer::createFromVector<int8_t>({0}),
                             .dimensions = {1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.25f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = 0
                         }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
@@ -693,24 +693,24 @@ const TestModel& get_test_model_Simple_quant8_signed_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, { // op2_new
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-121, -120, -119, -118, -117, -116, -115, -114, -113, -112, -111, -110}),
+                            .data = TestBuffer::createFromVector<int8_t>({-50, -48, -46, -44, -42, -40, -38, -36, -34, -32, -30, -28}),
                             .dimensions = {1, 3, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = -64
                         }, { // placeholder5
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-128}),
+                            .data = TestBuffer::createFromVector<int8_t>({-64}),
                             .dimensions = {1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = -64
                         }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
@@ -1279,24 +1279,24 @@ const TestModel& get_test_model_RHSAdjoint_quant8_signed() {
                 .inputIndexes = {0, 1},
                 .operands = {{ // op11
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-127, -126, -125, -124, -123, -122}),
+                            .data = TestBuffer::createFromVector<int8_t>({4, 8, 12, 16, 20, 24}),
                             .dimensions = {1, 2, 3},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.25f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = 0
                         }, { // op21
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-121, -117, -113, -120, -116, -112, -119, -115, -111, -118, -114, -110}),
+                            .data = TestBuffer::createFromVector<int8_t>({-50, -42, -34, -48, -40, -32, -46, -38, -30, -44, -36, -28}),
                             .dimensions = {1, 4, 3},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = -64
                         }, { // adj01
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
@@ -1361,9 +1361,9 @@ const TestModel& get_test_model_RHSAdjoint_quant8_signed_all_inputs_as_internal(
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.25f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = 0
                         }, { // op21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({}),
@@ -1371,9 +1371,9 @@ const TestModel& get_test_model_RHSAdjoint_quant8_signed_all_inputs_as_internal(
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = -64
                         }, { // adj01
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
@@ -1406,24 +1406,24 @@ const TestModel& get_test_model_RHSAdjoint_quant8_signed_all_inputs_as_internal(
                             .zeroPoint = -128
                         }, { // op11_new
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-127, -126, -125, -124, -123, -122}),
+                            .data = TestBuffer::createFromVector<int8_t>({4, 8, 12, 16, 20, 24}),
                             .dimensions = {1, 2, 3},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.25f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = 0
                         }, { // placeholder10
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-128}),
+                            .data = TestBuffer::createFromVector<int8_t>({0}),
                             .dimensions = {1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.25f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = 0
                         }, { // param10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
@@ -1436,24 +1436,24 @@ const TestModel& get_test_model_RHSAdjoint_quant8_signed_all_inputs_as_internal(
                             .zeroPoint = 0
                         }, { // op21_new
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-121, -117, -113, -120, -116, -112, -119, -115, -111, -118, -114, -110}),
+                            .data = TestBuffer::createFromVector<int8_t>({-50, -42, -34, -48, -40, -32, -46, -38, -30, -44, -36, -28}),
                             .dimensions = {1, 4, 3},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = -64
                         }, { // placeholder11
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-128}),
+                            .data = TestBuffer::createFromVector<int8_t>({-64}),
                             .dimensions = {1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = -64
                         }, { // param11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
@@ -2022,24 +2022,24 @@ const TestModel& get_test_model_LHSAdjoint_quant8_signed() {
                 .inputIndexes = {0, 1},
                 .operands = {{ // op12
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-127, -124, -126, -123, -125, -122}),
+                            .data = TestBuffer::createFromVector<int8_t>({4, 16, 8, 20, 12, 24}),
                             .dimensions = {1, 3, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.25f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = 0
                         }, { // op22
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-121, -120, -119, -118, -117, -116, -115, -114, -113, -112, -111, -110}),
+                            .data = TestBuffer::createFromVector<int8_t>({-50, -48, -46, -44, -42, -40, -38, -36, -34, -32, -30, -28}),
                             .dimensions = {1, 3, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = -64
                         }, { // adj02
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
@@ -2104,9 +2104,9 @@ const TestModel& get_test_model_LHSAdjoint_quant8_signed_all_inputs_as_internal(
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.25f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = 0
                         }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({}),
@@ -2114,9 +2114,9 @@ const TestModel& get_test_model_LHSAdjoint_quant8_signed_all_inputs_as_internal(
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = -64
                         }, { // adj02
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
@@ -2149,24 +2149,24 @@ const TestModel& get_test_model_LHSAdjoint_quant8_signed_all_inputs_as_internal(
                             .zeroPoint = -128
                         }, { // op12_new
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-127, -124, -126, -123, -125, -122}),
+                            .data = TestBuffer::createFromVector<int8_t>({4, 16, 8, 20, 12, 24}),
                             .dimensions = {1, 3, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.25f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = 0
                         }, { // placeholder16
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-128}),
+                            .data = TestBuffer::createFromVector<int8_t>({0}),
                             .dimensions = {1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.25f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = 0
                         }, { // param16
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
@@ -2179,24 +2179,24 @@ const TestModel& get_test_model_LHSAdjoint_quant8_signed_all_inputs_as_internal(
                             .zeroPoint = 0
                         }, { // op22_new
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-121, -120, -119, -118, -117, -116, -115, -114, -113, -112, -111, -110}),
+                            .data = TestBuffer::createFromVector<int8_t>({-50, -48, -46, -44, -42, -40, -38, -36, -34, -32, -30, -28}),
                             .dimensions = {1, 3, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = -64
                         }, { // placeholder17
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-128}),
+                            .data = TestBuffer::createFromVector<int8_t>({-64}),
                             .dimensions = {1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = -64
                         }, { // param17
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
@@ -2765,24 +2765,24 @@ const TestModel& get_test_model_TwoBatchSize_quant8_signed() {
                 .inputIndexes = {0, 1},
                 .operands = {{ // op13
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-127, -126, -125, -124, -123, -122, -127, -126, -125, -124, -123, -122}),
+                            .data = TestBuffer::createFromVector<int8_t>({4, 8, 12, 16, 20, 24, 4, 8, 12, 16, 20, 24}),
                             .dimensions = {2, 2, 3},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.25f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = 0
                         }, { // op23
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-121, -120, -119, -118, -117, -116, -115, -114, -113, -112, -111, -110, -121, -120, -119, -118, -117, -116, -115, -114, -113, -112, -111, -110}),
+                            .data = TestBuffer::createFromVector<int8_t>({-50, -48, -46, -44, -42, -40, -38, -36, -34, -32, -30, -28, -50, -48, -46, -44, -42, -40, -38, -36, -34, -32, -30, -28}),
                             .dimensions = {2, 3, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = -64
                         }, { // adj03
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
@@ -2847,9 +2847,9 @@ const TestModel& get_test_model_TwoBatchSize_quant8_signed_all_inputs_as_interna
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.25f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = 0
                         }, { // op23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int8_t>({}),
@@ -2857,9 +2857,9 @@ const TestModel& get_test_model_TwoBatchSize_quant8_signed_all_inputs_as_interna
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = -64
                         }, { // adj03
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
@@ -2892,24 +2892,24 @@ const TestModel& get_test_model_TwoBatchSize_quant8_signed_all_inputs_as_interna
                             .zeroPoint = -128
                         }, { // op13_new
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-127, -126, -125, -124, -123, -122, -127, -126, -125, -124, -123, -122}),
+                            .data = TestBuffer::createFromVector<int8_t>({4, 8, 12, 16, 20, 24, 4, 8, 12, 16, 20, 24}),
                             .dimensions = {2, 2, 3},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.25f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = 0
                         }, { // placeholder22
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-128}),
+                            .data = TestBuffer::createFromVector<int8_t>({0}),
                             .dimensions = {1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.25f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = 0
                         }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
@@ -2922,24 +2922,24 @@ const TestModel& get_test_model_TwoBatchSize_quant8_signed_all_inputs_as_interna
                             .zeroPoint = 0
                         }, { // op23_new
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-121, -120, -119, -118, -117, -116, -115, -114, -113, -112, -111, -110, -121, -120, -119, -118, -117, -116, -115, -114, -113, -112, -111, -110}),
+                            .data = TestBuffer::createFromVector<int8_t>({-50, -48, -46, -44, -42, -40, -38, -36, -34, -32, -30, -28, -50, -48, -46, -44, -42, -40, -38, -36, -34, -32, -30, -28}),
                             .dimensions = {2, 3, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = -64
                         }, { // placeholder23
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int8_t>({-128}),
+                            .data = TestBuffer::createFromVector<int8_t>({-64}),
                             .dimensions = {1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
-                            .scale = 1.0f,
+                            .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            .zeroPoint = -128
+                            .zeroPoint = -64
                         }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
