@@ -23,6 +23,8 @@ namespace android {
 namespace nn {
 namespace maximum_minimum {
 
+Result<Version> validate(const IOperationValidationContext* context);
+
 bool prepare(const Shape& in1, const Shape& in2, Shape* output);
 
 bool eval(const void* in1, const Shape& shape1, const void* in2, const Shape& shape2,

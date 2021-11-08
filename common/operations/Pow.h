@@ -23,6 +23,8 @@ namespace android {
 namespace nn {
 namespace pow {
 
+Result<Version> validate(const IOperationValidationContext* context);
+
 bool prepare(const Shape& in1, const Shape& in2, Shape* output);
 
 bool eval(const void* baseData, const Shape& baseShape, const void* exponentData,

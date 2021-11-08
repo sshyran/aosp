@@ -19,10 +19,10 @@
 
 #include "OperationsUtils.h"
 
-namespace android::nn {
+namespace android::nn::grouped_conv2d {
 
-// This implementation is left intentionally blank.
+Result<Version> validate(const IOperationValidationContext* context);
 
-}  // namespace android::nn
+}  // namespace android::nn::grouped_conv2d
 
 #endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_GROUPED_CONV_2D_H

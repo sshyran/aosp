@@ -19,10 +19,10 @@
 
 #include "OperationsUtils.h"
 
-namespace android::nn {
+namespace android::nn::arg_min_max {
 
-// This implementation is left intentionally blank.
+Result<Version> validate(const IOperationValidationContext* context);
 
-}  // namespace android::nn
+}  // namespace android::nn::arg_min_max
 
 #endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_ARG_MINMAX_H
