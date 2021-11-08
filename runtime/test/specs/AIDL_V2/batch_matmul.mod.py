@@ -18,9 +18,9 @@ def test(name, input0, input1, adj0, adj1, output, input0_data, input1_data,
   model = Model().Operation("BATCH_MATMUL", input0, input1, adj0, adj1).To(
       output)
   quant8_signed = DataTypeConverter().Identify({
-      input0: ("TENSOR_QUANT8_ASYMM_SIGNED", 1, -128),
-      input1: ("TENSOR_QUANT8_ASYMM_SIGNED", 1, -128),
-      output: ("TENSOR_QUANT8_ASYMM_SIGNED", 1, -128),
+      input0: ("TENSOR_QUANT8_ASYMM_SIGNED", 0.25, 0),
+      input1: ("TENSOR_QUANT8_ASYMM_SIGNED", 0.50, -64),
+      output: ("TENSOR_QUANT8_ASYMM_SIGNED", 1.00, -128),
   })
   Example({
       input0: input0_data,
