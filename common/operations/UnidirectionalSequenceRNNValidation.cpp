@@ -19,7 +19,8 @@
 #include "OperationsUtils.h"
 #include "UnidirectionalSequenceRNN.h"
 
-namespace android::nn::unidirectional_sequence_rnn {
+namespace android::nn {
+namespace unidirectional_sequence_rnn {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -42,4 +43,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return minVersionSupported;
 }
 
-}  // namespace android::nn::unidirectional_sequence_rnn
+}  // namespace unidirectional_sequence_rnn
+
+NN_DEFINE_VALIDATION_FUNCTION(UNIDIRECTIONAL_SEQUENCE_RNN, unidirectional_sequence_rnn::validate);
+
+}  // namespace android::nn

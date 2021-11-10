@@ -19,7 +19,8 @@
 #include "LSHProjection.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::lsh_projection {
+namespace android::nn {
+namespace lsh_projection {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(context->getNumInputs() == 4 && context->getNumOutputs() == 1)
@@ -57,4 +58,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return version;
 }
 
-}  // namespace android::nn::lsh_projection
+}  // namespace lsh_projection
+
+NN_DEFINE_VALIDATION_FUNCTION(LSH_PROJECTION, lsh_projection::validate);
+
+}  // namespace android::nn

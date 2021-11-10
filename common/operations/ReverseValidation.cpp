@@ -19,7 +19,8 @@
 #include "OperationsUtils.h"
 #include "Reverse.h"
 
-namespace android::nn::reverse_op {
+namespace android::nn {
+namespace reverse_op {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -68,4 +69,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevel7;
 }
 
-}  // namespace android::nn::reverse_op
+}  // namespace reverse_op
+
+NN_DEFINE_VALIDATION_FUNCTION(REVERSE, reverse_op::validate);
+
+}  // namespace android::nn

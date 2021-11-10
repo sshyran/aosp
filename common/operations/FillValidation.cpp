@@ -17,7 +17,8 @@
 #include "Fill.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::fill_op {
+namespace android::nn {
+namespace fill_op {
 namespace {
 
 bool getValueType(OperandType outputType, OperandType* valueType) {
@@ -57,4 +58,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevel4;
 }
 
-}  // namespace android::nn::fill_op
+}  // namespace fill_op
+
+NN_DEFINE_VALIDATION_FUNCTION(FILL, fill_op::validate);
+
+}  // namespace android::nn

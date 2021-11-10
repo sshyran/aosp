@@ -17,7 +17,8 @@
 #include "Dequantize.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::dequantize {
+namespace android::nn {
+namespace dequantize {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -47,4 +48,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevel3;
 }
 
-}  // namespace android::nn::dequantize
+}  // namespace dequantize
+
+NN_DEFINE_VALIDATION_FUNCTION(DEQUANTIZE, dequantize::validate);
+
+}  // namespace android::nn

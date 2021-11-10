@@ -17,7 +17,8 @@
 #include "Elu.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::elu {
+namespace android::nn {
+namespace elu {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -36,4 +37,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return minSupportedVersion;
 }
 
-}  // namespace android::nn::elu
+}  // namespace elu
+
+NN_DEFINE_VALIDATION_FUNCTION(ELU, elu::validate);
+
+}  // namespace android::nn

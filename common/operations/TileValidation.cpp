@@ -19,7 +19,8 @@
 #include "OperationsUtils.h"
 #include "Tile.h"
 
-namespace android::nn::tile {
+namespace android::nn {
+namespace tile {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(context->getNumInputs() == 2 && context->getNumOutputs() == 1)
@@ -46,4 +47,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return version;
 }
 
-}  // namespace android::nn::tile
+}  // namespace tile
+
+NN_DEFINE_VALIDATION_FUNCTION(TILE, tile::validate);
+
+}  // namespace android::nn

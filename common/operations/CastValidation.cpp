@@ -21,7 +21,8 @@
 #include "Cast.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::cast {
+namespace android::nn {
+namespace cast {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(context->getNumInputs() == 1 && context->getNumOutputs() == 1)
@@ -68,4 +69,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return version;
 }
 
-}  // namespace android::nn::cast
+}  // namespace cast
+
+NN_DEFINE_VALIDATION_FUNCTION(CAST, cast::validate);
+
+}  // namespace android::nn

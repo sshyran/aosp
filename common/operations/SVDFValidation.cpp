@@ -19,7 +19,8 @@
 #include "OperationsUtils.h"
 #include "SVDF.h"
 
-namespace android::nn::svdf {
+namespace android::nn {
+namespace svdf {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(context->getNumInputs() == 7 && context->getNumOutputs() == 2)
@@ -43,4 +44,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return version;
 }
 
-}  // namespace android::nn::svdf
+}  // namespace svdf
+
+NN_DEFINE_VALIDATION_FUNCTION(SVDF, svdf::validate);
+
+}  // namespace android::nn

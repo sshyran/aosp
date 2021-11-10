@@ -17,7 +17,8 @@
 #include "Comparisons.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::comparisons {
+namespace android::nn {
+namespace comparisons {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -38,4 +39,13 @@ Result<Version> validate(const IOperationValidationContext* context) {
     }
 }
 
-}  // namespace android::nn::comparisons
+}  // namespace comparisons
+
+NN_DEFINE_VALIDATION_FUNCTION(EQUAL, comparisons::validate);
+NN_DEFINE_VALIDATION_FUNCTION(GREATER, comparisons::validate);
+NN_DEFINE_VALIDATION_FUNCTION(GREATER_EQUAL, comparisons::validate);
+NN_DEFINE_VALIDATION_FUNCTION(LESS, comparisons::validate);
+NN_DEFINE_VALIDATION_FUNCTION(LESS_EQUAL, comparisons::validate);
+NN_DEFINE_VALIDATION_FUNCTION(NOT_EQUAL, comparisons::validate);
+
+}  // namespace android::nn

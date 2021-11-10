@@ -17,7 +17,8 @@
 #include "OperationsUtils.h"
 #include "Transpose.h"
 
-namespace android::nn::transpose {
+namespace android::nn {
+namespace transpose {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -43,4 +44,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return minSupportedVersion;
 }
 
-}  // namespace android::nn::transpose
+}  // namespace transpose
+
+NN_DEFINE_VALIDATION_FUNCTION(TRANSPOSE, transpose::validate);
+
+}  // namespace android::nn

@@ -20,7 +20,8 @@
 #include "Reshape.h"
 #include "nnapi/Validation.h"
 
-namespace android::nn::reshape {
+namespace android::nn {
+namespace reshape {
 
 Result<Version> validateDepthToSpace(const IOperationValidationContext* context) {
     NN_RET_CHECK((context->getNumInputs() == 3 || context->getNumInputs() == 2) &&
@@ -342,4 +343,14 @@ Result<Version> validateReshape(const IOperationValidationContext* context) {
     return version;
 }
 
-}  // namespace android::nn::reshape
+}  // namespace reshape
+
+NN_DEFINE_VALIDATION_FUNCTION(DEPTH_TO_SPACE, reshape::validateDepthToSpace);
+NN_DEFINE_VALIDATION_FUNCTION(RESHAPE, reshape::validateReshape);
+NN_DEFINE_VALIDATION_FUNCTION(SPACE_TO_DEPTH, reshape::validateSpaceToDepth);
+NN_DEFINE_VALIDATION_FUNCTION(BATCH_TO_SPACE_ND, reshape::validateBatchToSpaceND);
+NN_DEFINE_VALIDATION_FUNCTION(PAD, reshape::validatePad);
+NN_DEFINE_VALIDATION_FUNCTION(SPACE_TO_BATCH_ND, reshape::validateSpaceToBatchND);
+NN_DEFINE_VALIDATION_FUNCTION(PAD_V2, reshape::validatePadV2);
+
+}  // namespace android::nn

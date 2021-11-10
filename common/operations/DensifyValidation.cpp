@@ -20,7 +20,8 @@
 
 #include "OperationsUtils.h"
 
-namespace android::nn::densify_op {
+namespace android::nn {
+namespace densify_op {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     // Checking number of inputs and outputs
@@ -37,6 +38,10 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevelExperimental;
 }
 
-}  // namespace android::nn::densify_op
+}  // namespace densify_op
+
+NN_DEFINE_VALIDATION_FUNCTION(DENSIFY, densify_op::validate);
+
+}  // namespace android::nn
 
 #endif  // NN_EXPERIMENTAL_FEATURE

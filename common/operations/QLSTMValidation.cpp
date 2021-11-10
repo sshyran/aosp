@@ -19,7 +19,8 @@
 #include "OperationsUtils.h"
 #include "QLSTM.h"
 
-namespace android::nn::qlstm {
+namespace android::nn {
+namespace qlstm {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -72,4 +73,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevel4;
 }
 
-}  // namespace android::nn::qlstm
+}  // namespace qlstm
+
+NN_DEFINE_VALIDATION_FUNCTION(QUANTIZED_LSTM, qlstm::validate);
+
+}  // namespace android::nn

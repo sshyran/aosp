@@ -19,7 +19,8 @@
 #include "FullyConnected.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::fully_connected {
+namespace android::nn {
+namespace fully_connected {
 
 bool validateShapes(const Shape& input, const Shape& weights, const Shape& bias, Shape* output) {
     // Check all the parameters of tensor match within themselves and match the
@@ -128,4 +129,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return minSupportedVersion;
 }
 
-}  // namespace android::nn::fully_connected
+}  // namespace fully_connected
+
+NN_DEFINE_VALIDATION_FUNCTION(FULLY_CONNECTED, fully_connected::validate);
+
+}  // namespace android::nn

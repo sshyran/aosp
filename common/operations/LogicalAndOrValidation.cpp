@@ -17,7 +17,8 @@
 #include "LogicalAndOr.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::logical {
+namespace android::nn {
+namespace logical {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -30,4 +31,9 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevel3;
 }
 
-}  // namespace android::nn::logical
+}  // namespace logical
+
+NN_DEFINE_VALIDATION_FUNCTION(LOGICAL_AND, logical::validate);
+NN_DEFINE_VALIDATION_FUNCTION(LOGICAL_OR, logical::validate);
+
+}  // namespace android::nn

@@ -19,7 +19,8 @@
 #include "OperationsUtils.h"
 #include "Pow.h"
 
-namespace android::nn::pow {
+namespace android::nn {
+namespace pow {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(context->getNumInputs() == 2 && context->getNumOutputs() == 1)
@@ -44,4 +45,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return version;
 }
 
-}  // namespace android::nn::pow
+}  // namespace pow
+
+NN_DEFINE_VALIDATION_FUNCTION(POW, pow::validate);
+
+}  // namespace android::nn

@@ -17,7 +17,8 @@
 #include "OperationsUtils.h"
 #include "Quantize.h"
 
-namespace android::nn::quantize {
+namespace android::nn {
+namespace quantize {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -39,4 +40,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     }
 }
 
-}  // namespace android::nn::quantize
+}  // namespace quantize
+
+NN_DEFINE_VALIDATION_FUNCTION(QUANTIZE, quantize::validate);
+
+}  // namespace android::nn

@@ -19,7 +19,8 @@
 #include "OperationsUtils.h"
 #include "TransposeConv2D.h"
 
-namespace android::nn::transpose_conv_2d {
+namespace android::nn {
+namespace transpose_conv_2d {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     const uint32_t inputCount = context->getNumInputs();
@@ -67,4 +68,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return minSupportedVersion;
 }
 
-}  // namespace android::nn::transpose_conv_2d
+}  // namespace transpose_conv_2d
+
+NN_DEFINE_VALIDATION_FUNCTION(TRANSPOSE_CONV_2D, transpose_conv_2d::validate);
+
+}  // namespace android::nn

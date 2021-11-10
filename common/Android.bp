@@ -46,7 +46,6 @@ cc_defaults {
     host_supported: true,
     srcs: [
         "OperationResolver.cpp",
-        "operations/*Validation.cpp",
         "operations/Activation.cpp",
         "operations/BatchMatmul.cpp",
         "operations/BidirectionalSequenceRNN.cpp",
@@ -138,7 +137,6 @@ cc_defaults {
         "LegacyUtils.cpp",
         "MemoryUtils.cpp",
         "MetaModel.cpp",
-        "OperationsUtils.cpp",
         "QuantUtils.cpp",
         "TokenHasher.cpp",
         "ValidateHal.cpp",
@@ -280,7 +278,6 @@ cc_defaults {
         "IndexedShapeWrapper.cpp",
         "LegacyUtils.cpp",
         "MetaModel.cpp",
-        "OperationsUtils.cpp",
         "TokenHasher.cpp",
     ],
     header_libs: [
@@ -385,11 +382,13 @@ cc_defaults {
     name: "neuralnetworks_types_defaults",
     defaults: ["neuralnetworks_utils_defaults"],
     srcs: [
+        "OperationsUtils.cpp",
         "SharedMemory.cpp",
         "SharedMemoryAndroid.cpp",
         "TypeUtils.cpp",
         "Types.cpp",
         "Validation.cpp",
+        "operations/*Validation.cpp",
     ],
     target: {
         android: {
@@ -433,11 +432,13 @@ cc_library_static {
     ],
     srcs: [
         "DynamicCLDeps.cpp",
+        "OperationsUtils.cpp",
         "SharedMemory.cpp",
         "SharedMemoryAndroid.cpp",
         "TypeUtils.cpp",
         "Types.cpp",
         "Validation.cpp",
+        "operations/*Validation.cpp",
     ],
     local_include_dirs: ["include/nnapi"],
     export_include_dirs: ["include"],
