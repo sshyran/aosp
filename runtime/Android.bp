@@ -138,6 +138,7 @@ cc_defaults {
         "libhidlmemory",
         "libjsoncpp",
         "libmath",
+        "libneuralnetworks_common",
         "libprocessgroup",
         "libtextclassifier_hash_static",
         "libutils",
@@ -174,9 +175,6 @@ cc_library_shared {
         "libneuralnetworks_defaults",
         "neuralnetworks_defaults",
     ],
-    static_libs: [
-        "libneuralnetworks_common",
-    ],
     apex_available: [
         "com.android.neuralnetworks",
         "test_com.android.neuralnetworks",
@@ -198,9 +196,6 @@ cc_library_static {
         "libneuralnetworks_defaults",
         "neuralnetworks_defaults",
     ],
-    static_libs: [
-        "libneuralnetworks_common",
-    ],
     apex_available: ["//apex_available:platform"],
 }
 
@@ -211,8 +206,13 @@ cc_library_static {
         "libneuralnetworks_defaults",
         "neuralnetworks_defaults",
     ],
+    exclude_static_libs: [
+        "libneuralnetworks_common",
+        "neuralnetworks_types",
+    ],
     static_libs: [
         "libneuralnetworks_common_experimental",
+        "neuralnetworks_types_experimental",
     ],
     cflags: ["-DNN_EXPERIMENTAL_FEATURE"],
     apex_available: ["//apex_available:platform"],
