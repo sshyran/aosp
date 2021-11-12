@@ -523,7 +523,7 @@ bool GeneratedTests::shouldSkipTest() {
 }
 
 void GeneratedTests::SetUp() {
-    const char* libdir = basename(SUPPORT_LIBRARY_NAME.c_str());
+    const char* libdir = dirname(SUPPORT_LIBRARY_NAME.c_str());
     setenv(kQCDspLoadPathEnv, libdir, 1);
     LOG(INFO) << "Overwritten system env variable " << kQCDspLoadPathEnv << " with " << libdir;
     mNnApi = loadNnApiSupportLibrary(SUPPORT_LIBRARY_NAME);
