@@ -227,10 +227,12 @@ cc_test {
     exclude_static_libs: [
         "libneuralnetworks_common",
         "libneuralnetworks_static",
+        "neuralnetworks_types",
     ],
     static_libs: [
         "libneuralnetworks_common_experimental",
         "libneuralnetworks_static_experimental",
+        "neuralnetworks_types_experimental",
     ],
     cflags: ["-DNN_EXPERIMENTAL_FEATURE"],
     test_options: {
