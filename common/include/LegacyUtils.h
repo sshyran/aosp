@@ -77,6 +77,18 @@ const int kOEMCodeBase = 10000;
         }                                             \
     } while (0)
 
+enum class HalVersion : int32_t {
+    UNKNOWN,
+    V1_0,
+    V1_1,
+    V1_2,
+    V1_3,
+    AIDL_UNSTABLE,
+    LATEST = V1_3,
+};
+
+std::ostream& operator<<(std::ostream& os, const HalVersion& halVersion);
+
 // Make a Duration from a duration in nanoseconds. If the value exceeds the max duration, return the
 // maximum expressible duration.
 Duration makeTimeoutDuration(uint64_t nanoseconds);

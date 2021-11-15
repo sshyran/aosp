@@ -943,24 +943,6 @@ std::ostream& operator<<(std::ostream& os, const Version& version) {
     return os << "Version{" << underlyingType(version) << "}";
 }
 
-std::ostream& operator<<(std::ostream& os, const HalVersion& halVersion) {
-    switch (halVersion) {
-        case HalVersion::UNKNOWN:
-            return os << "UNKNOWN HAL version";
-        case HalVersion::V1_0:
-            return os << "HAL version 1.0";
-        case HalVersion::V1_1:
-            return os << "HAL version 1.1";
-        case HalVersion::V1_2:
-            return os << "HAL version 1.2";
-        case HalVersion::V1_3:
-            return os << "HAL version 1.3";
-        case HalVersion::AIDL_UNSTABLE:
-            return os << "HAL uses unstable AIDL";
-    }
-    return os << "HalVersion{" << underlyingType(halVersion) << "}";
-}
-
 bool operator==(const Timing& a, const Timing& b) {
     return a.timeOnDevice == b.timeOnDevice && a.timeInDriver == b.timeInDriver;
 }
