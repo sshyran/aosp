@@ -32,16 +32,6 @@
 
 namespace android::nn {
 
-enum class HalVersion : int32_t {
-    UNKNOWN,
-    V1_0,
-    V1_1,
-    V1_2,
-    V1_3,
-    AIDL_UNSTABLE,
-    LATEST = V1_3,
-};
-
 // The latest version of the HAL allowed by the Experimental Feature Level flag.
 Version getLatestHalVersion();
 
@@ -146,7 +136,6 @@ std::ostream& operator<<(std::ostream& os, const OptionalTimePoint& optionalTime
 std::ostream& operator<<(std::ostream& os, const Duration& timeoutDuration);
 std::ostream& operator<<(std::ostream& os, const OptionalDuration& optionalTimeoutDuration);
 std::ostream& operator<<(std::ostream& os, const Version& version);
-std::ostream& operator<<(std::ostream& os, const HalVersion& halVersion);
 
 bool operator==(const Timing& a, const Timing& b);
 bool operator!=(const Timing& a, const Timing& b);

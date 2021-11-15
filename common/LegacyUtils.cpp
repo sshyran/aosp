@@ -42,6 +42,24 @@
 namespace android {
 namespace nn {
 
+std::ostream& operator<<(std::ostream& os, const HalVersion& halVersion) {
+    switch (halVersion) {
+        case HalVersion::UNKNOWN:
+            return os << "UNKNOWN HAL version";
+        case HalVersion::V1_0:
+            return os << "HAL version 1.0";
+        case HalVersion::V1_1:
+            return os << "HAL version 1.1";
+        case HalVersion::V1_2:
+            return os << "HAL version 1.2";
+        case HalVersion::V1_3:
+            return os << "HAL version 1.3";
+        case HalVersion::AIDL_UNSTABLE:
+            return os << "HAL uses unstable AIDL";
+    }
+    return os << "HalVersion{" << static_cast<int32_t>(halVersion) << "}";
+}
+
 Duration makeTimeoutDuration(uint64_t nanoseconds) {
     constexpr auto kMaxCount = Duration::max().count();
     using CommonType = std::common_type_t<Duration::rep, uint64_t>;
