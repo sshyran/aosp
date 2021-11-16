@@ -24,6 +24,7 @@
 #include <tuple>
 
 #include "HalInterfaces.h"
+#include "LegacyUtils.h"
 #include "nnapi/TypeUtils.h"
 #include "nnapi/Validation.h"
 
