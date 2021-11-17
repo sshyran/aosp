@@ -573,6 +573,10 @@ std::ostream& operator<<(std::ostream& os, const OperationType& operationType) {
             return os << "BATCH_MATMUL";
         case OperationType::PACK:
             return os << "PACK";
+        case OperationType::MIRROR_PAD:
+            return os << "MIRROR_PAD";
+        case OperationType::REVERSE:
+            return os << "REVERSE";
         case OperationType::OEM_OPERATION:
             return os << "OEM_OPERATION";
 #ifdef NN_EXPERIMENTAL_FEATURE
@@ -918,6 +922,8 @@ static std::ostream& operator<<(std::ostream& os, const Version::Level& level) {
             return os << "FEATURE_LEVEL_5";
         case Version::Level::FEATURE_LEVEL_6:
             return os << "FEATURE_LEVEL_6";
+        case Version::Level::FEATURE_LEVEL_7:
+            return os << "FEATURE_LEVEL_7";
 #ifdef NN_EXPERIMENTAL_FEATURE
         case Version::Level::FEATURE_LEVEL_EXPERIMENTAL:
             return os << "FEATURE_LEVEL_EXPERIMENTAL";
