@@ -89,7 +89,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
 
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM &&
         outputType == OperandType::TENSOR_FLOAT32) {
-        return Version::ANDROID_OC_MR1;
+        return kVersionFeatureLevel1;
     }
 
     NN_RET_CHECK(inputType == OperandType::TENSOR_QUANT8_ASYMM ||
@@ -100,7 +100,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(outputType == OperandType::TENSOR_FLOAT16 ||
                  outputType == OperandType::TENSOR_FLOAT32)
             << "Unsupported output operand type for DEQUANTIZE op: " << outputType;
-    return Version::ANDROID_Q;
+    return kVersionFeatureLevel3;
 }
 
 bool prepare(IOperationExecutionContext* context) {

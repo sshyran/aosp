@@ -190,14 +190,4 @@ int SyncFence::getFd() const {
     return mSyncFence == nullptr ? -1 : mSyncFence->get();
 }
 
-const Version Version::ANDROID_OC_MR1 = Version{.level = Version::Level::ANDROID_OC_MR1};
-const Version Version::ANDROID_P = Version{.level = Version::Level::ANDROID_P};
-const Version Version::ANDROID_Q = Version{.level = Version::Level::ANDROID_Q};
-const Version Version::ANDROID_R = Version{.level = Version::Level::ANDROID_R};
-const Version Version::ANDROID_S = Version{.level = Version::Level::ANDROID_S};
-const Version Version::FEATURE_LEVEL_6 = Version{.level = Version::Level::FEATURE_LEVEL_6};
-#ifdef NN_EXPERIMENTAL_FEATURE
-const Version Version::EXPERIMENTAL = Version{.level = Version::Level::EXPERIMENTAL};
-#endif  // NN_EXPERIMENTAL_FEATURE
-
 }  // namespace android::nn

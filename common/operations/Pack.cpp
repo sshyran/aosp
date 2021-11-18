@@ -95,7 +95,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
         }
     }
 
-    return Version::FEATURE_LEVEL_6;
+    return kVersionFeatureLevel6;
 }
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION

@@ -140,9 +140,9 @@ Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(validateInputTypes(context, {inputType, inputType, inputType, inputType, inputType,
                                               OperandType::INT32, OperandType::INT32}));
     std::vector<OperandType> outputTypes = {inputType};
-    Version minVersionSupported = Version::ANDROID_Q;
+    Version minVersionSupported = kVersionFeatureLevel3;
     if (numOutputs == kNumOutputsWithState) {
-        minVersionSupported = Version::ANDROID_R;
+        minVersionSupported = kVersionFeatureLevel4;
         outputTypes.push_back(inputType);
     }
     NN_RET_CHECK(validateOutputTypes(context, outputTypes));

@@ -450,7 +450,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
     const auto inputType = context->getInputType(kInputTensor);
     const auto filterType = context->getInputType(kFilterTensor);
     std::vector<OperandType> inExpectedTypes;
-    Version minSupportedVersion = Version::ANDROID_Q;
+    Version minSupportedVersion = kVersionFeatureLevel3;
     if (inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_FLOAT16) {
         inExpectedTypes = {inputType, inputType, inputType};
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM ||
@@ -468,7 +468,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
         }
         inExpectedTypes = {inputType, filterType, OperandType::TENSOR_INT32};
         if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-            minSupportedVersion = Version::ANDROID_R;
+            minSupportedVersion = kVersionFeatureLevel4;
         }
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation " << kOperationName;

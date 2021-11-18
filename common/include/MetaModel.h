@@ -48,7 +48,7 @@ namespace android::nn {
 // example:
 //
 //     const MetaModel& metaModel = ...;
-//     auto ret = metaModel.getSlice(Version::ANDROID_OC_MR1);
+//     auto ret = metaModel.getSlice(kVersionFeatureLevel1);
 //     if (ret.has_value()) {
 //         const Model model = ret->first;  // the slice
 //         auto mapper = ret->second;
@@ -59,7 +59,7 @@ namespace android::nn {
 //     } else {
 //         // Could not obtain a slice.  For example, perhaps none of the
 //         // original model's operations are compliant with
-//         // Version::ANDROID_OC_MR1.
+//         // kVersionFeatureLevel1.
 //     }
 //
 class MetaModel {

@@ -161,9 +161,9 @@ Result<Version> validate(const IOperationValidationContext* context) {
                 << "Unsupported input operand type for UNIDIRECTIONAL_SEQUENCE_LSTM op: "
                 << inputType;
     }
-    Version minVersionSupported = Version::ANDROID_Q;
+    Version minVersionSupported = kVersionFeatureLevel3;
     if (context->getNumOutputs() == kNumOutputsWithState) {
-        minVersionSupported = Version::ANDROID_R;
+        minVersionSupported = kVersionFeatureLevel4;
         outExpectedTypes.insert(outExpectedTypes.end(), {inputType, inputType});
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));

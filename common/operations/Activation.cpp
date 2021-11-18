@@ -369,19 +369,19 @@ Result<Version> validate(OperationType opType, const IOperationValidationContext
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     auto inputType = context->getInputType(kInputTensor);
-    auto minSupportedVersion = Version::ANDROID_OC_MR1;
+    auto minSupportedVersion = kVersionFeatureLevel1;
     if (inputType == OperandType::TENSOR_FLOAT32) {
-        minSupportedVersion = Version::ANDROID_OC_MR1;
+        minSupportedVersion = kVersionFeatureLevel1;
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        minSupportedVersion = Version::ANDROID_Q;
+        minSupportedVersion = kVersionFeatureLevel3;
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
         if (opType == OperationType::TANH) {
-            minSupportedVersion = Version::ANDROID_Q;
+            minSupportedVersion = kVersionFeatureLevel3;
         } else {
-            minSupportedVersion = Version::ANDROID_OC_MR1;
+            minSupportedVersion = kVersionFeatureLevel1;
         }
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = Version::ANDROID_R;
+        minSupportedVersion = kVersionFeatureLevel4;
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << opType;
     }
@@ -398,11 +398,11 @@ Result<Version> validateHardSwish(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     auto inputType = context->getInputType(kInputTensor);
-    auto minSupportedVersion = Version::ANDROID_OC_MR1;
+    auto minSupportedVersion = kVersionFeatureLevel1;
     if (inputType == OperandType::TENSOR_FLOAT16 || inputType == OperandType::TENSOR_FLOAT32 ||
         inputType == OperandType::TENSOR_QUANT8_ASYMM ||
         inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = Version::ANDROID_R;
+        minSupportedVersion = kVersionFeatureLevel4;
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation ELU";
     }

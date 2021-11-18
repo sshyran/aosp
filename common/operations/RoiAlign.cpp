@@ -380,9 +380,9 @@ Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return Version::ANDROID_R;
+        return kVersionFeatureLevel4;
     } else {
-        return Version::ANDROID_Q;
+        return kVersionFeatureLevel3;
     }
 }
 

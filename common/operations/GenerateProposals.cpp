@@ -223,7 +223,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return Version::ANDROID_Q;
+    return kVersionFeatureLevel3;
 }
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
@@ -754,9 +754,9 @@ Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return Version::ANDROID_R;
+        return kVersionFeatureLevel4;
     } else {
-        return Version::ANDROID_Q;
+        return kVersionFeatureLevel3;
     }
 }
 
@@ -1284,9 +1284,9 @@ Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return Version::ANDROID_R;
+        return kVersionFeatureLevel4;
     } else {
-        return Version::ANDROID_Q;
+        return kVersionFeatureLevel3;
     }
 }
 
@@ -1620,7 +1620,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(
             context, {inputType, inputType, OperandType::TENSOR_INT32, OperandType::TENSOR_INT32}));
-    return Version::ANDROID_Q;
+    return kVersionFeatureLevel3;
 }
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION

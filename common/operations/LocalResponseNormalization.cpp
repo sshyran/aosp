@@ -149,16 +149,16 @@ Result<Version> validate(const IOperationValidationContext* context) {
     const OperandType inputType = context->getInputType(kInputTensor);
     std::vector<OperandType> inExpectedTypes;
     std::vector<OperandType> outExpectedTypes;
-    auto minSupportedVersion = Version::ANDROID_OC_MR1;
+    auto minSupportedVersion = kVersionFeatureLevel1;
     if (inputType == OperandType::TENSOR_FLOAT32) {
-        minSupportedVersion = Version::ANDROID_OC_MR1;
+        minSupportedVersion = kVersionFeatureLevel1;
         inExpectedTypes = {
                 OperandType::TENSOR_FLOAT32, OperandType::INT32,   OperandType::FLOAT32,
                 OperandType::FLOAT32,        OperandType::FLOAT32,
         };
         outExpectedTypes = {OperandType::TENSOR_FLOAT32};
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        minSupportedVersion = Version::ANDROID_Q;
+        minSupportedVersion = kVersionFeatureLevel3;
         inExpectedTypes = {
                 OperandType::TENSOR_FLOAT16, OperandType::INT32,   OperandType::FLOAT16,
                 OperandType::FLOAT16,        OperandType::FLOAT16,
@@ -170,9 +170,9 @@ Result<Version> validate(const IOperationValidationContext* context) {
 
     if (context->getNumInputs() == kNumInputs) {
         inExpectedTypes.push_back(OperandType::INT32);
-        minSupportedVersion = Version::ANDROID_Q;
+        minSupportedVersion = kVersionFeatureLevel3;
     } else if (context->getInputShape(kInputTensor).dimensions.size() != 4) {
-        minSupportedVersion = Version::ANDROID_Q;
+        minSupportedVersion = kVersionFeatureLevel3;
     }
 
     const Shape& input = context->getInputShape(kInputTensor);

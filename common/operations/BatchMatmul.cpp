@@ -237,7 +237,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(inputLHSTensorType, outputType)
             << "Output type " << outputType << " does not match input type " << inputLHSTensorType;
 
-    return Version::FEATURE_LEVEL_6;
+    return kVersionFeatureLevel6;
 }
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
