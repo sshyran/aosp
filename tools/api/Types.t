@@ -251,32 +251,31 @@ using ExecuteFencedInfoCallback = std::function<GeneralResult<std::pair<Timing, 
 // runtime-only features are supported/required.
 struct Version {
     enum class Level : uint8_t {
-        ANDROID_OC_MR1,
-        ANDROID_P,
-        ANDROID_Q,
-        ANDROID_R,
-        ANDROID_S,
+        FEATURE_LEVEL_1,
+        FEATURE_LEVEL_2,
+        FEATURE_LEVEL_3,
+        FEATURE_LEVEL_4,
+        FEATURE_LEVEL_5,
         FEATURE_LEVEL_6,
 #ifdef NN_EXPERIMENTAL_FEATURE
-        EXPERIMENTAL,
+        FEATURE_LEVEL_EXPERIMENTAL,
 #endif  // NN_EXPERIMENTAL_FEATURE
     };
 
     Level level;
     bool runtimeOnlyFeatures = false;
-
-    // Public static constants to temporarily mimic the previous enum scoping behavior.
-    // TODO: replace this with constexpr global constants instead.
-    const static Version ANDROID_OC_MR1;
-    const static Version ANDROID_P;
-    const static Version ANDROID_Q;
-    const static Version ANDROID_R;
-    const static Version ANDROID_S;
-    const static Version FEATURE_LEVEL_6;
-#ifdef NN_EXPERIMENTAL_FEATURE
-    const static Version EXPERIMENTAL;
-#endif  // NN_EXPERIMENTAL_FEATURE
 };
+
+constexpr auto kVersionFeatureLevel1 = Version{.level = Version::Level::FEATURE_LEVEL_1};
+constexpr auto kVersionFeatureLevel2 = Version{.level = Version::Level::FEATURE_LEVEL_2};
+constexpr auto kVersionFeatureLevel3 = Version{.level = Version::Level::FEATURE_LEVEL_3};
+constexpr auto kVersionFeatureLevel4 = Version{.level = Version::Level::FEATURE_LEVEL_4};
+constexpr auto kVersionFeatureLevel5 = Version{.level = Version::Level::FEATURE_LEVEL_5};
+constexpr auto kVersionFeatureLevel6 = Version{.level = Version::Level::FEATURE_LEVEL_6};
+#ifdef NN_EXPERIMENTAL_FEATURE
+constexpr auto kVersionFeatureLevelExperimental =
+        Version{.level = Version::Level::FEATURE_LEVEL_EXPERIMENTAL};
+#endif  // NN_EXPERIMENTAL_FEATURE
 
 // Describes the memory preference of an operand.
 struct MemoryPreference {

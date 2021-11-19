@@ -235,7 +235,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
     std::vector<OperandType> inExpectedTypes;
     std::vector<OperandType> outExpectedTypes;
     auto inputType = context->getInputType(kHeatmapTensor);
-    auto minSupportedVersion = Version::ANDROID_Q;
+    auto minSupportedVersion = kVersionFeatureLevel3;
     if (inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_FLOAT16) {
         inExpectedTypes = {inputType, inputType, OperandType::BOOL};
         outExpectedTypes = {inputType, inputType};
@@ -248,7 +248,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
                            OperandType::TENSOR_QUANT16_ASYMM, OperandType::BOOL};
         outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             OperandType::TENSOR_QUANT16_ASYMM};
-        minSupportedVersion = Version::ANDROID_R;
+        minSupportedVersion = kVersionFeatureLevel4;
     } else {
         return NN_ERROR() << "Unsupported input tensor type for operation " << kOperationName;
     }

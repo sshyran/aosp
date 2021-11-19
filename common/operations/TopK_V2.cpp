@@ -85,9 +85,9 @@ Result<Version> validate(const IOperationValidationContext* context) {
             << "Unsupported input operand type for select op: " << inputType;
     NN_RET_CHECK(validateInputTypes(context, {inputType, OperandType::INT32}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType, OperandType::TENSOR_INT32}));
-    Version minSupportedVersion = Version::ANDROID_Q;
+    Version minSupportedVersion = kVersionFeatureLevel3;
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = Version::ANDROID_R;
+        minSupportedVersion = kVersionFeatureLevel4;
     }
     return minSupportedVersion;
 }

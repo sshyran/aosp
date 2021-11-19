@@ -152,7 +152,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
     outExpectedTypes.push_back(OperandType::TENSOR_QUANT8_ASYMM_SIGNED);
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
 
-    return Version::ANDROID_R;
+    return kVersionFeatureLevel4;
 }
 
 bool prepare(IOperationExecutionContext* context) {

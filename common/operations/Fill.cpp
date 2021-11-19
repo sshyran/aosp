@@ -77,7 +77,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(getValueType(outputType, &valueType));
     NN_RET_CHECK(validateInputTypes(context, {OperandType::TENSOR_INT32, valueType}));
 
-    return Version::ANDROID_R;
+    return kVersionFeatureLevel4;
 }
 
 bool prepare(IOperationExecutionContext* context) {

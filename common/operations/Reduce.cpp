@@ -88,7 +88,7 @@ Result<Version> validateProdSum(const IOperationValidationContext* context) {
     if (hasKnownRank(input)) {
         NN_RET_CHECK_LE(getNumberOfDimensions(input), 4u);
     }
-    return Version::ANDROID_Q;
+    return kVersionFeatureLevel3;
 }
 
 Result<Version> validateMaxMin(const IOperationValidationContext* context) {
@@ -103,9 +103,9 @@ Result<Version> validateMaxMin(const IOperationValidationContext* context) {
     NN_RET_CHECK(
             validateInputTypes(context, {inputType, OperandType::TENSOR_INT32, OperandType::BOOL}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    auto minVersion = Version::ANDROID_Q;
+    auto minVersion = kVersionFeatureLevel3;
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minVersion = Version::ANDROID_R;
+        minVersion = kVersionFeatureLevel4;
     }
     const Shape& input = context->getInputShape(kInputTensor);
     if (hasKnownRank(input)) {
@@ -127,7 +127,7 @@ Result<Version> validateLogical(const IOperationValidationContext* context) {
     if (hasKnownRank(input)) {
         NN_RET_CHECK_LE(getNumberOfDimensions(input), 4u);
     }
-    return Version::ANDROID_Q;
+    return kVersionFeatureLevel3;
 }
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION

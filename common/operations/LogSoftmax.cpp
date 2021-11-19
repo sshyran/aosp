@@ -87,7 +87,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
-    return Version::ANDROID_Q;
+    return kVersionFeatureLevel3;
 }
 
 bool prepare(IOperationExecutionContext* context) {

@@ -446,8 +446,8 @@ bool divFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, c
 
 Result<Version> validate(OperationType opType, const IOperationValidationContext* context) {
     auto minSupportedVersion = (opType == OperationType::DIV || opType == OperationType::SUB)
-                                       ? Version::ANDROID_P
-                                       : Version::ANDROID_OC_MR1;
+                                       ? kVersionFeatureLevel2
+                                       : kVersionFeatureLevel1;
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     auto inputType = context->getInputType(kInputTensor1);
@@ -455,27 +455,27 @@ Result<Version> validate(OperationType opType, const IOperationValidationContext
     const Shape& input2 = context->getInputShape(kInputTensor2);
     const Shape& output = context->getOutputShape(kOutputTensor);
     if (inputType == OperandType::TENSOR_FLOAT32) {
-        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_OC_MR1);
+        minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel1);
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_Q);
+        minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel3);
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
         if (opType == OperationType::SUB) {
-            minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_Q);
+            minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel3);
         } else if (opType == OperationType::DIV) {
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation DIV";
         } else if (opType == OperationType::MUL) {
             NN_RET_CHECK_GT(output.scale, input1.scale * input2.scale);
-            minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_OC_MR1);
+            minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel1);
         } else {
-            minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_OC_MR1);
+            minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel1);
         }
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
         if (opType == OperationType::MUL) {
             NN_RET_CHECK_GT(output.scale, input1.scale * input2.scale);
         }
-        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_R);
+        minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel4);
     } else if (inputType == OperandType::TENSOR_INT32) {
-        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_R);
+        minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel4);
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << opType;
     }

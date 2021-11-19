@@ -151,13 +151,13 @@ Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_GE(inputCount, 2u);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     const OperandType inputType = context->getInputType(0);
-    auto minSupportedVersion = Version::ANDROID_OC_MR1;
+    auto minSupportedVersion = kVersionFeatureLevel1;
     if (inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        minSupportedVersion = Version::ANDROID_OC_MR1;
+        minSupportedVersion = kVersionFeatureLevel1;
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        minSupportedVersion = Version::ANDROID_Q;
+        minSupportedVersion = kVersionFeatureLevel3;
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = Version::ANDROID_R;
+        minSupportedVersion = kVersionFeatureLevel4;
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
     }
@@ -168,7 +168,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
         for (uint32_t i = 0; i < inputCount - 1; ++i) {
             const Shape& input = context->getInputShape(i);
             if (input.scale != output.scale || input.offset != output.offset) {
-                minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_Q);
+                minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel3);
             }
         }
     }

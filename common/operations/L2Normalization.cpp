@@ -213,21 +213,21 @@ Result<Version> validate(const IOperationValidationContext* context) {
 
     const OperandType inputType = context->getInputType(kInputTensor);
     std::vector<OperandType> inExpectedTypes = {inputType};
-    auto minSupportedVersion = Version::ANDROID_OC_MR1;
+    auto minSupportedVersion = kVersionFeatureLevel1;
     if (inputType == OperandType::TENSOR_FLOAT16 || inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        minSupportedVersion = Version::ANDROID_Q;
+        minSupportedVersion = kVersionFeatureLevel3;
     } else if (inputType == OperandType::TENSOR_FLOAT32) {
-        minSupportedVersion = Version::ANDROID_OC_MR1;
+        minSupportedVersion = kVersionFeatureLevel1;
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = Version::ANDROID_R;
+        minSupportedVersion = kVersionFeatureLevel4;
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
     }
     if (context->getNumInputs() == kNumInputs) {
         inExpectedTypes.push_back(OperandType::INT32);
-        minSupportedVersion = Version::ANDROID_Q;
+        minSupportedVersion = kVersionFeatureLevel3;
     } else if (context->getInputShape(kInputTensor).dimensions.size() != 4) {
-        minSupportedVersion = Version::ANDROID_Q;
+        minSupportedVersion = kVersionFeatureLevel3;
     }
     const Shape& input = context->getInputShape(kInputTensor);
     if (hasKnownRank(input)) {

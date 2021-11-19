@@ -117,11 +117,11 @@ Result<Version> validate(const IOperationValidationContext* context) {
 
     Version minSupportedVersion;
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = Version::ANDROID_R;
+        minSupportedVersion = kVersionFeatureLevel4;
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        minSupportedVersion = Version::ANDROID_Q;
+        minSupportedVersion = kVersionFeatureLevel3;
     } else {
-        minSupportedVersion = Version::ANDROID_P;
+        minSupportedVersion = kVersionFeatureLevel2;
     }
 
     NN_RET_CHECK(validateInputTypes(context, {
