@@ -243,26 +243,27 @@ std::shared_ptr<DriverDevice> DriverDevice::create(SharedDevice device, bool isU
 }
 
 int64_t DriverDevice::getFeatureLevel() const {
-    Version featureLevel = kInterface->getFeatureLevel();
-    switch (featureLevel) {
-        case Version::ANDROID_OC_MR1:
+    Version version = kInterface->getFeatureLevel();
+    CHECK(!version.runtimeOnlyFeatures);
+    switch (version.level) {
+        case Version::Level::ANDROID_OC_MR1:
             return ANEURALNETWORKS_FEATURE_LEVEL_1;
-        case Version::ANDROID_P:
+        case Version::Level::ANDROID_P:
             return ANEURALNETWORKS_FEATURE_LEVEL_2;
-        case Version::ANDROID_Q:
+        case Version::Level::ANDROID_Q:
             return ANEURALNETWORKS_FEATURE_LEVEL_3;
-        case Version::ANDROID_R:
+        case Version::Level::ANDROID_R:
             return ANEURALNETWORKS_FEATURE_LEVEL_4;
-        case Version::ANDROID_S:
+        case Version::Level::ANDROID_S:
             return ANEURALNETWORKS_FEATURE_LEVEL_5;
-        case Version::FEATURE_LEVEL_6:
+        case Version::Level::FEATURE_LEVEL_6:
             return ANEURALNETWORKS_FEATURE_LEVEL_6;
 #ifdef NN_EXPERIMENTAL_FEATURE
-        case Version::EXPERIMENTAL:
+        case Version::Level::EXPERIMENTAL:
             break;
 #endif  // NN_EXPERIMENTAL_FEATURE
     }
-    LOG(FATAL) << "Unsupported driver feature level: " << featureLevel;
+    LOG(FATAL) << "Unsupported driver feature level: " << version;
     return -1;
 }
 
