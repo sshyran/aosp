@@ -29,7 +29,18 @@ namespace android::nn {
 
 // Utility functions
 
-Version combineVersions(Version lhs, Version rhs);
+// Takes two minimum versions needed for two features and returns a the minimum version that must be
+// supported in order to support both features.
+Version combineVersions(Version minVersionNeeded1, Version minVersionNeeded2);
+
+// Indicates whether a feature at version `minVersionNeeded` is supported on version
+// `maxVersionSupported`. For example:
+// * a feature at Version::ANDROID_P is supported on a driver at Version::ANDROID_Q.
+// * a feature at Version::ANDROID_Q is supported on a driver at Version::ANDROID_Q.
+// * a feature at Version::ANDROID_S is not supported on a driver at Version::ANDROID_Q.
+// * a feature that is runtime only (i.e., invalid with respect to the HAL specification) is not
+//   supported on a driver that does not support runtime-only features.
+bool isCompliantVersion(Version minVersionNeeded, Version maxVersionSupported);
 
 Result<Version> validate(const DeviceStatus& deviceStatus);
 Result<Version> validate(const ExecutionPreference& executionPreference);
