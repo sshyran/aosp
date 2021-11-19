@@ -201,7 +201,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
         NN_RET_CHECK_EQ(context->getInputShape(i).dimensions.size(), 1u);
         NN_RET_CHECK_EQ(context->getInputType(i), OperandType::TENSOR_INT32);
     }
-    return Version::EXPERIMENTAL;
+    return kVersionFeatureLevelExperimental;
 }
 
 bool prepare(IOperationExecutionContext* context) {

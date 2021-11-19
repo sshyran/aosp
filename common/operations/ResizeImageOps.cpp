@@ -191,20 +191,20 @@ Result<Version> validate(OperationType opType, const IOperationValidationContext
     auto inputType = context->getInputType(kInputTensor);
     auto scalarType = context->getInputType(kOutputHeightParamScalar);
     std::vector<OperandType> inExpectedTypes = {inputType, scalarType, scalarType};
-    auto minSupportedVersion = Version::ANDROID_OC_MR1;
+    auto minSupportedVersion = kVersionFeatureLevel1;
     NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
                  inputType == OperandType::TENSOR_FLOAT32 ||
                  inputType == OperandType::TENSOR_QUANT8_ASYMM ||
                  inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
             << "Unsupported tensor type for operation " << opType;
     if (inputType == OperandType::TENSOR_FLOAT16 || inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_Q);
+        minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel3);
     }
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_R);
+        minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel4);
     }
     if (scalarType != OperandType::INT32) {
-        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_Q);
+        minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel3);
         if (inputType == OperandType::TENSOR_FLOAT32) {
             NN_RET_CHECK(scalarType == OperandType::FLOAT32);
         } else if (inputType == OperandType::TENSOR_FLOAT16) {
@@ -215,15 +215,15 @@ Result<Version> validate(OperationType opType, const IOperationValidationContext
         }
     }
     if (numInputs < kNumInputs) {
-        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_OC_MR1);
+        minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel1);
     } else if (numInputs == kNumInputs) {
         inExpectedTypes.push_back(OperandType::BOOL);
-        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_Q);
+        minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel3);
     } else {
         while (inExpectedTypes.size() < numInputs) {
             inExpectedTypes.push_back(OperandType::BOOL);
         }
-        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_R);
+        minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel4);
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));

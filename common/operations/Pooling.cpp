@@ -304,15 +304,15 @@ Result<Version> validate(OperationType opType, const IOperationValidationContext
     NN_RET_CHECK(inputCount == 11 || inputCount == 10 || inputCount == 8 || inputCount == 7);
     auto inputType = context->getInputType(kInputTensor);
     std::vector<OperandType> inExpectedTypes;
-    auto minSupportedVersion = Version::ANDROID_OC_MR1;
+    auto minSupportedVersion = kVersionFeatureLevel1;
     if (inputType == OperandType::TENSOR_FLOAT32) {
-        minSupportedVersion = Version::ANDROID_OC_MR1;
+        minSupportedVersion = kVersionFeatureLevel1;
         inExpectedTypes = {
                 inputType,          OperandType::INT32, OperandType::INT32, OperandType::INT32,
                 OperandType::INT32, OperandType::INT32, OperandType::INT32,
         };
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        minSupportedVersion = Version::ANDROID_Q;
+        minSupportedVersion = kVersionFeatureLevel3;
         inExpectedTypes = {
                 OperandType::TENSOR_FLOAT16, OperandType::INT32, OperandType::INT32,
                 OperandType::INT32,          OperandType::INT32, OperandType::INT32,
@@ -320,7 +320,7 @@ Result<Version> validate(OperationType opType, const IOperationValidationContext
         };
     } else if (opType != OperationType::L2_POOL_2D &&
                inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        minSupportedVersion = Version::ANDROID_OC_MR1;
+        minSupportedVersion = kVersionFeatureLevel1;
         inExpectedTypes = {
                 OperandType::TENSOR_QUANT8_ASYMM,
                 OperandType::INT32,
@@ -332,7 +332,7 @@ Result<Version> validate(OperationType opType, const IOperationValidationContext
         };
     } else if (opType != OperationType::L2_POOL_2D &&
                inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = Version::ANDROID_R;
+        minSupportedVersion = kVersionFeatureLevel4;
         inExpectedTypes = {
                 OperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                 OperandType::INT32,
@@ -353,9 +353,9 @@ Result<Version> validate(OperationType opType, const IOperationValidationContext
     }
     if (inputCount == 11 || inputCount == 8) {
         inExpectedTypes.push_back(OperandType::BOOL);
-        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_Q);
+        minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel3);
     } else {
-        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_OC_MR1);
+        minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel1);
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));

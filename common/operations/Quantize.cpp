@@ -77,9 +77,9 @@ Result<Version> validate(const IOperationValidationContext* context) {
                  outputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
             << "Unsupported output operand type for QUANTIZE op: " << outputType;
     if (outputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return Version::ANDROID_R;
+        return kVersionFeatureLevel4;
     } else {
-        return Version::ANDROID_Q;
+        return kVersionFeatureLevel3;
     }
 }
 

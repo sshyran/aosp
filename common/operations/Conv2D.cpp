@@ -622,15 +622,15 @@ Result<Version> validate(const IOperationValidationContext* context) {
         }
     }
 
-    auto minSupportedVersion = Version::ANDROID_OC_MR1;
+    auto minSupportedVersion = kVersionFeatureLevel1;
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = Version::ANDROID_R;
+        minSupportedVersion = kVersionFeatureLevel4;
     } else if (inputType == OperandType::TENSOR_FLOAT16 ||
                filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL || withLayout ||
                withDilation || !meetsQuantizedScaleConstraintBeforeV1_2) {
-        minSupportedVersion = Version::ANDROID_Q;
+        minSupportedVersion = kVersionFeatureLevel3;
     } else {
-        minSupportedVersion = Version::ANDROID_OC_MR1;
+        minSupportedVersion = kVersionFeatureLevel1;
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));

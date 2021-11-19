@@ -91,7 +91,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
             << "Unsupported tensor type for elementwise operation";
     NN_RET_CHECK(validateInputTypes(context, {inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return Version::ANDROID_Q;
+    return kVersionFeatureLevel3;
 }
 
 Result<Version> validateAbs(const IOperationValidationContext* context) {
@@ -103,7 +103,7 @@ Result<Version> validateAbs(const IOperationValidationContext* context) {
             << "Unsupported tensor type for operation ABS";
     NN_RET_CHECK(validateInputTypes(context, {inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return inputType == OperandType::TENSOR_INT32 ? Version::ANDROID_R : Version::ANDROID_Q;
+    return inputType == OperandType::TENSOR_INT32 ? kVersionFeatureLevel4 : kVersionFeatureLevel3;
 }
 
 Result<Version> validateFloor(const IOperationValidationContext* context) {
@@ -122,7 +122,7 @@ Result<Version> validateFloor(const IOperationValidationContext* context) {
         NN_RET_CHECK_LE(getNumberOfDimensions(input), 4u);
     }
 
-    return inputType == OperandType::TENSOR_FLOAT16 ? Version::ANDROID_Q : Version::ANDROID_OC_MR1;
+    return inputType == OperandType::TENSOR_FLOAT16 ? kVersionFeatureLevel3 : kVersionFeatureLevel1;
 }
 
 bool prepare(IOperationExecutionContext* context) {

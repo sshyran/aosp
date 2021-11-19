@@ -246,20 +246,20 @@ int64_t DriverDevice::getFeatureLevel() const {
     Version version = kInterface->getFeatureLevel();
     CHECK(!version.runtimeOnlyFeatures);
     switch (version.level) {
-        case Version::Level::ANDROID_OC_MR1:
+        case Version::Level::FEATURE_LEVEL_1:
             return ANEURALNETWORKS_FEATURE_LEVEL_1;
-        case Version::Level::ANDROID_P:
+        case Version::Level::FEATURE_LEVEL_2:
             return ANEURALNETWORKS_FEATURE_LEVEL_2;
-        case Version::Level::ANDROID_Q:
+        case Version::Level::FEATURE_LEVEL_3:
             return ANEURALNETWORKS_FEATURE_LEVEL_3;
-        case Version::Level::ANDROID_R:
+        case Version::Level::FEATURE_LEVEL_4:
             return ANEURALNETWORKS_FEATURE_LEVEL_4;
-        case Version::Level::ANDROID_S:
+        case Version::Level::FEATURE_LEVEL_5:
             return ANEURALNETWORKS_FEATURE_LEVEL_5;
         case Version::Level::FEATURE_LEVEL_6:
             return ANEURALNETWORKS_FEATURE_LEVEL_6;
 #ifdef NN_EXPERIMENTAL_FEATURE
-        case Version::Level::EXPERIMENTAL:
+        case Version::Level::FEATURE_LEVEL_EXPERIMENTAL:
             break;
 #endif  // NN_EXPERIMENTAL_FEATURE
     }
