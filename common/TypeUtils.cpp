@@ -65,20 +65,6 @@ std::ostream& operator<<(std::ostream& os, const std::vector<Type>& vec) {
 
 }  // namespace
 
-Version getLatestHalVersion() {
-    // TODO: Once the Experimental Feature Level flag is added to the NNAPI, update this logic to
-    // instead use the Version specified by the Experimental Feature Level flag.
-#ifdef NN_EXPERIMENTAL_FEATURE
-    return Version::EXPERIMENTAL;
-#else
-    return Version::FEATURE_LEVEL_6;
-#endif  // NN_EXPERIMENTAL_FEATURE
-}
-
-Version getCurrentRuntimeVersion() {
-    return static_cast<Version>(underlyingType(getLatestHalVersion()) + 1);
-}
-
 bool isExtension(OperandType type) {
     return getExtensionPrefix(underlyingType(type)) != 0;
 }
@@ -918,29 +904,34 @@ std::ostream& operator<<(std::ostream& os, const OptionalDuration& optionalTimeo
     return os << optionalTimeoutDuration.value();
 }
 
-std::ostream& operator<<(std::ostream& os, const Version& version) {
-    switch (version) {
-        case Version::ANDROID_OC_MR1:
+static std::ostream& operator<<(std::ostream& os, const Version::Level& level) {
+    switch (level) {
+        case Version::Level::ANDROID_OC_MR1:
             return os << "ANDROID_OC_MR1";
-        case Version::ANDROID_P:
+        case Version::Level::ANDROID_P:
             return os << "ANDROID_P";
-        case Version::ANDROID_Q:
+        case Version::Level::ANDROID_Q:
             return os << "ANDROID_Q";
-        case Version::ANDROID_R:
+        case Version::Level::ANDROID_R:
             return os << "ANDROID_R";
-        case Version::ANDROID_S:
+        case Version::Level::ANDROID_S:
             return os << "ANDROID_S";
-        case Version::FEATURE_LEVEL_6:
+        case Version::Level::FEATURE_LEVEL_6:
             return os << "FEATURE_LEVEL_6";
 #ifdef NN_EXPERIMENTAL_FEATURE
-        case Version::EXPERIMENTAL:
+        case Version::Level::EXPERIMENTAL:
             return os << "EXPERIMENTAL";
 #endif  // NN_EXPERIMENTAL_FEATURE
     }
-    if (version == getCurrentRuntimeVersion()) {
-        return os << "CURRENT_RUNTIME";
+    return os << "Version{" << underlyingType(level) << "}";
+}
+
+std::ostream& operator<<(std::ostream& os, const Version& version) {
+    os << version.level;
+    if (version.runtimeOnlyFeatures) {
+        os << " (with runtime-specific features)";
     }
-    return os << "Version{" << underlyingType(version) << "}";
+    return os;
 }
 
 bool operator==(const Timing& a, const Timing& b) {
@@ -1036,6 +1027,13 @@ bool operator==(const Operation& a, const Operation& b) {
     return toTuple(a) == toTuple(b);
 }
 bool operator!=(const Operation& a, const Operation& b) {
+    return !(a == b);
+}
+
+bool operator==(const Version& a, const Version& b) {
+    return a.level == b.level && a.runtimeOnlyFeatures == b.runtimeOnlyFeatures;
+}
+bool operator!=(const Version& a, const Version& b) {
     return !(a == b);
 }
 

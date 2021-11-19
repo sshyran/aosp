@@ -33,14 +33,6 @@
 
 namespace android::nn {
 
-// The latest version of the HAL allowed by the Experimental Feature Level flag.
-Version getLatestHalVersion();
-
-// The runtime supports functionality that is currently not part of any HAL specification (e.g.,
-// Control Flow operations with operands of unknown size; see http://b/132458982#comment63). Because
-// of this, the runtime version is always the latest available HAL version + 1.
-Version getCurrentRuntimeVersion();
-
 bool isExtension(OperandType type);
 bool isExtension(OperationType type);
 
@@ -164,6 +156,8 @@ bool operator==(const Operand& a, const Operand& b);
 bool operator!=(const Operand& a, const Operand& b);
 bool operator==(const Operation& a, const Operation& b);
 bool operator!=(const Operation& a, const Operation& b);
+bool operator==(const Version& a, const Version& b);
+bool operator!=(const Version& a, const Version& b);
 
 inline std::string toString(uint32_t obj) {
     return std::to_string(obj);

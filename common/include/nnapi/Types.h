@@ -991,16 +991,34 @@ struct Timing {
 // Returns status, timingLaunched, timingFenced
 using ExecuteFencedInfoCallback = std::function<GeneralResult<std::pair<Timing, Timing>>()>;
 
-// Note: Update getLatestHalVersion in TypeUtils.h when a newer version is added here.
-enum class Version {
-    ANDROID_OC_MR1 = 0,
-    ANDROID_P = 2,
-    ANDROID_Q = 4,
-    ANDROID_R = 6,
-    ANDROID_S = 8,
-    FEATURE_LEVEL_6 = 10,
+// Version is a tuple that contains what NNAPI feature level is supported/required and whether
+// runtime-only features are supported/required.
+struct Version {
+    enum class Level : uint8_t {
+        ANDROID_OC_MR1,
+        ANDROID_P,
+        ANDROID_Q,
+        ANDROID_R,
+        ANDROID_S,
+        FEATURE_LEVEL_6,
 #ifdef NN_EXPERIMENTAL_FEATURE
-    EXPERIMENTAL = 12,
+        EXPERIMENTAL,
+#endif  // NN_EXPERIMENTAL_FEATURE
+    };
+
+    Level level;
+    bool runtimeOnlyFeatures = false;
+
+    // Public static constants to temporarily mimic the previous enum scoping behavior.
+    // TODO: replace this with constexpr global constants instead.
+    const static Version ANDROID_OC_MR1;
+    const static Version ANDROID_P;
+    const static Version ANDROID_Q;
+    const static Version ANDROID_R;
+    const static Version ANDROID_S;
+    const static Version FEATURE_LEVEL_6;
+#ifdef NN_EXPERIMENTAL_FEATURE
+    const static Version EXPERIMENTAL;
 #endif  // NN_EXPERIMENTAL_FEATURE
 };
 

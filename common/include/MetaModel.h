@@ -110,7 +110,10 @@ class MetaModel {
         std::vector<uint32_t> mSlicedOperationIndexToOrigIndex;
     };
 
-    mutable std::map<Version, Slice> mCachedSlices;
+    struct Comparison {
+        bool operator()(Version lhs, Version rhs) const;
+    };
+    mutable std::map<Version, Slice, Comparison> mCachedSlices;
 
     Slice makeSlice(Version version) const;
 

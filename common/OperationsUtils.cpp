@@ -26,6 +26,7 @@
 
 #include "LegacyUtils.h"
 #include "Operations.h"
+#include "nnapi/Validation.h"
 
 namespace android {
 namespace nn {
@@ -88,7 +89,7 @@ bool validateOutputTypes(const IOperationValidationContext* context,
 
 bool validateVersion(const IOperationValidationContext* context, Version contextVersion,
                      Version minSupportedVersion) {
-    if (contextVersion < minSupportedVersion) {
+    if (!isCompliantVersion(minSupportedVersion, contextVersion)) {
         std::ostringstream message;
         message << "Operation " << context->getOperationName() << " with inputs {";
         for (uint32_t i = 0, n = context->getNumInputs(); i < n; ++i) {

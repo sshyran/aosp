@@ -1639,12 +1639,13 @@ Result<Version> validateIfOperation(const std::vector<uint32_t>& inputs,
 }
 
 Result<Version> validateControlFlowOperandUnknownSize(const Operand& operand) {
+    auto version = Version::ANDROID_R;
     if (!isExtension(operand.type) && getNonExtensionSize(operand).value() == 0) {
-        // 1.3 HAL (corresponding to Version::ANDROID_R) does not support CF operations with
+        // 1.3 HAL (corresponding to Version::Level::ANDROID_R) does not support CF operations with
         // operands of unknown size. See http://b/132458982#comment63.
-        return getCurrentRuntimeVersion();
+        version.runtimeOnlyFeatures = true;
     }
-    return Version::ANDROID_R;
+    return version;
 }
 
 Result<Version> validateWhileOperation(const std::vector<uint32_t>& inputs,
@@ -2662,8 +2663,19 @@ Result<Version> validateOperationIncludingOperandVersions(
 // namespace. If there is a function name clash between one of the functions below and one of the
 // functions above, the function in the anonymous namespace is appended with "Impl".
 
-Version combineVersions(Version lhs, Version rhs) {
-    return std::max<Version>(lhs, rhs);
+Version combineVersions(Version minVersionNeeded1, Version minVersionNeeded2) {
+    return Version{
+            .level = std::max<Version::Level>(minVersionNeeded1.level, minVersionNeeded2.level),
+            .runtimeOnlyFeatures =
+                    minVersionNeeded1.runtimeOnlyFeatures || minVersionNeeded2.runtimeOnlyFeatures,
+    };
+}
+
+bool isCompliantVersion(Version minVersionNeeded, Version maxVersionSupported) {
+    if (minVersionNeeded.runtimeOnlyFeatures && !maxVersionSupported.runtimeOnlyFeatures) {
+        return false;
+    }
+    return minVersionNeeded.level <= maxVersionSupported.level;
 }
 
 Result<Version> validate(const DeviceStatus& deviceStatus) {
