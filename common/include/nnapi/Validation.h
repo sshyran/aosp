@@ -35,9 +35,9 @@ Version combineVersions(Version minVersionNeeded1, Version minVersionNeeded2);
 
 // Indicates whether a feature at version `minVersionNeeded` is supported on version
 // `maxVersionSupported`. For example:
-// * a feature at Version::ANDROID_P is supported on a driver at Version::ANDROID_Q.
-// * a feature at Version::ANDROID_Q is supported on a driver at Version::ANDROID_Q.
-// * a feature at Version::ANDROID_S is not supported on a driver at Version::ANDROID_Q.
+// * a feature at kVersionFeatureLevel2 is supported on a driver at kVersionFeatureLevel3.
+// * a feature at kVersionFeatureLevel3 is supported on a driver at kVersionFeatureLevel3.
+// * a feature at kVersionFeatureLevel5 is not supported on a driver at kVersionFeatureLevel3.
 // * a feature that is runtime only (i.e., invalid with respect to the HAL specification) is not
 //   supported on a driver that does not support runtime-only features.
 bool isCompliantVersion(Version minVersionNeeded, Version maxVersionSupported);

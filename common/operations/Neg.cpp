@@ -56,7 +56,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
             << "Unsupported tensor type for operation " << kOperationName;
     NN_RET_CHECK(validateInputTypes(context, {inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return Version::ANDROID_Q;
+    return kVersionFeatureLevel3;
 }
 
 bool prepare(IOperationExecutionContext* context) {

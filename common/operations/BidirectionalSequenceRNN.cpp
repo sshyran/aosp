@@ -336,9 +336,9 @@ Result<Version> validate(const IOperationValidationContext* context) {
     std::vector<OperandType> outExpectedTypes(numOutputs, inputType);
     NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
 
-    Version minSupportedVersion = Version::ANDROID_Q;
+    Version minSupportedVersion = kVersionFeatureLevel3;
     if (numOutputs == kNumOutputsWithState || numOutputs == kNumOutputsMergedWithState) {
-        minSupportedVersion = Version::ANDROID_R;
+        minSupportedVersion = kVersionFeatureLevel4;
     }
     return minSupportedVersion;
 }

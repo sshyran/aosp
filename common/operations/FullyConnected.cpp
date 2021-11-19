@@ -233,9 +233,9 @@ Result<Version> validate(const IOperationValidationContext* context) {
     auto inputType = context->getInputType(kInputTensor);
     std::vector<OperandType> inExpectedTypes;
     std::vector<OperandType> outExpectedTypes;
-    auto minSupportedVersion = Version::ANDROID_OC_MR1;
+    auto minSupportedVersion = kVersionFeatureLevel1;
     if (inputType == OperandType::TENSOR_FLOAT32) {
-        minSupportedVersion = Version::ANDROID_OC_MR1;
+        minSupportedVersion = kVersionFeatureLevel1;
         inExpectedTypes = {
                 OperandType::TENSOR_FLOAT32,
                 OperandType::TENSOR_FLOAT32,
@@ -243,7 +243,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
                 OperandType::INT32,
         };
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        minSupportedVersion = Version::ANDROID_Q;
+        minSupportedVersion = kVersionFeatureLevel3;
         inExpectedTypes = {
                 OperandType::TENSOR_FLOAT16,
                 OperandType::TENSOR_FLOAT16,
@@ -260,9 +260,9 @@ Result<Version> validate(const IOperationValidationContext* context) {
         bool meetsQuantizedScaleConstraintBeforeV1_2 = (outputScale > inputScale * weightsScale);
 
         if (!meetsQuantizedScaleConstraintBeforeV1_2) {
-            minSupportedVersion = Version::ANDROID_Q;
+            minSupportedVersion = kVersionFeatureLevel3;
         } else {
-            minSupportedVersion = Version::ANDROID_OC_MR1;
+            minSupportedVersion = kVersionFeatureLevel1;
         }
 
         inExpectedTypes = {
@@ -272,7 +272,7 @@ Result<Version> validate(const IOperationValidationContext* context) {
                 OperandType::INT32,
         };
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = Version::ANDROID_R;
+        minSupportedVersion = kVersionFeatureLevel4;
 
         inExpectedTypes = {
                 OperandType::TENSOR_QUANT8_ASYMM_SIGNED,

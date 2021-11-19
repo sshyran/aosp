@@ -243,15 +243,15 @@ Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     auto inputType = context->getInputType(kInputTensor);
     std::vector<OperandType> inExpectedTypes;
-    auto minSupportedVersion = Version::ANDROID_OC_MR1;
+    auto minSupportedVersion = kVersionFeatureLevel1;
     if (inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        minSupportedVersion = Version::ANDROID_OC_MR1;
+        minSupportedVersion = kVersionFeatureLevel1;
         inExpectedTypes = {inputType, OperandType::FLOAT32};
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        minSupportedVersion = Version::ANDROID_Q;
+        minSupportedVersion = kVersionFeatureLevel3;
         inExpectedTypes = {inputType, OperandType::FLOAT16};
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = Version::ANDROID_R;
+        minSupportedVersion = kVersionFeatureLevel4;
         inExpectedTypes = {inputType, OperandType::FLOAT32};
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
@@ -261,11 +261,11 @@ Result<Version> validate(const IOperationValidationContext* context) {
         NN_RET_CHECK_LE(inputRank, 4u);
     }
     if (context->getNumInputs() == kNumInputs) {
-        minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_Q);
+        minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel3);
         inExpectedTypes.push_back(OperandType::INT32);
     } else {
         if (inputRank != 2 && inputRank != 4 && inputRank != 0) {
-            minSupportedVersion = combineVersions(minSupportedVersion, Version::ANDROID_Q);
+            minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel3);
         }
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
