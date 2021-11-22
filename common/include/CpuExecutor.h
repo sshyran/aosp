@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_CPU_EXECUTOR_H
-#define ANDROID_FRAMEWORKS_ML_NN_COMMON_CPU_EXECUTOR_H
+#ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_CPU_EXECUTOR_H
+#define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_CPU_EXECUTOR_H
 
 #include <android-base/macros.h>
 #include <nnapi/Types.h>
@@ -295,4 +295,4 @@ inline RunTimeOperandInfo* GetOutput(const Operation& operation, RunTimeOperandI
 }  // namespace nn
 }  // namespace android
 
-#endif  // ANDROID_FRAMEWORKS_ML_NN_COMMON_CPU_EXECUTOR_H
+#endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_CPU_EXECUTOR_H
