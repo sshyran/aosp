@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MANAGER_H
-#define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MANAGER_H
+#ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_RUNTIME_MANAGER_H
+#define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_RUNTIME_MANAGER_H
 
 #include <LegacyUtils.h>
 #include <android-base/macros.h>
@@ -257,4 +257,4 @@ std::vector<SharedDevice> getDevices();
 }  // namespace nn
 }  // namespace android
 
-#endif  // ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MANAGER_H
+#endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_RUNTIME_MANAGER_H

@@ -16,8 +16,8 @@
 
 // Classes used to plan how to execute a model across multiple devices.
 
-#ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_EXECUTION_PLAN_H
-#define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_EXECUTION_PLAN_H
+#ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_RUNTIME_EXECUTION_PLAN_H
+#define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_RUNTIME_EXECUTION_PLAN_H
 
 #include <LegacyUtils.h>
 #include <TokenHasher.h>
@@ -1011,4 +1011,4 @@ inline std::ostream& operator<<(std::ostream& out, ExecutionPlan::Kind kind) {
 }  // namespace nn
 }  // namespace android
 
-#endif  // ANDROID_FRAMEWORKS_ML_NN_RUNTIME_EXECUTION_PLAN_H
+#endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_RUNTIME_EXECUTION_PLAN_H
