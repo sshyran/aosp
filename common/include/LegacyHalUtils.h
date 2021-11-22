@@ -17,8 +17,8 @@
 // utilities. LegacyUtils.h is the subset of these utilities that do not touch
 // HAL.
 
-#ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_LEGACY_HAL_UTILS_H
-#define ANDROID_FRAMEWORKS_ML_NN_COMMON_LEGACY_HAL_UTILS_H
+#ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_LEGACY_HAL_UTILS_H
+#define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_LEGACY_HAL_UTILS_H
 
 #include <android-base/logging.h>
 #include <nnapi/TypeUtils.h>
@@ -403,4 +403,4 @@ V1_3::Subgraph convertToV1_3(const Model::Subgraph& model);
 }  // namespace nn
 }  // namespace android
 
-#endif  // ANDROID_FRAMEWORKS_ML_NN_COMMON_LEGACY_HAL_UTILS_H
+#endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_LEGACY_HAL_UTILS_H
