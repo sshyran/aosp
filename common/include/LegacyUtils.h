@@ -40,7 +40,7 @@ namespace nn {
 const int kNumberOfDataTypes = 16;
 
 // The number of operation types (OperationCode) defined in NeuralNetworksTypes.h.
-const int kNumberOfOperationTypes = 104;
+const int kNumberOfOperationTypes = 106;
 
 #ifdef NN_EXPERIMENTAL_FEATURE
 const int kNumberOfExperimentalOperationTypes = 1;

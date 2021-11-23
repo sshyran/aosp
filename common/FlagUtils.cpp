@@ -43,6 +43,8 @@ FeatureLevelCode flagToFeatureLevelCode(int64_t featureLevelFlag) {
             return ANEURALNETWORKS_FEATURE_LEVEL_5;
         case 6:
             return ANEURALNETWORKS_FEATURE_LEVEL_6;
+        case 7:
+            return ANEURALNETWORKS_FEATURE_LEVEL_7;
         default:
             return KDefaultFeatureLevelCode;
     }

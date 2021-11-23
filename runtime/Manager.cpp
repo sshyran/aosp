@@ -258,6 +258,8 @@ int64_t DriverDevice::getFeatureLevel() const {
             return ANEURALNETWORKS_FEATURE_LEVEL_5;
         case Version::Level::FEATURE_LEVEL_6:
             return ANEURALNETWORKS_FEATURE_LEVEL_6;
+        case Version::Level::FEATURE_LEVEL_7:
+            return ANEURALNETWORKS_FEATURE_LEVEL_7;
 #ifdef NN_EXPERIMENTAL_FEATURE
         case Version::Level::FEATURE_LEVEL_EXPERIMENTAL:
             break;

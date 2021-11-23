@@ -125,6 +125,23 @@ Result<Version> validateFloor(const IOperationValidationContext* context) {
     return inputType == OperandType::TENSOR_FLOAT16 ? kVersionFeatureLevel3 : kVersionFeatureLevel1;
 }
 
+Result<Version> validateRsqrt(const IOperationValidationContext* context) {
+    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
+    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
+    OperandType inputType = context->getInputType(kInputTensor);
+    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
+                 inputType == OperandType::TENSOR_FLOAT32 ||
+                 inputType == OperandType::TENSOR_QUANT8_ASYMM ||
+                 inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
+            << "Unsupported tensor type for operation RSQRT";
+    NN_RET_CHECK(validateInputTypes(context, {inputType}));
+    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+    return (inputType == OperandType::TENSOR_QUANT8_ASYMM ||
+            inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
+                   ? kVersionFeatureLevel7
+                   : kVersionFeatureLevel3;
+}
+
 bool prepare(IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
     Shape output = context->getOutputShape(kOutputTensor);
@@ -174,7 +191,7 @@ NN_REGISTER_OPERATION(FLOOR, "FLOOR", elementwise::validateFloor, elementwise::p
                       elementwise::executeFloor);
 NN_REGISTER_OPERATION(LOG, "LOG", elementwise::validate, elementwise::prepare,
                       elementwise::executeLog);
-NN_REGISTER_OPERATION(RSQRT, "RSQRT", elementwise::validate, elementwise::prepare,
+NN_REGISTER_OPERATION(RSQRT, "RSQRT", elementwise::validateRsqrt, elementwise::prepare,
                       elementwise::executeRsqrt);
 NN_REGISTER_OPERATION(SIN, "SIN", elementwise::validate, elementwise::prepare,
                       elementwise::executeSin);

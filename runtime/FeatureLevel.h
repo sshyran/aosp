@@ -31,7 +31,7 @@ namespace nn {
 #ifdef NN_EXPERIMENTAL_FEATURE
 constexpr int64_t kCurrentNNAPIRuntimeFeatureLevel = ANEURALNETWORKS_FEATURE_LEVEL_EXPERIMENTAL;
 #else   // NN_EXPERIMENTAL_FEATURE
-constexpr int64_t kCurrentNNAPIRuntimeFeatureLevel = ANEURALNETWORKS_FEATURE_LEVEL_6;
+constexpr int64_t kCurrentNNAPIRuntimeFeatureLevel = ANEURALNETWORKS_FEATURE_LEVEL_7;
 #endif  // NN_EXPERIMENTAL_FEATURE
 
 // The current version of the NNAPI APEX module.
