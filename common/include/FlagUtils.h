@@ -31,7 +31,7 @@ constexpr char kCurrentFeatureLevelFlagName[] = "current_feature_level";
 constexpr int64_t kDefaultFeatureLevelNum = 5;
 constexpr FeatureLevelCode KDefaultFeatureLevelCode = ANEURALNETWORKS_FEATURE_LEVEL_5;
 constexpr int64_t kMinFeatureLevelNum = 5;
-constexpr int64_t kMaxFeatureLevelNum = 6;
+constexpr int64_t kMaxFeatureLevelNum = 7;
 
 // Weak symbol to get server feature level flag so that other targets with different build options
 // (e.g. not vendor available) can implement this function.
