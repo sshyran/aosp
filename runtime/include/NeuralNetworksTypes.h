@@ -4688,6 +4688,8 @@ typedef enum {
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} (since NNAPI feature level 7)
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since NNAPI feature level 7)
      *
      * Supported tensor rank: from 1.
      *
@@ -4696,6 +4698,9 @@ typedef enum {
      *
      * Outputs:
      * * 0: The output tensor of same shape as input0.
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensor,
+     *      the scale and zeroPoint can be different from inputs' scale and zeroPoint.
      *
      * Available since NNAPI feature level 3.
      */
@@ -5750,6 +5755,76 @@ typedef enum {
      * Available since NNAPI feature level 6.
      */
     ANEURALNETWORKS_PACK = 103,
+
+    // Operations below are available since NNAPI feature level 7.
+
+    /**
+     * Pads a tensor with mirrored values.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     *
+     * Supported tensor rank: from 1.
+     *
+     * Inputs:
+     * * 0: An n-D tensor, specifying the tensor to be padded.
+     * * 1: A 2-D tensor of {@link ANEURALNETWORKS_TENSOR_INT32}, the paddings
+     *      for each spatial dimension of the input tensor. The shape of the
+     *      tensor must be {rank(input0), 2}.
+     *      padding[i, 0] specifies the number of elements to be padded in the
+     *      front of dimension i.
+     *      padding[i, 1] specifies the number of elements to be padded after the
+     *      end of dimension i.
+     * * 2: An {@link ANEURALNETWORKS_INT32} scalar, specifying the mode.
+     *      Options are 0:REFLECT and 1:SYMMETRIC.
+     *
+     * Outputs:
+     * * 0: A tensor of the same {@link OperandCode} as input0. The
+     *      output tensor has the same rank as input0, and each
+     *      dimension of the output tensor has the same size as the
+     *      corresponding dimension of the input tensor plus the size
+     *      of the padding:
+     *          output0.dimension[i] =
+     *              padding[i, 0] + input0.dimension[i] + padding[i, 1]
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensor,
+     *      the scale and zeroPoint must be the same as input0.
+     *
+     * Available since NNAPI feature level 7.
+     */
+    ANEURALNETWORKS_MIRROR_PAD = 104,
+
+    /**
+     * Reverses a specified dimension of a tensor.
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     *
+     * Supported tensor rank: up to 8.
+     *
+     * Inputs:
+     * * 0: Input tensor of rank n.
+     * * 1: Axis tensor of type {@link ANEURALNETWORKS_TENSOR_INT32} and shape [1],
+     *      specifying which dimension of the input tensor is to be reversed. The dimension
+     *      must be in the range [0, n).
+     *
+     * Outputs:
+     * * 0: The reversed tensor.
+     *      For {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensors,
+     *      the scales and zeroPoint must be the same as input0.
+     *
+     * Available since NNAPI feature level 7.
+     */
+    ANEURALNETWORKS_REVERSE = 105,
 } OperationCode;
 
 /**
@@ -5877,6 +5952,8 @@ typedef enum {
     ANEURALNETWORKS_FEATURE_LEVEL_5 = 31,
     /** Android NNAPI feature level 6 */
     ANEURALNETWORKS_FEATURE_LEVEL_6 = 1000006,
+    /** Android NNAPI feature level 7 */
+    ANEURALNETWORKS_FEATURE_LEVEL_7 = 1000007,
 } FeatureLevelCode;
 
 /**
