@@ -814,6 +814,8 @@ static bool compliantWith(HalVersion version, const V1_3::Model& model,
                            case HalVersion::V1_3:
                                is_operand_compliant = compliantWithV1_3(op);
                                break;
+                           case HalVersion::AIDL_V1:
+                           case HalVersion::AIDL_V2:
                            case HalVersion::AIDL_UNSTABLE:
                                is_operand_compliant = compliantWithAidl(op);
                                break;

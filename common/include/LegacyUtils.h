@@ -83,7 +83,11 @@ enum class HalVersion : int32_t {
     V1_1,
     V1_2,
     V1_3,
+    AIDL_V1,
+    AIDL_V2,
     AIDL_UNSTABLE,
+    // TODO(b/207721221): Add AIDL support to TestPartitioning so that LATEST can be set to AIDL
+    //  version.
     LATEST = V1_3,
 };
 
