@@ -14,80 +14,71 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "SampleDriverMinimal"
+#define LOG_TAG "SampleDriverAidlFloatSlow"
 
 #include <android-base/logging.h>
-#include <android/binder_auto_utils.h>
+#include <hidl/LegacySupport.h>
+#include <nnapi/hal/aidl/Conversions.h>
 #include <nnapi/hal/aidl/HalUtils.h>
 
 #include <memory>
 #include <thread>
 #include <vector>
 
-#include "SampleDriverPartial.h"
+#include "SampleDriverAidlPartial.h"
 
 namespace android {
 namespace nn {
-namespace sample_driver {
+namespace sample_driver_aidl {
 
-class SampleDriverMinimal : public SampleDriverPartial {
+class SampleDriverFloatSlow : public SampleDriverPartial {
    public:
-    SampleDriverMinimal() : SampleDriverPartial("nnapi-sample_minimal") {}
+    SampleDriverFloatSlow() : SampleDriverPartial("nnapi-sample_float_slow") {}
     ndk::ScopedAStatus getCapabilities(aidl_hal::Capabilities* capabilities) override;
 
    private:
     std::vector<bool> getSupportedOperationsImpl(const Model& model) const override;
 };
 
-ndk::ScopedAStatus SampleDriverMinimal::getCapabilities(aidl_hal::Capabilities* capabilities) {
+ndk::ScopedAStatus SampleDriverFloatSlow::getCapabilities(aidl_hal::Capabilities* capabilities) {
     android::nn::initVLogMask();
     VLOG(DRIVER) << "getCapabilities()";
 
     *capabilities = {
-            .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 0.4f, .powerUsage = 0.5f},
-            .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 0.4f, .powerUsage = 0.5f},
+            .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 1.2f, .powerUsage = 0.6f},
+            .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 1.2f, .powerUsage = 0.6f},
             .operandPerformance = nonExtensionOperandPerformance({1.0f, 1.0f}),
             .ifPerformance = {.execTime = 1.0f, .powerUsage = 1.0f},
             .whilePerformance = {.execTime = 1.0f, .powerUsage = 1.0f}};
     update(&capabilities->operandPerformance, aidl_hal::OperandType::TENSOR_FLOAT32,
-           {.execTime = 0.4f, .powerUsage = 0.5f});
+           {.execTime = 1.3f, .powerUsage = 0.7f});
     update(&capabilities->operandPerformance, aidl_hal::OperandType::FLOAT32,
-           {.execTime = 0.4f, .powerUsage = 0.5f});
+           {.execTime = 1.3f, .powerUsage = 0.7f});
 
     return ndk::ScopedAStatus::ok();
 }
 
-std::vector<bool> SampleDriverMinimal::getSupportedOperationsImpl(const Model& model) const {
+std::vector<bool> SampleDriverFloatSlow::getSupportedOperationsImpl(const Model& model) const {
     const size_t count = model.main.operations.size();
     std::vector<bool> supported(count);
-    // Simulate supporting just a few ops
     for (size_t i = 0; i < count; i++) {
-        supported[i] = false;
         const Operation& operation = model.main.operations[i];
-        switch (operation.type) {
-            case OperationType::ADD:
-            case OperationType::CONCATENATION:
-            case OperationType::CONV_2D: {
-                const Operand& firstOperand = model.main.operands[operation.inputs[0]];
-                if (firstOperand.type == OperandType::TENSOR_FLOAT32) {
-                    supported[i] = true;
-                }
-                break;
-            }
-            default:
-                break;
+        if (!isExtensionOperationType(operation.type) && operation.inputs.size() > 0) {
+            const Operand& firstOperand = model.main.operands[operation.inputs[0]];
+            supported[i] = firstOperand.type == OperandType::TENSOR_FLOAT32;
         }
     }
     return supported;
 }
 
-}  // namespace sample_driver
+}  // namespace sample_driver_aidl
 }  // namespace nn
 }  // namespace android
 
-using android::nn::sample_driver::SampleDriverMinimal;
+using android::nn::sample_driver_aidl::SampleDriverFloatSlow;
 
 int main() {
-    std::shared_ptr<SampleDriverMinimal> driver = ndk::SharedRefBase::make<SampleDriverMinimal>();
+    std::shared_ptr<SampleDriverFloatSlow> driver =
+            ndk::SharedRefBase::make<SampleDriverFloatSlow>();
     return driver->run();
 }

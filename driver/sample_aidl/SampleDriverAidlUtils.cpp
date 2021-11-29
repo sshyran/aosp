@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include "SampleDriverUtils.h"
+#include "SampleDriverAidlUtils.h"
 
 #include <aidl/android/hardware/common/NativeHandle.h>
 #include <android/binder_auto_utils.h>
@@ -29,11 +29,11 @@
 #include <thread>
 #include <utility>
 
-#include "SampleDriver.h"
+#include "SampleDriverAidl.h"
 
 namespace android {
 namespace nn {
-namespace sample_driver {
+namespace sample_driver_aidl {
 
 void notify(const std::shared_ptr<aidl_hal::IPreparedModelCallback>& callback,
             const aidl_hal::ErrorStatus& status,
@@ -132,6 +132,6 @@ ndk::ScopedAStatus prepareModelBase(
     return ndk::ScopedAStatus::ok();
 }
 
-}  // namespace sample_driver
+}  // namespace sample_driver_aidl
 }  // namespace nn
 }  // namespace android

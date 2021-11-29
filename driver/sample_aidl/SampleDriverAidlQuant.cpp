@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "SampleDriverFloatSlow"
+#define LOG_TAG "SampleDriverAidlQuant"
 
 #include <android-base/logging.h>
-#include <hidl/LegacySupport.h>
 #include <nnapi/hal/aidl/Conversions.h>
 #include <nnapi/hal/aidl/HalUtils.h>
 
@@ -25,60 +24,64 @@
 #include <thread>
 #include <vector>
 
-#include "SampleDriverPartial.h"
+#include "SampleDriverAidlPartial.h"
 
 namespace android {
 namespace nn {
-namespace sample_driver {
+namespace sample_driver_aidl {
 
-class SampleDriverFloatSlow : public SampleDriverPartial {
+class SampleDriverQuant : public SampleDriverPartial {
    public:
-    SampleDriverFloatSlow() : SampleDriverPartial("nnapi-sample_float_slow") {}
+    SampleDriverQuant() : SampleDriverPartial("nnapi-sample_quant") {}
     ndk::ScopedAStatus getCapabilities(aidl_hal::Capabilities* capabilities) override;
 
    private:
     std::vector<bool> getSupportedOperationsImpl(const Model& model) const override;
 };
 
-ndk::ScopedAStatus SampleDriverFloatSlow::getCapabilities(aidl_hal::Capabilities* capabilities) {
+ndk::ScopedAStatus SampleDriverQuant::getCapabilities(aidl_hal::Capabilities* capabilities) {
     android::nn::initVLogMask();
     VLOG(DRIVER) << "getCapabilities()";
 
     *capabilities = {
-            .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 1.2f, .powerUsage = 0.6f},
-            .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 1.2f, .powerUsage = 0.6f},
-            .operandPerformance = nonExtensionOperandPerformance({1.0f, 1.0f}),
-            .ifPerformance = {.execTime = 1.0f, .powerUsage = 1.0f},
-            .whilePerformance = {.execTime = 1.0f, .powerUsage = 1.0f}};
-    update(&capabilities->operandPerformance, aidl_hal::OperandType::TENSOR_FLOAT32,
-           {.execTime = 1.3f, .powerUsage = 0.7f});
-    update(&capabilities->operandPerformance, aidl_hal::OperandType::FLOAT32,
-           {.execTime = 1.3f, .powerUsage = 0.7f});
+            .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 50.0f, .powerUsage = 1.0f},
+            .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 50.0f, .powerUsage = 1.0f},
+            .operandPerformance = nonExtensionOperandPerformance({50.0f, 1.0f}),
+            .ifPerformance = {.execTime = 50.0f, .powerUsage = 1.0f},
+            .whilePerformance = {.execTime = 50.0f, .powerUsage = 1.0f}};
 
     return ndk::ScopedAStatus::ok();
 }
 
-std::vector<bool> SampleDriverFloatSlow::getSupportedOperationsImpl(const Model& model) const {
+static bool isQuantized(OperandType opType) {
+    return opType == OperandType::TENSOR_QUANT8_ASYMM ||
+           opType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED;
+}
+
+std::vector<bool> SampleDriverQuant::getSupportedOperationsImpl(const Model& model) const {
     const size_t count = model.main.operations.size();
     std::vector<bool> supported(count);
     for (size_t i = 0; i < count; i++) {
         const Operation& operation = model.main.operations[i];
         if (!isExtensionOperationType(operation.type) && operation.inputs.size() > 0) {
             const Operand& firstOperand = model.main.operands[operation.inputs[0]];
-            supported[i] = firstOperand.type == OperandType::TENSOR_FLOAT32;
+            supported[i] = isQuantized(firstOperand.type);
+            if (operation.type == OperationType::SELECT) {
+                const Operand& secondOperand = model.main.operands[operation.inputs[1]];
+                supported[i] = isQuantized(secondOperand.type);
+            }
         }
     }
     return supported;
 }
 
-}  // namespace sample_driver
+}  // namespace sample_driver_aidl
 }  // namespace nn
 }  // namespace android
 
-using android::nn::sample_driver::SampleDriverFloatSlow;
+using android::nn::sample_driver_aidl::SampleDriverQuant;
 
 int main() {
-    std::shared_ptr<SampleDriverFloatSlow> driver =
-            ndk::SharedRefBase::make<SampleDriverFloatSlow>();
+    std::shared_ptr<SampleDriverQuant> driver = ndk::SharedRefBase::make<SampleDriverQuant>();
     return driver->run();
 }
