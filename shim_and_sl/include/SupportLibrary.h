@@ -47,8 +47,8 @@
  * The base->implFeatureLevel is set to the actual Feature Level
  * implemented by the SLDriverImpl,
  */
-struct NnApiSupportLibrary : NnApiSLDriverImplFL5 {
-    NnApiSupportLibrary(const NnApiSLDriverImplFL5& impl, void* libHandle);
+struct NnApiSupportLibrary : NnApiSLDriverImplFL6 {
+    NnApiSupportLibrary(const NnApiSLDriverImplFL6& impl, void* libHandle);
     ~NnApiSupportLibrary();
 
     void* libHandle = nullptr;
