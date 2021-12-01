@@ -19,6 +19,7 @@
 #include <Utils.h>
 #include <android-base/scopeguard.h>
 #include <gtest/gtest.h>
+#include <nnapi/Validation.h>
 
 #include "GeneratedTestUtils.h"
 #include "Memory.h"
@@ -39,6 +40,18 @@ using WrapperType = test_wrapper::Type;
 
 // Tag for the compilance tests
 class ComplianceTest : public ::testing::Test {};
+
+// Verifies the earliest supported version for the model.
+static void testAvailableSinceVersion(const WrapperModel& wrapperModel, const Version testVersion) {
+    // Creates a canonical model from a wrapper model.
+    auto modelBuilder = reinterpret_cast<const ModelBuilder*>(wrapperModel.getHandle());
+    EXPECT_TRUE(modelBuilder->isFinished());
+    EXPECT_TRUE(modelBuilder->isValid());
+    Model model = modelBuilder->makeModel();
+    const auto modelVersion = validate(model);
+    ASSERT_TRUE(modelVersion.ok());
+    ASSERT_EQ(testVersion, modelVersion.value());
+}
 
 // Creates a HIDL model from a wrapper model.
 static HidlModel createHidlModel(const WrapperModel& wrapperModel) {
@@ -226,6 +239,8 @@ TEST_P(GeneratedComplianceTest, Test) {
     ASSERT_TRUE(model.isValid());
     model.finish();
     switch (testModel.minSupportedVersion) {
+        // TODO(b/209797313): Unify HalVersion and Version.
+        // TODO(b/213801779): Use testAvailableSinceVersion for HIDL.
         case TestHalVersion::V1_0:
             testAvailableSinceV1_0(model);
             break;
@@ -239,9 +254,13 @@ TEST_P(GeneratedComplianceTest, Test) {
             testAvailableSinceV1_3(model);
             break;
         case TestHalVersion::AIDL_V1:
+            testAvailableSinceVersion(model, kVersionFeatureLevel5);
+            break;
         case TestHalVersion::AIDL_V2:
+            testAvailableSinceVersion(model, kVersionFeatureLevel6);
+            break;
         case TestHalVersion::AIDL_V3:
-            // TODO(b/202585778): Add testAvailableSinceAIDL_V1 and testAvailableSinceAIDL_V2.
+            testAvailableSinceVersion(model, kVersionFeatureLevel7);
             break;
         case TestHalVersion::UNKNOWN:
             FAIL();
