@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_DRIVER_SAMPLE_AIDL_SAMPLE_DRIVER_UTILS_H
-#define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_DRIVER_SAMPLE_AIDL_SAMPLE_DRIVER_UTILS_H
+#ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_DRIVER_SAMPLE_AIDL_SAMPLE_DRIVER_AIDL_UTILS_H
+#define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_DRIVER_SAMPLE_AIDL_SAMPLE_DRIVER_AIDL_UTILS_H
 
 #include <android/binder_auto_utils.h>
 
 #include <memory>
 #include <string>
 
-#include "SampleDriver.h"
+#include "SampleDriverAidl.h"
 
 namespace android {
 namespace nn {
-namespace sample_driver {
+namespace sample_driver_aidl {
 
 void notify(const std::shared_ptr<aidl_hal::IPreparedModelCallback>& callback,
             const aidl_hal::ErrorStatus& status,
@@ -41,8 +41,8 @@ ndk::ScopedAStatus prepareModelBase(
 ndk::ScopedAStatus toAStatus(aidl_hal::ErrorStatus errorStatus);
 ndk::ScopedAStatus toAStatus(aidl_hal::ErrorStatus errorStatus, const std::string& errorMessage);
 
-}  // namespace sample_driver
+}  // namespace sample_driver_aidl
 }  // namespace nn
 }  // namespace android
 
-#endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_DRIVER_SAMPLE_AIDL_SAMPLE_DRIVER_UTILS_H
+#endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_DRIVER_SAMPLE_AIDL_SAMPLE_DRIVER_AIDL_UTILS_H

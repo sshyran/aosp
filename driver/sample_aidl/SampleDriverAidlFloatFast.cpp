@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "SampleDriverQuant"
+#define LOG_TAG "SampleDriverAidlFloatFast"
 
 #include <android-base/logging.h>
+#include <android/binder_auto_utils.h>
+#include <hidl/LegacySupport.h>
 #include <nnapi/hal/aidl/Conversions.h>
 #include <nnapi/hal/aidl/HalUtils.h>
 
@@ -24,64 +26,60 @@
 #include <thread>
 #include <vector>
 
-#include "SampleDriverPartial.h"
+#include "SampleDriverAidlPartial.h"
 
 namespace android {
 namespace nn {
-namespace sample_driver {
+namespace sample_driver_aidl {
 
-class SampleDriverQuant : public SampleDriverPartial {
+class SampleDriverFloatFast : public SampleDriverPartial {
    public:
-    SampleDriverQuant() : SampleDriverPartial("nnapi-sample_quant") {}
+    SampleDriverFloatFast() : SampleDriverPartial("nnapi-sample_float_fast") {}
     ndk::ScopedAStatus getCapabilities(aidl_hal::Capabilities* capabilities) override;
 
    private:
     std::vector<bool> getSupportedOperationsImpl(const Model& model) const override;
 };
 
-ndk::ScopedAStatus SampleDriverQuant::getCapabilities(aidl_hal::Capabilities* capabilities) {
+ndk::ScopedAStatus SampleDriverFloatFast::getCapabilities(aidl_hal::Capabilities* capabilities) {
     android::nn::initVLogMask();
     VLOG(DRIVER) << "getCapabilities()";
 
     *capabilities = {
-            .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 50.0f, .powerUsage = 1.0f},
-            .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 50.0f, .powerUsage = 1.0f},
-            .operandPerformance = nonExtensionOperandPerformance({50.0f, 1.0f}),
-            .ifPerformance = {.execTime = 50.0f, .powerUsage = 1.0f},
-            .whilePerformance = {.execTime = 50.0f, .powerUsage = 1.0f}};
+            .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 0.7f, .powerUsage = 1.1f},
+            .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 0.7f, .powerUsage = 1.1f},
+            .operandPerformance = nonExtensionOperandPerformance({1.0f, 1.0f}),
+            .ifPerformance = {.execTime = 1.0f, .powerUsage = 1.0f},
+            .whilePerformance = {.execTime = 1.0f, .powerUsage = 1.0f}};
+    update(&capabilities->operandPerformance, aidl_hal::OperandType::TENSOR_FLOAT32,
+           {.execTime = 0.8f, .powerUsage = 1.2f});
+    update(&capabilities->operandPerformance, aidl_hal::OperandType::FLOAT32,
+           {.execTime = 0.8f, .powerUsage = 1.2f});
 
     return ndk::ScopedAStatus::ok();
 }
 
-static bool isQuantized(OperandType opType) {
-    return opType == OperandType::TENSOR_QUANT8_ASYMM ||
-           opType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED;
-}
-
-std::vector<bool> SampleDriverQuant::getSupportedOperationsImpl(const Model& model) const {
+std::vector<bool> SampleDriverFloatFast::getSupportedOperationsImpl(const Model& model) const {
     const size_t count = model.main.operations.size();
     std::vector<bool> supported(count);
     for (size_t i = 0; i < count; i++) {
         const Operation& operation = model.main.operations[i];
         if (!isExtensionOperationType(operation.type) && operation.inputs.size() > 0) {
             const Operand& firstOperand = model.main.operands[operation.inputs[0]];
-            supported[i] = isQuantized(firstOperand.type);
-            if (operation.type == OperationType::SELECT) {
-                const Operand& secondOperand = model.main.operands[operation.inputs[1]];
-                supported[i] = isQuantized(secondOperand.type);
-            }
+            supported[i] = firstOperand.type == OperandType::TENSOR_FLOAT32;
         }
     }
     return supported;
 }
 
-}  // namespace sample_driver
+}  // namespace sample_driver_aidl
 }  // namespace nn
 }  // namespace android
 
-using android::nn::sample_driver::SampleDriverQuant;
+using android::nn::sample_driver_aidl::SampleDriverFloatFast;
 
 int main() {
-    std::shared_ptr<SampleDriverQuant> driver = ndk::SharedRefBase::make<SampleDriverQuant>();
+    std::shared_ptr<SampleDriverFloatFast> driver =
+            ndk::SharedRefBase::make<SampleDriverFloatFast>();
     return driver->run();
 }
