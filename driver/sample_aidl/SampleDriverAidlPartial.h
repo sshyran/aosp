@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_DRIVER_SAMPLE_AIDL_SAMPLE_DRIVER_PARTIAL_H
-#define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_DRIVER_SAMPLE_AIDL_SAMPLE_DRIVER_PARTIAL_H
+#ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_DRIVER_SAMPLE_AIDL_SAMPLE_DRIVER_AIDL_PARTIAL_H
+#define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_DRIVER_SAMPLE_AIDL_SAMPLE_DRIVER_AIDL_PARTIAL_H
 
 #include <android-base/logging.h>
 
@@ -23,11 +23,11 @@
 #include <thread>
 #include <vector>
 
-#include "SampleDriver.h"
+#include "SampleDriverAidl.h"
 
 namespace android {
 namespace nn {
-namespace sample_driver {
+namespace sample_driver_aidl {
 
 // A base class for sample drivers that support only a subset of NNAPI
 // operations. Classes of such drivers should inherit from this class and
@@ -54,8 +54,8 @@ class SampleDriverPartial : public SampleDriver {
     virtual std::vector<bool> getSupportedOperationsImpl(const Model& model) const = 0;
 };
 
-}  // namespace sample_driver
+}  // namespace sample_driver_aidl
 }  // namespace nn
 }  // namespace android
 
-#endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_DRIVER_SAMPLE_AIDL_SAMPLE_DRIVER_PARTIAL_H
+#endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_DRIVER_SAMPLE_AIDL_SAMPLE_DRIVER_AIDL_PARTIAL_H

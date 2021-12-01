@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "SampleDriverPartial"
+#define LOG_TAG "SampleDriverAidlPartial"
 
-#include "SampleDriverPartial.h"
+#include "SampleDriverAidlPartial.h"
 
 #include <android-base/logging.h>
 #include <android/binder_auto_utils.h>
@@ -29,11 +29,11 @@
 #include <utility>
 #include <vector>
 
-#include "SampleDriverUtils.h"
+#include "SampleDriverAidlUtils.h"
 
 namespace android {
 namespace nn {
-namespace sample_driver {
+namespace sample_driver_aidl {
 
 ndk::ScopedAStatus SampleDriverPartial::getSupportedOperations(
         const aidl_hal::Model& model, std::vector<bool>* supportedOperations) {
@@ -68,6 +68,6 @@ ndk::ScopedAStatus SampleDriverPartial::prepareModel(
                             callback, isModelFullySupported);
 }
 
-}  // namespace sample_driver
+}  // namespace sample_driver_aidl
 }  // namespace nn
 }  // namespace android

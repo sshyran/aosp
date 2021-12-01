@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "SampleDriverAll"
+#define LOG_TAG "SampleDriverAidlAll"
 
 #include <android/binder_interface_utils.h>
 
 #include <memory>
 
-#include "SampleDriverFull.h"
+#include "SampleDriverAidlFull.h"
 
 using aidl::android::hardware::neuralnetworks::PerformanceInfo;
-using android::nn::sample_driver::SampleDriverFull;
+using android::nn::sample_driver_aidl::SampleDriverFull;
 
 int main() {
     const PerformanceInfo performance{.execTime = 1.1f, .powerUsage = 1.1f};

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "SampleDriverFull"
+#define LOG_TAG "SampleDriverAidlFull"
 
-#include "SampleDriverFull.h"
+#include "SampleDriverAidlFull.h"
 
 #include <nnapi/Validation.h>
 #include <nnapi/hal/aidl/Conversions.h>
@@ -26,11 +26,11 @@
 #include <vector>
 
 #include "LegacyUtils.h"
-#include "SampleDriverUtils.h"
+#include "SampleDriverAidlUtils.h"
 
 namespace android {
 namespace nn {
-namespace sample_driver {
+namespace sample_driver_aidl {
 
 ndk::ScopedAStatus SampleDriverFull::getCapabilities(aidl_hal::Capabilities* capabilities) {
     android::nn::initVLogMask();
@@ -59,6 +59,6 @@ ndk::ScopedAStatus SampleDriverFull::getSupportedOperations(
     return ndk::ScopedAStatus::ok();
 }
 
-}  // namespace sample_driver
+}  // namespace sample_driver_aidl
 }  // namespace nn
 }  // namespace android
