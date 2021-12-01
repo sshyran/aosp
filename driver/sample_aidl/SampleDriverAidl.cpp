@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "SampleDriver"
+#define LOG_TAG "SampleDriverAidl"
 
-#include "SampleDriver.h"
+#include "SampleDriverAidl.h"
 
 #include <android-base/logging.h>
 #include <android-base/properties.h>
@@ -47,13 +47,13 @@
 #include <vector>
 
 #include "CpuExecutor.h"
-#include "SampleDriverUtils.h"
+#include "SampleDriverAidlUtils.h"
 #include "Tracing.h"
 #include "Utils.h"
 
 namespace android {
 namespace nn {
-namespace sample_driver {
+namespace sample_driver_aidl {
 
 namespace {
 
@@ -646,6 +646,6 @@ ndk::ScopedAStatus SampleBurst::releaseMemoryResource(int64_t memoryIdentifierTo
     return ndk::ScopedAStatus::ok();
 }
 
-}  // namespace sample_driver
+}  // namespace sample_driver_aidl
 }  // namespace nn
 }  // namespace android
