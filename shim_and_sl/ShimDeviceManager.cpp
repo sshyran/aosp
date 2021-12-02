@@ -130,15 +130,15 @@ ANeuralNetworksShimResultCode registerDevices(NnApiSLDriverImpl* nnapiSLImpl,
         return ANNSHIM_FAILED_TO_LOAD_SL;
     }
 
-    if (nnapiSLImpl->implFeatureLevel > ANEURALNETWORKS_FEATURE_LEVEL_5) {
+    if (nnapiSLImpl->implFeatureLevel > ANEURALNETWORKS_FEATURE_LEVEL_6) {
         LOG(ERROR) << "Invalid implStructFeatureLevel if NnApiSLDriverImpl, latest supported "
-                      "version is ANEURALNETWORKS_FEATURE_LEVEL_5";
+                      "version is ANEURALNETWORKS_FEATURE_LEVEL_6";
         return ANNSHIM_FAILED_TO_LOAD_SL;
     }
 
     const std::shared_ptr<const NnApiSupportLibrary> nnapi =
             std::make_shared<const NnApiSupportLibrary>(
-                    *reinterpret_cast<NnApiSLDriverImplFL5*>(nnapiSLImpl), nullptr);
+                    *reinterpret_cast<NnApiSLDriverImplFL6*>(nnapiSLImpl), nullptr);
 
     ABinderProcess_setThreadPoolMaxThreadCount(numberOfListenerThreads);
 
