@@ -31,6 +31,8 @@
 
 static_assert(offsetof(NnApiSLDriverImplFL5, base.implFeatureLevel) == 0,
               ".base.implFeatureLevel is not at offset 0 of a NnApiSLDriverImplFL5 struct");
+static_assert(offsetof(NnApiSLDriverImplFL6, base.implFeatureLevel) == 0,
+              ".base.implFeatureLevel is not at offset 0 of a NnApiSLDriverImplFL6 struct");
 static_assert(offsetof(NnApiSLDriverImpl, implFeatureLevel) == 0,
               ".implFeatureLevel is not at offset 0 of a NnApiSLDriverImpl struct");
 
@@ -45,6 +47,8 @@ static_assert(sizeof(NnApiSLDriverImpl) == sizeof(int64_t), "NnApiSLDriverImpl s
 //  void (*reserved_placeholder1)();
 static_assert(sizeof(NnApiSLDriverImplFL5) == sizeof(int64_t) + 104 * sizeof(void*),
               "NnApiSLDriverImplFL5 size changed");
+static_assert(sizeof(NnApiSLDriverImplFL6) == sizeof(int64_t) + 104 * sizeof(void*),
+              "NnApiSLDriverImplFL6 size changed");
 
 static_assert(ANNSHIM_NO_ERROR == 0, "ANNSHIM_NO_ERROR has changed");
 static_assert(ANNSHIM_FAILED_TO_LOAD_SL == 1, "ANNSHIM_FAILED_TO_LOAD_SL has changed");

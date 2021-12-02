@@ -1612,4 +1612,13 @@ typedef struct NnApiSLDriverImplFL5 {
 
 } NnApiSLDriverImplFL5;
 
+/**
+ * NnApiSLDriverImpl for an Updatable SL Driver implementing {@link
+ * ANEURALNETWORKS_FEATURE_LEVEL_6}.
+ *
+ * This struct must set its implFeatureLevel to {@link ANEURALNETWORKS_FEATURE_LEVEL_6}.
+ *
+ */
+typedef struct NnApiSLDriverImplFL5 NnApiSLDriverImplFL6;
+
 __END_DECLS
