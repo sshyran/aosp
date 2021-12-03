@@ -124,6 +124,7 @@ cc_defaults {
     ],
     whole_static_libs: [
         "neuralnetworks_generated_AIDL_V2_example",
+        "neuralnetworks_generated_AIDL_V3_example",
         "neuralnetworks_generated_V1_0_example",
         "neuralnetworks_generated_V1_1_example",
         "neuralnetworks_generated_V1_2_example",
@@ -402,6 +403,7 @@ cc_defaults {
     ],
     whole_static_libs: [
         "neuralnetworks_generated_AIDL_V2_example",
+        "neuralnetworks_generated_AIDL_V3_example",
         "neuralnetworks_generated_V1_0_example",
         "neuralnetworks_generated_V1_1_example",
         "neuralnetworks_generated_V1_2_example",
@@ -558,6 +560,12 @@ cc_library_static {
     name: "neuralnetworks_generated_AIDL_V2_example",
     defaults: ["neuralnetworks_generated_defaults"],
     srcs: ["generated/spec_AIDL_V2/*.example.cpp"],
+}
+
+cc_library_static {
+    name: "neuralnetworks_generated_AIDL_V3_example",
+    defaults: ["neuralnetworks_generated_defaults"],
+    srcs: ["generated/spec_AIDL_V3/*.example.cpp"],
 }
 
 cc_library_static {

@@ -39,6 +39,7 @@ bool compute(const InputType* inputData, const Shape& inputShape, OutputType* ou
     const float scale = inputShape.scale;
     for (int i = 0; i < numElements; ++i) {
         const int32_t value = inputData[i];
+        // This dequantization formula also appears in Elementwise.cpp.
         outputData[i] = static_cast<OutputType>(scale * (value - zeroPoint));
     }
     return true;

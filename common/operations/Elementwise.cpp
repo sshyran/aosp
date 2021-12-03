@@ -17,6 +17,8 @@
 #define LOG_TAG "Operations"
 
 #include <cmath>
+#include <functional>
+#include <limits>
 
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
@@ -35,13 +37,41 @@ constexpr uint32_t kOutputTensor = 0;
 namespace {
 
 template <typename IntermediateType, typename T>
-inline bool compute(IntermediateType func(IntermediateType), const T* input, const Shape& shape,
-                    T* output) {
+inline bool compute(const std::function<IntermediateType(IntermediateType)>& func, const T* input,
+                    const Shape& shape, T* output) {
     const auto size = getNumberOfElements(shape);
     for (uint32_t i = 0; i < size; ++i) {
         output[i] = static_cast<T>(func(static_cast<IntermediateType>(input[i])));
     }
     return true;
+}
+
+template <typename IntermediateType, typename T>
+inline bool compute(IntermediateType func(IntermediateType), const T* input, const Shape& shape,
+                    T* output) {
+    return compute(std::function<IntermediateType(IntermediateType)>(func), input, shape, output);
+}
+
+template <typename IntermediateType, typename T>
+auto makeQuantized(const std::function<IntermediateType(IntermediateType)>& func, float inScale,
+                   T inZeroPoint, float outScale, T outZeroPoint) {
+    return [func, inScale, inZeroPoint, outScale, outZeroPoint](T val) -> T {
+        // For dequantization formula, see Dequantize.cpp.
+        using WideT = int32_t;
+        static_assert(sizeof(T) < sizeof(WideT));
+        IntermediateType dequantizedVal =
+                (static_cast<WideT>(val) - static_cast<WideT>(inZeroPoint)) * inScale;
+
+        IntermediateType res = func(dequantizedVal);
+
+        // For quantization formula, see Quantize.cpp.
+        T quantizedRes = static_cast<T>(std::max<float>(
+                static_cast<IntermediateType>(std::numeric_limits<T>::min()),
+                std::min<float>(static_cast<IntermediateType>(std::numeric_limits<T>::max()),
+                                outZeroPoint + std::round(res / outScale))));
+
+        return quantizedRes;
+    };
 }
 
 bool execute(IOperationExecutionContext* context, float func(float)) {
@@ -79,6 +109,44 @@ bool executeAbs(IOperationExecutionContext* context) {
                                              context->getOutputBuffer<int32_t>(kOutputTensor));
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation ABS";
+    }
+}
+
+bool executeRsqrt(IOperationExecutionContext* context) {
+    const std::function<float(float)> frsqrt = [](float x) { return 1.f / std::sqrt(x); };
+    const auto tensorType = context->getInputType(kInputTensor);
+    switch (tensorType) {
+        case OperandType::TENSOR_FLOAT16:
+            return compute<float, _Float16>(frsqrt, context->getInputBuffer<_Float16>(kInputTensor),
+                                            context->getInputShape(kInputTensor),
+                                            context->getOutputBuffer<_Float16>(kOutputTensor));
+        case OperandType::TENSOR_FLOAT32:
+            return compute<float, float>(frsqrt, context->getInputBuffer<float>(kInputTensor),
+                                         context->getInputShape(kInputTensor),
+                                         context->getOutputBuffer<float>(kOutputTensor));
+        case OperandType::TENSOR_QUANT8_ASYMM: {
+            const Shape inShape = context->getInputShape(kInputTensor);
+            const Shape outShape = context->getOutputShape(kOutputTensor);
+            return compute<uint8_t, uint8_t>(
+                    makeQuantized(frsqrt, inShape.scale, static_cast<uint8_t>(inShape.offset),
+                                  outShape.scale, static_cast<uint8_t>(outShape.offset)),
+                    context->getInputBuffer<uint8_t>(kInputTensor),
+                    context->getInputShape(kInputTensor),
+                    context->getOutputBuffer<uint8_t>(kOutputTensor));
+        }
+        case OperandType::TENSOR_QUANT8_ASYMM_SIGNED: {
+            const Shape inShape = context->getInputShape(kInputTensor);
+            const Shape outShape = context->getOutputShape(kOutputTensor);
+            return compute<int8_t, int8_t>(
+                    makeQuantized(frsqrt, inShape.scale, static_cast<int8_t>(inShape.offset),
+                                  outShape.scale, static_cast<int8_t>(outShape.offset)),
+                    context->getInputBuffer<int8_t>(kInputTensor),
+                    context->getInputShape(kInputTensor),
+                    context->getOutputBuffer<int8_t>(kOutputTensor));
+        }
+        default:
+            NN_RET_CHECK_FAIL() << "Unsupported tensor type " << tensorType
+                                << " for operation RSQRT";
     }
 }
 
@@ -167,10 +235,6 @@ bool executeFloor(IOperationExecutionContext* context) {
 
 bool executeLog(IOperationExecutionContext* context) {
     return execute(context, std::log);
-}
-
-bool executeRsqrt(IOperationExecutionContext* context) {
-    return execute(context, [](float x) { return 1.f / std::sqrt(x); });
 }
 
 bool executeSin(IOperationExecutionContext* context) {
