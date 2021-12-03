@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-syntax = "proto2";
+syntax = "proto3";
 
-package android_nn_fuzz;
+package android.nn.fuzz;
 
 enum OperandType {
     FLOAT32 = 0;
@@ -171,8 +171,8 @@ message Scales {
 }
 
 message SymmPerChannelQuantParams {
-    required Scales scales = 1;
-    required uint32 channel_dim = 2;
+    Scales scales = 1;
+    uint32 channel_dim = 2;
 }
 
 message Dimensions {
@@ -180,13 +180,13 @@ message Dimensions {
 }
 
 message Operand {
-    required OperandType type = 1;
-    required Dimensions dimensions = 2;
-    required float scale = 4;
-    required int32 zero_point = 5;
-    required OperandLifeTime lifetime = 6;
-    required SymmPerChannelQuantParams channel_quant = 7;
-    required Buffer data = 8;
+    OperandType type = 1;
+    Dimensions dimensions = 2;
+    float scale = 4;
+    int32 zero_point = 5;
+    OperandLifeTime lifetime = 6;
+    SymmPerChannelQuantParams channel_quant = 7;
+    Buffer data = 8;
 }
 
 message Operands {
@@ -198,9 +198,9 @@ message Indexes {
 }
 
 message Operation {
-    required OperationType type = 1;
-    required Indexes inputs = 2;
-    required Indexes outputs = 3;
+    OperationType type = 1;
+    Indexes inputs = 2;
+    Indexes outputs = 3;
 }
 
 message Operations {
@@ -208,10 +208,10 @@ message Operations {
 }
 
 message Subgraph {
-    required Operands operands = 1;
-    required Operations operations = 2;
-    required Indexes input_indexes = 3;
-    required Indexes output_indexes = 4;
+    Operands operands = 1;
+    Operations operations = 2;
+    Indexes input_indexes = 3;
+    Indexes output_indexes = 4;
 }
 
 message Subgraphs {
@@ -219,11 +219,11 @@ message Subgraphs {
 }
 
 message Model {
-    required Subgraph main = 1;
-    required Subgraphs referenced = 2;
-    required bool is_relaxed = 3;
+    Subgraph main = 1;
+    Subgraphs referenced = 2;
+    bool is_relaxed = 3;
 }
 
 message Test {
-    required Model model = 1;
+    Model model = 1;
 }

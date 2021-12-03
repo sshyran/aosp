@@ -51,7 +51,7 @@ bool shouldSkip(const TestModel& model) {
 
 }  // namespace
 
-DEFINE_PROTO_FUZZER(const ::android_nn_fuzz::Test& model) {
+DEFINE_PROTO_FUZZER(const ::android::nn::fuzz::Test& model) {
     const TestModel testModel = convertToTestModel(model);
     if (!shouldSkip(testModel)) {
         nnapiFuzzTest(testModel);

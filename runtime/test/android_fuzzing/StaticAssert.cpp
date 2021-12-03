@@ -21,7 +21,6 @@ namespace android::nn::fuzz {
 namespace {
 
 using namespace test_helper;
-using namespace android_nn_fuzz;
 
 static_assert(static_cast<TestOperandType>(FLOAT32) == TestOperandType::FLOAT32);
 static_assert(static_cast<TestOperandType>(INT32) == TestOperandType::INT32);

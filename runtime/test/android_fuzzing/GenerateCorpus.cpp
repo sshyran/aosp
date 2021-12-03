@@ -31,7 +31,6 @@ namespace android::nn::fuzz {
 namespace {
 
 using namespace test_helper;
-using namespace android_nn_fuzz;
 
 OperandType convert(TestOperandType type) {
     return static_cast<OperandType>(type);
