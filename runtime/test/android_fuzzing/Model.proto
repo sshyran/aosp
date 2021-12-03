@@ -34,6 +34,7 @@ enum OperandType {
     TENSOR_QUANT16_ASYMM = 12;
     TENSOR_QUANT8_SYMM = 13;
     TENSOR_QUANT8_ASYMM_SIGNED = 14;
+    SUBGRAPH_OPERAND = 15;
 }
 
 enum OperationType {
@@ -132,6 +133,17 @@ enum OperationType {
     UNIDIRECTIONAL_SEQUENCE_LSTM = 92;
     UNIDIRECTIONAL_SEQUENCE_RNN = 93;
     RESIZE_NEAREST_NEIGHBOR = 94;
+    QUANTIZED_LSTM = 95;
+    IF = 96;
+    WHILE = 97;
+    ELU = 98;
+    HARD_SWISH = 99;
+    FILL = 100;
+    RANK = 101;
+    BATCH_MATMUL = 102;
+    PACK = 103;
+    MIRROR_PAD = 104;
+    REVERSE = 105;
 }
 
 enum OperandLifeTime {
@@ -141,10 +153,17 @@ enum OperandLifeTime {
     CONSTANT_COPY = 3;
     CONSTANT_REFERENCE = 4;
     NO_VALUE = 5;
+    SUBGRAPH_LIFETIME = 6;
 }
 
+message EmptyBuffer {}
+
 message Buffer {
-    required uint32 random_seed = 1;
+    oneof type {
+        EmptyBuffer empty = 1;
+        uint32 scalar = 2;
+        uint32 random_seed = 3;
+    }
 }
 
 message Scales {
@@ -188,12 +207,21 @@ message Operations {
     repeated Operation operation = 1;
 }
 
-message Model {
+message Subgraph {
     required Operands operands = 1;
     required Operations operations = 2;
     required Indexes input_indexes = 3;
     required Indexes output_indexes = 4;
-    required bool is_relaxed = 5;
+}
+
+message Subgraphs {
+    repeated Subgraph subgraph = 1;
+}
+
+message Model {
+    required Subgraph main = 1;
+    required Subgraphs referenced = 2;
+    required bool is_relaxed = 3;
 }
 
 message Test {

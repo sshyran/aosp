@@ -290,13 +290,16 @@ model {
 
 This format is largely based on the format defined in [NNAPI HAL][10]. The one
 major exception is that the contents of an operand's data are replaced by data
-generated from “random_seed” (except for `TEMPORARY_VARIABLE` and `NO_VALUE`
-operands, in which cases there is no data, so "random_seed" is ignored). This
-is done for a practical reason: `libFuzzer` (and by extension
+generated from the “Buffer” message (except for `TEMPORARY_VARIABLE` and
+`NO_VALUE` operands, in which cases there is no data, so the “Buffer” message is
+ignored). This is done for a practical reason: `libFuzzer` (and by extension
 `libprotobuf-mutator`) converge slower when the amount of randomly generated
 input is large. For the fuzz tests, the contents of the operand data are not as
-interesting as the structure of the graph itself, so the data was replaced by
-a seed to a random number generator instead.
+interesting as the structure of the graph itself, so the data was replaced by a
+“Buffer”, which is one of the following:
+* EmptyBuffer empty, represented no value
+* uint32_t scalar, repesenting a scalar value
+* uint32_t random_seed, used to generate random data
 
 [1]: https://cs.android.com/android/platform/superproject/+/master:packages/modules/NeuralNetworks/runtime/test/android_fuzzing/DriverFuzzTest.cpp;l=307-324;drc=34aee872d5dc317ad8a32377e9114c0c606d8afe
 [2]: https://cs.android.com/android/platform/superproject/+/master:packages/modules/NeuralNetworks/runtime/test/android_fuzzing/FuzzTest.cpp;l=130-151;drc=34aee872d5dc317ad8a32377e9114c0c606d8afe

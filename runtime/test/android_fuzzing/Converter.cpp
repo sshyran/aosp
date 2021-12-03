@@ -60,12 +60,21 @@ std::vector<uint32_t> convert(const android_nn_fuzz::Dimensions& dimensions) {
 }
 
 TestBuffer convert(size_t size, const android_nn_fuzz::Buffer& buffer) {
-    if (size == 0) {
-        return TestBuffer();
+    switch (buffer.type_case()) {
+        case android_nn_fuzz::Buffer::TypeCase::TYPE_NOT_SET:
+        case android_nn_fuzz::Buffer::TypeCase::kEmpty:
+            break;
+        case android_nn_fuzz::Buffer::TypeCase::kScalar: {
+            const uint32_t scalar = buffer.scalar();
+            return TestBuffer(sizeof(scalar), &scalar);
+        }
+        case android_nn_fuzz::Buffer::TypeCase::kRandomSeed: {
+            const uint32_t randomSeed = buffer.random_seed();
+            std::default_random_engine generator{randomSeed};
+            return TestBuffer::createRandom(size % kMaxSize, &generator);
+        }
     }
-    const uint32_t randomSeed = buffer.random_seed();
-    std::default_random_engine generator{randomSeed};
-    return TestBuffer::createRandom(size % kMaxSize, &generator);
+    return TestBuffer();
 }
 
 TestOperand convert(const android_nn_fuzz::Operand& operand) {
@@ -140,21 +149,37 @@ void calculateNumberOfConsumers(const std::vector<TestOperation>& operations,
     std::for_each(operations.begin(), operations.end(), addAllConsumers);
 }
 
-TestModel convert(const android_nn_fuzz::Model& model) {
-    std::vector<TestOperand> operands = convert(model.operands());
-    std::vector<TestOperation> operations = convert(model.operations());
-    std::vector<uint32_t> inputIndexes = convert(model.input_indexes());
-    std::vector<uint32_t> outputIndexes = convert(model.output_indexes());
-    const bool isRelaxed = model.is_relaxed();
+TestSubgraph convert(const android_nn_fuzz::Subgraph& subgraph) {
+    std::vector<TestOperand> operands = convert(subgraph.operands());
+    std::vector<TestOperation> operations = convert(subgraph.operations());
+    std::vector<uint32_t> inputIndexes = convert(subgraph.input_indexes());
+    std::vector<uint32_t> outputIndexes = convert(subgraph.output_indexes());
 
     // Calculate number of consumers.
     calculateNumberOfConsumers(operations, &operands);
 
-    return {.main = {.operands = std::move(operands),
-                     .operations = std::move(operations),
-                     .inputIndexes = std::move(inputIndexes),
-                     .outputIndexes = std::move(outputIndexes)},
-            .isRelaxed = isRelaxed};
+    return {.operands = std::move(operands),
+            .operations = std::move(operations),
+            .inputIndexes = std::move(inputIndexes),
+            .outputIndexes = std::move(outputIndexes)};
+}
+
+std::vector<TestSubgraph> convert(const android_nn_fuzz::Subgraphs& subgraphs) {
+    std::vector<TestSubgraph> testSubgraphs;
+    testSubgraphs.reserve(subgraphs.subgraph_size());
+    const auto& repeatedSubgraph = subgraphs.subgraph();
+    std::transform(repeatedSubgraph.begin(), repeatedSubgraph.end(),
+                   std::back_inserter(testSubgraphs),
+                   [](const auto& subgraph) { return convert(subgraph); });
+    return testSubgraphs;
+}
+
+TestModel convert(const android_nn_fuzz::Model& model) {
+    TestSubgraph main = convert(model.main());
+    std::vector<TestSubgraph> referenced = convert(model.referenced());
+    const bool isRelaxed = model.is_relaxed();
+
+    return {.main = std::move(main), .referenced = std::move(referenced), .isRelaxed = isRelaxed};
 }
 
 }  // anonymous namespace
