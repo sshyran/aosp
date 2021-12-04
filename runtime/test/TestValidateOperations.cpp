@@ -1025,6 +1025,16 @@ TEST(TensorRankMutator, AppliesConstraintToInputsAtGivenInputsToGenerateInvalidM
             });
 }
 
+// Test quantization parameters that are inconsistent among operands.
+enum class BadQuantization { NONE, zeroPoint, scale };
+void scramble(ANeuralNetworksOperandType* type, BadQuantization bad) {
+    if (bad == BadQuantization::zeroPoint) {
+        type->zeroPoint = 1;
+    } else if (bad == BadQuantization::scale) {
+        type->scale *= 2;
+    }
+};
+
 void argMinMaxTest(ANeuralNetworksOperationType operationCode, int32_t inputOperandType) {
     SCOPED_TRACE(inputOperandType);
     uint32_t inputDimensions[4] = {2, 2, 2, 2};
@@ -1498,6 +1508,14 @@ TEST(OperationValidationTest, RSQRT_float32) {
     activationOpTest(ANEURALNETWORKS_RSQRT, ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
+TEST(OperationValidationTest, RSQRT_quant8) {
+    activationOpTest(ANEURALNETWORKS_RSQRT, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+TEST(OperationValidationTest, RSQRT_quant8_signed) {
+    activationOpTest(ANEURALNETWORKS_RSQRT, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
 TEST(OperationValidationTest, SIN_float16) {
     activationOpTest(ANEURALNETWORKS_SIN, ANEURALNETWORKS_TENSOR_FLOAT16);
 }
@@ -1741,25 +1759,44 @@ TEST(OperationValidationTest, MEAN_quant8_signed) {
     meanOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
-void padOpTest(int32_t inputOperandCode) {
+void padOpTest(ANeuralNetworksOperationType operationCode, int32_t inputOperandCode) {
     SCOPED_TRACE(inputOperandCode);
+
     uint32_t inputDimensions[4] = {2, 2, 2, 2};
     ANeuralNetworksOperandType input = getOpType(inputOperandCode, 4, inputDimensions);
-    uint32_t padSizeDimensions[1] = {4};
+    uint32_t padSizeDimensions[2] = {4, 2};
     ANeuralNetworksOperandType padSize =
-            getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, padSizeDimensions);
+            getOpType(ANEURALNETWORKS_TENSOR_INT32, 2, padSizeDimensions);
+    std::vector<ANeuralNetworksOperandType> inputs = {input, padSize};
+    if (operationCode == ANEURALNETWORKS_MIRROR_PAD) {
+        inputs.push_back(getOpType(ANEURALNETWORKS_INT32));
+    }
+
     uint32_t outputDimensions[4] = {4, 3, 4, 3};
     ANeuralNetworksOperandType output = getOpType(inputOperandCode, 4, outputDimensions);
-    OperationTestBase test(ANEURALNETWORKS_PAD, {input, padSize}, {output},
-                           {{TensorRankConstraint::UpTo(4)}});
+
+    std::vector<TensorRankMutator> inputRankMutators;
+    if (operationCode == ANEURALNETWORKS_PAD) {
+        inputRankMutators.push_back({TensorRankConstraint::UpTo(4)});
+    }
+
+    OperationTestBase test(operationCode, inputs, {output}, inputRankMutators);
     test.testOpsValidations();
 }
 
 TEST(OperationValidationTest, PAD) {
-    padOpTest(ANEURALNETWORKS_TENSOR_FLOAT16);
-    padOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
-    padOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
-    padOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+    padOpTest(ANEURALNETWORKS_PAD, ANEURALNETWORKS_TENSOR_FLOAT16);
+    padOpTest(ANEURALNETWORKS_PAD, ANEURALNETWORKS_TENSOR_FLOAT32);
+    padOpTest(ANEURALNETWORKS_PAD, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+    padOpTest(ANEURALNETWORKS_PAD, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
+TEST(OperationValidationTest, MIRROR_PAD) {
+    padOpTest(ANEURALNETWORKS_MIRROR_PAD, ANEURALNETWORKS_TENSOR_FLOAT16);
+    padOpTest(ANEURALNETWORKS_MIRROR_PAD, ANEURALNETWORKS_TENSOR_FLOAT32);
+    padOpTest(ANEURALNETWORKS_MIRROR_PAD, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+    padOpTest(ANEURALNETWORKS_MIRROR_PAD, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+    padOpTest(ANEURALNETWORKS_MIRROR_PAD, ANEURALNETWORKS_TENSOR_INT32);
 }
 
 void padV2OpTest(int32_t inputOperandCode) {
@@ -4734,16 +4771,7 @@ TEST(OperationValidationTest, PACK_int32) {
 }
 
 // Test quantization parameters that are inconsistent among operands.
-enum class PackBadQuantization { NONE, zeroPoint, scale };
-void packTestBadQuantization(int32_t operandCode, PackBadQuantization bad) {
-    auto scramble = [bad](ANeuralNetworksOperandType* type) {
-        if (bad == PackBadQuantization::zeroPoint) {
-            type->zeroPoint = 1;
-        } else if (bad == PackBadQuantization::scale) {
-            type->scale *= 2;
-        }
-    };
-
+void packTestBadQuantization(int32_t operandCode, BadQuantization bad) {
     constexpr uint32_t inputTensorCount = 2;
     const uint32_t inputDimensions[3] = {4, 5, 6};
     constexpr size_t inputRank = sizeof(inputDimensions) / sizeof(inputDimensions[0]);
@@ -4767,12 +4795,12 @@ void packTestBadQuantization(int32_t operandCode, PackBadQuantization bad) {
         ANeuralNetworksOperandType outputType =
                 getOpType(operandCode, outputRank, outputDimensions);
         if (deviant == inputTensorCount) {
-            scramble(&outputType);
+            scramble(&outputType, bad);
         } else {
-            scramble(&inputTypes[1 + deviant]);
+            scramble(&inputTypes[1 + deviant], bad);
         }
         OperationTestBase packTest(ANEURALNETWORKS_PACK, inputTypes, {outputType});
-        if (bad == PackBadQuantization::NONE) {
+        if (bad == BadQuantization::NONE) {
             packTest.testSuccess();
             return;
         } else {
@@ -4784,24 +4812,23 @@ void packTestBadQuantization(int32_t operandCode, PackBadQuantization bad) {
 TEST(OperationValidationTest, PACK_quant8_bad_none) {
     // Make sure packTestBadQuantization starts with a valid operation and only corrupts what it
     // intends to.
-    packTestBadQuantization(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, PackBadQuantization::NONE);
+    packTestBadQuantization(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, BadQuantization::NONE);
 }
 
 TEST(OperationValidationTest, PACK_quant8_bad_zeroPoint) {
-    packTestBadQuantization(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, PackBadQuantization::zeroPoint);
+    packTestBadQuantization(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, BadQuantization::zeroPoint);
 }
 
 TEST(OperationValidationTest, PACK_quant8_bad_scale) {
-    packTestBadQuantization(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, PackBadQuantization::scale);
+    packTestBadQuantization(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, BadQuantization::scale);
 }
 
 TEST(OperationValidationTest, PACK_quant8_signed_bad_zeroPoint) {
-    packTestBadQuantization(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED,
-                            PackBadQuantization::zeroPoint);
+    packTestBadQuantization(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED, BadQuantization::zeroPoint);
 }
 
 TEST(OperationValidationTest, PACK_quant8_signed_bad_scale) {
-    packTestBadQuantization(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED, PackBadQuantization::scale);
+    packTestBadQuantization(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED, BadQuantization::scale);
 }
 
 // Test ranks that are inconsistent among operands.
@@ -4878,6 +4905,162 @@ TEST(OperationValidationTest, PACK_float32_rank_lo) {
 
 TEST(OperationValidationTest, PACK_float32_rank_hi) {
     packTestBadRank(ANEURALNETWORKS_TENSOR_FLOAT32, 1);
+}
+
+void reverseTest(int32_t operandCode) {
+    const uint32_t tensorDimensions[3] = {4, 5, 6};
+    constexpr size_t tensorRank = sizeof(tensorDimensions) / sizeof(tensorDimensions[0]);
+    const ANeuralNetworksOperandType tensorType =
+            getOpType(operandCode, tensorRank, tensorDimensions);
+
+    const uint32_t axisDimensions[1] = {0};
+    constexpr size_t axisRank = sizeof(axisDimensions) / sizeof(axisDimensions[0]);
+    const ANeuralNetworksOperandType axisType =
+            getOpType(ANEURALNETWORKS_TENSOR_INT32, axisRank, axisDimensions);
+
+    OperationTestBase reverseTest(ANEURALNETWORKS_REVERSE, {tensorType, axisType}, {tensorType});
+    reverseTest.testOpsValidations();
+}
+
+TEST(OperationValidationTest, REVERSE_float16) {
+    reverseTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
+TEST(OperationValidationTest, REVERSE_float32) {
+    reverseTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, REVERSE_quant8) {
+    reverseTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+TEST(OperationValidationTest, REVERSE_quant8_signed) {
+    reverseTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
+TEST(OperationValidationTest, REVERSE_int32) {
+    reverseTest(ANEURALNETWORKS_TENSOR_INT32);
+}
+
+// Test quantization parameters that are inconsistent among operands.
+void reverseTestBadQuantization(int32_t operandCode, BadQuantization bad) {
+    const uint32_t tensorDimensions[3] = {4, 5, 6};
+    constexpr size_t tensorRank = sizeof(tensorDimensions) / sizeof(tensorDimensions[0]);
+    const ANeuralNetworksOperandType tensorType =
+            getOpType(operandCode, tensorRank, tensorDimensions);
+
+    const uint32_t axisDimensions[1] = {0};
+    constexpr size_t axisRank = sizeof(axisDimensions) / sizeof(axisDimensions[0]);
+    const ANeuralNetworksOperandType axisType =
+            getOpType(ANEURALNETWORKS_TENSOR_INT32, axisRank, axisDimensions);
+
+    ANeuralNetworksOperandType outputType = tensorType;
+    scramble(&outputType, bad);
+
+    OperationTestBase reverseTest(ANEURALNETWORKS_REVERSE, {tensorType, axisType}, {outputType});
+    if (bad == BadQuantization::NONE) {
+        reverseTest.testSuccess();
+        return;
+    } else {
+        reverseTest.testFailure(ANEURALNETWORKS_BAD_DATA);
+    }
+}
+
+TEST(OperationValidationTest, REVERSE_quant8_bad_none) {
+    // Make sure reverseTestBadQuantization starts with a valid operation and only corrupts what it
+    // intends to.
+    reverseTestBadQuantization(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, BadQuantization::NONE);
+}
+
+TEST(OperationValidationTest, REVERSE_quant8_bad_zeroPoint) {
+    reverseTestBadQuantization(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, BadQuantization::zeroPoint);
+}
+
+TEST(OperationValidationTest, REVERSE_quant8_bad_scale) {
+    reverseTestBadQuantization(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, BadQuantization::scale);
+}
+
+TEST(OperationValidationTest, REVERSE_quant8_signed_bad_zeroPoint) {
+    reverseTestBadQuantization(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED,
+                               BadQuantization::zeroPoint);
+}
+
+TEST(OperationValidationTest, REVERSE_quant8_signed_bad_scale) {
+    reverseTestBadQuantization(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED, BadQuantization::scale);
+}
+
+// Test ranks that are inconsistent among operands or otherwise incorrect.
+void reverseTestBadRank(uint32_t operandCode, int adjustRank) {
+    const uint32_t tensorDimensions[3] = {4, 5, 6};
+    constexpr size_t tensorRank = sizeof(tensorDimensions) / sizeof(tensorDimensions[0]);
+    const ANeuralNetworksOperandType tensorType =
+            getOpType(operandCode, tensorRank, tensorDimensions);
+
+    const uint32_t axisDimensions[1] = {0};
+    constexpr size_t axisRank = sizeof(axisDimensions) / sizeof(axisDimensions[0]);
+    const ANeuralNetworksOperandType axisType =
+            getOpType(ANEURALNETWORKS_TENSOR_INT32, axisRank, axisDimensions);
+
+    constexpr size_t kOperandCount = 3;  // 2 inputs, 1 output
+
+    // The "deviant" is the operand whose rank is to be changed.
+    for (uint32_t deviant = 0; deviant < kOperandCount; ++deviant) {
+        SCOPED_TRACE(deviant);
+
+        // input 0, input 1, output 0
+        std::vector<ANeuralNetworksOperandType> operands = {tensorType, axisType, tensorType};
+        ASSERT_EQ(operands.size(), kOperandCount);
+
+        std::vector<uint32_t> scrambledDimensions;
+        auto scramble = [adjustRank,
+                         &scrambledDimensions](ANeuralNetworksOperandType* type) -> bool {
+            if (!adjustRank) {
+                return true;
+            }
+            if (adjustRank < 0) {
+                if (type->dimensionCount <= uint32_t(-adjustRank)) {
+                    // not a valid test scenario
+                    return false;
+                }
+                type->dimensionCount += adjustRank;
+                return true;
+            }
+            const uint32_t oldRank = type->dimensionCount;
+            const uint32_t newRank = oldRank + adjustRank;
+            EXPECT_EQ(scrambledDimensions.size(), size_t(0));  // only use this vector once
+            scrambledDimensions.assign(&type->dimensions[0], &type->dimensions[oldRank]);
+            scrambledDimensions.resize(newRank, /* arbitrary choice */ 7);
+            type->dimensionCount = newRank;
+            type->dimensions = &scrambledDimensions[0];
+            return true;
+        };
+
+        if (!scramble(&operands[deviant])) {
+            continue;
+        }
+        OperationTestBase reverseTest(ANEURALNETWORKS_REVERSE, {operands[0], operands[1]},
+                                      {operands[2]});
+        if (adjustRank) {
+            reverseTest.testFailure(ANEURALNETWORKS_BAD_DATA);
+        } else {
+            reverseTest.testSuccess();
+            return;
+        }
+    }
+}
+
+TEST(OperationValidationTest, REVERSE_float32_rank_good) {
+    // Make sure reverseTestBadRank starts with a valid operation and only corrupts it when it
+    // intends to.
+    reverseTestBadRank(ANEURALNETWORKS_TENSOR_FLOAT32, 0);
+}
+
+TEST(OperationValidationTest, REVERSE_float32_rank_lo) {
+    reverseTestBadRank(ANEURALNETWORKS_TENSOR_FLOAT32, -1);
+}
+
+TEST(OperationValidationTest, REVERSE_float32_rank_hi) {
+    reverseTestBadRank(ANEURALNETWORKS_TENSOR_FLOAT32, 1);
 }
 
 }  // end namespace
