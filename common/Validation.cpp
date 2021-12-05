@@ -913,6 +913,7 @@ Result<void> checkNoReferenceCycles(const std::vector<Model::Subgraph>& referenc
     CHECK(verified != nullptr);
     CHECK_EQ(referencedSubgraphs.size(), path->size());
     CHECK_EQ(referencedSubgraphs.size(), verified->size());
+    NN_RET_CHECK_LT(subgraphIndex, referencedSubgraphs.size());
     const auto& subgraph = referencedSubgraphs.at(subgraphIndex);
 
     // Quickly return if the current subgraph has already been verified to have no reference cycles.
