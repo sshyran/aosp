@@ -46,22 +46,7 @@ SharedDevice getDevice() {
     return device;
 }
 
-void noopLogger(base::LogId /*log_buffer_id*/, base::LogSeverity /*severity*/, const char* /*tag*/,
-                const char* /*file*/, unsigned int /*line*/, const char* /*message*/) {
-    // Do nothing
-}
-
-void disableLogger() {
-    [[maybe_unused]] static const auto logger = base::SetLogger(noopLogger);
-}
-
 ExecutionResult<void> runTest(const ::test_helper::TestModel& testModel) {
-    // Disable the logger to make running on the host easier: LOG on the host is directed to
-    // std::err, making it difficult to see what the fuzzer is doing if the logger is enabled.
-    // The logging is also disabled on the device because logging may slow down the test, and
-    // logging is currently not needed for this test.
-    disableLogger();
-
     // Set up device.
     const auto device = getDevice();
     CHECK(device != nullptr);
