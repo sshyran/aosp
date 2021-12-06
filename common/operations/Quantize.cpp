@@ -36,6 +36,7 @@ constexpr uint32_t kOutputTensor = 0;
 
 namespace {
 
+// The quantization formula also appears in Elementwise.cpp.
 template <typename T>
 bool quantizeToQuant8(const T* inputData, uint8_t* outputData, const Shape& outputShape) {
     NNTRACE_COMP("quantizeToQuant8");
@@ -48,6 +49,7 @@ bool quantizeToQuant8(const T* inputData, uint8_t* outputData, const Shape& outp
     return true;
 }
 
+// The quantization formula also appears in Elementwise.cpp.
 template <typename T>
 bool quantizeToQuant8Signed(const T* inputData, int8_t* outputData, const Shape& outputShape) {
     NNTRACE_COMP("quantizeToQuant8Signed");
