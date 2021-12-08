@@ -14,35 +14,36 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_FLAG_UTILS_H
-#define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_FLAG_UTILS_H
+#ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_RUNTIME_SERVER_FLAG_H
+#define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_RUNTIME_SERVER_FLAG_H
 
+#include <nnapi/Types.h>
 #include <stdint.h>
 
 #include "NeuralNetworks.h"
 
-namespace android {
-namespace nn {
+namespace android::nn {
 
 // Keep these values consistent with server side configuration in
 // google3/googledata/experiments/mobile/android_platform/nnapi_native/features/feature_level.gcl.
 constexpr char kExprCategoryName[] = "nnapi_native";
 constexpr char kCurrentFeatureLevelFlagName[] = "current_feature_level";
 constexpr int64_t kDefaultFeatureLevelNum = 5;
-constexpr FeatureLevelCode KDefaultFeatureLevelCode = ANEURALNETWORKS_FEATURE_LEVEL_5;
+// When this value is updated, update kMinFeatureLevelCode in runtime/test/TestUpdatability.cpp with
+// the corresponding ANEURALNETWORKS_FEATURE_LEVEL_* version.
 constexpr int64_t kMinFeatureLevelNum = 5;
 constexpr int64_t kMaxFeatureLevelNum = 7;
 
-// Weak symbol to get server feature level flag so that other targets with different build options
-// (e.g. not vendor available) can implement this function.
-// Note that this function should NOT be used directly and may not be present in the final artifact.
-// Clients are expected to use queryFeatureLevel instead.
-int64_t _getServerFeatureLevelFlag() __attribute__((weak));
+// Function to get server feature level flag. Note that this function should NOT be used directly.
+// Instead, clients are expected to use DeviceManager::getRuntimeVersion or
+// DeviceManager::getRuntimeFeatureLevel in runtime/Manager.h.
+#if !defined(NN_COMPATIBILITY_LIBRARY_BUILD) && !defined(NN_EXPERIMENTAL_FEATURE)
+int64_t getServerFeatureLevelFlag();
+#endif  // !defined(NN_COMPATIBILITY_LIBRARY_BUILD) && !defined(NN_EXPERIMENTAL_FEATURE)
 
-// Queries system flag for the current feature level.
-FeatureLevelCode queryFeatureLevel();
+// Get the runtime version corresponding to the server feature flag value.
+Version serverFeatureLevelToVersion(int64_t serverFeatureLevel);
 
-}  // namespace nn
-}  // namespace android
+}  // namespace android::nn
 
-#endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_FLAG_UTILS_H
+#endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_RUNTIME_SERVER_FLAG_H

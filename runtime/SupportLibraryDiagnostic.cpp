@@ -20,7 +20,6 @@
 #include <utility>
 
 #include "ExecutionBuilder.h"
-#include "FeatureLevel.h"
 #include "NeuralNetworksSupportLibraryImpl.h"
 #include "Telemetry.h"
 
@@ -94,7 +93,7 @@ int32_t SL_ANeuralNetworksDiagnosticCompilationInfo_getSessionId(
 
 int64_t SL_ANeuralNetworksDiagnosticCompilationInfo_getNnApiVersion(
         const ANeuralNetworksDiagnosticCompilationInfo* /*diagnosticCompilationInfo*/) {
-    return android::nn::kCurrentNNAPIRuntimeFeatureLevel;
+    return android::nn::DeviceManager::get()->getRuntimeFeatureLevel();
 }
 
 const uint8_t* SL_ANeuralNetworksDiagnosticCompilationInfo_getModelArchHash(
@@ -149,7 +148,7 @@ int32_t SL_ANeuralNetworksDiagnosticExecutionInfo_getSessionId(
 
 int64_t SL_ANeuralNetworksDiagnosticExecutionInfo_getNnApiVersion(
         const ANeuralNetworksDiagnosticExecutionInfo* /*diagnosticExecutionInfo*/) {
-    return android::nn::kCurrentNNAPIRuntimeFeatureLevel;
+    return android::nn::DeviceManager::get()->getRuntimeFeatureLevel();
 }
 
 const uint8_t* SL_ANeuralNetworksDiagnosticExecutionInfo_getModelArchHash(
