@@ -898,7 +898,8 @@ int ExecutionPlan::CompoundBody::finish(const SourceModels* sourceModels,
                                           executionPreference, priority);
             if (stepHasDynamicTemporaries) {
                 mHasDynamicTemporaries = true;
-                if (step->getDevice()->getFeatureLevel() < kHalVersionV1_2ToApi.featureLevel) {
+                if (!isCompliantVersion(kHalVersionV1_2ToApi.canonical,
+                                        step->getDevice()->getFeatureLevel())) {
                     // Until HAL 1.2, an Operand with lifetime SUBGRAPH_OUTPUT
                     // must have fully specified dimensions either in the
                     // Operand or in the RequestArgument.  In the case of a

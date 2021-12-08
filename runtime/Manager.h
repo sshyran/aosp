@@ -129,7 +129,7 @@ class Device {
     // Introspection methods returning device information
     virtual const std::string& getName() const = 0;
     virtual const std::string& getVersionString() const = 0;
-    virtual int64_t getFeatureLevel() const = 0;
+    virtual Version getFeatureLevel() const = 0;
     virtual int32_t getType() const = 0;
     virtual bool isUpdatable() const = 0;
     virtual const std::vector<Extension>& getSupportedExtensions() const = 0;
@@ -168,6 +168,15 @@ class DeviceManager {
         }
         return mDevices;
     }
+
+    // Gets the runtime version corresponding to getServerFeatureLevelFlag (in ServerFlag.h).
+    Version getRuntimeVersion() const { return mRuntimeVersion; }
+
+    // Gets the runtime feature level corresponding to getServerFeatureLevelFlag (in ServerFlag.h).
+    int64_t getRuntimeFeatureLevel() const;
+
+    // Convert the internal Version level representation to the NDK representation.
+    static int64_t versionToFeatureLevel(Version::Level versionLevel);
 
     // For testing only:
     void setUseCpuOnly(bool useCpuOnly) { mSetCpuOnly = useCpuOnly; }
@@ -230,6 +239,9 @@ class DeviceManager {
     void registerDevice(const SharedDevice& device);
 
     void findAvailableDevices();
+
+    // Runtime version corresponding to getServerFeatureLevelFlag (in ServerFlag.h).
+    Version mRuntimeVersion;
 
     // List of all the devices we discovered (including CpuDevice).
     std::vector<std::shared_ptr<Device>> mDevices;

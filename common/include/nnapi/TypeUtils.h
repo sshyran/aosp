@@ -128,6 +128,7 @@ std::ostream& operator<<(std::ostream& os, const TimePoint& timePoint);
 std::ostream& operator<<(std::ostream& os, const OptionalTimePoint& optionalTimePoint);
 std::ostream& operator<<(std::ostream& os, const Duration& timeoutDuration);
 std::ostream& operator<<(std::ostream& os, const OptionalDuration& optionalTimeoutDuration);
+std::ostream& operator<<(std::ostream& os, const Version::Level& versionLevel);
 std::ostream& operator<<(std::ostream& os, const Version& version);
 
 bool operator==(const Timing& a, const Timing& b);
