@@ -20,6 +20,7 @@
 
 #include <GraphDump.h>
 #include <LegacyUtils.h>
+#include <nnapi/Validation.h>
 
 #include <algorithm>
 #include <map>
@@ -535,8 +536,18 @@ int ModelBuilder::finish() {
     //       a CONSTANT_REFERENCE operand will not have correct .poolIndex, and
     //       validation will not work properly.
     const Model modelForValidation = makeModel();
-    if (auto result = validate(modelForValidation); !result.ok()) {
-        LOG(ERROR) << "ANeuralNetworksModel_finish called on invalid model: " << result.error();
+    const auto maybeVersion = validate(modelForValidation);
+    if (!maybeVersion.ok()) {
+        LOG(ERROR) << "ANeuralNetworksModel_finish called on invalid model: "
+                   << maybeVersion.error();
+        mInvalidModel = true;
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    if (!isCompliantVersion(maybeVersion.value(), DeviceManager::get()->getRuntimeVersion())) {
+        LOG(ERROR) << "ANeuralNetworksModel_finish called on a model that is newer what is "
+                      "allowed. Model version needed: "
+                   << maybeVersion.value() << ", current runtime version supported: "
+                   << DeviceManager::get()->getRuntimeVersion();
         mInvalidModel = true;
         return ANEURALNETWORKS_BAD_DATA;
     }

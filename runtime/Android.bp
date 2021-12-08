@@ -209,6 +209,7 @@ cc_library_static {
     exclude_static_libs: [
         "libneuralnetworks_common",
         "neuralnetworks_types",
+        "server_configurable_flags",
     ],
     static_libs: [
         "libneuralnetworks_common_experimental",
@@ -240,6 +241,7 @@ cc_library_static {
         "ModelArgumentInfo.cpp",
         "ModelBuilder.cpp",
         "NeuralNetworks.cpp",
+        "ServerFlag.cpp",
         "SupportLibraryDiagnostic.cpp",
         "Telemetry.cpp",
         "TypeManager.cpp",

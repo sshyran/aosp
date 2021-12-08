@@ -58,6 +58,7 @@ cc_defaults {
         "libneuralnetworks_generated_test_harness",
         "libtextclassifier_hash_static",
         "neuralnetworks_utils_hal_service",
+        "server_configurable_flags",
     ],
     whole_static_libs: [
         "libcrypto_static",
@@ -229,6 +230,7 @@ cc_test {
         "libneuralnetworks_common",
         "libneuralnetworks_static",
         "neuralnetworks_types",
+        "server_configurable_flags",
     ],
     static_libs: [
         "libneuralnetworks_common_experimental",
