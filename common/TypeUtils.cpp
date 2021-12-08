@@ -908,8 +908,8 @@ std::ostream& operator<<(std::ostream& os, const OptionalDuration& optionalTimeo
     return os << optionalTimeoutDuration.value();
 }
 
-static std::ostream& operator<<(std::ostream& os, const Version::Level& level) {
-    switch (level) {
+std::ostream& operator<<(std::ostream& os, const Version::Level& versionLevel) {
+    switch (versionLevel) {
         case Version::Level::FEATURE_LEVEL_1:
             return os << "FEATURE_LEVEL_1";
         case Version::Level::FEATURE_LEVEL_2:
@@ -929,7 +929,7 @@ static std::ostream& operator<<(std::ostream& os, const Version::Level& level) {
             return os << "FEATURE_LEVEL_EXPERIMENTAL";
 #endif  // NN_EXPERIMENTAL_FEATURE
     }
-    return os << "Version{" << static_cast<uint32_t>(underlyingType(level)) << "}";
+    return os << "Version{" << static_cast<uint32_t>(underlyingType(versionLevel)) << "}";
 }
 
 std::ostream& operator<<(std::ostream& os, const Version& version) {
