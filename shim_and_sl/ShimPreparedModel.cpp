@@ -235,7 +235,8 @@ class ShimFencedExecutionCallback : public BnFencedExecutionCallback {
                        ANeuralNetworksEvent* r = nullptr;
                        if (createResult == Result::NO_ERROR) {
                            createResult = static_cast<Result>(
-                                   mNnapi->ANeuralNetworksEvent_createFromSyncFenceFd(e.get(), &r));
+                                   mNnapi->getFL5()->ANeuralNetworksEvent_createFromSyncFenceFd(
+                                           e.get(), &r));
                        }
                        return r;
                    });
@@ -243,7 +244,7 @@ class ShimFencedExecutionCallback : public BnFencedExecutionCallback {
     const auto guard = ::android::base::make_scope_guard([this, deps] {
         for (auto& dep : deps) {
             if (dep != nullptr) {
-                mNnapi->ANeuralNetworksEvent_free(const_cast<ANeuralNetworksEvent*>(dep));
+                mNnapi->getFL5()->ANeuralNetworksEvent_free(const_cast<ANeuralNetworksEvent*>(dep));
             }
         }
     });
