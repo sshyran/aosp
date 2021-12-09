@@ -22,7 +22,7 @@
 
 namespace android::nn::fuzz {
 
-test_helper::TestModel convertToTestModel(const android_nn_fuzz::Test& model);
+test_helper::TestModel convertToTestModel(const Test& model);
 
 }  // namespace android::nn::fuzz
 
