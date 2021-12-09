@@ -331,6 +331,17 @@ class Model {
         }
     }
 
+    void setOperandValueFromModel(uint32_t index, const Model* model) {
+        if (__builtin_available(android /* Android R / FL4 */ 30, *)) {
+            if (NNAPI_CALL(ANeuralNetworksModel_setOperandValueFromModel(
+                        mModel, index, model->getHandle())) != ANEURALNETWORKS_NO_ERROR) {
+                mValid = false;
+            }
+        } else {
+            mValid = false;
+        }
+    }
+
     void addOperation(ANeuralNetworksOperationType type, const std::vector<uint32_t>& inputs,
                       const std::vector<uint32_t>& outputs) {
         if (NNAPI_CALL(ANeuralNetworksModel_addOperation(

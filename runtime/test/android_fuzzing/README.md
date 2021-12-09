@@ -210,93 +210,103 @@ that whenever the fuzz test finds a crash, the resultant test case that is
 dumped to a file will be in a human-readable format.
 
 Here is one example of a crash case that was found:
-```
+```protobuf
 model {
- operands {
-   operand {
-     type: TENSOR_INT32
-     dimensions {
-       dimension: 1
-     }
-     scale: 0
-     zero_point: 0
-     lifetime: TEMPORARY_VARIABLE
-     channel_quant {
-       scales {
-       }
-       channel_dim: 0
-     }
-     data {
-       random_seed: 4
-     }
-   }
-   operand {
-     type: TENSOR_FLOAT32
-     dimensions {
-       dimension: 2
-       dimension: 4
-     }
-     scale: 0
-     zero_point: 0
-     lifetime: TEMPORARY_VARIABLE
-     channel_quant {
-       scales {
-       }
-       channel_dim: 0
-     }
-     data {
-       random_seed: 0
-     }
-   }
-   operand {
-     type: TENSOR_FLOAT32
-     dimensions {
-     }
-     scale: 0
-     zero_point: 0
-     lifetime: SUBGRAPH_OUTPUT
-     channel_quant {
-       scales {
-       }
-       channel_dim: 27
-     }
-     data {
-       random_seed: 0
-     }
-   }
- }
- operations {
-   operation {
-     type: EMBEDDING_LOOKUP
-     inputs {
-       index: 0
-       index: 1
-     }
-     outputs {
-       index: 2
-     }
-   }
- }
- input_indexes {
-   index: 0
-   index: 1
- }
- output_indexes {
-   index: 2
- }
- is_relaxed: true
+  main {
+    operands {
+      operand {
+        type: TENSOR_QUANT8_ASYMM
+        scale: 1
+      }
+      operand {
+        type: TENSOR_INT32
+        dimensions {
+          dimension: 1
+        }
+        lifetime: CONSTANT_COPY
+      }
+      operand {
+        type: TENSOR_QUANT8_ASYMM
+        dimensions {
+          dimension: 9
+        }
+        scale: 1
+        lifetime: SUBGRAPH_OUTPUT
+      }
+      operand {
+        type: TENSOR_QUANT8_ASYMM
+        dimensions {
+          dimension: 1
+          dimension: 1
+          dimension: 3
+          dimension: 3
+        }
+        scale: 1
+        lifetime: SUBGRAPH_INPUT
+      }
+      operand {
+        type: TENSOR_QUANT8_ASYMM
+        dimensions {
+          dimension: 1
+        }
+        scale: 1
+        lifetime: CONSTANT_COPY
+      }
+      operand {
+        type: INT32
+        lifetime: CONSTANT_COPY
+      }
+    }
+    operations {
+      operation {
+        inputs {
+          index: 3
+          index: 4
+          index: 5
+        }
+        outputs {
+          index: 0
+        }
+      }
+      operation {
+        type: TILE
+        inputs {
+          index: 0
+          index: 1
+        }
+        outputs {
+          index: 2
+        }
+      }
+    }
+    input_indexes {
+      index: 3
+    }
+    output_indexes {
+      index: 2
+    }
+  }
 }
 ```
 
 This format is largely based on the format defined in [NNAPI HAL][10]. The one
 major exception is that the contents of an operand's data are replaced by data
-generated from “random_seed” (except for `TEMPORARY_VARIABLE` and `NO_VALUE`
-operands, in which cases there is no data, so "random_seed" is ignored). This
-is done for a practical reason: `libFuzzer` (and by extension
+generated from the “Buffer” message (except for `TEMPORARY_VARIABLE` and
+`NO_VALUE` operands, in which cases there is no data, so the “Buffer” message is
+ignored). This is done for a practical reason: `libFuzzer` (and by extension
 `libprotobuf-mutator`) converge slower when the amount of randomly generated
 input is large. For the fuzz tests, the contents of the operand data are not as
-interesting as the structure of the graph itself, so the data was replaced by
-a seed to a random number generator instead.
+interesting as the structure of the graph itself, so the data was replaced by a
+“Buffer”, which is one of the following:
+* EmptyBuffer empty, represented no value
+* uint32_t scalar, repesenting a scalar value
+* uint32_t random_seed, used to generate random data
+
+The NNAPI `libprotobuf-mutator` implementation uses the proto3 specification.
+Note that this means whenever a field contains the default value (e.g., uint32_t
+holds a value of 0), [that field is omitted from the text][11]. For example, in
+the test case listed above, `model.main.operations[0].operation.type` is omitted
+because it holds the value `ADD`.
 
 [1]: https://cs.android.com/android/platform/superproject/+/master:packages/modules/NeuralNetworks/runtime/test/android_fuzzing/DriverFuzzTest.cpp;l=307-324;drc=34aee872d5dc317ad8a32377e9114c0c606d8afe
 [2]: https://cs.android.com/android/platform/superproject/+/master:packages/modules/NeuralNetworks/runtime/test/android_fuzzing/FuzzTest.cpp;l=130-151;drc=34aee872d5dc317ad8a32377e9114c0c606d8afe
@@ -308,3 +318,4 @@ a seed to a random number generator instead.
 [8]: https://source.android.com/devices/tech/debug/libfuzzer
 [9]: https://cs.android.com/android/platform/superproject/+/master:external/libprotobuf-mutator/
 [10]: https://cs.android.com/android/platform/superproject/+/master:hardware/interfaces/neuralnetworks/
+[11]: https://developers.google.com/protocol-buffers/docs/proto3#default
