@@ -327,11 +327,15 @@ cc_fuzz {
     srcs: [
         "android_fuzzing/DriverFuzzTest.cpp",
     ],
+    header_libs: [
+        "libneuralnetworks_headers",
+    ],
     static_libs: [
-        "libSampleDriver",
         "libneuralnetworks_common",
         "libneuralnetworks_generated_test_harness",
-        "libneuralnetworks_static",
+        "neuralnetworks_canonical_sample_driver",
+        "neuralnetworks_test_utils",
+        "neuralnetworks_types",
     ],
 }
 
