@@ -47,19 +47,16 @@ cc_library_static {
         "StaticAssert.cpp",
     ],
     shared_libs: [
-        "android.hidl.memory@1.0",
-        "libhidlmemory",
         "libprotobuf-cpp-full",
     ],
     static_libs: [
         "libneuralnetworks_common",
         "libneuralnetworks_generated_test_harness",
-        "libneuralnetworks_static",
+        "neuralnetworks_types",
     ],
     whole_static_libs: [
         "libneuralnetworks_fuzzer_proto",
         "libprotobuf-mutator",
-        "neuralnetworks_types",
     ],
     target: {
         android: {
