@@ -40,13 +40,51 @@ OperandType getOperandType(const TestOperand& op) {
     }
 }
 
-std::optional<Model> CreateModel(const TestModel& testModel) {
+enum class Visited : uint8_t {
+    NOT_YET_VISITED,
+    CURRENTLY_VISITING,
+    ALREADY_VISITED,
+};
+
+bool areSubgraphsAcyclic(const TestModel& testModel, size_t index, std::vector<Visited>* visited,
+                         std::vector<size_t>* order) {
+    if (index >= visited->size()) return false;
+    Visited& status = (*visited)[index];
+
+    if (status == Visited::CURRENTLY_VISITING) return false;
+    if (status == Visited::ALREADY_VISITED) return true;
+    status = Visited::CURRENTLY_VISITING;
+
+    const auto& subgraph = index == 0 ? testModel.main : testModel.referenced[index - 1];
+    for (const auto& operand : subgraph.operands) {
+        if (operand.type != TestOperandType::SUBGRAPH) continue;
+        if (operand.data.size() < sizeof(uint32_t)) return false;
+        if (operand.data.get<void>() == nullptr) return false;
+        const uint32_t subgraphIndex = *operand.data.get<uint32_t>();
+        if (!areSubgraphsAcyclic(testModel, subgraphIndex + 1, visited, order)) return false;
+    }
+
+    status = Visited::ALREADY_VISITED;
+    order->push_back(index);
+    return true;
+}
+
+std::optional<std::vector<size_t>> getSubgraphOrder(const TestModel& testModel) {
+    std::vector<Visited> visited(testModel.referenced.size() + 1, Visited::NOT_YET_VISITED);
+    std::vector<size_t> order;
+    order.reserve(visited.size());
+    if (!areSubgraphsAcyclic(testModel, 0, &visited, &order)) return std::nullopt;
+    return order;
+}
+
+std::optional<Model> CreateSubgraph(const TestModel& testModel, size_t subgraphIndex,
+                                    const std::vector<Model>& subgraphs) {
+    const TestSubgraph& testSubgraph =
+            subgraphIndex == 0 ? testModel.main : testModel.referenced[subgraphIndex - 1];
     Model model;
 
     // Operands.
-    // TODO(b/148605565): Add control flow support
-    CHECK_EQ(testModel.referenced.size(), 0u) << "Subgraphs not supported";
-    for (const auto& operand : testModel.main.operands) {
+    for (const auto& operand : testSubgraph.operands) {
         auto type = getOperandType(operand);
         auto index = model.addOperand(&type);
 
@@ -59,7 +97,11 @@ std::optional<Model> CreateModel(const TestModel& testModel) {
                 model.setOperandValue(index, nullptr, 0);
                 break;
             case TestOperandLifeTime::SUBGRAPH: {
-                CHECK(false);
+                if (operand.data.size() < sizeof(uint32_t)) return std::nullopt;
+                if (operand.data.get<void>() == nullptr) return std::nullopt;
+                const uint32_t referencedSubgraphIndex = *operand.data.get<uint32_t>();
+                if (referencedSubgraphIndex >= subgraphs.size()) return std::nullopt;
+                model.setOperandValueFromModel(index, &subgraphs[referencedSubgraphIndex]);
             } break;
             case TestOperandLifeTime::SUBGRAPH_INPUT:
             case TestOperandLifeTime::SUBGRAPH_OUTPUT:
@@ -71,14 +113,13 @@ std::optional<Model> CreateModel(const TestModel& testModel) {
     }
 
     // Operations.
-    CHECK_EQ(testModel.referenced.size(), 0u) << "Subgraphs not supported";
-    for (const auto& operation : testModel.main.operations) {
+    for (const auto& operation : testSubgraph.operations) {
         model.addOperation(static_cast<int>(operation.type), operation.inputs, operation.outputs);
         if (!model.isValid()) return std::nullopt;
     }
 
     // Inputs and outputs.
-    model.identifyInputsAndOutputs(testModel.main.inputIndexes, testModel.main.outputIndexes);
+    model.identifyInputsAndOutputs(testSubgraph.inputIndexes, testSubgraph.outputIndexes);
     if (!model.isValid()) return std::nullopt;
 
     // Relaxed computation.
@@ -90,6 +131,20 @@ std::optional<Model> CreateModel(const TestModel& testModel) {
     }
 
     return model;
+}
+
+std::optional<std::vector<Model>> CreateModel(const TestModel& testModel) {
+    auto subgraphOrder = getSubgraphOrder(testModel);
+    if (!subgraphOrder.has_value()) return std::nullopt;
+
+    std::vector<Model> subgraphs(testModel.referenced.size() + 1);
+    for (size_t index : subgraphOrder.value()) {
+        auto subgraph = CreateSubgraph(testModel, index, subgraphs);
+        if (!subgraph.has_value()) return std::nullopt;
+        subgraphs[index] = std::move(subgraph).value();
+    }
+
+    return subgraphs;
 }
 
 std::optional<Compilation> CreateCompilation(const Model& model) {
@@ -125,17 +180,33 @@ std::optional<Execution> CreateExecution(const Compilation& compilation,
     return execution;
 }
 
+void noopLogger(android::base::LogId /*log_buffer_id*/, android::base::LogSeverity /*severity*/,
+                const char* /*tag*/, const char* /*file*/, unsigned int /*line*/,
+                const char* /*message*/) {
+    // Do nothing
+}
+
+void disableLogger() {
+    [[maybe_unused]] static const auto logger = ::android::base::SetLogger(noopLogger);
+}
+
 }  // anonymous namespace
 
 void nnapiFuzzTest(const TestModel& testModel) {
+    // Disable the logger to make running on the host easier: LOG on the host is directed to
+    // std::err, making it difficult to see what the fuzzer is doing if the logger is enabled.
+    // The logging is also disabled on the device because logging may slow down the test, and
+    // logging is currently not needed for this test.
+    disableLogger();
+
     // set up model
-    auto model = CreateModel(testModel);
-    if (!model.has_value()) {
+    auto models = CreateModel(testModel);
+    if (!models.has_value() || models->empty()) {
         return;
     }
 
     // set up compilation
-    auto compilation = CreateCompilation(*model);
+    auto compilation = CreateCompilation(models->front());
     if (!compilation.has_value()) {
         return;
     }
