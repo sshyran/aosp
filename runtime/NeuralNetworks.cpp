@@ -1902,8 +1902,8 @@ int SL_ANeuralNetworksDevice_forEachVendorExtensionOperandTypeInformation(
 
 #define NNCL_FUNC(symbol) .symbol = symbol
 
-NnApiSLDriverImplFL6 slDriverImpl{
-        .base{.implFeatureLevel = ANEURALNETWORKS_FEATURE_LEVEL_6},
+NnApiSLDriverImplFL7 slDriverImpl{
+        .base{.implFeatureLevel = ANEURALNETWORKS_FEATURE_LEVEL_7},
         NNCL_FUNC(ANeuralNetworksBurst_create),
         NNCL_FUNC(ANeuralNetworksBurst_free),
         NNCL_FUNC(ANeuralNetworksCompilation_createForDevices),

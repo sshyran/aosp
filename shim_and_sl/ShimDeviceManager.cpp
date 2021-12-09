@@ -131,9 +131,9 @@ ANeuralNetworksShimResultCode registerDevices(NnApiSLDriverImpl* nnapiSLImpl,
         return ANNSHIM_FAILED_TO_LOAD_SL;
     }
 
-    if (nnapiSLImpl->implFeatureLevel > ANEURALNETWORKS_FEATURE_LEVEL_6) {
+    if (nnapiSLImpl->implFeatureLevel > ANEURALNETWORKS_FEATURE_LEVEL_7) {
         LOG(ERROR) << "Invalid implStructFeatureLevel if NnApiSLDriverImpl, latest supported "
-                      "version is ANEURALNETWORKS_FEATURE_LEVEL_6";
+                      "version is ANEURALNETWORKS_FEATURE_LEVEL_7";
         return ANNSHIM_FAILED_TO_LOAD_SL;
     }
 
@@ -147,6 +147,10 @@ ANeuralNetworksShimResultCode registerDevices(NnApiSLDriverImpl* nnapiSLImpl,
     if (nnapiSLImpl->implFeatureLevel == ANEURALNETWORKS_FEATURE_LEVEL_6) {
         nnapi = std::make_unique<NnApiSupportLibrary>(
                 *reinterpret_cast<NnApiSLDriverImplFL6*>(nnapiSLImpl), nullptr);
+    }
+    if (nnapiSLImpl->implFeatureLevel == ANEURALNETWORKS_FEATURE_LEVEL_7) {
+        nnapi = std::make_unique<NnApiSupportLibrary>(
+                *reinterpret_cast<NnApiSLDriverImplFL7*>(nnapiSLImpl), nullptr);
     }
 
     CHECK_NE(nnapi, nullptr);
