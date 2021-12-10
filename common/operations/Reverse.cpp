@@ -21,13 +21,11 @@
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 
-#if 0
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
 #pragma clang diagnostic ignored "-Wsign-compare"
 #include <tensorflow/lite/kernels/internal/reference/reference_ops.h>
 #pragma clang diagnostic pop
-#endif
 
 #include "CpuOperationUtils.h"
 #endif  // NN_INCLUDE_CPU_IMPLEMENTATION
@@ -94,12 +92,55 @@ Result<Version> validate(const IOperationValidationContext* context) {
 }
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
-bool prepare(IOperationExecutionContext* /*context*/) {
-    return false;
+bool prepare(IOperationExecutionContext* context) {
+    const Shape inputShape = context->getInputShape(kInputTensor);
+
+    // Input tensor must be of rank 1..8.
+    const auto inputTensorRank = getNumberOfDimensions(inputShape);
+    NN_RET_CHECK_GE(inputTensorRank, 1U);
+    NN_RET_CHECK_LE(inputTensorRank, 8U);
+
+    // Check the axis dimension value.
+    const Shape axisShape = context->getInputShape(kInputAxisTensor);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(axisShape), 1U);
+    NN_RET_CHECK_EQ(getNumberOfElements(axisShape), 1U);
+    const int32_t axisDimension = (context->getInputBuffer<int32_t>(kInputAxisTensor))[0];
+    NN_RET_CHECK_GE(axisDimension, 0);
+    NN_RET_CHECK_LT(uint32_t(axisDimension), inputTensorRank);
+
+    Shape outputShape = context->getOutputShape(kOutputTensor);
+    NN_RET_CHECK(SetShape(inputShape, &outputShape));
+    return context->setOutputShape(kOutputTensor, outputShape);
 }
 
-bool execute(IOperationExecutionContext* /*context*/) {
-    return false;
+template <typename T>
+bool reverse(IOperationExecutionContext* context) {
+    // Note that the NNAPI REVERSE operation requires input and output tensor to
+    // have the same dimensions.
+    const tflite::RuntimeShape tensorShape =
+            convertShapeToTflshape(context->getInputShape(kInputTensor));
+
+    tflite::reference_ops::Reverse((context->getInputBuffer<int32_t>(kInputAxisTensor))[0],
+                                   tensorShape, context->getInputBuffer<T>(kInputTensor),
+                                   tensorShape, context->getOutputBuffer<T>(kOutputTensor));
+    return true;
+}
+
+bool execute(IOperationExecutionContext* context) {
+    switch (context->getInputType(kInputTensor)) {
+        case OperandType::TENSOR_FLOAT16:
+            return reverse<_Float16>(context);
+        case OperandType::TENSOR_FLOAT32:
+            return reverse<float>(context);
+        case OperandType::TENSOR_QUANT8_ASYMM:
+            return reverse<uint8_t>(context);
+        case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+            return reverse<int8_t>(context);
+        case OperandType::TENSOR_INT32:
+            return reverse<int32_t>(context);
+        default:
+            NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
+    }
 }
 #endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
