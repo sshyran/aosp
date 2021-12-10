@@ -44,8 +44,8 @@ namespace test_helper {
 class bool8 {
    public:
     bool8() : mValue() {}
-    /* implicit */ bool8(bool value) : mValue(value) {}
-    inline operator bool() const { return mValue != 0; }
+    /* implicit */ bool8(bool value) : mValue(value) {}   // NOLINT(google-explicit-constructor)
+    inline operator bool() const { return mValue != 0; }  // NOLINT(google-explicit-constructor)
 
    private:
     uint8_t mValue;
@@ -213,9 +213,11 @@ class TestBuffer {
     // type byte size. In NNAPI, 4-byte boundary should be sufficient for all current data types.
     static constexpr size_t kAlignment = 4;
 
+    TestBuffer() = default;
+
     // Create the buffer of a given size and initialize from data.
     // If data is nullptr, the allocated memory stays uninitialized.
-    TestBuffer(size_t size = 0, const void* data = nullptr) : mSize(size) {
+    explicit TestBuffer(size_t size, const void* data = nullptr) : mSize(size) {
         if (size > 0) {
             // The size for aligned_alloc must be an integral multiple of alignment.
             mBuffer.reset(aligned_alloc(kAlignment, alignedSize()), free);
@@ -285,7 +287,9 @@ struct TestOperand {
     bool isIgnored = false;
 
     // For CONSTANT_COPY/REFERENCE and SUBGRAPH_INPUT, this is the data set in model and request.
-    // For SUBGRAPH_OUTPUT, this is the expected results.
+    // For SUBGRAPH_OUTPUT,
+    // - If isIgnored == false, this is the expected results.
+    // - If isIgnored == true, this is populated but ignored
     // For TEMPORARY_VARIABLE and NO_VALUE, this is nullptr.
     TestBuffer data;
 };
@@ -337,14 +341,14 @@ struct TestModel {
         }
     }
 
-    void forEachSubgraph(std::function<void(const TestSubgraph&)> handler) const {
+    void forEachSubgraph(const std::function<void(const TestSubgraph&)>& handler) const {
         handler(main);
         for (const TestSubgraph& subgraph : referenced) {
             handler(subgraph);
         }
     }
 
-    void forEachSubgraph(std::function<void(TestSubgraph&)> handler) {
+    void forEachSubgraph(const std::function<void(TestSubgraph&)>& handler) {
         handler(main);
         for (TestSubgraph& subgraph : referenced) {
             handler(subgraph);
@@ -460,20 +464,20 @@ class TestModelManager {
 
     // Returns a vector of selected TestModels for which the given "filter" returns true.
     using TestParam = std::pair<std::string, const TestModel*>;
-    std::vector<TestParam> getTestModels(std::function<bool(const TestModel&)> filter) {
+    std::vector<TestParam> getTestModels(const std::function<bool(const TestModel&)>& filter) {
         std::vector<TestParam> testModels;
         testModels.reserve(mTestModels.size());
         std::copy_if(mTestModels.begin(), mTestModels.end(), std::back_inserter(testModels),
-                     [filter](const auto& nameTestPair) { return filter(*nameTestPair.second); });
+                     [&filter](const auto& nameTestPair) { return filter(*nameTestPair.second); });
         return testModels;
     }
 
     // Returns a vector of selected TestModels for which the given "filter" returns true.
-    std::vector<TestParam> getTestModels(std::function<bool(const std::string&)> filter) {
+    std::vector<TestParam> getTestModels(const std::function<bool(const std::string&)>& filter) {
         std::vector<TestParam> testModels;
         testModels.reserve(mTestModels.size());
         std::copy_if(mTestModels.begin(), mTestModels.end(), std::back_inserter(testModels),
-                     [filter](const auto& nameTestPair) { return filter(nameTestPair.first); });
+                     [&filter](const auto& nameTestPair) { return filter(nameTestPair.first); });
         return testModels;
     }
 
