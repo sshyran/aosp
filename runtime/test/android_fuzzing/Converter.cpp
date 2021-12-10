@@ -59,7 +59,7 @@ std::vector<uint32_t> convert(const Dimensions& dimensions) {
     return std::vector<uint32_t>(repeatedDimension.begin(), repeatedDimension.end());
 }
 
-TestBuffer convert(size_t size, const Buffer& buffer) {
+TestBuffer convert(size_t size, bool initialize, const Buffer& buffer) {
     switch (buffer.type_case()) {
         case Buffer::TypeCase::TYPE_NOT_SET:
         case Buffer::TypeCase::kEmpty:
@@ -69,6 +69,9 @@ TestBuffer convert(size_t size, const Buffer& buffer) {
             return TestBuffer(sizeof(scalar), &scalar);
         }
         case Buffer::TypeCase::kRandomSeed: {
+            if (!initialize) {
+                return TestBuffer(size);
+            }
             const uint32_t randomSeed = buffer.random_seed();
             std::default_random_engine generator{randomSeed};
             return TestBuffer::createRandom(size % kMaxSize, &generator);
@@ -85,13 +88,13 @@ TestOperand convert(const Operand& operand) {
     const TestOperandLifeTime lifetime = convert(operand.lifetime());
     auto channelQuant = convert(operand.channel_quant());
 
-    const bool isIgnored = false;
+    const bool isIgnored = lifetime == TestOperandLifeTime::SUBGRAPH_OUTPUT;
     const auto opType = static_cast<nn::OperandType>(type);
     const size_t size = getNonExtensionSize(opType, dimensions).value_or(0);
     const bool makeEmpty = (lifetime == TestOperandLifeTime::NO_VALUE ||
                             lifetime == TestOperandLifeTime::TEMPORARY_VARIABLE);
     const size_t bufferSize = makeEmpty ? 0 : size;
-    TestBuffer data = convert(bufferSize, operand.data());
+    TestBuffer data = convert(bufferSize, !isIgnored, operand.data());
 
     return {.type = type,
             .dimensions = std::move(dimensions),

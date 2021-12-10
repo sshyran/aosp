@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+#include <android-base/logging.h>
 #include <nnapi/TypeUtils.h>
 #include <src/libfuzzer/libfuzzer_macro.h>
 
@@ -49,9 +50,18 @@ bool shouldSkip(const TestModel& model) {
            std::any_of(model.referenced.begin(), model.referenced.end(), hasOperandThatOverflows);
 }
 
+void limitLoggingToCrashes() {
+    [[maybe_unused]] static const auto oldSeverity = ::android::base::SetMinimumLogSeverity(
+            ::android::base::LogSeverity::FATAL_WITHOUT_ABORT);
+}
+
 }  // namespace
 
 DEFINE_PROTO_FUZZER(const ::android::nn::fuzz::Test& model) {
+    // Limit NNAPI fuzz test logging to crashes (which is what the test cares about) to reduce the
+    // noise and potentially speed up testing.
+    limitLoggingToCrashes();
+
     const TestModel testModel = convertToTestModel(model);
     if (!shouldSkip(testModel)) {
         nnapiFuzzTest(testModel);
