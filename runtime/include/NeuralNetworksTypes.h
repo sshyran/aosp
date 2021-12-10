@@ -5817,7 +5817,7 @@ typedef enum {
      *      must be in the range [0, n).
      *
      * Outputs:
-     * * 0: The reversed tensor.
+     * * 0: The reversed tensor of the same shape as the input tensor.
      *      For {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
      *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensors,
      *      the scales and zeroPoint must be the same as input0.
