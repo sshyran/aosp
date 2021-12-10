@@ -22,6 +22,7 @@
 #include <LegacyUtils.h>
 #include <MetaModel.h>
 #include <Tracing.h>
+#include <android-base/properties.h>
 #include <nnapi/IBurst.h>
 #include <nnapi/IDevice.h>
 #include <nnapi/IExecution.h>
@@ -35,6 +36,7 @@
 #include <iterator>
 #include <map>
 #include <memory>
+#include <regex>
 #include <string>
 #include <tuple>
 #include <utility>
@@ -1315,9 +1317,25 @@ std::vector<std::shared_ptr<DriverDevice>> getDriverDevices() {
 void DeviceManager::findAvailableDevices() {
     VLOG(MANAGER) << "findAvailableDevices";
 
+#ifdef NN_DEBUGGABLE
+    // debug.nn.enabled-devices defines a regex pattern. For all available driver devices, only the
+    // ones with name matching the pattern are enabled. Driver devices with unmatched names are
+    // ignored. If this property is not set, all available driver devices are enabled by default.
+    // This filter only applies to driver devices. nnapi-reference is always enabled.
+    std::string patternStr = base::GetProperty("debug.nn.enabled-devices", ".*");
+    VLOG(MANAGER) << "Enabled devices: " << patternStr;
+    const std::regex pattern(patternStr);
+#endif  // NN_DEBUGGABLE
+
     // register driver devices
     auto driverDevices = getDriverDevices();
     for (auto& driverDevice : driverDevices) {
+#ifdef NN_DEBUGGABLE
+        if (!std::regex_match(driverDevice->getName(), pattern)) {
+            VLOG(MANAGER) << "Ignored interface " << driverDevice->getName();
+            continue;
+        }
+#endif  // NN_DEBUGGABLE
         VLOG(MANAGER) << "Found interface " << driverDevice->getName();
         mDevices.push_back(std::move(driverDevice));
     }
