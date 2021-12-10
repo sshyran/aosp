@@ -25,12 +25,21 @@
 
 namespace {
 
+using ::android::nn::wrapper::Compilation;
+using ::android::nn::wrapper::Execution;
+using ::android::nn::wrapper::Model;
+using ::android::nn::wrapper::OperandType;
+using ::android::nn::wrapper::Result;
+using ::android::nn::wrapper::SymmPerChannelQuantParams;
+using ::android::nn::wrapper::Type;
 using ::test_helper::TestModel;
-using namespace ::android::nn::wrapper;
-using namespace test_helper;
+using ::test_helper::TestOperand;
+using ::test_helper::TestOperandLifeTime;
+using ::test_helper::TestOperandType;
+using ::test_helper::TestSubgraph;
 
 OperandType getOperandType(const TestOperand& op) {
-    auto dims = op.dimensions;
+    const auto& dims = op.dimensions;
     if (op.type == TestOperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
         return OperandType(
                 static_cast<Type>(op.type), dims,
@@ -57,7 +66,7 @@ bool areSubgraphsAcyclic(const TestModel& testModel, size_t index, std::vector<V
 
     const auto& subgraph = index == 0 ? testModel.main : testModel.referenced[index - 1];
     for (const auto& operand : subgraph.operands) {
-        if (operand.type != TestOperandType::SUBGRAPH) continue;
+        if (operand.lifetime != TestOperandLifeTime::SUBGRAPH) continue;
         if (operand.data.size() < sizeof(uint32_t)) return false;
         if (operand.data.get<void>() == nullptr) return false;
         const uint32_t subgraphIndex = *operand.data.get<uint32_t>();
@@ -97,10 +106,7 @@ std::optional<Model> CreateSubgraph(const TestModel& testModel, size_t subgraphI
                 model.setOperandValue(index, nullptr, 0);
                 break;
             case TestOperandLifeTime::SUBGRAPH: {
-                if (operand.data.size() < sizeof(uint32_t)) return std::nullopt;
-                if (operand.data.get<void>() == nullptr) return std::nullopt;
                 const uint32_t referencedSubgraphIndex = *operand.data.get<uint32_t>();
-                if (referencedSubgraphIndex >= subgraphs.size()) return std::nullopt;
                 model.setOperandValueFromModel(index, &subgraphs[referencedSubgraphIndex]);
             } break;
             case TestOperandLifeTime::SUBGRAPH_INPUT:
@@ -133,7 +139,8 @@ std::optional<Model> CreateSubgraph(const TestModel& testModel, size_t subgraphI
     return model;
 }
 
-std::optional<std::vector<Model>> CreateModel(const TestModel& testModel) {
+// The first Model returned is the main model. Any subsequent Models are referenced models.
+std::optional<std::vector<Model>> CreateModels(const TestModel& testModel) {
     auto subgraphOrder = getSubgraphOrder(testModel);
     if (!subgraphOrder.has_value()) return std::nullopt;
 
@@ -180,27 +187,11 @@ std::optional<Execution> CreateExecution(const Compilation& compilation,
     return execution;
 }
 
-void noopLogger(android::base::LogId /*log_buffer_id*/, android::base::LogSeverity /*severity*/,
-                const char* /*tag*/, const char* /*file*/, unsigned int /*line*/,
-                const char* /*message*/) {
-    // Do nothing
-}
-
-void disableLogger() {
-    [[maybe_unused]] static const auto logger = ::android::base::SetLogger(noopLogger);
-}
-
 }  // anonymous namespace
 
 void nnapiFuzzTest(const TestModel& testModel) {
-    // Disable the logger to make running on the host easier: LOG on the host is directed to
-    // std::err, making it difficult to see what the fuzzer is doing if the logger is enabled.
-    // The logging is also disabled on the device because logging may slow down the test, and
-    // logging is currently not needed for this test.
-    disableLogger();
-
     // set up model
-    auto models = CreateModel(testModel);
+    auto models = CreateModels(testModel);
     if (!models.has_value() || models->empty()) {
         return;
     }
