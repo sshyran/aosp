@@ -20,7 +20,10 @@ enum AndroidLogSeverity {
 void ChromeLogger(int /*log_buffer_id*/, int severity, const char* tag,
                   const char* file, unsigned int line, const char* message) {
   std::string logline = base::StrCat(
-      {tag, ":", file, ":", base::NumberToString(line), ": ", message});
+      {tag == nullptr ? "" : tag, ":",
+       file == nullptr ? "" : file, ":",
+       base::NumberToString(line), ": ",
+       message == nullptr ? "" : message});
   switch (static_cast<AndroidLogSeverity>(severity)) {
     case (AndroidLogSeverity::VERBOSE):
     case (AndroidLogSeverity::DEBUG):
