@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//common-mk/mojom_bindings_generator.gni")
 import("//common-mk/pkg_config.gni")
 import("//common-mk/proto_library.gni")
 
@@ -111,7 +112,7 @@ pkg_config("common_defaults") {
     "NN_INCLUDE_CPU_IMPLEMENTATION",
     "TF_LITE_DISABLE_X86_NEON",
   ]
-  pkg_deps = [ "libnnapi-support" ]
+  pkg_deps = [ "libnnapi-support", "libmojo" ]
 }
 
 # Tests cannot be build with the NDEBUG flag set,
@@ -132,6 +133,30 @@ pkg_config("disable_ndebug") {
     "-UNDEBUG",
   ]
   pkg_deps = [ "libnnapi-support" ]
+}
+
+generate_mojom_bindings("nnapi-mojo-bindings-lib") {
+  mojo_root = "${platform2_root}"
+  configs = [
+    ":common_defaults",
+  ]
+  cflags_cc = [
+    # Several of the libchrome headers that get pulled in require
+    # this warning to be squashed.
+    # e.g. base/scoped_generic.h (TrackAcquire)
+    "-Wno-unused-parameter",
+  ]
+  sources = [
+    "chromeos/mojo_driver/mojom/nnapi_hal.mojom",
+  ]
+  include_dirs = [
+    "chromeos/mojo_driver/mojom",
+    "common/include",
+  ]
+  mojo_extra_args = [
+    "--typemap",
+    rebase_path("chromeos/mojo_driver/mojom/type_mappings.json"),
+  ]
 }
 
 static_library("runtime") {
@@ -499,6 +524,71 @@ shared_library("full-driver") {
   ]
 }
 
+shared_library("mojo-driver") {
+  configs += [
+    ":common_defaults",
+    "//common-mk:visibility_default",
+  ]
+  cflags_cc = [
+    "-Wno-unused-parameter",
+    "-Wno-unused-lambda-capture",
+    "-Wno-unused-function"
+  ]
+  deps = [
+    ":full-driver", # TODO: Remove once dependency on SampleDriverFull is removed
+    ":nn-common",
+    ":nnapi_worker",
+    ":nnapi-mojo-bindings-lib",
+  ]
+  include_dirs = [
+    "driver/sample",
+    "runtime/include",
+  ]
+  sources = [
+    "chromeos/mojo_driver/ipc_driver.cpp",
+    "chromeos/mojo_driver/ipc_driver_support.cpp",
+    "chromeos/mojo_driver/mojo_controller.cpp",
+    "chromeos/mojo_driver/nnapi_hal_impl.cpp",
+    "chromeos/mojo_driver/nnapi_stubs.cpp",
+    "chromeos/mojo_driver/sample_driver.cpp",
+  ]
+  libs = [
+    "pthread",
+  ]
+}
+
+executable("nnapi_worker") {
+  configs += [
+    ":common_defaults",
+    "//common-mk:visibility_default",
+  ]
+  cflags_cc = [
+    "-Wno-unused-parameter",
+    "-Wno-unused-lambda-capture",
+    "-Wno-unused-function"
+  ]
+  deps = [
+    ":full-driver", # TODO: Remove once dependency on SampleDriverFull is removed
+    ":nn-common",
+    ":nnapi-mojo-bindings-lib",
+  ]
+  include_dirs = [
+    "driver/sample",
+    "runtime/include",
+  ]
+  sources = [
+    "chromeos/mojo_driver/nnapi_hal_impl.cpp",
+    "chromeos/mojo_driver/nnapi_stubs.cpp",
+    "chromeos/mojo_driver/sample_driver.cpp",
+    "chromeos/mojo_driver/worker.cpp",
+    "chromeos/mojo_driver/worker_main.cpp",
+    "chromeos/logger.cpp",
+  ]
+  libs = [
+    "pthread",
+  ]
+}
+
 shared_library("xnn-driver") {
   configs += [
     ":common_defaults",
@@ -585,8 +675,15 @@ if (use.test) {
       "//common-mk:test",
       ":target_defaults",
     ]
+    cflags_cc = [
+      "-Wno-unused-parameter",
+    ]
     deps = []
-    sources = [ "chromeos/testrunner.cpp" ]
+    sources = [
+      "chromeos/logger.cpp",
+      "chromeos/testrunner.cpp",
+      "chromeos/testrunner_messageloop.cpp",
+    ]
   }
 
   executable("runtime_testrunner") {

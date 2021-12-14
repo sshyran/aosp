@@ -1,0 +1,68 @@
+{
+  "c++": {
+    "chromeos.nnapi.mojom.ErrorStatus": {
+      "hashable": false,
+      "typename": "android::nn::V1_0::ErrorStatus",
+      "forward_declaration": null,
+      "traits_headers": [
+        "nnapi_mojom_traits.h"
+      ],
+      "copyable_pass_by_value": true,
+      "force_serialize": false,
+      "move_only": false,
+      "nullable_is_same_type": false,
+      "non_copyable_non_movable": false,
+      "public_headers": [
+        "HalInterfaces.h"
+      ]
+    },
+    "chromeos.nnapi.mojom.Capabilities": {
+      "hashable": false,
+      "typename": "android::nn::V1_3::Capabilities",
+      "forward_declaration": null,
+      "traits_headers": [
+        "nnapi_mojom_traits.h"
+      ],
+      "copyable_pass_by_value": true,
+      "force_serialize": false,
+      "move_only": false,
+      "nullable_is_same_type": false,
+      "non_copyable_non_movable": false,
+      "public_headers": [
+        "HalInterfaces.h"
+      ]
+    },
+    "chromeos.nnapi.mojom.Request": {
+      "hashable": false,
+      "typename": "android::nn::V1_0::Request",
+      "forward_declaration": null,
+      "traits_headers": [
+        "nnapi_mojom_traits.h"
+      ],
+      "copyable_pass_by_value": true,
+      "force_serialize": false,
+      "move_only": false,
+      "nullable_is_same_type": false,
+      "non_copyable_non_movable": false,
+      "public_headers": [
+        "HalInterfaces.h"
+      ]
+    },
+    "chromeos.nnapi.mojom.Model": {
+      "hashable": false,
+      "typename": "android::nn::V1_0::Model",
+      "forward_declaration": null,
+      "traits_headers": [
+        "nnapi_mojom_traits.h"
+      ],
+      "copyable_pass_by_value": true,
+      "force_serialize": false,
+      "move_only": false,
+      "nullable_is_same_type": false,
+      "non_copyable_non_movable": false,
+      "public_headers": [
+        "HalInterfaces.h"
+      ]
+    }
+  }
+}

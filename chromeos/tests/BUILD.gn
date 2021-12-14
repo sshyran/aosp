@@ -74,9 +74,11 @@ static_library("vts_common") {
   sources = [
     "${vts_src}/1.0/vts/functional/Callbacks.cpp",
     "${vts_src}/1.0/vts/functional/Utils.cpp",
+    "${nn_src}/chromeos/logger.cpp",
     "${nn_src}/chromeos/compilation_caching.cpp",
     "${nn_src}/chromeos/daemon_store.cpp",
     "${nn_src}/chromeos/testrunner.cpp",
+    "${nn_src}/chromeos/testrunner_messageloop.cpp",
     "${nn_src}/chromeos/driver_loader.cpp",
     "${nn_src}/chromeos/driver_loader_utils.cpp",
     "${nn_src}/common/ExecutionBurstController.cpp",
@@ -210,6 +212,10 @@ executable("cros_nnapi_cts") {
     "//aosp/frameworks/ml:target_defaults",
     "//common-mk:test",
   ]
+  cflags_cc = [
+    "-Wno-sign-compare",
+    "-Wno-unused-parameter",
+  ]
   defines = [
     "NNTEST_CTS",
     "NNTEST_ONLY_PUBLIC_API",
@@ -230,7 +236,9 @@ executable("cros_nnapi_cts") {
     "${sysroot}/usr/include/aosp",
   ]
   sources = [
+    "${nn_src}/chromeos/logger.cpp",
     "${nn_src}/chromeos/testrunner.cpp",
+    "${nn_src}/chromeos/testrunner_messageloop.cpp",
     "${nn_src}/runtime/test/GeneratedTestUtils.cpp",
     "${nn_src}/runtime/test/RequireDebug.cpp",
     "${nn_src}/runtime/test/TestControlFlow.cpp",

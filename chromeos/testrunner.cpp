@@ -12,6 +12,10 @@
 
 #include "android-base/logging.h"
 #include "daemon_store.h"
+#include "logger.h"
+
+void SetupMessageLoop();
+void DestroyMessageLoop();
 
 int main(int argc, char** argv) {
   // Our testrunners are invoked with platform_test, which doesn't
@@ -34,12 +38,18 @@ int main(int argc, char** argv) {
   std::string cacheDir = base + "/mock-user-hash/nnapi_compilations";
   std::filesystem::create_directories(cacheDir);
 
-  testing::InitGoogleTest(&argc, argv);
   android::base::InitLogging(argv, android::base::StderrLogger);
+  android::base::SetLogger(ChromeLogger);
+
+  SetupMessageLoop();
+
+  testing::InitGoogleTest(&argc, argv);
   testing::GTEST_FLAG(throw_on_failure) = true;
   testing::InitGoogleMock(&argc, argv);
 
   int test_result = RUN_ALL_TESTS();
+
+  DestroyMessageLoop();
 
   // Clean up the fake cryptohome area
   std::filesystem::remove_all(base);

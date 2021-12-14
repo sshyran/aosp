@@ -1,0 +1,173 @@
+// Copyright 2022 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// This is a Mojo representation of the NNAPI v1.0 HAL
+// (https://chromium.googlesource.com/aosp/platform/hardware/interfaces/neuralnetworks/+/refs/heads/master/1.0/)
+
+module chromeos.nnapi.mojom;
+
+[Extensible] enum OperandType {
+  FLOAT32 = 0,
+  INT32 = 1,
+  UINT32 = 2,
+  TENSOR_FLOAT32 = 3,
+  TENSOR_INT32 = 4,
+  TENSOR_QUANT8_ASYMM = 5,
+  OEM = 10000,
+  TENSOR_OEM_BYTE = 10001,
+};
+
+[Extensible] enum OperationType {
+  ADD = 0,
+  AVERAGE_POOL_2D = 1,
+  CONCATENATION = 2,
+  CONV_2D = 3,
+  DEPTHWISE_CONV_2D = 4,
+  DEPTH_TO_SPACE = 5,
+  DEQUANTIZE = 6,
+  EMBEDDING_LOOKUP = 7,
+  FLOOR = 8,
+  FULLY_CONNECTED = 9,
+  HASHTABLE_LOOKUP = 10,
+  L2_NORMALIZATION = 11,
+  L2_POOL_2D = 12,
+  LOCAL_RESPONSE_NORMALIZATION = 13,
+  LOGISTIC = 14,
+  LSH_PROJECTION = 15,
+  LSTM = 16,
+  MAX_POOL_2D = 17,
+  MUL = 18,
+  RELU = 19,
+  RELU1 = 20,
+  RELU6 = 21,
+  RESHAPE = 22,
+  RESIZE_BILINEAR = 23,
+  RNN = 24,
+  SOFTMAX = 25,
+  SPACE_TO_DEPTH = 26,
+  SVDF = 27,
+  TANH = 28,
+  OEM_OPERATION = 10000,
+};
+
+enum FusedActivationFunc {
+  NONE = 0,
+  RELU = 1,
+  RELU1 = 2,
+  RELU6 = 3,
+};
+
+enum OperandLifeTime {
+  TEMPORARY_VARIABLE,
+  MODEL_INPUT,
+  MODEL_OUTPUT,
+  CONSTANT_COPY,
+  CONSTANT_REFERENCE,
+  NO_VALUE,
+};
+
+enum DeviceStatus {
+  AVAILABLE,
+  BUSY,
+  OFFLINE,
+  UNKNOWN,
+};
+
+struct HidlHandle {
+  int32 version;
+  int32 numFds;
+  int32 numInts;
+  array<handle<platform>> fds;
+  array<int32> ints;
+};
+
+struct HidlMemory {
+  HidlHandle hidl_handle;
+  uint64 size;
+  string name;
+};
+
+struct DataLocation {
+  uint32 poolIndex;
+  uint32 offset;
+  uint32 length;
+};
+
+struct Operand {
+  OperandType type;
+  array<uint32> dimensions;
+  uint32 numberOfConsumers;
+  float scale;
+  int32 zeroPoint;
+  OperandLifeTime lifetime;
+  DataLocation location;
+};
+
+struct Operation {
+  OperationType type;
+  array<uint32> inputs;
+  array<uint32> outputs;
+};
+
+struct Model {
+  array<Operand> operands;
+  array<Operation> operations;
+  array<uint32> inputIndexes;
+  array<uint32> outputIndexes;
+  array<uint8> operandValues;
+  array<HidlMemory> pools;
+};
+
+struct RequestArgument {
+  bool hasNoValue;
+  DataLocation location;
+  array<uint32> dimensions;
+};
+
+struct Request {
+  array<RequestArgument> inputs;
+  array<RequestArgument> outputs;
+  array<HidlMemory> pools;
+};
+
+[Stable] enum ErrorStatus {
+  NONE,
+  DEVICE_UNAVAILABLE,
+  GENERAL_FAILURE,
+  OUTPUT_INSUFFICIENT_SIZE,
+  INVALID_ARGUMENT,
+  MISSED_DEADLINE_TRANSIENT,
+  MISSED_DEADLINE_PERSISTENT,
+  RESOURCE_EXHAUSTED_TRANSIENT,
+  RESOURCE_EXHAUSTED_PERSISTENT,
+};
+
+[Stable] struct PerformanceInfo {
+  float execTime;
+  float powerUsage;
+};
+
+[Stable] struct Capabilities {
+  PerformanceInfo float32Performance;
+  PerformanceInfo quantized8Performance;
+};
+
+interface IExecutionCallback {
+  notify(ErrorStatus status);
+};
+
+interface IPreparedModel {
+  [Sync] execute(Request request,
+                 pending_remote<IExecutionCallback> e_callback) => (ErrorStatus status);
+};
+
+interface IPreparedModelCallback {
+  notify(ErrorStatus status, pending_remote<IPreparedModel> preparedModel);
+};
+
+interface IDevice {
+  [Sync] getCapabilities() => (ErrorStatus status, Capabilities capabilities);
+  [Sync] prepareModel(Model model,
+                      pending_remote<IPreparedModelCallback> pm_callback) => (ErrorStatus status);
+};
