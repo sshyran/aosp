@@ -68,6 +68,7 @@ cc_defaults {
             shared_libs: [
                 "libandroid",
                 "libnativewindow",
+                "libstatssocket",
             ],
         },
         host: {
@@ -212,6 +213,7 @@ cc_test {
     target: {
         android: {
             test_config: "AndroidTest_NeuralNetworksTest_static.xml",
+            srcs: ["TestWestworldTelemetry.cpp"],
         },
         host: {
             cflags: [

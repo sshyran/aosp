@@ -27,6 +27,11 @@
 
 #include "Manager.h"
 #include "NeuralNetworks.h"
+#include "Tracing.h"
+
+#if defined(__ANDROID__) && !defined(NN_COMPATIBILITY_LIBRARY_BUILD)
+#include "TelemetryWestworld.h"
+#endif  // defined(__ANDROID__) && !defined(NN_COMPATIBILITY_LIBRARY_BUILD)
 
 namespace android::nn::telemetry {
 namespace {
@@ -142,13 +147,16 @@ int32_t getSessionId() {
 }
 
 void onCompilationFinish(CompilationBuilder* c, int resultCode) {
+    NNTRACE_RT(NNTRACE_PHASE_UNSPECIFIED, "onCompilationFinish");
+
     // Allow to emit even only if compilation was finished
     if (!c->isFinished()) {
         LOG(ERROR) << "telemetry::onCompilationFinish called on unfinished compilation";
         return;
     }
 
-    if (!gLoggingCallbacksSet) {
+    const bool loggingCallbacksSet = gLoggingCallbacksSet;
+    if (!loggingCallbacksSet && !DeviceManager::get()->isPlatformTelemetryEnabled()) {
         return;
     }
 
@@ -166,17 +174,28 @@ void onCompilationFinish(CompilationBuilder* c, int resultCode) {
             .hasDynamicTemporaries = c->hasDynamicTemporaries(),
     };
 
-    gCompilationCallback(&info);
+#if defined(__ANDROID__) && !defined(NN_COMPATIBILITY_LIBRARY_BUILD)
+    if (DeviceManager::get()->isPlatformTelemetryEnabled()) {
+        logCompilationToWestworld(&info);
+    }
+#endif  // defined(__ANDROID__) && !defined(NN_COMPATIBILITY_LIBRARY_BUILD)
+
+    if (loggingCallbacksSet) {
+        gCompilationCallback(&info);
+    }
 }
 
 void onExecutionFinish(ExecutionBuilder* e, ExecutionMode executionMode, int resultCode) {
-    // Allow to emit even only if compilation was finished
+    NNTRACE_RT(NNTRACE_PHASE_UNSPECIFIED, "onExecutionFinish");
+
+    // Allow to emit even only if execution was finished
     if (!e->completed()) {
         LOG(ERROR) << "telemetry::onExecutionFinish called on unfinished execution";
         return;
     }
 
-    if (!gLoggingCallbacksSet) {
+    const bool loggingCallbacksSet = gLoggingCallbacksSet;
+    if (!loggingCallbacksSet && !DeviceManager::get()->isPlatformTelemetryEnabled()) {
         return;
     }
 
@@ -212,7 +231,15 @@ void onExecutionFinish(ExecutionBuilder* e, ExecutionMode executionMode, int res
             .hasDynamicTemporaries = compilation->hasDynamicTemporaries(),
     };
 
-    gExecutionCallback(&info);
+#if defined(__ANDROID__) && !defined(NN_COMPATIBILITY_LIBRARY_BUILD)
+    if (DeviceManager::get()->isPlatformTelemetryEnabled()) {
+        logExecutionToWestworld(&info);
+    }
+#endif  // defined(__ANDROID__) && !defined(NN_COMPATIBILITY_LIBRARY_BUILD)
+
+    if (loggingCallbacksSet) {
+        gExecutionCallback(&info);
+    }
 }
 
 void registerTelemetryCallbacks(std::function<void(const DiagnosticCompilationInfo*)> compilation,
