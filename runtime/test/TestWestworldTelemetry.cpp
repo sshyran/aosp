@@ -17,6 +17,7 @@
 #include <gtest/gtest.h>
 
 #include <algorithm>
+#include <condition_variable>
 #include <numeric>
 
 #include "Telemetry.h"
@@ -28,6 +29,7 @@ constexpr auto kNoTiming = std::numeric_limits<uint64_t>::max();
 constexpr auto kNoAggregateTiming = AtomValue::AccumulatedTiming{};
 constexpr ModelArchHash kExampleModelArchHash = {1, 2, 3};
 constexpr const char* kExampleDeviceId = "driver1=version1,driver2=version2";
+constexpr auto kLongTime = std::chrono::seconds(60 * 60 * 24);
 
 const AtomKey kExampleKey = {
         .isExecution = true,
@@ -42,6 +44,28 @@ const AtomKey kExampleKey = {
         .cacheEnabled = false,
         .hasControlFlow = false,
         .hasDynamicTemporaries = false,
+};
+
+// This class is thread-safe.
+class Signal {
+   public:
+    void signal() {
+        {
+            std::lock_guard hold(mMutex);
+            mSignalled = true;
+        }
+        mWaitForSignal.notify_all();
+    }
+
+    void wait() {
+        std::unique_lock lock(mMutex);
+        mWaitForSignal.wait(lock, [this]() REQUIRES(mMutex) { return mSignalled; });
+    }
+
+   private:
+    mutable std::mutex mMutex;
+    mutable std::condition_variable mWaitForSignal;
+    mutable bool mSignalled GUARDED_BY(mMutex) = false;
 };
 
 bool operator==(const AtomValue::AccumulatedTiming& lhs, const AtomValue::AccumulatedTiming& rhs) {
@@ -203,48 +227,78 @@ TEST(WestworldTelemetryTest, AtomAggregatorPush) {
     EXPECT_TRUE(aggregator.empty());
 }
 
-TEST(WestworldTelemetryTest, LoggerWithQuietPeriodFastLog) {
-    Atom example{};
-    auto fn = [example](Atom&& atom) { EXPECT_EQ(atom, example); };
-    LoggerWithQuietPeriod logger(std::chrono::nanoseconds(0), fn);
-    logger.write(std::move(example));
+TEST(WestworldTelemetryTest, AsyncLoggerTeardownWhileWaitingForData) {
+    constexpr auto fn = [](Atom&& /*atom*/) {};
+    const auto start = Clock::now();
+    { AsyncLogger logger(fn, kLongTime); }
+    const auto elapsed = Clock::now() - start;
+    EXPECT_LT(elapsed, kLongTime);
 }
 
-TEST(WestworldTelemetryTest, LoggerWithQuietPeriodStoreAndReturn) {
-    Atom example{};
-    auto fn = [](Atom&& /*atom*/) { ADD_FAILURE() << "Logger not expected to be called"; };
-    LoggerWithQuietPeriod logger(std::chrono::nanoseconds(0), fn, {}, TimePoint::max());
-    logger.write(std::move(example));
+TEST(WestworldTelemetryTest, AsyncLoggerTeardownDuringSleep) {
+    Signal loggingOccurred;
+    auto fn = [&loggingOccurred](Atom&& /*atom*/) mutable { loggingOccurred.signal(); };
+
+    const auto start = Clock::now();
+    {
+        AsyncLogger logger(fn, kLongTime);
+        logger.write({});
+        loggingOccurred.wait();
+    }
+    const auto elapsed = Clock::now() - start;
+
+    EXPECT_LT(elapsed, kLongTime);
 }
 
-TEST(WestworldTelemetryTest, LoggerWithQuietPeriodStoreAndLog) {
-    const auto key = kExampleKey;
-    const auto value1 = AtomValue{.count = 2};
-    const auto value2 = AtomValue{.count = 3};
-    const auto result = Atom{key, AtomValue{.count = 5}};
+TEST(WestworldTelemetryTest, AsyncLoggerVerifyQuietPeriod) {
+    std::atomic<uint32_t> count = 0;
+    Signal loggingOccurred;
+    const auto fn = [&count, &loggingOccurred](Atom&& /*atom*/) {
+        ++count;
+        loggingOccurred.signal();
+    };
 
-    AtomAggregator aggregator;
-    aggregator.push({key, value1});
+    {
+        AsyncLogger logger(fn, kLongTime);
+        logger.write({});
+        loggingOccurred.wait();
 
-    const auto fn = [&result](Atom&& atom) { EXPECT_EQ(atom, result); };
-    LoggerWithQuietPeriod logger(std::chrono::nanoseconds(0), fn, std::move(aggregator));
-    logger.write({key, value2});
-}
+        // At this point, logger is in the quiet period because it has already logged once. Send
+        // many more atoms and ensure the logging function is not called a second time.
+        for (int32_t error = ANEURALNETWORKS_NO_ERROR; error <= ANEURALNETWORKS_DEAD_OBJECT;
+             ++error) {
+            auto key = kExampleKey;
+            key.errorCode = error;
+            logger.write({key, AtomValue{.count = 1}});
+        }
+    }
 
-TEST(WestworldTelemetryTest, LoggerWithQuietPeriodOnlyStoreOnce) {
-    const auto key = kExampleKey;
-    const auto value1 = AtomValue{.count = 2};
-    const auto value2 = AtomValue{.count = 3};
-
-    uint32_t count = 0;
-    const auto fn = [&count](Atom&& /*atom*/) mutable { ++count; };
-    LoggerWithQuietPeriod logger(std::chrono::seconds(60 * 60 * 24), fn);
-
-    EXPECT_EQ(count, 0u);
-    logger.write({key, value1});
     EXPECT_EQ(count, 1u);
-    logger.write({key, value2});
-    EXPECT_EQ(count, 1u);
+}
+
+TEST(WestworldTelemetryTest, AsyncLoggerVerifyAllDataSent) {
+    const uint32_t targetCount = ANEURALNETWORKS_DEAD_OBJECT - ANEURALNETWORKS_NO_ERROR + 1;
+    std::atomic<uint32_t> count = 0;
+    Signal allDataSent;
+    const auto fn = [&count, &allDataSent](Atom&& /*atom*/) {
+        const uint32_t currentCount = ++count;
+        if (currentCount == targetCount) {
+            allDataSent.signal();
+        }
+    };
+
+    {
+        AsyncLogger logger(fn, std::chrono::nanoseconds(0));
+        for (int32_t error = ANEURALNETWORKS_NO_ERROR; error <= ANEURALNETWORKS_DEAD_OBJECT;
+             ++error) {
+            auto key = kExampleKey;
+            key.errorCode = error;
+            logger.write({key, AtomValue{.count = 1}});
+        }
+        allDataSent.wait();
+    }
+
+    EXPECT_EQ(count, targetCount);
 }
 
 TEST(WestworldTelemetryTest, createAtomFromCompilationInfoWhenNoError) {

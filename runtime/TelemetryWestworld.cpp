@@ -19,6 +19,7 @@
 #include "TelemetryWestworld.h"
 
 #include <android-base/logging.h>
+#include <android-base/no_destructor.h>
 #include <statslog_neuralnetworks.h>
 
 #include <algorithm>
@@ -27,6 +28,7 @@
 #include <mutex>
 #include <queue>
 #include <string>
+#include <thread>
 #include <vector>
 
 #include "FeatureLevel.h"
@@ -38,6 +40,7 @@ namespace {
 
 constexpr uint64_t kNoTimeReportedRuntime = std::numeric_limits<uint64_t>::max();
 constexpr int64_t kNoTimeReportedWestworld = std::numeric_limits<int64_t>::max();
+constexpr size_t kInitialChannelSize = 100;
 
 // WestWorld specifies that "Atom logging frequency should not exceed once per 10 milliseconds (i.e.
 // consecutive atom calls should be at least 10 milliseconds apart)." A quiet period of 100ms is
@@ -231,27 +234,10 @@ void logAtomToWestworld(Atom&& atom) {
     }
 }
 
-// This class ensures that we are not pushing atoms to Westworld more frequently than
-// kMinimumLoggingQuietPeriod ms.
-class WestworldLogger {
-   public:
-    static WestworldLogger& get() {
-        static WestworldLogger logger;
-        return logger;
-    }
-
-    void write(Atom&& atom) {
-        std::lock_guard hold(mMutex);
-        mLogger.write(std::move(atom));
-    }
-
-   private:
-    WestworldLogger() = default;
-
-    std::mutex mMutex;
-    LoggerWithQuietPeriod mLogger GUARDED_BY(mMutex) =
-            LoggerWithQuietPeriod(kMinimumLoggingQuietPeriod, logAtomToWestworld);
-};
+AsyncLogger& getWestworldLogger() {
+    static base::NoDestructor<AsyncLogger> logger(logAtomToWestworld, kMinimumLoggingQuietPeriod);
+    return *logger;
+}
 
 constexpr auto asTuple(const AtomKey& v) {
     return std::tie(v.isExecution, v.modelArchHash, v.deviceId, v.executionMode, v.errorCode,
@@ -307,39 +293,75 @@ std::pair<AtomKey, AtomValue> AtomAggregator::pop() {
     return std::make_pair(std::move(node.key()), node.mapped());
 }
 
-LoggerWithQuietPeriod::LoggerWithQuietPeriod(Duration duration, LoggerFn logger,
-                                             AtomAggregator data, TimePoint safeToLogTimepoint)
-    : kQuietPeriodDuration(duration),
-      kLogger(std::move(logger)),
-      mData(std::move(data)),
-      mSafeToLogTimepoint(safeToLogTimepoint) {
-    CHECK(kLogger != nullptr);
+AsyncLogger::AsyncLogger(LoggerFn logger, Duration loggingQuietPeriodDuration) {
+    mChannel.reserve(kInitialChannelSize);
+    mThread = std::thread([this, log = std::move(logger), loggingQuietPeriodDuration]() {
+        AtomAggregator data;
+        std::vector<Atom> atoms;
+        atoms.reserve(kInitialChannelSize);
+
+        // Loop until the thread is being torn down.
+        while (true) {
+            // Get data if it's available.
+            const Result result = takeAll(&atoms, /*blockUntilDataIsAvailable=*/data.empty());
+            if (result == Result::TEARDOWN) {
+                break;
+            }
+
+            // Aggregate the data locally.
+            std::for_each(atoms.begin(), atoms.end(),
+                          [&data](Atom& atom) { data.push(std::move(atom)); });
+            atoms.clear();
+
+            // Log data if available and sleep.
+            if (!data.empty()) {
+                log(data.pop());
+                const Result result = sleepFor(loggingQuietPeriodDuration);
+                if (result == Result::TEARDOWN) {
+                    break;
+                }
+            }
+        }
+    });
 }
 
-void LoggerWithQuietPeriod::write(Atom&& atom) {
-    NNTRACE_RT(NNTRACE_PHASE_UNSPECIFIED, "LoggerWithQuietPeriod::write");
-
-    const auto currentTime = Clock::now();
-    const bool hasLoggedRecently = currentTime < mSafeToLogTimepoint;
-
-    // Quickly log the data without aggregation if possible.
-    if (mData.empty() && !hasLoggedRecently) {
-        kLogger(std::move(atom));
-        mSafeToLogTimepoint = currentTime + kQuietPeriodDuration;
-        return;
+void AsyncLogger::write(Atom&& atom) {
+    bool wasEmpty = false;
+    {
+        std::lock_guard hold(mMutex);
+        wasEmpty = mChannel.empty();
+        mChannel.push_back(std::move(atom));
     }
-
-    // Aggregate the data.
-    mData.push(std::move(atom));
-
-    // Don't log any data if we've logged recently.
-    if (hasLoggedRecently) {
-        return;
+    if (wasEmpty) {
+        mNotEmptyOrTeardown.notify_one();
     }
+}
 
-    // Retrieve an aggregated atom and send it to WestWorld.
-    kLogger(mData.pop());
-    mSafeToLogTimepoint = currentTime + kQuietPeriodDuration;
+AsyncLogger::Result AsyncLogger::takeAll(std::vector<Atom>* output,
+                                         bool blockUntilDataIsAvailable) {
+    CHECK(output != nullptr);
+    CHECK(output->empty());
+    const auto blockUntil = blockUntilDataIsAvailable ? TimePoint::max() : TimePoint{};
+    std::unique_lock lock(mMutex);
+    mNotEmptyOrTeardown.wait_until(
+            lock, blockUntil, [this]() REQUIRES(mMutex) { return !mChannel.empty() || mTeardown; });
+    std::swap(*output, mChannel);
+    return mTeardown ? Result::TEARDOWN : Result::SUCCESS;
+}
+
+AsyncLogger::Result AsyncLogger::sleepFor(Duration duration) {
+    std::unique_lock lock(mMutex);
+    mNotEmptyOrTeardown.wait_for(lock, duration, [this]() REQUIRES(mMutex) { return mTeardown; });
+    return mTeardown ? Result::TEARDOWN : Result::SUCCESS;
+}
+
+AsyncLogger::~AsyncLogger() {
+    {
+        std::lock_guard hold(mMutex);
+        mTeardown = true;
+    }
+    mNotEmptyOrTeardown.notify_one();
+    mThread.join();
 }
 
 Atom createAtomFrom(const DiagnosticCompilationInfo* info) {
@@ -410,12 +432,12 @@ Atom createAtomFrom(const DiagnosticExecutionInfo* info) {
 
 void logCompilationToWestworld(const DiagnosticCompilationInfo* info) {
     NNTRACE_RT(NNTRACE_PHASE_UNSPECIFIED, "logCompilationWestworld");
-    WestworldLogger::get().write(createAtomFrom(info));
+    getWestworldLogger().write(createAtomFrom(info));
 }
 
 void logExecutionToWestworld(const DiagnosticExecutionInfo* info) {
     NNTRACE_RT(NNTRACE_PHASE_UNSPECIFIED, "logExecutionWestworld");
-    WestworldLogger::get().write(createAtomFrom(info));
+    getWestworldLogger().write(createAtomFrom(info));
 }
 
 }  // namespace android::nn::telemetry
