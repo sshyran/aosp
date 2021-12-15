@@ -89,6 +89,14 @@ Version getRuntimeFeatureLevelVersion() {
     return version;
 }
 
+bool getWhetherPlatformTelemetryIsEnabled() {
+#if !defined(NN_COMPATIBILITY_LIBRARY_BUILD) && !defined(NN_EXPERIMENTAL_FEATURE)
+    return getServerTelemetryEnableFlag();
+#else   // !defined(NN_COMPATIBILITY_LIBRARY_BUILD) && !defined(NN_EXPERIMENTAL_FEATURE)
+    return false;
+#endif  // !defined(NN_COMPATIBILITY_LIBRARY_BUILD) && !defined(NN_EXPERIMENTAL_FEATURE)
+}
+
 }  // namespace
 
 // A Device with actual underlying driver
@@ -1356,6 +1364,7 @@ void DeviceManager::registerDevice(const SharedDevice& device) {
 DeviceManager::DeviceManager() {
     VLOG(MANAGER) << "DeviceManager::DeviceManager";
     mRuntimeVersion = getRuntimeFeatureLevelVersion();
+    mIsPlatformTelemetryEnabled = getWhetherPlatformTelemetryIsEnabled();
     findAvailableDevices();
 #ifdef NN_DEBUGGABLE
     mStrictSlicing = (getProp("debug.nn.strict-slicing") != 0);
