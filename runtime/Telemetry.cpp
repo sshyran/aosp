@@ -118,12 +118,6 @@ DataClass evalOutputDataClass(const ModelBuilder* m) {
     return result;
 }
 
-#if defined(__ANDROID__) && !defined(NN_COMPATIBILITY_LIBRARY_BUILD)
-constexpr bool kWestworldLogging = true;
-#else   // defined(__ANDROID__) && !defined(NN_COMPATIBILITY_LIBRARY_BUILD)
-constexpr bool kWestworldLogging = false;
-#endif  // defined(__ANDROID__) && !defined(NN_COMPATIBILITY_LIBRARY_BUILD)
-
 }  // namespace
 
 // Infer a data class from an operand type. Call iteratievly on operands set, previousDataClass is
@@ -162,7 +156,7 @@ void onCompilationFinish(CompilationBuilder* c, int resultCode) {
     }
 
     const bool loggingCallbacksSet = gLoggingCallbacksSet;
-    if (!loggingCallbacksSet && !kWestworldLogging) {
+    if (!loggingCallbacksSet && !DeviceManager::get()->isPlatformTelemetryEnabled()) {
         return;
     }
 
@@ -181,7 +175,9 @@ void onCompilationFinish(CompilationBuilder* c, int resultCode) {
     };
 
 #if defined(__ANDROID__) && !defined(NN_COMPATIBILITY_LIBRARY_BUILD)
-    logCompilationToWestworld(&info);
+    if (DeviceManager::get()->isPlatformTelemetryEnabled()) {
+        logCompilationToWestworld(&info);
+    }
 #endif  // defined(__ANDROID__) && !defined(NN_COMPATIBILITY_LIBRARY_BUILD)
 
     if (loggingCallbacksSet) {
@@ -199,7 +195,7 @@ void onExecutionFinish(ExecutionBuilder* e, ExecutionMode executionMode, int res
     }
 
     const bool loggingCallbacksSet = gLoggingCallbacksSet;
-    if (!loggingCallbacksSet && !kWestworldLogging) {
+    if (!loggingCallbacksSet && !DeviceManager::get()->isPlatformTelemetryEnabled()) {
         return;
     }
 
@@ -236,7 +232,9 @@ void onExecutionFinish(ExecutionBuilder* e, ExecutionMode executionMode, int res
     };
 
 #if defined(__ANDROID__) && !defined(NN_COMPATIBILITY_LIBRARY_BUILD)
-    logExecutionToWestworld(&info);
+    if (DeviceManager::get()->isPlatformTelemetryEnabled()) {
+        logExecutionToWestworld(&info);
+    }
 #endif  // defined(__ANDROID__) && !defined(NN_COMPATIBILITY_LIBRARY_BUILD)
 
     if (loggingCallbacksSet) {
