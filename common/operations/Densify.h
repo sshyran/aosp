@@ -19,11 +19,12 @@
 
 #include <vector>
 
-#include "LegacyUtils.h"
-#include "OperationResolver.h"
 #include "OperationsUtils.h"
 
 namespace android {
+
+class IOperationExecutionContext;
+
 namespace nn {
 namespace densify_op {
 

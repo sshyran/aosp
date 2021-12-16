@@ -17,8 +17,6 @@
 #ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_LSTM_H
 #define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_LSTM_H
 
-#include <tensorflow/lite/kernels/internal/tensor_utils.h>
-
 #include <algorithm>
 #include <cmath>
 #include <vector>
@@ -30,7 +28,7 @@ namespace android {
 namespace nn {
 
 struct LSTMParams {
-    TfLiteFusedActivation activation;
+    ActivationFn activation;
     float cell_clip;
     float proj_clip;
     bool use_cifg;
