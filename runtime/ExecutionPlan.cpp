@@ -26,6 +26,7 @@
 #include <OperationsUtils.h>
 #include <TokenHasher.h>
 #include <Tracing.h>
+#include <android-base/logging.h>
 #include <fcntl.h>
 #include <nnapi/IBurst.h>
 #include <sys/stat.h>
@@ -1930,13 +1931,13 @@ ExecutionPlan::Kind ExecutionPlan::forTest_getKind() const {
         case EMPTY:
             return Kind::EMPTY;
         case SIMPLE:
-            nnAssert(mBody);
+            CHECK(mBody);
             return mBody->mSuccessfulFinish ? Kind::SIMPLE : Kind::ERROR;
         case COMPOUND:
-            nnAssert(mBody);
+            CHECK(mBody);
             return mBody->mSuccessfulFinish ? Kind::COMPOUND : Kind::ERROR;
         default:
-            nnAssert(!"unexpected state");
+            LOG(FATAL) << "unexpected state";
             return Kind::ERROR;
     }
 }

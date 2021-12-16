@@ -20,6 +20,7 @@
 
 #include <GraphDump.h>
 #include <LegacyUtils.h>
+#include <android-base/logging.h>
 #include <nnapi/Validation.h>
 
 #include <algorithm>
@@ -877,7 +878,7 @@ bool ModelBuilder::sortIntoRunOrder() {
     }
 
     if (runOrder.size() != mOperations.size()) {
-        nnAssert(runOrder.size() < mOperations.size());
+        CHECK_LT(runOrder.size(), mOperations.size());
         // Graph must contain at least one cycle or one never-written
         // operand, because there is at least one Operation that never
         // became ready.

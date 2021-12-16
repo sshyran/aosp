@@ -18,14 +18,15 @@
 
 #include "OperationsUtils.h"
 
+#include <android-base/logging.h>
+
 #include <algorithm>
 #include <cmath>
 #include <limits>
 #include <sstream>
 #include <vector>
 
-#include "LegacyUtils.h"
-#include "Operations.h"
+#include "ActivationFunctor.h"
 #include "nnapi/Validation.h"
 
 namespace android {
@@ -142,9 +143,9 @@ uint32_t getNumberOfElements(const Shape& shape) {
 
 uint32_t getNumberOfElements(const Shape& shape, size_t firstAxisInclusive,
                              size_t lastAxisExclusive) {
-    nnAssert(0 <= firstAxisInclusive);
-    nnAssert(firstAxisInclusive <= lastAxisExclusive);
-    nnAssert(lastAxisExclusive <= shape.dimensions.size());
+    CHECK_LE(0u, firstAxisInclusive);
+    CHECK_LE(firstAxisInclusive, lastAxisExclusive);
+    CHECK_LE(lastAxisExclusive, shape.dimensions.size());
     uint32_t count = 1;
     for (size_t i = firstAxisInclusive; i < lastAxisExclusive; i++) {
         count *= shape.dimensions[i];
@@ -157,7 +158,7 @@ uint32_t getNumberOfDimensions(const Shape& shape) {
 }
 
 uint32_t getSizeOfDimension(const Shape& shape, uint32_t dimensionIdx) {
-    nnAssert(0 <= dimensionIdx && dimensionIdx < shape.dimensions.size());
+    CHECK(0 <= dimensionIdx && dimensionIdx < shape.dimensions.size());
     return shape.dimensions[dimensionIdx];
 }
 

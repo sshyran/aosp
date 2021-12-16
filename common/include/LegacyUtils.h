@@ -66,9 +66,6 @@ const int kOEMCodeBase = 10000;
 #define SHOW_IF_DEBUG(msg) ""
 #endif
 
-// DEPRECATED(b/118737105). Use CHECK.
-#define nnAssert(v) CHECK(v)
-
 #define NN_RETURN_IF_ERROR(expr)                      \
     do {                                              \
         int _errorCode = (expr);                      \
