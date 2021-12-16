@@ -123,7 +123,7 @@ EntryType tableLookup(const EntryType (&table)[entryCount],
     } else if (code >= kOEMCodeBase && (code - kOEMCodeBase) < entryCountOEM) {
         return tableOEM[code - kOEMCodeBase];
     } else {
-        nnAssert(!"tableLookup: bad code");
+        LOG(FATAL) << "tableLookup: bad code";
         return EntryType();
     }
 }
