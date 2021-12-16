@@ -169,7 +169,7 @@ BidirectionalSequenceLSTM::BidirectionalSequenceLSTM(const Operation& operation,
     bw_output_layer_norm_weights_ = GetInput(operation, operands, kBwOutputLayerNormWeightsTensor);
 
     const auto& activationOperand = *GetInput(operation, operands, kActivationParam);
-    params_.activation = static_cast<TfLiteFusedActivation>(getScalarDataWithDefault<int32_t>(
+    params_.activation = static_cast<ActivationFn>(getScalarDataWithDefault<int32_t>(
             activationOperand, TfLiteFusedActivation::kTfLiteActNone));
     const auto& clipOperand = *GetInput(operation, operands, kCellClipParam);
     const auto& projOperand = *GetInput(operation, operands, kProjClipParam);

@@ -23,6 +23,8 @@
 #include <tensorflow/lite/kernels/internal/reference/portable_tensor_utils.h>
 #pragma clang diagnostic pop
 
+#include <tensorflow/lite/kernels/internal/tensor_utils.h>
+
 #include <vector>
 
 #include "CpuExecutor.h"
@@ -87,7 +89,7 @@ LSTMCell::LSTMCell(const Operation& operation, RunTimeOperandInfo* operands) {
     cell_state_in_ = GetInput(operation, operands, kCellStateInTensor);
 
     const auto& activationOperand = *GetInput(operation, operands, kActivationParam);
-    params_.activation = static_cast<TfLiteFusedActivation>(getScalarDataWithDefault<int32_t>(
+    params_.activation = static_cast<ActivationFn>(getScalarDataWithDefault<int32_t>(
             activationOperand, TfLiteFusedActivation::kTfLiteActNone));
 
     const auto& cellClipOperand = *GetInput(operation, operands, kCellClipParam);
@@ -930,8 +932,9 @@ bool LSTMCell::LSTMStep(
     }
     tflite::tensor_utils::VectorVectorCwiseProduct(forget_gate_scratch, cell_state_in_buffer,
                                                    n_batch * n_cell, cell_state_out_buffer);
-    tflite::tensor_utils::ApplyActivationToVector(cell_scratch, n_batch * n_cell, params.activation,
-                                                  cell_scratch);
+    tflite::tensor_utils::ApplyActivationToVector(
+            cell_scratch, n_batch * n_cell, static_cast<TfLiteFusedActivation>(params.activation),
+            cell_scratch);
     if (params.use_cifg) {
         tflite::tensor_utils::Sub1Vector(forget_gate_scratch, n_batch * n_cell,
                                          forget_gate_scratch);
@@ -963,8 +966,9 @@ bool LSTMCell::LSTMStep(
     }
     tflite::tensor_utils::ApplySigmoidToVector(output_gate_scratch, n_batch * n_cell,
                                                output_gate_scratch);
-    tflite::tensor_utils::ApplyActivationToVector(cell_state_out_buffer, n_batch * n_cell,
-                                                  params.activation, cell_scratch);
+    tflite::tensor_utils::ApplyActivationToVector(
+            cell_state_out_buffer, n_batch * n_cell,
+            static_cast<TfLiteFusedActivation>(params.activation), cell_scratch);
     tflite::tensor_utils::VectorVectorCwiseProduct(output_gate_scratch, cell_scratch,
                                                    n_batch * n_cell, output_gate_scratch);
 

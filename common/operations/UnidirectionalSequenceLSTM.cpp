@@ -23,6 +23,8 @@
 #include "OperationsUtils.h"
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
+#include <tensorflow/lite/kernels/internal/tensor_utils.h>
+
 #include "LSTM.h"
 #endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
@@ -103,7 +105,7 @@ template <typename T>
 inline LSTMParams getLSTMParams(IOperationExecutionContext* context) {
     LSTMParams params;
     params.activation =
-            static_cast<TfLiteFusedActivation>(context->getInputValue<int32_t>(kActivationParam));
+            static_cast<ActivationFn>(context->getInputValue<int32_t>(kActivationParam));
     params.cell_clip = static_cast<float>(context->getInputValue<T>(kCellClipParam));
     params.proj_clip = static_cast<float>(context->getInputValue<T>(kProjClipParam));
     params.use_cifg = !hasTensor(context, kInputToInputWeightsTensor);

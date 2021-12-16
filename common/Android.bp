@@ -125,6 +125,7 @@ cc_defaults {
         "include",
     ],
     srcs: [
+        "ActivationFunctor.cpp",
         "BufferTracker.cpp",
         "CpuExecutor.cpp",
         "ExecutionBurstController.cpp",
@@ -326,6 +327,7 @@ cc_library_static {
         "libtextclassifier_hash_static",
     ],
     srcs: [
+        "ActivationFunctor.cpp",
         "QuantUtils.cpp",
         "operations/ArgMinMax.cpp",
         "operations/BidirectionalSequenceLSTM.cpp",
