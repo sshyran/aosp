@@ -18,6 +18,8 @@
 
 #include "SVDF.h"
 
+#include <tensorflow/lite/kernels/internal/tensor_utils.h>
+
 #include <algorithm>
 #include <vector>
 
@@ -39,7 +41,7 @@ SVDF::SVDF(const Operation& operation, RunTimeOperandInfo* operands) {
     const auto& rankOperand = *GetInput(operation, operands, kRankParam);
     params_.rank_ = getScalarDataWithDefault<int>(rankOperand, 0);
     const auto& activationOperand = *GetInput(operation, operands, kActivationParam);
-    params_.activation_ = static_cast<TfLiteFusedActivation>(getScalarDataWithDefault<int>(
+    params_.activation_ = static_cast<ActivationFn>(getScalarDataWithDefault<int>(
             activationOperand, TfLiteFusedActivation::kTfLiteActNone));
 
     state_out_ = GetOutput(operation, operands, kStateOutTensor);
@@ -211,8 +213,9 @@ void SVDF::EvalFloat32(const float* inputData, const float* inputStateData, cons
     }
 
     // Apply activation.
-    tflite::tensor_utils::ApplyActivationToVector(outputData, batch_size * num_units,
-                                                  params_.activation_, outputData);
+    tflite::tensor_utils::ApplyActivationToVector(
+            outputData, batch_size * num_units,
+            static_cast<TfLiteFusedActivation>(params_.activation_), outputData);
     // Finished ApplyTimeWeightsBiasAndActivation
 
     // Right shift the state.

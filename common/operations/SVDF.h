@@ -17,12 +17,11 @@
 #ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_SVDF_H
 #define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_SVDF_H
 
-#include <tensorflow/lite/kernels/internal/tensor_utils.h>
-
 #include <algorithm>
 #include <cmath>
 #include <vector>
 
+#include "ActivationFunctor.h"
 #include "nnapi/Types.h"
 
 namespace android {
@@ -30,7 +29,7 @@ namespace nn {
 
 struct SVDFParams {
     int rank_;
-    TfLiteFusedActivation activation_;
+    ActivationFn activation_;
 };
 
 struct RunTimeOperandInfo;
