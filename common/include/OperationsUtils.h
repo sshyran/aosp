@@ -161,27 +161,31 @@ inline int32_t computeOutSizeTransposeConv(int32_t imageSize, int32_t filterSize
     return imageSize * stride + filterSize - stride - paddingHead - paddingTail;
 }
 
-__wur bool QuantizeMultiplier(double double_multiplier, int32_t* quantized_multiplier,
-                              int32_t* shift);
+[[nodiscard]] bool QuantizeMultiplier(double double_multiplier, int32_t* quantized_multiplier,
+                                      int32_t* shift);
 
-__wur bool QuantizeMultiplierSmallerThanOne(double double_multiplier, int32_t* quantized_multiplier,
-                                            int32_t* right_shift);
+[[nodiscard]] bool QuantizeMultiplierSmallerThanOne(double double_multiplier,
+                                                    int32_t* quantized_multiplier,
+                                                    int32_t* right_shift);
 
 // Same as QuantizeMultiplierSmallerThanOne but returns left shift (i.e. negated
 // right shift), so that it has the same interface as
 // QuantizeMultiplierGreaterThanOne and QuantizeMultiplier functions.
-__wur bool QuantizeMultiplierSmallerThanOneExp(double double_multiplier,
-                                               int32_t* quantized_multiplier, int32_t* left_shift);
+[[nodiscard]] bool QuantizeMultiplierSmallerThanOneExp(double double_multiplier,
+                                                       int32_t* quantized_multiplier,
+                                                       int32_t* left_shift);
 
-__wur bool QuantizeMultiplierGreaterThanOne(double double_multiplier, int32_t* quantized_multiplier,
-                                            int* left_shift);
+[[nodiscard]] bool QuantizeMultiplierGreaterThanOne(double double_multiplier,
+                                                    int32_t* quantized_multiplier, int* left_shift);
 
-__wur bool GetQuantizedConvolutionMultipler(const Shape& inputShape, const Shape& filterShape,
-                                            const Shape& biasShape, const Shape& outputShape,
-                                            double* multiplier);
+[[nodiscard]] bool GetQuantizedConvolutionMultipler(const Shape& inputShape,
+                                                    const Shape& filterShape,
+                                                    const Shape& biasShape,
+                                                    const Shape& outputShape, double* multiplier);
 
-__wur bool GetQuantizedConvolutionMultiplier(const Shape& inputShape, const Shape& filterShape,
-                                             const Shape& outputShape, double* multiplier);
+[[nodiscard]] bool GetQuantizedConvolutionMultiplier(const Shape& inputShape,
+                                                     const Shape& filterShape,
+                                                     const Shape& outputShape, double* multiplier);
 
 void CalculateActivationRangeUint8(int32_t activation, const Shape& outputShape, int32_t* act_min,
                                    int32_t* act_max);
