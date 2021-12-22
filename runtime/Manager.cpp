@@ -1331,7 +1331,7 @@ void DeviceManager::findAvailableDevices() {
     // ignored. If this property is not set, all available driver devices are enabled by default.
     // This filter only applies to driver devices. nnapi-reference is always enabled.
     std::string patternStr = base::GetProperty("debug.nn.enabled-devices", ".*");
-    VLOG(MANAGER) << "Enabled devices: " << patternStr;
+    LOG(INFO) << "Enabled devices: " << patternStr;
     const std::regex pattern(patternStr);
 #endif  // NN_DEBUGGABLE
 
@@ -1340,11 +1340,13 @@ void DeviceManager::findAvailableDevices() {
     for (auto& driverDevice : driverDevices) {
 #ifdef NN_DEBUGGABLE
         if (!std::regex_match(driverDevice->getName(), pattern)) {
-            VLOG(MANAGER) << "Ignored interface " << driverDevice->getName();
+            LOG(INFO) << "Ignored interface " << driverDevice->getName()
+                      << " (version = " << driverDevice->getVersionString() << ")";
             continue;
         }
 #endif  // NN_DEBUGGABLE
-        VLOG(MANAGER) << "Found interface " << driverDevice->getName();
+        LOG(INFO) << "Found interface " << driverDevice->getName()
+                  << " (version = " << driverDevice->getVersionString() << ")";
         mDevices.push_back(std::move(driverDevice));
     }
 
