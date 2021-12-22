@@ -962,6 +962,7 @@ int ExecutionPlan::CompoundBody::finish(const SourceModels* sourceModels,
     findMemoryStepRoles();
 
     mSuccessfulFinish = true;
+    LOG(INFO) << "ExecutionPlan::CompoundBody::finish: compilation finished successfully";
     return ANEURALNETWORKS_NO_ERROR;
 }
 
@@ -1106,6 +1107,10 @@ int ExecutionPlan::SimpleBody::finish(const SourceModels*, int32_t executionPref
         n = simulateFailureResultCode;
     }
     mSuccessfulFinish = (n == ANEURALNETWORKS_NO_ERROR);
+    if (mSuccessfulFinish) {
+        LOG(INFO) << "ExecutionPlan::SimpleBody::finish: compilation finished successfully on "
+                  << mDevice->getName();
+    }
     return n;
 }
 
