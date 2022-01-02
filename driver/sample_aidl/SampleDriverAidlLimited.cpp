@@ -16,56 +16,118 @@
 
 #define LOG_TAG "SampleDriverAidlLimited"
 
+#include <aidl/android/hardware/neuralnetworks/BnDevice.h>
+#include <aidl/android/hardware/neuralnetworks/IDevice.h>
 #include <android-base/logging.h>
-#include <android/binder_auto_utils.h>
-#include <hidl/LegacySupport.h>
-#include <nnapi/hal/aidl/Conversions.h>
-#include <nnapi/hal/aidl/HalUtils.h>
+#include <android/binder_interface_utils.h>
+#include <android/binder_manager.h>
+#include <android/binder_process.h>
+#include <nnapi/Types.h>
+#include <nnapi/hal/aidl/Adapter.h>
 
+#include <algorithm>
 #include <memory>
-#include <thread>
+#include <string>
+#include <utility>
 #include <vector>
 
-#include "SampleDriverAidlPartial.h"
-#include "SampleDriverAidlUtils.h"
+#include "CanonicalDevice.h"
+#include "LimitedSupportDevice.h"
 
-namespace android {
-namespace nn {
-namespace sample_driver_aidl {
+namespace android::nn::sample {
+namespace {
 
-class SampleDriverFloatFast : public SampleDriverPartial {
-   public:
-    explicit SampleDriverFloatFast(const std::string& name) : SampleDriverPartial(name.c_str()) {}
-    ndk::ScopedAStatus getCapabilities(aidl_hal::Capabilities* capabilities) override;
+std::vector<Capabilities::OperandPerformance> makeOperandPerformance(
+        const Capabilities::PerformanceInfo& perfInfo) {
+    static constexpr OperandType kOperandTypes[] = {
+            OperandType::FLOAT32,
+            OperandType::INT32,
+            OperandType::UINT32,
+            OperandType::TENSOR_FLOAT32,
+            OperandType::TENSOR_INT32,
+            OperandType::TENSOR_QUANT8_ASYMM,
+            OperandType::BOOL,
+            OperandType::TENSOR_QUANT16_SYMM,
+            OperandType::TENSOR_FLOAT16,
+            OperandType::TENSOR_BOOL8,
+            OperandType::FLOAT16,
+            OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            OperandType::TENSOR_QUANT16_ASYMM,
+            OperandType::TENSOR_QUANT8_SYMM,
+            OperandType::TENSOR_QUANT8_ASYMM_SIGNED,
+            // OperandType::SUBGRAPH, OperandType::OEM, and OperandType::TENSOR_OEM_BYTE
+            // intentionally omitted.
+    };
 
-   private:
-    std::vector<bool> getSupportedOperationsImpl(const Model& model) const override;
-};
-
-ndk::ScopedAStatus SampleDriverFloatFast::getCapabilities(aidl_hal::Capabilities* capabilities) {
-    android::nn::initVLogMask();
-    VLOG(DRIVER) << "getCapabilities()";
-
-    *capabilities = {
-            .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 0.7f, .powerUsage = 1.1f},
-            .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 0.7f, .powerUsage = 1.1f},
-            .operandPerformance = nonExtensionOperandPerformance({1.0f, 1.0f}),
-            .ifPerformance = {.execTime = 1.0f, .powerUsage = 1.0f},
-            .whilePerformance = {.execTime = 1.0f, .powerUsage = 1.0f}};
-    update(&capabilities->operandPerformance, aidl_hal::OperandType::TENSOR_FLOAT32,
-           {.execTime = 0.8f, .powerUsage = 1.2f});
-    update(&capabilities->operandPerformance, aidl_hal::OperandType::FLOAT32,
-           {.execTime = 0.8f, .powerUsage = 1.2f});
-
-    return ndk::ScopedAStatus::ok();
+    std::vector<Capabilities::OperandPerformance> operandPerformance;
+    operandPerformance.reserve(std::size(kOperandTypes));
+    std::transform(std::begin(kOperandTypes), std::end(kOperandTypes),
+                   std::back_inserter(operandPerformance), [&perfInfo](OperandType op) {
+                       return Capabilities::OperandPerformance{.type = op, .info = perfInfo};
+                   });
+    return operandPerformance;
 }
 
-std::vector<bool> SampleDriverFloatFast::getSupportedOperationsImpl(const Model& model) const {
+void update(std::vector<Capabilities::OperandPerformance>* operandPerformance, OperandType type,
+            const Capabilities::PerformanceInfo& info) {
+    CHECK(operandPerformance != nullptr);
+    auto it = std::lower_bound(operandPerformance->begin(), operandPerformance->end(), type,
+                               [](const Capabilities::OperandPerformance& perf, OperandType type) {
+                                   return perf.type < type;
+                               });
+    CHECK(it != operandPerformance->end());
+    CHECK_EQ(it->type, type);
+    it->info = info;
+}
+
+Capabilities makeCapabilities(const Capabilities::PerformanceInfo& defaultInfo,
+                              const Capabilities::PerformanceInfo& float32Info,
+                              const Capabilities::PerformanceInfo& relaxedInfo) {
+    auto operandPerformance = makeOperandPerformance(defaultInfo);
+    update(&operandPerformance, OperandType::TENSOR_FLOAT32, float32Info);
+    update(&operandPerformance, OperandType::FLOAT32, float32Info);
+    auto table =
+            Capabilities::OperandPerformanceTable::create(std::move(operandPerformance)).value();
+
+    return {.relaxedFloat32toFloat16PerformanceScalar = relaxedInfo,
+            .relaxedFloat32toFloat16PerformanceTensor = relaxedInfo,
+            .operandPerformance = std::move(table),
+            .ifPerformance = defaultInfo,
+            .whilePerformance = defaultInfo};
+}
+
+Capabilities makeCapabilitiesFloatFast() {
+    const Capabilities::PerformanceInfo defaultInfo = {.execTime = 1.0f, .powerUsage = 1.0f};
+    const Capabilities::PerformanceInfo float32Info = {.execTime = 0.8f, .powerUsage = 1.2f};
+    const Capabilities::PerformanceInfo relaxedInfo = {.execTime = 0.7f, .powerUsage = 1.1f};
+    return makeCapabilities(defaultInfo, float32Info, relaxedInfo);
+}
+
+Capabilities makeCapabilitiesFloatSlow() {
+    const Capabilities::PerformanceInfo defaultInfo = {.execTime = 1.0f, .powerUsage = 1.0f};
+    const Capabilities::PerformanceInfo float32Info = {.execTime = 1.3f, .powerUsage = 0.7f};
+    const Capabilities::PerformanceInfo relaxedInfo = {.execTime = 1.2f, .powerUsage = 0.6f};
+    return makeCapabilities(defaultInfo, float32Info, relaxedInfo);
+}
+
+Capabilities makeCapabilitiesMinimal() {
+    const Capabilities::PerformanceInfo defaultInfo = {.execTime = 1.0f, .powerUsage = 1.0f};
+    const Capabilities::PerformanceInfo float32Info = {.execTime = 0.4f, .powerUsage = 0.5f};
+    const Capabilities::PerformanceInfo relaxedInfo = {.execTime = 0.4f, .powerUsage = 0.5f};
+    return makeCapabilities(defaultInfo, float32Info, relaxedInfo);
+}
+
+Capabilities makeCapabilitiesQuant() {
+    const Capabilities::PerformanceInfo info = {.execTime = 50.0f, .powerUsage = 1.0f};
+    return makeCapabilities(info, info, info);
+}
+
+GeneralResult<std::vector<bool>> getSupportedOperationsFloat(const Model& model) {
     const size_t count = model.main.operations.size();
     std::vector<bool> supported(count);
     for (size_t i = 0; i < count; i++) {
         const Operation& operation = model.main.operations[i];
-        if (!isExtensionOperationType(operation.type) && operation.inputs.size() > 0) {
+        if (!isExtension(operation.type) && !operation.inputs.empty()) {
             const Operand& firstOperand = model.main.operands[operation.inputs[0]];
             supported[i] = firstOperand.type == OperandType::TENSOR_FLOAT32;
         }
@@ -73,74 +135,7 @@ std::vector<bool> SampleDriverFloatFast::getSupportedOperationsImpl(const Model&
     return supported;
 }
 
-class SampleDriverFloatSlow : public SampleDriverPartial {
-   public:
-    explicit SampleDriverFloatSlow(const std::string& name) : SampleDriverPartial(name.c_str()) {}
-    ndk::ScopedAStatus getCapabilities(aidl_hal::Capabilities* capabilities) override;
-
-   private:
-    std::vector<bool> getSupportedOperationsImpl(const Model& model) const override;
-};
-
-ndk::ScopedAStatus SampleDriverFloatSlow::getCapabilities(aidl_hal::Capabilities* capabilities) {
-    android::nn::initVLogMask();
-    VLOG(DRIVER) << "getCapabilities()";
-
-    *capabilities = {
-            .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 1.2f, .powerUsage = 0.6f},
-            .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 1.2f, .powerUsage = 0.6f},
-            .operandPerformance = nonExtensionOperandPerformance({1.0f, 1.0f}),
-            .ifPerformance = {.execTime = 1.0f, .powerUsage = 1.0f},
-            .whilePerformance = {.execTime = 1.0f, .powerUsage = 1.0f}};
-    update(&capabilities->operandPerformance, aidl_hal::OperandType::TENSOR_FLOAT32,
-           {.execTime = 1.3f, .powerUsage = 0.7f});
-    update(&capabilities->operandPerformance, aidl_hal::OperandType::FLOAT32,
-           {.execTime = 1.3f, .powerUsage = 0.7f});
-
-    return ndk::ScopedAStatus::ok();
-}
-
-std::vector<bool> SampleDriverFloatSlow::getSupportedOperationsImpl(const Model& model) const {
-    const size_t count = model.main.operations.size();
-    std::vector<bool> supported(count);
-    for (size_t i = 0; i < count; i++) {
-        const Operation& operation = model.main.operations[i];
-        if (!isExtensionOperationType(operation.type) && operation.inputs.size() > 0) {
-            const Operand& firstOperand = model.main.operands[operation.inputs[0]];
-            supported[i] = firstOperand.type == OperandType::TENSOR_FLOAT32;
-        }
-    }
-    return supported;
-}
-
-class SampleDriverMinimal : public SampleDriverPartial {
-   public:
-    explicit SampleDriverMinimal(const std::string& name) : SampleDriverPartial(name.c_str()) {}
-    ndk::ScopedAStatus getCapabilities(aidl_hal::Capabilities* capabilities) override;
-
-   private:
-    std::vector<bool> getSupportedOperationsImpl(const Model& model) const override;
-};
-
-ndk::ScopedAStatus SampleDriverMinimal::getCapabilities(aidl_hal::Capabilities* capabilities) {
-    android::nn::initVLogMask();
-    VLOG(DRIVER) << "getCapabilities()";
-
-    *capabilities = {
-            .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 0.4f, .powerUsage = 0.5f},
-            .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 0.4f, .powerUsage = 0.5f},
-            .operandPerformance = nonExtensionOperandPerformance({1.0f, 1.0f}),
-            .ifPerformance = {.execTime = 1.0f, .powerUsage = 1.0f},
-            .whilePerformance = {.execTime = 1.0f, .powerUsage = 1.0f}};
-    update(&capabilities->operandPerformance, aidl_hal::OperandType::TENSOR_FLOAT32,
-           {.execTime = 0.4f, .powerUsage = 0.5f});
-    update(&capabilities->operandPerformance, aidl_hal::OperandType::FLOAT32,
-           {.execTime = 0.4f, .powerUsage = 0.5f});
-
-    return ndk::ScopedAStatus::ok();
-}
-
-std::vector<bool> SampleDriverMinimal::getSupportedOperationsImpl(const Model& model) const {
+GeneralResult<std::vector<bool>> getSupportedOperationsMinimal(const Model& model) {
     const size_t count = model.main.operations.size();
     std::vector<bool> supported(count);
     // Simulate supporting just a few ops
@@ -164,40 +159,17 @@ std::vector<bool> SampleDriverMinimal::getSupportedOperationsImpl(const Model& m
     return supported;
 }
 
-class SampleDriverQuant : public SampleDriverPartial {
-   public:
-    explicit SampleDriverQuant(const std::string& name) : SampleDriverPartial(name.c_str()) {}
-    ndk::ScopedAStatus getCapabilities(aidl_hal::Capabilities* capabilities) override;
-
-   private:
-    std::vector<bool> getSupportedOperationsImpl(const Model& model) const override;
-};
-
-ndk::ScopedAStatus SampleDriverQuant::getCapabilities(aidl_hal::Capabilities* capabilities) {
-    android::nn::initVLogMask();
-    VLOG(DRIVER) << "getCapabilities()";
-
-    *capabilities = {
-            .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 50.0f, .powerUsage = 1.0f},
-            .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 50.0f, .powerUsage = 1.0f},
-            .operandPerformance = nonExtensionOperandPerformance({50.0f, 1.0f}),
-            .ifPerformance = {.execTime = 50.0f, .powerUsage = 1.0f},
-            .whilePerformance = {.execTime = 50.0f, .powerUsage = 1.0f}};
-
-    return ndk::ScopedAStatus::ok();
-}
-
-static bool isQuantized(OperandType opType) {
+bool isQuantized(OperandType opType) {
     return opType == OperandType::TENSOR_QUANT8_ASYMM ||
            opType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED;
 }
 
-std::vector<bool> SampleDriverQuant::getSupportedOperationsImpl(const Model& model) const {
+GeneralResult<std::vector<bool>> getSupportedOperationsQuant(const Model& model) {
     const size_t count = model.main.operations.size();
     std::vector<bool> supported(count);
     for (size_t i = 0; i < count; i++) {
         const Operation& operation = model.main.operations[i];
-        if (!isExtensionOperationType(operation.type) && operation.inputs.size() > 0) {
+        if (!isExtension(operation.type) && !operation.inputs.empty()) {
             const Operand& firstOperand = model.main.operands[operation.inputs[0]];
             supported[i] = isQuantized(firstOperand.type);
             if (operation.type == OperationType::SELECT) {
@@ -209,31 +181,73 @@ std::vector<bool> SampleDriverQuant::getSupportedOperationsImpl(const Model& mod
     return supported;
 }
 
-}  // namespace sample_driver_aidl
-}  // namespace nn
-}  // namespace android
+SharedDevice makeDevice(std::string name, Capabilities capabilities,
+                        LimitedSupportDevice::SupportedOperationsFunction getSupportedOperations) {
+    auto device = std::make_shared<const Device>(std::move(name));
+    auto limitedDevice = std::make_shared<const LimitedSupportDevice>(
+            std::move(device), std::move(capabilities), std::move(getSupportedOperations));
+    return limitedDevice;
+}
 
-using android::nn::sample_driver_aidl::runAll;
-using android::nn::sample_driver_aidl::SampleDriverFloatFast;
-using android::nn::sample_driver_aidl::SampleDriverFloatSlow;
-using android::nn::sample_driver_aidl::SampleDriverMinimal;
-using android::nn::sample_driver_aidl::SampleDriverQuant;
+std::vector<SharedDevice> getDevices() {
+    SharedDevice device;
+    std::vector<SharedDevice> devices;
+    devices.reserve(4);
+
+    device = makeDevice("nnapi-sample_float_fast", makeCapabilitiesFloatFast(),
+                        getSupportedOperationsFloat);
+    devices.push_back(std::move(device));
+
+    device = makeDevice("nnapi-sample_float_slow", makeCapabilitiesFloatSlow(),
+                        getSupportedOperationsFloat);
+    devices.push_back(std::move(device));
+
+    device = makeDevice("nnapi-sample_minimal", makeCapabilitiesMinimal(),
+                        getSupportedOperationsMinimal);
+    devices.push_back(std::move(device));
+
+    device = makeDevice("nnapi-sample_quant", makeCapabilitiesQuant(), getSupportedOperationsQuant);
+    devices.push_back(std::move(device));
+
+    return devices;
+}
+
+namespace aidl_hal = ::aidl::android::hardware::neuralnetworks;
 
 int main() {
-    const std::string nameFloatFast = "nnapi-sample_float_fast";
-    const auto driverFloatFast = ndk::SharedRefBase::make<SampleDriverFloatFast>(nameFloatFast);
+    constexpr size_t kNumberOfThreads = 4;
+    ABinderProcess_setThreadPoolMaxThreadCount(kNumberOfThreads);
 
-    const std::string nameFloatSlow = "nnapi-sample_float_slow";
-    const auto driverFloatSlow = ndk::SharedRefBase::make<SampleDriverFloatSlow>(nameFloatSlow);
+    // Get the canonical interface objects.
+    const auto devices = getDevices();
 
-    const std::string nameMinimal = "nnapi-sample_minimal";
-    const auto driverMinimal = ndk::SharedRefBase::make<SampleDriverMinimal>(nameMinimal);
+    // Adapt all canonical interface objects to AIDL interface objects.
+    std::vector<std::shared_ptr<aidl_hal::BnDevice>> aidlDevices;
+    aidlDevices.reserve(devices.size());
+    std::transform(devices.begin(), devices.end(), std::back_inserter(aidlDevices),
+                   [](const auto& device) { return aidl_hal::adapter::adapt(device); });
 
-    const std::string nameQuant = "nnapi-sample_quant";
-    const auto driverQuant = ndk::SharedRefBase::make<SampleDriverQuant>(nameQuant);
+    // Register all AIDL interface objects.
+    CHECK_EQ(devices.size(), aidlDevices.size());
+    for (size_t i = 0; i < aidlDevices.size(); ++i) {
+        const std::string name = devices[i]->getName();
+        const std::string fqName = std::string(aidl_hal::IDevice::descriptor) + "/" + name;
+        const binder_status_t status =
+                AServiceManager_addService(aidlDevices[i]->asBinder().get(), fqName.c_str());
+        if (status != STATUS_OK) {
+            LOG(ERROR) << "Could not register service " << name;
+            return 1;
+        }
+    }
 
-    return runAll({{driverFloatFast, nameFloatFast},
-                   {driverFloatSlow, nameFloatSlow},
-                   {driverMinimal, nameMinimal},
-                   {driverQuant, nameQuant}});
+    ABinderProcess_joinThreadPool();
+    LOG(ERROR) << "Service exited!";
+    return 1;
+}
+
+}  // namespace
+}  // namespace android::nn::sample
+
+int main() {
+    return android::nn::sample::main();
 }

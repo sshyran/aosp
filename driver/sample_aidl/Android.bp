@@ -79,7 +79,30 @@ cc_binary {
 cc_binary {
     name: "android.hardware.neuralnetworks-service-sample-limited",
     srcs: ["SampleDriverAidlLimited.cpp"],
-    defaults: ["NeuralNetworksSampleDriverAidl_server_defaults"],
+    defaults: [
+        "neuralnetworks_defaults",
+        "neuralnetworks_use_latest_utils_hal_aidl",
+    ],
+    header_libs: [
+        "libneuralnetworks_headers",
+    ],
+    shared_libs: [
+        "libbase",
+        "libbinder_ndk",
+        "libcutils",
+        "liblog",
+        "libnativewindow",
+        "libtextclassifier_hash",
+        "libutils",
+    ],
+    static_libs: [
+        "libaidlcommonsupport",
+        "libneuralnetworks_common",
+        "neuralnetworks_canonical_sample_driver",
+        "neuralnetworks_utils_hal_adapter_aidl",
+    ],
+    relative_install_path: "hw",
+    proprietary: true,
     init_rc: ["config/android.hardware.neuralnetworks-service-sample-limited.rc"],
     vintf_fragments: ["config/android.hardware.neuralnetworks-service-sample-limited.xml"],
 }
