@@ -1,0 +1,76 @@
+/*
+ * Copyright (C) 2022 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#include <gtest/gtest.h>
+
+#include "ServerFlag.h"
+
+using android::nn::getServerFeatureLevelFlag;
+using android::nn::kDefaultFeatureLevelNum;
+using android::nn::kMaxFeatureLevelNum;
+using android::nn::kMinFeatureLevelNum;
+
+static std::string fakeServerFuncDefault(const std::string& /*categoryName*/,
+                                         const std::string& /*flagName*/,
+                                         const std::string& /*defaultValue*/) {
+    return std::to_string(kDefaultFeatureLevelNum);
+}
+
+static std::string fakeServerFuncMax(const std::string& /*categoryName*/,
+                                     const std::string& /*flagName*/,
+                                     const std::string& /*defaultValue*/) {
+    return std::to_string(kMaxFeatureLevelNum);
+}
+
+static std::string fakeServerFuncMin(const std::string& /*categoryName*/,
+                                     const std::string& /*flagName*/,
+                                     const std::string& /*defaultValue*/) {
+    return std::to_string(kMinFeatureLevelNum);
+}
+
+static std::string fakeServerFuncLarge(const std::string& /*categoryName*/,
+                                       const std::string& /*flagName*/,
+                                       const std::string& /*defaultValue*/) {
+    return std::to_string(kMaxFeatureLevelNum + 1);
+}
+
+static std::string fakeServerFuncSmall(const std::string& /*categoryName*/,
+                                       const std::string& /*flagName*/,
+                                       const std::string& /*defaultValue*/) {
+    return std::to_string(kMinFeatureLevelNum - 1);
+}
+
+static std::string fakeServerFuncNull(const std::string& /*categoryName*/,
+                                      const std::string& /*flagName*/,
+                                      const std::string& /*defaultValue*/) {
+    return "null";
+}
+
+TEST(ServerFlagTest, ServerFeatureLevelFlag) {
+    // Tests android::nn::getServerFeatureLevelFlag directly because
+    // feature level is stored as static variable in runtime so that the value does not change if
+    // uses client APIs.
+
+    // Tests correct value is returned if the flag is set legally.
+    EXPECT_EQ(getServerFeatureLevelFlag(fakeServerFuncDefault), kDefaultFeatureLevelNum);
+    EXPECT_EQ(getServerFeatureLevelFlag(fakeServerFuncMax), kMaxFeatureLevelNum);
+    EXPECT_EQ(getServerFeatureLevelFlag(fakeServerFuncMin), kMinFeatureLevelNum);
+
+    // Tests default value is returned if the flag is unset or illegal.
+    EXPECT_EQ(getServerFeatureLevelFlag(fakeServerFuncLarge), kDefaultFeatureLevelNum);
+    EXPECT_EQ(getServerFeatureLevelFlag(fakeServerFuncSmall), kDefaultFeatureLevelNum);
+    EXPECT_EQ(getServerFeatureLevelFlag(fakeServerFuncNull), kDefaultFeatureLevelNum);
+}

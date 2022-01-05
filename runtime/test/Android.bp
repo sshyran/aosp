@@ -182,6 +182,7 @@ cc_defaults {
         "TestPartitioning.cpp",
         "TestPartitioningRandom.cpp",
         "TestRemoveDefaultArguments.cpp",
+        "TestServerFlag.cpp",
         "TestTelemetry.cpp",
         "fibonacci_extension/FibonacciDriver.cpp",
         "fibonacci_extension/FibonacciExtensionTest.cpp",
