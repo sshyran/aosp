@@ -132,7 +132,7 @@ bool GeneratedTests::checkSupported(const Model& model, ANeuralNetworksDevice* d
     for (int i = 0; i < MAX_NUM_OPS; ++i) {
         supportedOps[i] = true;
     }
-    EXPECT_EQ(mNnApi->ANeuralNetworksModel_getSupportedOperationsForDevices(
+    EXPECT_EQ(mNnApi->getFL5()->ANeuralNetworksModel_getSupportedOperationsForDevices(
                       model.getHandle(), &device, /*numDevices=*/1, supportedOps.data()),
               ANEURALNETWORKS_NO_ERROR);
     const bool fullySupportedModel =
@@ -192,7 +192,7 @@ std::optional<Compilation> GeneratedTests::compileModel(const Model& model,
         std::vector<std::string> modelCacheFilenames, dataCacheFilenames;
         if (useSetCachingFromFds) {
             uint32_t numModelCacheFiles, numDataCacheFiles;
-            EXPECT_EQ(mNnApi->SL_ANeuralNetworksDevice_getNumberOfCacheFilesNeeded(
+            EXPECT_EQ(mNnApi->getFL5()->SL_ANeuralNetworksDevice_getNumberOfCacheFilesNeeded(
                               device, &numModelCacheFiles, &numDataCacheFiles),
                       ANEURALNETWORKS_NO_ERROR);
             for (uint32_t i = 0; i < numModelCacheFiles; i++) {
@@ -258,28 +258,28 @@ void computeWithPtrs(const TestModel& testModel, Execution* execution,
 ANeuralNetworksMemory* GeneratedTests::createDeviceMemoryForInput(const Compilation& compilation,
                                                                   uint32_t index) {
     ANeuralNetworksMemoryDesc* desc = nullptr;
-    EXPECT_EQ(mNnApi->ANeuralNetworksMemoryDesc_create(&desc), ANEURALNETWORKS_NO_ERROR);
-    EXPECT_EQ(mNnApi->ANeuralNetworksMemoryDesc_addInputRole(desc, compilation.getHandle(), index,
-                                                             1.0f),
+    EXPECT_EQ(mNnApi->getFL5()->ANeuralNetworksMemoryDesc_create(&desc), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(mNnApi->getFL5()->ANeuralNetworksMemoryDesc_addInputRole(
+                      desc, compilation.getHandle(), index, 1.0f),
               ANEURALNETWORKS_NO_ERROR);
-    EXPECT_EQ(mNnApi->ANeuralNetworksMemoryDesc_finish(desc), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(mNnApi->getFL5()->ANeuralNetworksMemoryDesc_finish(desc), ANEURALNETWORKS_NO_ERROR);
     ANeuralNetworksMemory* memory = nullptr;
-    mNnApi->ANeuralNetworksMemory_createFromDesc(desc, &memory);
-    mNnApi->ANeuralNetworksMemoryDesc_free(desc);
+    mNnApi->getFL5()->ANeuralNetworksMemory_createFromDesc(desc, &memory);
+    mNnApi->getFL5()->ANeuralNetworksMemoryDesc_free(desc);
     return memory;
 }
 
 ANeuralNetworksMemory* GeneratedTests::createDeviceMemoryForOutput(const Compilation& compilation,
                                                                    uint32_t index) {
     ANeuralNetworksMemoryDesc* desc = nullptr;
-    EXPECT_EQ(mNnApi->ANeuralNetworksMemoryDesc_create(&desc), ANEURALNETWORKS_NO_ERROR);
-    EXPECT_EQ(mNnApi->ANeuralNetworksMemoryDesc_addOutputRole(desc, compilation.getHandle(), index,
-                                                              1.0f),
+    EXPECT_EQ(mNnApi->getFL5()->ANeuralNetworksMemoryDesc_create(&desc), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(mNnApi->getFL5()->ANeuralNetworksMemoryDesc_addOutputRole(
+                      desc, compilation.getHandle(), index, 1.0f),
               ANEURALNETWORKS_NO_ERROR);
-    EXPECT_EQ(mNnApi->ANeuralNetworksMemoryDesc_finish(desc), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(mNnApi->getFL5()->ANeuralNetworksMemoryDesc_finish(desc), ANEURALNETWORKS_NO_ERROR);
     ANeuralNetworksMemory* memory = nullptr;
-    mNnApi->ANeuralNetworksMemory_createFromDesc(desc, &memory);
-    mNnApi->ANeuralNetworksMemoryDesc_free(desc);
+    mNnApi->getFL5()->ANeuralNetworksMemory_createFromDesc(desc, &memory);
+    mNnApi->getFL5()->ANeuralNetworksMemoryDesc_free(desc);
     return memory;
 }
 
@@ -314,7 +314,7 @@ void GeneratedTests::computeWithDeviceMemories(const Compilation& compilation,
             // Copy data from TestBuffer to device memory.
             auto ashmem = TestAshmem::createFrom(mNnApi.get(), operand.data);
             ASSERT_NE(ashmem, nullptr);
-            ASSERT_EQ(mNnApi->ANeuralNetworksMemory_copy(ashmem->get()->get(), memory),
+            ASSERT_EQ(mNnApi->getFL5()->ANeuralNetworksMemory_copy(ashmem->get()->get(), memory),
                       ANEURALNETWORKS_NO_ERROR);
             ASSERT_EQ(Result::NO_ERROR, execution->setInputFromMemory(i, &wrapperMemory, 0, 0));
         }
@@ -340,7 +340,8 @@ void GeneratedTests::computeWithDeviceMemories(const Compilation& compilation,
 
         auto ashmem = TestAshmem::createFrom(mNnApi.get(), output);
         ASSERT_NE(ashmem, nullptr);
-        ASSERT_EQ(mNnApi->ANeuralNetworksMemory_copy(outputMemories[i].get(), ashmem->get()->get()),
+        ASSERT_EQ(mNnApi->getFL5()->ANeuralNetworksMemory_copy(outputMemories[i].get(),
+                                                               ashmem->get()->get()),
                   ANEURALNETWORKS_NO_ERROR);
         std::copy(ashmem->dataAs<uint8_t>(), ashmem->dataAs<uint8_t>() + bufferSize,
                   output.getMutable<uint8_t>());
@@ -392,13 +393,13 @@ void GeneratedTests::executeWithCompilation(const Compilation& compilation,
 void GeneratedTests::executeOnce(const Model& model, const TestModel& testModel) {
     NNTRACE_APP(NNTRACE_PHASE_OVERALL, "executeOnce");
     uint32_t numDevices = 0;
-    mNnApi->ANeuralNetworks_getDeviceCount(&numDevices);
+    mNnApi->getFL5()->ANeuralNetworks_getDeviceCount(&numDevices);
     bool modelSupported = false;
     for (uint32_t i = 0; i < numDevices; ++i) {
         ANeuralNetworksDevice* device = nullptr;
-        mNnApi->ANeuralNetworks_getDevice(i, &device);
+        mNnApi->getFL5()->ANeuralNetworks_getDevice(i, &device);
         const char* deviceName = nullptr;
-        mNnApi->ANeuralNetworksDevice_getName(device, &deviceName);
+        mNnApi->getFL5()->ANeuralNetworksDevice_getName(device, &deviceName);
         SCOPED_TRACE("Device = " + std::string(deviceName));
         std::cout << "\nDevice = " << deviceName << std::endl;
         if (!checkSupported(model, device)) {
@@ -439,13 +440,13 @@ void GeneratedTests::executeMultithreadedSharedCompilation(const Model& model,
     SCOPED_TRACE("MultithreadedSharedCompilation");
     std::cout << "\nMultithreadedSharedCompilation" << std::endl;
     uint32_t numDevices = 0;
-    mNnApi->ANeuralNetworks_getDeviceCount(&numDevices);
+    mNnApi->getFL5()->ANeuralNetworks_getDeviceCount(&numDevices);
     bool modelSupported = false;
     for (uint32_t i = 0; i < numDevices; ++i) {
         ANeuralNetworksDevice* device = nullptr;
-        mNnApi->ANeuralNetworks_getDevice(i, &device);
+        mNnApi->getFL5()->ANeuralNetworks_getDevice(i, &device);
         const char* deviceName = nullptr;
-        mNnApi->ANeuralNetworksDevice_getName(device, &deviceName);
+        mNnApi->getFL5()->ANeuralNetworksDevice_getName(device, &deviceName);
         SCOPED_TRACE("Device = " + std::string(deviceName));
         std::cout << "\nDevice = " << deviceName << std::endl;
         if (!checkSupported(model, device)) {
