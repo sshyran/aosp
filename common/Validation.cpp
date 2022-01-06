@@ -684,14 +684,13 @@ Result<Version> validateUnknownHandle(const Memory::Unknown::Handle& handle) {
     return kVersionFeatureLevel3;
 }
 
-Result<Version> validateHandle(const Handle& handle) {
-    NN_RET_CHECK(handle.ok());
-    return kVersionFeatureLevel3;
-}
-
 Result<Version> validateSharedHandle(const SharedHandle& handle) {
-    NN_RET_CHECK(handle != nullptr);
-    return validateHandle(*handle);
+    // The absence of a shared handle is implicitly valid for all versions.
+    if (handle == nullptr) {
+        return kVersionFeatureLevel1;
+    }
+    NN_RET_CHECK(handle->ok());
+    return kVersionFeatureLevel3;
 }
 
 Result<Version> validateMemory(const Memory::Ashmem& memory) {
