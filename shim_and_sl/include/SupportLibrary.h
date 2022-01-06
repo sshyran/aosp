@@ -47,8 +47,9 @@
 struct NnApiSupportLibrary {
     NnApiSupportLibrary(const NnApiSLDriverImplFL5& impl, void* libHandle)
         : libHandle(libHandle), impl(impl) {}
-    // No need for ctor below since FL6 is typedef of FL5
+    // No need for ctor below since FL6&7 are typedefs of FL5
     // NnApiSupportLibrary(const NnApiSLDriverImplFL6& impl, void* libHandle): impl(impl),
+    // NnApiSupportLibrary(const NnApiSLDriverImplFL7& impl, void* libHandle): impl(impl),
     // libHandle(libHandle) {}
     ~NnApiSupportLibrary() {
         if (libHandle != nullptr) {
@@ -69,10 +70,16 @@ struct NnApiSupportLibrary {
                 [](auto&& impl) { return reinterpret_cast<const NnApiSLDriverImplFL6*>(&impl); },
                 impl);
     }
+    const NnApiSLDriverImplFL7* getFL7() const {
+        assert(getFeatureLevel() >= ANEURALNETWORKS_FEATURE_LEVEL_7);
+        return std::visit(
+                [](auto&& impl) { return reinterpret_cast<const NnApiSLDriverImplFL7*>(&impl); },
+                impl);
+    }
 
     void* libHandle = nullptr;
-    // NnApiSLDriverImplFL6 is a typedef of FL5, can't be explicitly specified.
-    std::variant<NnApiSLDriverImplFL5 /*, NnApiSLDriverImplFL6*/> impl;
+    // NnApiSLDriverImplFL[6-7] is a typedef of FL5, can't be explicitly specified.
+    std::variant<NnApiSLDriverImplFL5 /*, NnApiSLDriverImplFL6, NnApiSLDriverImplFL7*/> impl;
 };
 
 /**
