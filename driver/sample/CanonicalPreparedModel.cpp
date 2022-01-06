@@ -193,8 +193,15 @@ GeneralResult<std::pair<SyncFence, ExecuteFencedInfoCallback>> PreparedModel::ex
     TimePoint driverStart, driverEnd, deviceStart, deviceEnd;
     if (measure == MeasureTiming::YES) driverStart = Clock::now();
 
-    if (const auto result = validateRequestForModel(request, kModel); !result.ok()) {
+    if (const auto result =
+                validateRequestForModel(request, kModel, /*allowUnspecifiedOutput=*/false);
+        !result.ok()) {
         return NN_ERROR(ErrorStatus::INVALID_ARGUMENT) << result.error();
+    }
+    if (std::any_of(waitFor.begin(), waitFor.end(),
+                    [](const SyncFence& syncFence) { return !syncFence.getSharedHandle(); })) {
+        return NN_ERROR(ErrorStatus::INVALID_ARGUMENT)
+               << "sample::PreparedModel::executeFenced passed an empty SyncFence";
     }
     if (hasDeadlinePassed(deadline)) {
         return NN_ERROR(ErrorStatus::MISSED_DEADLINE_PERSISTENT);
@@ -202,9 +209,6 @@ GeneralResult<std::pair<SyncFence, ExecuteFencedInfoCallback>> PreparedModel::ex
 
     // Wait for the dependent events to signal
     for (const auto& syncFence : waitFor) {
-        if (!syncFence.getSharedHandle()) {
-            return NN_ERROR(ErrorStatus::INVALID_ARGUMENT);
-        }
         if (syncFence.syncWait({}) != SyncFence::FenceState::SIGNALED) {
             return NN_ERROR(ErrorStatus::GENERAL_FAILURE) << "syncWait failed";
         }
