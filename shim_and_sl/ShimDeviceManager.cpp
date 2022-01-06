@@ -83,7 +83,7 @@ ANeuralNetworksShimResultCode registerService(const std::shared_ptr<IDevice>& de
 std::unordered_map<std::string, ANeuralNetworksDevice*> getNamedDevices(
         const std::shared_ptr<const NnApiSupportLibrary>& nnapi) {
     uint32_t numDevices;
-    if (nnapi->ANeuralNetworks_getDeviceCount(&numDevices) != ANEURALNETWORKS_NO_ERROR) {
+    if (nnapi->getFL5()->ANeuralNetworks_getDeviceCount(&numDevices) != ANEURALNETWORKS_NO_ERROR) {
         LOG(ERROR) << "Failed ANeuralNetworks_getDeviceCount";
         return {};
     }
@@ -91,13 +91,14 @@ std::unordered_map<std::string, ANeuralNetworksDevice*> getNamedDevices(
     std::unordered_map<std::string, ANeuralNetworksDevice*> nameToDevice;
     for (uint32_t i = 0; i < numDevices; ++i) {
         ANeuralNetworksDevice* device;
-        if (nnapi->ANeuralNetworks_getDevice(i, &device) != ANEURALNETWORKS_NO_ERROR) {
+        if (nnapi->getFL5()->ANeuralNetworks_getDevice(i, &device) != ANEURALNETWORKS_NO_ERROR) {
             LOG(ERROR) << "Failed ANeuralNetworks_getDevice";
             return {};
         }
 
         const char* name = nullptr;
-        if (nnapi->ANeuralNetworksDevice_getName(device, &name) != ANEURALNETWORKS_NO_ERROR) {
+        if (nnapi->getFL5()->ANeuralNetworksDevice_getName(device, &name) !=
+            ANEURALNETWORKS_NO_ERROR) {
             LOG(ERROR) << "Failed ANeuralNetworks_getName";
             return {};
         }
@@ -136,9 +137,19 @@ ANeuralNetworksShimResultCode registerDevices(NnApiSLDriverImpl* nnapiSLImpl,
         return ANNSHIM_FAILED_TO_LOAD_SL;
     }
 
-    const std::shared_ptr<const NnApiSupportLibrary> nnapi =
-            std::make_shared<const NnApiSupportLibrary>(
-                    *reinterpret_cast<NnApiSLDriverImplFL6*>(nnapiSLImpl), nullptr);
+    // NnApiSLDriverImplFL[5-6] are identical, hence we can just cast to latest one.
+    std::shared_ptr<const NnApiSupportLibrary> nnapi;
+
+    if (nnapiSLImpl->implFeatureLevel == ANEURALNETWORKS_FEATURE_LEVEL_5) {
+        nnapi = std::make_unique<NnApiSupportLibrary>(
+                *reinterpret_cast<NnApiSLDriverImplFL5*>(nnapiSLImpl), nullptr);
+    }
+    if (nnapiSLImpl->implFeatureLevel == ANEURALNETWORKS_FEATURE_LEVEL_6) {
+        nnapi = std::make_unique<NnApiSupportLibrary>(
+                *reinterpret_cast<NnApiSLDriverImplFL6*>(nnapiSLImpl), nullptr);
+    }
+
+    CHECK_NE(nnapi, nullptr);
 
     ABinderProcess_setThreadPoolMaxThreadCount(numberOfListenerThreads);
 

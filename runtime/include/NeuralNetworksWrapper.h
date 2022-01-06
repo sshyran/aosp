@@ -176,7 +176,7 @@ struct OperandType {
 };
 
 #ifdef NNTEST_SLTS
-#define NNAPI_CALL(apiCall) mNnApi->apiCall
+#define NNAPI_CALL(apiCall) mNnApi->getFL5()->apiCall
 #else
 #define NNAPI_CALL(apiCall) apiCall
 #endif
@@ -473,7 +473,7 @@ class Compilation {
             const std::vector<const ANeuralNetworksDevice*>& devices) {
         ANeuralNetworksCompilation* compilation = nullptr;
         const Result result =
-                static_cast<Result>(nnapi->ANeuralNetworksCompilation_createForDevices(
+                static_cast<Result>(nnapi->getFL5()->ANeuralNetworksCompilation_createForDevices(
                         model->getHandle(), devices.empty() ? nullptr : devices.data(),
                         devices.size(), &compilation));
         return {result, Compilation(nnapi, compilation)};

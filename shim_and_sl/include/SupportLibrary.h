@@ -17,8 +17,12 @@
 #ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_SL_SUPPORT_LIBRARY_H
 #define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_SL_SUPPORT_LIBRARY_H
 
+#include <android-base/logging.h>
+#include <dlfcn.h>
+
 #include <memory>
 #include <string>
+#include <variant>
 
 #include "NeuralNetworksSupportLibraryImpl.h"
 #include "NeuralNetworksTypes.h"
@@ -28,17 +32,10 @@
 #endif
 
 /**
- * Helper struct, derived from the latest NnApiSLDriverImpl.
+ * Helper struct, wraps different versions of NnApiSLDriverImpl.
  *
  * Owns the .so handle, and will close it in destructor.
  * Sets proper implStructFeatureLevel in constructor.
- *
- * It's derived from the latest NnApiSLDriverImplFL* struct,
- * so it contains all possible functionality.
- *
- * When a new NnApiSLDriverImpl is introduced, this class
- * has to switch base class to it and provide constructors for
- * all existing NnApiSLDriverImplFL* structs.
  *
  * There's expectation that for M>N, NnApiSLDriverImplFL(M) is
  * a strict superset of NnApiSLDriverImplFL(N), and *NnApiSLDriverImplFL(M) can
@@ -47,11 +44,35 @@
  * The base->implFeatureLevel is set to the actual Feature Level
  * implemented by the SLDriverImpl,
  */
-struct NnApiSupportLibrary : NnApiSLDriverImplFL6 {
-    NnApiSupportLibrary(const NnApiSLDriverImplFL6& impl, void* libHandle);
-    ~NnApiSupportLibrary();
+struct NnApiSupportLibrary {
+    NnApiSupportLibrary(const NnApiSLDriverImplFL5& impl, void* libHandle)
+        : libHandle(libHandle), impl(impl) {}
+    // No need for ctor below since FL6 is typedef of FL5
+    // NnApiSupportLibrary(const NnApiSLDriverImplFL6& impl, void* libHandle): impl(impl),
+    // libHandle(libHandle) {}
+    ~NnApiSupportLibrary() {
+        if (libHandle != nullptr) {
+            dlclose(libHandle);
+            libHandle = nullptr;
+        }
+    }
+
+    int64_t getFeatureLevel() const { return getFL5()->base.implFeatureLevel; }
+    const NnApiSLDriverImplFL5* getFL5() const {
+        return std::visit(
+                [](auto&& impl) { return reinterpret_cast<const NnApiSLDriverImplFL5*>(&impl); },
+                impl);
+    }
+    const NnApiSLDriverImplFL6* getFL6() const {
+        CHECK_GE(getFeatureLevel(), ANEURALNETWORKS_FEATURE_LEVEL_6);
+        return std::visit(
+                [](auto&& impl) { return reinterpret_cast<const NnApiSLDriverImplFL6*>(&impl); },
+                impl);
+    }
 
     void* libHandle = nullptr;
+    // NnApiSLDriverImplFL6 is a typedef of FL5, can't be explicitly specified.
+    std::variant<NnApiSLDriverImplFL5 /*, NnApiSLDriverImplFL6*/> impl;
 };
 
 /**
