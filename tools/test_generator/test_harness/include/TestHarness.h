@@ -203,7 +203,7 @@ enum class TestOperationType {
 #endif  // NN_EXPERIMENTAL_FEATURE
 };
 
-// TODO(b/202703727): Refactor this with android::nn::HalVersion.
+// TODO(b/209797313): Deduplicate this enum class.
 enum class TestHalVersion { UNKNOWN, V1_0, V1_1, V1_2, V1_3, AIDL_V1, AIDL_V2, AIDL_V3 };
 
 // Manages the data buffer for a test operand.
