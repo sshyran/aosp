@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-#include <HalInterfaces.h>
-#include <MemoryUtils.h>
-#include <Utils.h>
 #include <android-base/scopeguard.h>
 #include <gtest/gtest.h>
+#include <nnapi/SharedMemory.h>
+#include <nnapi/Types.h>
 #include <nnapi/Validation.h>
 
 #include "GeneratedTestUtils.h"
@@ -33,7 +32,6 @@
 namespace android::nn::compliance_test {
 
 using namespace test_helper;
-using HidlModel = V1_3::Model;
 using WrapperModel = test_wrapper::Model;
 using WrapperOperandType = test_wrapper::OperandType;
 using WrapperType = test_wrapper::Type;
@@ -49,54 +47,15 @@ static void testAvailableSinceVersion(const WrapperModel& wrapperModel, const Ve
     EXPECT_TRUE(modelBuilder->isValid());
     Model model = modelBuilder->makeModel();
     const auto modelVersion = validate(model);
-    ASSERT_TRUE(modelVersion.ok());
+    ASSERT_TRUE(modelVersion.ok()) << modelVersion.error();
     ASSERT_EQ(testVersion, modelVersion.value());
 }
 
-// Creates a HIDL model from a wrapper model.
-static HidlModel createHidlModel(const WrapperModel& wrapperModel) {
-    auto modelBuilder = reinterpret_cast<const ModelBuilder*>(wrapperModel.getHandle());
-    EXPECT_TRUE(modelBuilder->isFinished());
-    EXPECT_TRUE(modelBuilder->isValid());
-    return convertToV1_3(modelBuilder->makeModel());
-}
-
-static void testAvailableSinceV1_3(const WrapperModel& wrapperModel) {
-    HidlModel hidlModel = createHidlModel(wrapperModel);
-    ASSERT_FALSE(compliantWithV1_2(hidlModel));
-    ASSERT_FALSE(compliantWithV1_1(hidlModel));
-    ASSERT_FALSE(compliantWithV1_0(hidlModel));
-}
-
-static void testAvailableSinceV1_2(const WrapperModel& wrapperModel) {
-    HidlModel hidlModel = createHidlModel(wrapperModel);
-    ASSERT_TRUE(compliantWithV1_2(hidlModel));
-    ASSERT_FALSE(compliantWithV1_1(hidlModel));
-    ASSERT_FALSE(compliantWithV1_0(hidlModel));
-}
-
-static void testAvailableSinceV1_1(const WrapperModel& wrapperModel) {
-    HidlModel hidlModel = createHidlModel(wrapperModel);
-    ASSERT_TRUE(compliantWithV1_2(hidlModel));
-    ASSERT_TRUE(compliantWithV1_1(hidlModel));
-    ASSERT_FALSE(compliantWithV1_0(hidlModel));
-}
-
-static void testAvailableSinceV1_0(const WrapperModel& wrapperModel) {
-    HidlModel hidlModel = createHidlModel(wrapperModel);
-    ASSERT_TRUE(compliantWithV1_2(hidlModel));
-    ASSERT_TRUE(compliantWithV1_1(hidlModel));
-    ASSERT_TRUE(compliantWithV1_0(hidlModel));
-}
-
-[[maybe_unused]] static void testAvailableSinceV1_2(const V1_3::Request& request) {
-    ASSERT_FALSE(compliantWithV1_0(request));
-    ASSERT_TRUE(compliantWithV1_2(request));
-}
-
-static void testAvailableSinceV1_3(const V1_3::Request& request) {
-    ASSERT_FALSE(compliantWithV1_0(request));
-    ASSERT_FALSE(compliantWithV1_2(request));
+// Verifies the earliest supported version for the request.
+static void testAvailableSinceVersion(const Request& request, const Version testVersion) {
+    const auto requestVersion = validate(request);
+    ASSERT_TRUE(requestVersion.ok()) << requestVersion.error();
+    ASSERT_EQ(testVersion, requestVersion.value());
 }
 
 static const WrapperOperandType kTypeTensorFloat(WrapperType::TENSOR_FLOAT32, {1});
@@ -116,7 +75,7 @@ TEST_F(ComplianceTest, Rank0TensorModelInput) {
     model.identifyInputsAndOutputs({op1, op2}, {op3});
     ASSERT_TRUE(model.isValid());
     model.finish();
-    testAvailableSinceV1_2(model);
+    testAvailableSinceVersion(model, kVersionFeatureLevel3);
 }
 
 TEST_F(ComplianceTest, Rank0TensorModelOutput) {
@@ -130,7 +89,7 @@ TEST_F(ComplianceTest, Rank0TensorModelOutput) {
     model.identifyInputsAndOutputs({op1, op2}, {op3});
     ASSERT_TRUE(model.isValid());
     model.finish();
-    testAvailableSinceV1_2(model);
+    testAvailableSinceVersion(model, kVersionFeatureLevel3);
 }
 
 TEST_F(ComplianceTest, Rank0TensorTemporaryVariable) {
@@ -147,7 +106,7 @@ TEST_F(ComplianceTest, Rank0TensorTemporaryVariable) {
     model.identifyInputsAndOutputs({op1, op2, op4}, {op5});
     ASSERT_TRUE(model.isValid());
     model.finish();
-    testAvailableSinceV1_2(model);
+    testAvailableSinceVersion(model, kVersionFeatureLevel3);
 }
 
 // Hardware buffers are an Android concept, which aren't necessarily
@@ -182,53 +141,80 @@ TEST_F(ComplianceTest, HardwareBufferModel) {
     model.identifyInputsAndOutputs({op1}, {op3});
     ASSERT_TRUE(model.isValid());
     model.finish();
-    testAvailableSinceV1_2(model);
+    testAvailableSinceVersion(model, kVersionFeatureLevel3);
 }
 
 TEST_F(ComplianceTest, HardwareBufferRequest) {
-    const auto [n, ahwb] = MemoryRuntimeAHWB::create(1024);
+    constexpr size_t kAhwbMemorySize = 1024;
+    const auto [n, ahwb] = MemoryRuntimeAHWB::create(kAhwbMemorySize);
     ASSERT_EQ(n, ANEURALNETWORKS_NO_ERROR);
-    V1_3::Request::MemoryPool sharedMemoryPool,
-            ahwbMemoryPool = convertToV1_3(ahwb->getMemoryPool());
-    sharedMemoryPool.hidlMemory(allocateSharedMemory(1024));
-    ASSERT_TRUE(sharedMemoryPool.hidlMemory().valid());
-    ASSERT_TRUE(ahwbMemoryPool.hidlMemory().valid());
+    const Request::MemoryPool ahwbMemoryPool = ahwb->getMemoryPool();
+
+    constexpr size_t kSharedMemorySize = 1024;
+    auto maybeSharedMemoryPool = createSharedMemory(kSharedMemorySize);
+    ASSERT_TRUE(maybeSharedMemoryPool.ok()) << maybeSharedMemoryPool.error().message;
+    const Request::MemoryPool sharedMemoryPool = std::move(maybeSharedMemoryPool).value();
 
     // AHardwareBuffer as input.
-    testAvailableSinceV1_2(V1_3::Request{
-            .inputs = {{.hasNoValue = false, .location = {.poolIndex = 0}, .dimensions = {}}},
-            .outputs = {{.hasNoValue = false, .location = {.poolIndex = 1}, .dimensions = {}}},
-            .pools = {ahwbMemoryPool, sharedMemoryPool},
-    });
+    testAvailableSinceVersion(
+            Request{
+                    .inputs = {{.lifetime = Request::Argument::LifeTime::POOL,
+                                .location = {.poolIndex = 0, .length = kAhwbMemorySize},
+                                .dimensions = {}}},
+                    .outputs = {{.lifetime = Request::Argument::LifeTime::POOL,
+                                 .location = {.poolIndex = 1, .length = kSharedMemorySize},
+                                 .dimensions = {}}},
+                    .pools = {ahwbMemoryPool, sharedMemoryPool},
+            },
+            kVersionFeatureLevel3);
 
     // AHardwareBuffer as output.
-    testAvailableSinceV1_2(V1_3::Request{
-            .inputs = {{.hasNoValue = false, .location = {.poolIndex = 0}, .dimensions = {}}},
-            .outputs = {{.hasNoValue = false, .location = {.poolIndex = 1}, .dimensions = {}}},
-            .pools = {sharedMemoryPool, ahwbMemoryPool},
-    });
+    testAvailableSinceVersion(
+            Request{
+                    .inputs = {{.lifetime = Request::Argument::LifeTime::POOL,
+                                .location = {.poolIndex = 0, .length = kSharedMemorySize},
+                                .dimensions = {}}},
+                    .outputs = {{.lifetime = Request::Argument::LifeTime::POOL,
+                                 .location = {.poolIndex = 1, .length = kAhwbMemorySize},
+                                 .dimensions = {}}},
+                    .pools = {sharedMemoryPool, ahwbMemoryPool},
+            },
+            kVersionFeatureLevel3);
 }
 #endif
 
 TEST_F(ComplianceTest, DeviceMemory) {
-    V1_3::Request::MemoryPool sharedMemoryPool, deviceMemoryPool;
-    sharedMemoryPool.hidlMemory(allocateSharedMemory(1024));
-    ASSERT_TRUE(sharedMemoryPool.hidlMemory().valid());
-    deviceMemoryPool.token(1);
+    constexpr size_t kSharedMemorySize = 1024;
+    auto maybeSharedMemoryPool = createSharedMemory(kSharedMemorySize);
+    ASSERT_TRUE(maybeSharedMemoryPool.ok()) << maybeSharedMemoryPool.error().message;
+    const Request::MemoryPool sharedMemoryPool = std::move(maybeSharedMemoryPool).value();
+    const Request::MemoryPool deviceMemoryPool = Request::MemoryDomainToken(1);
 
     // Device memory as input.
-    testAvailableSinceV1_3(V1_3::Request{
-            .inputs = {{.hasNoValue = false, .location = {.poolIndex = 0}, .dimensions = {}}},
-            .outputs = {{.hasNoValue = false, .location = {.poolIndex = 1}, .dimensions = {}}},
-            .pools = {deviceMemoryPool, sharedMemoryPool},
-    });
+    testAvailableSinceVersion(
+            Request{
+                    .inputs = {{.lifetime = Request::Argument::LifeTime::POOL,
+                                .location = {.poolIndex = 0},
+                                .dimensions = {}}},
+                    .outputs = {{.lifetime = Request::Argument::LifeTime::POOL,
+                                 .location = {.poolIndex = 1, .length = kSharedMemorySize},
+                                 .dimensions = {}}},
+                    .pools = {deviceMemoryPool, sharedMemoryPool},
+            },
+            kVersionFeatureLevel4);
 
     // Device memory as output.
-    testAvailableSinceV1_3(V1_3::Request{
-            .inputs = {{.hasNoValue = false, .location = {.poolIndex = 0}, .dimensions = {}}},
-            .outputs = {{.hasNoValue = false, .location = {.poolIndex = 1}, .dimensions = {}}},
-            .pools = {sharedMemoryPool, deviceMemoryPool},
-    });
+    testAvailableSinceVersion(
+            Request{
+                    .inputs = {{.lifetime = Request::Argument::LifeTime::POOL,
+                                .location = {.poolIndex = 0, .length = kSharedMemorySize},
+                                .dimensions = {}}},
+                    .outputs = {{.lifetime = Request::Argument::LifeTime::POOL,
+                                 .location = {.poolIndex = 1},
+                                 .dimensions = {}}},
+                    .pools = {sharedMemoryPool, deviceMemoryPool},
+            },
+            kVersionFeatureLevel4);
 }
 
 class GeneratedComplianceTest : public generated_tests::GeneratedTestBase {};
@@ -240,18 +226,17 @@ TEST_P(GeneratedComplianceTest, Test) {
     model.finish();
     switch (testModel.minSupportedVersion) {
         // TODO(b/209797313): Unify HalVersion and Version.
-        // TODO(b/213801779): Use testAvailableSinceVersion for HIDL.
         case TestHalVersion::V1_0:
-            testAvailableSinceV1_0(model);
+            testAvailableSinceVersion(model, kVersionFeatureLevel1);
             break;
         case TestHalVersion::V1_1:
-            testAvailableSinceV1_1(model);
+            testAvailableSinceVersion(model, kVersionFeatureLevel2);
             break;
         case TestHalVersion::V1_2:
-            testAvailableSinceV1_2(model);
+            testAvailableSinceVersion(model, kVersionFeatureLevel3);
             break;
         case TestHalVersion::V1_3:
-            testAvailableSinceV1_3(model);
+            testAvailableSinceVersion(model, kVersionFeatureLevel4);
             break;
         case TestHalVersion::AIDL_V1:
             testAvailableSinceVersion(model, kVersionFeatureLevel5);
