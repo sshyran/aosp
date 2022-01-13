@@ -208,9 +208,10 @@ bool validateShapes(const Shape& input, const Shape& weights, const Shape& bias,
     uint32_t num_units = getSizeOfDimension(weights, 0u);
     uint32_t input_size = getSizeOfDimension(weights, 1u);
     uint32_t bias_len = getSizeOfDimension(bias, 0u);
-    uint32_t batch_size = input_size == 0 ? 0 : input_n_elements / input_size;
-    if (batch_size != 0) {
-        NN_RET_CHECK_EQ(input_size * batch_size, input_n_elements);
+    uint32_t batch_size = 0;
+    if (input_size != 0) {
+        NN_RET_CHECK_EQ(input_n_elements % input_size, 0u);
+        batch_size = input_n_elements / input_size;
     }
     if (num_units != 0 && bias_len != 0) {
         NN_RET_CHECK_EQ(bias_len, num_units);
