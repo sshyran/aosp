@@ -19,7 +19,8 @@
 #include "LocalResponseNormalization.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::local_response_norm {
+namespace android::nn {
+namespace local_response_norm {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(context->getNumInputs() == kNumInputs ||
@@ -64,4 +65,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return minSupportedVersion;
 }
 
-}  // namespace android::nn::local_response_norm
+}  // namespace local_response_norm
+
+NN_DEFINE_VALIDATION_FUNCTION(LOCAL_RESPONSE_NORMALIZATION, local_response_norm::validate);
+
+}  // namespace android::nn

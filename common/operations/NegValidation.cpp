@@ -17,7 +17,8 @@
 #include "Neg.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::neg {
+namespace android::nn {
+namespace neg {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -31,4 +32,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevel3;
 }
 
-}  // namespace android::nn::neg
+}  // namespace neg
+
+NN_DEFINE_VALIDATION_FUNCTION(NEG, neg::validate);
+
+}  // namespace android::nn

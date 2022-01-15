@@ -20,7 +20,8 @@
 #include "Pooling.h"
 #include "nnapi/Validation.h"
 
-namespace android::nn::pooling {
+namespace android::nn {
+namespace pooling {
 
 Result<Version> validate(OperationType opType, const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
@@ -86,4 +87,16 @@ Result<Version> validate(OperationType opType, const IOperationValidationContext
     return minSupportedVersion;
 }
 
-}  // namespace android::nn::pooling
+}  // namespace pooling
+
+NN_DEFINE_VALIDATION_FUNCTION(AVERAGE_POOL_2D, [](const IOperationValidationContext* context) {
+    return pooling::validate(OperationType::AVERAGE_POOL_2D, context);
+});
+NN_DEFINE_VALIDATION_FUNCTION(L2_POOL_2D, [](const IOperationValidationContext* context) {
+    return pooling::validate(OperationType::L2_POOL_2D, context);
+});
+NN_DEFINE_VALIDATION_FUNCTION(MAX_POOL_2D, [](const IOperationValidationContext* context) {
+    return pooling::validate(OperationType::MAX_POOL_2D, context);
+});
+
+}  // namespace android::nn

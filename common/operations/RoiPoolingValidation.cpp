@@ -19,7 +19,8 @@
 #include "OperationsUtils.h"
 #include "RoiPooling.h"
 
-namespace android::nn::roi_pooling {
+namespace android::nn {
+namespace roi_pooling {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -58,4 +59,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     }
 }
 
-}  // namespace android::nn::roi_pooling
+}  // namespace roi_pooling
+
+NN_DEFINE_VALIDATION_FUNCTION(ROI_POOLING, roi_pooling::validate);
+
+}  // namespace android::nn

@@ -17,7 +17,8 @@
 #include "OperationsUtils.h"
 #include "Rank.h"
 
-namespace android::nn::rank_op {
+namespace android::nn {
+namespace rank_op {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -38,4 +39,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevel4;
 }
 
-}  // namespace android::nn::rank_op
+}  // namespace rank_op
+
+NN_DEFINE_VALIDATION_FUNCTION(RANK, rank_op::validate);
+
+}  // namespace android::nn

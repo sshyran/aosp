@@ -19,7 +19,8 @@
 #include "Conv2D.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::conv_2d {
+namespace android::nn {
+namespace conv_2d {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     const uint32_t numInputs = context->getNumInputs();
@@ -122,4 +123,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return minSupportedVersion;
 }
 
-}  // namespace android::nn::conv_2d
+}  // namespace conv_2d
+
+NN_DEFINE_VALIDATION_FUNCTION(CONV_2D, conv_2d::validate);
+
+}  // namespace android::nn

@@ -19,7 +19,8 @@
 #include "MaximumMinimum.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::maximum_minimum {
+namespace android::nn {
+namespace maximum_minimum {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(context->getNumInputs() == 2 && context->getNumOutputs() == 1)
@@ -46,4 +47,9 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return version;
 }
 
-}  // namespace android::nn::maximum_minimum
+}  // namespace maximum_minimum
+
+NN_DEFINE_VALIDATION_FUNCTION(MAXIMUM, maximum_minimum::validate);
+NN_DEFINE_VALIDATION_FUNCTION(MINIMUM, maximum_minimum::validate);
+
+}  // namespace android::nn

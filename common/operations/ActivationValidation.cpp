@@ -17,7 +17,8 @@
 #include "Activation.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::activation {
+namespace android::nn {
+namespace activation {
 
 Result<Version> validate(OperationType opType, const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -65,4 +66,23 @@ Result<Version> validateHardSwish(const IOperationValidationContext* context) {
     return minSupportedVersion;
 }
 
-}  // namespace android::nn::activation
+}  // namespace activation
+
+NN_DEFINE_VALIDATION_FUNCTION(RELU, [](const IOperationValidationContext* context) {
+    return activation::validate(OperationType::RELU, context);
+});
+NN_DEFINE_VALIDATION_FUNCTION(RELU1, [](const IOperationValidationContext* context) {
+    return activation::validate(OperationType::RELU1, context);
+});
+NN_DEFINE_VALIDATION_FUNCTION(RELU6, [](const IOperationValidationContext* context) {
+    return activation::validate(OperationType::RELU6, context);
+});
+NN_DEFINE_VALIDATION_FUNCTION(LOGISTIC, [](const IOperationValidationContext* context) {
+    return activation::validate(OperationType::LOGISTIC, context);
+});
+NN_DEFINE_VALIDATION_FUNCTION(TANH, [](const IOperationValidationContext* context) {
+    return activation::validate(OperationType::TANH, context);
+});
+NN_DEFINE_VALIDATION_FUNCTION(HARD_SWISH, activation::validateHardSwish);
+
+}  // namespace android::nn

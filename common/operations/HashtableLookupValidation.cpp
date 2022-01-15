@@ -19,7 +19,8 @@
 #include "HashtableLookup.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::hashtable_lookup {
+namespace android::nn {
+namespace hashtable_lookup {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(context->getNumInputs() == 3 && context->getNumOutputs() == 2)
@@ -36,4 +37,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevel1;
 }
 
-}  // namespace android::nn::hashtable_lookup
+}  // namespace hashtable_lookup
+
+NN_DEFINE_VALIDATION_FUNCTION(HASHTABLE_LOOKUP, hashtable_lookup::validate);
+
+}  // namespace android::nn

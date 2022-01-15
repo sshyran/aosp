@@ -20,7 +20,8 @@
 #include "ResizeImageOps.h"
 #include "nnapi/Validation.h"
 
-namespace android::nn::resize_image {
+namespace android::nn {
+namespace resize_image {
 
 Result<Version> validate(OperationType opType, const IOperationValidationContext* context) {
     const auto numInputs = context->getNumInputs();
@@ -74,4 +75,15 @@ Result<Version> validate(OperationType opType, const IOperationValidationContext
     return minSupportedVersion;
 }
 
-}  // namespace android::nn::resize_image
+}  // namespace resize_image
+
+NN_DEFINE_VALIDATION_FUNCTION(RESIZE_BILINEAR, [](const IOperationValidationContext* context) {
+    return resize_image::validate(OperationType::RESIZE_BILINEAR, context);
+});
+NN_DEFINE_VALIDATION_FUNCTION(RESIZE_NEAREST_NEIGHBOR,
+                              [](const IOperationValidationContext* context) {
+                                  return resize_image::validate(
+                                          OperationType::RESIZE_NEAREST_NEIGHBOR, context);
+                              });
+
+}  // namespace android::nn

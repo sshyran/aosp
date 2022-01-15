@@ -17,7 +17,8 @@
 #include "LogicalNot.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::logical_not {
+namespace android::nn {
+namespace logical_not {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -30,4 +31,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevel3;
 }
 
-}  // namespace android::nn::logical_not
+}  // namespace logical_not
+
+NN_DEFINE_VALIDATION_FUNCTION(LOGICAL_NOT, logical_not::validate);
+
+}  // namespace android::nn

@@ -19,7 +19,8 @@
 #include "Multinomial.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::multinomial {
+namespace android::nn {
+namespace multinomial {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(context->getNumInputs() == 3 && context->getNumOutputs() == 1)
@@ -37,4 +38,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevel3;
 }
 
-}  // namespace android::nn::multinomial
+}  // namespace multinomial
+
+NN_DEFINE_VALIDATION_FUNCTION(RANDOM_MULTINOMIAL, multinomial::validate);
+
+}  // namespace android::nn

@@ -17,7 +17,8 @@
 #include "OperationsUtils.h"
 #include "PRelu.h"
 
-namespace android::nn::prelu {
+namespace android::nn {
+namespace prelu {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -37,4 +38,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     }
 }
 
-}  // namespace android::nn::prelu
+}  // namespace prelu
+
+NN_DEFINE_VALIDATION_FUNCTION(PRELU, prelu::validate);
+
+}  // namespace android::nn

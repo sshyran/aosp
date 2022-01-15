@@ -19,7 +19,8 @@
 #include "GroupedConv2D.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::grouped_conv2d {
+namespace android::nn {
+namespace grouped_conv2d {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK((context->getNumInputs() == 12 || context->getNumInputs() == 9) &&
@@ -80,4 +81,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return version;
 }
 
-}  // namespace android::nn::grouped_conv2d
+}  // namespace grouped_conv2d
+
+NN_DEFINE_VALIDATION_FUNCTION(GROUPED_CONV_2D, grouped_conv2d::validate);
+
+}  // namespace android::nn

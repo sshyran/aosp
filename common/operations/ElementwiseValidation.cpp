@@ -17,7 +17,8 @@
 #include "Elementwise.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::elementwise {
+namespace android::nn {
+namespace elementwise {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -79,4 +80,14 @@ Result<Version> validateRsqrt(const IOperationValidationContext* context) {
                    : kVersionFeatureLevel3;
 }
 
-}  // namespace android::nn::elementwise
+}  // namespace elementwise
+
+NN_DEFINE_VALIDATION_FUNCTION(FLOOR, elementwise::validateFloor);
+NN_DEFINE_VALIDATION_FUNCTION(ABS, elementwise::validateAbs);
+NN_DEFINE_VALIDATION_FUNCTION(EXP, elementwise::validate);
+NN_DEFINE_VALIDATION_FUNCTION(LOG, elementwise::validate);
+NN_DEFINE_VALIDATION_FUNCTION(RSQRT, elementwise::validateRsqrt);
+NN_DEFINE_VALIDATION_FUNCTION(SIN, elementwise::validate);
+NN_DEFINE_VALIDATION_FUNCTION(SQRT, elementwise::validate);
+
+}  // namespace android::nn
