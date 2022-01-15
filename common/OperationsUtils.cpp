@@ -75,6 +75,37 @@ void CalculateActivationRangeImpl(int32_t activation, const Shape& outputShape, 
 
 }  // namespace
 
+std::string IOperationValidationContext::invalidInOutNumberMessage(int expIn, int expOut) const {
+    std::ostringstream os;
+    os << "Invalid number of input operands (" << getNumInputs() << ", expected " << expIn
+       << ") or output operands (" << getNumOutputs() << ", expected " << expOut
+       << ") for operation " << getOperationName();
+    return os.str();
+}
+
+Result<void> IOperationValidationContext::validateOperationOperandTypes(
+        const std::vector<OperandType>& inExpectedTypes,
+        const std::vector<OperandType>& outExpectedInTypes) const {
+    NN_RET_CHECK_EQ(getNumInputs(), inExpectedTypes.size())
+            << "Wrong operand count: expected " << inExpectedTypes.size() << " inputs, got "
+            << getNumInputs() << " inputs";
+    NN_RET_CHECK_EQ(getNumOutputs(), outExpectedInTypes.size())
+            << "Wrong operand count: expected " << outExpectedInTypes.size() << " outputs, got "
+            << getNumOutputs() << " outputs";
+    for (size_t i = 0; i < getNumInputs(); i++) {
+        NN_RET_CHECK_EQ(getInputType(i), inExpectedTypes[i])
+                << "Invalid input tensor type " << getInputType(i) << " for input " << i
+                << ", expected " << inExpectedTypes[i];
+    }
+    for (size_t i = 0; i < getNumOutputs(); i++) {
+        NN_RET_CHECK_EQ(getOutputType(i), outExpectedInTypes[i])
+                << "Invalid output tensor type " << getOutputType(i) << " for input " << i
+                << ", expected " << outExpectedInTypes[i];
+    }
+
+    return {};
+}
+
 bool validateInputTypes(const IOperationValidationContext* context,
                         const std::vector<OperandType>& expectedTypes) {
     return validateOperandTypes(expectedTypes, "input", context->getNumInputs(),

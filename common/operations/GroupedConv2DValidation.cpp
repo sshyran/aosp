@@ -14,11 +14,70 @@
  * limitations under the License.
  */
 
+#include <vector>
+
 #include "GroupedConv2D.h"
 #include "OperationsUtils.h"
 
-namespace android::nn {
+namespace android::nn::grouped_conv2d {
 
-// This implementation is left intentionally blank.
+Result<Version> validate(const IOperationValidationContext* context) {
+    NN_RET_CHECK((context->getNumInputs() == 12 || context->getNumInputs() == 9) &&
+                 context->getNumOutputs() == 1)
+            << "Invalid number of input operands (" << context->getNumInputs()
+            << ", expected 12 or 9) or output operands (" << context->getNumOutputs()
+            << ", expected 1) for operation " << context->getOperationName();
+    auto inputType = context->getInputType(0);
+    auto filterType = context->getInputType(1);
+    std::vector<OperandType> inExpectedTypes;
+    std::vector<OperandType> outExpectedTypes;
+    if (inputType == OperandType::TENSOR_FLOAT32) {
+        inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                           OperandType::TENSOR_FLOAT32, OperandType::INT32,
+                           OperandType::INT32,          OperandType::INT32,
+                           OperandType::INT32,          OperandType::INT32};
+        outExpectedTypes = {OperandType::TENSOR_FLOAT32};
+    } else if (inputType == OperandType::TENSOR_FLOAT16) {
+        inExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::TENSOR_FLOAT16,
+                           OperandType::TENSOR_FLOAT16, OperandType::INT32,
+                           OperandType::INT32,          OperandType::INT32,
+                           OperandType::INT32,          OperandType::INT32};
+        outExpectedTypes = {OperandType::TENSOR_FLOAT16};
+    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM ||
+               inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        NN_RET_CHECK(filterType == inputType ||
+                     filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL)
+                << "Unsupported filter tensor type for operation " << context->getOperationName();
 
-}  // namespace android::nn
+        NN_RET_CHECK(filterType != OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL ||
+                     std::get<Operand::SymmPerChannelQuantParams>(context->getInputExtraParams(1))
+                                     .channelDim == 0)
+                << "Unsupported filter tensor channel dimension for operation "
+                << context->getOperationName();
+
+        inExpectedTypes = {inputType,          filterType,         OperandType::TENSOR_INT32,
+                           OperandType::INT32, OperandType::INT32, OperandType::INT32,
+                           OperandType::INT32, OperandType::INT32};
+        outExpectedTypes = {inputType};
+    } else {
+        NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
+                            << context->getOperationName();
+    }
+
+    if (context->getNumInputs() == 12) {
+        std::vector<OperandType> explicitScalarTypes(3, OperandType::INT32);
+        inExpectedTypes.insert(inExpectedTypes.end(), explicitScalarTypes.begin(),
+                               explicitScalarTypes.end());
+    }
+    inExpectedTypes.push_back(OperandType::BOOL);
+    Version version;
+    if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        version = kVersionFeatureLevel4;
+    } else {
+        version = kVersionFeatureLevel3;
+    }
+    NN_TRY(context->validateOperationOperandTypes(inExpectedTypes, outExpectedTypes));
+    return version;
+}
+
+}  // namespace android::nn::grouped_conv2d

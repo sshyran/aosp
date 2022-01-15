@@ -67,6 +67,12 @@ class IOperationValidationContext {
     virtual uint32_t getNumOutputs() const = 0;
     virtual OperandType getOutputType(uint32_t index) const = 0;
     virtual Shape getOutputShape(uint32_t index) const = 0;
+
+    std::string invalidInOutNumberMessage(int expIn, int expOut) const;
+
+    Result<void> validateOperationOperandTypes(
+            const std::vector<OperandType>& inExpectedTypes,
+            const std::vector<OperandType>& outExpectedInTypes) const;
 };
 
 // Provides inputs and outputs during operation execution.

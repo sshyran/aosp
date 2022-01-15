@@ -14,11 +14,26 @@
  * limitations under the License.
  */
 
+#include <vector>
+
 #include "HashtableLookup.h"
 #include "OperationsUtils.h"
 
-namespace android::nn {
+namespace android::nn::hashtable_lookup {
 
-// This implementation is left intentionally blank.
+Result<Version> validate(const IOperationValidationContext* context) {
+    NN_RET_CHECK(context->getNumInputs() == 3 && context->getNumOutputs() == 2)
+            << context->invalidInOutNumberMessage(3, 2);
+    auto inputType = context->getInputType(2);
+    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT32 ||
+                 inputType == OperandType::TENSOR_INT32 ||
+                 inputType == OperandType::TENSOR_QUANT8_ASYMM)
+            << "Unsupported input tensor type for operation " << context->getOperationName();
+    std::vector<OperandType> inExpectedTypes = {OperandType::TENSOR_INT32,
+                                                OperandType::TENSOR_INT32, inputType};
+    std::vector<OperandType> outExpectedTypes = {inputType, OperandType::TENSOR_QUANT8_ASYMM};
+    NN_TRY(context->validateOperationOperandTypes(inExpectedTypes, outExpectedTypes));
+    return kVersionFeatureLevel1;
+}
 
-}  // namespace android::nn
+}  // namespace android::nn::hashtable_lookup
