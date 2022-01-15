@@ -67,9 +67,9 @@ cc_defaults {
         "libaidlcommonsupport",
         "libarect",
         "libcutils",
+        "libneuralnetworks_common",
         "libneuralnetworks_shim_static",
         "neuralnetworks_supportlibrary_loader",
-        "neuralnetworks_types",
         "neuralnetworks_utils_hal_common",
     ],
     shared_libs: [

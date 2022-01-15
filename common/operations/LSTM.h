@@ -22,10 +22,16 @@
 #include <vector>
 
 #include "ActivationFunctor.h"
+#include "OperationsUtils.h"
 #include "nnapi/Types.h"
 
 namespace android {
 namespace nn {
+namespace lstm {
+
+Result<Version> validate(const IOperationValidationContext* context);
+
+}  // namespace lstm
 
 struct LSTMParams {
     ActivationFn activation;

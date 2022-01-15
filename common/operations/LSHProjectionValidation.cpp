@@ -14,11 +14,47 @@
  * limitations under the License.
  */
 
+#include <vector>
+
 #include "LSHProjection.h"
 #include "OperationsUtils.h"
 
-namespace android::nn {
+namespace android::nn::lsh_projection {
 
-// This implementation is left intentionally blank.
+Result<Version> validate(const IOperationValidationContext* context) {
+    NN_RET_CHECK(context->getNumInputs() == 4 && context->getNumOutputs() == 1)
+            << context->invalidInOutNumberMessage(4, 1);
+    auto inputType = context->getInputType(1);
+    NN_RET_CHECK(
+            inputType == OperandType::TENSOR_FLOAT16 || inputType == OperandType::TENSOR_FLOAT32 ||
+            inputType == OperandType::TENSOR_INT32 || inputType == OperandType::TENSOR_QUANT8_ASYMM)
+            << "Unsupported input tensor type for operation " << context->getOperationName();
+    auto hashType = context->getInputType(0);
+    Version version;
+    std::vector<OperandType> inExpectedTypes;
+    if (hashType == OperandType::TENSOR_FLOAT16) {
+        version = kVersionFeatureLevel3;
+        inExpectedTypes = {
+                OperandType::TENSOR_FLOAT16,
+                inputType,
+                OperandType::TENSOR_FLOAT16,
+                OperandType::INT32,
+        };
+    } else if (hashType == OperandType::TENSOR_FLOAT32) {
+        version = kVersionFeatureLevel1;
+        inExpectedTypes = {
+                OperandType::TENSOR_FLOAT32,
+                inputType,
+                OperandType::TENSOR_FLOAT32,
+                OperandType::INT32,
+        };
+    } else {
+        NN_RET_CHECK_FAIL() << "Unsupported hash tensor type for operation "
+                            << context->getOperationName();
+    }
+    std::vector<OperandType> outExpectedTypes = {OperandType::TENSOR_INT32};
+    NN_TRY(context->validateOperationOperandTypes(inExpectedTypes, outExpectedTypes));
+    return version;
+}
 
-}  // namespace android::nn
+}  // namespace android::nn::lsh_projection

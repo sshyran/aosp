@@ -14,12 +14,52 @@
  * limitations under the License.
  */
 
+#include <vector>
+
 #include "LSTM.h"
-
 #include "OperationsUtils.h"
+#include "nnapi/Validation.h"
 
-namespace android::nn {
+namespace android::nn::lstm {
 
-// This implementation is left intentionally blank.
+Result<Version> validate(const IOperationValidationContext* context) {
+    NN_RET_CHECK((context->getNumInputs() == 23 || context->getNumInputs() == 27) &&
+                 context->getNumOutputs() == 4)
+            << "Invalid number of input operands (" << context->getNumInputs()
+            << ", expected 23 or 27) or output operands (" << context->getNumOutputs()
+            << ", expected 4) for operation " << context->getOperationName();
+    std::vector<OperandType> inExpectedTypes;
+    std::vector<OperandType> outExpectedTypes;
+    auto inputType = context->getInputType(0);
+    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT32 ||
+                 inputType == OperandType::TENSOR_FLOAT16)
+            << "Unsupported input tensor type for operation " << context->getOperationName();
 
-}  // namespace android::nn
+    Version version = kVersionFeatureLevel1;
+    inExpectedTypes = {inputType, inputType, inputType,         inputType, inputType, inputType,
+                       inputType, inputType, inputType,         inputType, inputType, inputType,
+                       inputType, inputType, inputType,         inputType, inputType, inputType,
+                       inputType, inputType, OperandType::INT32};
+    if (inputType == OperandType::TENSOR_FLOAT32) {
+        inExpectedTypes.push_back(OperandType::FLOAT32);
+        inExpectedTypes.push_back(OperandType::FLOAT32);
+    } else {
+        version = kVersionFeatureLevel3;
+        inExpectedTypes.push_back(OperandType::FLOAT16);
+        inExpectedTypes.push_back(OperandType::FLOAT16);
+    }
+
+    outExpectedTypes = {inputType, inputType, inputType, inputType};
+    if (context->getNumInputs() == 23) {
+        version = combineVersions(version, kVersionFeatureLevel1);
+    } else {
+        version = combineVersions(version, kVersionFeatureLevel3);
+        for (int i = 0; i < 4; ++i) {
+            inExpectedTypes.push_back(inputType);
+        }
+    }
+    NN_TRY(context->validateOperationOperandTypes(inExpectedTypes, outExpectedTypes));
+    return version;
+}
+
+}  // namespace android::nn::lstm

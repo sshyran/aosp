@@ -17,8 +17,25 @@
 #include "ArgMinMax.h"
 #include "OperationsUtils.h"
 
-namespace android::nn {
+namespace android::nn::arg_min_max {
 
-// This implementation is left intentionally blank
+Result<Version> validate(const IOperationValidationContext* context) {
+    NN_RET_CHECK(context->getNumInputs() == 2 && context->getNumOutputs() == 1)
+            << context->invalidInOutNumberMessage(2, 1);
+    auto inputType = context->getInputType(0);
+    std::vector<OperandType> inExpectedTypes;
+    std::vector<OperandType> outExpectedTypes;
+    if (inputType == OperandType::TENSOR_FLOAT16 || inputType == OperandType::TENSOR_FLOAT32 ||
+        inputType == OperandType::TENSOR_INT32 || inputType == OperandType::TENSOR_QUANT8_ASYMM ||
+        inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        inExpectedTypes = {inputType, OperandType::INT32};
+        outExpectedTypes = {OperandType::TENSOR_INT32};
+    } else {
+        NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
+                            << context->getOperationName();
+    }
+    NN_TRY(context->validateOperationOperandTypes(inExpectedTypes, outExpectedTypes));
+    return kVersionFeatureLevel3;
+}
 
-}  // namespace android::nn
+}  // namespace android::nn::arg_min_max

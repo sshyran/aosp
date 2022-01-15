@@ -14,12 +14,36 @@
  * limitations under the License.
  */
 
-#include "MaximumMinimum.h"
+#include <vector>
 
+#include "MaximumMinimum.h"
 #include "OperationsUtils.h"
 
 namespace android::nn::maximum_minimum {
 
-// This implementation is left intentionally blank.
+Result<Version> validate(const IOperationValidationContext* context) {
+    NN_RET_CHECK(context->getNumInputs() == 2 && context->getNumOutputs() == 1)
+            << context->invalidInOutNumberMessage(2, 1);
+    std::vector<OperandType> inExpectedTypes;
+    std::vector<OperandType> outExpectedTypes;
+    OperandType inputType = context->getInputType(0);
+    if (inputType == OperandType::TENSOR_FLOAT16 || inputType == OperandType::TENSOR_FLOAT32 ||
+        inputType == OperandType::TENSOR_INT32 || inputType == OperandType::TENSOR_QUANT8_ASYMM ||
+        inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        inExpectedTypes = {inputType, inputType};
+        outExpectedTypes = {inputType};
+    } else {
+        NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
+                            << context->getOperationName();
+    }
+    Version version;
+    if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        version = kVersionFeatureLevel4;
+    } else {
+        version = kVersionFeatureLevel3;
+    }
+    NN_TRY(context->validateOperationOperandTypes(inExpectedTypes, outExpectedTypes));
+    return version;
+}
 
 }  // namespace android::nn::maximum_minimum

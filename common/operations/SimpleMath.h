@@ -19,10 +19,10 @@
 
 #include "OperationsUtils.h"
 
-namespace android::nn {
+namespace android::nn::mean {
 
-// This implementation is left intentionally blank.
+Result<Version> validate(const IOperationValidationContext* context);
 
-}  // namespace android::nn
+}  // namespace android::nn::mean
 
 #endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_SIMPLE_MATH_H

@@ -14,11 +14,29 @@
  * limitations under the License.
  */
 
+#include <vector>
+
 #include "OperationsUtils.h"
 #include "QuantizedLSTM.h"
 
-namespace android::nn {
+namespace android::nn::quantized_16bit_lstm {
 
-// This implementation is left intentionally blank.
+Result<Version> validate(const IOperationValidationContext* context) {
+    NN_RET_CHECK(context->getNumInputs() == 15 && context->getNumOutputs() == 2)
+            << context->invalidInOutNumberMessage(15, 2);
+    std::vector<OperandType> inExpectedTypes = {
+            OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT8_ASYMM,
+            OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT8_ASYMM,
+            OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT8_ASYMM,
+            OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT8_ASYMM,
+            OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_INT32,
+            OperandType::TENSOR_INT32,        OperandType::TENSOR_INT32,
+            OperandType::TENSOR_INT32,        OperandType::TENSOR_QUANT16_SYMM,
+            OperandType::TENSOR_QUANT8_ASYMM};
+    std::vector<OperandType> outExpectedTypes = {OperandType::TENSOR_QUANT16_SYMM,
+                                                 OperandType::TENSOR_QUANT8_ASYMM};
+    NN_TRY(context->validateOperationOperandTypes(inExpectedTypes, outExpectedTypes));
+    return kVersionFeatureLevel3;
+}
 
-}  // namespace android::nn
+}  // namespace android::nn::quantized_16bit_lstm

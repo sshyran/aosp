@@ -14,12 +14,56 @@
  * limitations under the License.
  */
 
-#include "BidirectionalSequenceLSTM.h"
+#include <vector>
 
+#include "BidirectionalSequenceLSTM.h"
 #include "OperationsUtils.h"
 
-namespace android::nn {
+namespace android::nn::bidirectional_sequence_lstm {
 
-// This implementation is left intentionally blank.
+Result<Version> validate(const IOperationValidationContext* context) {
+    const uint32_t kNumOutputs = 2;
+    const uint32_t kNumOutputsMerged = 1;
+    const uint32_t kNumOutputsWithState = 6;
+    const uint32_t kNumOutputsMergedWithState = 5;
+    NN_RET_CHECK(context->getNumInputs() == 61 &&
+                 (context->getNumOutputs() == kNumOutputs ||
+                  context->getNumOutputs() == kNumOutputsMerged ||
+                  context->getNumOutputs() == kNumOutputsWithState ||
+                  context->getNumOutputs() == kNumOutputsMergedWithState))
+            << "Invalid number of input operands (" << context->getNumInputs()
+            << ", expected 61) or output operands (" << context->getNumOutputs()
+            << ", expected 1, 2, 5 or 6) for operation " << context->getOperationName();
 
-}  // namespace android::nn
+    std::vector<OperandType> inExpectedTypes;
+    auto inputType = context->getInputType(0);
+    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT32 ||
+                 inputType == OperandType::TENSOR_FLOAT16)
+            << "Unsupported input tensor type for operation " << context->getOperationName();
+
+    inExpectedTypes = {};
+    for (int i = 0; i < 48; ++i) {
+        inExpectedTypes.push_back(inputType);
+    }
+    inExpectedTypes.push_back(OperandType::INT32);
+    inExpectedTypes.push_back(inputType == OperandType::TENSOR_FLOAT32 ? OperandType::FLOAT32
+                                                                       : OperandType::FLOAT16);
+    inExpectedTypes.push_back(inputType == OperandType::TENSOR_FLOAT32 ? OperandType::FLOAT32
+                                                                       : OperandType::FLOAT16);
+    inExpectedTypes.push_back(OperandType::BOOL);
+    inExpectedTypes.push_back(OperandType::BOOL);
+    for (int i = 0; i < 8; ++i) {
+        inExpectedTypes.push_back(inputType);
+    }
+
+    Version version = kVersionFeatureLevel3;
+    if (context->getNumOutputs() == kNumOutputsWithState ||
+        context->getNumOutputs() == kNumOutputsMergedWithState) {
+        version = kVersionFeatureLevel4;
+    }
+    std::vector<OperandType> outExpectedTypes(context->getNumOutputs(), inputType);
+    NN_TRY(context->validateOperationOperandTypes(inExpectedTypes, outExpectedTypes));
+    return version;
+}
+
+}  // namespace android::nn::bidirectional_sequence_lstm

@@ -14,11 +14,36 @@
  * limitations under the License.
  */
 
+#include <vector>
+
 #include "OperationsUtils.h"
 #include "SimpleMath.h"
 
-namespace android::nn {
+namespace android::nn::mean {
 
-// This implementation is left intentionally blank.
+Result<Version> validate(const IOperationValidationContext* context) {
+    NN_RET_CHECK(context->getNumInputs() == 3 && context->getNumOutputs() == 1)
+            << context->invalidInOutNumberMessage(3, 1);
+    const auto inputRank = context->getInputShape(0).dimensions.size();
+    NN_RET_CHECK_LE(inputRank, 4u)
+            << "Unsupported input tensor rank for operation " << context->getOperationName();
+    auto inputType = context->getInputType(0);
+    Version version;
+    if (inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+        version = kVersionFeatureLevel2;
+    } else if (inputType == OperandType::TENSOR_FLOAT16) {
+        version = kVersionFeatureLevel3;
+    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        version = kVersionFeatureLevel4;
+    } else {
+        NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
+                            << context->getOperationName();
+    }
+    std::vector<OperandType> inExpectedTypes = {inputType, OperandType::TENSOR_INT32,
+                                                OperandType::INT32};
+    std::vector<OperandType> outExpectedTypes = {inputType};
+    NN_TRY(context->validateOperationOperandTypes(inExpectedTypes, outExpectedTypes));
+    return version;
+}
 
-}  // namespace android::nn
+}  // namespace android::nn::mean

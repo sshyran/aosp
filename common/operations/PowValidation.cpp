@@ -14,12 +14,34 @@
  * limitations under the License.
  */
 
-#include "Pow.h"
+#include <vector>
 
 #include "OperationsUtils.h"
+#include "Pow.h"
 
 namespace android::nn::pow {
 
-// This implementation is left intentionally blank.
+Result<Version> validate(const IOperationValidationContext* context) {
+    NN_RET_CHECK(context->getNumInputs() == 2 && context->getNumOutputs() == 1)
+            << context->invalidInOutNumberMessage(2, 1);
+    auto inputType = context->getInputType(0);
+    std::vector<OperandType> inExpectedTypes;
+    std::vector<OperandType> outExpectedTypes;
+    if (inputType == OperandType::TENSOR_FLOAT16 || inputType == OperandType::TENSOR_FLOAT32) {
+        inExpectedTypes = {inputType, inputType};
+        outExpectedTypes = {inputType};
+    } else {
+        NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
+                            << context->getOperationName();
+    }
+    Version version;
+    if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        version = kVersionFeatureLevel4;
+    } else {
+        version = kVersionFeatureLevel3;
+    }
+    NN_TRY(context->validateOperationOperandTypes(inExpectedTypes, outExpectedTypes));
+    return version;
+}
 
 }  // namespace android::nn::pow
