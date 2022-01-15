@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "LocalResponseNormalization.h"
+
 #include <algorithm>
 #include <vector>
 
@@ -36,19 +38,6 @@
 namespace android {
 namespace nn {
 namespace local_response_norm {
-
-constexpr char kOperationName[] = "LOCAL_RESPONSE_NORMALIZATION";
-
-constexpr uint32_t kNumInputs = 6;
-constexpr uint32_t kInputTensor = 0;
-[[maybe_unused]] constexpr uint32_t kRadiusScalar = 1;
-[[maybe_unused]] constexpr uint32_t kBiasScalar = 2;
-[[maybe_unused]] constexpr uint32_t kAlphaScalar = 3;
-[[maybe_unused]] constexpr uint32_t kBetaScalar = 4;
-[[maybe_unused]] constexpr uint32_t kAxisScalar = 5;
-
-constexpr uint32_t kNumOutputs = 1;
-[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -139,52 +128,7 @@ bool executeTyped(IOperationExecutionContext* context) {
 }
 
 }  // namespace
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK(context->getNumInputs() == kNumInputs ||
-                 context->getNumInputs() == kNumInputs - 1);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-
-    const OperandType inputType = context->getInputType(kInputTensor);
-    std::vector<OperandType> inExpectedTypes;
-    std::vector<OperandType> outExpectedTypes;
-    auto minSupportedVersion = kVersionFeatureLevel1;
-    if (inputType == OperandType::TENSOR_FLOAT32) {
-        minSupportedVersion = kVersionFeatureLevel1;
-        inExpectedTypes = {
-                OperandType::TENSOR_FLOAT32, OperandType::INT32,   OperandType::FLOAT32,
-                OperandType::FLOAT32,        OperandType::FLOAT32,
-        };
-        outExpectedTypes = {OperandType::TENSOR_FLOAT32};
-    } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        minSupportedVersion = kVersionFeatureLevel3;
-        inExpectedTypes = {
-                OperandType::TENSOR_FLOAT16, OperandType::INT32,   OperandType::FLOAT16,
-                OperandType::FLOAT16,        OperandType::FLOAT16,
-        };
-        outExpectedTypes = {OperandType::TENSOR_FLOAT16};
-    } else {
-        NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
-    }
-
-    if (context->getNumInputs() == kNumInputs) {
-        inExpectedTypes.push_back(OperandType::INT32);
-        minSupportedVersion = kVersionFeatureLevel3;
-    } else if (context->getInputShape(kInputTensor).dimensions.size() != 4) {
-        minSupportedVersion = kVersionFeatureLevel3;
-    }
-
-    const Shape& input = context->getInputShape(kInputTensor);
-    if (hasKnownRank(input)) {
-        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4u);
-    }
-    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return minSupportedVersion;
-}
-
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     const Shape& input = context->getInputShape(kInputTensor);
     int32_t numDimensions = getNumberOfDimensions(input);

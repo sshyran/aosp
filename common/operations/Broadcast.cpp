@@ -18,6 +18,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "Broadcast.h"
+
 #include <algorithm>
 #include <vector>
 
@@ -47,14 +49,6 @@ namespace android {
 namespace nn {
 
 namespace broadcast {
-
-constexpr uint32_t kNumInputs = 3;
-constexpr uint32_t kInputTensor1 = 0;
-constexpr uint32_t kInputTensor2 = 1;
-[[maybe_unused]] constexpr uint32_t kActivationScalar = 2;
-
-constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -442,54 +436,7 @@ bool divFloat16(const _Float16* in1, const Shape& shape1, const _Float16* in2, c
 }
 
 }  // namespace
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-Result<Version> validate(OperationType opType, const IOperationValidationContext* context) {
-    auto minSupportedVersion = (opType == OperationType::DIV || opType == OperationType::SUB)
-                                       ? kVersionFeatureLevel2
-                                       : kVersionFeatureLevel1;
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    auto inputType = context->getInputType(kInputTensor1);
-    const Shape& input1 = context->getInputShape(kInputTensor1);
-    const Shape& input2 = context->getInputShape(kInputTensor2);
-    const Shape& output = context->getOutputShape(kOutputTensor);
-    if (inputType == OperandType::TENSOR_FLOAT32) {
-        minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel1);
-    } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel3);
-    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        if (opType == OperationType::SUB) {
-            minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel3);
-        } else if (opType == OperationType::DIV) {
-            NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation DIV";
-        } else if (opType == OperationType::MUL) {
-            NN_RET_CHECK_GT(output.scale, input1.scale * input2.scale);
-            minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel1);
-        } else {
-            minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel1);
-        }
-    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        if (opType == OperationType::MUL) {
-            NN_RET_CHECK_GT(output.scale, input1.scale * input2.scale);
-        }
-        minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel4);
-    } else if (inputType == OperandType::TENSOR_INT32) {
-        minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel4);
-    } else {
-        NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << opType;
-    }
-
-    if (hasKnownRank(input1) && hasKnownRank(input2)) {
-        NN_RET_CHECK_LE(getNumberOfDimensions(input1), 4u);
-        NN_RET_CHECK_LE(getNumberOfDimensions(input2), 4u);
-    }
-    NN_RET_CHECK(validateInputTypes(context, {inputType, inputType, OperandType::INT32}));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return minSupportedVersion;
-}
-
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape input1 = context->getInputShape(kInputTensor1);
     Shape input2 = context->getInputShape(kInputTensor2);

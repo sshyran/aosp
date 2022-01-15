@@ -31,6 +31,7 @@
 #include "CpuOperationUtils.h"
 #include "LegacyUtils.h"
 #include "Operations.h"
+#include "Reshape.h"
 #include "Tracing.h"
 
 namespace android {

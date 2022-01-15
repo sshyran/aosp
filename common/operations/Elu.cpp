@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "Elu.h"
+
 #include <algorithm>
 #include <cmath>
 #include <vector>
@@ -28,14 +30,6 @@
 namespace android {
 namespace nn {
 namespace elu {
-
-constexpr uint32_t kNumInputs = 2;
-constexpr uint32_t kInputTensor = 0;
-constexpr uint32_t kAlphaScalar = 1;
-
-constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
-
 namespace {
 
 template <typename T>
@@ -51,23 +45,6 @@ bool eluFloat(const T* inputData, const Shape& inputShape, const T alpha, T* out
 }
 
 }  // namespace
-
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    auto inputType = context->getInputType(kInputTensor);
-    auto minSupportedVersion = kVersionFeatureLevel1;
-    if (inputType == OperandType::TENSOR_FLOAT16 || inputType == OperandType::TENSOR_FLOAT32) {
-        minSupportedVersion = kVersionFeatureLevel4;
-    } else {
-        NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation ELU";
-    }
-    auto scalarType =
-            inputType == OperandType::TENSOR_FLOAT16 ? OperandType::FLOAT16 : OperandType::FLOAT32;
-    NN_RET_CHECK(validateInputTypes(context, {inputType, scalarType}));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return minSupportedVersion;
-}
 
 bool prepare(IOperationExecutionContext* context) {
     Shape inputShape = context->getInputShape(kInputTensor);

@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "InstanceNormalization.h"
+
 #include <cmath>
 #include <vector>
 
@@ -29,18 +31,6 @@
 namespace android {
 namespace nn {
 namespace instance_normalization {
-
-constexpr char kOperationName[] = "INSTANCE_NORMALIZATION";
-
-constexpr uint32_t kNumInputs = 5;
-constexpr uint32_t kInputTensor = 0;
-[[maybe_unused]] constexpr uint32_t kGammaScalar = 1;
-[[maybe_unused]] constexpr uint32_t kBetaScalar = 2;
-[[maybe_unused]] constexpr uint32_t kEpsilonScalar = 3;
-[[maybe_unused]] constexpr uint32_t kLayoutScalar = 4;
-
-constexpr uint32_t kNumOutputs = 1;
-[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -102,28 +92,7 @@ inline bool instanceNorm(const T* inputData, const Shape& inputShape, T gamma, T
 }
 
 }  // namespace
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    std::vector<OperandType> inExpectedTypes;
-    auto inputType = context->getInputType(kInputTensor);
-    if (inputType == OperandType::TENSOR_FLOAT32) {
-        inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::FLOAT32, OperandType::FLOAT32,
-                           OperandType::FLOAT32, OperandType::BOOL};
-    } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        inExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::FLOAT16, OperandType::FLOAT16,
-                           OperandType::FLOAT16, OperandType::BOOL};
-    } else {
-        return NN_ERROR() << "Unsupported input tensor type for operation " << kOperationName;
-    }
-    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return kVersionFeatureLevel3;
-}
-
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
     NN_RET_CHECK_EQ(getNumberOfDimensions(input), 4u);

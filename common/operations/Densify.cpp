@@ -38,19 +38,6 @@ namespace android {
 namespace nn {
 namespace densify_op {
 
-constexpr uint32_t kMinNumInputs = 5;
-constexpr uint32_t kInputTensor = 0;
-constexpr uint32_t kInputTravOrder = 1;
-constexpr uint32_t kInputBlockMap = 2;
-constexpr uint32_t kInputDimFormat = 3;
-constexpr uint32_t kInputDimensions = 4;
-constexpr uint32_t kInputArrSeg = 5;
-constexpr uint32_t kInputArrIdx = 6;
-constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
-constexpr int32_t DENSE = 0;
-[[maybe_unused]] constexpr int32_t SPARSE_CSR = 1;
-
 uint64_t getFlattenedIndex(const std::vector<int32_t>& indices, const std::vector<uint32_t>& shape,
                            const int origRank) {
     uint64_t index = 0;
@@ -187,21 +174,6 @@ inline bool densify(IOperationExecutionContext* context) {
     populate(srcData, &indices, 0u, 0u, destData, destShape.dimensions, dimFormat, traversalOrder,
              blockSize, blockMap, dimMetadata, origRank);
     return true;
-}
-
-Result<Version> validate(const IOperationValidationContext* context) {
-    // Checking number of inputs and outputs
-    const uint32_t inputCount = context->getNumInputs();
-    NN_RET_CHECK_GE(inputCount, kMinNumInputs);
-    NN_RET_CHECK_EQ(inputCount,
-                    kMinNumInputs + context->getInputShape(kInputTravOrder).dimensions.front() * 2);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    NN_RET_CHECK_EQ(context->getInputShape(kInputTensor).dimensions.size(), 1u);
-    for (uint32_t i = 1; i < inputCount; i++) {
-        NN_RET_CHECK_EQ(context->getInputShape(i).dimensions.size(), 1u);
-        NN_RET_CHECK_EQ(context->getInputType(i), OperandType::TENSOR_INT32);
-    }
-    return kVersionFeatureLevelExperimental;
 }
 
 bool prepare(IOperationExecutionContext* context) {

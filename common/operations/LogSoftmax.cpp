@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "LogSoftmax.h"
+
 #include <algorithm>
 #include <cmath>
 #include <vector>
@@ -27,16 +29,6 @@
 namespace android {
 namespace nn {
 namespace log_softmax {
-
-constexpr char kOperationName[] = "LOG_SOFTMAX";
-
-constexpr uint32_t kNumInputs = 3;
-constexpr uint32_t kInputTensor = 0;
-constexpr uint32_t kInputBeta = 1;
-constexpr uint32_t kInputAxis = 2;
-
-constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
 
 template <typename T>
 inline bool compute(const T* input, const Shape& shape, T beta, uint32_t axis, T* output) {
@@ -68,26 +60,6 @@ inline bool compute(const T* input, const Shape& shape, T beta, uint32_t axis, T
         }
     }
     return true;
-}
-
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    OperandType inputType = context->getInputType(kInputTensor);
-    std::vector<OperandType> inExpectedTypes;
-    std::vector<OperandType> outExpectedTypes;
-    if (inputType == OperandType::TENSOR_FLOAT32) {
-        inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::FLOAT32, OperandType::INT32};
-        outExpectedTypes = {OperandType::TENSOR_FLOAT32};
-    } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        inExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::FLOAT16, OperandType::INT32};
-        outExpectedTypes = {OperandType::TENSOR_FLOAT16};
-    } else {
-        return NN_ERROR() << "Unsupported input tensor type for operation " << kOperationName;
-    }
-    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
-    NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
-    return kVersionFeatureLevel3;
 }
 
 bool prepare(IOperationExecutionContext* context) {

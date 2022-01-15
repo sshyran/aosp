@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "Reduce.h"
+
 #include <algorithm>
 #include <limits>
 #include <vector>
@@ -35,19 +37,6 @@
 namespace android {
 namespace nn {
 namespace reduce {
-
-constexpr uint32_t kNumInputs = 3;
-constexpr uint32_t kInputTensor = 0;
-[[maybe_unused]] constexpr uint32_t kInputAxes = 1;
-[[maybe_unused]] constexpr uint32_t kInputKeepDims = 2;
-
-constexpr uint32_t kNumOutputs = 1;
-[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
-
-// Values from
-// https://en.wikipedia.org/wiki/Half-precision_floating-point_format#IEEE_754_half-precision_binary_floating-point_format:_binary16
-constexpr _Float16 kFloat16Max = 65504;
-[[maybe_unused]] constexpr _Float16 kFloat16Lowest = -kFloat16Max;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -72,65 +61,7 @@ inline bool compute(IOperationExecutionContext* context, T init, T func(T, T)) {
 }
 
 }  // namespace
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-Result<Version> validateProdSum(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    OperandType inputType = context->getInputType(kInputTensor);
-    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
-                 inputType == OperandType::TENSOR_FLOAT32)
-            << "Unsupported tensor type for REDUCE_PROD or REDUCE_SUM";
-    NN_RET_CHECK(
-            validateInputTypes(context, {inputType, OperandType::TENSOR_INT32, OperandType::BOOL}));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    const Shape& input = context->getInputShape(kInputTensor);
-    if (hasKnownRank(input)) {
-        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4u);
-    }
-    return kVersionFeatureLevel3;
-}
-
-Result<Version> validateMaxMin(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    OperandType inputType = context->getInputType(kInputTensor);
-    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
-                 inputType == OperandType::TENSOR_FLOAT32 ||
-                 inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-                 inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
-            << "Unsupported tensor type for REDUCE_MAX or REDUCE_MIN";
-    NN_RET_CHECK(
-            validateInputTypes(context, {inputType, OperandType::TENSOR_INT32, OperandType::BOOL}));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    auto minVersion = kVersionFeatureLevel3;
-    if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minVersion = kVersionFeatureLevel4;
-    }
-    const Shape& input = context->getInputShape(kInputTensor);
-    if (hasKnownRank(input)) {
-        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4u);
-    }
-    return minVersion;
-}
-
-Result<Version> validateLogical(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    OperandType inputType = context->getInputType(kInputTensor);
-    NN_RET_CHECK(inputType == OperandType::TENSOR_BOOL8)
-            << "Unsupported tensor type for REDUCE_ANY or REDUCE_ALL";
-    NN_RET_CHECK(
-            validateInputTypes(context, {inputType, OperandType::TENSOR_INT32, OperandType::BOOL}));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    const Shape& input = context->getInputShape(kInputTensor);
-    if (hasKnownRank(input)) {
-        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4u);
-    }
-    return kVersionFeatureLevel3;
-}
-
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape inputShape = context->getInputShape(kInputTensor);
     const uint32_t inputRank = getNumberOfDimensions(inputShape);
