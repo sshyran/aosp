@@ -157,6 +157,9 @@ class BuiltinOperationResolver : public IOperationResolver {
     }
 #endif
 
+#define NN_OPERATION_IS_NOT_IMPLEMENTED(identifier) \
+    const OperationRegistration* register_##identifier() { return nullptr; }
+
 }  // namespace nn
 }  // namespace android
 
