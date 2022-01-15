@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "PRelu.h"
+
 #include <algorithm>
 #include <vector>
 
@@ -36,15 +38,6 @@
 namespace android {
 namespace nn {
 namespace prelu {
-
-constexpr char kOperationName[] = "PRELU";
-
-constexpr uint32_t kNumInputs = 2;
-constexpr uint32_t kInputTensor = 0;
-[[maybe_unused]] constexpr uint32_t kAlphaTensor = 1;
-
-constexpr uint32_t kNumOutputs = 1;
-[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 template <typename T>
@@ -102,27 +95,7 @@ bool evalQuant8(const T* aData, const Shape& aShape, const T* bData, const Shape
             },
             aData, aShape, bData, bShape, outputData, outputShape);
 }
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    auto inputType = context->getInputType(kInputTensor);
-    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
-                 inputType == OperandType::TENSOR_FLOAT32 ||
-                 inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-                 inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
-            << "Unsupported tensor type for operation " << kOperationName;
-    NN_RET_CHECK(validateInputTypes(context, {inputType, inputType}));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return kVersionFeatureLevel4;
-    } else {
-        return kVersionFeatureLevel3;
-    }
-}
-
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
     Shape alpha = context->getInputShape(kAlphaTensor);

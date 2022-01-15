@@ -16,6 +16,9 @@
 
 #define LOG_TAG "Operations"
 
+#include "Elementwise.h"
+
+#include <algorithm>
 #include <cmath>
 #include <functional>
 #include <limits>
@@ -27,13 +30,6 @@
 namespace android {
 namespace nn {
 namespace elementwise {
-
-constexpr uint32_t kNumInputs = 1;
-constexpr uint32_t kInputTensor = 0;
-
-constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
-
 namespace {
 
 template <typename IntermediateType, typename T>
@@ -148,66 +144,6 @@ bool executeRsqrt(IOperationExecutionContext* context) {
             NN_RET_CHECK_FAIL() << "Unsupported tensor type " << tensorType
                                 << " for operation RSQRT";
     }
-}
-
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    OperandType inputType = context->getInputType(kInputTensor);
-    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
-                 inputType == OperandType::TENSOR_FLOAT32)
-            << "Unsupported tensor type for elementwise operation";
-    NN_RET_CHECK(validateInputTypes(context, {inputType}));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return kVersionFeatureLevel3;
-}
-
-Result<Version> validateAbs(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    OperandType inputType = context->getInputType(kInputTensor);
-    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
-                 inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_INT32)
-            << "Unsupported tensor type for operation ABS";
-    NN_RET_CHECK(validateInputTypes(context, {inputType}));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return inputType == OperandType::TENSOR_INT32 ? kVersionFeatureLevel4 : kVersionFeatureLevel3;
-}
-
-Result<Version> validateFloor(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-
-    OperandType inputType = context->getInputType(kInputTensor);
-    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
-                 inputType == OperandType::TENSOR_FLOAT32)
-            << "Unsupported tensor type for operation FLOOR";
-    NN_RET_CHECK(validateInputTypes(context, {inputType}));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-
-    const Shape& input = context->getInputShape(kInputTensor);
-    if (hasKnownRank(input)) {
-        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4u);
-    }
-
-    return inputType == OperandType::TENSOR_FLOAT16 ? kVersionFeatureLevel3 : kVersionFeatureLevel1;
-}
-
-Result<Version> validateRsqrt(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    OperandType inputType = context->getInputType(kInputTensor);
-    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
-                 inputType == OperandType::TENSOR_FLOAT32 ||
-                 inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-                 inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
-            << "Unsupported tensor type for operation RSQRT";
-    NN_RET_CHECK(validateInputTypes(context, {inputType}));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return (inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-            inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
-                   ? kVersionFeatureLevel7
-                   : kVersionFeatureLevel3;
 }
 
 bool prepare(IOperationExecutionContext* context) {

@@ -28,6 +28,19 @@ class IOperationExecutionContext;
 namespace nn {
 namespace densify_op {
 
+constexpr uint32_t kMinNumInputs = 5;
+constexpr uint32_t kInputTensor = 0;
+constexpr uint32_t kInputTravOrder = 1;
+constexpr uint32_t kInputBlockMap = 2;
+constexpr uint32_t kInputDimFormat = 3;
+constexpr uint32_t kInputDimensions = 4;
+constexpr uint32_t kInputArrSeg = 5;
+constexpr uint32_t kInputArrIdx = 6;
+constexpr uint32_t kNumOutputs = 1;
+constexpr uint32_t kOutputTensor = 0;
+constexpr int32_t DENSE = 0;
+constexpr int32_t SPARSE_CSR = 1;
+
 /**
  * getFlattenedIndex:
  * Gets the index of destData where indices points to. Uses shape and origRank

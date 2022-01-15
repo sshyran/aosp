@@ -14,78 +14,15 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "Operations"
+#ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_SPLIT_H
+#define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_SPLIT_H
 
-#include <vector>
-
-#include "Operations.h"
 #include "OperationsUtils.h"
-#include "Tracing.h"
 
-namespace android {
-namespace nn {
+namespace android::nn {
 
-template <typename Scalar>
-bool splitGeneric(const Scalar* inputData, const Shape& inputShape, int32_t axis,
-                  const std::vector<Scalar*>* outputDataPtrs,
-                  const std::vector<Shape>& outputShapes) {
-    NN_CHECK(handleNegativeAxis(inputShape, &axis));
-    int outerSize = 1;
-    for (int i = 0; i < axis; ++i) {
-        outerSize *= inputShape.dimensions[i];
-    }
-    int baseInnerSize = 1;
-    int concatDimensions = getNumberOfDimensions(inputShape);
-    for (int i = axis + 1; i < concatDimensions; ++i) {
-        baseInnerSize *= inputShape.dimensions[i];
-    }
+// This implementation is left intentionally blank.
 
-    const Scalar* inputPtr = inputData;
-    for (int k = 0; k < outerSize; k++) {
-        for (size_t i = 0; i < outputDataPtrs->size(); ++i) {
-            const int copySize = outputShapes[i].dimensions[axis] * baseInnerSize;
-            memcpy(outputDataPtrs->at(i) + k * copySize, inputPtr, copySize * sizeof(Scalar));
-            inputPtr += copySize;
-        }
-    }
+}  // namespace android::nn
 
-    return true;
-}
-
-bool splitFloat16(const _Float16* inputData, const Shape& inputShape, int32_t axis,
-                  const std::vector<_Float16*>* outputDataPtrs,
-                  const std::vector<Shape>& outputShapes) {
-    NNTRACE_COMP("splitFloat16");
-    return splitGeneric<_Float16>(inputData, inputShape, axis, outputDataPtrs, outputShapes);
-}
-
-bool splitFloat32(const float* inputData, const Shape& inputShape, int32_t axis,
-                  const std::vector<float*>* outputDataPtrs,
-                  const std::vector<Shape>& outputShapes) {
-    NNTRACE_COMP("splitFloat32");
-    return splitGeneric<float>(inputData, inputShape, axis, outputDataPtrs, outputShapes);
-}
-
-bool splitQuant8(const uint8_t* inputData, const Shape& inputShape, int32_t axis,
-                 const std::vector<uint8_t*>* outputDataPtrs,
-                 const std::vector<Shape>& outputShapes) {
-    NNTRACE_COMP("splitQuant8");
-    return splitGeneric<uint8_t>(inputData, inputShape, axis, outputDataPtrs, outputShapes);
-}
-
-bool splitQuant8Signed(const int8_t* inputData, const Shape& inputShape, int32_t axis,
-                       const std::vector<int8_t*>* outputDataPtrs,
-                       const std::vector<Shape>& outputShapes) {
-    NNTRACE_COMP("splitQuant8Signed");
-    return splitGeneric<int8_t>(inputData, inputShape, axis, outputDataPtrs, outputShapes);
-}
-
-bool splitInt32(const int32_t* inputData, const Shape& inputShape, int32_t axis,
-                const std::vector<int32_t*>* outputDataPtrs,
-                const std::vector<Shape>& outputShapes) {
-    NNTRACE_COMP("splitInt32");
-    return splitGeneric<int32_t>(inputData, inputShape, axis, outputDataPtrs, outputShapes);
-}
-
-}  // namespace nn
-}  // namespace android
+#endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_SPLIT_H

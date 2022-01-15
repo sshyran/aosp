@@ -18,6 +18,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "StridedSlice.h"
+
 #include <vector>
 
 #include "OperationResolver.h"
@@ -37,18 +39,6 @@
 namespace android {
 namespace nn {
 namespace strided_slice {
-
-constexpr uint32_t kNumInputs = 7;
-constexpr uint32_t kInputTensor = 0;
-[[maybe_unused]] constexpr uint32_t kBeginTensor = 1;
-[[maybe_unused]] constexpr uint32_t kEndTensor = 2;
-[[maybe_unused]] constexpr uint32_t kStridesTensor = 3;
-[[maybe_unused]] constexpr uint32_t kBeginMask = 4;
-[[maybe_unused]] constexpr uint32_t kEndMask = 5;
-[[maybe_unused]] constexpr uint32_t kShrinkAxisMask = 6;
-
-constexpr uint32_t kNumOutputs = 1;
-[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -103,45 +93,7 @@ bool executeTyped(IOperationExecutionContext* context) {
 }
 
 }  // namespace
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    OperandType inputType = context->getInputType(kInputTensor);
-    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
-                 inputType == OperandType::TENSOR_FLOAT32 ||
-                 inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-                 inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
-            << "Unsupported input operand type for STRIDED_SLICE op: " << inputType;
-
-    Version minSupportedVersion;
-    if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = kVersionFeatureLevel4;
-    } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        minSupportedVersion = kVersionFeatureLevel3;
-    } else {
-        minSupportedVersion = kVersionFeatureLevel2;
-    }
-
-    NN_RET_CHECK(validateInputTypes(context, {
-                                                     inputType,
-                                                     OperandType::TENSOR_INT32,
-                                                     OperandType::TENSOR_INT32,
-                                                     OperandType::TENSOR_INT32,
-                                                     OperandType::INT32,
-                                                     OperandType::INT32,
-                                                     OperandType::INT32,
-                                             }));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    const Shape& input = context->getInputShape(kInputTensor);
-    if (hasKnownRank(input)) {
-        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4u);
-    }
-    return minSupportedVersion;
-}
-
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     // StridedSlice op only supports 1D-4D input arrays.
     const Shape& inputShape = context->getInputShape(kInputTensor);

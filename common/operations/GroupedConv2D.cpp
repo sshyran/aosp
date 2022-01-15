@@ -27,6 +27,7 @@
 #include <vector>
 
 #include "CpuOperationUtils.h"
+#include "GroupedConv2D.h"
 #include "Operations.h"
 #include "Tracing.h"
 

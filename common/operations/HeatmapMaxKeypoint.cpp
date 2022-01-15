@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "HeatmapMaxKeypoint.h"
+
 #include <algorithm>
 #include <cfloat>
 #include <cmath>
@@ -32,17 +34,6 @@
 namespace android {
 namespace nn {
 namespace heatmap_max_keypoint {
-
-constexpr char kOperationName[] = "HEATMAP_MAX_KEYPOINT";
-
-constexpr uint32_t kNumInputs = 3;
-constexpr uint32_t kHeatmapTensor = 0;
-[[maybe_unused]] constexpr uint32_t kBoxesTensor = 1;
-[[maybe_unused]] constexpr uint32_t kLayoutScalar = 2;
-
-constexpr uint32_t kNumOutputs = 2;
-[[maybe_unused]] constexpr uint32_t kOutputScoreTensor = 0;
-[[maybe_unused]] constexpr uint32_t kOutputKeypointTensor = 1;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -227,37 +218,7 @@ inline bool heatmapMaxKeypointQuant(const int8_t* heatmap, const Shape& heatmapS
 }
 
 }  // namespace
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    std::vector<OperandType> inExpectedTypes;
-    std::vector<OperandType> outExpectedTypes;
-    auto inputType = context->getInputType(kHeatmapTensor);
-    auto minSupportedVersion = kVersionFeatureLevel3;
-    if (inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_FLOAT16) {
-        inExpectedTypes = {inputType, inputType, OperandType::BOOL};
-        outExpectedTypes = {inputType, inputType};
-    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT16_ASYMM,
-                           OperandType::BOOL};
-        outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT16_ASYMM};
-    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                           OperandType::TENSOR_QUANT16_ASYMM, OperandType::BOOL};
-        outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                            OperandType::TENSOR_QUANT16_ASYMM};
-        minSupportedVersion = kVersionFeatureLevel4;
-    } else {
-        return NN_ERROR() << "Unsupported input tensor type for operation " << kOperationName;
-    }
-    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
-    NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
-    return minSupportedVersion;
-}
-
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     bool layout = context->getInputValue<bool>(kLayoutScalar);
     Shape heatmapShape = context->getInputShape(kHeatmapTensor);

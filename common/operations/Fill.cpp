@@ -16,20 +16,14 @@
 
 #define LOG_TAG "Operations"
 
+#include "Fill.h"
+
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 
 namespace android {
 namespace nn {
 namespace fill_op {
-
-constexpr uint32_t kNumInputs = 2;
-constexpr uint32_t kDimsTensor = 0;
-constexpr uint32_t kValueScalar = 1;
-
-constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
-
 namespace {
 
 template <typename T>
@@ -43,42 +37,7 @@ bool executeTyped(IOperationExecutionContext* context) {
     return true;
 }
 
-bool getValueType(OperandType outputType, OperandType* valueType) {
-    switch (outputType) {
-        case OperandType::TENSOR_FLOAT16:
-            *valueType = OperandType::FLOAT16;
-            return true;
-        case OperandType::TENSOR_FLOAT32:
-            *valueType = OperandType::FLOAT32;
-            return true;
-        case OperandType::TENSOR_INT32:
-            *valueType = OperandType::INT32;
-            return true;
-        default:
-            NN_RET_CHECK_FAIL() << "Unsupported value type for fill op: " << outputType;
-    }
-}
-
 }  // namespace
-
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    // Check output type first because input value type is dependent on the
-    // output type.
-    OperandType outputType = context->getOutputType(kOutputTensor);
-    NN_RET_CHECK(outputType == OperandType::TENSOR_FLOAT16 ||
-                 outputType == OperandType::TENSOR_FLOAT32 ||
-                 outputType == OperandType::TENSOR_INT32)
-            << "Unsupported output type for fill op: " << outputType;
-    NN_RET_CHECK(validateOutputTypes(context, {outputType}));
-
-    OperandType valueType;
-    NN_RET_CHECK(getValueType(outputType, &valueType));
-    NN_RET_CHECK(validateInputTypes(context, {OperandType::TENSOR_INT32, valueType}));
-
-    return kVersionFeatureLevel4;
-}
 
 bool prepare(IOperationExecutionContext* context) {
     Shape dimsShape = context->getInputShape(kDimsTensor);

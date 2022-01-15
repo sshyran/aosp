@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "Dequantize.h"
+
 #include "IndexedShapeWrapper.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
@@ -23,13 +25,6 @@
 namespace android {
 namespace nn {
 namespace dequantize {
-
-constexpr uint32_t kNumInputs = 1;
-constexpr uint32_t kInputTensor = 0;
-
-constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
-
 namespace {
 
 template <typename InputType, typename OutputType>
@@ -75,34 +70,6 @@ bool computePerChannel(const int8_t* inputData, const Shape& inputShape, OutputT
 }
 
 }  // namespace
-
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-
-    const OperandType inputType = context->getInputType(kInputTensor);
-    const OperandType outputType = context->getOutputType(kOutputTensor);
-
-    const Shape& input = context->getInputShape(kInputTensor);
-    if (hasKnownRank(input)) {
-        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4u);
-    }
-
-    if (inputType == OperandType::TENSOR_QUANT8_ASYMM &&
-        outputType == OperandType::TENSOR_FLOAT32) {
-        return kVersionFeatureLevel1;
-    }
-
-    NN_RET_CHECK(inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-                 inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED ||
-                 inputType == OperandType::TENSOR_QUANT8_SYMM ||
-                 inputType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL)
-            << "Unsupported input operand type for DEQUANTIZE op: " << inputType;
-    NN_RET_CHECK(outputType == OperandType::TENSOR_FLOAT16 ||
-                 outputType == OperandType::TENSOR_FLOAT32)
-            << "Unsupported output operand type for DEQUANTIZE op: " << outputType;
-    return kVersionFeatureLevel3;
-}
 
 bool prepare(IOperationExecutionContext* context) {
     const Shape& input = context->getInputShape(kInputTensor);

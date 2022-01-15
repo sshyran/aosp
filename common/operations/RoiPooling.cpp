@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "RoiPooling.h"
+
 #include <algorithm>
 #include <cfloat>
 #include <cmath>
@@ -32,21 +34,6 @@
 namespace android {
 namespace nn {
 namespace roi_pooling {
-
-constexpr char kOperationName[] = "ROI_POOLING";
-
-constexpr uint32_t kNumInputs = 8;
-constexpr uint32_t kInputTensor = 0;
-[[maybe_unused]] constexpr uint32_t kRoiTensor = 1;
-[[maybe_unused]] constexpr uint32_t kBatchSplitTensor = 2;
-[[maybe_unused]] constexpr uint32_t kOutputHeightScalar = 3;
-[[maybe_unused]] constexpr uint32_t kOutputWidthScalar = 4;
-[[maybe_unused]] constexpr uint32_t kHeightStrideSalar = 5;
-[[maybe_unused]] constexpr uint32_t kWidthStrideScalar = 6;
-[[maybe_unused]] constexpr uint32_t kLayoutScalar = 7;
-
-constexpr uint32_t kNumOutputs = 1;
-[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -187,46 +174,7 @@ inline bool roiPooling<int8_t, uint16_t>(const int8_t* inputData, const Shape& i
 }
 
 }  // namespace
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    std::vector<OperandType> inExpectedTypes;
-    auto inputType = context->getInputType(kInputTensor);
-    if (inputType == OperandType::TENSOR_FLOAT32) {
-        inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
-                           OperandType::TENSOR_INT32,   OperandType::INT32,
-                           OperandType::INT32,          OperandType::FLOAT32,
-                           OperandType::FLOAT32,        OperandType::BOOL};
-    } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        inExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::TENSOR_FLOAT16,
-                           OperandType::TENSOR_INT32,   OperandType::INT32,
-                           OperandType::INT32,          OperandType::FLOAT16,
-                           OperandType::FLOAT16,        OperandType::BOOL};
-    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-               inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        inExpectedTypes = {inputType,
-                           OperandType::TENSOR_QUANT16_ASYMM,
-                           OperandType::TENSOR_INT32,
-                           OperandType::INT32,
-                           OperandType::INT32,
-                           OperandType::FLOAT32,
-                           OperandType::FLOAT32,
-                           OperandType::BOOL};
-    } else {
-        return NN_ERROR() << "Unsupported input tensor type for operation " << kOperationName;
-    }
-    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return kVersionFeatureLevel4;
-    } else {
-        return kVersionFeatureLevel3;
-    }
-}
-
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     bool useNchw = context->getInputValue<bool>(kLayoutScalar);
     Shape input = context->getInputShape(kInputTensor);

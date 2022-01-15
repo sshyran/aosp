@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#include "QLSTM.h"
+
 #include <algorithm>
 #include <memory>
 #include <vector>
@@ -31,129 +33,11 @@ namespace qlstm {
 
 namespace {
 
-// Inputs
-constexpr uint32_t kNumInputs = 32;
-
-constexpr uint32_t kInputTensor = 0;
-// Input weight tensors of size: [numUnits, inputSize].
-constexpr uint32_t kInputToInputWeightsTensor = 1;
-constexpr uint32_t kInputToForgetWeightsTensor = 2;
-constexpr uint32_t kInputToCellWeightsTensor = 3;
-constexpr uint32_t kInputToOutputWeightsTensor = 4;
-
-// Recurrent weight tensors of size [numUnits, outputSize].
-constexpr uint32_t kRecurrentToInputWeightsTensor = 5;
-constexpr uint32_t kRecurrentToForgetWeightsTensor = 6;
-constexpr uint32_t kRecurrentToCellWeightsTensor = 7;
-constexpr uint32_t kRecurrentToOutputWeightsTensor = 8;
-
-// For peephole (optional).
-// Cell to input/forget/output weights of size [numUnits].
-constexpr uint32_t kCellToInputWeightsTensor = 9;
-constexpr uint32_t kCellToForgetWeightsTensor = 10;
-constexpr uint32_t kCellToOutputWeightsTensor = 11;
-
-// Gates bias tensors of size [numUnits].
-constexpr uint32_t kInputGateBiasTensor = 12;
-constexpr uint32_t kForgetGateBiasTensor = 13;
-constexpr uint32_t kCellGateBiasTensor = 14;
-constexpr uint32_t kOutputGateBiasTensor = 15;
-
-// Projection weight tensor of size [outputSize, numUnits].
-constexpr uint32_t kProjectionWeightsTensor = 16;
-// Projection bias tensor of size [outputSize].
-constexpr uint32_t kProjectionBiasTensor = 17;
-
-// Output from the previous time step, as tensor
-// of size [numBatches, outputSize].
-constexpr uint32_t kPrevOutputTensor = 18;
-
-// Cell state from the previous time step, as tensor
-// of size [numBatches, numUnits].
-constexpr uint32_t kPrevCellStateTensor = 19;
-
-// Layer normalization tensors of size [numUnits].
-constexpr uint32_t kInputLayerNormTensor = 20;
-constexpr uint32_t kForgetLayerNormTensor = 21;
-constexpr uint32_t kCellLayerNormTensor = 22;
-constexpr uint32_t kOutputLayerNormTensor = 23;
-
-// Clipping.
-[[maybe_unused]] constexpr uint32_t kCellClip = 24;
-[[maybe_unused]] constexpr uint32_t kProjectionClip = 25;
-
-// Scales of the result of matmul, i.e. input to layer normalization.
-[[maybe_unused]] constexpr uint32_t kInputIntermediateScale = 26;
-[[maybe_unused]] constexpr uint32_t kForgetIntermediateScale = 27;
-[[maybe_unused]] constexpr uint32_t kCellIntermediateScale = 28;
-[[maybe_unused]] constexpr uint32_t kOutputIntermediateScale = 29;
-
-// Zero point and scale of hidden state.
-[[maybe_unused]] constexpr uint32_t kHiddenStateZeroPoint = 30;
-[[maybe_unused]] constexpr uint32_t kHiddenStateScale = 31;
-
-// Outputs:
-constexpr uint32_t kNumOutputs = 3;
-constexpr uint32_t kOutputStateOutTensor = 0;
-constexpr uint32_t kCellStateOutTensor = 1;
-constexpr uint32_t kOutputTensor = 2;
-
 inline bool hasTensor(IOperationExecutionContext* context, const uint32_t tensor) {
     return context->getInputBuffer(tensor) != nullptr;
 }
 
 }  // namespace
-
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-
-    std::vector<OperandType> inExpectedTypes;
-    // Input.
-    inExpectedTypes.push_back(OperandType::TENSOR_QUANT8_ASYMM_SIGNED);
-    // Input-to-* and recurrent-to-* weights.
-    for (int i = 0; i < 8; ++i) {
-        inExpectedTypes.push_back(OperandType::TENSOR_QUANT8_SYMM);
-    }
-    // Cell-to-* weights.
-    for (int i = 0; i < 3; ++i) {
-        inExpectedTypes.push_back(OperandType::TENSOR_QUANT16_SYMM);
-    }
-    // Gate biases.
-    for (int i = 0; i < 4; ++i) {
-        inExpectedTypes.push_back(OperandType::TENSOR_INT32);
-    }
-    // Projection.
-    inExpectedTypes.push_back(OperandType::TENSOR_QUANT8_SYMM);
-    inExpectedTypes.push_back(OperandType::TENSOR_INT32);
-    // Previous output.
-    inExpectedTypes.push_back(OperandType::TENSOR_QUANT8_ASYMM_SIGNED);
-    // Previous cell state.
-    inExpectedTypes.push_back(OperandType::TENSOR_QUANT16_SYMM);
-    // Layer norm weights
-    for (int i = 0; i < 4; ++i) {
-        inExpectedTypes.push_back(OperandType::TENSOR_QUANT16_SYMM);
-    }
-    // Cell/projection clipping and scales of intermediate results at the 4 gates.
-    for (int i = 0; i < 6; ++i) {
-        inExpectedTypes.push_back(OperandType::FLOAT32);
-    }
-    // Zero point and scale of the hidden state.
-    inExpectedTypes.push_back(OperandType::INT32);
-    inExpectedTypes.push_back(OperandType::FLOAT32);
-    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
-
-    std::vector<OperandType> outExpectedTypes;
-    // Output state (out).
-    outExpectedTypes.push_back(OperandType::TENSOR_QUANT8_ASYMM_SIGNED);
-    // Cell state (out).
-    outExpectedTypes.push_back(OperandType::TENSOR_QUANT16_SYMM);
-    // Output.
-    outExpectedTypes.push_back(OperandType::TENSOR_QUANT8_ASYMM_SIGNED);
-    NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
-
-    return kVersionFeatureLevel4;
-}
 
 bool prepare(IOperationExecutionContext* context) {
     // Check that none of the required inputs are omitted

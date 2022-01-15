@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "Split.h"
+
 #include <vector>
 
 #include "Operations.h"

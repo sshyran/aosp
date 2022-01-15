@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "Gather.h"
+
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
@@ -23,17 +25,6 @@
 namespace android {
 namespace nn {
 namespace gather {
-
-constexpr char kOperationName[] = "GATHER";
-
-constexpr uint32_t kNumInputs = 3;
-constexpr uint32_t kInputTensor = 0;
-constexpr uint32_t kInputAxis = 1;
-constexpr uint32_t kInputIndices = 2;
-
-constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
-
 namespace {
 
 template <typename T>
@@ -58,26 +49,6 @@ inline bool eval(const T* inputData, const Shape& inputShape, int32_t axis,
 }
 
 }  // namespace
-
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    OperandType inputType = context->getInputType(kInputTensor);
-    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
-                 inputType == OperandType::TENSOR_FLOAT32 ||
-                 inputType == OperandType::TENSOR_INT32 ||
-                 inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-                 inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
-            << "Unsupported tensor type for operation " << kOperationName;
-    NN_RET_CHECK(validateInputTypes(context,
-                                    {inputType, OperandType::INT32, OperandType::TENSOR_INT32}));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return kVersionFeatureLevel4;
-    } else {
-        return kVersionFeatureLevel3;
-    }
-}
 
 bool prepare(IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);

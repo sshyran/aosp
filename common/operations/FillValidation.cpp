@@ -14,34 +14,11 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "Operations"
-
-#include "OperationResolver.h"
+#include "Fill.h"
 #include "OperationsUtils.h"
 
-namespace android {
-namespace nn {
-namespace fill_op {
-
-constexpr uint32_t kNumInputs = 2;
-constexpr uint32_t kDimsTensor = 0;
-constexpr uint32_t kValueScalar = 1;
-
-constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
-
+namespace android::nn::fill_op {
 namespace {
-
-template <typename T>
-bool executeTyped(IOperationExecutionContext* context) {
-    T* output = context->getOutputBuffer<T>(kOutputTensor);
-    const int numElements = getNumberOfElements(context->getOutputShape(kOutputTensor));
-    const T value = context->getInputValue<T>(kValueScalar);
-    for (int i = 0; i < numElements; ++i) {
-        output[i] = value;
-    }
-    return true;
-}
 
 bool getValueType(OperandType outputType, OperandType* valueType) {
     switch (outputType) {
@@ -80,35 +57,4 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevel4;
 }
 
-bool prepare(IOperationExecutionContext* context) {
-    Shape dimsShape = context->getInputShape(kDimsTensor);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(dimsShape), 1u);
-
-    Shape outputShape = context->getOutputShape(kOutputTensor);
-    outputShape.dimensions.resize(dimsShape.dimensions[0]);
-    const int32_t* dims = context->getInputBuffer<int32_t>(kDimsTensor);
-    for (uint32_t i = 0; i < dimsShape.dimensions[0]; ++i) {
-        outputShape.dimensions[i] = dims[i];
-    }
-    return context->setOutputShape(kOutputTensor, outputShape);
-}
-
-bool execute(IOperationExecutionContext* context) {
-    switch (context->getInputType(kValueScalar)) {
-        case OperandType::FLOAT16:
-            return executeTyped<_Float16>(context);
-        case OperandType::FLOAT32:
-            return executeTyped<float>(context);
-        case OperandType::INT32:
-            return executeTyped<int32_t>(context);
-        default:
-            NN_RET_CHECK_FAIL() << "Unsupported value type for fill op.";
-    }
-}
-
-}  // namespace fill_op
-
-NN_REGISTER_OPERATION(FILL, "FILL", fill_op::validate, fill_op::prepare, fill_op::execute);
-
-}  // namespace nn
-}  // namespace android
+}  // namespace android::nn::fill_op

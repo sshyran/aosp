@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "Softmax.h"
+
 #include <algorithm>
 #include <cfloat>
 #include <limits>
@@ -41,16 +43,6 @@ namespace android {
 namespace nn {
 
 namespace softmax {
-
-constexpr char kOperationName[] = "SOFTMAX";
-
-constexpr uint32_t kNumInputs = 3;
-constexpr uint32_t kInputTensor = 0;
-[[maybe_unused]] constexpr uint32_t kBetaScalar = 1;
-[[maybe_unused]] constexpr uint32_t kAxisScalar = 2;
-
-constexpr uint32_t kNumOutputs = 1;
-[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -235,45 +227,7 @@ bool softmaxQuant8(const T* inputData, const Shape& inputShape, const float beta
 }
 
 }  // namespace
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK(context->getNumInputs() == kNumInputs ||
-                 context->getNumInputs() == kNumInputs - 1);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    auto inputType = context->getInputType(kInputTensor);
-    std::vector<OperandType> inExpectedTypes;
-    auto minSupportedVersion = kVersionFeatureLevel1;
-    if (inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        minSupportedVersion = kVersionFeatureLevel1;
-        inExpectedTypes = {inputType, OperandType::FLOAT32};
-    } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        minSupportedVersion = kVersionFeatureLevel3;
-        inExpectedTypes = {inputType, OperandType::FLOAT16};
-    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = kVersionFeatureLevel4;
-        inExpectedTypes = {inputType, OperandType::FLOAT32};
-    } else {
-        NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
-    }
-    const auto inputRank = getNumberOfDimensions(context->getInputShape(kInputTensor));
-    if (inputRank != 0) {
-        NN_RET_CHECK_LE(inputRank, 4u);
-    }
-    if (context->getNumInputs() == kNumInputs) {
-        minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel3);
-        inExpectedTypes.push_back(OperandType::INT32);
-    } else {
-        if (inputRank != 2 && inputRank != 4 && inputRank != 0) {
-            minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel3);
-        }
-    }
-    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return minSupportedVersion;
-}
-
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
     float beta = (input.type == OperandType::TENSOR_FLOAT16)

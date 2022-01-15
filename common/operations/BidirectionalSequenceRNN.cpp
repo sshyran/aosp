@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "BidirectionalSequenceRNN.h"
+
 #include <algorithm>
 #include <utility>
 #include <vector>
@@ -26,37 +28,6 @@
 namespace android {
 namespace nn {
 namespace bidirectional_sequence_rnn {
-
-constexpr uint32_t kNumInputs = 15;
-constexpr uint32_t kInputTensor = 0;
-// Forward cell tensors
-[[maybe_unused]] constexpr uint32_t kFwWeightsTensor = 1;
-[[maybe_unused]] constexpr uint32_t kFwRecurrentWeightsTensor = 2;
-[[maybe_unused]] constexpr uint32_t kFwBiasTensor = 3;
-[[maybe_unused]] constexpr uint32_t kFwHiddenStateTensor = 4;
-// Backward cell tensors
-[[maybe_unused]] constexpr uint32_t kBwWeightsTensor = 5;
-[[maybe_unused]] constexpr uint32_t kBwRecurrentWeightsTensor = 6;
-[[maybe_unused]] constexpr uint32_t kBwBiasTensor = 7;
-[[maybe_unused]] constexpr uint32_t kBwHiddenStateTensor = 8;
-// Auxiliary inputs
-[[maybe_unused]] constexpr uint32_t kAuxInputTensor = 9;       // optional
-[[maybe_unused]] constexpr uint32_t kFwAuxWeightsTensor = 10;  // optional
-[[maybe_unused]] constexpr uint32_t kBwAuxWeightsTensor = 11;  // optional
-// Cell parameters
-[[maybe_unused]] constexpr uint32_t kActivationParam = 12;
-[[maybe_unused]] constexpr uint32_t kTimeMajorParam = 13;
-[[maybe_unused]] constexpr uint32_t kMergeOutputsParam = 14;
-
-constexpr uint32_t kNumOutputs = 2;
-constexpr uint32_t kNumOutputsMerged = 1;
-constexpr uint32_t kNumOutputsWithState = 4;
-constexpr uint32_t kNumOutputsMergedWithState = 3;
-
-[[maybe_unused]] constexpr uint32_t kFwOutputTensor = 0;
-[[maybe_unused]] constexpr uint32_t kBwOutputTensor = 1;  // Only if mergeOutputs parameter is false
-[[maybe_unused]] constexpr uint32_t kFwOutputHiddenStateTensor = 2;
-[[maybe_unused]] constexpr uint32_t kBwOutputHiddenStateTensor = 3;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -313,37 +284,7 @@ bool executeTyped(IOperationExecutionContext* context) {
 }
 
 }  // namespace
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    // Exact number is dependent on the mergeOutputs parameter and checked
-    // during preparation.
-    const uint32_t numOutputs = context->getNumOutputs();
-    NN_RET_CHECK(numOutputs == kNumOutputs || numOutputs == kNumOutputsMerged ||
-                 numOutputs == kNumOutputsWithState || numOutputs == kNumOutputsMergedWithState);
-
-    OperandType inputType = context->getInputType(kInputTensor);
-    if (inputType != OperandType::TENSOR_FLOAT16 && inputType != OperandType::TENSOR_FLOAT32) {
-        return NN_ERROR() << "Unsupported input operand type for UNIDIRECTIONAL_SEQUENCE_RNN op: "
-                          << inputType;
-    }
-    NN_RET_CHECK(validateInputTypes(
-            context, {inputType, inputType, inputType, inputType, inputType, inputType, inputType,
-                      inputType, inputType, inputType, inputType, inputType, OperandType::INT32,
-                      OperandType::BOOL, OperandType::BOOL}));
-
-    std::vector<OperandType> outExpectedTypes(numOutputs, inputType);
-    NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
-
-    Version minSupportedVersion = kVersionFeatureLevel3;
-    if (numOutputs == kNumOutputsWithState || numOutputs == kNumOutputsMergedWithState) {
-        minSupportedVersion = kVersionFeatureLevel4;
-    }
-    return minSupportedVersion;
-}
-
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     const bool mergeOutputs = context->getInputValue<bool>(kMergeOutputsParam);
     const int32_t numOutputs = context->getNumOutputs();

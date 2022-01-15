@@ -26,10 +26,13 @@
 #pragma clang diagnostic pop
 
 #include <limits>
+#include <memory>
+#include <vector>
 
 #include "CpuOperationUtils.h"
 #endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
+#include "BatchMatmul.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
@@ -38,21 +41,8 @@ namespace android {
 namespace nn {
 namespace batch_matmul_op {
 
-constexpr char kOperationName[] = "BATCH_MATMUL";
-
-constexpr uint32_t kNumInputs = 4;
-constexpr uint32_t kInputLHSTensor = 0;
-constexpr uint32_t kInputRHSTensor = 1;
-constexpr uint32_t kInputLHSAdj = 2;
-constexpr uint32_t kInputRHSAdj = 3;
-
-constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
-
-namespace {
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
-
-using tflite::RuntimeShape;
+namespace {
 
 // Checks if two matrices can be multiplied.
 bool canMatrixMul(uint32_t LHSRow, uint32_t LHSCol, uint32_t RHSRow, uint32_t RHSCol, bool adjX,
@@ -206,41 +196,9 @@ bool batchMatMulQuantized(const T* inputLHSData, const Shape& inputLHSShape, con
             convertShapeToTflshape(outputShape), outputData);
     return true;
 }
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
 }  // namespace
 
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-
-    // Checks two input tensors have same input type and number of dimensions.
-    OperandType inputLHSTensorType = context->getInputType(kInputLHSTensor);
-    OperandType inputRHSTensorType = context->getInputType(kInputRHSTensor);
-    NN_RET_CHECK_EQ(inputLHSTensorType, inputRHSTensorType)
-            << "Input types do not match between two input tensors. InputLHSTensor: "
-            << inputLHSTensorType << ", InputRHSTensor: " << inputRHSTensorType;
-    NN_RET_CHECK(inputLHSTensorType == OperandType::TENSOR_FLOAT16 ||
-                 inputLHSTensorType == OperandType::TENSOR_FLOAT32 ||
-                 inputLHSTensorType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED ||
-                 inputLHSTensorType == OperandType::TENSOR_INT32)
-            << "Incorrect input tensor type for a BATCH_MATMUL op: " << inputLHSTensorType;
-
-    OperandType inputLHSAdjType = context->getInputType(kInputLHSAdj);
-    OperandType inputRHSAdjType = context->getInputType(kInputRHSAdj);
-    NN_RET_CHECK(inputLHSAdjType == OperandType::BOOL && inputRHSAdjType == OperandType::BOOL)
-            << "Incorrect input scalar type for a BATCH_MATMUL op: InputLHSAdj: " << inputLHSAdjType
-            << ", InputRHSAdj: " << inputRHSAdjType;
-
-    // Checks output type matches input type.
-    OperandType outputType = context->getOutputType(kOutputTensor);
-    NN_RET_CHECK_EQ(inputLHSTensorType, outputType)
-            << "Output type " << outputType << " does not match input type " << inputLHSTensorType;
-
-    return kVersionFeatureLevel6;
-}
-
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape inputLHSTensorShape = context->getInputShape(kInputLHSTensor);
     Shape inputRHSTensorShape = context->getInputShape(kInputRHSTensor);

@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "Activation.h"
+
 #include <algorithm>
 #include <limits>
 #include <vector>
@@ -44,12 +46,6 @@ namespace android {
 namespace nn {
 
 namespace activation {
-
-constexpr uint32_t kNumInputs = 1;
-constexpr uint32_t kInputTensor = 0;
-
-constexpr uint32_t kNumOutputs = 1;
-[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -363,55 +359,7 @@ bool hardSwishQuant(const T* inputData, const Shape& inputShape, T* outputData,
 }
 
 }  // namespace
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-Result<Version> validate(OperationType opType, const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    auto inputType = context->getInputType(kInputTensor);
-    auto minSupportedVersion = kVersionFeatureLevel1;
-    if (inputType == OperandType::TENSOR_FLOAT32) {
-        minSupportedVersion = kVersionFeatureLevel1;
-    } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        minSupportedVersion = kVersionFeatureLevel3;
-    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        if (opType == OperationType::TANH) {
-            minSupportedVersion = kVersionFeatureLevel3;
-        } else {
-            minSupportedVersion = kVersionFeatureLevel1;
-        }
-    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = kVersionFeatureLevel4;
-    } else {
-        NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << opType;
-    }
-    const Shape& input = context->getInputShape(kInputTensor);
-    if (hasKnownRank(input)) {
-        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4u);
-    }
-    NN_RET_CHECK(validateInputTypes(context, {inputType}));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return minSupportedVersion;
-}
-
-Result<Version> validateHardSwish(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    auto inputType = context->getInputType(kInputTensor);
-    auto minSupportedVersion = kVersionFeatureLevel1;
-    if (inputType == OperandType::TENSOR_FLOAT16 || inputType == OperandType::TENSOR_FLOAT32 ||
-        inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-        inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = kVersionFeatureLevel4;
-    } else {
-        NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation ELU";
-    }
-    NN_RET_CHECK(validateInputTypes(context, {inputType}));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return minSupportedVersion;
-}
-
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(OperationType opType, IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
     if (opType != OperationType::HARD_SWISH) {

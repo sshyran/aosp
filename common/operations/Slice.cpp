@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "Slice.h"
+
 #include <vector>
 
 #include "IndexedShapeWrapper.h"
@@ -28,16 +30,6 @@
 namespace android {
 namespace nn {
 namespace slice {
-
-constexpr char kOperationName[] = "SLICE";
-
-constexpr uint32_t kNumInputs = 3;
-constexpr uint32_t kInputTensor = 0;
-[[maybe_unused]] constexpr uint32_t kBeginTensor = 1;
-[[maybe_unused]] constexpr uint32_t kSizeTensor = 2;
-
-constexpr uint32_t kNumOutputs = 1;
-[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -81,32 +73,7 @@ bool evalGeneric(const T* inputData, const Shape& inputShape, const int32_t* beg
 }
 
 }  // namespace
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-
-    const OperandType inputType = context->getInputType(kInputTensor);
-    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
-                 inputType == OperandType::TENSOR_FLOAT32 ||
-                 inputType == OperandType::TENSOR_INT32 ||
-                 inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-                 inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
-            << "Unsupported tensor type for operation " << kOperationName;
-    auto minSupportedVersion = kVersionFeatureLevel1;
-    if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = kVersionFeatureLevel4;
-    } else {
-        minSupportedVersion = kVersionFeatureLevel3;
-    }
-    NN_RET_CHECK(validateInputTypes(
-            context, {inputType, OperandType::TENSOR_INT32, OperandType::TENSOR_INT32}));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return minSupportedVersion;
-}
-
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     const Shape& inputShape = context->getInputShape(kInputTensor);
     const uint32_t n_dims = getNumberOfDimensions(inputShape);

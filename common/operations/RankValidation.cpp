@@ -14,21 +14,10 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "Operations"
-
-#include "LegacyUtils.h"
-#include "OperationResolver.h"
 #include "OperationsUtils.h"
+#include "Rank.h"
 
-namespace android {
-namespace nn {
-namespace rank_op {
-
-constexpr uint32_t kNumInputs = 1;
-constexpr uint32_t kInputTensor = 0;
-
-constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputScalar = 0;
+namespace android::nn::rank_op {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -49,20 +38,4 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevel4;
 }
 
-bool prepare(IOperationExecutionContext* context) {
-    Shape output = context->getOutputShape(kOutputScalar);
-    return context->setOutputShape(kOutputScalar, output);
-}
-
-bool execute(IOperationExecutionContext* context) {
-    *context->getOutputBuffer<int32_t>(kOutputScalar) =
-            getNumberOfDimensions(context->getInputShape(kInputTensor));
-    return true;
-}
-
-}  // namespace rank_op
-
-NN_REGISTER_OPERATION(RANK, "RANK", rank_op::validate, rank_op::prepare, rank_op::execute);
-
-}  // namespace nn
-}  // namespace android
+}  // namespace android::nn::rank_op

@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "FullyConnected.h"
+
 #include <vector>
 
 #include "OperationResolver.h"
@@ -39,20 +41,9 @@ namespace android {
 namespace nn {
 namespace fully_connected {
 
-constexpr char kOperationName[] = "FULLY_CONNECTED";
-
-constexpr uint32_t kNumInputs = 4;
-constexpr uint32_t kInputTensor = 0;
-constexpr uint32_t kWeightsTensor = 1;
-constexpr uint32_t kBiasTensor = 2;
-[[maybe_unused]] constexpr uint32_t kActivationScalar = 3;
-
-constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
-
+#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
 
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 // executionMutex is used to protect concurrent access of non-threadsafe resources
 // like gemmlowp::GemmContext.
 // std::mutex is safe for pthreads on Android.
@@ -185,119 +176,9 @@ bool fullyConnectedQuant8(const int8_t* inputData, const Shape& inputShape,
 
     return true;
 }
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
-
-bool validateShapes(const Shape& input, const Shape& weights, const Shape& bias,
-                    Shape* output = nullptr) {
-    // Check all the parameters of tensor match within themselves and match the
-    // input configuration.
-    NN_RET_CHECK(weights.type == input.type);
-    if (input.type == OperandType::TENSOR_QUANT8_ASYMM ||
-        input.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK(bias.type == OperandType::TENSOR_INT32);
-    } else {
-        NN_RET_CHECK(bias.type == input.type);
-    }
-    // The Tensorflow fully connected layer specification says that input should
-    // be of at least rank 2, so we check. Tflite doesn't check.
-    NN_RET_CHECK_GE(getNumberOfDimensions(input), 2u);
-    NN_RET_CHECK_LE(getNumberOfDimensions(input), 4u);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(weights), 2u);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(bias), 1u);
-    uint32_t input_n_elements = getNumberOfElements(input);
-    uint32_t num_units = getSizeOfDimension(weights, 0u);
-    uint32_t input_size = getSizeOfDimension(weights, 1u);
-    uint32_t bias_len = getSizeOfDimension(bias, 0u);
-    uint32_t batch_size = 0;
-    if (input_size != 0) {
-        NN_RET_CHECK_EQ(input_n_elements % input_size, 0u);
-        batch_size = input_n_elements / input_size;
-    }
-    if (num_units != 0 && bias_len != 0) {
-        NN_RET_CHECK_EQ(bias_len, num_units);
-    }
-    if (output != nullptr) {
-        // Only batch_size can be 0.
-        NN_RET_CHECK_GT(num_units, 0u);
-        NN_RET_CHECK_GT(input_size, 0u);
-        output->type = input.type;
-        output->dimensions = {batch_size, num_units};
-    }
-    return true;
-}
 
 }  // namespace
 
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    auto inputType = context->getInputType(kInputTensor);
-    std::vector<OperandType> inExpectedTypes;
-    std::vector<OperandType> outExpectedTypes;
-    auto minSupportedVersion = kVersionFeatureLevel1;
-    if (inputType == OperandType::TENSOR_FLOAT32) {
-        minSupportedVersion = kVersionFeatureLevel1;
-        inExpectedTypes = {
-                OperandType::TENSOR_FLOAT32,
-                OperandType::TENSOR_FLOAT32,
-                OperandType::TENSOR_FLOAT32,
-                OperandType::INT32,
-        };
-    } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        minSupportedVersion = kVersionFeatureLevel3;
-        inExpectedTypes = {
-                OperandType::TENSOR_FLOAT16,
-                OperandType::TENSOR_FLOAT16,
-                OperandType::TENSOR_FLOAT16,
-                OperandType::INT32,
-        };
-    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        // NeuralNetworks.h specifies that ANEURALNETWORKS_FULLY_CONNECTED's output must
-        // meet "outputScale > inputScale * weightsScale" for the operand type
-        // ANEURALNETWORKS_TENSOR_QUANT8_ASYMM before API level 29.
-        const float inputScale = context->getInputShape(kInputTensor).scale;
-        const float weightsScale = context->getInputShape(kWeightsTensor).scale;
-        const float outputScale = context->getOutputShape(kOutputTensor).scale;
-        bool meetsQuantizedScaleConstraintBeforeV1_2 = (outputScale > inputScale * weightsScale);
-
-        if (!meetsQuantizedScaleConstraintBeforeV1_2) {
-            minSupportedVersion = kVersionFeatureLevel3;
-        } else {
-            minSupportedVersion = kVersionFeatureLevel1;
-        }
-
-        inExpectedTypes = {
-                OperandType::TENSOR_QUANT8_ASYMM,
-                OperandType::TENSOR_QUANT8_ASYMM,
-                OperandType::TENSOR_INT32,
-                OperandType::INT32,
-        };
-    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = kVersionFeatureLevel4;
-
-        inExpectedTypes = {
-                OperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                OperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                OperandType::TENSOR_INT32,
-                OperandType::INT32,
-        };
-    } else {
-        NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation " << kOperationName;
-    }
-    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-
-    Shape input = context->getInputShape(kInputTensor);
-    Shape weights = context->getInputShape(kWeightsTensor);
-    Shape bias = context->getInputShape(kBiasTensor);
-    if (hasKnownRank(input) && hasKnownRank(weights) && hasKnownRank(bias)) {
-        NN_RET_CHECK(validateShapes(input, weights, bias));
-    }
-
-    return minSupportedVersion;
-}
-
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
     Shape weights = context->getInputShape(kWeightsTensor);

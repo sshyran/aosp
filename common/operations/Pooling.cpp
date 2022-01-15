@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "Pooling.h"
+
 #include <vector>
 
 #include "OperationResolver.h"
@@ -38,11 +40,6 @@ namespace android {
 namespace nn {
 
 namespace pooling {
-
-constexpr uint32_t kInputTensor = 0;
-
-constexpr uint32_t kNumOutputs = 1;
-[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -296,73 +293,7 @@ bool maxPool(const T* inputData, const Shape& inputShape, const PoolingParam& pa
 }
 
 }  // namespace
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-Result<Version> validate(OperationType opType, const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    auto inputCount = context->getNumInputs();
-    NN_RET_CHECK(inputCount == 11 || inputCount == 10 || inputCount == 8 || inputCount == 7);
-    auto inputType = context->getInputType(kInputTensor);
-    std::vector<OperandType> inExpectedTypes;
-    auto minSupportedVersion = kVersionFeatureLevel1;
-    if (inputType == OperandType::TENSOR_FLOAT32) {
-        minSupportedVersion = kVersionFeatureLevel1;
-        inExpectedTypes = {
-                inputType,          OperandType::INT32, OperandType::INT32, OperandType::INT32,
-                OperandType::INT32, OperandType::INT32, OperandType::INT32,
-        };
-    } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        minSupportedVersion = kVersionFeatureLevel3;
-        inExpectedTypes = {
-                OperandType::TENSOR_FLOAT16, OperandType::INT32, OperandType::INT32,
-                OperandType::INT32,          OperandType::INT32, OperandType::INT32,
-                OperandType::INT32,
-        };
-    } else if (opType != OperationType::L2_POOL_2D &&
-               inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        minSupportedVersion = kVersionFeatureLevel1;
-        inExpectedTypes = {
-                OperandType::TENSOR_QUANT8_ASYMM,
-                OperandType::INT32,
-                OperandType::INT32,
-                OperandType::INT32,
-                OperandType::INT32,
-                OperandType::INT32,
-                OperandType::INT32,
-        };
-    } else if (opType != OperationType::L2_POOL_2D &&
-               inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = kVersionFeatureLevel4;
-        inExpectedTypes = {
-                OperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                OperandType::INT32,
-                OperandType::INT32,
-                OperandType::INT32,
-                OperandType::INT32,
-                OperandType::INT32,
-                OperandType::INT32,
-        };
-    } else {
-        NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation " << opType;
-    }
-
-    if (inputCount >= 10) {
-        std::vector<OperandType> explicitScalarTypes(3, OperandType::INT32);
-        inExpectedTypes.insert(inExpectedTypes.end(), explicitScalarTypes.begin(),
-                               explicitScalarTypes.end());
-    }
-    if (inputCount == 11 || inputCount == 8) {
-        inExpectedTypes.push_back(OperandType::BOOL);
-        minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel3);
-    } else {
-        minSupportedVersion = combineVersions(minSupportedVersion, kVersionFeatureLevel1);
-    }
-    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return minSupportedVersion;
-}
-
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
     NN_RET_CHECK_EQ(getNumberOfDimensions(input), 4u);
