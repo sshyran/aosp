@@ -19,10 +19,19 @@
 
 #include "OperationsUtils.h"
 
-namespace android::nn {
+namespace android::nn::reshape {
 
-// This implementation is left intentionally blank.
+Result<Version> validateDepthToSpace(const IOperationValidationContext* context);
+Result<Version> validateSpaceToDepth(const IOperationValidationContext* context);
 
-}  // namespace android::nn
+Result<Version> validatePad(const IOperationValidationContext* context);
+Result<Version> validatePadV2(const IOperationValidationContext* context);
+
+Result<Version> validateBatchToSpaceND(const IOperationValidationContext* context);
+Result<Version> validateSpaceToBatchND(const IOperationValidationContext* context);
+
+Result<Version> validateReshape(const IOperationValidationContext* context);
+
+}  // namespace android::nn::reshape
 
 #endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_RESHAPE_H

@@ -20,10 +20,16 @@
 #include <vector>
 
 #include "ActivationFunctor.h"
+#include "OperationsUtils.h"
 #include "nnapi/Types.h"
 
 namespace android {
 namespace nn {
+namespace rnn {
+
+Result<Version> validate(const IOperationValidationContext* context);
+
+}  // namespace rnn
 
 struct RunTimeOperandInfo;
 struct Shape;

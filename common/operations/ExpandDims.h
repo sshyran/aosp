@@ -23,6 +23,8 @@ namespace android {
 namespace nn {
 namespace expand_dims {
 
+Result<Version> validate(const IOperationValidationContext* context);
+
 bool prepare(const Shape& input, int32_t axis, Shape* output);
 
 bool eval(const uint8_t* inputData, const Shape& inputShape, int32_t axis, uint8_t* outputData,

@@ -14,11 +14,33 @@
  * limitations under the License.
  */
 
+#include <vector>
+
 #include "OperationsUtils.h"
 #include "SVDF.h"
 
-namespace android::nn {
+namespace android::nn::svdf {
 
-// This implementation is left intentionally blank.
+Result<Version> validate(const IOperationValidationContext* context) {
+    NN_RET_CHECK(context->getNumInputs() == 7 && context->getNumOutputs() == 2)
+            << context->invalidInOutNumberMessage(7, 2);
+    Version version;
+    OperandType inputType = context->getInputType(0);
+    if (inputType == OperandType::TENSOR_FLOAT32) {
+        version = kVersionFeatureLevel1;
+    } else if (inputType == OperandType::TENSOR_FLOAT16) {
+        version = kVersionFeatureLevel3;
+    } else {
+        NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
+                            << context->getOperationName();
+    }
+    std::vector<OperandType> inExpectedTypes = {
+            inputType, inputType,          inputType,          inputType,
+            inputType, OperandType::INT32, OperandType::INT32,
+    };
+    std::vector<OperandType> outExpectedTypes = {inputType, inputType};
+    NN_TRY(context->validateOperationOperandTypes(inExpectedTypes, outExpectedTypes));
+    return version;
+}
 
-}  // namespace android::nn
+}  // namespace android::nn::svdf

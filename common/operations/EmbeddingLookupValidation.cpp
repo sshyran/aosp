@@ -14,11 +14,37 @@
  * limitations under the License.
  */
 
+#include <vector>
+
 #include "EmbeddingLookup.h"
 #include "OperationsUtils.h"
 
-namespace android::nn {
+namespace android::nn::embedding_lookup {
 
-// This implementation is left intentionally blank.
+Result<Version> validate(const IOperationValidationContext* context) {
+    NN_RET_CHECK(context->getNumInputs() == 2 && context->getNumOutputs() == 1)
+            << context->invalidInOutNumberMessage(2, 1);
+    auto inputType = context->getInputType(1);
+    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
+                 inputType == OperandType::TENSOR_FLOAT32 ||
+                 inputType == OperandType::TENSOR_INT32 ||
+                 inputType == OperandType::TENSOR_QUANT8_ASYMM ||
+                 inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
+            << "Unsupported input tensor type for operation " << context->getOperationName();
+    Version version;
+    std::vector<OperandType> inExpectedTypes = {OperandType::TENSOR_INT32, inputType};
+    std::vector<OperandType> outExpectedTypes = {inputType};
+    if (inputType == OperandType::TENSOR_FLOAT16 ||
+        inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        version = kVersionFeatureLevel4;
+    } else if (inputType == OperandType::TENSOR_INT32 ||
+               inputType == OperandType::TENSOR_QUANT8_ASYMM) {
+        version = kVersionFeatureLevel3;
+    } else {
+        version = kVersionFeatureLevel1;
+    }
+    NN_TRY(context->validateOperationOperandTypes(inExpectedTypes, outExpectedTypes));
+    return version;
+}
 
-}  // namespace android::nn
+}  // namespace android::nn::embedding_lookup

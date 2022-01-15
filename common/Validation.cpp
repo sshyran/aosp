@@ -42,6 +42,25 @@
 #include "SharedMemory.h"
 #include "TypeUtils.h"
 #include "Types.h"
+#include "operations/ArgMinMax.h"
+#include "operations/BidirectionalSequenceLSTM.h"
+#include "operations/Cast.h"
+#include "operations/EmbeddingLookup.h"
+#include "operations/ExpandDims.h"
+#include "operations/GroupedConv2D.h"
+#include "operations/HashtableLookup.h"
+#include "operations/LSHProjection.h"
+#include "operations/LSTM.h"
+#include "operations/MaximumMinimum.h"
+#include "operations/Multinomial.h"
+#include "operations/Pow.h"
+#include "operations/QuantizedLSTM.h"
+#include "operations/RNN.h"
+#include "operations/Reshape.h"
+#include "operations/SVDF.h"
+#include "operations/SimpleMath.h"
+#include "operations/Split.h"
+#include "operations/Tile.h"
 
 namespace android::nn {
 namespace {
@@ -1514,29 +1533,6 @@ Result<void> validateOperandListImpl(const std::vector<uint32_t>& list, size_t o
     return {};
 }
 
-Result<void> validateOperationOperandTypes(const IOperationValidationContext* context,
-                                           const std::vector<OperandType>& inExpectedTypes,
-                                           const std::vector<OperandType>& outExpectedInTypes) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), inExpectedTypes.size())
-            << "Wrong operand count: expected " << inExpectedTypes.size() << " inputs, got "
-            << context->getNumInputs() << " inputs";
-    NN_RET_CHECK_EQ(context->getNumOutputs(), outExpectedInTypes.size())
-            << "Wrong operand count: expected " << outExpectedInTypes.size() << " outputs, got "
-            << context->getNumOutputs() << " outputs";
-    for (size_t i = 0; i < context->getNumInputs(); i++) {
-        NN_RET_CHECK_EQ(context->getInputType(i), inExpectedTypes[i])
-                << "Invalid input tensor type " << context->getInputType(i) << " for input " << i
-                << ", expected " << inExpectedTypes[i];
-    }
-    for (size_t i = 0; i < context->getNumOutputs(); i++) {
-        NN_RET_CHECK_EQ(context->getOutputType(i), outExpectedInTypes[i])
-                << "Invalid output tensor type " << context->getOutputType(i) << " for input " << i
-                << ", expected " << outExpectedInTypes[i];
-    }
-
-    return {};
-}
-
 Result<void> validateSubgraphReference(const std::vector<Model::Subgraph>& subgraphs,
                                        const Operand& modelOperand) {
     NN_RET_CHECK_EQ(modelOperand.type, OperandType::SUBGRAPH)
@@ -1754,875 +1750,70 @@ Result<Version> validateOperationButNotOperandsImpl(const Operation& operation,
         return kVersionFeatureLevel3;
     }
 
-    auto invalidInOutNumberMessage = [](const IOperationValidationContext* context, int expIn,
-                                        int expOut) {
-        std::ostringstream os;
-        os << "Invalid number of input operands (" << context->getNumInputs() << ", expected "
-           << expIn << ") or output operands (" << context->getNumOutputs() << ", expected "
-           << expOut << ") for operation " << context->getOperationName();
-        return os.str();
-    };
-
     std::ostringstream oss;
     oss << operation.type;
     const std::string name = oss.str();
     OperationValidationContext context(name.c_str(), inputIndexes, outputIndexes, operands);
 
     switch (opType) {
-        case OperationType::OEM_OPERATION: {
+        case OperationType::OEM_OPERATION:
             return kVersionFeatureLevel1;
-        }
-        case OperationType::RESHAPE: {
-            NN_RET_CHECK(context.getNumInputs() == 2 && context.getNumOutputs() == 1)
-                    << invalidInOutNumberMessage(&context, 2, 1);
-            auto inputType = context.getInputType(0);
-            Version version;
-            std::vector<OperandType> inExpectedTypes;
-            std::vector<OperandType> outExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT32) {
-                version = kVersionFeatureLevel1;
-                inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_INT32};
-                outExpectedTypes = {OperandType::TENSOR_FLOAT32};
-            } else if (inputType == OperandType::TENSOR_FLOAT16) {
-                version = kVersionFeatureLevel3;
-                inExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::TENSOR_INT32};
-                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
-            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-                version = kVersionFeatureLevel1;
-                inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_INT32};
-                outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
-            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                version = kVersionFeatureLevel4;
-                inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                                   OperandType::TENSOR_INT32};
-                outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM_SIGNED};
-            } else if (inputType == OperandType::TENSOR_INT32) {
-                version = kVersionFeatureLevel6;
-                inExpectedTypes = {OperandType::TENSOR_INT32, OperandType::TENSOR_INT32};
-                outExpectedTypes = {OperandType::TENSOR_INT32};
-            } else {
-                NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
-                                    << context.getOperationName();
-            }
-            const auto inputRank = context.getInputShape(0).dimensions.size();
-            NN_RET_CHECK_LE(inputRank, 4u)
-                    << "Unsupported input tensor rank for operation " << context.getOperationName();
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return version;
-        }
-        case OperationType::DEPTH_TO_SPACE: {
-            NN_RET_CHECK((context.getNumInputs() == 3 || context.getNumInputs() == 2) &&
-                         context.getNumOutputs() == 1)
-                    << "Invalid number of input operands (" << context.getNumInputs()
-                    << ", expected 3 or 2) or output operands (" << context.getNumOutputs()
-                    << ", expected 1) for operation " << context.getOperationName();
-            auto inputType = context.getInputType(0);
-            Version version;
-            std::vector<OperandType> inExpectedTypes;
-            std::vector<OperandType> outExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT32) {
-                version = kVersionFeatureLevel1;
-                inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::INT32};
-                outExpectedTypes = {OperandType::TENSOR_FLOAT32};
-            } else if (inputType == OperandType::TENSOR_FLOAT16) {
-                version = kVersionFeatureLevel3;
-                inExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::INT32};
-                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
-            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-                version = kVersionFeatureLevel1;
-                inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM, OperandType::INT32};
-                outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
-            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                version = kVersionFeatureLevel4;
-                inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM_SIGNED, OperandType::INT32};
-                outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM_SIGNED};
-            } else {
-                NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
-                                    << context.getOperationName();
-            }
-            if (context.getNumInputs() == 3) {
-                inExpectedTypes.push_back(OperandType::BOOL);
-                version = combineVersions(version, kVersionFeatureLevel3);
-            } else {
-                version = combineVersions(version, kVersionFeatureLevel1);
-            }
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return version;
-        }
-        case OperationType::SPACE_TO_DEPTH: {
-            NN_RET_CHECK((context.getNumInputs() == 3 || context.getNumInputs() == 2) &&
-                         context.getNumOutputs() == 1)
-                    << "Invalid number of input operands (" << context.getNumInputs()
-                    << ", expected 3 or 2) or output operands (" << context.getNumOutputs()
-                    << ", expected 1) for operation " << context.getOperationName();
-            auto inputType = context.getInputType(0);
-            Version version;
-            std::vector<OperandType> inExpectedTypes;
-            std::vector<OperandType> outExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT32) {
-                version = kVersionFeatureLevel1;
-                inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::INT32};
-                outExpectedTypes = {OperandType::TENSOR_FLOAT32};
-            } else if (inputType == OperandType::TENSOR_FLOAT16) {
-                version = kVersionFeatureLevel3;
-                inExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::INT32};
-                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
-            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-                version = kVersionFeatureLevel1;
-                inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM, OperandType::INT32};
-                outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
-            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                version = kVersionFeatureLevel4;
-                inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM_SIGNED, OperandType::INT32};
-                outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM_SIGNED};
-            } else {
-                NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
-                                    << context.getOperationName();
-            }
-            if (context.getNumInputs() == 3) {
-                inExpectedTypes.push_back(OperandType::BOOL);
-                version = combineVersions(version, kVersionFeatureLevel3);
-            } else {
-                version = combineVersions(version, kVersionFeatureLevel1);
-            }
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return version;
-        }
-        case OperationType::EMBEDDING_LOOKUP: {
-            NN_RET_CHECK(context.getNumInputs() == 2 && context.getNumOutputs() == 1)
-                    << invalidInOutNumberMessage(&context, 2, 1);
-            auto inputType = context.getInputType(1);
-            NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
-                         inputType == OperandType::TENSOR_FLOAT32 ||
-                         inputType == OperandType::TENSOR_INT32 ||
-                         inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-                         inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
-                    << "Unsupported input tensor type for operation " << context.getOperationName();
-            Version version;
-            std::vector<OperandType> inExpectedTypes = {OperandType::TENSOR_INT32, inputType};
-            std::vector<OperandType> outExpectedTypes = {inputType};
-            if (inputType == OperandType::TENSOR_FLOAT16 ||
-                inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                version = kVersionFeatureLevel4;
-            } else if (inputType == OperandType::TENSOR_INT32 ||
-                       inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-                version = kVersionFeatureLevel3;
-            } else {
-                version = kVersionFeatureLevel1;
-            }
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return version;
-        }
-        case OperationType::HASHTABLE_LOOKUP: {
-            NN_RET_CHECK(context.getNumInputs() == 3 && context.getNumOutputs() == 2)
-                    << invalidInOutNumberMessage(&context, 3, 2);
-            auto inputType = context.getInputType(2);
-            NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT32 ||
-                         inputType == OperandType::TENSOR_INT32 ||
-                         inputType == OperandType::TENSOR_QUANT8_ASYMM)
-                    << "Unsupported input tensor type for operation " << context.getOperationName();
-            std::vector<OperandType> inExpectedTypes = {OperandType::TENSOR_INT32,
-                                                        OperandType::TENSOR_INT32, inputType};
-            std::vector<OperandType> outExpectedTypes = {inputType,
-                                                         OperandType::TENSOR_QUANT8_ASYMM};
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return kVersionFeatureLevel1;
-        }
-        case OperationType::LSH_PROJECTION: {
-            NN_RET_CHECK(context.getNumInputs() == 4 && context.getNumOutputs() == 1)
-                    << invalidInOutNumberMessage(&context, 4, 1);
-            auto inputType = context.getInputType(1);
-            NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
-                         inputType == OperandType::TENSOR_FLOAT32 ||
-                         inputType == OperandType::TENSOR_INT32 ||
-                         inputType == OperandType::TENSOR_QUANT8_ASYMM)
-                    << "Unsupported input tensor type for operation " << context.getOperationName();
-            auto hashType = context.getInputType(0);
-            Version version;
-            std::vector<OperandType> inExpectedTypes;
-            if (hashType == OperandType::TENSOR_FLOAT16) {
-                version = kVersionFeatureLevel3;
-                inExpectedTypes = {
-                        OperandType::TENSOR_FLOAT16,
-                        inputType,
-                        OperandType::TENSOR_FLOAT16,
-                        OperandType::INT32,
-                };
-            } else if (hashType == OperandType::TENSOR_FLOAT32) {
-                version = kVersionFeatureLevel1;
-                inExpectedTypes = {
-                        OperandType::TENSOR_FLOAT32,
-                        inputType,
-                        OperandType::TENSOR_FLOAT32,
-                        OperandType::INT32,
-                };
-            } else {
-                NN_RET_CHECK_FAIL() << "Unsupported hash tensor type for operation "
-                                    << context.getOperationName();
-            }
-            std::vector<OperandType> outExpectedTypes = {OperandType::TENSOR_INT32};
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return version;
-        }
-        case OperationType::BIDIRECTIONAL_SEQUENCE_LSTM: {
-            const uint32_t kNumOutputs = 2;
-            const uint32_t kNumOutputsMerged = 1;
-            const uint32_t kNumOutputsWithState = 6;
-            const uint32_t kNumOutputsMergedWithState = 5;
-            NN_RET_CHECK(context.getNumInputs() == 61 &&
-                         (context.getNumOutputs() == kNumOutputs ||
-                          context.getNumOutputs() == kNumOutputsMerged ||
-                          context.getNumOutputs() == kNumOutputsWithState ||
-                          context.getNumOutputs() == kNumOutputsMergedWithState))
-                    << "Invalid number of input operands (" << context.getNumInputs()
-                    << ", expected 61) or output operands (" << context.getNumOutputs()
-                    << ", expected 1, 2, 5 or 6) for operation " << context.getOperationName();
-
-            std::vector<OperandType> inExpectedTypes;
-            auto inputType = context.getInputType(0);
-            NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT32 ||
-                         inputType == OperandType::TENSOR_FLOAT16)
-                    << "Unsupported input tensor type for operation " << context.getOperationName();
-
-            inExpectedTypes = {};
-            for (int i = 0; i < 48; ++i) {
-                inExpectedTypes.push_back(inputType);
-            }
-            inExpectedTypes.push_back(OperandType::INT32);
-            inExpectedTypes.push_back(inputType == OperandType::TENSOR_FLOAT32
-                                              ? OperandType::FLOAT32
-                                              : OperandType::FLOAT16);
-            inExpectedTypes.push_back(inputType == OperandType::TENSOR_FLOAT32
-                                              ? OperandType::FLOAT32
-                                              : OperandType::FLOAT16);
-            inExpectedTypes.push_back(OperandType::BOOL);
-            inExpectedTypes.push_back(OperandType::BOOL);
-            for (int i = 0; i < 8; ++i) {
-                inExpectedTypes.push_back(inputType);
-            }
-
-            Version version = kVersionFeatureLevel3;
-            if (context.getNumOutputs() == kNumOutputsWithState ||
-                context.getNumOutputs() == kNumOutputsMergedWithState) {
-                version = kVersionFeatureLevel4;
-            }
-            std::vector<OperandType> outExpectedTypes(context.getNumOutputs(), inputType);
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return version;
-        }
-        case OperationType::LSTM: {
-            NN_RET_CHECK((context.getNumInputs() == 23 || context.getNumInputs() == 27) &&
-                         context.getNumOutputs() == 4)
-                    << "Invalid number of input operands (" << context.getNumInputs()
-                    << ", expected 23 or 27) or output operands (" << context.getNumOutputs()
-                    << ", expected 4) for operation " << context.getOperationName();
-            std::vector<OperandType> inExpectedTypes;
-            std::vector<OperandType> outExpectedTypes;
-            auto inputType = context.getInputType(0);
-            NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT32 ||
-                         inputType == OperandType::TENSOR_FLOAT16)
-                    << "Unsupported input tensor type for operation " << context.getOperationName();
-
-            Version version = kVersionFeatureLevel1;
-            inExpectedTypes = {inputType,         inputType, inputType, inputType, inputType,
-                               inputType,         inputType, inputType, inputType, inputType,
-                               inputType,         inputType, inputType, inputType, inputType,
-                               inputType,         inputType, inputType, inputType, inputType,
-                               OperandType::INT32};
-            if (inputType == OperandType::TENSOR_FLOAT32) {
-                inExpectedTypes.push_back(OperandType::FLOAT32);
-                inExpectedTypes.push_back(OperandType::FLOAT32);
-            } else {
-                version = kVersionFeatureLevel3;
-                inExpectedTypes.push_back(OperandType::FLOAT16);
-                inExpectedTypes.push_back(OperandType::FLOAT16);
-            }
-
-            outExpectedTypes = {inputType, inputType, inputType, inputType};
-            if (context.getNumInputs() == 23) {
-                version = combineVersions(version, kVersionFeatureLevel1);
-            } else {
-                version = combineVersions(version, kVersionFeatureLevel3);
-                for (int i = 0; i < 4; ++i) {
-                    inExpectedTypes.push_back(inputType);
-                }
-            }
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return version;
-        }
-        case OperationType::QUANTIZED_16BIT_LSTM: {
-            NN_RET_CHECK(context.getNumInputs() == 15 && context.getNumOutputs() == 2)
-                    << invalidInOutNumberMessage(&context, 15, 2);
-            std::vector<OperandType> inExpectedTypes = {
-                    OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT8_ASYMM,
-                    OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT8_ASYMM,
-                    OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT8_ASYMM,
-                    OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_QUANT8_ASYMM,
-                    OperandType::TENSOR_QUANT8_ASYMM, OperandType::TENSOR_INT32,
-                    OperandType::TENSOR_INT32,        OperandType::TENSOR_INT32,
-                    OperandType::TENSOR_INT32,        OperandType::TENSOR_QUANT16_SYMM,
-                    OperandType::TENSOR_QUANT8_ASYMM};
-            std::vector<OperandType> outExpectedTypes = {OperandType::TENSOR_QUANT16_SYMM,
-                                                         OperandType::TENSOR_QUANT8_ASYMM};
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return kVersionFeatureLevel3;
-        }
-        case OperationType::RANDOM_MULTINOMIAL: {
-            NN_RET_CHECK(context.getNumInputs() == 3 && context.getNumOutputs() == 1)
-                    << invalidInOutNumberMessage(&context, 3, 1);
-            OperandType inputType = context.getInputType(0);
-            std::vector<OperandType> inExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT32 ||
-                inputType == OperandType::TENSOR_FLOAT16) {
-                inExpectedTypes = {inputType, OperandType::INT32, OperandType::TENSOR_INT32};
-            } else {
-                NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
-                                    << context.getOperationName();
-            }
-            std::vector<OperandType> outExpectedTypes = {OperandType::TENSOR_INT32};
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return kVersionFeatureLevel3;
-        }
-        case OperationType::RNN: {
-            NN_RET_CHECK(context.getNumInputs() == 6 && context.getNumOutputs() == 2)
-                    << invalidInOutNumberMessage(&context, 6, 2);
-            OperandType inputType = context.getInputType(0);
-            Version version;
-            std::vector<OperandType> inExpectedTypes;
-            std::vector<OperandType> outExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT32) {
-                version = kVersionFeatureLevel1;
-                inExpectedTypes = {
-                        OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
-                        OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
-                        OperandType::TENSOR_FLOAT32, OperandType::INT32,
-                };
-                outExpectedTypes = {
-                        OperandType::TENSOR_FLOAT32,
-                        OperandType::TENSOR_FLOAT32,
-                };
-            } else if (inputType == OperandType::TENSOR_FLOAT16) {
-                version = kVersionFeatureLevel3;
-                inExpectedTypes = {
-                        OperandType::TENSOR_FLOAT16, OperandType::TENSOR_FLOAT16,
-                        OperandType::TENSOR_FLOAT16, OperandType::TENSOR_FLOAT16,
-                        OperandType::TENSOR_FLOAT16, OperandType::INT32,
-                };
-                outExpectedTypes = {
-                        OperandType::TENSOR_FLOAT16,
-                        OperandType::TENSOR_FLOAT16,
-                };
-            } else {
-                NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
-                                    << context.getOperationName();
-            }
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return version;
-        }
-        case OperationType::SVDF: {
-            NN_RET_CHECK(context.getNumInputs() == 7 && context.getNumOutputs() == 2)
-                    << invalidInOutNumberMessage(&context, 7, 2);
-            Version version;
-            OperandType inputType = context.getInputType(0);
-            if (inputType == OperandType::TENSOR_FLOAT32) {
-                version = kVersionFeatureLevel1;
-            } else if (inputType == OperandType::TENSOR_FLOAT16) {
-                version = kVersionFeatureLevel3;
-            } else {
-                NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
-                                    << context.getOperationName();
-            }
-            std::vector<OperandType> inExpectedTypes = {
-                    inputType, inputType,          inputType,          inputType,
-                    inputType, OperandType::INT32, OperandType::INT32,
-            };
-            std::vector<OperandType> outExpectedTypes = {inputType, inputType};
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return version;
-        }
-        case OperationType::BATCH_TO_SPACE_ND: {
-            NN_RET_CHECK((context.getNumInputs() == 3 || context.getNumInputs() == 2) &&
-                         context.getNumOutputs() == 1)
-                    << "Invalid number of input operands (" << context.getNumInputs()
-                    << ", expected 3 or 2) or output operands (" << context.getNumOutputs()
-                    << ", expected 1) for operation " << context.getOperationName();
-            auto inputType = context.getInputType(0);
-            Version version = kVersionFeatureLevel1;
-            std::vector<OperandType> inExpectedTypes;
-            std::vector<OperandType> outExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT32) {
-                inExpectedTypes = {
-                        OperandType::TENSOR_FLOAT32,
-                        OperandType::TENSOR_INT32,
-                };
-                outExpectedTypes = {OperandType::TENSOR_FLOAT32};
-            } else if (inputType == OperandType::TENSOR_FLOAT16) {
-                version = kVersionFeatureLevel3;
-                inExpectedTypes = {
-                        OperandType::TENSOR_FLOAT16,
-                        OperandType::TENSOR_INT32,
-                };
-                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
-            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-                inExpectedTypes = {
-                        OperandType::TENSOR_QUANT8_ASYMM,
-                        OperandType::TENSOR_INT32,
-                };
-                outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
-            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                version = kVersionFeatureLevel4;
-                inExpectedTypes = {
-                        OperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                        OperandType::TENSOR_INT32,
-                };
-                outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM_SIGNED};
-            } else {
-                NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
-                                    << context.getOperationName();
-            }
-            if (context.getNumInputs() == 3) {
-                inExpectedTypes.push_back(OperandType::BOOL);
-                version = combineVersions(version, kVersionFeatureLevel3);
-            } else {
-                version = combineVersions(version, kVersionFeatureLevel2);
-            }
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return version;
-        }
-        case OperationType::SPACE_TO_BATCH_ND: {
-            NN_RET_CHECK((context.getNumInputs() == 4 || context.getNumInputs() == 3) &&
-                         context.getNumOutputs() == 1)
-                    << "Invalid number of input operands (" << context.getNumInputs()
-                    << ", expected 4 or 3) or output operands (" << context.getNumOutputs()
-                    << ", expected 1) for operation " << context.getOperationName();
-            auto inputType = context.getInputType(0);
-            Version version = kVersionFeatureLevel1;
-            std::vector<OperandType> inExpectedTypes;
-            std::vector<OperandType> outExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT32) {
-                inExpectedTypes = {
-                        OperandType::TENSOR_FLOAT32,
-                        OperandType::TENSOR_INT32,
-                        OperandType::TENSOR_INT32,
-                };
-                outExpectedTypes = {OperandType::TENSOR_FLOAT32};
-            } else if (inputType == OperandType::TENSOR_FLOAT16) {
-                version = kVersionFeatureLevel3;
-                inExpectedTypes = {
-                        OperandType::TENSOR_FLOAT16,
-                        OperandType::TENSOR_INT32,
-                        OperandType::TENSOR_INT32,
-                };
-                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
-            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-                if (context.getInputShape(0).offset != 0) {
-                    version = kVersionFeatureLevel3;
-                }
-                inExpectedTypes = {
-                        OperandType::TENSOR_QUANT8_ASYMM,
-                        OperandType::TENSOR_INT32,
-                        OperandType::TENSOR_INT32,
-                };
-                outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
-            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                version = kVersionFeatureLevel4;
-                inExpectedTypes = {
-                        OperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-                        OperandType::TENSOR_INT32,
-                        OperandType::TENSOR_INT32,
-                };
-                outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM_SIGNED};
-            } else {
-                NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
-                                    << context.getOperationName();
-            }
-            if (context.getNumInputs() == 4) {
-                inExpectedTypes.push_back(OperandType::BOOL);
-                version = combineVersions(version, kVersionFeatureLevel3);
-            } else {
-                version = combineVersions(version, kVersionFeatureLevel2);
-            }
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return version;
-        }
-        case OperationType::PAD: {
-            NN_RET_CHECK(context.getNumInputs() == 2 && context.getNumOutputs() == 1)
-                    << invalidInOutNumberMessage(&context, 2, 1);
-            auto inputType = context.getInputType(0);
-            Version version;
-            std::vector<OperandType> inExpectedTypes;
-            std::vector<OperandType> outExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT32) {
-                version = kVersionFeatureLevel2;
-                inExpectedTypes = {
-                        OperandType::TENSOR_FLOAT32,
-                        OperandType::TENSOR_INT32,
-                };
-                outExpectedTypes = {OperandType::TENSOR_FLOAT32};
-            } else if (inputType == OperandType::TENSOR_FLOAT16) {
-                version = kVersionFeatureLevel3;
-                inExpectedTypes = {
-                        OperandType::TENSOR_FLOAT16,
-                        OperandType::TENSOR_INT32,
-                };
-                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
-            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-                       inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                    version = kVersionFeatureLevel4;
-                } else {
-                    if (context.getInputShape(0).offset == 0) {
-                        version = kVersionFeatureLevel2;
-                    } else {
-                        version = kVersionFeatureLevel3;
-                    }
-                }
-                inExpectedTypes = {
-                        inputType,
-                        OperandType::TENSOR_INT32,
-                };
-                outExpectedTypes = {inputType};
-            } else {
-                NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
-                                    << context.getOperationName();
-            }
-            const auto inputRank = context.getInputShape(0).dimensions.size();
-            NN_RET_CHECK_LE(inputRank, 4u)
-                    << "Unsupported input tensor rank for operation " << context.getOperationName();
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return version;
-        }
-        case OperationType::PAD_V2: {
-            NN_RET_CHECK(context.getNumInputs() == 3 && context.getNumOutputs() == 1)
-                    << invalidInOutNumberMessage(&context, 3, 1);
-            auto inputType = context.getInputType(0);
-            Version version;
-            std::vector<OperandType> inExpectedTypes;
-            std::vector<OperandType> outExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT32) {
-                version = kVersionFeatureLevel3;
-                inExpectedTypes = {
-                        OperandType::TENSOR_FLOAT32,
-                        OperandType::TENSOR_INT32,
-                        OperandType::FLOAT32,
-                };
-                outExpectedTypes = {OperandType::TENSOR_FLOAT32};
-            } else if (inputType == OperandType::TENSOR_FLOAT16) {
-                version = kVersionFeatureLevel3;
-                inExpectedTypes = {
-                        OperandType::TENSOR_FLOAT16,
-                        OperandType::TENSOR_INT32,
-                        OperandType::FLOAT16,
-                };
-                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
-            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-                       inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                    version = kVersionFeatureLevel4;
-                } else {
-                    version = kVersionFeatureLevel3;
-                }
-                inExpectedTypes = {
-                        inputType,
-                        OperandType::TENSOR_INT32,
-                        OperandType::INT32,
-                };  // TODO(b/116699425): Make it UINT8.
-                outExpectedTypes = {inputType};
-            } else {
-                NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
-                                    << context.getOperationName();
-            }
-            const auto inputRank = context.getInputShape(0).dimensions.size();
-            NN_RET_CHECK_LE(inputRank, 4u)
-                    << "Unsupported input tensor rank for operation " << context.getOperationName();
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return version;
-        }
-        case OperationType::CAST: {
-            NN_RET_CHECK(context.getNumInputs() == 1 && context.getNumOutputs() == 1)
-                    << invalidInOutNumberMessage(&context, 1, 1);
-            auto inputShape = context.getInputShape(0);
-            auto outputShape = context.getOutputShape(0);
-            auto inputType = inputShape.type;
-            auto outputType = outputShape.type;
-            Version version;
-            std::vector<OperandType> inExpectedTypes;
-            std::vector<OperandType> outExpectedTypes;
-            if ((inputType == OperandType::TENSOR_FLOAT16 ||
-                 inputType == OperandType::TENSOR_FLOAT32 ||
-                 inputType == OperandType::TENSOR_INT32 ||
-                 inputType == OperandType::TENSOR_QUANT8_ASYMM) &&
-                (outputType == OperandType::TENSOR_FLOAT16 ||
-                 outputType == OperandType::TENSOR_FLOAT32 ||
-                 outputType == OperandType::TENSOR_INT32 ||
-                 outputType == OperandType::TENSOR_QUANT8_ASYMM)) {
-                version = kVersionFeatureLevel3;
-                inExpectedTypes = {inputType};
-                outExpectedTypes = {outputType};
-            } else if (inputType == OperandType::TENSOR_BOOL8 ||
-                       inputType == OperandType::TENSOR_QUANT16_ASYMM ||
-                       inputType == OperandType::TENSOR_QUANT16_SYMM ||
-                       inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED ||
-                       inputType == OperandType::TENSOR_QUANT8_SYMM) {
-                version = kVersionFeatureLevel4;
-                inExpectedTypes = {inputType};
-                outExpectedTypes = {inputType};  // Only identity CAST is supported.
-            } else {
-                NN_RET_CHECK_FAIL()
-                        << "Unsupported data type for operation " << context.getOperationName();
-            }
-            // Validate that output shape is equal to input shape if dimensions
-            // are already known.
-            auto getNumberOfElements = [](const std::vector<uint32_t>& dims) {
-                if (dims.empty()) {
-                    return 0;
-                }
-                return std::accumulate(dims.begin(), dims.end(), 1, std::multiplies<>());
-            };
-            NN_RET_CHECK(inputShape.dimensions.empty() || outputShape.dimensions.empty() ||
-                         getNumberOfElements(outputShape.dimensions) == 0 ||
-                         inputShape.dimensions == outputShape.dimensions);
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return version;
-        }
-        case OperationType::MEAN: {
-            NN_RET_CHECK(context.getNumInputs() == 3 && context.getNumOutputs() == 1)
-                    << invalidInOutNumberMessage(&context, 3, 1);
-            const auto inputRank = context.getInputShape(0).dimensions.size();
-            NN_RET_CHECK_LE(inputRank, 4u)
-                    << "Unsupported input tensor rank for operation " << context.getOperationName();
-            auto inputType = context.getInputType(0);
-            Version version;
-            if (inputType == OperandType::TENSOR_FLOAT32 ||
-                inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-                version = kVersionFeatureLevel2;
-            } else if (inputType == OperandType::TENSOR_FLOAT16) {
-                version = kVersionFeatureLevel3;
-            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                version = kVersionFeatureLevel4;
-            } else {
-                NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
-                                    << context.getOperationName();
-            }
-            std::vector<OperandType> inExpectedTypes = {inputType, OperandType::TENSOR_INT32,
-                                                        OperandType::INT32};
-            std::vector<OperandType> outExpectedTypes = {inputType};
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return version;
-        }
+        case OperationType::RESHAPE:
+            return reshape::validateReshape(&context);
+        case OperationType::DEPTH_TO_SPACE:
+            return reshape::validateDepthToSpace(&context);
+        case OperationType::SPACE_TO_DEPTH:
+            return reshape::validateSpaceToDepth(&context);
+        case OperationType::EMBEDDING_LOOKUP:
+            return embedding_lookup::validate(&context);
+        case OperationType::HASHTABLE_LOOKUP:
+            return hashtable_lookup::validate(&context);
+        case OperationType::LSH_PROJECTION:
+            return lsh_projection::validate(&context);
+        case OperationType::BIDIRECTIONAL_SEQUENCE_LSTM:
+            return bidirectional_sequence_lstm::validate(&context);
+        case OperationType::LSTM:
+            return lstm::validate(&context);
+        case OperationType::QUANTIZED_16BIT_LSTM:
+            return quantized_16bit_lstm::validate(&context);
+        case OperationType::RANDOM_MULTINOMIAL:
+            return multinomial::validate(&context);
+        case OperationType::RNN:
+            return rnn::validate(&context);
+        case OperationType::SVDF:
+            return svdf::validate(&context);
+        case OperationType::BATCH_TO_SPACE_ND:
+            return reshape::validateBatchToSpaceND(&context);
+        case OperationType::SPACE_TO_BATCH_ND:
+            return reshape::validateSpaceToBatchND(&context);
+        case OperationType::PAD:
+            return reshape::validatePad(&context);
+        case OperationType::PAD_V2:
+            return reshape::validatePadV2(&context);
+        case OperationType::CAST:
+            return cast::validate(&context);
+        case OperationType::MEAN:
+            return mean::validate(&context);
         case OperationType::ARGMAX:
-        case OperationType::ARGMIN: {
-            NN_RET_CHECK(context.getNumInputs() == 2 && context.getNumOutputs() == 1)
-                    << invalidInOutNumberMessage(&context, 2, 1);
-            auto inputType = context.getInputType(0);
-            std::vector<OperandType> inExpectedTypes;
-            std::vector<OperandType> outExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT16 ||
-                inputType == OperandType::TENSOR_FLOAT32 ||
-                inputType == OperandType::TENSOR_INT32 ||
-                inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-                inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                inExpectedTypes = {inputType, OperandType::INT32};
-                outExpectedTypes = {OperandType::TENSOR_INT32};
-            } else {
-                NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
-                                    << context.getOperationName();
-            }
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return kVersionFeatureLevel3;
-        }
-        case OperationType::EXPAND_DIMS: {
-            NN_RET_CHECK(context.getNumInputs() == 2 && context.getNumOutputs() == 1)
-                    << invalidInOutNumberMessage(&context, 2, 1);
-            auto inputType = context.getInputType(0);
-            std::vector<OperandType> inExpectedTypes;
-            std::vector<OperandType> outExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT16 ||
-                inputType == OperandType::TENSOR_FLOAT32 ||
-                inputType == OperandType::TENSOR_INT32 ||
-                inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-                inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                inExpectedTypes = {inputType, OperandType::INT32};
-                outExpectedTypes = {inputType};
-            } else {
-                NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
-                                    << context.getOperationName();
-            }
-            Version version;
-            if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                version = kVersionFeatureLevel4;
-            } else {
-                version = kVersionFeatureLevel3;
-            }
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return version;
-        }
-        case OperationType::SPLIT: {
-            NN_RET_CHECK_EQ(context.getNumInputs(), 3u)
-                    << "Invalid number of input operands (" << context.getNumInputs()
-                    << ", expected 3)" << context.getOperationName();
-            auto inputType = context.getInputType(0);
-            NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
-                         inputType == OperandType::TENSOR_FLOAT32 ||
-                         inputType == OperandType::TENSOR_INT32 ||
-                         inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-                         inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
-                    << "Unsupported input tensor type for operation " << context.getOperationName();
-            Version version;
-            if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                version = kVersionFeatureLevel4;
-            } else {
-                version = kVersionFeatureLevel3;
-            }
-            std::vector<OperandType> inExpectedTypes = {inputType, OperandType::INT32,
-                                                        OperandType::INT32};
-            std::vector<OperandType> outExpectedTypes(context.getNumOutputs(), inputType);
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return version;
-        }
+        case OperationType::ARGMIN:
+            return arg_min_max::validate(&context);
+        case OperationType::EXPAND_DIMS:
+            return expand_dims::validate(&context);
+        case OperationType::SPLIT:
+            return split::validate(&context);
         case OperationType::MAXIMUM:
-        case OperationType::MINIMUM: {
-            NN_RET_CHECK(context.getNumInputs() == 2 && context.getNumOutputs() == 1)
-                    << invalidInOutNumberMessage(&context, 2, 1);
-            std::vector<OperandType> inExpectedTypes;
-            std::vector<OperandType> outExpectedTypes;
-            OperandType inputType = context.getInputType(0);
-            if (inputType == OperandType::TENSOR_FLOAT16 ||
-                inputType == OperandType::TENSOR_FLOAT32 ||
-                inputType == OperandType::TENSOR_INT32 ||
-                inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-                inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                inExpectedTypes = {inputType, inputType};
-                outExpectedTypes = {inputType};
-            } else {
-                NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
-                                    << context.getOperationName();
-            }
-            Version version;
-            if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                version = kVersionFeatureLevel4;
-            } else {
-                version = kVersionFeatureLevel3;
-            }
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return version;
-        }
-        case OperationType::GROUPED_CONV_2D: {
-            NN_RET_CHECK((context.getNumInputs() == 12 || context.getNumInputs() == 9) &&
-                         context.getNumOutputs() == 1)
-                    << "Invalid number of input operands (" << context.getNumInputs()
-                    << ", expected 12 or 9) or output operands (" << context.getNumOutputs()
-                    << ", expected 1) for operation " << context.getOperationName();
-            auto inputType = context.getInputType(0);
-            auto filterType = context.getInputType(1);
-            std::vector<OperandType> inExpectedTypes;
-            std::vector<OperandType> outExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT32) {
-                inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
-                                   OperandType::TENSOR_FLOAT32, OperandType::INT32,
-                                   OperandType::INT32,          OperandType::INT32,
-                                   OperandType::INT32,          OperandType::INT32};
-                outExpectedTypes = {OperandType::TENSOR_FLOAT32};
-            } else if (inputType == OperandType::TENSOR_FLOAT16) {
-                inExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::TENSOR_FLOAT16,
-                                   OperandType::TENSOR_FLOAT16, OperandType::INT32,
-                                   OperandType::INT32,          OperandType::INT32,
-                                   OperandType::INT32,          OperandType::INT32};
-                outExpectedTypes = {OperandType::TENSOR_FLOAT16};
-            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-                       inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                NN_RET_CHECK(filterType == inputType ||
-                             filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL)
-                        << "Unsupported filter tensor type for operation "
-                        << context.getOperationName();
-
-                NN_RET_CHECK(
-                        filterType != OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL ||
-                        std::get<Operand::SymmPerChannelQuantParams>(context.getInputExtraParams(1))
-                                        .channelDim == 0)
-                        << "Unsupported filter tensor channel dimension for operation "
-                        << context.getOperationName();
-
-                inExpectedTypes = {
-                        inputType,          filterType,         OperandType::TENSOR_INT32,
-                        OperandType::INT32, OperandType::INT32, OperandType::INT32,
-                        OperandType::INT32, OperandType::INT32};
-                outExpectedTypes = {inputType};
-            } else {
-                NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
-                                    << context.getOperationName();
-            }
-
-            if (context.getNumInputs() == 12) {
-                std::vector<OperandType> explicitScalarTypes(3, OperandType::INT32);
-                inExpectedTypes.insert(inExpectedTypes.end(), explicitScalarTypes.begin(),
-                                       explicitScalarTypes.end());
-            }
-            inExpectedTypes.push_back(OperandType::BOOL);
-            Version version;
-            if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                version = kVersionFeatureLevel4;
-            } else {
-                version = kVersionFeatureLevel3;
-            }
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return version;
-        }
-        case OperationType::TILE: {
-            NN_RET_CHECK(context.getNumInputs() == 2 && context.getNumOutputs() == 1)
-                    << invalidInOutNumberMessage(&context, 2, 1);
-            auto inputType = context.getInputType(0);
-            std::vector<OperandType> inExpectedTypes;
-            std::vector<OperandType> outExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT16 ||
-                inputType == OperandType::TENSOR_FLOAT32 ||
-                inputType == OperandType::TENSOR_INT32 ||
-                inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-                inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                inExpectedTypes = {inputType, OperandType::TENSOR_INT32};
-                outExpectedTypes = {inputType};
-            } else {
-                NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
-                                    << context.getOperationName();
-            }
-            Version version;
-            if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                version = kVersionFeatureLevel4;
-            } else {
-                version = kVersionFeatureLevel3;
-            }
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return version;
-        }
-        case OperationType::POW: {
-            NN_RET_CHECK(context.getNumInputs() == 2 && context.getNumOutputs() == 1)
-                    << invalidInOutNumberMessage(&context, 2, 1);
-            auto inputType = context.getInputType(0);
-            std::vector<OperandType> inExpectedTypes;
-            std::vector<OperandType> outExpectedTypes;
-            if (inputType == OperandType::TENSOR_FLOAT16 ||
-                inputType == OperandType::TENSOR_FLOAT32) {
-                inExpectedTypes = {inputType, inputType};
-                outExpectedTypes = {inputType};
-            } else {
-                NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
-                                    << context.getOperationName();
-            }
-            Version version;
-            if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-                version = kVersionFeatureLevel4;
-            } else {
-                version = kVersionFeatureLevel3;
-            }
-            NN_TRY(validateOperationOperandTypes(&context, inExpectedTypes, outExpectedTypes));
-            return version;
-        }
-        case OperationType::IF: {
+        case OperationType::MINIMUM:
+            return maximum_minimum::validate(&context);
+        case OperationType::GROUPED_CONV_2D:
+            return grouped_conv2d::validate(&context);
+        case OperationType::TILE:
+            return tile::validate(&context);
+        case OperationType::POW:
+            return pow::validate(&context);
+        case OperationType::IF:
             return validateIfOperation(inputIndexes, outputIndexes, operands, subgraphs);
-        }
-        case OperationType::WHILE: {
+        case OperationType::WHILE:
             return validateWhileOperation(inputIndexes, outputIndexes, operands, subgraphs);
-        }
         default: {
             const OperationRegistration* operationRegistration =
                     BuiltinOperationResolver::get()->findOperation(

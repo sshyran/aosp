@@ -14,11 +14,48 @@
  * limitations under the License.
  */
 
+#include <vector>
+
 #include "OperationsUtils.h"
 #include "RNN.h"
 
-namespace android::nn {
+namespace android::nn::rnn {
 
-// This implementation is left intentionally blank.
+Result<Version> validate(const IOperationValidationContext* context) {
+    NN_RET_CHECK(context->getNumInputs() == 6 && context->getNumOutputs() == 2)
+            << context->invalidInOutNumberMessage(6, 2);
+    OperandType inputType = context->getInputType(0);
+    Version version;
+    std::vector<OperandType> inExpectedTypes;
+    std::vector<OperandType> outExpectedTypes;
+    if (inputType == OperandType::TENSOR_FLOAT32) {
+        version = kVersionFeatureLevel1;
+        inExpectedTypes = {
+                OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
+                OperandType::TENSOR_FLOAT32, OperandType::INT32,
+        };
+        outExpectedTypes = {
+                OperandType::TENSOR_FLOAT32,
+                OperandType::TENSOR_FLOAT32,
+        };
+    } else if (inputType == OperandType::TENSOR_FLOAT16) {
+        version = kVersionFeatureLevel3;
+        inExpectedTypes = {
+                OperandType::TENSOR_FLOAT16, OperandType::TENSOR_FLOAT16,
+                OperandType::TENSOR_FLOAT16, OperandType::TENSOR_FLOAT16,
+                OperandType::TENSOR_FLOAT16, OperandType::INT32,
+        };
+        outExpectedTypes = {
+                OperandType::TENSOR_FLOAT16,
+                OperandType::TENSOR_FLOAT16,
+        };
+    } else {
+        NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
+                            << context->getOperationName();
+    }
+    NN_TRY(context->validateOperationOperandTypes(inExpectedTypes, outExpectedTypes));
+    return version;
+}
 
-}  // namespace android::nn
+}  // namespace android::nn::rnn

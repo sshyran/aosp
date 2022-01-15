@@ -14,11 +14,27 @@
  * limitations under the License.
  */
 
+#include <vector>
+
 #include "Multinomial.h"
 #include "OperationsUtils.h"
 
-namespace android::nn {
+namespace android::nn::multinomial {
 
-// This implementation is left intentionally blank.
+Result<Version> validate(const IOperationValidationContext* context) {
+    NN_RET_CHECK(context->getNumInputs() == 3 && context->getNumOutputs() == 1)
+            << context->invalidInOutNumberMessage(3, 1);
+    OperandType inputType = context->getInputType(0);
+    std::vector<OperandType> inExpectedTypes;
+    if (inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_FLOAT16) {
+        inExpectedTypes = {inputType, OperandType::INT32, OperandType::TENSOR_INT32};
+    } else {
+        NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation "
+                            << context->getOperationName();
+    }
+    std::vector<OperandType> outExpectedTypes = {OperandType::TENSOR_INT32};
+    NN_TRY(context->validateOperationOperandTypes(inExpectedTypes, outExpectedTypes));
+    return kVersionFeatureLevel3;
+}
 
-}  // namespace android::nn
+}  // namespace android::nn::multinomial

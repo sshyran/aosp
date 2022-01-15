@@ -14,11 +14,34 @@
  * limitations under the License.
  */
 
+#include <vector>
+
 #include "OperationsUtils.h"
 #include "Split.h"
 
-namespace android::nn {
+namespace android::nn::split {
 
-// This implementation is left intentionally blank.
+Result<Version> validate(const IOperationValidationContext* context) {
+    NN_RET_CHECK_EQ(context->getNumInputs(), 3u)
+            << "Invalid number of input operands (" << context->getNumInputs() << ", expected 3)"
+            << context->getOperationName();
+    auto inputType = context->getInputType(0);
+    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
+                 inputType == OperandType::TENSOR_FLOAT32 ||
+                 inputType == OperandType::TENSOR_INT32 ||
+                 inputType == OperandType::TENSOR_QUANT8_ASYMM ||
+                 inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
+            << "Unsupported input tensor type for operation " << context->getOperationName();
+    Version version;
+    if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        version = kVersionFeatureLevel4;
+    } else {
+        version = kVersionFeatureLevel3;
+    }
+    std::vector<OperandType> inExpectedTypes = {inputType, OperandType::INT32, OperandType::INT32};
+    std::vector<OperandType> outExpectedTypes(context->getNumOutputs(), inputType);
+    NN_TRY(context->validateOperationOperandTypes(inExpectedTypes, outExpectedTypes));
+    return version;
+}
 
-}  // namespace android::nn
+}  // namespace android::nn::split
