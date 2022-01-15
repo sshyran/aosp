@@ -18,6 +18,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "Squeeze.h"
+
 #include <vector>
 
 #include "OperationResolver.h"
@@ -27,44 +29,6 @@
 namespace android {
 namespace nn {
 namespace squeeze {
-
-constexpr uint32_t kNumInputs = 2;
-constexpr uint32_t kInputTensor = 0;
-[[maybe_unused]] constexpr uint32_t kSqueezeDims = 1;
-
-constexpr uint32_t kNumOutputs = 1;
-[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
-
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    OperandType inputType = context->getInputType(kInputTensor);
-    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
-                 inputType == OperandType::TENSOR_FLOAT32 ||
-                 inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-                 inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
-            << "Unsupported input operand type for SQUEEZE op: " << inputType;
-
-    Version minSupportedVersion;
-    if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = kVersionFeatureLevel4;
-    } else if (inputType == OperandType::TENSOR_FLOAT16) {
-        minSupportedVersion = kVersionFeatureLevel3;
-    } else {
-        minSupportedVersion = kVersionFeatureLevel2;
-    }
-
-    NN_RET_CHECK(validateInputTypes(context, {
-                                                     inputType,
-                                                     OperandType::TENSOR_INT32,
-                                             }));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    const Shape& input = context->getInputShape(kInputTensor);
-    if (hasKnownRank(input)) {
-        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4u);
-    }
-    return minSupportedVersion;
-}
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {

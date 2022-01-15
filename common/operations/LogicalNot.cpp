@@ -16,19 +16,14 @@
 
 #define LOG_TAG "Operations"
 
+#include "LogicalNot.h"
+
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 
 namespace android {
 namespace nn {
 namespace logical_not {
-
-constexpr uint32_t kNumInputs = 1;
-constexpr uint32_t kInputTensor = 0;
-
-constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
-
 namespace {
 
 bool compute(const bool8* input, const Shape& shape, bool8* output) {
@@ -40,17 +35,6 @@ bool compute(const bool8* input, const Shape& shape, bool8* output) {
 }
 
 }  // namespace
-
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    OperandType inputType = context->getInputType(kInputTensor);
-    NN_RET_CHECK(inputType == OperandType::TENSOR_BOOL8)
-            << "Unsupported tensor type for LOGICAL_NOT";
-    NN_RET_CHECK(validateInputTypes(context, {inputType}));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return kVersionFeatureLevel3;
-}
 
 bool prepare(IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);

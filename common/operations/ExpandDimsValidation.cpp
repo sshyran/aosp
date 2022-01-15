@@ -14,36 +14,11 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "Operations"
-
 #include "ExpandDims.h"
+#include "OperationsUtils.h"
 
-#include "LegacyUtils.h"
+namespace android::nn::expand_dims {
 
-namespace android {
-namespace nn {
-namespace expand_dims {
+// This implementation is left intentionally blank.
 
-bool prepare(const Shape& input, int32_t axis, Shape* output) {
-    NN_CHECK(handleNegativeAxis(getNumberOfDimensions(input) + 1, &axis));
-
-    output->type = input.type;
-    output->offset = input.offset;
-    output->scale = input.scale;
-
-    output->dimensions.assign(input.dimensions.begin(), input.dimensions.end());
-    output->dimensions.insert(output->dimensions.begin() + axis, 1);
-
-    return true;
-}
-
-bool eval(const uint8_t* inputData, const Shape& inputShape, int32_t /*axis*/, uint8_t* outputData,
-          const Shape& /*outputShape*/) {
-    memcpy(outputData, inputData,
-           nonExtensionOperandSizeOfData(inputShape.type, inputShape.dimensions));
-    return true;
-}
-
-}  // namespace expand_dims
-}  // namespace nn
-}  // namespace android
+}  // namespace android::nn::expand_dims

@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "GenerateProposals.h"
+
 #include <algorithm>
 #include <cfloat>
 #include <cmath>
@@ -191,41 +193,6 @@ float getIoUAxisAligned(const float* roi1, const float* roi2) {
 
 namespace axis_aligned_bbox_transform {
 
-constexpr char kOperationName[] = "AXIS_ALIGNED_BBOX_TRANSFORM";
-
-constexpr uint32_t kNumInputs = 4;
-constexpr uint32_t kRoiTensor = 0;
-constexpr uint32_t kDeltaTensor = 1;
-[[maybe_unused]] constexpr uint32_t kBatchesTensor = 2;
-[[maybe_unused]] constexpr uint32_t kImageInfoTensor = 3;
-
-constexpr uint32_t kNumOutputs = 1;
-[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
-
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    std::vector<OperandType> inExpectedTypes;
-    auto inputType = context->getInputType(kRoiTensor);
-    auto deltaInputType = context->getInputType(kDeltaTensor);
-    if (inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_FLOAT16) {
-        inExpectedTypes = {inputType, inputType, OperandType::TENSOR_INT32, inputType};
-    } else if (inputType == OperandType::TENSOR_QUANT16_ASYMM) {
-        if (deltaInputType == OperandType::TENSOR_QUANT8_ASYMM ||
-            deltaInputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-            inExpectedTypes = {OperandType::TENSOR_QUANT16_ASYMM, deltaInputType,
-                               OperandType::TENSOR_INT32, OperandType::TENSOR_QUANT16_ASYMM};
-        } else {
-            return NN_ERROR() << "Unsupported input tensor type for operation " << kOperationName;
-        }
-    } else {
-        return NN_ERROR() << "Unsupported input tensor type for operation " << kOperationName;
-    }
-    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return kVersionFeatureLevel3;
-}
-
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape roiShape = context->getInputShape(kRoiTensor);
@@ -333,25 +300,6 @@ bool execute(IOperationExecutionContext* context) {
 }  // namespace axis_aligned_bbox_transform
 
 namespace box_with_nms_limit {
-
-constexpr char kOperationName[] = "BOX_WITH_NMS_LIMIT";
-
-constexpr uint32_t kNumInputs = 9;
-constexpr uint32_t kScoreTensor = 0;
-[[maybe_unused]] constexpr uint32_t kRoiTensor = 1;
-[[maybe_unused]] constexpr uint32_t kBatchesTensor = 2;
-[[maybe_unused]] constexpr uint32_t kScoreThresholdScalar = 3;
-[[maybe_unused]] constexpr uint32_t kMaxNumDetectionScalar = 4;
-[[maybe_unused]] constexpr uint32_t kNmsKernelScalar = 5;
-[[maybe_unused]] constexpr uint32_t kIoUThresholdScalar = 6;
-[[maybe_unused]] constexpr uint32_t kSigmaScalar = 7;
-[[maybe_unused]] constexpr uint32_t kNmsScoreThresholdScalar = 8;
-
-constexpr uint32_t kNumOutputs = 4;
-[[maybe_unused]] constexpr uint32_t kOutputScoreTensor = 0;
-[[maybe_unused]] constexpr uint32_t kOutputRoiTensor = 1;
-[[maybe_unused]] constexpr uint32_t kOutputClassTensor = 2;
-[[maybe_unused]] constexpr uint32_t kOutputBatchesTensor = 3;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -713,54 +661,7 @@ bool boxWithNmsLimitQuant(const int8_t* scoresData, const Shape& scoresShape,
 }
 
 }  // namespace
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    std::vector<OperandType> inExpectedTypes;
-    std::vector<OperandType> outExpectedTypes;
-    auto inputType = context->getInputType(kScoreTensor);
-    if (inputType == OperandType::TENSOR_FLOAT16) {
-        inExpectedTypes = {
-                OperandType::TENSOR_FLOAT16, OperandType::TENSOR_FLOAT16, OperandType::TENSOR_INT32,
-                OperandType::FLOAT16,        OperandType::INT32,          OperandType::INT32,
-                OperandType::FLOAT16,        OperandType::FLOAT16,        OperandType::FLOAT16};
-        outExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::TENSOR_FLOAT16,
-                            OperandType::TENSOR_INT32, OperandType::TENSOR_INT32};
-    } else if (inputType == OperandType::TENSOR_FLOAT32) {
-        inExpectedTypes = {
-                OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32, OperandType::TENSOR_INT32,
-                OperandType::FLOAT32,        OperandType::INT32,          OperandType::INT32,
-                OperandType::FLOAT32,        OperandType::FLOAT32,        OperandType::FLOAT32};
-        outExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
-                            OperandType::TENSOR_INT32, OperandType::TENSOR_INT32};
-    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-               inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        inExpectedTypes = {inputType,
-                           OperandType::TENSOR_QUANT16_ASYMM,
-                           OperandType::TENSOR_INT32,
-                           OperandType::FLOAT32,
-                           OperandType::INT32,
-                           OperandType::INT32,
-                           OperandType::FLOAT32,
-                           OperandType::FLOAT32,
-                           OperandType::FLOAT32};
-        outExpectedTypes = {inputType, OperandType::TENSOR_QUANT16_ASYMM, OperandType::TENSOR_INT32,
-                            OperandType::TENSOR_INT32};
-    } else {
-        NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
-    }
-    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
-    NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
-    if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return kVersionFeatureLevel4;
-    } else {
-        return kVersionFeatureLevel3;
-    }
-}
-
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape scoreShape = context->getInputShape(kScoreTensor);
     Shape roiShape = context->getInputShape(kRoiTensor);
@@ -918,26 +819,6 @@ bool execute(IOperationExecutionContext* context) {
 }  // namespace box_with_nms_limit
 
 namespace generate_proposals {
-
-constexpr char kOperationName[] = "GENERATE_PROPOSALS";
-
-constexpr uint32_t kNumInputs = 11;
-constexpr uint32_t kScoreTensor = 0;
-[[maybe_unused]] constexpr uint32_t kDeltaTensor = 1;
-[[maybe_unused]] constexpr uint32_t kAnchorTensor = 2;
-[[maybe_unused]] constexpr uint32_t kImageInfoTensor = 3;
-[[maybe_unused]] constexpr uint32_t kHeightStrideSalar = 4;
-[[maybe_unused]] constexpr uint32_t kWidthStrideScalar = 5;
-[[maybe_unused]] constexpr uint32_t kPreNmsMaxScalar = 6;
-[[maybe_unused]] constexpr uint32_t kPostNmsMaxScalar = 7;
-[[maybe_unused]] constexpr uint32_t kIoUThresholdScalar = 8;
-[[maybe_unused]] constexpr uint32_t kMinSizeScalar = 9;
-[[maybe_unused]] constexpr uint32_t kLayoutScalar = 10;
-
-constexpr uint32_t kNumOutputs = 3;
-[[maybe_unused]] constexpr uint32_t kOutputScoreTensor = 0;
-[[maybe_unused]] constexpr uint32_t kOutputRoiTensor = 1;
-[[maybe_unused]] constexpr uint32_t kOutputBatchesTensor = 2;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -1227,70 +1108,7 @@ bool generateProposalsQuant(const T_8QInput* scoresData, const Shape& scoresShap
 }
 
 }  // namespace
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    std::vector<OperandType> inExpectedTypes;
-    std::vector<OperandType> outExpectedTypes;
-    auto inputType = context->getInputType(kScoreTensor);
-    if (inputType == OperandType::TENSOR_FLOAT16) {
-        inExpectedTypes = {OperandType::TENSOR_FLOAT16,
-                           OperandType::TENSOR_FLOAT16,
-                           OperandType::TENSOR_FLOAT16,
-                           OperandType::TENSOR_FLOAT16,
-                           OperandType::FLOAT16,
-                           OperandType::FLOAT16,
-                           OperandType::INT32,
-                           OperandType::INT32,
-                           OperandType::FLOAT16,
-                           OperandType::FLOAT16,
-                           OperandType::BOOL};
-        outExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::TENSOR_FLOAT16,
-                            OperandType::TENSOR_INT32};
-    } else if (inputType == OperandType::TENSOR_FLOAT32) {
-        inExpectedTypes = {OperandType::TENSOR_FLOAT32,
-                           OperandType::TENSOR_FLOAT32,
-                           OperandType::TENSOR_FLOAT32,
-                           OperandType::TENSOR_FLOAT32,
-                           OperandType::FLOAT32,
-                           OperandType::FLOAT32,
-                           OperandType::INT32,
-                           OperandType::INT32,
-                           OperandType::FLOAT32,
-                           OperandType::FLOAT32,
-                           OperandType::BOOL};
-        outExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
-                            OperandType::TENSOR_INT32};
-    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-               inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        inExpectedTypes = {inputType,
-                           inputType,
-                           OperandType::TENSOR_QUANT16_SYMM,
-                           OperandType::TENSOR_QUANT16_ASYMM,
-                           OperandType::FLOAT32,
-                           OperandType::FLOAT32,
-                           OperandType::INT32,
-                           OperandType::INT32,
-                           OperandType::FLOAT32,
-                           OperandType::FLOAT32,
-                           OperandType::BOOL};
-        outExpectedTypes = {inputType, OperandType::TENSOR_QUANT16_ASYMM,
-                            OperandType::TENSOR_INT32};
-    } else {
-        NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
-    }
-    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
-    NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
-    if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return kVersionFeatureLevel4;
-    } else {
-        return kVersionFeatureLevel3;
-    }
-}
-
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     bool useNchw = context->getInputValue<bool>(kLayoutScalar);
     Shape scoreShape = context->getInputShape(kScoreTensor);
@@ -1425,30 +1243,6 @@ bool execute(IOperationExecutionContext* context) {
 }  // namespace generate_proposals
 
 namespace detection_postprocess {
-
-constexpr char kOperationName[] = "DETECTION_POSTPROCESS";
-
-constexpr uint32_t kNumInputs = 14;
-constexpr uint32_t kScoreTensor = 0;
-[[maybe_unused]] constexpr uint32_t kDeltaTensor = 1;
-[[maybe_unused]] constexpr uint32_t kAnchorTensor = 2;
-[[maybe_unused]] constexpr uint32_t kScaleYScalar = 3;
-[[maybe_unused]] constexpr uint32_t kScaleXScalar = 4;
-[[maybe_unused]] constexpr uint32_t kScaleHScalar = 5;
-[[maybe_unused]] constexpr uint32_t kScaleWScalar = 6;
-[[maybe_unused]] constexpr uint32_t kUseRegularNmsScalar = 7;
-[[maybe_unused]] constexpr uint32_t kMaxNumDetectionScalar = 8;
-[[maybe_unused]] constexpr uint32_t kMaxClassesPerDetectionScalar = 9;
-[[maybe_unused]] constexpr uint32_t kMaxNumDetectionPerClassScalar = 10;
-[[maybe_unused]] constexpr uint32_t kScoreThresholdScalar = 11;
-[[maybe_unused]] constexpr uint32_t kIoUThresholdScalar = 12;
-[[maybe_unused]] constexpr uint32_t kIsBGInLabelScalar = 13;
-
-constexpr uint32_t kNumOutputs = 4;
-[[maybe_unused]] constexpr uint32_t kOutputScoreTensor = 0;
-[[maybe_unused]] constexpr uint32_t kOutputRoiTensor = 1;
-[[maybe_unused]] constexpr uint32_t kOutputClassTensor = 2;
-[[maybe_unused]] constexpr uint32_t kOutputDetectionTensor = 3;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -1590,40 +1384,7 @@ bool detectionPostprocessFloat16(
 }
 
 }  // namespace
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    std::vector<OperandType> inExpectedTypes;
-    std::vector<OperandType> outExpectedTypes;
-    auto inputType = context->getInputType(kScoreTensor);
-    if (inputType == OperandType::TENSOR_FLOAT16) {
-        inExpectedTypes = {OperandType::TENSOR_FLOAT16, OperandType::TENSOR_FLOAT16,
-                           OperandType::TENSOR_FLOAT16, OperandType::FLOAT16,
-                           OperandType::FLOAT16,        OperandType::FLOAT16,
-                           OperandType::FLOAT16,        OperandType::BOOL,
-                           OperandType::INT32,          OperandType::INT32,
-                           OperandType::INT32,          OperandType::FLOAT16,
-                           OperandType::FLOAT16,        OperandType::BOOL};
-    } else if (inputType == OperandType::TENSOR_FLOAT32) {
-        inExpectedTypes = {OperandType::TENSOR_FLOAT32, OperandType::TENSOR_FLOAT32,
-                           OperandType::TENSOR_FLOAT32, OperandType::FLOAT32,
-                           OperandType::FLOAT32,        OperandType::FLOAT32,
-                           OperandType::FLOAT32,        OperandType::BOOL,
-                           OperandType::INT32,          OperandType::INT32,
-                           OperandType::INT32,          OperandType::FLOAT32,
-                           OperandType::FLOAT32,        OperandType::BOOL};
-    } else {
-        NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
-    }
-    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
-    NN_RET_CHECK(validateOutputTypes(
-            context, {inputType, inputType, OperandType::TENSOR_INT32, OperandType::TENSOR_INT32}));
-    return kVersionFeatureLevel3;
-}
-
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     Shape scoreShape = context->getInputShape(kScoreTensor);
     Shape deltasShape = context->getInputShape(kDeltaTensor);

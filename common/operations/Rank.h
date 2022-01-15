@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "Operations"
+#ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_RANK_H
+#define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_RANK_H
 
-#include "LegacyUtils.h"
-#include "OperationResolver.h"
 #include "OperationsUtils.h"
 
-namespace android {
-namespace nn {
-namespace rank_op {
+namespace android::nn::rank_op {
 
 constexpr uint32_t kNumInputs = 1;
 constexpr uint32_t kInputTensor = 0;
@@ -30,39 +27,8 @@ constexpr uint32_t kInputTensor = 0;
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputScalar = 0;
 
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    OperandType inputType = context->getInputType(kInputTensor);
-    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
-                 inputType == OperandType::TENSOR_FLOAT32 ||
-                 inputType == OperandType::TENSOR_INT32 ||
-                 inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-                 inputType == OperandType::TENSOR_QUANT16_SYMM ||
-                 inputType == OperandType::TENSOR_BOOL8 ||
-                 inputType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL ||
-                 inputType == OperandType::TENSOR_QUANT16_ASYMM ||
-                 inputType == OperandType::TENSOR_QUANT8_SYMM ||
-                 inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
-            << "Incorrect input type for a RANK op: " << inputType;
-    NN_RET_CHECK(validateOutputTypes(context, {OperandType::INT32}));
-    return kVersionFeatureLevel4;
-}
+Result<Version> validate(const IOperationValidationContext* context);
 
-bool prepare(IOperationExecutionContext* context) {
-    Shape output = context->getOutputShape(kOutputScalar);
-    return context->setOutputShape(kOutputScalar, output);
-}
+}  // namespace android::nn::rank_op
 
-bool execute(IOperationExecutionContext* context) {
-    *context->getOutputBuffer<int32_t>(kOutputScalar) =
-            getNumberOfDimensions(context->getInputShape(kInputTensor));
-    return true;
-}
-
-}  // namespace rank_op
-
-NN_REGISTER_OPERATION(RANK, "RANK", rank_op::validate, rank_op::prepare, rank_op::execute);
-
-}  // namespace nn
-}  // namespace android
+#endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_RANK_H

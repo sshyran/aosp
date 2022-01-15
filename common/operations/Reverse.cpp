@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "Reverse.h"
+
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 
@@ -33,63 +35,6 @@
 namespace android {
 namespace nn {
 namespace reverse_op {
-
-constexpr char kOperationName[] = "REVERSE";
-
-// inputs consist of tensor to be reversed and a shape [1] axis tensor
-constexpr uint32_t kNumInputs = 2;
-constexpr uint32_t kInputTensor = 0;
-constexpr uint32_t kInputAxisTensor = 1;
-
-constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
-
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-
-    // Validate the input tensor.
-    const OperandType inputTensorType = context->getInputType(kInputTensor);
-    NN_RET_CHECK(inputTensorType == OperandType::TENSOR_FLOAT16 ||
-                 inputTensorType == OperandType::TENSOR_FLOAT32 ||
-                 inputTensorType == OperandType::TENSOR_QUANT8_ASYMM ||
-                 inputTensorType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED ||
-                 inputTensorType == OperandType::TENSOR_INT32);
-
-    // Validate the axis tensor.
-    NN_RET_CHECK_EQ(context->getInputType(kInputAxisTensor), OperandType::TENSOR_INT32);
-    const Shape inputAxisTensorShape = context->getInputShape(kInputAxisTensor);
-    if (hasKnownRank(inputAxisTensorShape)) {
-        NN_RET_CHECK_EQ(getNumberOfDimensions(inputAxisTensorShape), 1U)
-                << "Input tensor #" << kInputAxisTensor << " must have 1 dimension";
-        auto dim0 = inputAxisTensorShape.dimensions[0];
-        NN_RET_CHECK(!dim0 || dim0 == 1)
-                << "Input tensor #" << kInputAxisTensor << " dimension must be 1 but is " << dim0;
-    }
-
-    // Validate the output tensor.
-    NN_RET_CHECK_EQ(context->getOutputType(kOutputTensor), inputTensorType);
-
-    // Consistency checks.
-    const Shape inputTensorShape = context->getInputShape(kInputTensor);
-    const Shape outputTensorShape = context->getOutputShape(kOutputTensor);
-    if (inputTensorType == OperandType::TENSOR_QUANT8_ASYMM ||
-        inputTensorType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK_EQ(inputTensorShape.scale, outputTensorShape.scale)
-                << "Input tensor #" << kInputTensor << " scale " << inputTensorShape.scale
-                << " does not match output tensor scale " << outputTensorShape.scale;
-        NN_RET_CHECK_EQ(inputTensorShape.offset, outputTensorShape.offset)
-                << "Input tensor #" << kInputTensor << " offset " << inputTensorShape.offset
-                << " does not match output tensor offset " << outputTensorShape.offset;
-    }
-    auto inputTensorRank = getNumberOfDimensions(inputTensorShape);
-    auto outputTensorRank = getNumberOfDimensions(outputTensorShape);
-    NN_RET_CHECK(!inputTensorRank || !outputTensorRank || inputTensorRank == outputTensorRank)
-            << "Input tensor #" << kInputTensor << " rank " << inputTensorRank << " does not match "
-            << "output tensor rank " << outputTensorRank;
-
-    return kVersionFeatureLevel7;
-}
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {

@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "ChannelShuffle.h"
+
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
@@ -23,16 +25,6 @@
 namespace android {
 namespace nn {
 namespace channel_shuffle {
-
-constexpr char kOperationName[] = "CHANNEL_SHUFFLE";
-
-constexpr uint32_t kNumInputs = 3;
-constexpr uint32_t kInputTensor = 0;
-constexpr uint32_t kNumGroups = 1;
-constexpr uint32_t kInputAxis = 2;
-
-constexpr uint32_t kNumOutputs = 1;
-constexpr uint32_t kOutputTensor = 0;
 
 template <typename T>
 inline bool eval(const T* inputData, const Shape& inputShape, int32_t numGroups, int32_t axis,
@@ -55,28 +47,6 @@ inline bool eval(const T* inputData, const Shape& inputShape, int32_t numGroups,
         }
     }
     return true;
-}
-
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    auto inputType = context->getInputType(kInputTensor);
-    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
-                 inputType == OperandType::TENSOR_FLOAT32 ||
-                 inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-                 inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
-            << "Unsupported tensor type for operation " << kOperationName;
-    const Shape& inputShape = context->getInputShape(kInputTensor);
-    if (hasKnownRank(inputShape)) {
-        NN_RET_CHECK_LE(getNumberOfDimensions(inputShape), 4u);
-    }
-    NN_RET_CHECK(validateInputTypes(context, {inputType, OperandType::INT32, OperandType::INT32}));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        return kVersionFeatureLevel4;
-    } else {
-        return kVersionFeatureLevel3;
-    }
 }
 
 bool prepare(IOperationExecutionContext* context) {

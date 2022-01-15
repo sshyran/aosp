@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "L2Normalization.h"
+
 #include <algorithm>
 #include <vector>
 
@@ -37,15 +39,6 @@
 namespace android {
 namespace nn {
 namespace l2_norm {
-
-constexpr char kOperationName[] = "L2_NORMALIZATION";
-
-constexpr uint32_t kNumInputs = 2;
-constexpr uint32_t kInputTensor = 0;
-[[maybe_unused]] constexpr uint32_t kAxisScalar = 1;
-
-constexpr uint32_t kNumOutputs = 1;
-[[maybe_unused]] constexpr uint32_t kOutputTensor = 0;
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 namespace {
@@ -204,41 +197,7 @@ bool l2normQuant8Signed(const int8_t* inputData, const Shape& inputShape, int32_
 }
 
 }  // namespace
-#endif  // NN_INCLUDE_CPU_IMPLEMENTATION
 
-Result<Version> validate(const IOperationValidationContext* context) {
-    NN_RET_CHECK(context->getNumInputs() == kNumInputs ||
-                 context->getNumInputs() == kNumInputs - 1);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-
-    const OperandType inputType = context->getInputType(kInputTensor);
-    std::vector<OperandType> inExpectedTypes = {inputType};
-    auto minSupportedVersion = kVersionFeatureLevel1;
-    if (inputType == OperandType::TENSOR_FLOAT16 || inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        minSupportedVersion = kVersionFeatureLevel3;
-    } else if (inputType == OperandType::TENSOR_FLOAT32) {
-        minSupportedVersion = kVersionFeatureLevel1;
-    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        minSupportedVersion = kVersionFeatureLevel4;
-    } else {
-        NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
-    }
-    if (context->getNumInputs() == kNumInputs) {
-        inExpectedTypes.push_back(OperandType::INT32);
-        minSupportedVersion = kVersionFeatureLevel3;
-    } else if (context->getInputShape(kInputTensor).dimensions.size() != 4) {
-        minSupportedVersion = kVersionFeatureLevel3;
-    }
-    const Shape& input = context->getInputShape(kInputTensor);
-    if (hasKnownRank(input)) {
-        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4u);
-    }
-    NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
-    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return minSupportedVersion;
-}
-
-#ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 bool prepare(IOperationExecutionContext* context) {
     const Shape& input = context->getInputShape(kInputTensor);
     int32_t numDimensions = getNumberOfDimensions(input);

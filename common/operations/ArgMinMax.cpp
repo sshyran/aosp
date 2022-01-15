@@ -18,6 +18,8 @@
 
 #define LOG_TAG "Operations"
 
+#include "ArgMinMax.h"
+
 #include "CpuOperationUtils.h"
 #include "Operations.h"
 #include "Tracing.h"
