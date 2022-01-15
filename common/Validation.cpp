@@ -42,27 +42,26 @@
 #include "SharedMemory.h"
 #include "TypeUtils.h"
 #include "Types.h"
-#include "operations/ArgMinMax.h"
-#include "operations/BidirectionalSequenceLSTM.h"
-#include "operations/Cast.h"
-#include "operations/EmbeddingLookup.h"
-#include "operations/ExpandDims.h"
-#include "operations/GroupedConv2D.h"
-#include "operations/HashtableLookup.h"
-#include "operations/LSHProjection.h"
-#include "operations/LSTM.h"
-#include "operations/MaximumMinimum.h"
-#include "operations/Multinomial.h"
-#include "operations/Pow.h"
-#include "operations/QuantizedLSTM.h"
-#include "operations/RNN.h"
-#include "operations/Reshape.h"
-#include "operations/SVDF.h"
-#include "operations/SimpleMath.h"
-#include "operations/Split.h"
-#include "operations/Tile.h"
 
 namespace android::nn {
+
+#define NN_FORWARD_DECLARE_VALIDATION_FUNCTION(opType) NN_VALIDATION_FUNCTION_SIGNATURE(opType);
+
+NN_FOR_EACH_OPERATION(NN_FORWARD_DECLARE_VALIDATION_FUNCTION)
+
+#undef NN_FORWARD_DECLARE_VALIDATION_FUNCTION
+
+static Result<Version> notImplementedThroughRegistration(
+        const IOperationValidationContext* context) {
+    LOG(FATAL) << "Operation " << context->getOperationName()
+               << " not supported through registration";
+    return NN_ERROR();
+}
+
+NN_DEFINE_VALIDATION_FUNCTION(IF, notImplementedThroughRegistration);
+NN_DEFINE_VALIDATION_FUNCTION(WHILE, notImplementedThroughRegistration);
+NN_DEFINE_VALIDATION_FUNCTION(OEM_OPERATION, notImplementedThroughRegistration);
+
 namespace {
 
 constexpr auto kNullptrVariant = std::variant<const void*, void*>{};
@@ -1755,80 +1754,31 @@ Result<Version> validateOperationButNotOperandsImpl(const Operation& operation,
     const std::string name = oss.str();
     OperationValidationContext context(name.c_str(), inputIndexes, outputIndexes, operands);
 
+    // Validate some operations explicitly.
     switch (opType) {
         case OperationType::OEM_OPERATION:
             return kVersionFeatureLevel1;
-        case OperationType::RESHAPE:
-            return reshape::validateReshape(&context);
-        case OperationType::DEPTH_TO_SPACE:
-            return reshape::validateDepthToSpace(&context);
-        case OperationType::SPACE_TO_DEPTH:
-            return reshape::validateSpaceToDepth(&context);
-        case OperationType::EMBEDDING_LOOKUP:
-            return embedding_lookup::validate(&context);
-        case OperationType::HASHTABLE_LOOKUP:
-            return hashtable_lookup::validate(&context);
-        case OperationType::LSH_PROJECTION:
-            return lsh_projection::validate(&context);
-        case OperationType::BIDIRECTIONAL_SEQUENCE_LSTM:
-            return bidirectional_sequence_lstm::validate(&context);
-        case OperationType::LSTM:
-            return lstm::validate(&context);
-        case OperationType::QUANTIZED_16BIT_LSTM:
-            return quantized_16bit_lstm::validate(&context);
-        case OperationType::RANDOM_MULTINOMIAL:
-            return multinomial::validate(&context);
-        case OperationType::RNN:
-            return rnn::validate(&context);
-        case OperationType::SVDF:
-            return svdf::validate(&context);
-        case OperationType::BATCH_TO_SPACE_ND:
-            return reshape::validateBatchToSpaceND(&context);
-        case OperationType::SPACE_TO_BATCH_ND:
-            return reshape::validateSpaceToBatchND(&context);
-        case OperationType::PAD:
-            return reshape::validatePad(&context);
-        case OperationType::PAD_V2:
-            return reshape::validatePadV2(&context);
-        case OperationType::CAST:
-            return cast::validate(&context);
-        case OperationType::MEAN:
-            return mean::validate(&context);
-        case OperationType::ARGMAX:
-        case OperationType::ARGMIN:
-            return arg_min_max::validate(&context);
-        case OperationType::EXPAND_DIMS:
-            return expand_dims::validate(&context);
-        case OperationType::SPLIT:
-            return split::validate(&context);
-        case OperationType::MAXIMUM:
-        case OperationType::MINIMUM:
-            return maximum_minimum::validate(&context);
-        case OperationType::GROUPED_CONV_2D:
-            return grouped_conv2d::validate(&context);
-        case OperationType::TILE:
-            return tile::validate(&context);
-        case OperationType::POW:
-            return pow::validate(&context);
         case OperationType::IF:
             return validateIfOperation(inputIndexes, outputIndexes, operands, subgraphs);
         case OperationType::WHILE:
             return validateWhileOperation(inputIndexes, outputIndexes, operands, subgraphs);
-        default: {
-            const OperationRegistration* operationRegistration =
-                    BuiltinOperationResolver::get()->findOperation(
-                            static_cast<OperationType>(opType));
-            // TODO: return ErrorStatus::UNEXPECTED_NULL
-            NN_RET_CHECK(operationRegistration != nullptr) << opType << " not registered";
-            // TODO: return ErrorStatus::UNEXPECTED_NULL
-            NN_RET_CHECK(operationRegistration->validate != nullptr)
-                    << "Incomplete operation registration: " << opType;
-
-            OperationValidationContext context(operationRegistration->name, inputIndexes,
-                                               outputIndexes, operands);
-            return operationRegistration->validate(&context);
-        }
+        default:
+            break;
     }
+
+#define NN_HANDLE_SWITCH_CASE(operationName) \
+    case OperationType::operationName:       \
+        return NN_VALIDATION_FUNCTION_NAME(operationName)(&context);
+
+    // Validate the remaining operations through operation-specific functions defined in
+    // common/operations/.
+    // TODO(b/213938830): operation validation dispatch is duplicated and does not handle extension
+    // types.
+    switch (opType) { NN_FOR_EACH_OPERATION(NN_HANDLE_SWITCH_CASE) }
+
+#undef NN_HANDLE_SWITCH_CASE
+
+    NN_RET_CHECK_FAIL() << "Invalid OperationType " << opType;
 }
 
 Result<Version> validateOperationIncludingOperandVersions(

@@ -19,7 +19,8 @@
 #include "DepthwiseConv2D.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::depthwise_conv_2d {
+namespace android::nn {
+namespace depthwise_conv_2d {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     const uint32_t numInputs = context->getNumInputs();
@@ -118,4 +119,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return minSupportedVersion;
 }
 
-}  // namespace android::nn::depthwise_conv_2d
+}  // namespace depthwise_conv_2d
+
+NN_DEFINE_VALIDATION_FUNCTION(DEPTHWISE_CONV_2D, depthwise_conv_2d::validate);
+
+}  // namespace android::nn

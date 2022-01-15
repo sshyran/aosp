@@ -17,7 +17,8 @@
 #include "ArgMinMax.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::arg_min_max {
+namespace android::nn {
+namespace arg_min_max {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(context->getNumInputs() == 2 && context->getNumOutputs() == 1)
@@ -38,4 +39,9 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevel3;
 }
 
-}  // namespace android::nn::arg_min_max
+}  // namespace arg_min_max
+
+NN_DEFINE_VALIDATION_FUNCTION(ARGMIN, arg_min_max::validate);
+NN_DEFINE_VALIDATION_FUNCTION(ARGMAX, arg_min_max::validate);
+
+}  // namespace android::nn

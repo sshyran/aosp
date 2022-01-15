@@ -19,7 +19,8 @@
 #include "OperationsUtils.h"
 #include "RNN.h"
 
-namespace android::nn::rnn {
+namespace android::nn {
+namespace rnn {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(context->getNumInputs() == 6 && context->getNumOutputs() == 2)
@@ -58,4 +59,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return version;
 }
 
-}  // namespace android::nn::rnn
+}  // namespace rnn
+
+NN_DEFINE_VALIDATION_FUNCTION(RNN, rnn::validate);
+
+}  // namespace android::nn

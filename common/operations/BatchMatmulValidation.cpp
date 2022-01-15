@@ -17,7 +17,8 @@
 #include "BatchMatmul.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::batch_matmul_op {
+namespace android::nn {
+namespace batch_matmul_op {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -49,4 +50,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevel6;
 }
 
-}  // namespace android::nn::batch_matmul_op
+}  // namespace batch_matmul_op
+
+NN_DEFINE_VALIDATION_FUNCTION(BATCH_MATMUL, batch_matmul_op::validate);
+
+}  // namespace android::nn

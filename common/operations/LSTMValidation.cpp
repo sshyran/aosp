@@ -20,7 +20,8 @@
 #include "OperationsUtils.h"
 #include "nnapi/Validation.h"
 
-namespace android::nn::lstm {
+namespace android::nn {
+namespace lstm {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK((context->getNumInputs() == 23 || context->getNumInputs() == 27) &&
@@ -62,4 +63,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return version;
 }
 
-}  // namespace android::nn::lstm
+}  // namespace lstm
+
+NN_DEFINE_VALIDATION_FUNCTION(LSTM, lstm::validate);
+
+}  // namespace android::nn

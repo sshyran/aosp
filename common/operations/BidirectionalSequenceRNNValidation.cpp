@@ -19,7 +19,8 @@
 #include "BidirectionalSequenceRNN.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::bidirectional_sequence_rnn {
+namespace android::nn {
+namespace bidirectional_sequence_rnn {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -49,4 +50,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return minSupportedVersion;
 }
 
-}  // namespace android::nn::bidirectional_sequence_rnn
+}  // namespace bidirectional_sequence_rnn
+
+NN_DEFINE_VALIDATION_FUNCTION(BIDIRECTIONAL_SEQUENCE_RNN, bidirectional_sequence_rnn::validate);
+
+}  // namespace android::nn

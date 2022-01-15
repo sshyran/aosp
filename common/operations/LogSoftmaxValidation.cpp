@@ -19,7 +19,8 @@
 #include "LogSoftmax.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::log_softmax {
+namespace android::nn {
+namespace log_softmax {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -41,4 +42,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevel3;
 }
 
-}  // namespace android::nn::log_softmax
+}  // namespace log_softmax
+
+NN_DEFINE_VALIDATION_FUNCTION(LOG_SOFTMAX, log_softmax::validate);
+
+}  // namespace android::nn

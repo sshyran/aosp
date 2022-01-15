@@ -19,7 +19,8 @@
 #include "OperationsUtils.h"
 #include "Split.h"
 
-namespace android::nn::split {
+namespace android::nn {
+namespace split {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), 3u)
@@ -44,4 +45,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return version;
 }
 
-}  // namespace android::nn::split
+}  // namespace split
+
+NN_DEFINE_VALIDATION_FUNCTION(SPLIT, split::validate);
+
+}  // namespace android::nn

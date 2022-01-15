@@ -17,7 +17,8 @@
 #include "OperationsUtils.h"
 #include "Slice.h"
 
-namespace android::nn::slice {
+namespace android::nn {
+namespace slice {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -42,4 +43,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return minSupportedVersion;
 }
 
-}  // namespace android::nn::slice
+}  // namespace slice
+
+NN_DEFINE_VALIDATION_FUNCTION(SLICE, slice::validate);
+
+}  // namespace android::nn

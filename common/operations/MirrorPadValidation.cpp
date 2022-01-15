@@ -20,7 +20,8 @@
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::mirror_pad_op {
+namespace android::nn {
+namespace mirror_pad_op {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -86,4 +87,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevel7;
 }
 
-}  // namespace android::nn::mirror_pad_op
+}  // namespace mirror_pad_op
+
+NN_DEFINE_VALIDATION_FUNCTION(MIRROR_PAD, mirror_pad_op::validate);
+
+}  // namespace android::nn

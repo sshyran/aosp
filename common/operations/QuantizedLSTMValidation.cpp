@@ -19,7 +19,8 @@
 #include "OperationsUtils.h"
 #include "QuantizedLSTM.h"
 
-namespace android::nn::quantized_16bit_lstm {
+namespace android::nn {
+namespace quantized_16bit_lstm {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(context->getNumInputs() == 15 && context->getNumOutputs() == 2)
@@ -39,4 +40,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevel3;
 }
 
-}  // namespace android::nn::quantized_16bit_lstm
+}  // namespace quantized_16bit_lstm
+
+NN_DEFINE_VALIDATION_FUNCTION(QUANTIZED_16BIT_LSTM, quantized_16bit_lstm::validate);
+
+}  // namespace android::nn

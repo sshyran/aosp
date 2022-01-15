@@ -20,7 +20,8 @@
 #include "OperationsUtils.h"
 #include "nnapi/Validation.h"
 
-namespace android::nn::concatenation {
+namespace android::nn {
+namespace concatenation {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     uint32_t inputCount = context->getNumInputs();
@@ -59,4 +60,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return minSupportedVersion;
 }
 
-}  // namespace android::nn::concatenation
+}  // namespace concatenation
+
+NN_DEFINE_VALIDATION_FUNCTION(CONCATENATION, concatenation::validate);
+
+}  // namespace android::nn

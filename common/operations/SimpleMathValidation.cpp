@@ -19,7 +19,8 @@
 #include "OperationsUtils.h"
 #include "SimpleMath.h"
 
-namespace android::nn::mean {
+namespace android::nn {
+namespace mean {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(context->getNumInputs() == 3 && context->getNumOutputs() == 1)
@@ -46,4 +47,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return version;
 }
 
-}  // namespace android::nn::mean
+}  // namespace mean
+
+NN_DEFINE_VALIDATION_FUNCTION(MEAN, mean::validate);
+
+}  // namespace android::nn

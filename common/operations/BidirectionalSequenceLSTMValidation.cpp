@@ -19,7 +19,8 @@
 #include "BidirectionalSequenceLSTM.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::bidirectional_sequence_lstm {
+namespace android::nn {
+namespace bidirectional_sequence_lstm {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     const uint32_t kNumOutputs = 2;
@@ -66,4 +67,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return version;
 }
 
-}  // namespace android::nn::bidirectional_sequence_lstm
+}  // namespace bidirectional_sequence_lstm
+
+NN_DEFINE_VALIDATION_FUNCTION(BIDIRECTIONAL_SEQUENCE_LSTM, bidirectional_sequence_lstm::validate);
+
+}  // namespace android::nn

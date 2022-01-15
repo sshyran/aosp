@@ -19,7 +19,8 @@
 #include "OperationsUtils.h"
 #include "RoiAlign.h"
 
-namespace android::nn::roi_align {
+namespace android::nn {
+namespace roi_align {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -62,4 +63,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     }
 }
 
-}  // namespace android::nn::roi_align
+}  // namespace roi_align
+
+NN_DEFINE_VALIDATION_FUNCTION(ROI_ALIGN, roi_align::validate);
+
+}  // namespace android::nn

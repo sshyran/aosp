@@ -19,7 +19,8 @@
 #include "OperationsUtils.h"
 #include "UnidirectionalSequenceLSTM.h"
 
-namespace android::nn::unidirectional_sequence_lstm {
+namespace android::nn {
+namespace unidirectional_sequence_lstm {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -75,4 +76,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return minVersionSupported;
 }
 
-}  // namespace android::nn::unidirectional_sequence_lstm
+}  // namespace unidirectional_sequence_lstm
+
+NN_DEFINE_VALIDATION_FUNCTION(UNIDIRECTIONAL_SEQUENCE_LSTM, unidirectional_sequence_lstm::validate);
+
+}  // namespace android::nn
