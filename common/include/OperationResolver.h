@@ -30,6 +30,8 @@ struct OperationRegistration {
     const char* name;
 
     // Validates operand types, shapes, and any values known during graph creation.
+    // TODO(b/213938830): operation validation dispatch is duplicated and does not handle extension
+    // types.
     std::function<Result<Version>(const IOperationValidationContext*)> validate;
 
     // prepare is called when the inputs this operation depends on have been

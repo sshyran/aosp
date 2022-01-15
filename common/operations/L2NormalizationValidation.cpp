@@ -19,7 +19,8 @@
 #include "L2Normalization.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::l2_norm {
+namespace android::nn {
+namespace l2_norm {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(context->getNumInputs() == kNumInputs ||
@@ -53,4 +54,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return minSupportedVersion;
 }
 
-}  // namespace android::nn::l2_norm
+}  // namespace l2_norm
+
+NN_DEFINE_VALIDATION_FUNCTION(L2_NORMALIZATION, l2_norm::validate);
+
+}  // namespace android::nn

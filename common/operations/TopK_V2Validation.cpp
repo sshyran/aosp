@@ -17,7 +17,8 @@
 #include "OperationsUtils.h"
 #include "TopK_V2.h"
 
-namespace android::nn::topk_v2 {
+namespace android::nn {
+namespace topk_v2 {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -38,4 +39,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return minSupportedVersion;
 }
 
-}  // namespace android::nn::topk_v2
+}  // namespace topk_v2
+
+NN_DEFINE_VALIDATION_FUNCTION(TOPK_V2, topk_v2::validate);
+
+}  // namespace android::nn

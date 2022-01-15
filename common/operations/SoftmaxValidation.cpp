@@ -20,7 +20,8 @@
 #include "Softmax.h"
 #include "nnapi/Validation.h"
 
-namespace android::nn::softmax {
+namespace android::nn {
+namespace softmax {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(context->getNumInputs() == kNumInputs ||
@@ -58,4 +59,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return minSupportedVersion;
 }
 
-}  // namespace android::nn::softmax
+}  // namespace softmax
+
+NN_DEFINE_VALIDATION_FUNCTION(SOFTMAX, softmax::validate);
+
+}  // namespace android::nn

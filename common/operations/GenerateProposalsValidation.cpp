@@ -19,7 +19,8 @@
 #include "GenerateProposals.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::bbox_ops {
+namespace android::nn {
+namespace bbox_ops {
 
 namespace axis_aligned_bbox_transform {
 
@@ -198,4 +199,12 @@ Result<Version> validate(const IOperationValidationContext* context) {
 
 }  // namespace detection_postprocess
 
-}  // namespace android::nn::bbox_ops
+}  // namespace bbox_ops
+
+NN_DEFINE_VALIDATION_FUNCTION(AXIS_ALIGNED_BBOX_TRANSFORM,
+                              bbox_ops::axis_aligned_bbox_transform::validate);
+NN_DEFINE_VALIDATION_FUNCTION(BOX_WITH_NMS_LIMIT, bbox_ops::box_with_nms_limit::validate);
+NN_DEFINE_VALIDATION_FUNCTION(GENERATE_PROPOSALS, bbox_ops::generate_proposals::validate);
+NN_DEFINE_VALIDATION_FUNCTION(DETECTION_POSTPROCESSING, bbox_ops::detection_postprocess::validate);
+
+}  // namespace android::nn

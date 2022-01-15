@@ -19,7 +19,8 @@
 #include "Broadcast.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::broadcast {
+namespace android::nn {
+namespace broadcast {
 
 Result<Version> validate(OperationType opType, const IOperationValidationContext* context) {
     auto minSupportedVersion = (opType == OperationType::DIV || opType == OperationType::SUB)
@@ -66,4 +67,19 @@ Result<Version> validate(OperationType opType, const IOperationValidationContext
     return minSupportedVersion;
 }
 
-}  // namespace android::nn::broadcast
+}  // namespace broadcast
+
+NN_DEFINE_VALIDATION_FUNCTION(ADD, [](const IOperationValidationContext* context) {
+    return broadcast::validate(OperationType::ADD, context);
+});
+NN_DEFINE_VALIDATION_FUNCTION(MUL, [](const IOperationValidationContext* context) {
+    return broadcast::validate(OperationType::MUL, context);
+});
+NN_DEFINE_VALIDATION_FUNCTION(DIV, [](const IOperationValidationContext* context) {
+    return broadcast::validate(OperationType::DIV, context);
+});
+NN_DEFINE_VALIDATION_FUNCTION(SUB, [](const IOperationValidationContext* context) {
+    return broadcast::validate(OperationType::SUB, context);
+});
+
+}  // namespace android::nn

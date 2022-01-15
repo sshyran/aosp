@@ -19,7 +19,8 @@
 #include "EmbeddingLookup.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::embedding_lookup {
+namespace android::nn {
+namespace embedding_lookup {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(context->getNumInputs() == 2 && context->getNumOutputs() == 1)
@@ -47,4 +48,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return version;
 }
 
-}  // namespace android::nn::embedding_lookup
+}  // namespace embedding_lookup
+
+NN_DEFINE_VALIDATION_FUNCTION(EMBEDDING_LOOKUP, embedding_lookup::validate);
+
+}  // namespace android::nn

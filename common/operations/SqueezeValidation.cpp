@@ -17,7 +17,8 @@
 #include "OperationsUtils.h"
 #include "Squeeze.h"
 
-namespace android::nn::squeeze {
+namespace android::nn {
+namespace squeeze {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -50,4 +51,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return minSupportedVersion;
 }
 
-}  // namespace android::nn::squeeze
+}  // namespace squeeze
+
+NN_DEFINE_VALIDATION_FUNCTION(SQUEEZE, squeeze::validate);
+
+}  // namespace android::nn

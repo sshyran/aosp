@@ -19,7 +19,8 @@
 #include "ExpandDims.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::expand_dims {
+namespace android::nn {
+namespace expand_dims {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(context->getNumInputs() == 2 && context->getNumOutputs() == 1)
@@ -46,4 +47,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return version;
 }
 
-}  // namespace android::nn::expand_dims
+}  // namespace expand_dims
+
+NN_DEFINE_VALIDATION_FUNCTION(EXPAND_DIMS, expand_dims::validate);
+
+}  // namespace android::nn

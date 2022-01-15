@@ -17,7 +17,8 @@
 #include "OperationsUtils.h"
 #include "Pack.h"
 
-namespace android::nn::pack_op {
+namespace android::nn {
+namespace pack_op {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_GE(context->getNumInputs(), kMinNumInputs);
@@ -71,4 +72,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevel6;
 }
 
-}  // namespace android::nn::pack_op
+}  // namespace pack_op
+
+NN_DEFINE_VALIDATION_FUNCTION(PACK, pack_op::validate);
+
+}  // namespace android::nn

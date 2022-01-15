@@ -17,7 +17,8 @@
 #include "OperationsUtils.h"
 #include "Reduce.h"
 
-namespace android::nn::reduce {
+namespace android::nn {
+namespace reduce {
 
 Result<Version> validateProdSum(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -75,4 +76,13 @@ Result<Version> validateLogical(const IOperationValidationContext* context) {
     return kVersionFeatureLevel3;
 }
 
-}  // namespace android::nn::reduce
+}  // namespace reduce
+
+NN_DEFINE_VALIDATION_FUNCTION(REDUCE_ALL, reduce::validateLogical);
+NN_DEFINE_VALIDATION_FUNCTION(REDUCE_ANY, reduce::validateLogical);
+NN_DEFINE_VALIDATION_FUNCTION(REDUCE_MAX, reduce::validateMaxMin);
+NN_DEFINE_VALIDATION_FUNCTION(REDUCE_MIN, reduce::validateMaxMin);
+NN_DEFINE_VALIDATION_FUNCTION(REDUCE_PROD, reduce::validateProdSum);
+NN_DEFINE_VALIDATION_FUNCTION(REDUCE_SUM, reduce::validateProdSum);
+
+}  // namespace android::nn

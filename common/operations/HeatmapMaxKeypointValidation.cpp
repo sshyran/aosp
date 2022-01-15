@@ -19,7 +19,8 @@
 #include "HeatmapMaxKeypoint.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::heatmap_max_keypoint {
+namespace android::nn {
+namespace heatmap_max_keypoint {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -49,4 +50,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return minSupportedVersion;
 }
 
-}  // namespace android::nn::heatmap_max_keypoint
+}  // namespace heatmap_max_keypoint
+
+NN_DEFINE_VALIDATION_FUNCTION(HEATMAP_MAX_KEYPOINT, heatmap_max_keypoint::validate);
+
+}  // namespace android::nn

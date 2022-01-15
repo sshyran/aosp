@@ -17,7 +17,8 @@
 #include "OperationsUtils.h"
 #include "StridedSlice.h"
 
-namespace android::nn::strided_slice {
+namespace android::nn {
+namespace strided_slice {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -55,4 +56,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return minSupportedVersion;
 }
 
-}  // namespace android::nn::strided_slice
+}  // namespace strided_slice
+
+NN_DEFINE_VALIDATION_FUNCTION(STRIDED_SLICE, strided_slice::validate);
+
+}  // namespace android::nn

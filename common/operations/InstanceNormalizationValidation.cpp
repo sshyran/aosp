@@ -19,7 +19,8 @@
 #include "InstanceNormalization.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::instance_normalization {
+namespace android::nn {
+namespace instance_normalization {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -40,4 +41,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     return kVersionFeatureLevel3;
 }
 
-}  // namespace android::nn::instance_normalization
+}  // namespace instance_normalization
+
+NN_DEFINE_VALIDATION_FUNCTION(INSTANCE_NORMALIZATION, instance_normalization::validate);
+
+}  // namespace android::nn

@@ -17,7 +17,8 @@
 #include "ChannelShuffle.h"
 #include "OperationsUtils.h"
 
-namespace android::nn::channel_shuffle {
+namespace android::nn {
+namespace channel_shuffle {
 
 Result<Version> validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -41,4 +42,8 @@ Result<Version> validate(const IOperationValidationContext* context) {
     }
 }
 
-}  // namespace android::nn::channel_shuffle
+}  // namespace channel_shuffle
+
+NN_DEFINE_VALIDATION_FUNCTION(CHANNEL_SHUFFLE, channel_shuffle::validate);
+
+}  // namespace android::nn
