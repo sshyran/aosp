@@ -525,7 +525,7 @@ shared_library("xnn-driver") {
     "cpuinfo_impl.pic",
     "pthreadpool",
     "xnnpack_for_tflite",
-    "scalar_ukernels",
+    "scalar_prod_microkernels",
     "indirection",
     "memory_planner",
     "operators",
@@ -537,11 +537,11 @@ shared_library("xnn-driver") {
   # platform specific libs
   if (current_cpu == "arm" || current_cpu == "arm64") {
     xnnpack_libs += [
-     "neon_ukernels",
-     "neondot_ukernels",
-     "neonfma_ukernels",
-     "neonv8_ukernels",
-     "asm_ukernels",
+     "neon_prod_microkernels",
+     "neondot_prod_microkernels",
+     "neonfma_prod_microkernels",
+     "neonv8_prod_microkernels",
+     "asm_microkernels",
     ]
   } else if (current_cpu == "x64" || current_cpu == "x86")  {
     xnnpack_libs += [
