@@ -1002,6 +1002,7 @@ struct Version {
         FEATURE_LEVEL_5,
         FEATURE_LEVEL_6,
         FEATURE_LEVEL_7,
+        FEATURE_LEVEL_8,
 #ifdef NN_EXPERIMENTAL_FEATURE
         FEATURE_LEVEL_EXPERIMENTAL,
 #endif  // NN_EXPERIMENTAL_FEATURE
@@ -1018,6 +1019,7 @@ constexpr auto kVersionFeatureLevel4 = Version{.level = Version::Level::FEATURE_
 constexpr auto kVersionFeatureLevel5 = Version{.level = Version::Level::FEATURE_LEVEL_5};
 constexpr auto kVersionFeatureLevel6 = Version{.level = Version::Level::FEATURE_LEVEL_6};
 constexpr auto kVersionFeatureLevel7 = Version{.level = Version::Level::FEATURE_LEVEL_7};
+constexpr auto kVersionFeatureLevel8 = Version{.level = Version::Level::FEATURE_LEVEL_8};
 #ifdef NN_EXPERIMENTAL_FEATURE
 constexpr auto kVersionFeatureLevelExperimental =
         Version{.level = Version::Level::FEATURE_LEVEL_EXPERIMENTAL};

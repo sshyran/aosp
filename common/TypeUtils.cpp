@@ -711,6 +711,8 @@ std::ostream& operator<<(std::ostream& os, const Version::Level& versionLevel) {
             return os << "FEATURE_LEVEL_6";
         case Version::Level::FEATURE_LEVEL_7:
             return os << "FEATURE_LEVEL_7";
+        case Version::Level::FEATURE_LEVEL_8:
+            return os << "FEATURE_LEVEL_8";
 #ifdef NN_EXPERIMENTAL_FEATURE
         case Version::Level::FEATURE_LEVEL_EXPERIMENTAL:
             return os << "FEATURE_LEVEL_EXPERIMENTAL";

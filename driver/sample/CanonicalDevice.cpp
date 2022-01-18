@@ -110,7 +110,7 @@ const std::string& Device::getVersionString() const {
 }
 
 Version Device::getFeatureLevel() const {
-    return kVersionFeatureLevel7;
+    return kVersionFeatureLevel8;
 }
 
 DeviceType Device::getType() const {

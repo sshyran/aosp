@@ -16,12 +16,13 @@
 
 #pragma once
 
+#include <aidl/android/hardware/neuralnetworks/BnPreparedModel.h>
+#include <android-base/logging.h>
+
 #include <memory>
 #include <utility>
 #include <vector>
 
-#include <aidl/android/hardware/neuralnetworks/BnPreparedModel.h>
-#include <android-base/logging.h>
 #include "ShimDevice.h"
 #include "SupportLibrary.h"
 #include "SupportLibraryWrapper.h"
@@ -54,6 +55,9 @@ class ShimPreparedModel : public BnPreparedModel {
                                        int64_t loopTimeoutDurationNs, int64_t durationNs,
                                        FencedExecutionResult* fencedExecutionResult) override;
     ndk::ScopedAStatus configureExecutionBurst(std::shared_ptr<IBurst>* burst) override;
+    ndk::ScopedAStatus createReusableExecution(const Request& request, bool measureTiming,
+                                               int64_t loopTimeoutDurationNs,
+                                               std::shared_ptr<IExecution>* execution) override;
 
     const ::android::nn::sl_wrapper::Compilation& getCompilation() const { return mCompilation; }
     const ::android::nn::sl_wrapper::Model& getMainModel() const {

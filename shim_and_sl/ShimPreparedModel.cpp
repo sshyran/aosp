@@ -17,6 +17,7 @@
 #include "ShimPreparedModel.h"
 
 #include <aidl/android/hardware/neuralnetworks/BnBurst.h>
+#include <aidl/android/hardware/neuralnetworks/BnExecution.h>
 #include <aidl/android/hardware/neuralnetworks/BnFencedExecutionCallback.h>
 #include <aidl/android/hardware/neuralnetworks/ErrorStatus.h>
 #include <aidl/android/hardware/neuralnetworks/OutputShape.h>
@@ -27,6 +28,7 @@
 #include <android/binder_auto_utils.h>
 #include <nnapi/TypeUtils.h>
 #include <nnapi/hal/aidl/Conversions.h>
+#include <nnapi/hal/aidl/Utils.h>
 
 #include <algorithm>
 #include <chrono>
@@ -168,31 +170,29 @@ class ShimFencedExecutionCallback : public BnFencedExecutionCallback {
             constexpr uint64_t uint64cap = std::numeric_limits<uint64_t>::max();
             auto result = mExecution.getDuration(Duration::ON_HARDWARE, &duration);
             SLW2SAS_RETURN_IF_ERROR(result);
-            timingLaunched->timeOnDeviceNs =
-                    (duration == uint64cap)
-                            ? -1
-                            : (duration > int64cap) ? int64cap : static_cast<int64_t>(duration);
+            timingLaunched->timeOnDeviceNs = (duration == uint64cap) ? -1
+                                             : (duration > int64cap)
+                                                     ? int64cap
+                                                     : static_cast<int64_t>(duration);
 
             result = mExecution.getDuration(Duration::IN_DRIVER, &duration);
             SLW2SAS_RETURN_IF_ERROR(result);
-            timingLaunched->timeInDriverNs =
-                    (duration == uint64cap)
-                            ? -1
-                            : (duration > int64cap) ? int64cap : static_cast<int64_t>(duration);
+            timingLaunched->timeInDriverNs = (duration == uint64cap) ? -1
+                                             : (duration > int64cap)
+                                                     ? int64cap
+                                                     : static_cast<int64_t>(duration);
 
             result = mExecution.getDuration(Duration::FENCED_ON_HARDWARE, &duration);
             SLW2SAS_RETURN_IF_ERROR(result);
-            timingFenced->timeOnDeviceNs =
-                    (duration == uint64cap)
-                            ? -1
-                            : (duration > int64cap) ? int64cap : static_cast<int64_t>(duration);
+            timingFenced->timeOnDeviceNs = (duration == uint64cap) ? -1
+                                           : (duration > int64cap) ? int64cap
+                                                                   : static_cast<int64_t>(duration);
 
             result = mExecution.getDuration(Duration::FENCED_IN_DRIVER, &duration);
             SLW2SAS_RETURN_IF_ERROR(result);
-            timingFenced->timeInDriverNs =
-                    (duration == uint64cap)
-                            ? -1
-                            : (duration > int64cap) ? int64cap : static_cast<int64_t>(duration);
+            timingFenced->timeInDriverNs = (duration == uint64cap) ? -1
+                                           : (duration > int64cap) ? int64cap
+                                                                   : static_cast<int64_t>(duration);
         } else {
             timingFenced->timeOnDeviceNs = -1;
             timingFenced->timeInDriverNs = -1;
@@ -318,17 +318,15 @@ class ShimFencedExecutionCallback : public BnFencedExecutionCallback {
         constexpr uint64_t uint64cap = std::numeric_limits<uint64_t>::max();
         auto result = execution->getDuration(Duration::ON_HARDWARE, &duration);
         SLW2SAS_RETURN_IF_ERROR(result);
-        timeOnDeviceNs =
-                (duration == uint64cap)
-                        ? -1
-                        : (duration > int64cap) ? int64cap : static_cast<int64_t>(duration);
+        timeOnDeviceNs = (duration == uint64cap) ? -1
+                         : (duration > int64cap) ? int64cap
+                                                 : static_cast<int64_t>(duration);
 
         result = execution->getDuration(Duration::IN_DRIVER, &duration);
         SLW2SAS_RETURN_IF_ERROR(result);
-        timeInDriverNs =
-                (duration == uint64cap)
-                        ? -1
-                        : (duration > int64cap) ? int64cap : static_cast<int64_t>(duration);
+        timeInDriverNs = (duration == uint64cap) ? -1
+                         : (duration > int64cap) ? int64cap
+                                                 : static_cast<int64_t>(duration);
     }
 
     *executionResult =
@@ -400,6 +398,78 @@ ndk::ScopedAStatus ShimBurst::releaseMemoryResource(int64_t memoryIdentifierToke
         return toAStatus(ErrorStatus::INVALID_ARGUMENT, "Invalid memoryIdentifierToken");
     }
     return ndk::ScopedAStatus::ok();
+}
+
+class ShimExecution : public BnExecution {
+   public:
+    explicit ShimExecution(std::shared_ptr<ShimPreparedModel> preparedModel, Request request,
+                           bool measureTiming, int64_t loopTimeoutDurationNs);
+
+    ndk::ScopedAStatus executeSynchronously(int64_t deadlineNs,
+                                            ExecutionResult* executionResult) override;
+    ndk::ScopedAStatus executeFenced(const std::vector<ndk::ScopedFileDescriptor>& waitFor,
+                                     int64_t deadlineNs, int64_t durationNs,
+                                     FencedExecutionResult* fencedExecutionResult) override;
+
+   protected:
+    std::atomic_flag mExecutionInFlight = ATOMIC_FLAG_INIT;
+    const std::shared_ptr<ShimPreparedModel> kPreparedModel;
+    const Request kRequest;
+    const bool kMeasureTiming;
+    const int64_t kLoopTimeoutDurationNs;
+};
+
+ndk::ScopedAStatus ShimPreparedModel::createReusableExecution(
+        const Request& request, bool measureTiming, int64_t loopTimeoutDurationNs,
+        std::shared_ptr<IExecution>* execution) {
+    auto maybeClonedRequest = aidl_hal::utils::clone(request);
+    if (!maybeClonedRequest.ok()) {
+        return toAStatus(aidl_hal::ErrorStatus::GENERAL_FAILURE,
+                         maybeClonedRequest.error().message);
+    }
+    std::shared_ptr<ShimPreparedModel> self = this->template ref<ShimPreparedModel>();
+    *execution = ndk::SharedRefBase::make<ShimExecution>(std::move(self),
+                                                         std::move(maybeClonedRequest).value(),
+                                                         measureTiming, loopTimeoutDurationNs);
+    return ndk::ScopedAStatus::ok();
+}
+
+ShimExecution::ShimExecution(std::shared_ptr<ShimPreparedModel> preparedModel, Request request,
+                             bool measureTiming, int64_t loopTimeoutDurationNs)
+    : kPreparedModel(std::move(preparedModel)),
+      kRequest(std::move(request)),
+      kMeasureTiming(measureTiming),
+      kLoopTimeoutDurationNs(loopTimeoutDurationNs) {
+    CHECK(kPreparedModel != nullptr);
+}
+
+ndk::ScopedAStatus ShimExecution::executeSynchronously(int64_t deadlineNs,
+                                                       ExecutionResult* executionResult) {
+    // Ensure at most one execution is in flight at a time.
+    const bool executionAlreadyInFlight = mExecutionInFlight.test_and_set();
+    if (executionAlreadyInFlight) {
+        return toAStatus(ErrorStatus::GENERAL_FAILURE,
+                         "Execution object supports at most one execution at a time");
+    }
+    const auto guard = ::android::base::make_scope_guard([this] { mExecutionInFlight.clear(); });
+
+    return kPreparedModel->executeSynchronously(kRequest, kMeasureTiming, deadlineNs,
+                                                kLoopTimeoutDurationNs, executionResult);
+}
+
+ndk::ScopedAStatus ShimExecution::executeFenced(
+        const std::vector<ndk::ScopedFileDescriptor>& waitFor, int64_t deadlineNs,
+        int64_t durationNs, FencedExecutionResult* fencedExecutionResult) {
+    // Ensure at most one execution is in flight at a time.
+    const bool executionAlreadyInFlight = mExecutionInFlight.test_and_set();
+    if (executionAlreadyInFlight) {
+        return toAStatus(ErrorStatus::GENERAL_FAILURE,
+                         "Execution object supports at most one execution at a time");
+    }
+    const auto guard = ::android::base::make_scope_guard([this] { mExecutionInFlight.clear(); });
+
+    return kPreparedModel->executeFenced(kRequest, waitFor, kMeasureTiming, deadlineNs,
+                                         kLoopTimeoutDurationNs, durationNs, fencedExecutionResult);
 }
 
 }  // namespace aidl::android::hardware::neuralnetworks
