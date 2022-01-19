@@ -4,7 +4,7 @@
 #include <base/logging.h>
 #include <base/files/file_util.h>
 #include <base/files/file_path.h>
-#include <base/scoped_native_library.h>
+#include <base/native_library.h>
 #include "sampledriver_util.h"
 
 bool ReadFileTo(std::string& filePath, std::string* content) {
@@ -16,8 +16,12 @@ void* GetFunctionFrom(std::string& libraryPath, std::string& functionName) {
     base::FilePath path(libraryPath);
     base::NativeLibraryOptions options;
     base::NativeLibraryLoadError loadError;
-    auto library = base::ScopedNativeLibrary(base::LoadNativeLibraryWithOptions(path, options, &loadError));
-    auto functionPointer = library.GetFunctionPointer(functionName.c_str());
+    auto library = base::LoadNativeLibraryWithOptions(path, options, &loadError);
+    if (library == nullptr) {
+        LOG(ERROR) << "Failed to load driver from: " << path << " with error " << loadError.ToString();
+        return nullptr;
+    }
+    auto functionPointer = base::GetFunctionPointerFromNativeLibrary(library, functionName.c_str());
     if (functionPointer == nullptr) {
         LOG(FATAL) << "Cannot get funtion " << functionName << " from " << libraryPath;
     }

@@ -230,7 +230,7 @@ class Subgraph {
         std::vector<uint32_t> xnnpackTensors(operands.size());
         for (int t : tensors) {
             if (t < 0) continue;
-            if (CheckTensorForXNNType(operands[tensors[t]].type) == V1_3::ErrorStatus::NONE) {
+            if (CheckTensorForXNNType(operands[tensors[t]].type) == V1_3::ErrorStatus::INVALID_ARGUMENT) {
                 LOG(ERROR) << "XNNPACK only support FLOAT32 and INT32 tensors";
                 return nullptr;
             }

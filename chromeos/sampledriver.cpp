@@ -4,7 +4,6 @@
 
 #include <android-base/logging.h>
 
-#include <dlfcn.h>
 #include <string>
 #include <unordered_map>
 #include <utility>
