@@ -99,8 +99,8 @@ void transposeRowsColumns(const T* inputData, const Shape& inputShape, T* output
 // Creates a temporary space in heap.
 // Note that it is caller's responsibility to free the memory.
 template <typename T>
-std::unique_ptr<T> getTempData(uint32_t numElems) {
-    return std::unique_ptr<T>(new (std::nothrow) T[numElems]);
+std::unique_ptr<T[]> getTempData(uint32_t numElems) {
+    return std::unique_ptr<T[]>(new (std::nothrow) T[numElems]);
 }
 
 // Performs batch matmul.
