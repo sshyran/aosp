@@ -339,6 +339,22 @@ class ShimFencedExecutionCallback : public BnFencedExecutionCallback {
     return toAStatus(errorStatus);
 }
 
+::ndk::ScopedAStatus ShimPreparedModel::executeSynchronouslyWithConfig(
+        const Request& request, const ExecutionConfig& config, int64_t deadlineNs,
+        ExecutionResult* executionResult) {
+    // TODO(b/205898101): Pass the execution hints properly.
+    return executeSynchronously(request, config.measureTiming, deadlineNs,
+                                config.loopTimeoutDurationNs, executionResult);
+}
+::ndk::ScopedAStatus ShimPreparedModel::executeFencedWithConfig(
+        const Request& request, const std::vector<ndk::ScopedFileDescriptor>& waitFor,
+        const ExecutionConfig& config, int64_t deadlineNs, int64_t durationNs,
+        FencedExecutionResult* executionResult) {
+    // TODO(b/205898101): Pass the execution hints properly.
+    return executeFenced(request, waitFor, config.measureTiming, deadlineNs,
+                         config.loopTimeoutDurationNs, durationNs, executionResult);
+}
+
 // TODO(183397380): make it use ANNBurst object
 class ShimBurst : public BnBurst {
    public:
@@ -350,6 +366,10 @@ class ShimBurst : public BnBurst {
                                             bool measureTiming, int64_t deadlineNs,
                                             int64_t loopTimeoutDurationNs,
                                             ExecutionResult* executionResult) override;
+    ndk::ScopedAStatus executeSynchronouslyWithConfig(
+            const Request& request, const std::vector<int64_t>& memoryIdentifierTokens,
+            const ExecutionConfig& config, int64_t deadlineNs,
+            ExecutionResult* executionResult) override;
     ndk::ScopedAStatus releaseMemoryResource(int64_t memoryIdentifierToken) override;
 
    protected:
@@ -393,6 +413,30 @@ ndk::ScopedAStatus ShimBurst::executeSynchronously(
                                                 loopTimeoutDurationNs, executionResult);
 }
 
+ndk::ScopedAStatus ShimBurst::executeSynchronouslyWithConfig(
+        const Request& request, const std::vector<int64_t>& memoryIdentifierTokens,
+        const ExecutionConfig& config, int64_t deadlineNs, ExecutionResult* executionResult) {
+    if (request.pools.size() != memoryIdentifierTokens.size()) {
+        return toAStatus(ErrorStatus::INVALID_ARGUMENT,
+                         "request.pools.size() != memoryIdentifierTokens.size()");
+    }
+    if (!std::all_of(memoryIdentifierTokens.begin(), memoryIdentifierTokens.end(),
+                     [](int64_t token) { return token >= -1; })) {
+        return toAStatus(ErrorStatus::INVALID_ARGUMENT, "Invalid memoryIdentifierTokens");
+    }
+
+    // Ensure at most one execution is in flight at a time.
+    const bool executionAlreadyInFlight = mExecutionInFlight.test_and_set();
+    if (executionAlreadyInFlight) {
+        return toAStatus(ErrorStatus::GENERAL_FAILURE,
+                         "Burst object supports at most one execution at a time");
+    }
+    const auto guard = ::android::base::make_scope_guard([this] { mExecutionInFlight.clear(); });
+
+    return kPreparedModel->executeSynchronouslyWithConfig(request, config, deadlineNs,
+                                                          executionResult);
+}
+
 ndk::ScopedAStatus ShimBurst::releaseMemoryResource(int64_t memoryIdentifierToken) {
     if (memoryIdentifierToken < -1) {
         return toAStatus(ErrorStatus::INVALID_ARGUMENT, "Invalid memoryIdentifierToken");
@@ -420,7 +464,7 @@ class ShimExecution : public BnExecution {
 };
 
 ndk::ScopedAStatus ShimPreparedModel::createReusableExecution(
-        const Request& request, bool measureTiming, int64_t loopTimeoutDurationNs,
+        const Request& request, const ExecutionConfig& config,
         std::shared_ptr<IExecution>* execution) {
     auto maybeClonedRequest = aidl_hal::utils::clone(request);
     if (!maybeClonedRequest.ok()) {
@@ -428,9 +472,9 @@ ndk::ScopedAStatus ShimPreparedModel::createReusableExecution(
                          maybeClonedRequest.error().message);
     }
     std::shared_ptr<ShimPreparedModel> self = this->template ref<ShimPreparedModel>();
-    *execution = ndk::SharedRefBase::make<ShimExecution>(std::move(self),
-                                                         std::move(maybeClonedRequest).value(),
-                                                         measureTiming, loopTimeoutDurationNs);
+    *execution = ndk::SharedRefBase::make<ShimExecution>(
+            std::move(self), std::move(maybeClonedRequest).value(), config.measureTiming,
+            config.loopTimeoutDurationNs);
     return ndk::ScopedAStatus::ok();
 }
 

@@ -17,10 +17,14 @@
 #ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_RUNTIME_COMPILATION_BUILDER_H
 #define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_RUNTIME_COMPILATION_BUILDER_H
 
+#include <nnapi/Types.h>
+
 #include <chrono>
 #include <memory>
 #include <optional>
+#include <set>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "ExecutionPlan.h"
@@ -57,6 +61,9 @@ class CompilationBuilder {
     int setPriority(int32_t priority);
 
     int setTimeoutDuration(uint64_t duration);
+
+    int addExtensionAttribute(const char* extensionName, uint16_t attributeCodeWithinExtension,
+                              const void* data, size_t length);
 
     int finish();
 
@@ -136,6 +143,9 @@ class CompilationBuilder {
 
     // Supplementary compilation info for Telemetry use
     std::optional<TelemetryInfo> mTelemetryInfo;
+
+    // Vendor specific metadata
+    std::vector<TokenValuePair> mMetadata;
 };
 
 }  // namespace nn

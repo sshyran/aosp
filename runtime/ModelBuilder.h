@@ -131,6 +131,7 @@ class ModelBuilder {
     // simulateFailureResultCode == ANEURALNETWORKS_NO_ERROR means behave normally.
     int partitionTheWork(const std::vector<std::shared_ptr<Device>>& devices, uint32_t preference,
                          uint32_t priority, const OptionalTimePoint& deadline, ExecutionPlan* plan,
+                         const std::vector<TokenValuePair>& metaData,
                          int simulateFailureResultCode = ANEURALNETWORKS_NO_ERROR) const;
 
     const uint8_t* getModelArchHash() const;

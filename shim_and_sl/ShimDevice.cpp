@@ -597,6 +597,14 @@ ndk::ScopedAStatus ShimDevice::prepareModel(
     return ndk::ScopedAStatus::ok();
 }
 
+ndk::ScopedAStatus ShimDevice::prepareModelWithConfig(
+        const Model& model, const PrepareModelConfig& config,
+        const std::shared_ptr<IPreparedModelCallback>& callback) {
+    // TODO(b/205898101): Pass the compilation hints properly.
+    return prepareModel(model, config.preference, config.priority, config.deadlineNs,
+                        config.modelCache, config.dataCache, config.cacheToken, callback);
+}
+
 ndk::ScopedAStatus ShimDevice::prepareModelFromCache(
         int64_t /*deadlineNs*/, const std::vector<::ndk::ScopedFileDescriptor>& /*modelCache*/,
         const std::vector<::ndk::ScopedFileDescriptor>& /*dataCache*/,

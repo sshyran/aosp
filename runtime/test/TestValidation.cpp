@@ -4004,6 +4004,220 @@ TEST(ValidationTestDevice, GetExtensionSupport) {
                   ANEURALNETWORKS_NO_ERROR);
     }
 }
-#endif
+
+constexpr const char* kTestAttributeExtensionName = "com.android.test_attribute_extension";
+const uint16_t kAttributeCode = 0;
+const uint16_t kAttributeCode2 = 2;
+const uint8_t kAttributeValue = 0;
+
+class ValidationTestCompilationExtension : public ValidationTestCompilation {
+   protected:
+    virtual void SetUp() {
+        ValidationTestCompilation::SetUp();
+        EXPECT_TRUE(::android::nn::TypeManager::get()->forTest_registerExtension({
+                .name = kTestAttributeExtensionName,
+                .operandTypes = {},
+        }));
+    }
+
+    virtual void TearDown() {
+        ::android::nn::TypeManager::get()->forTest_reset();
+        ValidationTestCompilation::TearDown();
+    }
+};
+
+// Also see TEST_F(ValidationTestCompilationExtensionForDevices_1, AddExtensionAttribute)
+// Also see TEST_F(ValidationTestCompilationExtensionForDevices_2, AddExtensionAttribute)
+TEST_F(ValidationTestCompilationExtension, AddExtensionAttribute) {
+    EXPECT_EQ(ANeuralNetworksCompilation_addExtensionAttribute(nullptr, kTestAttributeExtensionName,
+                                                               kAttributeCode, &kAttributeValue,
+                                                               sizeof(uint8_t)),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworksCompilation_addExtensionAttribute(
+                      mCompilation, nullptr, kAttributeCode, &kAttributeValue, sizeof(uint8_t)),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworksCompilation_addExtensionAttribute(
+                      mCompilation, kTestAttributeExtensionName, kAttributeCode, nullptr,
+                      sizeof(uint8_t)),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+
+    // ExtensionAttribute can only be added to Compilations created from CompilationForDevices with
+    // one device specified.
+    EXPECT_EQ(ANeuralNetworksCompilation_addExtensionAttribute(
+                      mCompilation, kTestAttributeExtensionName, kAttributeCode, &kAttributeValue,
+                      sizeof(uint8_t)),
+              ANEURALNETWORKS_BAD_DATA);
+}
+
+// Also see TEST_F(ValidationTestCompilationExtensionForDevices_1, ExecutionAddExtensionAttribute)
+// Also see TEST_F(ValidationTestCompilationExtensionForDevices_2, ExecutionAddExtensionAttribute)
+TEST_F(ValidationTestCompilationExtension, ExecutionAddExtensionAttribute) {
+    EXPECT_EQ(ANeuralNetworksExecution_addExtensionAttribute(nullptr, kTestAttributeExtensionName,
+                                                             kAttributeCode, &kAttributeValue,
+                                                             sizeof(uint8_t)),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+
+    ASSERT_EQ(ANeuralNetworksCompilation_finish(mCompilation), ANEURALNETWORKS_NO_ERROR);
+    ANeuralNetworksExecution* execution;
+    ASSERT_EQ(ANeuralNetworksExecution_create(mCompilation, &execution), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_addExtensionAttribute(execution, nullptr, kAttributeCode,
+                                                             &kAttributeValue, sizeof(uint8_t)),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworksExecution_addExtensionAttribute(execution, kTestAttributeExtensionName,
+                                                             kAttributeCode, nullptr,
+                                                             sizeof(uint8_t)),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+    // ExtensionAttribute can only be added to Executions created from CompilationForDevices with
+    // one device specified.
+    EXPECT_EQ(ANeuralNetworksExecution_addExtensionAttribute(execution, kTestAttributeExtensionName,
+                                                             kAttributeCode, &kAttributeValue,
+                                                             sizeof(uint8_t)),
+              ANEURALNETWORKS_BAD_DATA);
+    ANeuralNetworksExecution_free(execution);
+}
+
+class ValidationTestCompilationExtensionForDevices_1
+    : public ValidationTestCompilationForDevices_1 {
+   protected:
+    virtual void SetUp() {
+        ValidationTestCompilationForDevices_1::SetUp();
+        EXPECT_TRUE(::android::nn::TypeManager::get()->forTest_registerExtension({
+                .name = kTestAttributeExtensionName,
+                .operandTypes = {},
+        }));
+    }
+
+    virtual void TearDown() {
+        ::android::nn::TypeManager::get()->forTest_reset();
+        ValidationTestCompilationForDevices_1::TearDown();
+    }
+};
+
+// Also see TEST_F(ValidationTestCompilationExtension, AddExtensionAttribute)
+// Also see TEST_F(ValidationTestCompilationExtensionForDevices_2, AddExtensionAttribute)
+TEST_F(ValidationTestCompilationExtensionForDevices_1, AddExtensionAttribute) {
+    if (!mCompilation) {
+        return;
+    }
+    EXPECT_EQ(ANeuralNetworksCompilation_addExtensionAttribute(
+                      mCompilation, kTestAttributeExtensionName, kAttributeCode, &kAttributeValue,
+                      sizeof(uint8_t)),
+              ANEURALNETWORKS_NO_ERROR);
+    // Adding another attribute.
+    EXPECT_EQ(ANeuralNetworksCompilation_addExtensionAttribute(
+                      mCompilation, kTestAttributeExtensionName, kAttributeCode2, &kAttributeValue,
+                      sizeof(uint8_t)),
+              ANEURALNETWORKS_NO_ERROR);
+    // Adding the same attribute twice is illegal.
+    EXPECT_EQ(ANeuralNetworksCompilation_addExtensionAttribute(
+                      mCompilation, kTestAttributeExtensionName, kAttributeCode, &kAttributeValue,
+                      sizeof(uint8_t)),
+              ANEURALNETWORKS_BAD_DATA);
+    // Attempt to finish
+    const int n = ANeuralNetworksCompilation_finish(mCompilation);
+    EXPECT_TRUE(n == ANEURALNETWORKS_NO_ERROR);
+
+    EXPECT_EQ(ANeuralNetworksCompilation_addExtensionAttribute(
+                      mCompilation, kTestAttributeExtensionName, kAttributeCode, &kAttributeValue,
+                      sizeof(uint8_t)),
+              ANEURALNETWORKS_BAD_STATE);
+}
+
+// Also see TEST_F(ValidationTestCompilationExtension, ExecutionAddExtensionAttribute)
+// Also see TEST_F(ValidationTestCompilationExtensionForDevices_2, ExecutionAddExtensionAttribute)
+TEST_F(ValidationTestCompilationExtensionForDevices_1, ExecutionAddExtensionAttribute) {
+    if (!mCompilation) {
+        return;
+    }
+    ASSERT_EQ(ANeuralNetworksCompilation_finish(mCompilation), ANEURALNETWORKS_NO_ERROR);
+    ANeuralNetworksExecution* execution;
+    ASSERT_EQ(ANeuralNetworksExecution_create(mCompilation, &execution), ANEURALNETWORKS_NO_ERROR);
+
+    EXPECT_EQ(ANeuralNetworksExecution_addExtensionAttribute(execution, kTestAttributeExtensionName,
+                                                             kAttributeCode, &kAttributeValue,
+                                                             sizeof(uint8_t)),
+              ANEURALNETWORKS_NO_ERROR);
+    // Adding another attribute.
+    EXPECT_EQ(ANeuralNetworksExecution_addExtensionAttribute(execution, kTestAttributeExtensionName,
+                                                             kAttributeCode2, &kAttributeValue,
+                                                             sizeof(uint8_t)),
+              ANEURALNETWORKS_NO_ERROR);
+    // Adding the same attribute twice is illegal.
+    EXPECT_EQ(ANeuralNetworksExecution_addExtensionAttribute(execution, kTestAttributeExtensionName,
+                                                             kAttributeCode, &kAttributeValue,
+                                                             sizeof(uint8_t)),
+              ANEURALNETWORKS_BAD_DATA);
+
+    // start the execution
+    float in0[] = {0.0f, 0.0f}, in1[] = {1.0f, 1.0f}, out0[2];
+    int in2 = 0;
+    ASSERT_EQ(ANeuralNetworksExecution_setInput(execution, 0, nullptr, &in0, sizeof(in0)),
+              ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(ANeuralNetworksExecution_setInput(execution, 1, nullptr, &in1, sizeof(in1)),
+              ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(ANeuralNetworksExecution_setInput(execution, 2, nullptr, &in2, sizeof(in2)),
+              ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(ANeuralNetworksExecution_setOutput(execution, 0, nullptr, &out0, sizeof(out0)),
+              ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(ANeuralNetworksExecution_compute(execution), ANEURALNETWORKS_NO_ERROR);
+
+    EXPECT_EQ(ANeuralNetworksExecution_addExtensionAttribute(execution, kTestAttributeExtensionName,
+                                                             kAttributeCode, &kAttributeValue,
+                                                             sizeof(uint8_t)),
+              ANEURALNETWORKS_BAD_STATE);
+
+    ANeuralNetworksExecution_free(execution);
+}
+
+class ValidationTestCompilationExtensionForDevices_2
+    : public ValidationTestCompilationForDevices_2 {
+   protected:
+    virtual void SetUp() {
+        ValidationTestCompilationForDevices_2::SetUp();
+        EXPECT_TRUE(::android::nn::TypeManager::get()->forTest_registerExtension({
+                .name = kTestAttributeExtensionName,
+                .operandTypes = {},
+        }));
+    }
+
+    virtual void TearDown() {
+        ::android::nn::TypeManager::get()->forTest_reset();
+        ValidationTestCompilationForDevices_2::TearDown();
+    }
+};
+
+// Also see TEST_F(ValidationTestCompilationExtension, AddExtensionAttribute)
+// Also see TEST_F(ValidationTestCompilationExtensionForDevices_1, AddExtensionAttribute)
+TEST_F(ValidationTestCompilationExtensionForDevices_2, AddExtensionAttribute) {
+    if (!mCompilation) {
+        return;
+    }
+    // ExtensionAttribute can only be added to Compilations created from CompilationForDevices with
+    // one device specified.
+    EXPECT_EQ(ANeuralNetworksCompilation_addExtensionAttribute(
+                      mCompilation, kTestAttributeExtensionName, kAttributeCode, &kAttributeValue,
+                      sizeof(uint8_t)),
+              ANEURALNETWORKS_BAD_DATA);
+}
+
+// Also see TEST_F(ValidationTestCompilationExtension, ExecutionAddExtensionAttribute)
+// Also see TEST_F(ValidationTestCompilationExtensionForDevices_1, ExecutionAddExtensionAttribute)
+TEST_F(ValidationTestCompilationExtensionForDevices_2, ExecutionAddExtensionAttribute) {
+    if (!mCompilation) {
+        return;
+    }
+    ASSERT_EQ(ANeuralNetworksCompilation_finish(mCompilation), ANEURALNETWORKS_NO_ERROR);
+    ANeuralNetworksExecution* execution;
+    ASSERT_EQ(ANeuralNetworksExecution_create(mCompilation, &execution), ANEURALNETWORKS_NO_ERROR);
+
+    // ExtensionAttribute can only be added to Executions created from CompilationForDevices with
+    // one device specified.
+    EXPECT_EQ(ANeuralNetworksExecution_addExtensionAttribute(execution, kTestAttributeExtensionName,
+                                                             kAttributeCode, &kAttributeValue,
+                                                             sizeof(uint8_t)),
+              ANEURALNETWORKS_BAD_DATA);
+    ANeuralNetworksExecution_free(execution);
+}
+#endif  // NNTEST_ONLY_PUBLIC_API
 
 }  // namespace

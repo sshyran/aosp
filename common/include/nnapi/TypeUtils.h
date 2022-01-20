@@ -115,8 +115,7 @@ std::ostream& operator<<(std::ostream& os, const SharedMemory& memory);
 std::ostream& operator<<(std::ostream& os, const MemoryPreference& memoryPreference);
 std::ostream& operator<<(std::ostream& os, const Model::Subgraph& subgraph);
 std::ostream& operator<<(std::ostream& os, const Model::OperandValues& operandValues);
-std::ostream& operator<<(std::ostream& os,
-                         const Model::ExtensionNameAndPrefix& extensionNameAndPrefix);
+std::ostream& operator<<(std::ostream& os, const ExtensionNameAndPrefix& extensionNameAndPrefix);
 std::ostream& operator<<(std::ostream& os, const Model& model);
 std::ostream& operator<<(std::ostream& os, const BufferDesc& bufferDesc);
 std::ostream& operator<<(std::ostream& os, const BufferRole& bufferRole);

@@ -1565,7 +1565,7 @@ Model::Subgraph uncheckedConvert(const V1_3::Subgraph& subgraph) {
     return handleError(unvalidatedConvert(subgraph));
 }
 
-Model::ExtensionNameAndPrefix uncheckedConvert(const V1_2::Model::ExtensionNameAndPrefix& x) {
+ExtensionNameAndPrefix uncheckedConvert(const V1_2::Model::ExtensionNameAndPrefix& x) {
     return handleError(unvalidatedConvert(x));
 }
 
@@ -1720,7 +1720,7 @@ V1_3::Subgraph convertToV1_3(const Model::Subgraph& subgraph) {
     return handleError(V1_3::utils::unvalidatedConvert(subgraph));
 }
 
-V1_2::Model::ExtensionNameAndPrefix convertToV1_2(const Model::ExtensionNameAndPrefix& x) {
+V1_2::Model::ExtensionNameAndPrefix convertToV1_2(const ExtensionNameAndPrefix& x) {
     return handleError(V1_2::utils::unvalidatedConvert(x));
 }
 

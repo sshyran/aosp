@@ -83,6 +83,9 @@ class SampleDriver : public aidl_hal::BnDevice {
             const std::vector<ndk::ScopedFileDescriptor>& dataCache,
             const std::vector<uint8_t>& token,
             const std::shared_ptr<aidl_hal::IPreparedModelCallback>& callback) override;
+    ndk::ScopedAStatus prepareModelWithConfig(
+            const aidl_hal::Model& model, const aidl_hal::PrepareModelConfig& config,
+            const std::shared_ptr<aidl_hal::IPreparedModelCallback>& callback) override;
     ndk::ScopedAStatus prepareModelFromCache(
             int64_t deadlineNs, const std::vector<ndk::ScopedFileDescriptor>& modelCache,
             const std::vector<ndk::ScopedFileDescriptor>& dataCache,
@@ -124,9 +127,16 @@ class SamplePreparedModel : public aidl_hal::BnPreparedModel {
                                      bool measureTiming, int64_t deadlineNs,
                                      int64_t loopTimeoutDurationNs, int64_t durationNs,
                                      aidl_hal::FencedExecutionResult* executionResult) override;
+    ndk::ScopedAStatus executeSynchronouslyWithConfig(
+            const aidl_hal::Request& request, const aidl_hal::ExecutionConfig& config,
+            int64_t deadlineNs, aidl_hal::ExecutionResult* executionResult) override;
+    ndk::ScopedAStatus executeFencedWithConfig(
+            const aidl_hal::Request& request, const std::vector<ndk::ScopedFileDescriptor>& waitFor,
+            const aidl_hal::ExecutionConfig& config, int64_t deadlineNs, int64_t durationNs,
+            aidl_hal::FencedExecutionResult* executionResult) override;
     ndk::ScopedAStatus configureExecutionBurst(std::shared_ptr<aidl_hal::IBurst>* burst) override;
     ndk::ScopedAStatus createReusableExecution(
-            const aidl_hal::Request& request, bool measureTiming, int64_t loopTimeoutDurationNs,
+            const aidl_hal::Request& request, const aidl_hal::ExecutionConfig& config,
             std::shared_ptr<aidl_hal::IExecution>* execution) override;
     const aidl_hal::Model* getModel() const { return &mModel; }
 
@@ -171,6 +181,10 @@ class SampleBurst : public aidl_hal::BnBurst {
                                             bool measureTiming, int64_t deadlineNs,
                                             int64_t loopTimeoutDurationNs,
                                             aidl_hal::ExecutionResult* executionResult) override;
+    ndk::ScopedAStatus executeSynchronouslyWithConfig(
+            const aidl_hal::Request& request, const std::vector<int64_t>& memoryIdentifierTokens,
+            const aidl_hal::ExecutionConfig& config, int64_t deadlineNs,
+            aidl_hal::ExecutionResult* executionResult) override;
     ndk::ScopedAStatus releaseMemoryResource(int64_t memoryIdentifierToken) override;
 
    protected:

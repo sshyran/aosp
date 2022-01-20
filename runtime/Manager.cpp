@@ -37,6 +37,7 @@
 #include <map>
 #include <memory>
 #include <regex>
+#include <set>
 #include <string>
 #include <tuple>
 #include <utility>
@@ -154,7 +155,9 @@ class DriverDevice : public Device {
     std::pair<int, std::shared_ptr<RuntimePreparedModel>> prepareModel(
             const ModelFactory& makeModel, ExecutionPreference preference, Priority priority,
             const OptionalTimePoint& deadline, const CacheInfo& cacheInfo,
-            const std::optional<CacheToken>& maybeToken) const override;
+            const std::optional<CacheToken>& maybeToken,
+            const std::vector<TokenValuePair>& metaData,
+            const std::vector<ExtensionNameAndPrefix>& extensionNameAndPrefix) const override;
 
     std::pair<int, std::unique_ptr<RuntimeMemory>> allocate(const MemoryDescriptor& desc,
                                                             OperandType) const override;
@@ -193,7 +196,8 @@ class DriverPreparedModel : public RuntimePreparedModel {
             const std::vector<ModelArgumentInfo>& outputs,
             const std::vector<const RuntimeMemory*>& memories, const SharedBurst& burstController,
             MeasureTiming measure, const OptionalTimePoint& deadline,
-            const OptionalDuration& loopTimeoutDuration) const override;
+            const OptionalDuration& loopTimeoutDuration,
+            const std::vector<TokenValuePair>& metaData) const override;
 
     std::tuple<int, int, ExecuteFencedInfoCallback, Timing> executeFenced(
             const std::vector<ModelArgumentInfo>& inputs,
@@ -201,13 +205,15 @@ class DriverPreparedModel : public RuntimePreparedModel {
             const std::vector<const RuntimeMemory*>& memories, const std::vector<int>& waitFor,
             MeasureTiming measure, const OptionalTimePoint& deadline,
             const OptionalDuration& loopTimeoutDuration,
-            const OptionalDuration& timeoutDurationAfterFence) const override;
+            const OptionalDuration& timeoutDurationAfterFence,
+            const std::vector<TokenValuePair>& metaData) const override;
 
     std::pair<int, std::shared_ptr<RuntimeExecution>> createReusableExecution(
             const std::vector<ModelArgumentInfo>& inputs,
             const std::vector<ModelArgumentInfo>& outputs,
             const std::vector<const RuntimeMemory*>& memories, MeasureTiming measure,
-            const OptionalDuration& loopTimeoutDuration) const override;
+            const OptionalDuration& loopTimeoutDuration,
+            const std::vector<TokenValuePair>& metaData) const override;
 
     GeneralResult<SharedBurst> configureExecutionBurst() const override {
         return mPreparedModel->configureExecutionBurst();
@@ -232,13 +238,15 @@ class DriverExecution : public RuntimeExecution {
    public:
     DriverExecution(SharedExecution execution, Request request,
                     std::vector<const RuntimeMemory*> memories, MeasureTiming measure,
-                    OptionalDuration loopTimeoutDuration, Version deviceFeatureLevel)
+                    OptionalDuration loopTimeoutDuration, Version deviceFeatureLevel,
+                    const std::vector<TokenValuePair>& metaData)
         : kExecution(std::move(execution)),
           kRequest(std::move(request)),
           kMemories(std::move(memories)),
           kMeasure(measure),
           kLoopTimeoutDuration(std::move(loopTimeoutDuration)),
-          kDeviceFeatureLevel(deviceFeatureLevel) {
+          kDeviceFeatureLevel(deviceFeatureLevel),
+          kMetaData(metaData) {
         CHECK(kExecution != nullptr);
     }
 
@@ -261,6 +269,9 @@ class DriverExecution : public RuntimeExecution {
 
     // For fenced execution.
     const Version kDeviceFeatureLevel;
+
+    // Execution metadata.
+    std::vector<TokenValuePair> kMetaData;
 };
 
 DriverDevice::DriverDevice(SharedDevice device, bool isUpdatable)
@@ -475,7 +486,8 @@ GeneralResult<SharedPreparedModel> DriverDevice::prepareModelFromCacheInternal(
 std::pair<int, std::shared_ptr<RuntimePreparedModel>> DriverDevice::prepareModel(
         const ModelFactory& makeModel, ExecutionPreference preference, Priority priority,
         const OptionalTimePoint& deadline, const CacheInfo& cacheInfo,
-        const std::optional<CacheToken>& maybeToken) const {
+        const std::optional<CacheToken>& maybeToken, const std::vector<TokenValuePair>& metaData,
+        const std::vector<ExtensionNameAndPrefix>& extensionNameAndPrefix) const {
     // Attempt to compile from cache if token is present.
     if (maybeToken.has_value()) {
         auto result = prepareModelFromCacheInternal(deadline, cacheInfo, *maybeToken);
@@ -510,8 +522,9 @@ std::pair<int, std::shared_ptr<RuntimePreparedModel>> DriverDevice::prepareModel
     // Fallback to full compilation (possibly with token) if
     // prepareModelFromCache could not be used or failed.
     const Model model = makeModel();
-    auto result = kInterface->prepareModel(model, preference, priority, deadline, cache.modelCache,
-                                           cache.dataCache, token);
+    auto result =
+            kInterface->prepareModel(model, preference, priority, deadline, cache.modelCache,
+                                     cache.dataCache, token, metaData, extensionNameAndPrefix);
     if (!result.ok()) {
         LOG(ERROR) << "IDevice::prepareModel() error: " << result.error().message;
         return {convertErrorStatusToResultCode(result.error().code), nullptr};
@@ -569,7 +582,8 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
         const std::vector<ModelArgumentInfo>& inputs, const std::vector<ModelArgumentInfo>& outputs,
         const std::vector<const RuntimeMemory*>& memories, const SharedBurst& burstController,
         MeasureTiming measure, const OptionalTimePoint& deadline,
-        const OptionalDuration& loopTimeoutDuration) const {
+        const OptionalDuration& loopTimeoutDuration,
+        const std::vector<TokenValuePair>& metaData) const {
     NNTRACE_RT(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "DriverPreparedModel::execute");
 
     auto request = createDriverRequest(inputs, outputs, memories);
@@ -590,10 +604,11 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
         }
 
         VLOG(EXECUTION) << "Before burstController->execute() " << SHOW_IF_DEBUG(request);
-
-        result = burstController->execute(request, measure, deadline, loopTimeoutDuration);
+        result = burstController->execute(request, measure, deadline, loopTimeoutDuration, metaData,
+                                          TypeManager::get()->getExtensionNameAndPrefix(metaData));
     } else {
-        result = mPreparedModel->execute(request, measure, deadline, loopTimeoutDuration);
+        result = mPreparedModel->execute(request, measure, deadline, loopTimeoutDuration, metaData,
+                                         TypeManager::get()->getExtensionNameAndPrefix(metaData));
     }
 
     int n = ANEURALNETWORKS_OP_FAILED;
@@ -624,7 +639,8 @@ std::tuple<int, int, ExecuteFencedInfoCallback, Timing> DriverPreparedModel::exe
         const std::vector<const RuntimeMemory*>& memories, const std::vector<int>& waitFor,
         MeasureTiming measure, const OptionalTimePoint& deadline,
         const OptionalDuration& loopTimeoutDuration,
-        const OptionalDuration& timeoutDurationAfterFence) const {
+        const OptionalDuration& timeoutDurationAfterFence,
+        const std::vector<TokenValuePair>& metaData) const {
     NNTRACE_RT(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "DriverPreparedModel::executeFenced");
     CHECK(std::all_of(waitFor.begin(), waitFor.end(), [](int fd) { return fd >= 0; }));
 
@@ -647,8 +663,10 @@ std::tuple<int, int, ExecuteFencedInfoCallback, Timing> DriverPreparedModel::exe
     ExecuteFencedInfoCallback executeFencedInfoCallback = nullptr;
     Timing timing = {};
     if (isCompliantVersion(kHalVersionV1_3ToApi.canonical, mDevice->getFeatureLevel())) {
-        auto result = mPreparedModel->executeFenced(request, waitForHandles, measure, deadline,
-                                                    loopTimeoutDuration, timeoutDurationAfterFence);
+        auto result = mPreparedModel->executeFenced(
+                request, waitForHandles, measure, deadline, loopTimeoutDuration,
+                timeoutDurationAfterFence, metaData,
+                TypeManager::get()->getExtensionNameAndPrefix(metaData));
         if (!result.ok()) {
             LOG(ERROR) << "IPreparedModel::executeFenced() error: " << result.error().message;
             VLOG(EXECUTION) << "**executeFenced failed**";
@@ -669,7 +687,9 @@ std::tuple<int, int, ExecuteFencedInfoCallback, Timing> DriverPreparedModel::exe
                 return {ANEURALNETWORKS_OP_FAILED, -1, nullptr, {}};
             }
         }
-        auto result = mPreparedModel->execute(request, measure, deadline, loopTimeoutDuration);
+        auto result =
+                mPreparedModel->execute(request, measure, deadline, loopTimeoutDuration, metaData,
+                                        TypeManager::get()->getExtensionNameAndPrefix(metaData));
         if (!result.ok()) {
             LOG(ERROR) << "IPreparedModel::execute() error: " << result.error().message;
             return {convertErrorStatusToResultCode(result.error().code), -1, nullptr, {}};
@@ -693,11 +713,14 @@ std::tuple<int, int, ExecuteFencedInfoCallback, Timing> DriverPreparedModel::exe
 std::pair<int, std::shared_ptr<RuntimeExecution>> DriverPreparedModel::createReusableExecution(
         const std::vector<ModelArgumentInfo>& inputs, const std::vector<ModelArgumentInfo>& outputs,
         const std::vector<const RuntimeMemory*>& memories, MeasureTiming measure,
-        const OptionalDuration& loopTimeoutDuration) const {
+        const OptionalDuration& loopTimeoutDuration,
+        const std::vector<TokenValuePair>& metaData) const {
     NNTRACE_RT(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "DriverPreparedModel::createReusableExecution");
 
     auto request = createDriverRequest(inputs, outputs, memories);
-    auto result = mPreparedModel->createReusableExecution(request, measure, loopTimeoutDuration);
+    auto result = mPreparedModel->createReusableExecution(
+            request, measure, loopTimeoutDuration, metaData,
+            TypeManager::get()->getExtensionNameAndPrefix(metaData));
     if (!result.ok()) {
         LOG(ERROR) << "IPreparedModel::createReusableExecution() error: " << result.error().message;
         const int n = convertErrorStatusToResultCode(result.error().code);
@@ -705,7 +728,7 @@ std::pair<int, std::shared_ptr<RuntimeExecution>> DriverPreparedModel::createReu
     }
     auto execution = std::make_shared<DriverExecution>(
             std::move(result).value(), std::move(request), memories, measure, loopTimeoutDuration,
-            mDevice->getFeatureLevel());
+            mDevice->getFeatureLevel(), metaData);
     return {ANEURALNETWORKS_NO_ERROR, std::move(execution)};
 }
 
@@ -727,8 +750,9 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverExecution::compute(
                     memory->hold(cacheHold);
                 }
             }
-            auto createResult = burstController->createReusableExecution(kRequest, kMeasure,
-                                                                         kLoopTimeoutDuration);
+            auto createResult = burstController->createReusableExecution(
+                    kRequest, kMeasure, kLoopTimeoutDuration, kMetaData,
+                    TypeManager::get()->getExtensionNameAndPrefix(kMetaData));
             if (!createResult.ok()) {
                 LOG(ERROR) << "IBurst::createReusableExecution() error: "
                            << createResult.error().message;
@@ -907,7 +931,9 @@ class CpuDevice : public Device {
     std::pair<int, std::shared_ptr<RuntimePreparedModel>> prepareModel(
             const ModelFactory& makeModel, ExecutionPreference preference, Priority priority,
             const OptionalTimePoint& deadline, const CacheInfo& cacheInfo,
-            const std::optional<CacheToken>& maybeToken) const override;
+            const std::optional<CacheToken>& maybeToken,
+            const std::vector<TokenValuePair>& metaData,
+            const std::vector<ExtensionNameAndPrefix>& extensionNameAndPrefix) const override;
 
     std::pair<int, std::unique_ptr<RuntimeMemory>> allocate(const MemoryDescriptor& desc,
                                                             OperandType type) const override;
@@ -944,7 +970,8 @@ class CpuPreparedModel : public RuntimePreparedModel {
             const std::vector<ModelArgumentInfo>& outputs,
             const std::vector<const RuntimeMemory*>& memories, const SharedBurst& burstController,
             MeasureTiming measure, const OptionalTimePoint& deadline,
-            const OptionalDuration& loopTimeoutDuration) const override;
+            const OptionalDuration& loopTimeoutDuration,
+            const std::vector<TokenValuePair>& metaData) const override;
 
     GeneralResult<SharedBurst> configureExecutionBurst() const override { return nullptr; }
 
@@ -954,13 +981,15 @@ class CpuPreparedModel : public RuntimePreparedModel {
             const std::vector<const RuntimeMemory*>& memories, const std::vector<int>& waitFor,
             MeasureTiming measure, const OptionalTimePoint& deadline,
             const OptionalDuration& loopTimeoutDuration,
-            const OptionalDuration& timeoutDurationAfterFence) const override;
+            const OptionalDuration& timeoutDurationAfterFence,
+            const std::vector<TokenValuePair>& metaData) const override;
 
     std::pair<int, std::shared_ptr<RuntimeExecution>> createReusableExecution(
             const std::vector<ModelArgumentInfo>& inputs,
             const std::vector<ModelArgumentInfo>& outputs,
             const std::vector<const RuntimeMemory*>& memories, MeasureTiming measure,
-            const OptionalDuration& loopTimeoutDuration) const override;
+            const OptionalDuration& loopTimeoutDuration,
+            const std::vector<TokenValuePair>& metaData) const override;
 
     MemoryPreference getMemoryPreference() const override {
         return {kPreferredAlignment, kPreferredPadding};
@@ -1034,7 +1063,9 @@ static Result<void> validateAndCheckCompliance(const Type& object) {
 std::pair<int, std::shared_ptr<RuntimePreparedModel>> CpuDevice::prepareModel(
         const ModelFactory& makeModel, ExecutionPreference preference, Priority priority,
         const OptionalTimePoint& deadline, const CacheInfo& /*cacheInfo*/,
-        const std::optional<CacheToken>& maybeToken) const {
+        const std::optional<CacheToken>& maybeToken,
+        const std::vector<TokenValuePair>& /*metaData*/,
+        const std::vector<ExtensionNameAndPrefix>& /*extensionNameAndPrefix*/) const {
     CHECK(!maybeToken.has_value())
             << "Should never call prepareModel with cache information on CpuDevice";
 
@@ -1101,7 +1132,8 @@ std::tuple<int, int, ExecuteFencedInfoCallback, Timing> CpuPreparedModel::execut
         const std::vector<ModelArgumentInfo>& inputs, const std::vector<ModelArgumentInfo>& outputs,
         const std::vector<const RuntimeMemory*>& memories, const std::vector<int>& waitFor,
         MeasureTiming measure, const OptionalTimePoint& deadline,
-        const OptionalDuration& loopTimeoutDuration, const OptionalDuration& duration) const {
+        const OptionalDuration& loopTimeoutDuration, const OptionalDuration& duration,
+        const std::vector<TokenValuePair>& /*metaData*/) const {
     VLOG(EXECUTION)
             << "CpuPreparedModel::executeFenced wait for sync fences to signal before execution";
     for (int syncFd : waitFor) {
@@ -1124,7 +1156,7 @@ std::tuple<int, int, ExecuteFencedInfoCallback, Timing> CpuPreparedModel::execut
     }
 
     const auto [result, outputShapes, timing] = execute(inputs, outputs, memories, nullptr, measure,
-                                                        closestDeadline, loopTimeoutDuration);
+                                                        closestDeadline, loopTimeoutDuration, {});
     return {result, -1, nullptr, timing};
 }
 
@@ -1177,7 +1209,8 @@ std::tuple<int, std::vector<OutputShape>, Timing> CpuPreparedModel::execute(
         const std::vector<ModelArgumentInfo>& inputs, const std::vector<ModelArgumentInfo>& outputs,
         const std::vector<const RuntimeMemory*>& memories, const SharedBurst& /*burstController*/,
         MeasureTiming /*measure*/, const OptionalTimePoint& deadline,
-        const OptionalDuration& loopTimeoutDuration) const {
+        const OptionalDuration& loopTimeoutDuration,
+        const std::vector<TokenValuePair>& /*metaData*/) const {
     if (hasDeadlinePassed(deadline)) {
         return {ANEURALNETWORKS_MISSED_DEADLINE_PERSISTENT, {}, {}};
     }
@@ -1210,7 +1243,8 @@ std::tuple<int, std::vector<OutputShape>, Timing> CpuPreparedModel::execute(
 std::pair<int, std::shared_ptr<RuntimeExecution>> CpuPreparedModel::createReusableExecution(
         const std::vector<ModelArgumentInfo>& inputs, const std::vector<ModelArgumentInfo>& outputs,
         const std::vector<const RuntimeMemory*>& memories, MeasureTiming /*measure*/,
-        const OptionalDuration& loopTimeoutDuration) const {
+        const OptionalDuration& loopTimeoutDuration,
+        const std::vector<TokenValuePair>& /*metaData*/) const {
     auto [nCreateRequest, request, requestPoolInfos] = createCpuRequest(inputs, outputs, memories);
     if (nCreateRequest != ANEURALNETWORKS_NO_ERROR) {
         return {nCreateRequest, nullptr};

@@ -670,6 +670,38 @@ struct Memory {
 };
 
 /**
+ * The mapping between extension names and prefixes of values like operand and operation type, and
+ * token in {@link TokenValuePair}.
+ *
+ * An operand or operation whose numeric type value is above {@link IDevice::OPERAND_TYPE_BASE_MAX}
+ * or {@link IDevice::OPERATION_TYPE_BASE_MAX} respectively should be interpreted as an extension
+ * operand/operation. The low kExtensionTypeBits bits of the value correspond to the type ID within
+ * the extension and the high kExtensionPrefixBits bits encode the "prefix", which maps uniquely to
+ * the extension name. The sign bit is always 0.
+ *
+ * For example, if a model contains an operation whose value is 0x7AAABBBB and
+ * Model::extensionNameToPrefix contains an entry with prefix=0x7AAA and
+ * name="vendor.test.test_extension", then the operation should be interpreted as the operation
+ * 0xBBBB of the extension named vendor.test.test_extension.
+ *
+ * This is a one-to-one correspondence. That is, there must be at most one prefix corresponding to
+ * each extension name and at most one extension name corresponding to each prefix.
+ */
+struct ExtensionNameAndPrefix {
+    /**
+     * The extension name.
+     *
+     * See {@link Extension::name} for the format specification.
+     */
+    std::string name;
+
+    /**
+     * The extension prefix. Only the lowest 15 bits are used, so the value must be less than 32768.
+     */
+    uint16_t prefix = 0;
+};
+
+/**
  * A Neural Network Model.
  *
  * This includes not only the execution graph, but also constant data such as
@@ -726,26 +758,6 @@ struct Model {
 
        private:
         std::vector<uint8_t> mData;
-    };
-
-    /**
-     * A correspondence between an extension name and a prefix of operand and
-     * operation type values.
-     */
-    struct ExtensionNameAndPrefix {
-        /**
-         * The extension name.
-         *
-         * See {@link Extension::name} for the format specification.
-         */
-        std::string name;
-
-        /**
-         * The unique extension identifier within the model.
-         *
-         * See {@link Model::extensionNameToPrefix}.
-         */
-        uint16_t prefix = 0;
     };
 
     /**
@@ -1038,6 +1050,28 @@ struct MemoryPreference {
     // by the number of elements) rounding up to a multiple of the "padding" value. In DataLocation,
     // the padded length equals to the sum of the length and padding fields.
     uint32_t padding;
+};
+
+/**
+ * A type that is used to represent a token / byte array data pair.
+ */
+struct TokenValuePair {
+    /**
+     * A 32bit integer token. The token is created by combining the
+     * extension prefix and enum defined within the extension. Of the 32 bits in the token, the high
+     * kExtensionPrefixBits bits is the extension prefix and the low kExtensionTypeBits bits
+     * represents the enum within the extension.
+     *
+     * For example, if a token value is 0x7AAA000B and corresponding {@link ExtensionNameAndPrefix}
+     * contains an entry with prefix=0x7AAA and name="vendor.test.test_extension", then the token
+     * should be interpreted as the enum value 0x000B of the extension named
+     * vendor.test.test_extension.
+     */
+    int32_t token;
+    /**
+     * A byte array containing the raw data.
+     */
+    std::vector<uint8_t> value;
 };
 
 }  // namespace android::nn

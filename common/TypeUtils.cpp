@@ -606,9 +606,8 @@ std::ostream& operator<<(std::ostream& os, const Model::OperandValues& operandVa
     return os << "Model::OperandValues{<" << operandValues.size() << "bytes>}";
 }
 
-std::ostream& operator<<(std::ostream& os,
-                         const Model::ExtensionNameAndPrefix& extensionNameAndPrefix) {
-    return os << "Model::ExtensionNameAndPrefix{.name=" << extensionNameAndPrefix.name
+std::ostream& operator<<(std::ostream& os, const ExtensionNameAndPrefix& extensionNameAndPrefix) {
+    return os << "ExtensionNameAndPrefix{.name=" << extensionNameAndPrefix.name
               << ", .prefix=" << extensionNameAndPrefix.prefix << "}";
 }
 
