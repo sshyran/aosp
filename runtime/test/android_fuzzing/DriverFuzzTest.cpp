@@ -55,10 +55,10 @@ ExecutionResult<void> runTest(const ::test_helper::TestModel& testModel) {
     const auto model = NN_TRY(test::createModel(testModel));
 
     // Attempt to prepare the model.
-    const auto preparedModel =
-            NN_TRY(device->prepareModel(model, ExecutionPreference::DEFAULT, Priority::DEFAULT,
-                                        /*deadline=*/{}, /*modelCache=*/{},
-                                        /*dataCache=*/{}, /*token=*/{}));
+    const auto preparedModel = NN_TRY(device->prepareModel(
+            model, ExecutionPreference::DEFAULT, Priority::DEFAULT,
+            /*deadline=*/{}, /*modelCache=*/{},
+            /*dataCache=*/{}, /*token=*/{}, /*hints=*/{}, /*extensionPrefix*/ {}));
     CHECK(preparedModel != nullptr);
 
     // Set up request.
@@ -66,7 +66,8 @@ ExecutionResult<void> runTest(const ::test_helper::TestModel& testModel) {
 
     // Perform execution.
     NN_TRY(preparedModel->execute(request, MeasureTiming::YES, /*deadline=*/{},
-                                  /*loopTimeoutDuration=*/{}));
+                                  /*loopTimeoutDuration=*/{}, /*hints=*/{},
+                                  /*extensionPrefix*/ {}));
 
     return {};
 }

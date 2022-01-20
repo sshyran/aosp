@@ -126,7 +126,8 @@ PreparedModel::PreparedModel(Model model, ExecutionPreference preference, Priori
 
 ExecutionResult<std::pair<std::vector<OutputShape>, Timing>> PreparedModel::execute(
         const Request& request, MeasureTiming measure, const OptionalTimePoint& deadline,
-        const OptionalDuration& loopTimeoutDuration) const {
+        const OptionalDuration& loopTimeoutDuration, const std::vector<TokenValuePair>& /*hints*/,
+        const std::vector<ExtensionNameAndPrefix>& /*extensionNameToPrefix*/) const {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION, "sample::PreparedModel::execute");
     VLOG(DRIVER) << "sample::PreparedModel::execute(" << SHOW_IF_DEBUG(request) << ")";
 
@@ -185,7 +186,9 @@ ExecutionResult<std::pair<std::vector<OutputShape>, Timing>> PreparedModel::exec
 GeneralResult<std::pair<SyncFence, ExecuteFencedInfoCallback>> PreparedModel::executeFenced(
         const Request& request, const std::vector<SyncFence>& waitFor, MeasureTiming measure,
         const OptionalTimePoint& deadline, const OptionalDuration& loopTimeoutDuration,
-        const OptionalDuration& timeoutDurationAfterFence) const {
+        const OptionalDuration& timeoutDurationAfterFence,
+        const std::vector<TokenValuePair>& /*hints*/,
+        const std::vector<ExtensionNameAndPrefix>& /*extensionNameToPrefix*/) const {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                  "sample::PreparedModel::executeFenced");
     VLOG(DRIVER) << "executeFenced(" << SHOW_IF_DEBUG(request) << ")";
@@ -277,8 +280,9 @@ GeneralResult<std::pair<SyncFence, ExecuteFencedInfoCallback>> PreparedModel::ex
 }
 
 GeneralResult<SharedExecution> PreparedModel::createReusableExecution(
-        const Request& request, MeasureTiming measure,
-        const OptionalDuration& loopTimeoutDuration) const {
+        const Request& request, MeasureTiming measure, const OptionalDuration& loopTimeoutDuration,
+        const std::vector<TokenValuePair>& /*hints*/,
+        const std::vector<ExtensionNameAndPrefix>& /*extensionNameToPrefix*/) const {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                  "sample::PreparedModel::createReusableExecution");
     return std::make_shared<DefaultExecution>(shared_from_this(), request, measure,

@@ -1533,6 +1533,32 @@ int ANeuralNetworksModel_setOperandExtensionData(ANeuralNetworksModel* model, in
     return m->setOperandExtensionData(index, data, length);
 }
 
+int ANeuralNetworksCompilation_addExtensionAttribute(ANeuralNetworksCompilation* compilation,
+                                                     const char* extensionName,
+                                                     uint16_t attributeCodeWithinExtension,
+                                                     const void* data, size_t length) {
+    NNTRACE_RT(NNTRACE_PHASE_COMPILATION, "ANeuralNetworksCompilation_addExtensionAttribute");
+    if (!compilation || !extensionName || (!data && length != 0)) {
+        LOG(ERROR) << "ANeuralNetworksCompilation_addExtensionAttribute passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    CompilationBuilder* c = reinterpret_cast<CompilationBuilder*>(compilation);
+    return c->addExtensionAttribute(extensionName, attributeCodeWithinExtension, data, length);
+}
+
+int ANeuralNetworksExecution_addExtensionAttribute(ANeuralNetworksExecution* execution,
+                                                   const char* extensionName,
+                                                   uint16_t attributeCodeWithinExtension,
+                                                   const void* data, size_t length) {
+    NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "ANeuralNetworksExecution_addExtensionAttribute");
+    if (!execution || !extensionName || (!data && length != 0)) {
+        LOG(ERROR) << "ANeuralNetworksExecution_addExtensionAttribute passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    ExecutionBuilder* r = reinterpret_cast<ExecutionBuilder*>(execution);
+    return r->addExtensionAttribute(extensionName, attributeCodeWithinExtension, data, length);
+}
+
 int ANeuralNetworksEvent_createFromSyncFenceFd(int syncFenceFd, ANeuralNetworksEvent** event) {
     if (event == nullptr) {
         LOG(ERROR) << "ANeuralNetworksEvent_createFromSyncFenceFd passed a nullptr";

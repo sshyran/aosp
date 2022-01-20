@@ -849,7 +849,7 @@ class PartitioningModel : private WrapperModel {
                          const OptionalTimePoint& deadline, ExecutionPlan* plan) {
         return reinterpret_cast<ModelBuilder*>(getHandle())
                 ->partitionTheWork(devices, static_cast<uint32_t>(preference),
-                                   static_cast<int32_t>(priority), deadline, plan);
+                                   static_cast<int32_t>(priority), deadline, plan, {});
     }
 
 #ifdef VERBOSE
@@ -2852,6 +2852,7 @@ TEST_F(CacheTest, CacheTokenDifferentPreferencesSimpleBody) {
     expectUniqueTokens({fastToken, powerToken, sustainedToken});
 }
 
+// TODO (b/207721221): add test for AIDL compilation hints.
 // Test if the runtime maps to different cache tokens for compilations with different priorities
 // in execution plan with a simple body.
 TEST_F(CacheTest, CacheTokenDifferentPrioritiesSimpleBody) {

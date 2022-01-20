@@ -483,6 +483,38 @@ int ExecutionBuilder::setReusable(bool reusable) {
     return ANEURALNETWORKS_NO_ERROR;
 }
 
+int ExecutionBuilder::addExtensionAttribute(const char* extensionName,
+                                            uint16_t attributeCodeWithinExtension, const void* data,
+                                            size_t length) {
+    if (!mCompilation->mExplicitDeviceList || (mCompilation->mDevices.size() != 1)) {
+        LOG(ERROR) << "ANeuralNetworksExecution_addExtensionAttribute called on an "
+                      "ANeuralNetworksExecution created from an ANeuralNetworksCompilation that "
+                      "was not created by ANeuralNetworksCompilation_createForDevices with "
+                      "numDevices = 1";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    if (computationStarted()) {
+        LOG(ERROR) << "ANeuralNetworksExecution_addExtensionAttribute called after the execution "
+                      "has started.";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    int32_t attributeToken = 0;
+    if (!TypeManager::get()->getExtensionType(extensionName, attributeCodeWithinExtension,
+                                              &attributeToken)) {
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    if (std::find_if(mMetadata.begin(), mMetadata.end(), [attributeToken](const auto& entry) {
+            return attributeToken == entry.token;
+        }) != mMetadata.end()) {
+        LOG(ERROR) << "ANeuralNetworksCompilation_addExtensionAttribute called more than once for "
+                      "the same attribute";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    const uint8_t* dataPtr = reinterpret_cast<const uint8_t*>(data);
+    mMetadata.push_back({attributeToken, std::vector<uint8_t>(dataPtr, dataPtr + length)});
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
 int ExecutionBuilder::getOutputOperandDimensions(uint32_t index, uint32_t* dimensions) {
     if (!completed()) {
         LOG(ERROR) << "ANeuralNetworksExecution_getOutputOperandDimensions called before the "
@@ -1463,7 +1495,8 @@ std::pair<int, std::shared_ptr<RuntimeExecution>> StepExecutor::getReusableExecu
         const OptionalDuration loopTimeoutDuration =
                 makeTimeoutDuration(mExecutionBuilder->getLoopTimeoutDuration());
         auto [n, execution] = mPreparedModel->createReusableExecution(
-                mInputs, mOutputs, mMemories.getObjects(), measure, loopTimeoutDuration);
+                mInputs, mOutputs, mMemories.getObjects(), measure, loopTimeoutDuration,
+                mExecutionBuilder->getMetadata());
         if (n != ANEURALNETWORKS_NO_ERROR) {
             return {n, nullptr};
         }
@@ -1493,9 +1526,9 @@ std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::compute(
         const MeasureTiming measure = measureTiming(mExecutionBuilder);
         const OptionalDuration loopTimeoutDuration =
                 makeTimeoutDuration(mExecutionBuilder->getLoopTimeoutDuration());
-        std::tie(n, outputShapes, timing) =
-                mPreparedModel->execute(mInputs, mOutputs, mMemories.getObjects(), burstController,
-                                        measure, deadline, loopTimeoutDuration);
+        std::tie(n, outputShapes, timing) = mPreparedModel->execute(
+                mInputs, mOutputs, mMemories.getObjects(), burstController, measure, deadline,
+                loopTimeoutDuration, mExecutionBuilder->getMetadata());
     }
     mExecutionBuilder->reportTimingWithoutFencedExecutionCallback(timing);
     return {n, std::move(outputShapes), std::move(timing)};
@@ -1532,7 +1565,8 @@ std::tuple<int, int, ExecuteFencedInfoCallback> StepExecutor::computeFenced(
                 makeTimeoutDuration(mExecutionBuilder->getLoopTimeoutDuration());
         std::tie(n, syncFenceFd, executeFencedInfoCallback, timing) = mPreparedModel->executeFenced(
                 mInputs, mOutputs, mMemories.getObjects(), waitFor, measure, deadline,
-                loopTimeoutDuration, optionalTimeoutDurationAfterFence);
+                loopTimeoutDuration, optionalTimeoutDurationAfterFence,
+                mExecutionBuilder->getMetadata());
     }
     if (syncFenceFd < 0 && executeFencedInfoCallback == nullptr) {
         mExecutionBuilder->reportTimingWithoutFencedExecutionCallback(timing);
@@ -1551,8 +1585,8 @@ std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::computeOnCpuFall
     const ExecutionPreference preference =
             static_cast<ExecutionPreference>(ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER);
     const Priority priority = convertToCanonicalPriority(ANEURALNETWORKS_PRIORITY_DEFAULT);
-    auto [n, preparedModel] = DeviceManager::getCpuDevice()->prepareModel(makeModel, preference,
-                                                                          priority, {}, {}, {});
+    auto [n, preparedModel] = DeviceManager::getCpuDevice()->prepareModel(
+            makeModel, preference, priority, {}, {}, {}, {}, {});
     if (n != ANEURALNETWORKS_NO_ERROR) {
         return {n, {}, {}};
     }
@@ -1607,7 +1641,7 @@ std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::computeOnCpuFall
     const OptionalDuration loopTimeoutDuration =
             makeTimeoutDuration(mExecutionBuilder->getLoopTimeoutDuration());
     auto [nExecute, outputShapes, timing] = preparedModel->execute(
-            mInputs, mOutputs, memories, nullptr, measure, {}, loopTimeoutDuration);
+            mInputs, mOutputs, memories, nullptr, measure, {}, loopTimeoutDuration, {});
     mExecutionBuilder->reportTimingWithoutFencedExecutionCallback(timing);
     if (nExecute != ANEURALNETWORKS_NO_ERROR) {
         return {nExecute, std::move(outputShapes), timing};
