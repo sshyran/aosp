@@ -74,7 +74,7 @@ TestBuffer convert(size_t size, bool initialize, const Buffer& buffer) {
             }
             const uint32_t randomSeed = buffer.random_seed();
             std::default_random_engine generator{randomSeed};
-            return TestBuffer::createRandom(size % kMaxSize, &generator);
+            return TestBuffer::createRandom(size, &generator);
         }
     }
     return TestBuffer();
@@ -90,7 +90,7 @@ TestOperand convert(const Operand& operand) {
 
     const bool isIgnored = lifetime == TestOperandLifeTime::SUBGRAPH_OUTPUT;
     const auto opType = static_cast<nn::OperandType>(type);
-    const size_t size = getNonExtensionSize(opType, dimensions).value_or(0);
+    const size_t size = getNonExtensionSize(opType, dimensions).value_or(0) % kMaxSize;
     const bool makeEmpty = (lifetime == TestOperandLifeTime::NO_VALUE ||
                             lifetime == TestOperandLifeTime::TEMPORARY_VARIABLE);
     const size_t bufferSize = makeEmpty ? 0 : size;
