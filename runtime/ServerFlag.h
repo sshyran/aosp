@@ -20,6 +20,8 @@
 #include <nnapi/Types.h>
 #include <stdint.h>
 
+#include <string>
+
 #include "NeuralNetworks.h"
 
 namespace android::nn {
@@ -37,7 +39,8 @@ constexpr int64_t kMinFeatureLevelNum = 5;
 constexpr int64_t kMaxFeatureLevelNum = 7;
 constexpr bool kDefaultTelemetryEnableValue = false;
 
-#if !defined(NN_COMPATIBILITY_LIBRARY_BUILD) && !defined(NN_EXPERIMENTAL_FEATURE)
+#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
+#ifndef NN_EXPERIMENTAL_FEATURE
 // Function to get server feature level flag. Note that this function should NOT be used directly.
 // Instead, clients are expected to use DeviceManager::getRuntimeVersion or
 // DeviceManager::getRuntimeFeatureLevel in runtime/Manager.h.
@@ -47,7 +50,13 @@ int64_t getServerFeatureLevelFlag();
 // directly. Instead, clients are expected to use DeviceManager::isPlatformTelemetryEnabled in
 // runtime/Manager.h.
 bool getServerTelemetryEnableFlag();
-#endif  // !defined(NN_COMPATIBILITY_LIBRARY_BUILD) && !defined(NN_EXPERIMENTAL_FEATURE)
+#endif  // NN_EXPERIMENTAL_FEATURE
+
+// Testing-only.
+int64_t getServerFeatureLevelFlag(
+        std::function<std::string(const std::string&, const std::string&, const std::string&)>
+                serverFunc);
+#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
 
 // Get the runtime version corresponding to the server feature flag value.
 Version serverFeatureLevelToVersion(int64_t serverFeatureLevel);

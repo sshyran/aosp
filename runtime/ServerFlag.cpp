@@ -32,19 +32,10 @@
 
 namespace android::nn {
 
-#if !defined(NN_COMPATIBILITY_LIBRARY_BUILD) && !defined(NN_EXPERIMENTAL_FEATURE)
+#ifndef NN_COMPATIBILITY_LIBRARY_BUILD
+#ifndef NN_EXPERIMENTAL_FEATURE
 int64_t getServerFeatureLevelFlag() {
-    const std::string featureLevelString = server_configurable_flags::GetServerConfigurableFlag(
-            kExprCategoryName, kCurrentFeatureLevelFlagName,
-            std::to_string(kDefaultFeatureLevelNum));
-
-    int64_t featureLevel = kDefaultFeatureLevelNum;
-    const bool success = base::ParseInt(featureLevelString, &featureLevel, kMinFeatureLevelNum,
-                                        kMaxFeatureLevelNum);
-    if (!success) {
-        LOG(WARNING) << "Failed to parse result of GetServerConfigurableFlag, errno=" << errno;
-    }
-    return featureLevel;
+    return getServerFeatureLevelFlag(server_configurable_flags::GetServerConfigurableFlag);
 }
 
 bool getServerTelemetryEnableFlag() {
@@ -66,7 +57,25 @@ bool getServerTelemetryEnableFlag() {
                  << static_cast<int32_t>(parseBoolResult);
     return kDefaultTelemetryEnableValue;
 }
-#endif  // !defined(NN_COMPATIBILITY_LIBRARY_BUILD) && !defined(NN_EXPERIMENTAL_FEATURE)
+#endif  // NN_EXPERIMENTAL_FEATURE
+
+int64_t getServerFeatureLevelFlag(
+        std::function<std::string(const std::string&, const std::string&, const std::string&)>
+                serverFunc) {
+    const std::string featureLevelString =
+            serverFunc(kExprCategoryName, kCurrentFeatureLevelFlagName,
+                       std::to_string(kDefaultFeatureLevelNum));
+
+    int64_t featureLevel = kDefaultFeatureLevelNum;
+    const bool success = base::ParseInt(featureLevelString, &featureLevel, kMinFeatureLevelNum,
+                                        kMaxFeatureLevelNum);
+    if (!success) {
+        LOG(WARNING) << "Failed to parse result of GetServerConfigurableFlag, errno=" << errno;
+    }
+    return featureLevel;
+}
+
+#endif  // NN_COMPATIBILITY_LIBRARY_BUILD
 
 Version serverFeatureLevelToVersion(int64_t serverFeatureLevel) {
     Version version;
