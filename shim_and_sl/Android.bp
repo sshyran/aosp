@@ -15,15 +15,16 @@
  */
 
 // package has name collision with other module, must use licenses in targets
+// Inherits all licenses from parent to get Apache 2.0 and package name.
 // package {
-//     default_applicable_licenses: ["Android-Apache-2.0"],
+//     default_applicable_licenses: ["packages_modules_NeuralNetworks_license"],
 // }
 
 cc_library_headers {
     name: "neuralnetworks_supportlibrary_types_ndk",
     host_supported: false,
     export_include_dirs: ["public"],
-    licenses: ["Android-Apache-2.0"],
+    licenses: ["packages_modules_NeuralNetworks_license"],
     sdk_version: "current",
     vendor_available: true,
     min_sdk_version: "29",
@@ -34,7 +35,7 @@ cc_library_headers {
  * backed by a SL/Updatable Driver.
  */
 package {
-    default_applicable_licenses: ["Android-Apache-2.0"],
+    default_applicable_licenses: ["packages_modules_NeuralNetworks_license"],
 }
 
 cc_library_static {
@@ -56,7 +57,7 @@ cc_library_static {
         "ShimPreparedModel.cpp",
         "ShimUtils.cpp",
     ],
-    licenses: ["Android-Apache-2.0"],
+    licenses: ["packages_modules_NeuralNetworks_license"],
     vendor_available: true,
     min_sdk_version: "30",
     cflags: [
@@ -125,7 +126,7 @@ cc_library_static {
         "libarect",
         "libbase",
     ],
-    licenses: ["Android-Apache-2.0"],
+    licenses: ["packages_modules_NeuralNetworks_license"],
     vendor_available: true,
     min_sdk_version: "29",
     header_libs: [

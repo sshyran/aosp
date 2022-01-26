@@ -36,10 +36,10 @@ package {
 // See: http://go/android-license-faq
 license {
     name: "packages_modules_NeuralNetworks_runtime_license",
+    package_name: "Android Neural Networks API Runtime",
     visibility: [":__subpackages__"],
     license_kinds: [
         "SPDX-license-identifier-Apache-2.0",
-        "SPDX-license-identifier-Artistic",
         "SPDX-license-identifier-BSD",
         "SPDX-license-identifier-MPL",
         "SPDX-license-identifier-MPL-2.0",

@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-// Prebuilt generated using 'generated_prebuilts.sh'
 package {
-    default_applicable_licenses: ["Android-Apache-2.0"],
+    // Inherits all licenses from parent to get Apache 2.0 and package name
+    default_applicable_licenses: [
+        "packages_modules_NeuralNetworks_license",
+    ],
 }
 
+// Prebuilt generated using 'generated_prebuilts.sh'
 cc_prebuilt_library_shared {
     name: "neuralnetworks_sample_sl_driver_prebuilt",
 
