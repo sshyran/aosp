@@ -41,8 +41,6 @@ cc_defaults {
         "android.hardware.neuralnetworks@1.1",
         "android.hardware.neuralnetworks@1.2",
         "android.hardware.neuralnetworks@1.3",
-        "android.hidl.allocator@1.0",
-        "android.hidl.memory@1.0",
         "libbase",
         "libbinder_ndk",
         "libcutils",
@@ -79,35 +77,11 @@ cc_binary {
 }
 
 cc_binary {
-    name: "android.hardware.neuralnetworks-service-sample-float-fast",
-    srcs: ["SampleDriverAidlFloatFast.cpp"],
+    name: "android.hardware.neuralnetworks-service-sample-limited",
+    srcs: ["SampleDriverAidlLimited.cpp"],
     defaults: ["NeuralNetworksSampleDriverAidl_server_defaults"],
-    init_rc: ["config/android.hardware.neuralnetworks-service-sample-float-fast.rc"],
-    vintf_fragments: ["config/android.hardware.neuralnetworks-service-sample-float-fast.xml"],
-}
-
-cc_binary {
-    name: "android.hardware.neuralnetworks-service-sample-float-slow",
-    srcs: ["SampleDriverAidlFloatSlow.cpp"],
-    defaults: ["NeuralNetworksSampleDriverAidl_server_defaults"],
-    init_rc: ["config/android.hardware.neuralnetworks-service-sample-float-slow.rc"],
-    vintf_fragments: ["config/android.hardware.neuralnetworks-service-sample-float-slow.xml"],
-}
-
-cc_binary {
-    name: "android.hardware.neuralnetworks-service-sample-quant",
-    srcs: ["SampleDriverAidlQuant.cpp"],
-    defaults: ["NeuralNetworksSampleDriverAidl_server_defaults"],
-    init_rc: ["config/android.hardware.neuralnetworks-service-sample-quant.rc"],
-    vintf_fragments: ["config/android.hardware.neuralnetworks-service-sample-quant.xml"],
-}
-
-cc_binary {
-    name: "android.hardware.neuralnetworks-service-sample-minimal",
-    srcs: ["SampleDriverAidlMinimal.cpp"],
-    defaults: ["NeuralNetworksSampleDriverAidl_server_defaults"],
-    init_rc: ["config/android.hardware.neuralnetworks-service-sample-minimal.rc"],
-    vintf_fragments: ["config/android.hardware.neuralnetworks-service-sample-minimal.xml"],
+    init_rc: ["config/android.hardware.neuralnetworks-service-sample-limited.rc"],
+    vintf_fragments: ["config/android.hardware.neuralnetworks-service-sample-limited.xml"],
 }
 
 cc_library_static {
