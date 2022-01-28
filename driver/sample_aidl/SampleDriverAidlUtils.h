@@ -21,12 +21,18 @@
 
 #include <memory>
 #include <string>
+#include <utility>
+#include <vector>
 
 #include "SampleDriverAidl.h"
 
 namespace android {
 namespace nn {
 namespace sample_driver_aidl {
+
+// Starts and runs the driver service.  Typically called from main().
+// This will return only once the service shuts down.
+int run(const std::shared_ptr<aidl_hal::BnDevice>& device, const std::string& name);
 
 void notify(const std::shared_ptr<aidl_hal::IPreparedModelCallback>& callback,
             const aidl_hal::ErrorStatus& status,

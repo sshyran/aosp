@@ -19,6 +19,7 @@
 #include <aidl/android/hardware/common/NativeHandle.h>
 #include <android/binder_auto_utils.h>
 #include <android/binder_ibinder.h>
+#include <android/binder_manager.h>
 #include <nnapi/Validation.h>
 #include <nnapi/hal/aidl/Conversions.h>
 #include <nnapi/hal/aidl/Utils.h>
@@ -28,12 +29,31 @@
 #include <string>
 #include <thread>
 #include <utility>
+#include <vector>
 
 #include "SampleDriverAidl.h"
+#include "android/binder_process.h"
 
 namespace android {
 namespace nn {
 namespace sample_driver_aidl {
+
+int run(const std::shared_ptr<aidl_hal::BnDevice>& device, const std::string& name) {
+    constexpr size_t kNumberOfThreads = 4;
+    ABinderProcess_setThreadPoolMaxThreadCount(kNumberOfThreads);
+
+    const std::string fqName = std::string(SampleDriver::descriptor) + "/" + name;
+    const binder_status_t status =
+            AServiceManager_addService(device->asBinder().get(), fqName.c_str());
+    if (status != STATUS_OK) {
+        LOG(ERROR) << "Could not register service " << name;
+        return 1;
+    }
+
+    ABinderProcess_joinThreadPool();
+    LOG(ERROR) << "Service exited!";
+    return 1;
+}
 
 void notify(const std::shared_ptr<aidl_hal::IPreparedModelCallback>& callback,
             const aidl_hal::ErrorStatus& status,

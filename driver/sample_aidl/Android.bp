@@ -44,8 +44,6 @@ cc_defaults {
         "android.hardware.neuralnetworks@1.1",
         "android.hardware.neuralnetworks@1.2",
         "android.hardware.neuralnetworks@1.3",
-        "android.hidl.allocator@1.0",
-        "android.hidl.memory@1.0",
         "libbase",
         "libbinder_ndk",
         "libcutils",
@@ -82,35 +80,34 @@ cc_binary {
 }
 
 cc_binary {
-    name: "android.hardware.neuralnetworks-service-sample-float-fast",
-    srcs: ["SampleDriverAidlFloatFast.cpp"],
-    defaults: ["NeuralNetworksSampleDriverAidl_server_defaults"],
-    init_rc: ["config/android.hardware.neuralnetworks-service-sample-float-fast.rc"],
-    vintf_fragments: ["config/android.hardware.neuralnetworks-service-sample-float-fast.xml"],
-}
-
-cc_binary {
-    name: "android.hardware.neuralnetworks-service-sample-float-slow",
-    srcs: ["SampleDriverAidlFloatSlow.cpp"],
-    defaults: ["NeuralNetworksSampleDriverAidl_server_defaults"],
-    init_rc: ["config/android.hardware.neuralnetworks-service-sample-float-slow.rc"],
-    vintf_fragments: ["config/android.hardware.neuralnetworks-service-sample-float-slow.xml"],
-}
-
-cc_binary {
-    name: "android.hardware.neuralnetworks-service-sample-quant",
-    srcs: ["SampleDriverAidlQuant.cpp"],
-    defaults: ["NeuralNetworksSampleDriverAidl_server_defaults"],
-    init_rc: ["config/android.hardware.neuralnetworks-service-sample-quant.rc"],
-    vintf_fragments: ["config/android.hardware.neuralnetworks-service-sample-quant.xml"],
-}
-
-cc_binary {
-    name: "android.hardware.neuralnetworks-service-sample-minimal",
-    srcs: ["SampleDriverAidlMinimal.cpp"],
-    defaults: ["NeuralNetworksSampleDriverAidl_server_defaults"],
-    init_rc: ["config/android.hardware.neuralnetworks-service-sample-minimal.rc"],
-    vintf_fragments: ["config/android.hardware.neuralnetworks-service-sample-minimal.xml"],
+    name: "android.hardware.neuralnetworks-service-sample-limited",
+    srcs: ["SampleDriverAidlLimited.cpp"],
+    defaults: [
+        "neuralnetworks_defaults",
+        "neuralnetworks_use_latest_utils_hal_aidl",
+    ],
+    header_libs: [
+        "libneuralnetworks_headers",
+    ],
+    shared_libs: [
+        "libbase",
+        "libbinder_ndk",
+        "libcutils",
+        "liblog",
+        "libnativewindow",
+        "libtextclassifier_hash",
+        "libutils",
+    ],
+    static_libs: [
+        "libaidlcommonsupport",
+        "libneuralnetworks_common",
+        "neuralnetworks_canonical_sample_driver",
+        "neuralnetworks_utils_hal_adapter_aidl",
+    ],
+    relative_install_path: "hw",
+    proprietary: true,
+    init_rc: ["config/android.hardware.neuralnetworks-service-sample-limited.rc"],
+    vintf_fragments: ["config/android.hardware.neuralnetworks-service-sample-limited.xml"],
 }
 
 cc_library_static {

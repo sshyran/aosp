@@ -307,17 +307,6 @@ hardware::Return<void> SampleDriver::allocate(
     return hardware::Void();
 }
 
-int SampleDriver::run() {
-    android::hardware::configureRpcThreadpool(4, true);
-    if (registerAsService(mName) != android::OK) {
-        LOG(ERROR) << "Could not register service";
-        return 1;
-    }
-    android::hardware::joinRpcThreadpool();
-    LOG(ERROR) << "Service exited!";
-    return 1;
-}
-
 static void copyRunTimePoolInfos(const RunTimePoolInfo& srcPool, const RunTimePoolInfo& dstPool) {
     CHECK(srcPool.getBuffer() != nullptr);
     CHECK(dstPool.getBuffer() != nullptr);

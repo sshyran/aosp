@@ -23,8 +23,6 @@
 #include <android-base/scopeguard.h>
 #include <android/binder_auto_utils.h>
 #include <android/binder_interface_utils.h>
-#include <android/binder_manager.h>
-#include <android/binder_process.h>
 #include <nnapi/Result.h>
 #include <nnapi/Types.h>
 #include <nnapi/Validation.h>
@@ -231,17 +229,6 @@ ndk::ScopedAStatus SampleDriver::allocate(
     buffer->buffer = std::move(sampleBuffer);
     buffer->token = tokenValue;
     return ndk::ScopedAStatus::ok();
-}
-
-int SampleDriver::run() {
-    ABinderProcess_setThreadPoolMaxThreadCount(4);
-    const std::string name = std::string(SampleDriver::descriptor) + "/" + mName;
-    const binder_status_t status = AServiceManager_addService(this->asBinder().get(), name.c_str());
-    if (status != STATUS_OK) {
-        return 1;
-    }
-    ABinderProcess_joinThreadPool();
-    return 1;
 }
 
 static void copyRunTimePoolInfos(const RunTimePoolInfo& srcPool, const RunTimePoolInfo& dstPool) {

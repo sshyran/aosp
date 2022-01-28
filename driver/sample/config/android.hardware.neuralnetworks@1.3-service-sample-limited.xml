@@ -2,6 +2,9 @@
     <hal format="hidl">
         <name>android.hardware.neuralnetworks</name>
         <transport>hwbinder</transport>
+        <fqname>@1.3::IDevice/nnapi-sample_float_fast</fqname>
         <fqname>@1.3::IDevice/nnapi-sample_float_slow</fqname>
+        <fqname>@1.3::IDevice/nnapi-sample_minimal</fqname>
+        <fqname>@1.3::IDevice/nnapi-sample_quant</fqname>
     </hal>
 </manifest>

@@ -113,10 +113,6 @@ class SampleDriver : public V1_3::IDevice {
             const hardware::hidl_vec<V1_3::BufferRole>& inputRoles,
             const hardware::hidl_vec<V1_3::BufferRole>& outputRoles, allocate_cb cb) override;
 
-    // Starts and runs the driver service.  Typically called from main().
-    // This will return only once the service shuts down.
-    int run();
-
     CpuExecutor getExecutor() const { return CpuExecutor(mOperationResolver); }
     const std::shared_ptr<HalBufferTracker>& getHalBufferTracker() const {
         return mHalBufferTracker;

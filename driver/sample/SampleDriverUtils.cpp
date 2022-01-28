@@ -17,12 +17,31 @@
 #include "SampleDriverUtils.h"
 
 #include <android-base/logging.h>
+#include <hidl/HidlTransportSupport.h>
+
+#include <string>
+#include <utility>
+#include <vector>
 
 #include "SampleDriver.h"
 
 namespace android {
 namespace nn {
 namespace sample_driver {
+
+int run(const sp<V1_3::IDevice>& device, const std::string& name) {
+    constexpr size_t kNumberOfThreads = 4;
+    android::hardware::configureRpcThreadpool(kNumberOfThreads, true);
+
+    if (device->registerAsService(name) != android::OK) {
+        LOG(ERROR) << "Could not register service " << name;
+        return 1;
+    }
+
+    android::hardware::joinRpcThreadpool();
+    LOG(ERROR) << "Service exited!";
+    return 1;
+}
 
 void notify(const sp<V1_0::IPreparedModelCallback>& callback, const V1_3::ErrorStatus& status,
             const sp<SamplePreparedModel>& preparedModel) {
