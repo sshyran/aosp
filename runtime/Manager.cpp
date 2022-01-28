@@ -28,6 +28,7 @@
 #include <nnapi/IExecution.h>
 #include <nnapi/IPreparedModel.h>
 #include <nnapi/SharedMemory.h>
+#include <nnapi/TypeUtils.h>
 #include <nnapi/Types.h>
 #include <nnapi/Validation.h>
 
@@ -854,41 +855,7 @@ std::tuple<int, int, ExecuteFencedInfoCallback, Timing> DriverExecution::compute
 
 static Capabilities createCpuCapabilities() {
     constexpr Capabilities::PerformanceInfo kPerf = {.execTime = 1.0f, .powerUsage = 1.0f};
-    constexpr OperandType operandTypes[] = {
-            OperandType::FLOAT32,
-            OperandType::INT32,
-            OperandType::UINT32,
-            OperandType::TENSOR_FLOAT32,
-            OperandType::TENSOR_INT32,
-            OperandType::TENSOR_QUANT8_ASYMM,
-            OperandType::BOOL,
-            OperandType::TENSOR_QUANT16_SYMM,
-            OperandType::TENSOR_FLOAT16,
-            OperandType::TENSOR_BOOL8,
-            OperandType::FLOAT16,
-            OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
-            OperandType::TENSOR_QUANT16_ASYMM,
-            OperandType::TENSOR_QUANT8_SYMM,
-            OperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-    };
-
-    std::vector<Capabilities::OperandPerformance> operandPerformance;
-    operandPerformance.reserve(std::size(operandTypes));
-    std::transform(std::begin(operandTypes), std::end(operandTypes),
-                   std::back_inserter(operandPerformance), [kPerf](OperandType type) {
-                       return Capabilities::OperandPerformance{.type = type, .info = kPerf};
-                   });
-
-    auto table =
-            Capabilities::OperandPerformanceTable::create(std::move(operandPerformance)).value();
-
-    return Capabilities{
-            .relaxedFloat32toFloat16PerformanceScalar = kPerf,
-            .relaxedFloat32toFloat16PerformanceTensor = kPerf,
-            .operandPerformance = std::move(table),
-            .ifPerformance = kPerf,
-            .whilePerformance = kPerf,
-    };
+    return makeCapabilities(kPerf, kPerf, kPerf);
 }
 
 // A special abstracted device for the CPU. Only one instance of this class will exist.

@@ -80,6 +80,14 @@ class LimitedSupportDevice final : public IDevice {
     const SupportedOperationsFunction kSupportedOperationsFunction;
 };
 
+// Get a set of SharedDevices that have different performance characteristics and supported
+// operations. Currently returns four different variants:
+// * nnapi-sample_float_fast
+// * nnapi-sample_float_slow
+// * nnapi-sample_minimal
+// * nnapi-sample_quant
+std::vector<SharedDevice> getExampleLimitedDevices();
+
 }  // namespace android::nn::sample
 
 #endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_DRIVER_SAMPLE_LIMITED_SUPPORT_DEVICE_H

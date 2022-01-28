@@ -80,6 +80,11 @@ size_t roundUp(size_t size, size_t multiple);
 // alignment), the code check in Types.cpp similarly needs to be updated.
 size_t getAlignmentForLength(size_t length);
 
+// Make Capabilities provided three granularities of performance info.
+Capabilities makeCapabilities(const Capabilities::PerformanceInfo& defaultInfo,
+                              const Capabilities::PerformanceInfo& float32Info,
+                              const Capabilities::PerformanceInfo& relaxedInfo);
+
 // Set of output utility functions.
 std::ostream& operator<<(std::ostream& os, const DeviceStatus& deviceStatus);
 std::ostream& operator<<(std::ostream& os, const ExecutionPreference& executionPreference);
