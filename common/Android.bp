@@ -140,6 +140,7 @@ cc_defaults {
         "LegacyUtils.cpp",
         "MemoryUtils.cpp",
         "MetaModel.cpp",
+        "ModelUtils.cpp",
         "QuantUtils.cpp",
         "TokenHasher.cpp",
         "ValidateHal.cpp",
@@ -281,6 +282,7 @@ cc_defaults {
         "IndexedShapeWrapper.cpp",
         "LegacyUtils.cpp",
         "MetaModel.cpp",
+        "ModelUtils.cpp",
         "TokenHasher.cpp",
     ],
     header_libs: [

@@ -20,6 +20,7 @@
 
 #include <GraphDump.h>
 #include <LegacyUtils.h>
+#include <ModelUtils.h>
 #include <android-base/logging.h>
 #include <nnapi/Validation.h>
 
@@ -557,6 +558,7 @@ int ModelBuilder::finish() {
     }
 
     removeTrailingArgumentsWithDefaultValues();
+    simplifyModel();
 
     mCompletedModel = true;
     CHECK(calcModelArchHash(modelForValidation, mModelArchHash))
@@ -894,17 +896,18 @@ bool ModelBuilder::sortIntoRunOrder() {
 // A helper class to simplify state management when creating a Model.
 class ModelBuilder::ModelMaker {
    public:
-    static Model run(const ModelBuilder* model);
+    static Model run(const ModelBuilder* model, bool simplifyModel);
 
    private:
     static Model::Subgraph makeSubgraph(const ModelBuilder* model);
-    ModelMaker() {}
+    explicit ModelMaker(bool simplifyModel) : mSimplifyModel(simplifyModel) {}
     Model makeModel(const ModelBuilder* mainModel);
     uint32_t addSubgraph(const ModelBuilder* refModel);
     void updateOperandLocations(const ModelBuilder* refModel, Model::Subgraph* subgraph);
     void addExtensions(const ModelBuilder* model);
     void addExtensionWithPrefix(uint16_t prefix);
 
+    bool mSimplifyModel;
     std::vector<Model::Subgraph> mRefSubgraphs;
     Model::OperandValues mOperandValues;
     MemoryTracker mMemories;
@@ -912,14 +915,18 @@ class ModelBuilder::ModelMaker {
     std::set<uint16_t> mPrefixSet;
 };
 
-Model ModelBuilder::makeModel() const {
-    // TODO: Cache the Model to speed up subsequent calls.
-    return ModelMaker::run(this);
+void ModelBuilder::simplifyModel() {
+    mSimplifyModel = true;
 }
 
-Model ModelBuilder::ModelMaker::run(const ModelBuilder* model) {
+Model ModelBuilder::makeModel() const {
+    // TODO: Cache the Model to speed up subsequent calls.
+    return ModelMaker::run(this, mSimplifyModel);
+}
+
+Model ModelBuilder::ModelMaker::run(const ModelBuilder* model, bool simplifyModel) {
     // run() ensures the state of ModelMaker is destroyed after the call.
-    return ModelMaker().makeModel(model);
+    return ModelMaker(simplifyModel).makeModel(model);
 }
 
 Model ModelBuilder::ModelMaker::makeModel(const ModelBuilder* mainModel) {
@@ -934,6 +941,9 @@ Model ModelBuilder::ModelMaker::makeModel(const ModelBuilder* mainModel) {
                    [](const RuntimeMemory* m) { return m->getMemory(); });
     model.relaxComputationFloat32toFloat16 = mainModel->mRelaxComputationFloat32toFloat16;
     model.extensionNameToPrefix = std::move(mExtensionNameToPrefix);
+    if (mSimplifyModel) {
+        removeDeadOperands(&model);
+    }
     return model;
 }
 
