@@ -1835,7 +1835,7 @@ hardware::Return<void> SamplePreparedModelXNNPACK::executeFenced(
 
 class SampleDriverFloatXNNPACK : public SampleDriverPartial {
    public:
-    SampleDriverFloatXNNPACK() : SampleDriverPartial("nnapi-sample_float_xnnpack") {}
+    SampleDriverFloatXNNPACK(const std::string& name) : SampleDriverPartial(name.c_str()) {}
     hardware::Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
     hardware::Return<V1_0::ErrorStatus> prepareModel(
             const V1_0::Model& model, const sp<V1_0::IPreparedModelCallback>& callback) override;
@@ -1989,10 +1989,11 @@ using android::sp;
 using android::nn::sample_driver::SampleDriverFloatXNNPACK;
 
 int main() {
-    sp<SampleDriverFloatXNNPACK> driver(new SampleDriverFloatXNNPACK());
+    const std::string name = "nnapi-sample_float_xnnpack";
+    const auto driver = sp<SampleDriverFloatXNNPACK>::make(name);
     xnn_status status = xnn_initialize(/*allocator=*/nullptr);
     if (status != xnn_status_success) {
         return 0;
     }
-    return driver->run();
+    return run(driver, name);
 }

@@ -20,13 +20,20 @@
 #include <HalInterfaces.h>
 #include <hwbinder/IPCThreadState.h>
 
+#include <string>
 #include <thread>
+#include <utility>
+#include <vector>
 
 #include "SampleDriver.h"
 
 namespace android {
 namespace nn {
 namespace sample_driver {
+
+// Starts and runs the driver service.  Typically called from main().
+// This will return only once the service shuts down.
+int run(const sp<V1_3::IDevice>& device, const std::string& name);
 
 void notify(const sp<V1_0::IPreparedModelCallback>& callback, const V1_3::ErrorStatus& status,
             const sp<SamplePreparedModel>& preparedModel);

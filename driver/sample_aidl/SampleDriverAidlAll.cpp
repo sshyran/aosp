@@ -21,13 +21,15 @@
 #include <memory>
 
 #include "SampleDriverAidlFull.h"
+#include "SampleDriverAidlUtils.h"
 
 using aidl::android::hardware::neuralnetworks::PerformanceInfo;
 using android::nn::sample_driver_aidl::SampleDriverFull;
 
 int main() {
+    const std::string name = "nnapi-sample_all";
     const PerformanceInfo performance{.execTime = 1.1f, .powerUsage = 1.1f};
-    std::shared_ptr<SampleDriverFull> driver =
-            ndk::SharedRefBase::make<SampleDriverFull>("nnapi-sample_all", performance);
-    return driver->run();
+    const std::shared_ptr<SampleDriverFull> driver =
+            ndk::SharedRefBase::make<SampleDriverFull>(name.c_str(), performance);
+    return run(driver, name);
 }
