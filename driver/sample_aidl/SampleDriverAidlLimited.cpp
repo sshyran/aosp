@@ -37,201 +37,29 @@
 namespace android::nn::sample {
 namespace {
 
-std::vector<Capabilities::OperandPerformance> makeOperandPerformance(
-        const Capabilities::PerformanceInfo& perfInfo) {
-    static constexpr OperandType kOperandTypes[] = {
-            OperandType::FLOAT32,
-            OperandType::INT32,
-            OperandType::UINT32,
-            OperandType::TENSOR_FLOAT32,
-            OperandType::TENSOR_INT32,
-            OperandType::TENSOR_QUANT8_ASYMM,
-            OperandType::BOOL,
-            OperandType::TENSOR_QUANT16_SYMM,
-            OperandType::TENSOR_FLOAT16,
-            OperandType::TENSOR_BOOL8,
-            OperandType::FLOAT16,
-            OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
-            OperandType::TENSOR_QUANT16_ASYMM,
-            OperandType::TENSOR_QUANT8_SYMM,
-            OperandType::TENSOR_QUANT8_ASYMM_SIGNED,
-            // OperandType::SUBGRAPH, OperandType::OEM, and OperandType::TENSOR_OEM_BYTE
-            // intentionally omitted.
-    };
-
-    std::vector<Capabilities::OperandPerformance> operandPerformance;
-    operandPerformance.reserve(std::size(kOperandTypes));
-    std::transform(std::begin(kOperandTypes), std::end(kOperandTypes),
-                   std::back_inserter(operandPerformance), [&perfInfo](OperandType op) {
-                       return Capabilities::OperandPerformance{.type = op, .info = perfInfo};
-                   });
-    return operandPerformance;
-}
-
-void update(std::vector<Capabilities::OperandPerformance>* operandPerformance, OperandType type,
-            const Capabilities::PerformanceInfo& info) {
-    CHECK(operandPerformance != nullptr);
-    auto it = std::lower_bound(operandPerformance->begin(), operandPerformance->end(), type,
-                               [](const Capabilities::OperandPerformance& perf, OperandType type) {
-                                   return perf.type < type;
-                               });
-    CHECK(it != operandPerformance->end());
-    CHECK_EQ(it->type, type);
-    it->info = info;
-}
-
-Capabilities makeCapabilities(const Capabilities::PerformanceInfo& defaultInfo,
-                              const Capabilities::PerformanceInfo& float32Info,
-                              const Capabilities::PerformanceInfo& relaxedInfo) {
-    auto operandPerformance = makeOperandPerformance(defaultInfo);
-    update(&operandPerformance, OperandType::TENSOR_FLOAT32, float32Info);
-    update(&operandPerformance, OperandType::FLOAT32, float32Info);
-    auto table =
-            Capabilities::OperandPerformanceTable::create(std::move(operandPerformance)).value();
-
-    return {.relaxedFloat32toFloat16PerformanceScalar = relaxedInfo,
-            .relaxedFloat32toFloat16PerformanceTensor = relaxedInfo,
-            .operandPerformance = std::move(table),
-            .ifPerformance = defaultInfo,
-            .whilePerformance = defaultInfo};
-}
-
-Capabilities makeCapabilitiesFloatFast() {
-    const Capabilities::PerformanceInfo defaultInfo = {.execTime = 1.0f, .powerUsage = 1.0f};
-    const Capabilities::PerformanceInfo float32Info = {.execTime = 0.8f, .powerUsage = 1.2f};
-    const Capabilities::PerformanceInfo relaxedInfo = {.execTime = 0.7f, .powerUsage = 1.1f};
-    return makeCapabilities(defaultInfo, float32Info, relaxedInfo);
-}
-
-Capabilities makeCapabilitiesFloatSlow() {
-    const Capabilities::PerformanceInfo defaultInfo = {.execTime = 1.0f, .powerUsage = 1.0f};
-    const Capabilities::PerformanceInfo float32Info = {.execTime = 1.3f, .powerUsage = 0.7f};
-    const Capabilities::PerformanceInfo relaxedInfo = {.execTime = 1.2f, .powerUsage = 0.6f};
-    return makeCapabilities(defaultInfo, float32Info, relaxedInfo);
-}
-
-Capabilities makeCapabilitiesMinimal() {
-    const Capabilities::PerformanceInfo defaultInfo = {.execTime = 1.0f, .powerUsage = 1.0f};
-    const Capabilities::PerformanceInfo float32Info = {.execTime = 0.4f, .powerUsage = 0.5f};
-    const Capabilities::PerformanceInfo relaxedInfo = {.execTime = 0.4f, .powerUsage = 0.5f};
-    return makeCapabilities(defaultInfo, float32Info, relaxedInfo);
-}
-
-Capabilities makeCapabilitiesQuant() {
-    const Capabilities::PerformanceInfo info = {.execTime = 50.0f, .powerUsage = 1.0f};
-    return makeCapabilities(info, info, info);
-}
-
-GeneralResult<std::vector<bool>> getSupportedOperationsFloat(const Model& model) {
-    const size_t count = model.main.operations.size();
-    std::vector<bool> supported(count);
-    for (size_t i = 0; i < count; i++) {
-        const Operation& operation = model.main.operations[i];
-        if (!isExtension(operation.type) && !operation.inputs.empty()) {
-            const Operand& firstOperand = model.main.operands[operation.inputs[0]];
-            supported[i] = firstOperand.type == OperandType::TENSOR_FLOAT32;
-        }
-    }
-    return supported;
-}
-
-GeneralResult<std::vector<bool>> getSupportedOperationsMinimal(const Model& model) {
-    const size_t count = model.main.operations.size();
-    std::vector<bool> supported(count);
-    // Simulate supporting just a few ops
-    for (size_t i = 0; i < count; i++) {
-        supported[i] = false;
-        const Operation& operation = model.main.operations[i];
-        switch (operation.type) {
-            case OperationType::ADD:
-            case OperationType::CONCATENATION:
-            case OperationType::CONV_2D: {
-                const Operand& firstOperand = model.main.operands[operation.inputs[0]];
-                if (firstOperand.type == OperandType::TENSOR_FLOAT32) {
-                    supported[i] = true;
-                }
-                break;
-            }
-            default:
-                break;
-        }
-    }
-    return supported;
-}
-
-bool isQuantized(OperandType opType) {
-    return opType == OperandType::TENSOR_QUANT8_ASYMM ||
-           opType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED;
-}
-
-GeneralResult<std::vector<bool>> getSupportedOperationsQuant(const Model& model) {
-    const size_t count = model.main.operations.size();
-    std::vector<bool> supported(count);
-    for (size_t i = 0; i < count; i++) {
-        const Operation& operation = model.main.operations[i];
-        if (!isExtension(operation.type) && !operation.inputs.empty()) {
-            const Operand& firstOperand = model.main.operands[operation.inputs[0]];
-            supported[i] = isQuantized(firstOperand.type);
-            if (operation.type == OperationType::SELECT) {
-                const Operand& secondOperand = model.main.operands[operation.inputs[1]];
-                supported[i] = isQuantized(secondOperand.type);
-            }
-        }
-    }
-    return supported;
-}
-
-SharedDevice makeDevice(std::string name, Capabilities capabilities,
-                        LimitedSupportDevice::SupportedOperationsFunction getSupportedOperations) {
-    auto device = std::make_shared<const Device>(std::move(name));
-    auto limitedDevice = std::make_shared<const LimitedSupportDevice>(
-            std::move(device), std::move(capabilities), std::move(getSupportedOperations));
-    return limitedDevice;
-}
-
-std::vector<SharedDevice> getDevices() {
-    SharedDevice device;
-    std::vector<SharedDevice> devices;
-    devices.reserve(4);
-
-    device = makeDevice("nnapi-sample_float_fast", makeCapabilitiesFloatFast(),
-                        getSupportedOperationsFloat);
-    devices.push_back(std::move(device));
-
-    device = makeDevice("nnapi-sample_float_slow", makeCapabilitiesFloatSlow(),
-                        getSupportedOperationsFloat);
-    devices.push_back(std::move(device));
-
-    device = makeDevice("nnapi-sample_minimal", makeCapabilitiesMinimal(),
-                        getSupportedOperationsMinimal);
-    devices.push_back(std::move(device));
-
-    device = makeDevice("nnapi-sample_quant", makeCapabilitiesQuant(), getSupportedOperationsQuant);
-    devices.push_back(std::move(device));
-
-    return devices;
-}
-
-namespace aidl_hal = ::aidl::android::hardware::neuralnetworks;
+using AidlBnDevice = ::aidl::android::hardware::neuralnetworks::BnDevice;
+using AidlIDevice = ::aidl::android::hardware::neuralnetworks::IDevice;
+using ::aidl::android::hardware::neuralnetworks::adapter::adapt;
 
 int main() {
     constexpr size_t kNumberOfThreads = 4;
     ABinderProcess_setThreadPoolMaxThreadCount(kNumberOfThreads);
 
-    // Get the canonical interface objects.
-    const auto devices = getDevices();
+    // Get the canonical interface objects. When developing the SL, you may want to make this
+    // "getDevices" instead.
+    const auto devices = getExampleLimitedDevices();
 
     // Adapt all canonical interface objects to AIDL interface objects.
-    std::vector<std::shared_ptr<aidl_hal::BnDevice>> aidlDevices;
+    std::vector<std::shared_ptr<AidlBnDevice>> aidlDevices;
     aidlDevices.reserve(devices.size());
     std::transform(devices.begin(), devices.end(), std::back_inserter(aidlDevices),
-                   [](const auto& device) { return aidl_hal::adapter::adapt(device); });
+                   [](const auto& device) { return adapt(device); });
 
     // Register all AIDL interface objects.
     CHECK_EQ(devices.size(), aidlDevices.size());
     for (size_t i = 0; i < aidlDevices.size(); ++i) {
         const std::string name = devices[i]->getName();
-        const std::string fqName = std::string(aidl_hal::IDevice::descriptor) + "/" + name;
+        const std::string fqName = std::string(AidlIDevice::descriptor) + "/" + name;
         const binder_status_t status =
                 AServiceManager_addService(aidlDevices[i]->asBinder().get(), fqName.c_str());
         if (status != STATUS_OK) {

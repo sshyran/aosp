@@ -64,6 +64,49 @@ std::ostream& operator<<(std::ostream& os, const std::vector<Type>& vec) {
     return os << "]";
 }
 
+std::vector<Capabilities::OperandPerformance> makeOperandPerformance(
+        const Capabilities::PerformanceInfo& perfInfo) {
+    static constexpr OperandType kOperandTypes[] = {
+            OperandType::FLOAT32,
+            OperandType::INT32,
+            OperandType::UINT32,
+            OperandType::TENSOR_FLOAT32,
+            OperandType::TENSOR_INT32,
+            OperandType::TENSOR_QUANT8_ASYMM,
+            OperandType::BOOL,
+            OperandType::TENSOR_QUANT16_SYMM,
+            OperandType::TENSOR_FLOAT16,
+            OperandType::TENSOR_BOOL8,
+            OperandType::FLOAT16,
+            OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            OperandType::TENSOR_QUANT16_ASYMM,
+            OperandType::TENSOR_QUANT8_SYMM,
+            OperandType::TENSOR_QUANT8_ASYMM_SIGNED,
+            // OperandType::SUBGRAPH, OperandType::OEM, and OperandType::TENSOR_OEM_BYTE
+            // intentionally omitted.
+    };
+
+    std::vector<Capabilities::OperandPerformance> operandPerformance;
+    operandPerformance.reserve(std::size(kOperandTypes));
+    std::transform(std::begin(kOperandTypes), std::end(kOperandTypes),
+                   std::back_inserter(operandPerformance), [&perfInfo](OperandType op) {
+                       return Capabilities::OperandPerformance{.type = op, .info = perfInfo};
+                   });
+    return operandPerformance;
+}
+
+void update(std::vector<Capabilities::OperandPerformance>* operandPerformance, OperandType type,
+            const Capabilities::PerformanceInfo& info) {
+    CHECK(operandPerformance != nullptr);
+    auto it = std::lower_bound(operandPerformance->begin(), operandPerformance->end(), type,
+                               [](const Capabilities::OperandPerformance& perf, OperandType type) {
+                                   return perf.type < type;
+                               });
+    CHECK(it != operandPerformance->end());
+    CHECK_EQ(it->type, type);
+    it->info = info;
+}
+
 }  // namespace
 
 bool isExtension(OperandType type) {
@@ -243,6 +286,22 @@ size_t getAlignmentForLength(size_t length) {
     } else {
         return 4;  // Align on 4-byte boundary
     }
+}
+
+Capabilities makeCapabilities(const Capabilities::PerformanceInfo& defaultInfo,
+                              const Capabilities::PerformanceInfo& float32Info,
+                              const Capabilities::PerformanceInfo& relaxedInfo) {
+    auto operandPerformance = makeOperandPerformance(defaultInfo);
+    update(&operandPerformance, OperandType::TENSOR_FLOAT32, float32Info);
+    update(&operandPerformance, OperandType::FLOAT32, float32Info);
+    auto table =
+            Capabilities::OperandPerformanceTable::create(std::move(operandPerformance)).value();
+
+    return {.relaxedFloat32toFloat16PerformanceScalar = relaxedInfo,
+            .relaxedFloat32toFloat16PerformanceTensor = relaxedInfo,
+            .operandPerformance = std::move(table),
+            .ifPerformance = defaultInfo,
+            .whilePerformance = defaultInfo};
 }
 
 std::ostream& operator<<(std::ostream& os, const DeviceStatus& deviceStatus) {
