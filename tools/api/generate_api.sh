@@ -28,7 +28,7 @@ TOOL=$(dirname $0)/generate_api.py
 SPECFILE=$(dirname $0)/types.spec
 HALDIR=${ANDROID_BUILD_TOP}/hardware/interfaces/neuralnetworks
 NDKDIR=${ANDROID_BUILD_TOP}/packages/modules/NeuralNetworks/runtime/include
-CANONICALDIR=${ANDROID_BUILD_TOP}/packages/modules/NeuralNetworks/common/include/nnapi
+CANONICALDIR=${ANDROID_BUILD_TOP}/packages/modules/NeuralNetworks/common/types/include/nnapi
 AIDLDIR=${ANDROID_BUILD_TOP}/hardware/interfaces/neuralnetworks/aidl/android/hardware/neuralnetworks
 
 RET=0
