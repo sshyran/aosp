@@ -19,7 +19,7 @@
 #include "Dequantize.h"
 #include "IndexedShapeWrapper.h"
 #include "OperationResolver.h"
-#include "OperationsUtils.h"
+#include "OperationsExecutionUtils.h"
 
 namespace android {
 namespace nn {

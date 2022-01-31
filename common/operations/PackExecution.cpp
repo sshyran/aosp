@@ -17,7 +17,7 @@
 #define LOG_TAG "Operations"
 
 #include "OperationResolver.h"
-#include "OperationsUtils.h"
+#include "OperationsExecutionUtils.h"
 #include "Pack.h"
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION

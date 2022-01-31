@@ -36,8 +36,9 @@
 
 #include "ControlFlow.h"
 #include "OperandTypes.h"
-#include "OperationResolver.h"
 #include "OperationTypes.h"
+#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 #include "Result.h"
 #include "SharedMemory.h"
 #include "TypeUtils.h"

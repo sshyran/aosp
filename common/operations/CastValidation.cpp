@@ -19,7 +19,7 @@
 #include <vector>
 
 #include "Cast.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace cast {

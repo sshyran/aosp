@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "GenerateProposals.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace bbox_ops {

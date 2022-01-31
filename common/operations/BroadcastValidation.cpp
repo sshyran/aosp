@@ -17,7 +17,7 @@
 #include <nnapi/Validation.h>
 
 #include "Broadcast.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace broadcast {

@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "InstanceNormalization.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace instance_normalization {

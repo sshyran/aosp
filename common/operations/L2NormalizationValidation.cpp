@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "L2Normalization.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace l2_norm {

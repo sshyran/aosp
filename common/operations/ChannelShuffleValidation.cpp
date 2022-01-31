@@ -15,7 +15,7 @@
  */
 
 #include "ChannelShuffle.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace channel_shuffle {

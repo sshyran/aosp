@@ -24,7 +24,7 @@
 #include "BidirectionalSequenceLSTM.h"
 #include "CpuExecutor.h"
 #include "CpuOperationUtils.h"
-#include "OperationsUtils.h"
+#include "OperationsExecutionUtils.h"
 #include "Tracing.h"
 
 namespace android {

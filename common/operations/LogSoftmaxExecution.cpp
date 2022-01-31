@@ -22,7 +22,7 @@
 
 #include "LogSoftmax.h"
 #include "OperationResolver.h"
-#include "OperationsUtils.h"
+#include "OperationsExecutionUtils.h"
 #include "Tracing.h"
 
 namespace android {

@@ -18,7 +18,7 @@
 
 #include "Fill.h"
 #include "OperationResolver.h"
-#include "OperationsUtils.h"
+#include "OperationsExecutionUtils.h"
 
 namespace android {
 namespace nn {

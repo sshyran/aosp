@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "FullyConnected.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace fully_connected {

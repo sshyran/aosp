@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "LSTM.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 #include "nnapi/Validation.h"
 
 namespace android::nn {

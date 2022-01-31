@@ -28,7 +28,7 @@
 #include "ControlFlow.h"
 #include "LegacyUtils.h"
 #include "OperationResolver.h"
-#include "OperationsUtils.h"
+#include "OperationsExecutionUtils.h"
 
 namespace android {
 namespace nn {

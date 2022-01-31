@@ -21,7 +21,7 @@
 
 #include "IndexedShapeWrapper.h"
 #include "MaximumMinimum.h"
-#include "OperationsUtils.h"
+#include "OperationsExecutionUtils.h"
 #include "Tracing.h"
 
 namespace android {

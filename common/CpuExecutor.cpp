@@ -31,7 +31,7 @@
 #include "NeuralNetworks.h"
 #include "OperationResolver.h"
 #include "Operations.h"
-#include "OperationsUtils.h"
+#include "OperationsExecutionUtils.h"
 #include "Tracing.h"
 
 // b/109953668, disable OpenMP

@@ -21,7 +21,7 @@
 
 #include "MirrorPad.h"
 #include "OperationResolver.h"
-#include "OperationsUtils.h"
+#include "OperationsExecutionUtils.h"
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION
 #include <limits>

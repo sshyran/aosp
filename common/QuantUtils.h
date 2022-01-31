@@ -14,7 +14,7 @@
 #include <memory>
 
 #include "LegacyUtils.h"
-#include "OperationsUtils.h"
+#include "OperationsExecutionUtils.h"
 
 namespace android {
 namespace nn {

@@ -17,8 +17,7 @@
 #ifdef NN_EXPERIMENTAL_FEATURE
 
 #include "Densify.h"
-
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace densify_op {

@@ -15,7 +15,7 @@
  */
 
 #include "BatchMatmul.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace batch_matmul_op {

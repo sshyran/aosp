@@ -21,7 +21,7 @@
 #include <vector>
 
 #include "OperationResolver.h"
-#include "OperationsUtils.h"
+#include "OperationsExecutionUtils.h"
 #include "TopK_V2.h"
 
 namespace android {
