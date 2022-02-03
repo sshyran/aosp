@@ -99,6 +99,7 @@ cc_binary {
     name: "android.hardware.neuralnetworks-shim-service-sample",
     srcs: ["ShimServiceSample.cpp"],
     defaults: ["NeuralNetworksShimDriverAidl_server_defaults"],
+    stl: "libc++_static",
     init_rc: ["config/android.hardware.neuralnetworks-shim-service-sample.rc"],
     vintf_fragments: ["config/android.hardware.neuralnetworks-shim-service-sample.xml"],
 }
