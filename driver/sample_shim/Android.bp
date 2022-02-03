@@ -95,6 +95,13 @@ cc_defaults {
     proprietary: true,
 }
 
+// android.hardware.neuralnetworks-shim-service-sample takes an existing Support
+// Library prebuilt object and registers it as a sAIDL vendor service.
+//
+// To see an example where the driver code is available as a vendor service
+// directly in the build system, refer to how the sAIDL adapter is used in
+// android.hardware.neuralnetworks-service-sample-limited in the file
+// packages/modules/NeuralNetworks/driver/sample_aidl/Android.bp.
 cc_binary {
     name: "android.hardware.neuralnetworks-shim-service-sample",
     srcs: ["ShimServiceSample.cpp"],
