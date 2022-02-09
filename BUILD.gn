@@ -159,6 +159,8 @@ static_library("runtime") {
     "chromeos/compilation_caching.cpp",
     "chromeos/daemon_store.cpp",
     "chromeos/driver_loader.cpp",
+    "chromeos/driver_loader_utils.cpp",
+    "chromeos/chromeos_config_portal.cpp",
     "runtime/BurstBuilder.cpp",
     "runtime/CompilationBuilder.cpp",
     "runtime/ExecutionBuilder.cpp",
@@ -171,6 +173,7 @@ static_library("runtime") {
     "runtime/NeuralNetworks.cpp",
     "runtime/TypeManager.cpp",
   ]
+  pkg_deps = [ "libcros_config" ]
 }
 
 shared_library("nn-common") {
@@ -435,7 +438,9 @@ shared_library("vendor-nn-hal") {
   sources = [
     "chromeos/sampledriver.cpp",
     "chromeos/sampledriver_util.cpp",
+    "chromeos/chromeos_config_portal.cpp",
   ]
+  pkg_deps = [ "libcros_config" ]
 }
 
 shared_library("minimal-driver") {
@@ -744,6 +749,7 @@ if (use.test) {
       "chromeos/tests/common/includes_test.cc",
       "chromeos/tests/common/logger_enum_test.cc",
       "chromeos/tests/common/random_test.cc",
+      "chromeos/tests/common/chromeos_config_portal_test.cc",
     ]
   }
 

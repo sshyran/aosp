@@ -78,6 +78,7 @@ static_library("vts_common") {
     "${nn_src}/chromeos/daemon_store.cpp",
     "${nn_src}/chromeos/testrunner.cpp",
     "${nn_src}/chromeos/driver_loader.cpp",
+    "${nn_src}/chromeos/driver_loader_utils.cpp",
     "${nn_src}/common/ExecutionBurstController.cpp",
     "${nn_src}/common/ExecutionBurstServer.cpp",
     "${nn_src}/common/LegacyHalUtils.cpp",

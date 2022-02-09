@@ -3,72 +3,61 @@
 // found in the LICENSE file.
 
 #include <android-base/logging.h>
-
+#include <cros_config/cros_config.h>
+#include <sstream>
 #include <string>
 #include <unordered_map>
 #include <utility>
-#include <sstream>
 #include <vector>
 
 #include "HalInterfaces.h"
+#include "chromeos_config_portal.h"
 #include "sampledriver_util.h"
 
 // type of function pointer
 typedef void* (*get_driver_func)();
 
 std::unordered_map<std::string, std::string> driverToLibFallback = {
-  {"cros-default", "libfull-driver.so"},
-  {"default", "libfull-driver.so"},
-  {"xnnpack", "libxnn-driver.so"},
-  {"full", "libfull-driver.so"},
-  {"minimal", "libminimal-driver.so"}
-};
+    {"default", "libfull-driver.so"}};
 std::unordered_map<std::string, std::string> driverToLib;
 std::string funcName = "get_driver";
 
 template <typename T>
 T getDriverInstance(std::string serviceName) {
-    // dynamically construct map via conf file; responsive to any config change during execution time
-    std::string content = "";
-    std::string filePath = "/etc/env.d/drivers";
-    bool readStatus = ReadFileTo(filePath, &content);
-    bool parseStatus = false;
-    if (readStatus) {
-      parseStatus = ParseConfigTo(content, driverToLib, filePath);
-    }
+  auto configs = getDriverConfigs(std::make_unique<brillo::CrosConfig>());
 
-    // will use default config if parse or read failed
-    if (!readStatus || !parseStatus) {
-      LOG(ERROR) << "Will use fallback config";
-      driverToLib = driverToLibFallback;
-    }
+  for (auto config : configs) {
+    driverToLib.insert(std::pair<std::string, std::string>(
+        config.name, config.shared_library));
+  }
 
-    // if does not register any config use fallback one
-    if (driverToLib.size() == 0) {
-      LOG(ERROR) << "Got empty config!" << " ;Will use fallback config";
-      driverToLib = driverToLibFallback;
-    }
+  // will use default config if no config provided
+  if (!driverToLib.size()) {
+    LOG(ERROR) << "No cros-config found. Will use fallback config";
+    driverToLib = driverToLibFallback;
+  }
 
-    if (driverToLib.find(serviceName) == driverToLib.end()) {
-      LOG(ERROR) << "Cannot find " << serviceName << " in available driver list.";
-      return nullptr;
-    }
+  if (driverToLib.find(serviceName) == driverToLib.end()) {
+    LOG(ERROR) << "Cannot find " << serviceName << " in available driver list.";
+    return nullptr;
+  }
 
-    void *driverHandle = GetFunctionFrom(driverToLib[serviceName], funcName);
+  void* driverHandle = GetFunctionFrom(driverToLib[serviceName], funcName);
 
-    LOG(INFO) << "Loading " << serviceName << " from " << driverToLib[serviceName];
-    if (driverHandle == nullptr) {
-      LOG(ERROR) << driverToLib[serviceName] << " can not be loaded!";
-      return nullptr;
-    }
-    auto getDriverFunc = reinterpret_cast<get_driver_func>(driverHandle);
+  LOG(INFO) << "Loading " << serviceName << " from "
+            << driverToLib[serviceName];
+  if (driverHandle == nullptr) {
+    LOG(ERROR) << driverToLib[serviceName] << " can not be loaded!";
+    return nullptr;
+  }
+  auto getDriverFunc = reinterpret_cast<get_driver_func>(driverHandle);
 
-    auto sampleDriverInsance = static_cast<T>(getDriverFunc());
-    if (sampleDriverInsance == nullptr) {
-      LOG(FATAL) << "Cannot create driver from " << driverToLib[serviceName];
-    }
+  auto sampleDriverInstance = static_cast<T>(getDriverFunc());
+  if (sampleDriverInstance == nullptr) {
+    LOG(FATAL) << "Cannot create driver from " << driverToLib[serviceName];
+  }
 
-    return sampleDriverInsance;
+  return sampleDriverInstance;
 }
 
 namespace android {
@@ -80,11 +69,11 @@ namespace V1_0 {
 // This registers the SampleDriverFull into the DeviceManager.
 ::android::sp<IDevice> IDevice::getService(const std::string& serviceName,
                                            bool /*dummy*/) {
-    LOG(INFO) << "Creating " << serviceName << " driver";
+  LOG(INFO) << "Creating " << serviceName << " driver";
 
-    auto sampleDriverInsance = getDriverInstance<IDevice*>(serviceName);
+  auto sampleDriverInstance = getDriverInstance<IDevice*>(serviceName);
 
-    return sampleDriverInsance;
+  return sampleDriverInstance;
 }
 
 }  // namespace V1_0

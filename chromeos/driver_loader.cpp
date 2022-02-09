@@ -2,61 +2,39 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "HalInterfaces.h"
 #include <Utils.h>
 #include <nnapi/hal/1.3/Device.h>
 #include <utils/StrongPointer.h>
 
+#include "HalInterfaces.h"
+#include "driver_loader_utils.h"
+
 namespace android {
 namespace nn {
 
-bool getDriversFrom(char* content, std::vector<std::string>& serviceNames) {
-    if (content) {
-        std::string contentStr(content);
-        int idx = 0;
-        int len = 0;
-        int contentLength = contentStr.size();
-        while (idx < contentLength) {
-            while (idx+len < contentLength && contentStr[idx+len] != ':') len += 1;
-            if (len) serviceNames.push_back(contentStr.substr(idx, len));
-            idx = len + idx + 1;
-            len = 0;
-        }
-    } else {
-        // should return if nothing comes in
-        return false;
-    }
-    return true;
-}
-
 std::vector<SharedDevice> getDevices() {
-    std::vector<std::string> serviceNames;
-    char* content = std::getenv("DRIVERS");
-    bool getStatus = getDriversFrom(content, serviceNames);
-    if (serviceNames.size() == 0 || !getStatus) {
-        serviceNames = {"default"};
+  std::vector<std::string> serviceNames = getServiceNames();
+
+  std::vector<SharedDevice> devices;
+
+  for (auto serviceName : serviceNames) {
+    VLOG(MANAGER) << "Loading service " << serviceName;
+    auto driver = V1_3::IDevice::getService(serviceName);
+    GeneralResult<SharedDevice> result =
+        V1_3::utils::Device::create(serviceName, std::move(driver));
+    if (!result.has_value()) {
+      LOG(ERROR) << "Failed to create Device (" << result.error().code
+                 << "): " << result.error().message;
+    } else {
+      LOG(INFO) << "Creating SharedDevice for " << serviceName;
+      devices.push_back(std::move(result).value());
     }
+  }
 
-    std::vector<SharedDevice> devices;
-
-    for (auto serviceName : serviceNames) {
-        VLOG(MANAGER) << "Loading service " << serviceName;
-        auto driver = V1_3::IDevice::getService(serviceName);
-        GeneralResult<SharedDevice> result = V1_3::utils::Device::create(serviceName, std::move(driver));
-        if (!result.has_value()) {
-            LOG(ERROR) << "Failed to create Device (" << result.error().code
-                        << "): " << result.error().message;
-        }
-        else {
-            LOG(INFO) << "Creating SharedDevice for " << serviceName;
-            devices.push_back(std::move(result).value());
-        }
-    }
-
-    return devices;
+  return devices;
 }
 
-} //namespace nn
+}  // namespace nn
 
 namespace hardware {
 namespace neuralnetworks {
