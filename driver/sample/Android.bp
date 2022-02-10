@@ -196,6 +196,20 @@ cc_library_static {
     ],
 }
 
+// neuralnetworks_sample_sl_driver is an example NNAPI Support Library object.
+// In general, the SL should be built against the _cl variants, including:
+// * neuralnetworks_types_cl
+// * libneuralnetworks_common_cl
+// * libneuralnetworks_cl
+//
+// neuralnetworks_sample_sl_driver is not vendor_available, so it is not able
+// to be used directly by the build system for a vendor service. This SL object
+// is used as a prebuilt in packages/modules/NeuralNetworks/driver/sample_shim/.
+//
+// To see an example where the driver code is available as a vendor service
+// directly in the build system, refer to how the sAIDL adapter is used in
+// android.hardware.neuralnetworks-service-sample-limited in the file
+// packages/modules/NeuralNetworks/driver/sample_aidl/Android.bp.
 cc_library_shared {
     name: "neuralnetworks_sample_sl_driver",
     defaults: ["neuralnetworks_cl_defaults"],
