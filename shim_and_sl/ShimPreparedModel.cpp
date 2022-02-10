@@ -75,6 +75,12 @@ ErrorStatus ShimPreparedModel::parseInputs(
         }
     }
 
+    // enable input and output padding
+    const auto enablePaddingResult = execution->enableInputAndOutputPadding(true);
+    if (enablePaddingResult != Result::NO_ERROR) {
+        return convertResultToErrorStatus(enablePaddingResult);
+    }
+
     const auto& model = mMainAndReferencedModels[0];
     // set inputs
     for (int i = 0; i < request.inputs.size(); ++i) {
@@ -150,7 +156,7 @@ ErrorStatus ShimPreparedModel::parseInputs(
 class ShimFencedExecutionCallback : public BnFencedExecutionCallback {
    public:
     ShimFencedExecutionCallback(
-            ::android::nn::sl_wrapper::Execution execution, Event e,
+            std::shared_ptr<::android::nn::sl_wrapper::Execution> execution, Event e,
             std::vector<std::shared_ptr<::android::nn::sl_wrapper::Memory>> memoryPools,
             bool measureTiming)
         : mMemoryPools(std::move(memoryPools)),
@@ -168,27 +174,27 @@ class ShimFencedExecutionCallback : public BnFencedExecutionCallback {
             constexpr int64_t int64cap = std::numeric_limits<int64_t>::max();
             // Special value used for "no measurements"
             constexpr uint64_t uint64cap = std::numeric_limits<uint64_t>::max();
-            auto result = mExecution.getDuration(Duration::ON_HARDWARE, &duration);
+            auto result = mExecution->getDuration(Duration::ON_HARDWARE, &duration);
             SLW2SAS_RETURN_IF_ERROR(result);
             timingLaunched->timeOnDeviceNs = (duration == uint64cap) ? -1
                                              : (duration > int64cap)
                                                      ? int64cap
                                                      : static_cast<int64_t>(duration);
 
-            result = mExecution.getDuration(Duration::IN_DRIVER, &duration);
+            result = mExecution->getDuration(Duration::IN_DRIVER, &duration);
             SLW2SAS_RETURN_IF_ERROR(result);
             timingLaunched->timeInDriverNs = (duration == uint64cap) ? -1
                                              : (duration > int64cap)
                                                      ? int64cap
                                                      : static_cast<int64_t>(duration);
 
-            result = mExecution.getDuration(Duration::FENCED_ON_HARDWARE, &duration);
+            result = mExecution->getDuration(Duration::FENCED_ON_HARDWARE, &duration);
             SLW2SAS_RETURN_IF_ERROR(result);
             timingFenced->timeOnDeviceNs = (duration == uint64cap) ? -1
                                            : (duration > int64cap) ? int64cap
                                                                    : static_cast<int64_t>(duration);
 
-            result = mExecution.getDuration(Duration::FENCED_IN_DRIVER, &duration);
+            result = mExecution->getDuration(Duration::FENCED_IN_DRIVER, &duration);
             SLW2SAS_RETURN_IF_ERROR(result);
             timingFenced->timeInDriverNs = (duration == uint64cap) ? -1
                                            : (duration > int64cap) ? int64cap
@@ -205,10 +211,55 @@ class ShimFencedExecutionCallback : public BnFencedExecutionCallback {
 
    private:
     std::vector<std::shared_ptr<::android::nn::sl_wrapper::Memory>> mMemoryPools;
-    ::android::nn::sl_wrapper::Execution mExecution;
+    std::shared_ptr<::android::nn::sl_wrapper::Execution> mExecution;
     ::android::nn::wrapper::Event mEvent;
     bool mMeasureTiming;
 };
+
+static ndk::ScopedAStatus executeFencedInternal(
+        const std::shared_ptr<const NnApiSupportLibrary>& nnapi,
+        const std::shared_ptr<::android::nn::sl_wrapper::Execution>& execution,
+        std::vector<std::shared_ptr<::android::nn::sl_wrapper::Memory>> requestMemoryPools,
+        const std::vector<ndk::ScopedFileDescriptor>& waitFor, int64_t durationNs,
+        bool measureTiming, FencedExecutionResult* fencedExecutionResult) {
+    CHECK(execution != nullptr);
+    CHECK(fencedExecutionResult != nullptr);
+
+    std::vector<const ANeuralNetworksEvent*> deps(waitFor.size());
+    auto createResult = Result::NO_ERROR;
+    std::transform(waitFor.begin(), waitFor.end(), deps.begin(),
+                   [&](const ::ndk::ScopedFileDescriptor& e) {
+                       ANeuralNetworksEvent* r = nullptr;
+                       if (createResult == Result::NO_ERROR) {
+                           createResult = static_cast<Result>(
+                                   nnapi->getFL5()->ANeuralNetworksEvent_createFromSyncFenceFd(
+                                           e.get(), &r));
+                       }
+                       return r;
+                   });
+
+    const auto guard = ::android::base::make_scope_guard([nnapi, deps] {
+        for (auto& dep : deps) {
+            if (dep != nullptr) {
+                nnapi->getFL5()->ANeuralNetworksEvent_free(const_cast<ANeuralNetworksEvent*>(dep));
+            }
+        }
+    });
+
+    SLW2SAS_RETURN_IF_ERROR(createResult);
+
+    Event e(nnapi.get());
+    auto result = execution->startComputeWithDependencies(deps, durationNs, &e);
+    SLW2SAS_RETURN_IF_ERROR(result);
+
+    int syncFence = -1;
+    fencedExecutionResult->syncFence = ndk::ScopedFileDescriptor(
+            (e.getSyncFenceFd(&syncFence) == Result::NO_ERROR) ? syncFence : -1);
+    fencedExecutionResult->callback = ndk::SharedRefBase::make<ShimFencedExecutionCallback>(
+            execution, std::move(e), requestMemoryPools, measureTiming);
+
+    return ndk::ScopedAStatus::ok();
+}
 
 ::ndk::ScopedAStatus ShimPreparedModel::executeFenced(
         const ::aidl::android::hardware::neuralnetworks::Request& request,
@@ -220,73 +271,27 @@ class ShimFencedExecutionCallback : public BnFencedExecutionCallback {
         return ndk::ScopedAStatus::fromServiceSpecificError(
                 static_cast<int>(ErrorStatus::INVALID_ARGUMENT));
     }
-    auto execution = ::android::nn::sl_wrapper::Execution(mNnapi.get(), &mCompilation);
-    std::vector<std::shared_ptr<::android::nn::sl_wrapper::Memory>> requestMemoryPools;
-    auto errorStatus = parseInputs(request, measureTiming, deadlineNs, loopTimeoutDurationNs,
-                                   &execution, &requestMemoryPools);
-    if (errorStatus != ErrorStatus::NONE) {
-        return toAStatus(errorStatus);
-    }
-
-    std::vector<const ANeuralNetworksEvent*> deps(waitFor.size());
-    auto createResult = Result::NO_ERROR;
-    std::transform(waitFor.begin(), waitFor.end(), deps.begin(),
-                   [&](const ::ndk::ScopedFileDescriptor& e) {
-                       ANeuralNetworksEvent* r = nullptr;
-                       if (createResult == Result::NO_ERROR) {
-                           createResult = static_cast<Result>(
-                                   mNnapi->getFL5()->ANeuralNetworksEvent_createFromSyncFenceFd(
-                                           e.get(), &r));
-                       }
-                       return r;
-                   });
-
-    const auto guard = ::android::base::make_scope_guard([this, deps] {
-        for (auto& dep : deps) {
-            if (dep != nullptr) {
-                mNnapi->getFL5()->ANeuralNetworksEvent_free(const_cast<ANeuralNetworksEvent*>(dep));
-            }
-        }
-    });
-
-    SLW2SAS_RETURN_IF_ERROR(createResult);
-
-    Event e(mNnapi.get());
-    auto result = execution.startComputeWithDependencies(deps, durationNs, &e);
-    SLW2SAS_RETURN_IF_ERROR(result);
-
-    int syncFence = -1;
-    fencedExecutionResult->syncFence = ndk::ScopedFileDescriptor(
-            (e.getSyncFenceFd(&syncFence) == Result::NO_ERROR) ? syncFence : -1);
-    fencedExecutionResult->callback = ndk::SharedRefBase::make<ShimFencedExecutionCallback>(
-            std::move(execution), std::move(e), std::move(requestMemoryPools), measureTiming);
-
-    return ndk::ScopedAStatus::ok();
-}
-
-::ndk::ScopedAStatus ShimPreparedModel::executeSynchronously(
-        const Request& request, bool measureTiming, int64_t deadlineNs,
-        int64_t loopTimeoutDurationNs,
-        ::aidl::android::hardware::neuralnetworks::ExecutionResult* executionResult) {
-    if (deadlineNs < -1) {
-        LOG(ERROR) << "Invalid deadline value, must be >= -1";
-        return ndk::ScopedAStatus::fromServiceSpecificError(
-                static_cast<int>(ErrorStatus::INVALID_ARGUMENT));
-    }
-
     auto execution =
-            std::make_unique<::android::nn::sl_wrapper::Execution>(mNnapi.get(), &mCompilation);
+            std::make_shared<::android::nn::sl_wrapper::Execution>(mNnapi.get(), &mCompilation);
     std::vector<std::shared_ptr<::android::nn::sl_wrapper::Memory>> requestMemoryPools;
     auto errorStatus = parseInputs(request, measureTiming, deadlineNs, loopTimeoutDurationNs,
                                    execution.get(), &requestMemoryPools);
     if (errorStatus != ErrorStatus::NONE) {
         return toAStatus(errorStatus);
     }
+    return executeFencedInternal(mNnapi, execution, std::move(requestMemoryPools), waitFor,
+                                 durationNs, measureTiming, fencedExecutionResult);
+}
+
+static ndk::ScopedAStatus executeSynchronouslyInternal(
+        const std::shared_ptr<::android::nn::sl_wrapper::Execution>& execution, bool measureTiming,
+        int numOutputs, ExecutionResult* executionResult) {
+    CHECK(execution != nullptr);
+    CHECK(executionResult != nullptr);
 
     auto result = execution->compute();
-    errorStatus = convertResultToErrorStatus(result);
+    auto errorStatus = convertResultToErrorStatus(result);
 
-    int numOutputs = request.outputs.size();
     std::vector<OutputShape> outputShapes;
     outputShapes.reserve(numOutputs);
     bool sufficientSize = true;
@@ -337,6 +342,28 @@ class ShimFencedExecutionCallback : public BnFencedExecutionCallback {
         return ndk::ScopedAStatus::ok();
     }
     return toAStatus(errorStatus);
+}
+
+::ndk::ScopedAStatus ShimPreparedModel::executeSynchronously(
+        const Request& request, bool measureTiming, int64_t deadlineNs,
+        int64_t loopTimeoutDurationNs,
+        ::aidl::android::hardware::neuralnetworks::ExecutionResult* executionResult) {
+    if (deadlineNs < -1) {
+        LOG(ERROR) << "Invalid deadline value, must be >= -1";
+        return ndk::ScopedAStatus::fromServiceSpecificError(
+                static_cast<int>(ErrorStatus::INVALID_ARGUMENT));
+    }
+
+    auto execution =
+            std::make_shared<::android::nn::sl_wrapper::Execution>(mNnapi.get(), &mCompilation);
+    std::vector<std::shared_ptr<::android::nn::sl_wrapper::Memory>> requestMemoryPools;
+    auto errorStatus = parseInputs(request, measureTiming, deadlineNs, loopTimeoutDurationNs,
+                                   execution.get(), &requestMemoryPools);
+    if (errorStatus != ErrorStatus::NONE) {
+        return toAStatus(errorStatus);
+    }
+    return executeSynchronouslyInternal(execution, measureTiming, request.outputs.size(),
+                                        executionResult);
 }
 
 ::ndk::ScopedAStatus ShimPreparedModel::executeSynchronouslyWithConfig(
@@ -446,8 +473,11 @@ ndk::ScopedAStatus ShimBurst::releaseMemoryResource(int64_t memoryIdentifierToke
 
 class ShimExecution : public BnExecution {
    public:
-    explicit ShimExecution(std::shared_ptr<ShimPreparedModel> preparedModel, Request request,
-                           bool measureTiming, int64_t loopTimeoutDurationNs);
+    explicit ShimExecution(
+            std::shared_ptr<const NnApiSupportLibrary> nnapi,
+            std::shared_ptr<::android::nn::sl_wrapper::Execution> execution,
+            std::vector<std::shared_ptr<::android::nn::sl_wrapper::Memory>> requestMemoryPools,
+            bool measureTiming, int numberOfOutputs);
 
     ndk::ScopedAStatus executeSynchronously(int64_t deadlineNs,
                                             ExecutionResult* executionResult) override;
@@ -457,38 +487,53 @@ class ShimExecution : public BnExecution {
 
    protected:
     std::atomic_flag mExecutionInFlight = ATOMIC_FLAG_INIT;
-    const std::shared_ptr<ShimPreparedModel> kPreparedModel;
-    const Request kRequest;
+    std::shared_ptr<const NnApiSupportLibrary> mNnapi;
+    std::shared_ptr<::android::nn::sl_wrapper::Execution> mExecution;
+    const std::vector<std::shared_ptr<::android::nn::sl_wrapper::Memory>> kRequestMemoryPools;
     const bool kMeasureTiming;
-    const int64_t kLoopTimeoutDurationNs;
+    const int kNumberOfOutputs;
 };
 
 ndk::ScopedAStatus ShimPreparedModel::createReusableExecution(
         const Request& request, const ExecutionConfig& config,
         std::shared_ptr<IExecution>* execution) {
-    auto maybeClonedRequest = aidl_hal::utils::clone(request);
-    if (!maybeClonedRequest.ok()) {
-        return toAStatus(aidl_hal::ErrorStatus::GENERAL_FAILURE,
-                         maybeClonedRequest.error().message);
+    auto wrapperExecution =
+            std::make_shared<::android::nn::sl_wrapper::Execution>(mNnapi.get(), &mCompilation);
+    std::vector<std::shared_ptr<::android::nn::sl_wrapper::Memory>> requestMemoryPools;
+    auto errorStatus =
+            parseInputs(request, config.measureTiming, kNoDeadline, config.loopTimeoutDurationNs,
+                        wrapperExecution.get(), &requestMemoryPools);
+    if (errorStatus != ErrorStatus::NONE) {
+        return toAStatus(errorStatus);
     }
-    std::shared_ptr<ShimPreparedModel> self = this->template ref<ShimPreparedModel>();
+    auto result = wrapperExecution->setReusable(true);
+    SLW2SAS_RETURN_IF_ERROR(result);
+
     *execution = ndk::SharedRefBase::make<ShimExecution>(
-            std::move(self), std::move(maybeClonedRequest).value(), config.measureTiming,
-            config.loopTimeoutDurationNs);
+            mNnapi, std::move(wrapperExecution), std::move(requestMemoryPools),
+            config.measureTiming, request.outputs.size());
     return ndk::ScopedAStatus::ok();
 }
 
-ShimExecution::ShimExecution(std::shared_ptr<ShimPreparedModel> preparedModel, Request request,
-                             bool measureTiming, int64_t loopTimeoutDurationNs)
-    : kPreparedModel(std::move(preparedModel)),
-      kRequest(std::move(request)),
+ShimExecution::ShimExecution(
+        std::shared_ptr<const NnApiSupportLibrary> nnapi,
+        std::shared_ptr<::android::nn::sl_wrapper::Execution> execution,
+        std::vector<std::shared_ptr<::android::nn::sl_wrapper::Memory>> requestMemoryPools,
+        bool measureTiming, int numberOfOutputs)
+    : mNnapi(std::move(nnapi)),
+      mExecution(std::move(execution)),
+      kRequestMemoryPools(std::move(requestMemoryPools)),
       kMeasureTiming(measureTiming),
-      kLoopTimeoutDurationNs(loopTimeoutDurationNs) {
-    CHECK(kPreparedModel != nullptr);
-}
+      kNumberOfOutputs(numberOfOutputs) {}
 
 ndk::ScopedAStatus ShimExecution::executeSynchronously(int64_t deadlineNs,
                                                        ExecutionResult* executionResult) {
+    if (deadlineNs < -1) {
+        LOG(ERROR) << "Invalid deadline value, must be >= -1";
+        return ndk::ScopedAStatus::fromServiceSpecificError(
+                static_cast<int>(ErrorStatus::INVALID_ARGUMENT));
+    }
+
     // Ensure at most one execution is in flight at a time.
     const bool executionAlreadyInFlight = mExecutionInFlight.test_and_set();
     if (executionAlreadyInFlight) {
@@ -497,13 +542,19 @@ ndk::ScopedAStatus ShimExecution::executeSynchronously(int64_t deadlineNs,
     }
     const auto guard = ::android::base::make_scope_guard([this] { mExecutionInFlight.clear(); });
 
-    return kPreparedModel->executeSynchronously(kRequest, kMeasureTiming, deadlineNs,
-                                                kLoopTimeoutDurationNs, executionResult);
+    return executeSynchronouslyInternal(mExecution, kMeasureTiming, kNumberOfOutputs,
+                                        executionResult);
 }
 
 ndk::ScopedAStatus ShimExecution::executeFenced(
         const std::vector<ndk::ScopedFileDescriptor>& waitFor, int64_t deadlineNs,
         int64_t durationNs, FencedExecutionResult* fencedExecutionResult) {
+    if (deadlineNs < -1) {
+        LOG(ERROR) << "Invalid deadline value, must be >= -1";
+        return ndk::ScopedAStatus::fromServiceSpecificError(
+                static_cast<int>(ErrorStatus::INVALID_ARGUMENT));
+    }
+
     // Ensure at most one execution is in flight at a time.
     const bool executionAlreadyInFlight = mExecutionInFlight.test_and_set();
     if (executionAlreadyInFlight) {
@@ -512,8 +563,8 @@ ndk::ScopedAStatus ShimExecution::executeFenced(
     }
     const auto guard = ::android::base::make_scope_guard([this] { mExecutionInFlight.clear(); });
 
-    return kPreparedModel->executeFenced(kRequest, waitFor, kMeasureTiming, deadlineNs,
-                                         kLoopTimeoutDurationNs, durationNs, fencedExecutionResult);
+    return executeFencedInternal(mNnapi, mExecution, kRequestMemoryPools, waitFor, durationNs,
+                                 kMeasureTiming, fencedExecutionResult);
 }
 
 }  // namespace aidl::android::hardware::neuralnetworks
