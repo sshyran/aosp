@@ -175,14 +175,32 @@ cc_library_static {
     },
 }
 
+cc_library_static {
+    name: "neuralnetworks_canonical_sample_driver_cl",
+    defaults: ["neuralnetworks_cl_defaults"],
+    // b/109953668, disable OpenMP
+    // openmp: true,
+    srcs: [
+        "Canonical*.cpp",
+        "LimitedSupportDevice.cpp",
+    ],
+    header_libs: ["libneuralnetworks_headers_ndk"],
+    export_include_dirs: ["."],
+    static_libs: [
+        "libbase_ndk",
+        "libneuralnetworks_common_cl",
+        "neuralnetworks_types_cl",
+    ],
+    shared_libs: [
+        "libnativewindow",
+    ],
+}
+
 cc_library_shared {
     name: "neuralnetworks_sample_sl_driver",
-    defaults: ["neuralnetworks_defaults"],
-    host_supported: false,
+    defaults: ["neuralnetworks_cl_defaults"],
     srcs: ["SampleDriverSL.cpp"],
     shared_libs: [
-        "libbase",
-        "libcutils",
         "liblog",
         "libnativewindow",
     ],
@@ -196,7 +214,7 @@ cc_library_shared {
         "libcrypto_static",
         "libneuralnetworks_common_cl_cpu",
         "libtflite_static",
-        "neuralnetworks_canonical_sample_driver",
+        "neuralnetworks_canonical_sample_driver_cl",
         "neuralnetworks_types_cl",
     ],
     whole_static_libs: [

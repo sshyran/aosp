@@ -309,8 +309,6 @@ cc_library_static {
 cc_library_static {
     name: "libneuralnetworks_common_cl_cpu",
     defaults: ["libneuralnetworks_common_cl_defaults"],
-    sdk_version: "", // Override neuralnetworks_cl_defaults
-    min_sdk_version: "",
     header_libs: [
         "gemmlowp_headers",
         "libeigen",
@@ -320,10 +318,7 @@ cc_library_static {
         "tensorflow_headers",
     ],
     whole_static_libs: [
-        "libarect",
-        "libtflite_kernel_utils",
-        "neuralnetworks_types_cl",
-        "philox_random",
+        "philox_random_cl",
     ],
     static_libs: [
         "libcrypto_static",
