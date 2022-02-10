@@ -79,6 +79,23 @@ cc_binary {
     vintf_fragments: ["config/android.hardware.neuralnetworks-service-sample-all.xml"],
 }
 
+// android.hardware.neuralnetworks-service-sample-limited is a sAIDL vendor
+// service that adapts multiple canonical interface objects (as returned by
+// `getDevices`) as sAIDL objects and registers them with service manager.
+// Because it is vendor_available, it cannot use the Support Library's _cl
+// build variants. Instead, it uses the non-_cl variants which are
+// vendor_available, including:
+// * neuralnetworks_types
+// * libneuralnetworks_common
+// * neuralnetworks_utils_hal_adapter_aidl
+//
+// To see how the Support Library object can be built, refer to
+// neuralnetworks_sample_sl_driver defined in
+// packages/modules/NeuralNetworks/driver/sample/Android.bp.
+//
+// To see how a Support Library prebuilt can be used as a sAIDL vendor service,
+// refer to android.hardware.neuralnetworks-shim-service-sample defined in
+// packages/modules/NeuralNetworks/driver/sample_shim/Android.bp.
 cc_binary {
     name: "android.hardware.neuralnetworks-service-sample-limited",
     srcs: ["SampleDriverAidlLimited.cpp"],

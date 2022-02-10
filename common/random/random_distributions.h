@@ -16,6 +16,10 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_LIB_RANDOM_RANDOM_DISTRIBUTIONS_H_
 #define TENSORFLOW_CORE_LIB_RANDOM_RANDOM_DISTRIBUTIONS_H_
 
+// This include is needed in order to prevent a build error when including
+// tensorflow/core/lib/bfloat16/bfloat16.h.
+#include <iostream>
+
 #define _USE_MATH_DEFINES
 #include <math.h>
 

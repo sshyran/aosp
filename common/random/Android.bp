@@ -31,6 +31,7 @@ cc_library_headers {
         "com.android.neuralnetworks",
         "test_com.android.neuralnetworks",
     ],
+    sdk_version: "current",
 }
 
 cc_library_static {
@@ -58,4 +59,31 @@ cc_library_static {
     shared_libs: [
         "libbase",
     ],
+}
+
+cc_library_static {
+    name: "philox_random_cl",
+    apex_available: [
+        "//apex_available:platform",
+        "com.android.neuralnetworks",
+        "test_com.android.neuralnetworks",
+    ],
+    srcs: [
+        "guarded_philox_random.cc",
+        "random.cc",
+        "simple_philox.cc",
+    ],
+    cflags: [
+        "-DLOG_TAG=\"Random\"",
+    ],
+    header_libs: [
+        "libeigen",
+        "philox_random_headers",
+        "tensorflow_headers",
+    ],
+    static_libs: [
+        "libbase_ndk",
+    ],
+    sdk_version: "current",
+    stl: "libc++_static",
 }
