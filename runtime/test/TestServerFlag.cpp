@@ -18,8 +18,11 @@
 
 #include "ServerFlag.h"
 
+using android::nn::GetServerConfigurableFlagFunc;
 using android::nn::getServerFeatureLevelFlag;
+using android::nn::getServerTelemetryEnableFlag;
 using android::nn::kDefaultFeatureLevelNum;
+using android::nn::kDefaultTelemetryEnableValue;
 using android::nn::kMaxFeatureLevelNum;
 using android::nn::kMinFeatureLevelNum;
 
@@ -59,6 +62,24 @@ static std::string fakeServerFuncNull(const std::string& /*categoryName*/,
     return "null";
 }
 
+static std::string fakeServerTelemetryFuncDefault(const std::string& /*categoryName*/,
+                                                  const std::string& /*flagName*/,
+                                                  const std::string& /*defaultValue*/) {
+    return std::to_string(kDefaultTelemetryEnableValue);
+}
+
+static std::string fakeServerTelemetryFuncInvalid(const std::string& /*categoryName*/,
+                                                  const std::string& /*flagName*/,
+                                                  const std::string& /*defaultValue*/) {
+    return "not_a_bool";
+}
+
+static std::string fakeServerTelemetryFuncNull(const std::string& /*categoryName*/,
+                                               const std::string& /*flagName*/,
+                                               const std::string& /*defaultValue*/) {
+    return "null";
+}
+
 TEST(ServerFlagTest, ServerFeatureLevelFlag) {
     // Tests android::nn::getServerFeatureLevelFlag directly because
     // feature level is stored as static variable in runtime so that the value does not change if
@@ -73,4 +94,37 @@ TEST(ServerFlagTest, ServerFeatureLevelFlag) {
     EXPECT_EQ(getServerFeatureLevelFlag(fakeServerFuncLarge), kDefaultFeatureLevelNum);
     EXPECT_EQ(getServerFeatureLevelFlag(fakeServerFuncSmall), kDefaultFeatureLevelNum);
     EXPECT_EQ(getServerFeatureLevelFlag(fakeServerFuncNull), kDefaultFeatureLevelNum);
+}
+
+static GetServerConfigurableFlagFunc makeFuncWithReturn(std::string ret) {
+    return [ret = std::move(ret)](const std::string&, const std::string&,
+                                  const std::string&) -> std::string { return ret; };
+}
+
+TEST(ServerFlagTest, ServerTelemetryEnableFlag) {
+    // Tests android::nn::getServerTelemetryEnableFlag directly because whether or not telemetry is
+    // enabled is stored as static variable in runtime so that the value does not change if uses
+    // client APIs.
+
+    // Tests correct value is returned if the flag is set legally.
+    EXPECT_EQ(getServerTelemetryEnableFlag(fakeServerTelemetryFuncDefault),
+              kDefaultTelemetryEnableValue);
+
+    const std::vector<std::string> kPossibleTrueStrings = {"1", "on", "true", "y", "yes"};
+    for (const auto& trueString : kPossibleTrueStrings) {
+        GetServerConfigurableFlagFunc fn = makeFuncWithReturn(trueString);
+        EXPECT_EQ(getServerTelemetryEnableFlag(fn), true);
+    }
+
+    const std::vector<std::string> kPossibleFalseStrings = {"0", "false", "n", "no", "off"};
+    for (const auto& trueString : kPossibleFalseStrings) {
+        GetServerConfigurableFlagFunc fn = makeFuncWithReturn(trueString);
+        EXPECT_EQ(getServerTelemetryEnableFlag(fn), false);
+    }
+
+    // Tests default value is returned if the flag is unset or illegal.
+    EXPECT_EQ(getServerTelemetryEnableFlag(fakeServerTelemetryFuncInvalid),
+              kDefaultTelemetryEnableValue);
+    EXPECT_EQ(getServerTelemetryEnableFlag(fakeServerTelemetryFuncNull),
+              kDefaultTelemetryEnableValue);
 }
