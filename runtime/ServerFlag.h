@@ -53,9 +53,10 @@ bool getServerTelemetryEnableFlag();
 #endif  // NN_EXPERIMENTAL_FEATURE
 
 // Testing-only.
-int64_t getServerFeatureLevelFlag(
-        std::function<std::string(const std::string&, const std::string&, const std::string&)>
-                serverFunc);
+using GetServerConfigurableFlagFunc =
+        std::function<std::string(const std::string&, const std::string&, const std::string&)>;
+int64_t getServerFeatureLevelFlag(GetServerConfigurableFlagFunc serverFunc);
+bool getServerTelemetryEnableFlag(GetServerConfigurableFlagFunc serverFunc);
 #endif  // NN_COMPATIBILITY_LIBRARY_BUILD
 
 // Get the runtime version corresponding to the server feature flag value.
