@@ -1222,12 +1222,8 @@ int ANeuralNetworksCompilation_create(ANeuralNetworksModel* model,
     CompilationBuilder* c = nullptr;
 
     const auto& drivers = DeviceManager::get()->getDrivers();
-    std::vector<std::shared_ptr<Device>> nonUpdatableDrivers;
-    nonUpdatableDrivers.reserve(drivers.size());
-    std::copy_if(drivers.begin(), drivers.end(), std::back_inserter(nonUpdatableDrivers),
-                 [](const auto& driver) { return !driver->isUpdatable(); });
 
-    int result = m->createCompilation(&c, nonUpdatableDrivers);
+    int result = m->createCompilation(&c, drivers);
     *compilation = reinterpret_cast<ANeuralNetworksCompilation*>(c);
     return result;
 }
