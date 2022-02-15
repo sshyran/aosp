@@ -1293,15 +1293,16 @@ std::shared_ptr<Device> DeviceManager::forTest_makeDriverDevice(const SharedDevi
 }
 
 #ifndef NN_COMPATIBILITY_LIBRARY_BUILD
-std::vector<std::shared_ptr<DriverDevice>> getDriverDevices() {
+std::vector<std::shared_ptr<DriverDevice>> getDriverDevices(
+        [[maybe_unused]] Version::Level maxFeatureLevelAllowed) {
 #ifdef __ANDROID__
     const auto& appInfo = AppInfoFetcher::get()->getAppInfo();
     const bool currentProcessIsOnThePlatform =
             appInfo.appIsSystemApp || appInfo.appIsOnVendorImage || appInfo.appIsOnProductImage;
 
     const bool includeUpdatableDrivers = !currentProcessIsOnThePlatform;
-    auto devicesAndUpdatability =
-            hardware::neuralnetworks::service::getDevices(includeUpdatableDrivers);
+    auto devicesAndUpdatability = hardware::neuralnetworks::service::getDevices(
+            includeUpdatableDrivers, maxFeatureLevelAllowed);
 
     std::vector<std::shared_ptr<DriverDevice>> driverDevices;
     driverDevices.reserve(devicesAndUpdatability.size());
@@ -1314,7 +1315,8 @@ std::vector<std::shared_ptr<DriverDevice>> getDriverDevices() {
 #endif  // __ANDROID__
 }
 #else
-std::vector<std::shared_ptr<DriverDevice>> getDriverDevices() {
+std::vector<std::shared_ptr<DriverDevice>> getDriverDevices(
+        Version::Level /*maxFeatureLevelAllowed*/) {
     auto devices = getDevices();
     std::vector<std::shared_ptr<DriverDevice>> driverDevices;
     driverDevices.reserve(devices.size());
@@ -1339,7 +1341,7 @@ void DeviceManager::findAvailableDevices() {
 #endif  // NN_DEBUGGABLE
 
     // register driver devices
-    auto driverDevices = getDriverDevices();
+    auto driverDevices = getDriverDevices(mRuntimeVersion.level);
     for (auto& driverDevice : driverDevices) {
 #ifdef NN_DEBUGGABLE
         if (!std::regex_match(driverDevice->getName(), pattern)) {
