@@ -212,9 +212,9 @@ bool QuantizeMultiplier(double double_multiplier, int32_t* quantized_multiplier,
         return true;
     }
     const double q = std::frexp(double_multiplier, shift);
-    auto q_fixed = static_cast<int64_t>(std::round(q * (1ll << 31)));
-    NN_RET_CHECK(q_fixed <= (1ll << 31));
-    if (q_fixed == (1ll << 31)) {
+    auto q_fixed = static_cast<int64_t>(std::round(q * (1LL << 31)));
+    NN_RET_CHECK(q_fixed <= (1LL << 31));
+    if (q_fixed == (1LL << 31)) {
         q_fixed /= 2;
         ++*shift;
     }
