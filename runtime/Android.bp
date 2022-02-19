@@ -120,7 +120,6 @@ cc_defaults {
         },
         host: {
             cflags: [
-                "-D__ANDROID_API__=10000",
                 "-D__INTRODUCED_IN(n)=",
             ],
         },
