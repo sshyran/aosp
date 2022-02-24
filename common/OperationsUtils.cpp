@@ -286,9 +286,9 @@ bool QuantizeMultiplierGreaterThanOne(double double_multiplier, int32_t* quantiz
     return true;
 }
 
-bool GetQuantizedConvolutionMultipler(const Shape& inputShape, const Shape& filterShape,
-                                      const Shape& biasShape, const Shape& outputShape,
-                                      double* multiplier) {
+bool GetQuantizedConvolutionMultiplier(const Shape& inputShape, const Shape& filterShape,
+                                       const Shape& biasShape, const Shape& outputShape,
+                                       double* multiplier) {
     // Upcast bias and input_product to double
     const double input_product_scale = inputShape.scale * filterShape.scale;
     const double bias_scale = biasShape.scale;

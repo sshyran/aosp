@@ -202,8 +202,8 @@ bool depthwiseConvNhwc(const uint8_t* inputData, const Shape& inputShape, const 
     int32_t output_activation_min = 0;
     int32_t output_activation_max = 0;
 
-    NN_RET_CHECK(GetQuantizedConvolutionMultipler(inputShape, filterShape, biasShape, outputShape,
-                                                  &real_multiplier));
+    NN_RET_CHECK(GetQuantizedConvolutionMultiplier(inputShape, filterShape, biasShape, outputShape,
+                                                   &real_multiplier));
     int exponent;
     NN_RET_CHECK(QuantizeMultiplier(real_multiplier, &output_multiplier, &exponent));
     output_shift = -exponent;
@@ -304,7 +304,7 @@ bool depthwiseConvQuant8PerChannelNhwc(
         filterChannelShape.scale = filterScales[i];
         Shape biasChannelShape = biasShape;
         biasChannelShape.scale = filterScales[i] * inputShape.scale;
-        NN_RET_CHECK(GetQuantizedConvolutionMultipler(
+        NN_RET_CHECK(GetQuantizedConvolutionMultiplier(
                 inputShape, filterChannelShape, biasChannelShape, outputShape, &realMultiplier[i]));
         int exponent;
         NN_RET_CHECK(QuantizeMultiplier(realMultiplier[i], &outputMultiplier[i], &exponent));

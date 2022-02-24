@@ -114,8 +114,8 @@ bool fullyConnectedQuant8(const uint8_t* inputData, const Shape& inputShape,
     int32_t outputActivationMin = 0;
     int32_t outputActivationMax = 0;
 
-    NN_RET_CHECK(GetQuantizedConvolutionMultipler(inputShape, weightsShape, biasShape, outputShape,
-                                                  &realMultiplier));
+    NN_RET_CHECK(GetQuantizedConvolutionMultiplier(inputShape, weightsShape, biasShape, outputShape,
+                                                   &realMultiplier));
     int exponent;
     NN_RET_CHECK(QuantizeMultiplier(realMultiplier, &outputMultiplier, &exponent));
     outputShift = -exponent;
@@ -152,8 +152,8 @@ bool fullyConnectedQuant8(const int8_t* inputData, const Shape& inputShape,
     int32_t outputActivationMin = 0;
     int32_t outputActivationMax = 0;
 
-    NN_RET_CHECK(GetQuantizedConvolutionMultipler(inputShape, weightsShape, biasShape, outputShape,
-                                                  &realMultiplier));
+    NN_RET_CHECK(GetQuantizedConvolutionMultiplier(inputShape, weightsShape, biasShape, outputShape,
+                                                   &realMultiplier));
     NN_RET_CHECK(QuantizeMultiplier(realMultiplier, &outputMultiplier, &outputShift));
     CalculateActivationRangeInt8(activation, outputShape, &outputActivationMin,
                                  &outputActivationMax);

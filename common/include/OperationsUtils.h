@@ -310,10 +310,10 @@ inline int32_t computeOutSizeTransposeConv(int32_t imageSize, int32_t filterSize
 [[nodiscard]] bool QuantizeMultiplierGreaterThanOne(double double_multiplier,
                                                     int32_t* quantized_multiplier, int* left_shift);
 
-[[nodiscard]] bool GetQuantizedConvolutionMultipler(const Shape& inputShape,
-                                                    const Shape& filterShape,
-                                                    const Shape& biasShape,
-                                                    const Shape& outputShape, double* multiplier);
+[[nodiscard]] bool GetQuantizedConvolutionMultiplier(const Shape& inputShape,
+                                                     const Shape& filterShape,
+                                                     const Shape& biasShape,
+                                                     const Shape& outputShape, double* multiplier);
 
 [[nodiscard]] bool GetQuantizedConvolutionMultiplier(const Shape& inputShape,
                                                      const Shape& filterShape,
