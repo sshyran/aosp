@@ -61,12 +61,6 @@ cc_library_static {
                 "libnativewindow",
             ],
         },
-        host: {
-            cflags: [
-                "-D__ANDROID_API__=10000",
-                "-D__INTRODUCED_IN(n)=",
-            ],
-        },
     },
 }
 
@@ -81,15 +75,6 @@ cc_defaults {
     shared_libs: ["libprotobuf-cpp-full"],
     static_libs: ["libneuralnetworks_fuzzer_harness"],
     corpus: [":libneuralnetworks_fuzzer_corpus"],
-    target: {
-        host: {
-            cflags: [
-                "-D__ANDROID_API_S__=31",
-                "-D__ANDROID_API__=10000",
-                "-D__INTRODUCED_IN(n)=",
-            ],
-        },
-    },
 }
 
 // The following host binary is disabled because the genrule that uses this

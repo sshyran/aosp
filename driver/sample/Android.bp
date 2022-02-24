@@ -46,7 +46,6 @@ cc_library_static {
         },
         host: {
             cflags: [
-                "-D__ANDROID_API__=10000",
                 "-D__INTRODUCED_IN(n)=",
             ],
         },

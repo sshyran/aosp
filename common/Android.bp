@@ -185,9 +185,7 @@ cc_defaults {
         },
         host: {
             cflags: [
-                "-D__ANDROID_API__=10000",
                 "-D__INTRODUCED_IN(x)=",
-                "-D__assert(a,b,c)=",
             ],
         },
     },
@@ -370,9 +368,6 @@ cc_defaults {
         host: {
             cflags: [
                 "-D__ANDROID_API_S__=31",
-                "-D__ANDROID_API__=10000",
-                "-D__INTRODUCED_IN(x)=",
-                "-D__assert(a,b,c)=",
             ],
         },
     },
@@ -489,9 +484,7 @@ cc_defaults {
         host: {
             cflags: [
                 "-D__ANDROID_API_S__=31",
-                "-D__ANDROID_API__=10000",
                 "-D__INTRODUCED_IN(n)=",
-                "-D__assert(a,b,c)=",
             ],
         },
     },
