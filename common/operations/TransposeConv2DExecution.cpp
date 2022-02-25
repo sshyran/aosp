@@ -202,8 +202,8 @@ bool transposeConvNhwc(const T* inputData, const Shape& inputShape, const T* fil
     double realMultiplier = 0.0;
     int32_t outputMultiplier = 0;
     int32_t outputShift = 0;
-    NN_RET_CHECK(GetQuantizedConvolutionMultipler(inputShape, filterShape, biasShape, outputShape,
-                                                  &realMultiplier));
+    NN_RET_CHECK(GetQuantizedConvolutionMultiplier(inputShape, filterShape, biasShape, outputShape,
+                                                   &realMultiplier));
     int exponent;
     NN_RET_CHECK(QuantizeMultiplier(realMultiplier, &outputMultiplier, &exponent));
     outputShift = -exponent;
@@ -343,7 +343,7 @@ bool transposeConvQuant8PerChannelNhwc(const T* inputData, const Shape& inputSha
         Shape biasChannelShape = biasShape;
         biasChannelShape.scale = filterScales[i] * inputShape.scale;
 
-        NN_RET_CHECK(GetQuantizedConvolutionMultipler(
+        NN_RET_CHECK(GetQuantizedConvolutionMultiplier(
                 inputShape, filterChannelShape, biasChannelShape, outputShape, &realMultiplier[i]));
         int exponent;
         NN_RET_CHECK(QuantizeMultiplier(realMultiplier[i], &outputMultiplier[i], &exponent));

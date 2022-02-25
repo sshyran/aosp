@@ -16,7 +16,7 @@
 
 #include <vector>
 
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 #include "ResizeImageOps.h"
 #include "nnapi/Validation.h"
 

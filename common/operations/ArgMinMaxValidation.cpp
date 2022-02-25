@@ -15,7 +15,7 @@
  */
 
 #include "ArgMinMax.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace arg_min_max {

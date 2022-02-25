@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "Concatenation.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 #include "nnapi/Validation.h"
 
 namespace android::nn {

@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "Conv2D.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace conv_2d {

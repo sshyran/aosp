@@ -20,7 +20,7 @@
 #include <vector>
 
 #include "IndexedShapeWrapper.h"
-#include "OperationsUtils.h"
+#include "OperationsExecutionUtils.h"
 #include "Pow.h"
 
 namespace android {

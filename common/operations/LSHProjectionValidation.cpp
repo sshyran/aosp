@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "LSHProjection.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace lsh_projection {

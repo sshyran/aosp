@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "EmbeddingLookup.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace embedding_lookup {

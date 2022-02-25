@@ -19,7 +19,7 @@
 #include <vector>
 
 #include "CpuExecutor.h"
-#include "OperationsUtils.h"
+#include "OperationsExecutionUtils.h"
 #include "QLSTM.h"
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION

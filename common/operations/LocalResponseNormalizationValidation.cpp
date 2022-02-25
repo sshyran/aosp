@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "LocalResponseNormalization.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace local_response_norm {

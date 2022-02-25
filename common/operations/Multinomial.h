@@ -21,7 +21,7 @@
 #include <cmath>
 #include <vector>
 
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 #include "nnapi/Types.h"
 
 namespace android {

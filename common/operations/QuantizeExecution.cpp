@@ -21,7 +21,7 @@
 
 #include "IndexedShapeWrapper.h"
 #include "OperationResolver.h"
-#include "OperationsUtils.h"
+#include "OperationsExecutionUtils.h"
 #include "Quantize.h"
 #include "Tracing.h"
 

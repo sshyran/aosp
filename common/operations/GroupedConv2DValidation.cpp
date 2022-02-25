@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "GroupedConv2D.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace grouped_conv2d {

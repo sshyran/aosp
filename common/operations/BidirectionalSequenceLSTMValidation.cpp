@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "BidirectionalSequenceLSTM.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace bidirectional_sequence_lstm {

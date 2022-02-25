@@ -19,7 +19,7 @@
 
 #include <vector>
 
-#include "OperationsUtils.h"
+#include "OperationsExecutionUtils.h"
 
 namespace android {
 namespace nn {

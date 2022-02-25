@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "DepthwiseConv2D.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace depthwise_conv_2d {

@@ -20,7 +20,7 @@
 
 #include "IndexedShapeWrapper.h"
 #include "OperationResolver.h"
-#include "OperationsUtils.h"
+#include "OperationsExecutionUtils.h"
 #include "UnidirectionalSequenceLSTM.h"
 
 #ifdef NN_INCLUDE_CPU_IMPLEMENTATION

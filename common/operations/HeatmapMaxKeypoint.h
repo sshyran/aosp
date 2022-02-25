@@ -17,7 +17,7 @@
 #ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_HEATMAP_MAX_KEYPOINT_H
 #define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_HEATMAP_MAX_KEYPOINT_H
 
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn::heatmap_max_keypoint {
 

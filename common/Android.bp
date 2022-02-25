@@ -100,6 +100,11 @@ cc_defaults {
     tidy_disabled_srcs: tidy_disabled_common_operations_files,
 }
 
+filegroup {
+    name: "neuralnetworks_operations_validation",
+    srcs: ["operations/*Validation.cpp"],
+}
+
 // libneuralnetworks_common* provides common utilities for the NNAPI runtime, drivers, and tests to
 // use. Two variants of the common library are provided:
 // - libneuralnetworks_common: the common library, used by NNAPI runtime and tests.
@@ -141,6 +146,7 @@ cc_defaults {
         "MemoryUtils.cpp",
         "MetaModel.cpp",
         "ModelUtils.cpp",
+        "OperationsExecutionUtils.cpp",
         "QuantUtils.cpp",
         "TokenHasher.cpp",
         "ValidateHal.cpp",
@@ -212,6 +218,7 @@ cc_defaults {
         "libcrypto_static",
         "libruy_static",
         "libtextclassifier_hash_static",
+        "neuralnetworks_types",
     ],
     cflags: [
         "-DNAMESPACE_FOR_HASH_FUNCTIONS=farmhash",
@@ -281,6 +288,7 @@ cc_defaults {
         "LegacyUtils.cpp",
         "MetaModel.cpp",
         "ModelUtils.cpp",
+        "OperationsExecutionUtils.cpp",
         "TokenHasher.cpp",
     ],
     header_libs: [
@@ -289,6 +297,7 @@ cc_defaults {
     static_libs: [
         "libbase_ndk",
         "libcrypto_static",
+        "neuralnetworks_types_cl",
     ],
     shared_libs: [
         "libnativewindow",
@@ -377,13 +386,14 @@ cc_defaults {
     name: "neuralnetworks_types_defaults",
     defaults: ["neuralnetworks_utils_defaults"],
     srcs: [
+        ":neuralnetworks_operations_validation",
         "OperationsUtils.cpp",
+        "OperationsValidationUtils.cpp",
         "SharedMemory.cpp",
         "SharedMemoryAndroid.cpp",
         "TypeUtils.cpp",
         "Types.cpp",
         "Validation.cpp",
-        "operations/*Validation.cpp",
     ],
     target: {
         android: {
@@ -426,14 +436,15 @@ cc_library_static {
         "neuralnetworks_utils_defaults",
     ],
     srcs: [
+        ":neuralnetworks_operations_validation",
         "DynamicCLDeps.cpp",
         "OperationsUtils.cpp",
+        "OperationsValidationUtils.cpp",
         "SharedMemory.cpp",
         "SharedMemoryAndroid.cpp",
         "TypeUtils.cpp",
         "Types.cpp",
         "Validation.cpp",
-        "operations/*Validation.cpp",
     ],
     local_include_dirs: ["include/nnapi"],
     export_include_dirs: ["include"],
@@ -474,6 +485,7 @@ cc_defaults {
         "libgmock",
         "liblog",
         "libneuralnetworks_common",
+        "neuralnetworks_types",
     ],
     target: {
         android: {
