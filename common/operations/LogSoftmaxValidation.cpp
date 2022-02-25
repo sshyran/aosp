@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "LogSoftmax.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace log_softmax {

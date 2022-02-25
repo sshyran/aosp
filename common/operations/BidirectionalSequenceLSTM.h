@@ -23,7 +23,7 @@
 
 #include "ActivationFunctor.h"
 #include "LSTM.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android {
 namespace nn {

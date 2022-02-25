@@ -16,7 +16,7 @@
 
 #include <vector>
 
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 #include "RNN.h"
 
 namespace android::nn {

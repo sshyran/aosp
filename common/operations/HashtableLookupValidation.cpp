@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "HashtableLookup.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace hashtable_lookup {

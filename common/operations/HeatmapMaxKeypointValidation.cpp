@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "HeatmapMaxKeypoint.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace heatmap_max_keypoint {

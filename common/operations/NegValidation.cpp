@@ -15,7 +15,7 @@
  */
 
 #include "Neg.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace neg {

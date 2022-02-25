@@ -30,7 +30,7 @@
 #include "CpuExecutor.h"
 #include "CpuOperationUtils.h"
 #include "LegacyUtils.h"
-#include "OperationsUtils.h"
+#include "OperationsExecutionUtils.h"
 #include "Tracing.h"
 #include "nnapi/Types.h"
 

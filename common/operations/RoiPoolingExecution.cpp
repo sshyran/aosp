@@ -22,7 +22,7 @@
 #include <vector>
 
 #include "OperationResolver.h"
-#include "OperationsUtils.h"
+#include "OperationsExecutionUtils.h"
 #include "RoiPooling.h"
 #include "Tracing.h"
 

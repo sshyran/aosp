@@ -16,7 +16,7 @@
 
 #define LOG_TAG "Operations"
 
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 #include "Reverse.h"
 
 namespace android::nn {

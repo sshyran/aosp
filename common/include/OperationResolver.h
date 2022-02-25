@@ -19,7 +19,8 @@
 
 #include <utility>
 
-#include "OperationsUtils.h"
+#include "OperationsExecutionUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android {
 namespace nn {

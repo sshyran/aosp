@@ -17,8 +17,7 @@
 #define LOG_TAG "Operations"
 
 #include "MirrorPad.h"
-#include "OperationResolver.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace mirror_pad_op {

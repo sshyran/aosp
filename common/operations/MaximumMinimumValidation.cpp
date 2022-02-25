@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "MaximumMinimum.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace maximum_minimum {

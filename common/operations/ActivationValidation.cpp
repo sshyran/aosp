@@ -15,7 +15,7 @@
  */
 
 #include "Activation.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace activation {

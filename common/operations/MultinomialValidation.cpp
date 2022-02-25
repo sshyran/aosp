@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "Multinomial.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace multinomial {

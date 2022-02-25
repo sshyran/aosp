@@ -15,7 +15,7 @@
  */
 
 #include "Elu.h"
-#include "OperationsUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android::nn {
 namespace elu {
