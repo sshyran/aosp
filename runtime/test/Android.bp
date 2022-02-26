@@ -115,6 +115,7 @@ cc_defaults {
     ],
     header_libs: [
         "libneuralnetworks_common_headers",
+        "neuralnetworks_types_headers",
     ],
     static_libs: [
         "libgmock",
@@ -472,6 +473,7 @@ cc_library_static {
     ] + tidy_disabled_operation_signatures_files,
     include_dirs: [
         "packages/modules/NeuralNetworks/common/include",
+        "packages/modules/NeuralNetworks/common/types/include",
         "packages/modules/NeuralNetworks/runtime/",
         "packages/modules/NeuralNetworks/runtime/include/",
         "packages/modules/NeuralNetworks/tools/test_generator/test_harness/include",
