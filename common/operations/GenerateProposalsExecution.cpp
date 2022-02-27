@@ -1526,23 +1526,20 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace bbox_ops
 
-NN_REGISTER_OPERATION(AXIS_ALIGNED_BBOX_TRANSFORM,
-                      bbox_ops::axis_aligned_bbox_transform::kOperationName,
-                      bbox_ops::axis_aligned_bbox_transform::validate,
-                      bbox_ops::axis_aligned_bbox_transform::prepare,
-                      bbox_ops::axis_aligned_bbox_transform::execute, .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(AXIS_ALIGNED_BBOX_TRANSFORM,
+                                         bbox_ops::axis_aligned_bbox_transform::prepare,
+                                         bbox_ops::axis_aligned_bbox_transform::execute,
+                                         .allowZeroSizedInput = true);
 
-NN_REGISTER_OPERATION(BOX_WITH_NMS_LIMIT, bbox_ops::box_with_nms_limit::kOperationName,
-                      bbox_ops::box_with_nms_limit::validate, bbox_ops::box_with_nms_limit::prepare,
-                      bbox_ops::box_with_nms_limit::execute, .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(BOX_WITH_NMS_LIMIT, bbox_ops::box_with_nms_limit::prepare,
+                                         bbox_ops::box_with_nms_limit::execute,
+                                         .allowZeroSizedInput = true);
 
-NN_REGISTER_OPERATION(GENERATE_PROPOSALS, bbox_ops::generate_proposals::kOperationName,
-                      bbox_ops::generate_proposals::validate, bbox_ops::generate_proposals::prepare,
-                      bbox_ops::generate_proposals::execute);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(GENERATE_PROPOSALS, bbox_ops::generate_proposals::prepare,
+                                         bbox_ops::generate_proposals::execute);
 
-NN_REGISTER_OPERATION(DETECTION_POSTPROCESSING, bbox_ops::detection_postprocess::kOperationName,
-                      bbox_ops::detection_postprocess::validate,
-                      bbox_ops::detection_postprocess::prepare,
-                      bbox_ops::detection_postprocess::execute);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(DETECTION_POSTPROCESSING,
+                                         bbox_ops::detection_postprocess::prepare,
+                                         bbox_ops::detection_postprocess::execute);
 }  // namespace nn
 }  // namespace android

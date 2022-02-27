@@ -34,8 +34,6 @@ constexpr uint32_t kImageInfoTensor = 3;
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
-Result<Version> validate(const IOperationValidationContext* context);
-
 }  // namespace axis_aligned_bbox_transform
 
 namespace box_with_nms_limit {
@@ -58,8 +56,6 @@ constexpr uint32_t kOutputScoreTensor = 0;
 constexpr uint32_t kOutputRoiTensor = 1;
 constexpr uint32_t kOutputClassTensor = 2;
 constexpr uint32_t kOutputBatchesTensor = 3;
-
-Result<Version> validate(const IOperationValidationContext* context);
 
 }  // namespace box_with_nms_limit
 
@@ -84,8 +80,6 @@ constexpr uint32_t kNumOutputs = 3;
 constexpr uint32_t kOutputScoreTensor = 0;
 constexpr uint32_t kOutputRoiTensor = 1;
 constexpr uint32_t kOutputBatchesTensor = 2;
-
-Result<Version> validate(const IOperationValidationContext* context);
 
 }  // namespace generate_proposals
 
@@ -114,8 +108,6 @@ constexpr uint32_t kOutputScoreTensor = 0;
 constexpr uint32_t kOutputRoiTensor = 1;
 constexpr uint32_t kOutputClassTensor = 2;
 constexpr uint32_t kOutputDetectionTensor = 3;
-
-Result<Version> validate(const IOperationValidationContext* context);
 
 }  // namespace detection_postprocess
 

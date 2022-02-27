@@ -36,8 +36,6 @@ constexpr uint32_t kOutputTensor = 0;
 constexpr int kModeReflect = 0;
 constexpr int kModeSymmetric = 1;
 
-Result<Version> validate(const IOperationValidationContext* context);
-
 }  // namespace android::nn::mirror_pad_op
 
 #endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_MIRROR_PAD_H

@@ -26,8 +26,6 @@ constexpr char kOperationName[] = "CONCATENATION";
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
-Result<Version> validate(const IOperationValidationContext* context);
-
 }  // namespace android::nn::concatenation
 
 #endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_CONCATENATION_H

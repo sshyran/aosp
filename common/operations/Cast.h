@@ -23,8 +23,6 @@ namespace android {
 namespace nn {
 namespace cast {
 
-Result<Version> validate(const IOperationValidationContext* context);
-
 bool prepare(const Shape& input, Shape* output);
 
 bool eval(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,

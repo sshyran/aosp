@@ -27,7 +27,7 @@ namespace android {
 namespace nn {
 namespace rnn {
 
-Result<Version> validate(const IOperationValidationContext* context);
+// TODO: Add input/output labels.
 
 }  // namespace rnn
 

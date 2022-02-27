@@ -149,8 +149,8 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace transpose
 
-NN_REGISTER_OPERATION(TRANSPOSE, transpose::kOperationName, transpose::validate, transpose::prepare,
-                      transpose::execute, .allowOmittedOperand = true, .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(TRANSPOSE, transpose::prepare, transpose::execute,
+                                         .allowOmittedOperand = true, .allowZeroSizedInput = true);
 
 }  // namespace nn
 }  // namespace android

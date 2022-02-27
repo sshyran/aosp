@@ -126,9 +126,8 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace instance_normalization
 
-NN_REGISTER_OPERATION(INSTANCE_NORMALIZATION, instance_normalization::kOperationName,
-                      instance_normalization::validate, instance_normalization::prepare,
-                      instance_normalization::execute);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(INSTANCE_NORMALIZATION, instance_normalization::prepare,
+                                         instance_normalization::execute);
 
 }  // namespace nn
 }  // namespace android

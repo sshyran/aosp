@@ -27,11 +27,6 @@
 
 namespace android {
 namespace nn {
-namespace lstm {
-
-Result<Version> validate(const IOperationValidationContext* context);
-
-}  // namespace lstm
 
 struct LSTMParams {
     ActivationFn activation;

@@ -110,7 +110,7 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace topk_v2
 
-NN_REGISTER_OPERATION(TOPK_V2, "TOPK_V2", topk_v2::validate, topk_v2::prepare, topk_v2::execute);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(TOPK_V2, topk_v2::prepare, topk_v2::execute);
 
 }  // namespace nn
 }  // namespace android

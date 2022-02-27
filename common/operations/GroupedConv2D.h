@@ -21,7 +21,7 @@
 
 namespace android::nn::grouped_conv2d {
 
-Result<Version> validate(const IOperationValidationContext* context);
+// TODO: Add input/output labels.
 
 }  // namespace android::nn::grouped_conv2d
 

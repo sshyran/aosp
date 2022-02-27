@@ -182,20 +182,14 @@ bool executeSqrt(IOperationExecutionContext* context) {
 
 }  // namespace elementwise
 
-NN_REGISTER_OPERATION(ABS, "ABS", elementwise::validateAbs, elementwise::prepare,
-                      elementwise::executeAbs);
-NN_REGISTER_OPERATION(EXP, "EXP", elementwise::validate, elementwise::prepare,
-                      elementwise::executeExp);
-NN_REGISTER_OPERATION(FLOOR, "FLOOR", elementwise::validateFloor, elementwise::prepareFloor,
-                      elementwise::executeFloor);
-NN_REGISTER_OPERATION(LOG, "LOG", elementwise::validate, elementwise::prepare,
-                      elementwise::executeLog);
-NN_REGISTER_OPERATION(RSQRT, "RSQRT", elementwise::validateRsqrt, elementwise::prepare,
-                      elementwise::executeRsqrt);
-NN_REGISTER_OPERATION(SIN, "SIN", elementwise::validate, elementwise::prepare,
-                      elementwise::executeSin);
-NN_REGISTER_OPERATION(SQRT, "SQRT", elementwise::validate, elementwise::prepare,
-                      elementwise::executeSqrt);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(ABS, elementwise::prepare, elementwise::executeAbs);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(EXP, elementwise::prepare, elementwise::executeExp);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(FLOOR, elementwise::prepareFloor,
+                                         elementwise::executeFloor);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(LOG, elementwise::prepare, elementwise::executeLog);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(RSQRT, elementwise::prepare, elementwise::executeRsqrt);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(SIN, elementwise::prepare, elementwise::executeSin);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(SQRT, elementwise::prepare, elementwise::executeSqrt);
 
 }  // namespace nn
 }  // namespace android

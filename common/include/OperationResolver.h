@@ -158,6 +158,11 @@ class BuiltinOperationResolver : public IOperationResolver {
     }
 #endif
 
+#define NN_REGISTER_OPERATION_DEFAULT_VALIDATION(identifier, prepare, execute, ...)         \
+    NN_VALIDATION_FUNCTION_SIGNATURE(identifier);                                           \
+    NN_REGISTER_OPERATION(identifier, #identifier, NN_VALIDATION_FUNCTION_NAME(identifier), \
+                          prepare, execute, __VA_ARGS__);
+
 #define NN_OPERATION_IS_NOT_IMPLEMENTED(identifier) \
     const OperationRegistration* register_##identifier() { return nullptr; }
 

@@ -31,8 +31,6 @@ constexpr uint32_t kBiasTensor = 2;
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
-Result<Version> validate(const IOperationValidationContext* context);
-
 }  // namespace android::nn::depthwise_conv_2d
 
 #endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_DEPTHWISE_CONV_2D_H

@@ -27,14 +27,6 @@ constexpr uint32_t kInputTensor = 0;
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
-Result<Version> validate(const IOperationValidationContext* context);
-
-Result<Version> validateAbs(const IOperationValidationContext* context);
-
-Result<Version> validateFloor(const IOperationValidationContext* context);
-
-Result<Version> validateRsqrt(const IOperationValidationContext* context);
-
 }  // namespace android::nn::elementwise
 
 #endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_ELEMENTWISE_H

@@ -267,8 +267,8 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace densify_op
 
-NN_REGISTER_OPERATION(DENSIFY, "DENSIFY", densify_op::validate, densify_op::prepare,
-                      densify_op::execute, .allowOmittedOperand = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(DENSIFY, densify_op::prepare, densify_op::execute,
+                                         .allowOmittedOperand = true);
 
 }  // namespace nn
 }  // namespace android

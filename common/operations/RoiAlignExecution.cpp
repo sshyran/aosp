@@ -454,8 +454,8 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace roi_align
 
-NN_REGISTER_OPERATION(ROI_ALIGN, roi_align::kOperationName, roi_align::validate, roi_align::prepare,
-                      roi_align::execute, .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(ROI_ALIGN, roi_align::prepare, roi_align::execute,
+                                         .allowZeroSizedInput = true);
 
 }  // namespace nn
 }  // namespace android

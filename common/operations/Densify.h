@@ -39,8 +39,6 @@ constexpr uint32_t kOutputTensor = 0;
 constexpr int32_t DENSE = 0;
 constexpr int32_t SPARSE_CSR = 1;
 
-Result<Version> validate(const IOperationValidationContext* context);
-
 }  // namespace densify_op
 }  // namespace nn
 }  // namespace android

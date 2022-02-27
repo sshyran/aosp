@@ -683,8 +683,8 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace qlstm
 
-NN_REGISTER_OPERATION(QUANTIZED_LSTM, "QUANTIZED_LSTM", qlstm::validate, qlstm::prepare,
-                      qlstm::execute, .allowOmittedOperand = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(QUANTIZED_LSTM, qlstm::prepare, qlstm::execute,
+                                         .allowOmittedOperand = true);
 
 }  // namespace nn
 }  // namespace android

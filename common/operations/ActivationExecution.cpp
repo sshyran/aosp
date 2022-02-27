@@ -581,25 +581,26 @@ bool executeHardSwish(IOperationExecutionContext* context) {
 }  // namespace activation
 
 using std::placeholders::_1;
-NN_REGISTER_OPERATION(RELU, "RELU", std::bind(activation::validate, OperationType::RELU, _1),
-                      std::bind(activation::prepare, OperationType::RELU, _1),
-                      activation::executeRelu, .allowZeroSizedInput = true);
-NN_REGISTER_OPERATION(RELU1, "RELU1", std::bind(activation::validate, OperationType::RELU1, _1),
-                      std::bind(activation::prepare, OperationType::RELU1, _1),
-                      activation::executeRelu1, .allowZeroSizedInput = true);
-NN_REGISTER_OPERATION(RELU6, "RELU6", std::bind(activation::validate, OperationType::RELU6, _1),
-                      std::bind(activation::prepare, OperationType::RELU6, _1),
-                      activation::executeRelu6, .allowZeroSizedInput = true);
-NN_REGISTER_OPERATION(LOGISTIC, "LOGISTIC",
-                      std::bind(activation::validate, OperationType::LOGISTIC, _1),
-                      std::bind(activation::prepare, OperationType::LOGISTIC, _1),
-                      activation::executeLogistic, .allowZeroSizedInput = true);
-NN_REGISTER_OPERATION(TANH, "TANH", std::bind(activation::validate, OperationType::TANH, _1),
-                      std::bind(activation::prepare, OperationType::TANH, _1),
-                      activation::executeTanh, .allowZeroSizedInput = true);
-NN_REGISTER_OPERATION(HARD_SWISH, "HARD_SWISH", activation::validateHardSwish,
-                      std::bind(activation::prepare, OperationType::HARD_SWISH, _1),
-                      activation::executeHardSwish, .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(RELU,
+                                         std::bind(activation::prepare, OperationType::RELU, _1),
+                                         activation::executeRelu, .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(RELU1,
+                                         std::bind(activation::prepare, OperationType::RELU1, _1),
+                                         activation::executeRelu1, .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(RELU6,
+                                         std::bind(activation::prepare, OperationType::RELU6, _1),
+                                         activation::executeRelu6, .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(LOGISTIC,
+                                         std::bind(activation::prepare, OperationType::LOGISTIC,
+                                                   _1),
+                                         activation::executeLogistic, .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(TANH,
+                                         std::bind(activation::prepare, OperationType::TANH, _1),
+                                         activation::executeTanh, .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(HARD_SWISH,
+                                         std::bind(activation::prepare, OperationType::HARD_SWISH,
+                                                   _1),
+                                         activation::executeHardSwish, .allowZeroSizedInput = true);
 
 }  // namespace nn
 }  // namespace android

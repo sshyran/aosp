@@ -35,8 +35,6 @@ constexpr uint32_t kNumOutputsWithState = 2;
 constexpr uint32_t kOutputTensor = 0;
 constexpr uint32_t kStateOutputTensor = 1;
 
-Result<Version> validate(const IOperationValidationContext* context);
-
 }  // namespace android::nn::unidirectional_sequence_rnn
 
 #endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_UNIDIRECTIONAL_SEQUENCE_RNN_H

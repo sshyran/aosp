@@ -28,8 +28,6 @@ constexpr uint32_t kInputTensor2 = 1;
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
-Result<Version> validate(const IOperationValidationContext* context);
-
 }  // namespace android::nn::logical
 
 #endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_LOGICAL_AND_OR_H
