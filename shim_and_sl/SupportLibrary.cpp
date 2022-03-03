@@ -25,7 +25,7 @@
 #include <string>
 
 std::unique_ptr<const NnApiSupportLibrary> loadNnApiSupportLibrary(const std::string& libName) {
-    void* libHandle = dlopen(libName.c_str(), RTLD_LAZY | RTLD_LOCAL);
+    void* libHandle = dlopen(libName.c_str(), RTLD_LAZY | RTLD_LOCAL | RTLD_NODELETE);
     if (libHandle == nullptr) {
         LOG(ERROR) << "nnapi error: unable to open library " << libName.c_str() << " " << dlerror();
         return nullptr;
