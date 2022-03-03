@@ -242,8 +242,7 @@ bool eval(IOperationExecutionContext* context) {
 
 }  // namespace mirror_pad_op
 
-NN_REGISTER_OPERATION(MIRROR_PAD, mirror_pad_op::kOperationName, mirror_pad_op::validate,
-                      mirror_pad_op::prepare, mirror_pad_op::eval);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(MIRROR_PAD, mirror_pad_op::prepare, mirror_pad_op::eval);
 
 }  // namespace nn
 }  // namespace android

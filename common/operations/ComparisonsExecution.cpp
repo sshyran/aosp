@@ -240,18 +240,16 @@ bool executeGreater(IOperationExecutionContext* context) {
 
 }  // namespace comparisons
 
-NN_REGISTER_OPERATION(LESS, "LESS", comparisons::validate, comparisons::prepare,
-                      comparisons::executeLess);
-NN_REGISTER_OPERATION(LESS_EQUAL, "LESS_EQUAL", comparisons::validate, comparisons::prepare,
-                      comparisons::executeLessEqual);
-NN_REGISTER_OPERATION(EQUAL, "EQUAL", comparisons::validate, comparisons::prepare,
-                      comparisons::executeEqual);
-NN_REGISTER_OPERATION(NOT_EQUAL, "NOT_EQUAL", comparisons::validate, comparisons::prepare,
-                      comparisons::executeNotEqual);
-NN_REGISTER_OPERATION(GREATER_EQUAL, "GREATER_EQUAL", comparisons::validate, comparisons::prepare,
-                      comparisons::executeGreaterEqual);
-NN_REGISTER_OPERATION(GREATER, "GREATER", comparisons::validate, comparisons::prepare,
-                      comparisons::executeGreater);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(LESS, comparisons::prepare, comparisons::executeLess);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(LESS_EQUAL, comparisons::prepare,
+                                         comparisons::executeLessEqual);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(EQUAL, comparisons::prepare, comparisons::executeEqual);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(NOT_EQUAL, comparisons::prepare,
+                                         comparisons::executeNotEqual);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(GREATER_EQUAL, comparisons::prepare,
+                                         comparisons::executeGreaterEqual);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(GREATER, comparisons::prepare,
+                                         comparisons::executeGreater);
 
 }  // namespace nn
 }  // namespace android

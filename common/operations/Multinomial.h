@@ -26,11 +26,6 @@
 
 namespace android {
 namespace nn {
-namespace multinomial {
-
-Result<Version> validate(const IOperationValidationContext* context);
-
-}  // namespace multinomial
 
 struct RunTimeOperandInfo;
 struct Shape;

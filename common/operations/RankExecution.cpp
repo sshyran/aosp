@@ -38,7 +38,7 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace rank_op
 
-NN_REGISTER_OPERATION(RANK, "RANK", rank_op::validate, rank_op::prepare, rank_op::execute);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(RANK, rank_op::prepare, rank_op::execute);
 
 }  // namespace nn
 }  // namespace android

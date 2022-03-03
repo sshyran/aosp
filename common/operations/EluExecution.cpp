@@ -73,7 +73,7 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace elu
 
-NN_REGISTER_OPERATION(ELU, "ELU", elu::validate, elu::prepare, elu::execute);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(ELU, elu::prepare, elu::execute);
 
 }  // namespace nn
 }  // namespace android

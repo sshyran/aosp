@@ -23,8 +23,6 @@ namespace android {
 namespace nn {
 namespace tile {
 
-Result<Version> validate(const IOperationValidationContext* context);
-
 bool prepare(const Shape& input, const int32_t* multiples, const Shape& multiplesShape,
              Shape* output);
 

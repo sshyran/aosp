@@ -156,9 +156,8 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace local_response_norm
 
-NN_REGISTER_OPERATION(LOCAL_RESPONSE_NORMALIZATION, local_response_norm::kOperationName,
-                      local_response_norm::validate, local_response_norm::prepare,
-                      local_response_norm::execute);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(LOCAL_RESPONSE_NORMALIZATION, local_response_norm::prepare,
+                                         local_response_norm::execute);
 
 }  // namespace nn
 }  // namespace android

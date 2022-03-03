@@ -190,18 +190,12 @@ bool executeAll(IOperationExecutionContext* context) {
 
 }  // namespace reduce
 
-NN_REGISTER_OPERATION(REDUCE_PROD, "REDUCE_PROD", reduce::validateProdSum, reduce::prepare,
-                      reduce::executeProd);
-NN_REGISTER_OPERATION(REDUCE_SUM, "REDUCE_SUM", reduce::validateProdSum, reduce::prepare,
-                      reduce::executeSum);
-NN_REGISTER_OPERATION(REDUCE_MAX, "REDUCE_MAX", reduce::validateMaxMin, reduce::prepare,
-                      reduce::executeMax);
-NN_REGISTER_OPERATION(REDUCE_MIN, "REDUCE_MIN", reduce::validateMaxMin, reduce::prepare,
-                      reduce::executeMin);
-NN_REGISTER_OPERATION(REDUCE_ANY, "REDUCE_ANY", reduce::validateLogical, reduce::prepare,
-                      reduce::executeAny);
-NN_REGISTER_OPERATION(REDUCE_ALL, "REDUCE_ALL", reduce::validateLogical, reduce::prepare,
-                      reduce::executeAll);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(REDUCE_PROD, reduce::prepare, reduce::executeProd);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(REDUCE_SUM, reduce::prepare, reduce::executeSum);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(REDUCE_MAX, reduce::prepare, reduce::executeMax);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(REDUCE_MIN, reduce::prepare, reduce::executeMin);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(REDUCE_ANY, reduce::prepare, reduce::executeAny);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(REDUCE_ALL, reduce::prepare, reduce::executeAll);
 
 }  // namespace nn
 }  // namespace android

@@ -30,8 +30,6 @@ constexpr uint32_t kAlphaTensor = 1;
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
-Result<Version> validate(const IOperationValidationContext* context);
-
 }  // namespace android::nn::prelu
 
 #endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_PRELU_H

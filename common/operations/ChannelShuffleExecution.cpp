@@ -86,8 +86,8 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace channel_shuffle
 
-NN_REGISTER_OPERATION(CHANNEL_SHUFFLE, channel_shuffle::kOperationName, channel_shuffle::validate,
-                      channel_shuffle::prepare, channel_shuffle::execute);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(CHANNEL_SHUFFLE, channel_shuffle::prepare,
+                                         channel_shuffle::execute);
 
 }  // namespace nn
 }  // namespace android

@@ -178,8 +178,8 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace strided_slice
 
-NN_REGISTER_OPERATION(STRIDED_SLICE, "STRIDED_SLICE", strided_slice::validate,
-                      strided_slice::prepare, strided_slice::execute);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(STRIDED_SLICE, strided_slice::prepare,
+                                         strided_slice::execute);
 
 }  // namespace nn
 }  // namespace android

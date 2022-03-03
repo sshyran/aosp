@@ -279,8 +279,7 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace roi_pooling
 
-NN_REGISTER_OPERATION(ROI_POOLING, roi_pooling::kOperationName, roi_pooling::validate,
-                      roi_pooling::prepare, roi_pooling::execute);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(ROI_POOLING, roi_pooling::prepare, roi_pooling::execute);
 
 }  // namespace nn
 }  // namespace android

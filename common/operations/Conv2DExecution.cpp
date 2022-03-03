@@ -694,8 +694,8 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace conv_2d
 
-NN_REGISTER_OPERATION(CONV_2D, conv_2d::kOperationName, conv_2d::validate, conv_2d::prepare,
-                      conv_2d::execute, .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(CONV_2D, conv_2d::prepare, conv_2d::execute,
+                                         .allowZeroSizedInput = true);
 
 }  // namespace nn
 }  // namespace android

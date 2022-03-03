@@ -239,9 +239,8 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace fully_connected
 
-NN_REGISTER_OPERATION(FULLY_CONNECTED, fully_connected::kOperationName, fully_connected::validate,
-                      fully_connected::prepare, fully_connected::execute,
-                      .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(FULLY_CONNECTED, fully_connected::prepare,
+                                         fully_connected::execute, .allowZeroSizedInput = true);
 
 }  // namespace nn
 }  // namespace android

@@ -256,8 +256,7 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace l2_norm
 
-NN_REGISTER_OPERATION(L2_NORMALIZATION, l2_norm::kOperationName, l2_norm::validate,
-                      l2_norm::prepare, l2_norm::execute);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(L2_NORMALIZATION, l2_norm::prepare, l2_norm::execute);
 
 }  // namespace nn
 }  // namespace android

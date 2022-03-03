@@ -163,8 +163,8 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace slice
 
-NN_REGISTER_OPERATION(SLICE, slice::kOperationName, slice::validate, slice::prepare, slice::execute,
-                      .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(SLICE, slice::prepare, slice::execute,
+                                         .allowZeroSizedInput = true);
 
 }  // namespace nn
 }  // namespace android

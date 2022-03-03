@@ -90,8 +90,7 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace reverse_op
 
-NN_REGISTER_OPERATION(REVERSE, reverse_op::kOperationName, reverse_op::validate,
-                      reverse_op::prepare, reverse_op::execute);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(REVERSE, reverse_op::prepare, reverse_op::execute);
 
 }  // namespace nn
 }  // namespace android

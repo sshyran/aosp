@@ -21,7 +21,7 @@
 
 namespace android::nn::arg_min_max {
 
-Result<Version> validate(const IOperationValidationContext* context);
+// TODO: Add input/output labels.
 
 }  // namespace android::nn::arg_min_max
 

@@ -109,8 +109,7 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace gather
 
-NN_REGISTER_OPERATION(GATHER, gather::kOperationName, gather::validate, gather::prepare,
-                      gather::execute);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(GATHER, gather::prepare, gather::execute);
 
 }  // namespace nn
 }  // namespace android
