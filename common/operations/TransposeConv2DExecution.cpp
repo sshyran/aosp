@@ -577,9 +577,8 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace transpose_conv_2d
 
-NN_REGISTER_OPERATION(TRANSPOSE_CONV_2D, transpose_conv_2d::kOperationName,
-                      transpose_conv_2d::validate, transpose_conv_2d::prepare,
-                      transpose_conv_2d::execute, .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(TRANSPOSE_CONV_2D, transpose_conv_2d::prepare,
+                                         transpose_conv_2d::execute, .allowZeroSizedInput = true);
 
 }  // namespace nn
 }  // namespace android

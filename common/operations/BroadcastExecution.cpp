@@ -641,15 +641,14 @@ bool executeDiv(IOperationExecutionContext* context) {
 
 }  // namespace broadcast
 
-using std::placeholders::_1;
-NN_REGISTER_OPERATION(ADD, "ADD", std::bind(broadcast::validate, OperationType::ADD, _1),
-                      broadcast::prepare, broadcast::executeAdd, .allowZeroSizedInput = true);
-NN_REGISTER_OPERATION(MUL, "MUL", std::bind(broadcast::validate, OperationType::MUL, _1),
-                      broadcast::prepare, broadcast::executeMul, .allowZeroSizedInput = true);
-NN_REGISTER_OPERATION(SUB, "SUB", std::bind(broadcast::validate, OperationType::SUB, _1),
-                      broadcast::prepare, broadcast::executeSub, .allowZeroSizedInput = true);
-NN_REGISTER_OPERATION(DIV, "DIV", std::bind(broadcast::validate, OperationType::DIV, _1),
-                      broadcast::prepare, broadcast::executeDiv, .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(ADD, broadcast::prepare, broadcast::executeAdd,
+                                         .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(MUL, broadcast::prepare, broadcast::executeMul,
+                                         .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(SUB, broadcast::prepare, broadcast::executeSub,
+                                         .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(DIV, broadcast::prepare, broadcast::executeDiv,
+                                         .allowZeroSizedInput = true);
 
 }  // namespace nn
 }  // namespace android

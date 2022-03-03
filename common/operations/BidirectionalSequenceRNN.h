@@ -52,8 +52,6 @@ constexpr uint32_t kBwOutputTensor = 1;  // Only if mergeOutputs parameter is fa
 constexpr uint32_t kFwOutputHiddenStateTensor = 2;
 constexpr uint32_t kBwOutputHiddenStateTensor = 3;
 
-Result<Version> validate(const IOperationValidationContext* context);
-
 }  // namespace android::nn::bidirectional_sequence_rnn
 
 #endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_BIDIRECTIONAL_SEQUENCE_RNN_H

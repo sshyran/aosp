@@ -273,8 +273,8 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace batch_matmul_op
 
-NN_REGISTER_OPERATION(BATCH_MATMUL, batch_matmul_op::kOperationName, batch_matmul_op::validate,
-                      batch_matmul_op::prepare, batch_matmul_op::execute);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(BATCH_MATMUL, batch_matmul_op::prepare,
+                                         batch_matmul_op::execute);
 
 }  // namespace nn
 }  // namespace android

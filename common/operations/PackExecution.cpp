@@ -148,8 +148,7 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace pack_op
 
-NN_REGISTER_OPERATION(PACK, pack_op::kOperationName, pack_op::validate, pack_op::prepare,
-                      pack_op::execute);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(PACK, pack_op::prepare, pack_op::execute);
 
 }  // namespace nn
 }  // namespace android

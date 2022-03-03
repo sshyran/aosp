@@ -192,8 +192,8 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace concatenation
 
-NN_REGISTER_OPERATION(CONCATENATION, concatenation::kOperationName, concatenation::validate,
-                      concatenation::prepare, concatenation::execute, .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(CONCATENATION, concatenation::prepare,
+                                         concatenation::execute, .allowZeroSizedInput = true);
 
 }  // namespace nn
 }  // namespace android

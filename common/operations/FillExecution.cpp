@@ -66,7 +66,7 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace fill_op
 
-NN_REGISTER_OPERATION(FILL, "FILL", fill_op::validate, fill_op::prepare, fill_op::execute);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(FILL, fill_op::prepare, fill_op::execute);
 
 }  // namespace nn
 }  // namespace android

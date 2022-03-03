@@ -100,8 +100,8 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace quantize
 
-NN_REGISTER_OPERATION(QUANTIZE, "QUANTIZE", quantize::validate, quantize::prepare,
-                      quantize::execute, .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(QUANTIZE, quantize::prepare, quantize::execute,
+                                         .allowZeroSizedInput = true);
 
 }  // namespace nn
 }  // namespace android

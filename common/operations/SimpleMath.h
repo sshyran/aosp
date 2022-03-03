@@ -21,7 +21,7 @@
 
 namespace android::nn::mean {
 
-Result<Version> validate(const IOperationValidationContext* context);
+// TODO: Add input/output labels.
 
 }  // namespace android::nn::mean
 

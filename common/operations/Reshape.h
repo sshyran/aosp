@@ -21,16 +21,7 @@
 
 namespace android::nn::reshape {
 
-Result<Version> validateDepthToSpace(const IOperationValidationContext* context);
-Result<Version> validateSpaceToDepth(const IOperationValidationContext* context);
-
-Result<Version> validatePad(const IOperationValidationContext* context);
-Result<Version> validatePadV2(const IOperationValidationContext* context);
-
-Result<Version> validateBatchToSpaceND(const IOperationValidationContext* context);
-Result<Version> validateSpaceToBatchND(const IOperationValidationContext* context);
-
-Result<Version> validateReshape(const IOperationValidationContext* context);
+// TODO: Add input/output labels.
 
 }  // namespace android::nn::reshape
 

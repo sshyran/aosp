@@ -378,16 +378,12 @@ bool executeMaxPool(IOperationExecutionContext* context) {
 
 }  // namespace pooling
 
-using std::placeholders::_1;
-NN_REGISTER_OPERATION(AVERAGE_POOL_2D, "AVERAGE_POOL_2D",
-                      std::bind(pooling::validate, OperationType::AVERAGE_POOL_2D, _1),
-                      pooling::prepare, pooling::executeAveragePool, .allowZeroSizedInput = true);
-NN_REGISTER_OPERATION(L2_POOL_2D, "L2_POOL_2D",
-                      std::bind(pooling::validate, OperationType::L2_POOL_2D, _1), pooling::prepare,
-                      pooling::executeL2Pool, .allowZeroSizedInput = true);
-NN_REGISTER_OPERATION(MAX_POOL_2D, "MAX_POOL_2D",
-                      std::bind(pooling::validate, OperationType::MAX_POOL_2D, _1),
-                      pooling::prepare, pooling::executeMaxPool, .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(AVERAGE_POOL_2D, pooling::prepare,
+                                         pooling::executeAveragePool, .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(L2_POOL_2D, pooling::prepare, pooling::executeL2Pool,
+                                         .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(MAX_POOL_2D, pooling::prepare, pooling::executeMaxPool,
+                                         .allowZeroSizedInput = true);
 
 }  // namespace nn
 }  // namespace android

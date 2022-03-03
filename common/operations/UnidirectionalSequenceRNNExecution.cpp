@@ -173,9 +173,9 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace unidirectional_sequence_rnn
 
-NN_REGISTER_OPERATION(UNIDIRECTIONAL_SEQUENCE_RNN, "UNIDIRECTIONAL_SEQUENCE_RNN",
-                      unidirectional_sequence_rnn::validate, unidirectional_sequence_rnn::prepare,
-                      unidirectional_sequence_rnn::execute);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(UNIDIRECTIONAL_SEQUENCE_RNN,
+                                         unidirectional_sequence_rnn::prepare,
+                                         unidirectional_sequence_rnn::execute);
 
 }  // namespace nn
 }  // namespace android

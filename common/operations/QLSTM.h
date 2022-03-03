@@ -88,8 +88,6 @@ constexpr uint32_t kOutputStateOutTensor = 0;
 constexpr uint32_t kCellStateOutTensor = 1;
 constexpr uint32_t kOutputTensor = 2;
 
-Result<Version> validate(const IOperationValidationContext* context);
-
 }  // namespace android::nn::qlstm
 
 #endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_QLSTM_H

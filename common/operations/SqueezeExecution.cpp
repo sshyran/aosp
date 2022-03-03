@@ -105,8 +105,8 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace squeeze
 
-NN_REGISTER_OPERATION(SQUEEZE, "SQUEEZE", squeeze::validate, squeeze::prepare, squeeze::execute,
-                      .allowOmittedOperand = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(SQUEEZE, squeeze::prepare, squeeze::execute,
+                                         .allowOmittedOperand = true);
 
 }  // namespace nn
 }  // namespace android

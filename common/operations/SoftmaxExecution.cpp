@@ -278,8 +278,8 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace softmax
 
-NN_REGISTER_OPERATION(SOFTMAX, "SOFTMAX", softmax::validate, softmax::prepare, softmax::execute,
-                      .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(SOFTMAX, softmax::prepare, softmax::execute,
+                                         .allowZeroSizedInput = true);
 
 }  // namespace nn
 }  // namespace android

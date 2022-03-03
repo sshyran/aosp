@@ -415,9 +415,10 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace bidirectional_sequence_rnn
 
-NN_REGISTER_OPERATION(BIDIRECTIONAL_SEQUENCE_RNN, "BIDIRECTIONAL_SEQUENCE_RNN",
-                      bidirectional_sequence_rnn::validate, bidirectional_sequence_rnn::prepare,
-                      bidirectional_sequence_rnn::execute, .allowOmittedOperand = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(BIDIRECTIONAL_SEQUENCE_RNN,
+                                         bidirectional_sequence_rnn::prepare,
+                                         bidirectional_sequence_rnn::execute,
+                                         .allowOmittedOperand = true);
 
 }  // namespace nn
 }  // namespace android

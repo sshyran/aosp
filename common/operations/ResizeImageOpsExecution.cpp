@@ -257,17 +257,17 @@ bool execute(OperationType opType, IOperationExecutionContext* context) {
 
 using std::placeholders::_1;
 
-NN_REGISTER_OPERATION(RESIZE_BILINEAR, "RESIZE_BILINEAR",
-                      std::bind(resize_image::validate, OperationType::RESIZE_BILINEAR, _1),
-                      std::bind(resize_image::prepare, OperationType::RESIZE_BILINEAR, _1),
-                      std::bind(resize_image::execute, OperationType::RESIZE_BILINEAR, _1),
-                      .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(
+        RESIZE_BILINEAR, std::bind(resize_image::prepare, OperationType::RESIZE_BILINEAR, _1),
+        std::bind(resize_image::execute, OperationType::RESIZE_BILINEAR, _1),
+        .allowZeroSizedInput = true);
 
-NN_REGISTER_OPERATION(RESIZE_NEAREST_NEIGHBOR, "RESIZE_NEAREST_NEIGHBOR",
-                      std::bind(resize_image::validate, OperationType::RESIZE_NEAREST_NEIGHBOR, _1),
-                      std::bind(resize_image::prepare, OperationType::RESIZE_NEAREST_NEIGHBOR, _1),
-                      std::bind(resize_image::execute, OperationType::RESIZE_NEAREST_NEIGHBOR, _1),
-                      .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(RESIZE_NEAREST_NEIGHBOR,
+                                         std::bind(resize_image::prepare,
+                                                   OperationType::RESIZE_NEAREST_NEIGHBOR, _1),
+                                         std::bind(resize_image::execute,
+                                                   OperationType::RESIZE_NEAREST_NEIGHBOR, _1),
+                                         .allowZeroSizedInput = true);
 
 }  // namespace nn
 }  // namespace android

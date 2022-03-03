@@ -50,8 +50,7 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace logical_not
 
-NN_REGISTER_OPERATION(LOGICAL_NOT, "LOGICAL_NOT", logical_not::validate, logical_not::prepare,
-                      logical_not::execute);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(LOGICAL_NOT, logical_not::prepare, logical_not::execute);
 
 }  // namespace nn
 }  // namespace android

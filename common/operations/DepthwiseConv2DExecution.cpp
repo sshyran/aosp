@@ -580,9 +580,8 @@ bool execute(IOperationExecutionContext* context) {
 
 }  // namespace depthwise_conv_2d
 
-NN_REGISTER_OPERATION(DEPTHWISE_CONV_2D, depthwise_conv_2d::kOperationName,
-                      depthwise_conv_2d::validate, depthwise_conv_2d::prepare,
-                      depthwise_conv_2d::execute, .allowZeroSizedInput = true);
+NN_REGISTER_OPERATION_DEFAULT_VALIDATION(DEPTHWISE_CONV_2D, depthwise_conv_2d::prepare,
+                                         depthwise_conv_2d::execute, .allowZeroSizedInput = true);
 
 }  // namespace nn
 }  // namespace android
