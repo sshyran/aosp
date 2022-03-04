@@ -39,8 +39,7 @@ filegroup {
 
 apex_defaults {
     name: "com.android.neuralnetworks-defaults",
-    updatable: true,
-    min_sdk_version: "30",
+    defaults: ["r-launched-apex-module"],
     androidManifest: ":com.android.neuralnetworks-androidManifest",
     native_shared_libs: [
         "libneuralnetworks",
