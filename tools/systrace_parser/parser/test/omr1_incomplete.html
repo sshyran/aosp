@@ -423,7 +423,7 @@
     <span id="content"></span>
 
     <span id="significance">
-      
+
       <svg id="insignificant" viewBox="0 0 128 128">
         <circle cx="64" cy="64" r="60"></circle>
         <circle cx="44" cy="44" r="4"></circle>
@@ -431,7 +431,7 @@
         <line x1="36" x2="92" y1="80" y2="80"></line>
       </svg>
 
-      
+
       <svg id="significantly_better" viewBox="0 0 128 128">
         <circle cx="64" cy="64" r="60"></circle>
         <circle cx="44" cy="44" r="4"></circle>
@@ -439,7 +439,7 @@
         <path d="M 28 64 Q 64 128 100 64"></path>
       </svg>
 
-      
+
       <svg id="significantly_worse" viewBox="0 0 128 128">
         <circle cx="64" cy="64" r="60"></circle>
         <circle cx="44" cy="44" r="4"></circle>
@@ -814,7 +814,7 @@
 </style><template id="quad-stack-view-template">
   <div id="header"></div>
   <input id="stacking-distance-slider" max="400" min="1" step="1" type="range"/>
-  
+
   <canvas id="canvas"></canvas>
   <img id="chrome-left"/>
   <img id="chrome-mid"/>
@@ -1072,7 +1072,7 @@
     stroke: #000;
   }
 </style><template id="chart-base-template">
-  <svg> 
+  <svg>
     <g id="chart-area" xmlns="http://www.w3.org/2000/svg">
       <g class="x axis"></g>
       <g class="y axis"></g>
@@ -1442,7 +1442,7 @@
       <div id="label">Heap details</div>
       <div id="view_mode_container">
         <span>View mode:</span>
-        
+
       </div>
     </div>
     <div id="contents">
@@ -1617,7 +1617,7 @@
     </style>
     <tr-ui-b-view-specific-brushing-state id="state" view-id="analysis.memory_dump_overview_pane">
     </tr-ui-b-view-specific-brushing-state>
-    <div id="label">Overview <a href="https://chromium.googlesource.com/chromium/src/+/master/docs/memory-infra">Help</a></div>
+    <div id="label">Overview <a href="https://chromium.googlesource.com/chromium/src/+/HEAD/docs/memory-infra">Help</a></div>
     <div id="contents">
       <div id="info_text">No memory memory dumps selected</div>
       <tr-ui-b-table id="table"></tr-ui-b-table>
@@ -1649,11 +1649,11 @@
         font-size: 15px;
       }
     </style>
-    
+
     <div id="label"></div>
     <div id="aggregation_mode_container">
       <span>Metric aggregation:</span>
-      
+
     </div>
   </template>
 </dom-module><dom-module id="tr-ui-a-stacked-pane-view">
@@ -1707,7 +1707,7 @@
     </style>
     <tr-ui-b-table id="table">
     </tr-ui-b-table>
-    
+
   </template>
 </dom-module><dom-module id="tr-ui-a-selection-summary-table">
   <template>
@@ -1723,7 +1723,7 @@
     </style>
     <tr-ui-b-table id="table">
     </tr-ui-b-table>
-    
+
   </template>
 </dom-module><dom-module id="tr-ui-b-radio-picker">
   <template>
@@ -1774,7 +1774,7 @@
     <tr-ui-b-table id="table"></tr-ui-b-table>
   </template>
 </dom-module><dom-module id="tr-v-ui-collected-related-event-set-span">
-  
+
 </dom-module><dom-module id="tr-v-ui-device-info-span">
   <template>
     <tr-ui-b-table id="table"></tr-ui-b-table>
@@ -1784,7 +1784,7 @@
     <tr-ui-a-generic-object-view id="generic"></tr-ui-a-generic-object-view>
   </template>
 
-  
+
 </dom-module><dom-module id="tr-v-ui-merged-buildbot-info-span">
   <template>
     <tr-ui-b-table id="table"></tr-ui-b-table>
@@ -1809,13 +1809,13 @@
     <tr-ui-b-table id="table"></tr-ui-b-table>
   </template>
 </dom-module><dom-module id="tr-v-ui-related-event-set-span">
-  
+
 </dom-module><dom-module id="tr-v-ui-related-histogram-map-span">
   <template>
     <tr-ui-b-table id="table"></tr-ui-b-table>
   </template>
 </dom-module><dom-module id="tr-v-ui-related-histogram-set-span">
-  
+
 </dom-module><dom-module id="tr-v-ui-revision-info-span">
   <template>
     <tr-ui-b-table id="table"></tr-ui-b-table>
@@ -1825,19 +1825,19 @@
     <tr-v-ui-scalar-span id="scalar"></tr-v-ui-scalar-span>
   </template>
 
-  
+
 </dom-module><dom-module id="tr-v-ui-telemetry-info-span">
   <template>
     <tr-ui-b-table id="table"></tr-ui-b-table>
   </template>
 </dom-module><dom-module id="tr-v-ui-unmergeable-diagnostic-set-span">
-  
+
 </dom-module><dom-module id="tr-v-ui-diagnostic-map-table">
   <template>
     <tr-ui-b-table id="table"></tr-ui-b-table>
   </template>
 
-  
+
 </dom-module><dom-module name="tr-v-ui-scalar-map-table">
   <template>
     <style>
@@ -8656,7 +8656,7 @@ return childDict;},addCells_(){this.lazyCells_=tr.ui.analysis.createCells(this.s
 return numerics;},this);}};Polymer({is:'tr-ui-a-memory-dump-heap-details-pane',behaviors:[tr.ui.analysis.StackedPane],created(){this.heapDumps_=undefined;this.viewMode_=undefined;this.aggregationMode_=undefined;this.cachedBuilders_=new Map();},ready(){this.$.info_bar.message='Note: Values displayed in the heavy view '+'are lower bounds (except for the root).';Polymer.dom(this.$.view_mode_container).appendChild(tr.ui.b.createSelector(this,'viewMode','memoryDumpHeapDetailsPane.viewMode',MultiDimensionalViewBuilder.ViewType.TOP_DOWN_TREE_VIEW,[{label:'Top-down (Tree)',value:MultiDimensionalViewBuilder.ViewType.TOP_DOWN_TREE_VIEW},{label:'Top-down (Heavy)',value:MultiDimensionalViewBuilder.ViewType.TOP_DOWN_HEAVY_VIEW},{label:'Bottom-up (Heavy)',value:MultiDimensionalViewBuilder.ViewType.BOTTOM_UP_HEAVY_VIEW}]));this.$.drag_handle.target=this.$.path_view;this.$.drag_handle.horizontal=false;this.$.path_view.addEventListener('selected-node-changed',(function(e){this.$.breakdown_view.displayedNode=this.$.path_view.selectedNode;}).bind(this));this.$.breakdown_view.addEventListener('enter-node',(function(e){this.$.path_view.selectedNode=e.node;}).bind(this));},set heapDumps(heapDumps){this.heapDumps_=heapDumps;this.scheduleRebuild_();},get heapDumps(){return this.heapDumps_;},set aggregationMode(aggregationMode){this.aggregationMode_=aggregationMode;this.$.path_view.aggregationMode=aggregationMode;this.$.breakdown_view.aggregationMode=aggregationMode;},get aggregationMode(){return this.aggregationMode_;},set viewMode(viewMode){this.viewMode_=viewMode;this.scheduleRebuild_();},get viewMode(){return this.viewMode_;},get heavyView(){switch(this.viewMode){case MultiDimensionalViewBuilder.ViewType.TOP_DOWN_HEAVY_VIEW:case MultiDimensionalViewBuilder.ViewType.BOTTOM_UP_HEAVY_VIEW:return true;default:return false;}},onRebuild_(){if(this.heapDumps_===undefined||this.heapDumps_.length===0){this.$.info_text.style.display='block';this.$.split_view.style.display='none';this.$.view_mode_container.style.display='none';this.$.info_bar.hidden=true;this.$.path_view.selectedNode=undefined;return;}
 this.$.info_text.style.display='none';this.$.split_view.style.display='flex';this.$.view_mode_container.style.display='block';this.$.info_bar.hidden=!this.heavyView;this.$.path_view.selectedNode=this.createHeapTree_();this.$.path_view.rebuild();this.$.breakdown_view.rebuild();},createHeapTree_(){const definedHeapDump=tr.b.findFirstInArray(this.heapDumps_);if(definedHeapDump===undefined)return undefined;const rootRowTitle=definedHeapDump.allocatorName;const stackFrameTrees=this.createStackFrameTrees_(this.heapDumps_);return new HeapDumpTreeNode(stackFrameTrees,tr.ui.analysis.HeapDetailsRowDimension.ROOT,rootRowTitle,this.heavyView);},createStackFrameTrees_(heapDumps){const builders=heapDumps.map(heapDump=>this.createBuilder_(heapDump));const views=builders.map(builder=>{if(builder===undefined)return undefined;return builder.buildView(this.viewMode);});return views;},createBuilder_(heapDump){if(heapDump===undefined)return undefined;if(this.cachedBuilders_.has(heapDump)){return this.cachedBuilders_.get(heapDump);}
 const dimensions=2;const valueCount=2;const builder=new MultiDimensionalViewBuilder(dimensions,valueCount);for(const entry of heapDump.entries){const leafStackFrame=entry.leafStackFrame;const stackTracePath=leafStackFrame===undefined?[]:leafStackFrame.getUserFriendlyStackTrace().reverse();const objectTypeName=entry.objectTypeName;const objectTypeNamePath=objectTypeName===undefined?[]:[objectTypeName];const valueKind=entry.valuesAreTotals?MultiDimensionalViewBuilder.ValueKind.TOTAL:MultiDimensionalViewBuilder.ValueKind.SELF;builder.addPath([stackTracePath,objectTypeNamePath],[entry.size,entry.count],valueKind);}
-builder.complete=heapDump.isComplete;this.cachedBuilders_.set(heapDump,builder);return builder;},});return{};});'use strict';tr.exportTo('tr.ui.analysis',function(){const URL_TO_SIZE_VS_EFFECTIVE_SIZE='https://chromium.googlesource.com/chromium/src/+/master/docs/memory-infra/README.md#effective_size-vs_size';const SUBALLOCATION_CONTEXT=true;const MemoryAllocatorDumpInfoType=tr.model.MemoryAllocatorDumpInfoType;const PROVIDED_SIZE_LESS_THAN_AGGREGATED_CHILDREN=MemoryAllocatorDumpInfoType.PROVIDED_SIZE_LESS_THAN_AGGREGATED_CHILDREN;const PROVIDED_SIZE_LESS_THAN_LARGEST_OWNER=MemoryAllocatorDumpInfoType.PROVIDED_SIZE_LESS_THAN_LARGEST_OWNER;const LEFTWARDS_OPEN_HEADED_ARROW=String.fromCharCode(0x21FD);const RIGHTWARDS_OPEN_HEADED_ARROW=String.fromCharCode(0x21FE);const EN_DASH=String.fromCharCode(0x2013);const CIRCLED_LATIN_SMALL_LETTER_I=String.fromCharCode(0x24D8);function AllocatorDumpNameColumn(){tr.ui.analysis.TitleColumn.call(this,'Component');}
+builder.complete=heapDump.isComplete;this.cachedBuilders_.set(heapDump,builder);return builder;},});return{};});'use strict';tr.exportTo('tr.ui.analysis',function(){const URL_TO_SIZE_VS_EFFECTIVE_SIZE='https://chromium.googlesource.com/chromium/src/+/HEAD/docs/memory-infra/README.md#effective_size-vs_size';const SUBALLOCATION_CONTEXT=true;const MemoryAllocatorDumpInfoType=tr.model.MemoryAllocatorDumpInfoType;const PROVIDED_SIZE_LESS_THAN_AGGREGATED_CHILDREN=MemoryAllocatorDumpInfoType.PROVIDED_SIZE_LESS_THAN_AGGREGATED_CHILDREN;const PROVIDED_SIZE_LESS_THAN_LARGEST_OWNER=MemoryAllocatorDumpInfoType.PROVIDED_SIZE_LESS_THAN_LARGEST_OWNER;const LEFTWARDS_OPEN_HEADED_ARROW=String.fromCharCode(0x21FD);const RIGHTWARDS_OPEN_HEADED_ARROW=String.fromCharCode(0x21FE);const EN_DASH=String.fromCharCode(0x2013);const CIRCLED_LATIN_SMALL_LETTER_I=String.fromCharCode(0x24D8);function AllocatorDumpNameColumn(){tr.ui.analysis.TitleColumn.call(this,'Component');}
 AllocatorDumpNameColumn.prototype={__proto__:tr.ui.analysis.TitleColumn.prototype,formatTitle(row){if(!row.suballocation){return row.title;}
 return tr.ui.b.createSpan({textContent:row.title,italic:true,tooltip:row.fullNames===undefined?undefined:row.fullNames.join(', ')});}};function getAndUpdateEntry(map,name,createdCallback){let entry=map.get(name);if(entry===undefined){entry={count:0};createdCallback(entry);map.set(name,entry);}
 entry.count++;return entry;}
@@ -9700,7 +9700,7 @@ return{supported:true};},get textLabel(){return'Alerts';}});tr.ui.side_panel.Sid
 <!-- BEGIN TRACE -->
   <script class="trace-data" type="application/text">
 PROCESS DUMP
-USER           PID  PPID     VSZ    RSS WCHAN  PC S NAME                        COMM                       
+USER           PID  PPID     VSZ    RSS WCHAN  PC S NAME                        COMM
 root             1     0   13628   1896 SyS_epoll_wait 4fea4c S init            init
 root             2     0       0      0 kthreadd 0 S [kthreadd]                 2
 root             3     2       0      0 smpboot_thread_fn 0 S [ksoftirqd/0]     3
@@ -10406,7 +10406,7 @@ root         13217 13216   10524   1980 0      7a21451f94 R ps                  
 root         13218  5027   55632   9220 0      78b0a16ed0 R app_process         app_process64
 u0_a53       22412   717 4284840  43064 SyS_epoll_wait 70d91f346c S com.google.android.volta app_process64
 u0_a42       30672   717 4318596  58480 SyS_epoll_wait 70d91f346c S com.google.android.ims app_process64
-USER           PID   TID CMD            
+USER           PID   TID CMD
 root             1     1 init
 root             2     2 kthreadd
 root             3     3 ksoftirqd/0
@@ -11996,7 +11996,7 @@ u0_a26        7090  7143 GoogleApiHandle
 u0_a26        7090  7157 queued-work-loo
 u0_a26        7090  7162 Binder:7090_3
 u0_a26        7090  7174 GeofencerStateM
-u0_a26        7090  7176 RealContextHub 
+u0_a26        7090  7176 RealContextHub
 u0_a26        7090  7177 GAC_Executor[0]
 u0_a26        7090  7178 ConnectivityThr
 u0_a26        7090  7179 FlpThread
@@ -12429,7 +12429,7 @@ u0_a42       30672 30724 Primes-1
 u0_a42       30672 30730 webrtc-thread
 u0_a42       30672 30731 Timer-1
 u0_a42       30672 30732 ImsConnectionHa
-u0_a42       30672 30748 network_thread 
+u0_a42       30672 30748 network_thread
 u0_a42       30672 30749 Thread-4
 u0_a42       30672 30750 signaling_threa
 u0_a42       30672 30752 GAC_Executor[1]
@@ -12443,7 +12443,7 @@ u0_a42       30672 12312 AsyncTask #5
 u0_a42       30672 12322 AsyncTask #6
 u0_a42       30672 12323 AsyncTask #7
 u0_a42       30672 12340 AsyncTask #8
-USER           PID  PPID     VSZ    RSS WCHAN  PC S NAME                        COMM                       
+USER           PID  PPID     VSZ    RSS WCHAN  PC S NAME                        COMM
 root             1     0   13628   1840 SyS_epoll_wait 4fea4c S init            init
 root             2     0       0      0 kthreadd 0 S [kthreadd]                 2
 root             3     2       0      0 smpboot_thread_fn 0 S [ksoftirqd/0]     3
@@ -13144,7 +13144,7 @@ root         13729 13727    8948    660 SyS_rt_sigsuspend 749fa6d634 S sh       
 root         13730 13729   10524   1980 0      7380b4ef94 R ps                  toybox
 u0_a53       22412   717 4284840  42772 SyS_epoll_wait 70d91f346c S com.google.android.volta app_process64
 u0_a42       30672   717 4314228  58000 SyS_epoll_wait 70d91f346c S com.google.android.ims app_process64
-USER           PID   TID CMD            
+USER           PID   TID CMD
 root             1     1 init
 root             2     2 kthreadd
 root             3     3 ksoftirqd/0
@@ -14388,9 +14388,9 @@ u0_a39        1341 10541 Binder:1341_4
 u0_a39        1341 10803 FlashlightContr
 u0_a39        1341 21891 Binder:1341_5
 u0_a39        1341 13607 AsyncTask #503
-u0_a39        1341 13608 InflaterThread 
-u0_a39        1341 13609 InflaterThread 
-u0_a39        1341 13610 InflaterThread 
+u0_a39        1341 13608 InflaterThread
+u0_a39        1341 13609 InflaterThread
+u0_a39        1341 13610 InflaterThread
 root          1357  1357 qmi_hndl0000000
 radio         1362  1362 le.modemservice
 radio         1362  1367 Jit thread pool
@@ -14717,7 +14717,7 @@ u0_a26        7090  7143 GoogleApiHandle
 u0_a26        7090  7157 queued-work-loo
 u0_a26        7090  7162 Binder:7090_3
 u0_a26        7090  7174 GeofencerStateM
-u0_a26        7090  7176 RealContextHub 
+u0_a26        7090  7176 RealContextHub
 u0_a26        7090  7177 GAC_Executor[0]
 u0_a26        7090  7178 ConnectivityThr
 u0_a26        7090  7179 FlpThread
@@ -15119,7 +15119,7 @@ u0_a42       30672 30724 Primes-1
 u0_a42       30672 30730 webrtc-thread
 u0_a42       30672 30731 Timer-1
 u0_a42       30672 30732 ImsConnectionHa
-u0_a42       30672 30748 network_thread 
+u0_a42       30672 30748 network_thread
 u0_a42       30672 30749 Thread-4
 u0_a42       30672 30750 signaling_threa
 u0_a42       30672 30752 GAC_Executor[1]

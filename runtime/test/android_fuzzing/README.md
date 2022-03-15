@@ -306,5 +306,5 @@ a seed to a random number generator instead.
 [6]: https://cs.android.com/android/platform/superproject/+/master:packages/modules/NeuralNetworks/runtime/test/android_fuzzing/DriverFuzzTest.cpp;l=291-292,302;drc=34aee872d5dc317ad8a32377e9114c0c606d8afe
 [7]: https://cs.android.com/android/platform/superproject/+/master:build/soong/cc/sanitize.go;l=140-187;drc=b5b2aba43b5bb6305ea69d60f9bf580f711d7c96
 [8]: https://source.android.com/devices/tech/debug/libfuzzer
-[9]: https://cs.android.com/android/platform/superproject/+/master:external/libprotobuf-mutator/
-[10]: https://cs.android.com/android/platform/superproject/+/master:hardware/interfaces/neuralnetworks/
+[9]: https://cs.android.com/android/platform/superproject/+/HEAD:external/libprotobuf-mutator/
+[10]: https://cs.android.com/android/platform/superproject/+/HEAD:hardware/interfaces/neuralnetworks/

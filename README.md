@@ -11,7 +11,7 @@ driver using a framework that is shared with Android.
 NNAPI will be used as a [tensorflow lite](https://www.tensorflow.org/lite)
 [delegate](https://www.tensorflow.org/lite/performance/nnapi), most likely
 invoked by the
-[ML Service](https://chromium.googlesource.com/chromiumos/platform2/+/master/ml/README.md).
+[ML Service](https://chromium.googlesource.com/chromiumos/platform2/+/HEAD/ml/README.md).
 
 ## Implementation Details
 
@@ -42,7 +42,7 @@ Only the required functionality used by NNAPI.
 This functionality is implemented in the shared library
 [nnapi-support.so](https://chromium.googlesource.com/chromiumos/platform2/+/HEAD/nnapi).
 Vendor HALS should link in this library (you can follow
-[this](https://chromium.googlesource.com/aosp/platform/frameworks/ml/+/refs/heads/master/nn/BUILD.gn#74)
+[this](https://chromium.googlesource.com/aosp/platform/frameworks/ml/+/refs/heads/main/BUILD.gn#82)
 example).
 
 ## Building NNAPI
@@ -58,7 +58,7 @@ $ USE="nnapi" ./build_image --board=${BOARD} test
 ```
 
 This will build NNAPI, as well as a
-[sample CPU implementation](https://chromium.googlesource.com/aosp/platform/frameworks/ml/+/refs/heads/master/nn/BUILD.gn#509)
+[sample CPU implementation](https://chromium.googlesource.com/aosp/platform/frameworks/ml/+/refs/heads/main/BUILD.gn#662)
 of a NN HAL.
 
 If you build a test image, you can use a the sample executable `ml_cmdline` to
@@ -87,9 +87,9 @@ The NNAPI implementation `libneuralnetworks.so` is configured
 to load a shared library with this name.
 
 1. The entry point for the vendor NN HAL will be the symbol
-[android::hardware::neuralnetworks::V1_0::IDevice::getService](https://chromium.googlesource.com/aosp/platform/frameworks/ml/+/refs/heads/master/nn/chromeos/sampledriver.cpp#81), which will be called to register the HAL.
+[android::hardware::neuralnetworks::V1_0::IDevice::getService](https://chromium.googlesource.com/aosp/platform/frameworks/ml/+/refs/heads/main/chromeos/sampledriver.cpp#70), which will be called to register the HAL.
 
-1. For each driver's implementation, you need to inherit from `hal::IDevice` and implemente a class that contains the driver logic (See [SampleDriverFull.cpp](https://chromium.googlesource.com/aosp/platform/frameworks/ml/+/refs/heads/master/nn/driver/sample/SampleDriverFull.cpp) for a better understanding), and export a function named `[get_driver]`(https://chromium.googlesource.com/aosp/platform/frameworks/ml/+/refs/heads/master/nn/driver/sample/SampleDriverFull.cpp#27) that will handle the logic of initialization of a driver and return a `void *`; This function will be used in `getService` that will handle the register driver logic.
+1. For each driver's implementation, you need to inherit from `hal::IDevice` and implemente a class that contains the driver logic (See [SampleDriverFull.cpp](https://chromium.googlesource.com/aosp/platform/frameworks/ml/+/refs/heads/main/driver/sample/SampleDriverFull.cpp) for a better understanding), and export a function named `[get_driver]`(https://chromium.googlesource.com/aosp/platform/frameworks/ml/+/refs/heads/main/driver/sample/SampleDriverFull.cpp#28) that will handle the logic of initialization of a driver and return a `void *`; This function will be used in `getService` that will handle the register driver logic.
 
 1. Successful execution of the supplied test suites (See [Testing an NN HAL](#testing-an-nn-hal)).
 
