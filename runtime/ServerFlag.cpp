@@ -88,6 +88,8 @@ Version serverFeatureLevelToVersion(int64_t serverFeatureLevel) {
             return kVersionFeatureLevel6;
         case 7:
             return kVersionFeatureLevel7;
+        case 8:
+            return kVersionFeatureLevel8;
         default:
             LOG(FATAL) << "Invalid feature level flag value " << serverFeatureLevel;
             return {};

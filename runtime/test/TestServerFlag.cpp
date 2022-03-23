@@ -15,6 +15,8 @@
  */
 
 #include <gtest/gtest.h>
+#include <nnapi/TypeUtils.h>
+#include <nnapi/Types.h>
 
 #include "ServerFlag.h"
 
@@ -25,6 +27,11 @@ using android::nn::kDefaultFeatureLevelNum;
 using android::nn::kDefaultTelemetryEnableValue;
 using android::nn::kMaxFeatureLevelNum;
 using android::nn::kMinFeatureLevelNum;
+using android::nn::kVersionFeatureLevel5;
+using android::nn::kVersionFeatureLevel6;
+using android::nn::kVersionFeatureLevel7;
+using android::nn::kVersionFeatureLevel8;
+using android::nn::serverFeatureLevelToVersion;
 
 static std::string fakeServerFuncDefault(const std::string& /*categoryName*/,
                                          const std::string& /*flagName*/,
@@ -96,6 +103,17 @@ TEST(ServerFlagTest, ServerFeatureLevelFlag) {
     EXPECT_EQ(getServerFeatureLevelFlag(fakeServerFuncNull), kDefaultFeatureLevelNum);
 }
 
+TEST(ServerFlagTest, ServerFeatureLevelToVersion) {
+    EXPECT_EQ(serverFeatureLevelToVersion(5), kVersionFeatureLevel5);
+    EXPECT_EQ(serverFeatureLevelToVersion(6), kVersionFeatureLevel6);
+    EXPECT_EQ(serverFeatureLevelToVersion(7), kVersionFeatureLevel7);
+    EXPECT_EQ(serverFeatureLevelToVersion(8), kVersionFeatureLevel8);
+
+    EXPECT_EQ(serverFeatureLevelToVersion(kMinFeatureLevelNum), kVersionFeatureLevel5);
+    EXPECT_EQ(serverFeatureLevelToVersion(kDefaultFeatureLevelNum), kVersionFeatureLevel5);
+    EXPECT_EQ(serverFeatureLevelToVersion(kMaxFeatureLevelNum), kVersionFeatureLevel8);
+}
+
 static GetServerConfigurableFlagFunc makeFuncWithReturn(std::string ret) {
     return [ret = std::move(ret)](const std::string&, const std::string&,
                                   const std::string&) -> std::string { return ret; };
@@ -117,8 +135,8 @@ TEST(ServerFlagTest, ServerTelemetryEnableFlag) {
     }
 
     const std::vector<std::string> kPossibleFalseStrings = {"0", "false", "n", "no", "off"};
-    for (const auto& trueString : kPossibleFalseStrings) {
-        GetServerConfigurableFlagFunc fn = makeFuncWithReturn(trueString);
+    for (const auto& falseString : kPossibleFalseStrings) {
+        GetServerConfigurableFlagFunc fn = makeFuncWithReturn(falseString);
         EXPECT_EQ(getServerTelemetryEnableFlag(fn), false);
     }
 
