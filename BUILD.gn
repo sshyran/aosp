@@ -112,7 +112,7 @@ pkg_config("common_defaults") {
     "NN_INCLUDE_CPU_IMPLEMENTATION",
     "TF_LITE_DISABLE_X86_NEON",
   ]
-  pkg_deps = [ "libnnapi-support", "libmojo" ]
+  pkg_deps = [ "libnnapi-support", "libmojo", "libminijail", ]
 }
 
 # Tests cannot be build with the NDEBUG flag set,

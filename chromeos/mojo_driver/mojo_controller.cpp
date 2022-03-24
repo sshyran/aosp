@@ -4,12 +4,15 @@
 
 #include "mojo_controller.h"
 
+#include <base/logging.h>
 #include <base/strings/stringprintf.h>
 #include <base/task/task_traits.h>
+#include <libminijail.h>
 #include <mojo/core/embedder/embedder.h>
 #include <mojo/public/cpp/bindings/remote.h>
 #include <mojo/public/cpp/bindings/self_owned_receiver.h>
 #include <mojo/public/cpp/system/invitation.h>
+#include <scoped_minijail.h>
 
 #include "nnapi_hal_impl.h"
 
@@ -31,7 +34,7 @@ MojoController::MojoController() : ipc_thread_("IpcThread") {
   pid_t worker_pid;
   mojo::PlatformChannel channel;
   if (!SpawnWorkerProcessAndGetPid(channel, &worker_pid)) {
-    LOG(ERROR) << "Failed to spawn worker process";
+    LOG(FATAL) << "Failed to spawn worker process";
   } else {
     LOG(INFO) << "Spawned worker process: " << worker_pid;
   }
@@ -64,27 +67,68 @@ void MojoController::SendMojoInvitationAndGetRemote(
 bool MojoController::SpawnWorkerProcessAndGetPid(
     const mojo::PlatformChannel& channel,
     pid_t* worker_pid) {
+  LOG(INFO) << "Starting to spawn nnapi worker process...";
   DCHECK(worker_pid != nullptr);
+
+  // Start the process.
+  ScopedMinijail jail(minijail_new());
+
+  minijail_namespace_ipc(jail.get());
+  minijail_namespace_uts(jail.get());
+  minijail_namespace_net(jail.get());
+  minijail_namespace_cgroups(jail.get());
+  minijail_namespace_pids(jail.get());
+  minijail_namespace_vfs(jail.get());
 
   auto mojo_bootstrap_fd =
       channel.remote_endpoint().platform_handle().GetFD().get();
 
+  // Closes the unused FDs in the worker process.
+  // We keep the standard FDs here (should all point to `/dev/null`).
+  // Also we need to keep the FD used in bootstrapping the mojo connection.
+  CHECK(minijail_preserve_fd(jail.get(), STDIN_FILENO, STDIN_FILENO) == 0);
+  CHECK(minijail_preserve_fd(jail.get(), STDOUT_FILENO, STDOUT_FILENO) == 0);
+  CHECK(minijail_preserve_fd(jail.get(), STDERR_FILENO, STDERR_FILENO) == 0);
+  CHECK(minijail_preserve_fd(jail.get(), mojo_bootstrap_fd,
+                             mojo_bootstrap_fd) == 0);
+  minijail_close_open_fds(jail.get());
+
   std::string worker_path = "/usr/bin/nnapi_worker";
   std::string fd_argv = ::base::StringPrintf("%d", mojo_bootstrap_fd);
 
+#ifdef STRACE_NNAPI_HAL_IPC_DRIVER
+  // We use strace to create the log file to generate seccomp policy only for
+  // the nnapi_worker. When we use strace, we do not call
+  // minijail_use_seccomp_filter to use seccomp policy in minijail.
+  LOG(INFO) << "Running strace on nnapi_worker...";
+
+  std::string strace_path = "/usr/local/bin/strace";
+  std::string strace_arg_1 = "-f";
+  std::string strace_arg_2 = "-o";
+  std::string strace_arg_3 = "/tmp/nnapi_worker_strace.log";
+  char* argv[7] = {&strace_path[0],  &strace_arg_1[0], &strace_arg_2[0],
+                   &strace_arg_3[0], &worker_path[0],  &fd_argv[0],
+                   nullptr};
+
+  if (minijail_run_pid(jail.get(), &strace_path[0], argv, worker_pid) != 0) {
+    LOG(FATAL) << "Failed to spawn worker process using minijail";
+    return false;
+  }
+#else
+  std::string seccomp_policy_path =
+      "/usr/share/policy/nnapi-hal-driver-seccomp.policy";
   char* argv[3] = {&worker_path[0], &fd_argv[0], nullptr};
 
-  // TODO(b/222592905): Replace with libminijail and proper sandbox
-  if ((*worker_pid = fork()) == 0) {
-    int result = execv(&worker_path[0], argv);
-    if (result < 0) {
-      LOG(FATAL) << "Failed to spawn worker process";
-      LOG(ERROR) << "FAILED" << result;
-      perror("execve 1 fail");
-      exit(0);
-    }
-  }
+  minijail_parse_seccomp_filters(jail.get(), &seccomp_policy_path[0]);
+  minijail_use_seccomp_filter(jail.get());
 
+  if (minijail_run_pid(jail.get(), &worker_path[0], argv, worker_pid) != 0) {
+    LOG(FATAL) << "Failed to spawn worker process using minijail";
+    return false;
+  }
+#endif
+
+  LOG(INFO) << "Worker process spawned successfully!";
   return true;
 }
 
