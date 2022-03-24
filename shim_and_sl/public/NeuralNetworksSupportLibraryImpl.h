@@ -1630,4 +1630,43 @@ typedef struct NnApiSLDriverImplFL5 NnApiSLDriverImplFL6;
  */
 typedef NnApiSLDriverImplFL6 NnApiSLDriverImplFL7;
 
+/**
+ * NnApiSLDriverImpl for an Updatable SL Driver implementing {@link
+ * ANEURALNETWORKS_FEATURE_LEVEL_8}.
+ *
+ * This struct must set its implFeatureLevel to {@link ANEURALNETWORKS_FEATURE_LEVEL_8}.
+ */
+typedef struct NnApiSLDriverImplFL8 {
+    /**
+     * Base type with version information. Allows to cast a pointer of this type
+     * to NnApiSLDriverImpl* with valid version information.
+     * For this type, its .version fields should be always set to {@link
+     * ANEURALNETWORKS_FEATURE_LEVEL_8}.
+     */
+    NnApiSLDriverImplFL5 base;
+
+    /**
+     * SL Driver implementation of {@link ANeuralNetworksCompilation_addExtensionAttribute}.
+     * Behavior, arguments, and outputs match NNAPI Runtime function {@link
+     * ANeuralNetworksCompilation_addExtensionAttribute}, at the feature level of this NnApiSLDriver
+     * struct.
+     */
+    int (*ANeuralNetworksCompilation_addExtensionAttribute)(ANeuralNetworksCompilation* compilation,
+                                                            const char* extensionName,
+                                                            uint16_t attributeCodeWithinExtension,
+                                                            const void* data, size_t length);
+
+    /**
+     * SL Driver implementation of {@link ANeuralNetworksExecution_addExtensionAttribute}.
+     * Behavior, arguments, and outputs match NNAPI Runtime function {@link
+     * ANeuralNetworksExecution_addExtensionAttribute}, at the feature level of this NnApiSLDriver
+     * struct.
+     */
+    int (*ANeuralNetworksExecution_addExtensionAttribute)(ANeuralNetworksExecution* execution,
+                                                          const char* extensionName,
+                                                          uint16_t attributeCodeWithinExtension,
+                                                          const void* data, size_t length);
+
+} NnApiSLDriverImplFL8;
+
 __END_DECLS

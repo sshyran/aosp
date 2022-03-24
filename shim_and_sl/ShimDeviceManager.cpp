@@ -142,9 +142,13 @@ ANeuralNetworksShimResultCode registerDevices(NnApiSLDriverImpl* nnapiSLImpl,
         nnapi = std::make_unique<NnApiSupportLibrary>(
                 *reinterpret_cast<NnApiSLDriverImplFL6*>(nnapiSLImpl), nullptr);
     }
-    if (nnapiSLImpl->implFeatureLevel >= ANEURALNETWORKS_FEATURE_LEVEL_7) {
+    if (nnapiSLImpl->implFeatureLevel == ANEURALNETWORKS_FEATURE_LEVEL_7) {
         nnapi = std::make_unique<NnApiSupportLibrary>(
                 *reinterpret_cast<NnApiSLDriverImplFL7*>(nnapiSLImpl), nullptr);
+    }
+    if (nnapiSLImpl->implFeatureLevel >= ANEURALNETWORKS_FEATURE_LEVEL_8) {
+        nnapi = std::make_unique<NnApiSupportLibrary>(
+                *reinterpret_cast<NnApiSLDriverImplFL8*>(nnapiSLImpl), nullptr);
     }
 
     CHECK_NE(nnapi, nullptr);

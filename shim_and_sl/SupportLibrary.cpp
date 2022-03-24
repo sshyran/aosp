@@ -66,8 +66,12 @@ std::unique_ptr<const NnApiSupportLibrary> loadNnApiSupportLibrary(void* libHand
         return std::make_unique<NnApiSupportLibrary>(*reinterpret_cast<NnApiSLDriverImplFL6*>(impl),
                                                      libHandle);
     }
-    if (impl->implFeatureLevel >= ANEURALNETWORKS_FEATURE_LEVEL_7) {
+    if (impl->implFeatureLevel == ANEURALNETWORKS_FEATURE_LEVEL_7) {
         return std::make_unique<NnApiSupportLibrary>(*reinterpret_cast<NnApiSLDriverImplFL7*>(impl),
+                                                     libHandle);
+    }
+    if (impl->implFeatureLevel >= ANEURALNETWORKS_FEATURE_LEVEL_8) {
+        return std::make_unique<NnApiSupportLibrary>(*reinterpret_cast<NnApiSLDriverImplFL8*>(impl),
                                                      libHandle);
     }
 
