@@ -40,6 +40,7 @@
 #include <memory>
 #include <optional>
 #include <string>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -524,11 +525,12 @@ static std::vector<int> getIntFds(const std::vector<::ndk::ScopedFileDescriptor>
     return fds;
 }
 
-ndk::ScopedAStatus ShimDevice::prepareModel(
+ndk::ScopedAStatus ShimDevice::prepareModelCommon(
         const Model& model, ExecutionPreference preference, Priority priority, int64_t deadlineNs,
         const std::vector<::ndk::ScopedFileDescriptor>& modelCache,
         const std::vector<::ndk::ScopedFileDescriptor>& dataCache,
-        const std::vector<uint8_t>& token,
+        const std::vector<uint8_t>& token, const std::vector<TokenValuePair>& compilationHints,
+        const std::vector<ExtensionNameAndPrefix>& extensionNameToPrefix,
         const std::shared_ptr<IPreparedModelCallback>& callback) {
     // TODO(183398748): Run model preparation in detached thread.
     if (callback == nullptr) {
@@ -585,6 +587,31 @@ ndk::ScopedAStatus ShimDevice::prepareModel(
                                                      token),
                 callback);
     }
+    if (!compilationHints.empty() || !extensionNameToPrefix.empty()) {
+        std::unordered_map<uint16_t, std::string> prefixToName;
+        for (const auto [name, prefix] : extensionNameToPrefix) {
+            prefixToName.emplace(prefix, name);
+        }
+
+        for (const auto& [token, value] : compilationHints) {
+            const auto uToken = static_cast<uint32_t>(token);
+            const auto prefix = ::android::nn::getExtensionPrefix(uToken);
+            const auto attributeCodeWithinExtension = ::android::nn::getTypeWithinExtension(uToken);
+
+            const auto it = prefixToName.find(prefix);
+            if (it == prefixToName.end()) {
+                callback->notify(ErrorStatus::INVALID_ARGUMENT, nullptr);
+                return toAStatus(ErrorStatus::INVALID_ARGUMENT);
+            }
+            const std::string& extensionName = it->second;
+
+            SLW2SAS_OK_RETURN_AND_ERROR_CALLBACK_IF_ERROR(
+                    compilation.second.addExtensionAttribute(extensionName,
+                                                             attributeCodeWithinExtension, value),
+                    callback);
+        }
+    }
+
     SLW2SAS_OK_RETURN_AND_ERROR_CALLBACK_IF_ERROR(compilation.second.finish(), callback);
 
     const std::shared_ptr<ShimPreparedModel> preparedModel =
@@ -597,13 +624,22 @@ ndk::ScopedAStatus ShimDevice::prepareModel(
     return ndk::ScopedAStatus::ok();
 }
 
+ndk::ScopedAStatus ShimDevice::prepareModel(
+        const Model& model, ExecutionPreference preference, Priority priority, int64_t deadlineNs,
+        const std::vector<::ndk::ScopedFileDescriptor>& modelCache,
+        const std::vector<::ndk::ScopedFileDescriptor>& dataCache,
+        const std::vector<uint8_t>& token,
+        const std::shared_ptr<IPreparedModelCallback>& callback) {
+    return prepareModelCommon(model, preference, priority, deadlineNs, modelCache, dataCache, token,
+                              /*compilationHints=*/{}, /*extensionNameToPrefix=*/{}, callback);
+}
+
 ndk::ScopedAStatus ShimDevice::prepareModelWithConfig(
         const Model& model, const PrepareModelConfig& config,
         const std::shared_ptr<IPreparedModelCallback>& callback) {
-    // TODO(b/205898101): Pass the compilation hints properly.
-    return prepareModel(model, config.preference, config.priority, config.deadlineNs,
-                        config.modelCache, config.dataCache, utils::toVec(config.cacheToken),
-                        callback);
+    return prepareModelCommon(model, config.preference, config.priority, config.deadlineNs,
+                              config.modelCache, config.dataCache, utils::toVec(config.cacheToken),
+                              config.compilationHints, config.extensionNameToPrefix, callback);
 }
 
 ndk::ScopedAStatus ShimDevice::prepareModelFromCache(

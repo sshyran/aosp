@@ -77,7 +77,21 @@ class ShimPreparedModel : public BnPreparedModel {
     ErrorStatus parseInputs(
             const Request& request, bool measure, int64_t deadlineNs, int64_t loopTimeoutDurationNs,
             ::android::nn::sl_wrapper::Execution* execution,
-            std::vector<std::shared_ptr<::android::nn::sl_wrapper::Memory>>* requestMemoryPools);
+            std::vector<std::shared_ptr<::android::nn::sl_wrapper::Memory>>* requestMemoryPools,
+            const std::vector<TokenValuePair>& executionHints,
+            const std::vector<ExtensionNameAndPrefix>& extensionNameToPrefix);
+
+    ::ndk::ScopedAStatus executeSynchronouslyCommon(
+            const Request& request, bool measureTiming, int64_t deadlineNs,
+            int64_t loopTimeoutDurationNs, const std::vector<TokenValuePair>& executionHints,
+            const std::vector<ExtensionNameAndPrefix>& extensionNameToPrefix,
+            ExecutionResult* executionResult);
+    ::ndk::ScopedAStatus executeFencedCommon(
+            const Request& request, const std::vector<::ndk::ScopedFileDescriptor>& waitFor,
+            bool measureTiming, int64_t deadlineNs, int64_t loopTimeoutDurationNs,
+            int64_t durationNs, const std::vector<TokenValuePair>& executionHints,
+            const std::vector<ExtensionNameAndPrefix>& extensionNameToPrefix,
+            FencedExecutionResult* fencedExecutionResult);
 
     std::shared_ptr<const NnApiSupportLibrary> mNnapi;
     std::shared_ptr<ShimBufferTracker> mBufferTracker;

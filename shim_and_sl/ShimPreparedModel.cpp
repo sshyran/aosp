@@ -35,6 +35,7 @@
 #include <limits>
 #include <memory>
 #include <thread>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -46,7 +47,9 @@ namespace aidl::android::hardware::neuralnetworks {
 ErrorStatus ShimPreparedModel::parseInputs(
         const Request& request, bool measure, int64_t deadlineNs, int64_t loopTimeoutDurationNs,
         ::android::nn::sl_wrapper::Execution* execution,
-        std::vector<std::shared_ptr<::android::nn::sl_wrapper::Memory>>* requestMemoryPools) {
+        std::vector<std::shared_ptr<::android::nn::sl_wrapper::Memory>>* requestMemoryPools,
+        const std::vector<TokenValuePair>& executionHints,
+        const std::vector<ExtensionNameAndPrefix>& extensionNameToPrefix) {
     for (const auto& requestPool : request.pools) {
         switch (requestPool.getTag()) {
             case RequestMemoryPool::pool: {
@@ -150,6 +153,32 @@ ErrorStatus ShimPreparedModel::parseInputs(
     if (loopTimeoutDurationNs > 0) {
         execution->setLoopTimeout(loopTimeoutDurationNs);
     }
+
+    if (!executionHints.empty() || !extensionNameToPrefix.empty()) {
+        std::unordered_map<uint16_t, std::string> prefixToName;
+        for (const auto [name, prefix] : extensionNameToPrefix) {
+            prefixToName.emplace(prefix, name);
+        }
+
+        for (const auto& [token, value] : executionHints) {
+            const auto uToken = static_cast<uint32_t>(token);
+            const auto prefix = ::android::nn::getExtensionPrefix(uToken);
+            const auto attributeCodeWithinExtension = ::android::nn::getTypeWithinExtension(uToken);
+
+            const auto it = prefixToName.find(prefix);
+            if (it == prefixToName.end()) {
+                return ErrorStatus::INVALID_ARGUMENT;
+            }
+            const std::string& extensionName = it->second;
+
+            const auto result = execution->addExtensionAttribute(
+                    extensionName, attributeCodeWithinExtension, value);
+            if (result != Result::NO_ERROR) {
+                return convertResultToErrorStatus(result);
+            }
+        }
+    }
+
     return ErrorStatus::NONE;
 }
 
@@ -261,11 +290,14 @@ static ndk::ScopedAStatus executeFencedInternal(
     return ndk::ScopedAStatus::ok();
 }
 
-::ndk::ScopedAStatus ShimPreparedModel::executeFenced(
-        const ::aidl::android::hardware::neuralnetworks::Request& request,
-        const std::vector<::ndk::ScopedFileDescriptor>& waitFor, bool measureTiming,
-        int64_t deadlineNs, int64_t loopTimeoutDurationNs, int64_t durationNs,
+::ndk::ScopedAStatus ShimPreparedModel::executeFencedCommon(
+        const Request& request, const std::vector<::ndk::ScopedFileDescriptor>& waitFor,
+        bool measureTiming, int64_t deadlineNs, int64_t loopTimeoutDurationNs, int64_t durationNs,
+        const std::vector<TokenValuePair>& executionHints,
+        const std::vector<ExtensionNameAndPrefix>& extensionNameToPrefix,
         FencedExecutionResult* fencedExecutionResult) {
+    CHECK(fencedExecutionResult != nullptr);
+
     if (deadlineNs < -1) {
         LOG(ERROR) << "Invalid deadline value, must be >= -1";
         return ndk::ScopedAStatus::fromServiceSpecificError(
@@ -274,13 +306,24 @@ static ndk::ScopedAStatus executeFencedInternal(
     auto execution =
             std::make_shared<::android::nn::sl_wrapper::Execution>(mNnapi.get(), &mCompilation);
     std::vector<std::shared_ptr<::android::nn::sl_wrapper::Memory>> requestMemoryPools;
-    auto errorStatus = parseInputs(request, measureTiming, deadlineNs, loopTimeoutDurationNs,
-                                   execution.get(), &requestMemoryPools);
+    auto errorStatus =
+            parseInputs(request, measureTiming, deadlineNs, loopTimeoutDurationNs, execution.get(),
+                        &requestMemoryPools, executionHints, extensionNameToPrefix);
     if (errorStatus != ErrorStatus::NONE) {
         return toAStatus(errorStatus);
     }
     return executeFencedInternal(mNnapi, execution, std::move(requestMemoryPools), waitFor,
                                  durationNs, measureTiming, fencedExecutionResult);
+}
+
+::ndk::ScopedAStatus ShimPreparedModel::executeFenced(
+        const ::aidl::android::hardware::neuralnetworks::Request& request,
+        const std::vector<::ndk::ScopedFileDescriptor>& waitFor, bool measureTiming,
+        int64_t deadlineNs, int64_t loopTimeoutDurationNs, int64_t durationNs,
+        FencedExecutionResult* fencedExecutionResult) {
+    return executeFencedCommon(request, waitFor, measureTiming, deadlineNs, loopTimeoutDurationNs,
+                               durationNs, /*executionHints=*/{}, /*extensionNameToPrefix=*/{},
+                               fencedExecutionResult);
 }
 
 static ndk::ScopedAStatus executeSynchronouslyInternal(
@@ -344,10 +387,13 @@ static ndk::ScopedAStatus executeSynchronouslyInternal(
     return toAStatus(errorStatus);
 }
 
-::ndk::ScopedAStatus ShimPreparedModel::executeSynchronously(
+::ndk::ScopedAStatus ShimPreparedModel::executeSynchronouslyCommon(
         const Request& request, bool measureTiming, int64_t deadlineNs,
-        int64_t loopTimeoutDurationNs,
-        ::aidl::android::hardware::neuralnetworks::ExecutionResult* executionResult) {
+        int64_t loopTimeoutDurationNs, const std::vector<TokenValuePair>& executionHints,
+        const std::vector<ExtensionNameAndPrefix>& extensionNameToPrefix,
+        ExecutionResult* executionResult) {
+    CHECK(executionResult != nullptr);
+
     if (deadlineNs < -1) {
         LOG(ERROR) << "Invalid deadline value, must be >= -1";
         return ndk::ScopedAStatus::fromServiceSpecificError(
@@ -357,8 +403,9 @@ static ndk::ScopedAStatus executeSynchronouslyInternal(
     auto execution =
             std::make_shared<::android::nn::sl_wrapper::Execution>(mNnapi.get(), &mCompilation);
     std::vector<std::shared_ptr<::android::nn::sl_wrapper::Memory>> requestMemoryPools;
-    auto errorStatus = parseInputs(request, measureTiming, deadlineNs, loopTimeoutDurationNs,
-                                   execution.get(), &requestMemoryPools);
+    auto errorStatus =
+            parseInputs(request, measureTiming, deadlineNs, loopTimeoutDurationNs, execution.get(),
+                        &requestMemoryPools, executionHints, extensionNameToPrefix);
     if (errorStatus != ErrorStatus::NONE) {
         return toAStatus(errorStatus);
     }
@@ -366,20 +413,30 @@ static ndk::ScopedAStatus executeSynchronouslyInternal(
                                         executionResult);
 }
 
+::ndk::ScopedAStatus ShimPreparedModel::executeSynchronously(
+        const Request& request, bool measureTiming, int64_t deadlineNs,
+        int64_t loopTimeoutDurationNs,
+        ::aidl::android::hardware::neuralnetworks::ExecutionResult* executionResult) {
+    return executeSynchronouslyCommon(request, measureTiming, deadlineNs, loopTimeoutDurationNs,
+                                      /*executionHints=*/{}, /*extensionNameToPrefix=*/{},
+                                      executionResult);
+}
+
 ::ndk::ScopedAStatus ShimPreparedModel::executeSynchronouslyWithConfig(
         const Request& request, const ExecutionConfig& config, int64_t deadlineNs,
         ExecutionResult* executionResult) {
-    // TODO(b/205898101): Pass the execution hints properly.
-    return executeSynchronously(request, config.measureTiming, deadlineNs,
-                                config.loopTimeoutDurationNs, executionResult);
+    return executeSynchronouslyCommon(request, config.measureTiming, deadlineNs,
+                                      config.loopTimeoutDurationNs, config.executionHints,
+                                      config.extensionNameToPrefix, executionResult);
 }
+
 ::ndk::ScopedAStatus ShimPreparedModel::executeFencedWithConfig(
         const Request& request, const std::vector<ndk::ScopedFileDescriptor>& waitFor,
         const ExecutionConfig& config, int64_t deadlineNs, int64_t durationNs,
         FencedExecutionResult* executionResult) {
-    // TODO(b/205898101): Pass the execution hints properly.
-    return executeFenced(request, waitFor, config.measureTiming, deadlineNs,
-                         config.loopTimeoutDurationNs, durationNs, executionResult);
+    return executeFencedCommon(request, waitFor, config.measureTiming, deadlineNs,
+                               config.loopTimeoutDurationNs, durationNs, config.executionHints,
+                               config.extensionNameToPrefix, executionResult);
 }
 
 // TODO(183397380): make it use ANNBurst object
@@ -502,7 +559,8 @@ ndk::ScopedAStatus ShimPreparedModel::createReusableExecution(
     std::vector<std::shared_ptr<::android::nn::sl_wrapper::Memory>> requestMemoryPools;
     auto errorStatus =
             parseInputs(request, config.measureTiming, kNoDeadline, config.loopTimeoutDurationNs,
-                        wrapperExecution.get(), &requestMemoryPools);
+                        wrapperExecution.get(), &requestMemoryPools, config.executionHints,
+                        config.extensionNameToPrefix);
     if (errorStatus != ErrorStatus::NONE) {
         return toAStatus(errorStatus);
     }
