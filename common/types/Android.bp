@@ -51,7 +51,7 @@ cc_defaults {
     name: "neuralnetworks_types_defaults",
     defaults: ["neuralnetworks_utils_defaults"],
     srcs: [
-        ":neuralnetworks_operations_validation",
+        "operations/src/*.cpp",
         "src/OperationsUtils.cpp",
         "src/OperationsValidationUtils.cpp",
         "src/SharedMemory.cpp",
@@ -68,7 +68,10 @@ cc_defaults {
             static_libs: ["libarect"],
         },
     },
-    local_include_dirs: ["include/nnapi"],
+    local_include_dirs: [
+        "include/nnapi",
+        "operations/include",
+    ],
     export_include_dirs: ["include"],
     shared_libs: [
         "libbase",
@@ -101,7 +104,7 @@ cc_library_static {
         "neuralnetworks_utils_defaults",
     ],
     srcs: [
-        ":neuralnetworks_operations_validation",
+        "operations/src/*.cpp",
         "src/DynamicCLDeps.cpp",
         "src/OperationsUtils.cpp",
         "src/OperationsValidationUtils.cpp",
@@ -111,7 +114,10 @@ cc_library_static {
         "src/Types.cpp",
         "src/Validation.cpp",
     ],
-    local_include_dirs: ["include/nnapi"],
+    local_include_dirs: [
+        "include/nnapi",
+        "operations/include",
+    ],
     export_include_dirs: ["include"],
     static_libs: [
         "libbase_ndk",
