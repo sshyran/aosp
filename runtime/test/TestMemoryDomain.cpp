@@ -17,8 +17,9 @@
 #include <HalInterfaces.h>
 #include <SampleDriver.h>
 #include <SampleDriverFull.h>
-#include <android/hardware/neuralnetworks/1.2/ADevice.h>
 #include <gtest/gtest.h>
+#include <nnapi/SharedMemory.h>
+#include <nnapi/hal/1.2/Device.h>
 
 #include <algorithm>
 #include <map>
@@ -33,6 +34,12 @@
 #include "Memory.h"
 #include "TestNeuralNetworksWrapper.h"
 #include "TestUtils.h"
+
+#ifdef __ANDROID__
+constexpr bool kRunningOnAndroid = true;
+#else   // __ANDROID__
+constexpr bool kRunningOnAndroid = false;
+#endif  // __ANDROID__
 
 using namespace android::nn;
 namespace hardware = android::hardware;
@@ -260,7 +267,7 @@ class MemoryDomainTest : public MemoryDomainTestBase,
             const sp<TestDriverLatest> testDriver =
                     new TestDriverLatest(name, supportedOperations, AllocateReturn::NOT_SUPPORTED);
             DeviceManager::get()->forTest_registerDevice(
-                    makeSharedDevice(name, new V1_2::ADevice(testDriver)));
+                    V1_2::utils::Device::create(name, testDriver).value());
         } else {
             DeviceManager::get()->forTest_registerDevice(makeSharedDevice(
                     name,
@@ -316,9 +323,9 @@ TEST_P(MemoryDomainTest, DISABLED_SinglePartition) {
             const auto& memory = m->getMemory();
             EXPECT_TRUE(validate(memory).ok());
             if (kUseV1_2Driver) {
-                EXPECT_TRUE(isAshmem(memory));
+                EXPECT_FALSE(isAhwbBlob(memory));
             } else {
-                EXPECT_TRUE(isAhwbBlob(memory));
+                EXPECT_EQ(isAhwbBlob(memory), kRunningOnAndroid);
             }
         }
     }
@@ -355,9 +362,9 @@ TEST_P(MemoryDomainTest, DISABLED_MultiplePartitions) {
                 const auto& memory = m->getMemory();
                 EXPECT_TRUE(validate(memory).ok());
                 if (kUseV1_2Driver) {
-                    EXPECT_TRUE(isAshmem(memory));
+                    EXPECT_FALSE(isAhwbBlob(memory));
                 } else {
-                    EXPECT_TRUE(isAhwbBlob(memory));
+                    EXPECT_EQ(isAhwbBlob(memory), kRunningOnAndroid);
                 }
             }
         }
@@ -379,9 +386,9 @@ TEST_P(MemoryDomainTest, DISABLED_MultiplePartitions) {
             const auto& memory = m->getMemory();
             EXPECT_TRUE(validate(memory).ok());
             if (kUseV1_2Driver) {
-                EXPECT_TRUE(isAshmem(memory));
+                EXPECT_FALSE(isAhwbBlob(memory));
             } else {
-                EXPECT_TRUE(isAhwbBlob(memory));
+                EXPECT_EQ(isAhwbBlob(memory), kRunningOnAndroid);
             }
         }
     }
@@ -402,9 +409,9 @@ TEST_P(MemoryDomainTest, DISABLED_MultiplePartitions) {
             const auto& memory = m->getMemory();
             EXPECT_TRUE(validate(memory).ok());
             if (kUseV1_2Driver) {
-                EXPECT_TRUE(isAshmem(memory));
+                EXPECT_FALSE(isAhwbBlob(memory));
             } else {
-                EXPECT_TRUE(isAhwbBlob(memory));
+                EXPECT_EQ(isAhwbBlob(memory), kRunningOnAndroid);
             }
         }
     }
@@ -440,11 +447,6 @@ INSTANTIATE_TEST_SUITE_P(DeviceVersionV1_2, MemoryDomainTest,
                          testing::Combine(testing::Values(true), testing::Bool(),
                                           testing::Values(AllocateReturn::NOT_SUPPORTED)));
 
-// Hardware buffers are an Android concept, which aren't necessarily
-// available on other platforms such as ChromeOS, which also build NNAPI.
-// When using the latest driver, memory is allocated via hardware buffers,
-// which will fail on non-android platforms.
-#if defined(__ANDROID__)
 INSTANTIATE_TEST_SUITE_P(DeviceVersionLatest, MemoryDomainTest,
                          testing::Combine(testing::Values(false), testing::Bool(),
                                           kAllocateReturnChoices));
@@ -480,6 +482,5 @@ TEST_F(MemoryDomainCopyTest, DISABLED_MemoryCopyTest) {
 
     EXPECT_EQ(ashmem2->dataAs<float>()[0], initValue1);
 }
-#endif
 
 }  // namespace

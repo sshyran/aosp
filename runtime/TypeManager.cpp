@@ -17,6 +17,7 @@
 #define LOG_TAG "TypeManager"
 
 #include "TypeManager.h"
+#include "test/TmpDirectoryUtils.h"
 
 #include <LegacyUtils.h>
 #include <android-base/file.h>
@@ -33,7 +34,6 @@
 #ifndef NN_COMPATIBILITY_LIBRARY_BUILD
 #if !defined(NNAPI_CHROMEOS)
 #include <PackageInfo.h>
-#include <binder/IServiceManager.h>
 #include <procpartition/procpartition.h>
 #endif  // NNAPI_CHROMEOS
 #endif  // NN_COMPATIBILITY_LIBRARY_BUILD
@@ -78,7 +78,7 @@ bool isNNAPIVendorExtensionsUseAllowedInProductImage() {
 // '/' slash, then it's a native binary path (e.g. '/data/foo'). If not, it's a name
 // of Android app package (e.g. 'com.foo.bar').
 const char kAppAllowlistPath[] = "/vendor/etc/nnapi_extensions_app_allowlist";
-const char kCtsAllowlist[] = "/data/local/tmp/CTSNNAPITestCases";
+const char kCtsAllowlist[] = NN_TMP_DIR "/CTSNNAPITestCases";
 std::vector<std::string> getVendorExtensionAllowlistedApps() {
     std::string data;
     // Allowlist CTS by default.
@@ -156,7 +156,7 @@ bool TypeManager::isExtensionsUseAllowed(const AppInfoFetcher::AppInfo& appPacka
         // When running tests with mma and adb push.
         if (StartsWith(appPackageInfo.binaryPath, "/data/nativetest") ||
             // When running tests with Atest.
-            StartsWith(appPackageInfo.binaryPath, "/data/local/tmp/NeuralNetworksTest_")) {
+            StartsWith(appPackageInfo.binaryPath, NN_TMP_DIR "/NeuralNetworksTest_")) {
             return true;
         }
 #endif  // NN_DEBUGGABLE
@@ -230,6 +230,25 @@ bool TypeManager::getExtensionPrefix(const std::string& extensionName, uint16_t*
         mPrefixToExtension.push_back(&mExtensionNameToExtension[extensionName]);
     }
     return true;
+}
+
+std::vector<ExtensionNameAndPrefix> TypeManager::getExtensionNameAndPrefix(
+        const std::vector<TokenValuePair>& metaData) {
+    std::vector<ExtensionNameAndPrefix> extensionNameAndPrefix;
+    std::set<uint16_t> prefixSet;
+    for (auto p : metaData) {
+        uint16_t prefix = static_cast<uint32_t>(p.token) >> kExtensionTypeBits;
+        if (!prefixSet.insert(prefix).second) {
+            continue;
+        }
+        const Extension* extension;
+        CHECK(getExtensionInfo(prefix, &extension));
+        extensionNameAndPrefix.push_back({
+                .name = extension->name,
+                .prefix = prefix,
+        });
+    }
+    return extensionNameAndPrefix;
 }
 
 bool TypeManager::getExtensionType(const char* extensionName, uint16_t typeWithinExtension,

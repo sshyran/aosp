@@ -14,23 +14,22 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_LSTM_H
-#define ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_LSTM_H
-
-#include <tensorflow/lite/kernels/internal/tensor_utils.h>
+#ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_LSTM_H
+#define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_LSTM_H
 
 #include <algorithm>
 #include <cmath>
 #include <vector>
 
 #include "ActivationFunctor.h"
+#include "OperationsValidationUtils.h"
 #include "nnapi/Types.h"
 
 namespace android {
 namespace nn {
 
 struct LSTMParams {
-    TfLiteFusedActivation activation;
+    ActivationFn activation;
     float cell_clip;
     float proj_clip;
     bool use_cifg;
@@ -246,4 +245,4 @@ class LSTMCell {
 }  // namespace nn
 }  // namespace android
 
-#endif  // ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_LSTM_H
+#endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_LSTM_H

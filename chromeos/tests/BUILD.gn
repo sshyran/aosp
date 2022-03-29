@@ -34,6 +34,8 @@ pkg_config("vts_defaults") {
     "${vts_src}/1.0/vts/functional/include",
     "${nn_src}/common/include",
     "${nn_src}/common/include/nnapi",
+    "${nn_src}/common/types/include/nnapi",
+    "${nn_src}/common/types/include",
     "${nn_src}/runtime",
     "${nn_src}/runtime/include",
     "${nn_src}/tools/test_generator/test_harness/include",
@@ -86,10 +88,10 @@ static_library("vts_common") {
     "${nn_src}/common/LegacyHalUtils.cpp",
     "${nn_src}/common/LegacyUtils.cpp",
     "${nn_src}/common/MemoryUtils.cpp",
-    "${nn_src}/common/SharedMemoryAndroid.cpp",
-    "${nn_src}/common/TypeUtils.cpp",
-    "${nn_src}/common/Types.cpp",
-    "${nn_src}/common/Validation.cpp",
+    "${nn_src}/common/types/src/SharedMemoryAndroid.cpp",
+    "${nn_src}/common/types/src/TypeUtils.cpp",
+    "${nn_src}/common/types/src/Types.cpp",
+    "${nn_src}/common/types/src/Validation.cpp",
     "${nn_src}/tools/test_generator/test_harness/TestHarness.cpp",
   ]
 }
@@ -230,6 +232,7 @@ executable("cros_nnapi_cts") {
   include_dirs = [
     "${nn_src}/common",
     "${nn_src}/common/include",
+    "${nn_src}/common/types/include",
     "${nn_src}/runtime/include",
     "${nn_src}/runtime/test",
     "${nn_src}/tools/test_generator/test_harness/include",

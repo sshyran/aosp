@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
+#include <android-base/file.h>
+#include <android-base/logging.h>
 #include <android-base/macros.h>
 #include <android/log.h>  // Required for __INTRODUCED_IN(x)
+#include <android-base/unique_fd.h>
 #include <android/sharedmem.h>
 #include <gtest/gtest.h>
 #include <sys/mman.h>
@@ -105,7 +108,13 @@ class UnspecifiedDimensionsTest : public ::testing::TestWithParam<UnspecifiedDim
             }
         }
         void initialize(size_t size, const void* data) {
+#ifdef __ANDROID__
             fd = ASharedMemory_create(nullptr, kLength);
+#else   // __ANDROID__
+            TemporaryFile tmpFile;
+            fd = tmpFile.release();
+            CHECK_EQ(ftruncate(fd, kLength), 0);
+#endif  // __ANDROID__
             ASSERT_GT(fd, -1);
             buffer = (uint8_t*)mmap(nullptr, kLength, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
             ASSERT_NE(buffer, nullptr);

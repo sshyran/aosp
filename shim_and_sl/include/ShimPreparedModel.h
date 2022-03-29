@@ -16,12 +16,13 @@
 
 #pragma once
 
+#include <aidl/android/hardware/neuralnetworks/BnPreparedModel.h>
+#include <android-base/logging.h>
+
 #include <memory>
 #include <utility>
 #include <vector>
 
-#include <aidl/android/hardware/neuralnetworks/BnPreparedModel.h>
-#include <android-base/logging.h>
 #include "ShimDevice.h"
 #include "SupportLibrary.h"
 #include "SupportLibraryWrapper.h"
@@ -53,7 +54,19 @@ class ShimPreparedModel : public BnPreparedModel {
                                        bool measureTiming, int64_t deadlineNs,
                                        int64_t loopTimeoutDurationNs, int64_t durationNs,
                                        FencedExecutionResult* fencedExecutionResult) override;
+    ::ndk::ScopedAStatus executeSynchronouslyWithConfig(const Request& request,
+                                                        const ExecutionConfig& config,
+                                                        int64_t deadlineNs,
+                                                        ExecutionResult* executionResult) override;
+    ::ndk::ScopedAStatus executeFencedWithConfig(
+            const Request& request, const std::vector<ndk::ScopedFileDescriptor>& waitFor,
+            const ExecutionConfig& config, int64_t deadlineNs, int64_t durationNs,
+            FencedExecutionResult* executionResult) override;
+
     ndk::ScopedAStatus configureExecutionBurst(std::shared_ptr<IBurst>* burst) override;
+    ndk::ScopedAStatus createReusableExecution(const Request& request,
+                                               const ExecutionConfig& config,
+                                               std::shared_ptr<IExecution>* execution) override;
 
     const ::android::nn::sl_wrapper::Compilation& getCompilation() const { return mCompilation; }
     const ::android::nn::sl_wrapper::Model& getMainModel() const {

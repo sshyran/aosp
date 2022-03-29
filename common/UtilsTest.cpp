@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include <gmock/gmock-matchers.h>
+
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include <limits>
@@ -22,7 +23,7 @@
 
 #include "HalInterfaces.h"
 #include "MemoryUtils.h"
-#include "OperationsUtils.cpp"
+#include "OperationsExecutionUtils.h"
 #include "QuantUtils.h"
 #include "Utils.h"
 #include "ValidateHal.h"

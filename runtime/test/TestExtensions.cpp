@@ -179,7 +179,11 @@ TEST_F(ExtensionsTest, DISABLED_TestAllowedNativeBinaries) {
 
     // Allowlist for vendor/data partiion is not present on Android S.
     // Before S, checks below will fail. On S and later they will succeed.
+#ifdef __ANDROID__
     bool disableProductAllowlist = android_get_device_api_level() >= __ANDROID_API_S__;
+#else   // __ANDROID__
+    bool disableProductAllowlist = true;
+#endif  // __ANDROID__
 
     // Non-allowlisted /product binary, product enabled
     EXPECT_EQ(TypeManager::isExtensionsUseAllowed(native_info("/product/foo_not_allowlisted"),
@@ -215,7 +219,11 @@ TEST_F(ExtensionsTest, DISABLED_TestAllowedApps) {
 
     // Allowlist for vendor/data partiion is not present on Android S.
     // Before S, checks below will fail. On S and later they will succeed.
+#ifdef __ANDROID__
     bool disableProductAllowlist = android_get_device_api_level() >= __ANDROID_API_S__;
+#else   // __ANDROID__
+    bool disableProductAllowlist = true;
+#endif  // __ANDROID__
 
     auto test_app_process = [&](const std::string& binary) {
         // /data app

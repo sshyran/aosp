@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_LSHPROJECTION_H
-#define ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_LSHPROJECTION_H
+#ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_LSHPROJECTION_H
+#define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_LSHPROJECTION_H
 
 #include <vector>
 
+#include "OperationsValidationUtils.h"
 #include "nnapi/Types.h"
 
 namespace android {
@@ -76,4 +77,4 @@ void DenseLshProjection(const RunTimeOperandInfo* hash, const RunTimeOperandInfo
 }  // namespace nn
 }  // namespace android
 
-#endif  // ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_LSHPROJECTION_H
+#endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_LSHPROJECTION_H

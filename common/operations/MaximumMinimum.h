@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_MAXIMUM_MINIMUM_H
-#define ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_MAXIMUM_MINIMUM_H
+#ifndef ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_MAXIMUM_MINIMUM_H
+#define ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_MAXIMUM_MINIMUM_H
 
-#include "CpuOperationUtils.h"
+#include "OperationsValidationUtils.h"
 
 namespace android {
 namespace nn {
@@ -32,4 +32,4 @@ bool eval(const void* in1, const Shape& shape1, const void* in2, const Shape& sh
 }  // namespace nn
 }  // namespace android
 
-#endif  // ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_MAXIMUM_MINIMUM_H
+#endif  // ANDROID_PACKAGES_MODULES_NEURALNETWORKS_COMMON_OPERATIONS_MAXIMUM_MINIMUM_H
