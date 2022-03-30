@@ -463,6 +463,15 @@ class Compilation {
                         mCompilation, index, padding));
     };
 
+    Result addExtensionAttribute(const std::string& extensionName,
+                                 uint16_t attributeCodeWithinExtension,
+                                 const std::vector<uint8_t>& extensionAttributeData) {
+        return static_cast<Result>(
+                mNnApi->getFL8()->ANeuralNetworksCompilation_addExtensionAttribute(
+                        mCompilation, extensionName.c_str(), attributeCodeWithinExtension,
+                        extensionAttributeData.data(), extensionAttributeData.size()));
+    }
+
     ANeuralNetworksCompilation* getHandle() const { return mCompilation; }
 
    protected:
@@ -653,6 +662,14 @@ class Execution {
                 mNnApi->getFL5()->ANeuralNetworksExecution_getOutputOperandDimensions(
                         mExecution, index, dimensions->data()));
         return result;
+    }
+
+    Result addExtensionAttribute(const std::string& extensionName,
+                                 uint16_t attributeCodeWithinExtension,
+                                 const std::vector<uint8_t>& extensionAttributeData) {
+        return static_cast<Result>(mNnApi->getFL8()->ANeuralNetworksExecution_addExtensionAttribute(
+                mExecution, extensionName.c_str(), attributeCodeWithinExtension,
+                extensionAttributeData.data(), extensionAttributeData.size()));
     }
 
     ANeuralNetworksExecution* getHandle() { return mExecution; };

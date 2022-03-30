@@ -53,8 +53,7 @@ std::unique_ptr<const NnApiSupportLibrary> loadNnApiSupportLibrary(void* libHand
         return nullptr;
     }
 
-    if (impl->implFeatureLevel < ANEURALNETWORKS_FEATURE_LEVEL_5 ||
-        impl->implFeatureLevel > ANEURALNETWORKS_FEATURE_LEVEL_7) {
+    if (impl->implFeatureLevel < ANEURALNETWORKS_FEATURE_LEVEL_5) {
         LOG(ERROR) << "Unsupported NnApiSLDriverImpl->implFeatureLevel: " << impl->implFeatureLevel;
         return nullptr;
     }
@@ -69,6 +68,10 @@ std::unique_ptr<const NnApiSupportLibrary> loadNnApiSupportLibrary(void* libHand
     }
     if (impl->implFeatureLevel == ANEURALNETWORKS_FEATURE_LEVEL_7) {
         return std::make_unique<NnApiSupportLibrary>(*reinterpret_cast<NnApiSLDriverImplFL7*>(impl),
+                                                     libHandle);
+    }
+    if (impl->implFeatureLevel >= ANEURALNETWORKS_FEATURE_LEVEL_8) {
+        return std::make_unique<NnApiSupportLibrary>(*reinterpret_cast<NnApiSLDriverImplFL8*>(impl),
                                                      libHandle);
     }
 
