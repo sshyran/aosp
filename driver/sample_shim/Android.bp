@@ -66,6 +66,12 @@ cc_defaults {
     cflags: [
         "-DNN_COMPATIBILITY_LIBRARY_BUILD",
     ],
+    ldflags: [
+        // neuralnetworks_sample_sl_driver_prebuilt has undefined symbols that
+        // cause linker failures with --no-allow-shlib-undefined, the default
+        // when linking executables.
+        "-Wl,--allow-shlib-undefined",
+    ],
     static_libs: [
         "libaidlcommonsupport",
         "libarect",
