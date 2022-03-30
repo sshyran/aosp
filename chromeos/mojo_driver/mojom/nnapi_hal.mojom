@@ -151,6 +151,7 @@ struct Request {
 [Stable] struct Capabilities {
   PerformanceInfo float32Performance;
   PerformanceInfo quantized8Performance;
+  PerformanceInfo relaxedFloat32toFloat16Performance;
 };
 
 interface IExecutionCallback {
@@ -168,6 +169,8 @@ interface IPreparedModelCallback {
 
 interface IDevice {
   [Sync] getCapabilities() => (ErrorStatus status, Capabilities capabilities);
+  [Sync] getSupportedOperations(Model model) => (ErrorStatus status, array<bool> supportedOperations);
+  [Sync] getVersionString() => (ErrorStatus status, string version);
   [Sync] prepareModel(Model model,
                       pending_remote<IPreparedModelCallback> pm_callback) => (ErrorStatus status);
 };

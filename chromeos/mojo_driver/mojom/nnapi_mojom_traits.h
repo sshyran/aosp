@@ -80,6 +80,7 @@ struct StructTraits<chromeos::nnapi::mojom::CapabilitiesDataView,
     return android::nn::lookup(c.operandPerformance,
                                android::nn::V1_3::OperandType::TENSOR_FLOAT32);
   }
+
   static android::nn::V1_0::PerformanceInfo quantized8Performance(
       const android::nn::V1_3::Capabilities& c) {
     return android::nn::lookup(
@@ -87,13 +88,21 @@ struct StructTraits<chromeos::nnapi::mojom::CapabilitiesDataView,
         android::nn::V1_3::OperandType::TENSOR_QUANT8_ASYMM);
   }
 
+  static android::nn::V1_0::PerformanceInfo relaxedFloat32toFloat16Performance(
+      const android::nn::V1_3::Capabilities& c) {
+    return c.relaxedFloat32toFloat16PerformanceTensor;
+  }
+
   static bool Read(chromeos::nnapi::mojom::CapabilitiesDataView cap,
                    android::nn::V1_3::Capabilities* out) {
     bool result = true;
 
-    android::nn::V1_0::PerformanceInfo float32Perf, quant8Perf;
+    android::nn::V1_0::PerformanceInfo float32Perf, quant8Perf,
+        relaxedFloat32toFloat16Perf;
     result &= cap.ReadFloat32Performance(&float32Perf);
     result &= cap.ReadQuantized8Performance(&quant8Perf);
+    result &= cap.ReadRelaxedFloat32toFloat16Performance(
+        &relaxedFloat32toFloat16Perf);
 
     out->operandPerformance.resize(2);
     out->operandPerformance[0] = {
@@ -102,7 +111,10 @@ struct StructTraits<chromeos::nnapi::mojom::CapabilitiesDataView,
     out->operandPerformance[1] = {
         .type = android::nn::V1_3::OperandType::TENSOR_QUANT8_ASYMM,
         .info = quant8Perf};
-
+    out->relaxedFloat32toFloat16PerformanceScalar = relaxedFloat32toFloat16Perf;
+    out->relaxedFloat32toFloat16PerformanceTensor = relaxedFloat32toFloat16Perf;
+    out->ifPerformance = relaxedFloat32toFloat16Perf;
+    out->whilePerformance = relaxedFloat32toFloat16Perf;
     return result;
   }
 };

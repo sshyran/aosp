@@ -26,6 +26,16 @@ hardware::Return<V1_0::ErrorStatus> IPCDriver::prepareModel(
   return mojo_->prepareModel(model, callback);
 }
 
+hardware::Return<void> IPCDriver::getVersionString(getVersionString_cb cb) {
+  return mojo_->getVersionString(cb);
+}
+
+hardware::Return<void> IPCDriver::getSupportedOperations(
+    const V1_0::Model& model,
+    getSupportedOperations_cb cb) {
+  return mojo_->getSupportedOperations(model, cb);
+}
+
 // *************** LOCAL CPU DELEGATE ***************
 
 hardware::Return<void> IPCDriver::getSupportedOperations_1_3(
@@ -34,22 +44,12 @@ hardware::Return<void> IPCDriver::getSupportedOperations_1_3(
   return delegate_->getSupportedOperations_1_3(model, cb);
 }
 
-hardware::Return<void> IPCDriver::getVersionString(getVersionString_cb cb) {
-  return delegate_->getVersionString(cb);
-}
-
 hardware::Return<void> IPCDriver::getType(getType_cb cb) {
   return delegate_->getType(cb);
 }
 hardware::Return<void> IPCDriver::getSupportedExtensions(
     getSupportedExtensions_cb cb) {
   return delegate_->getSupportedExtensions(cb);
-}
-
-hardware::Return<void> IPCDriver::getSupportedOperations(
-    const V1_0::Model& model,
-    getSupportedOperations_cb cb) {
-  return delegate_->getSupportedOperations(model, cb);
 }
 
 hardware::Return<void> IPCDriver::getSupportedOperations_1_1(

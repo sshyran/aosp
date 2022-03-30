@@ -26,6 +26,10 @@ class IPCDriver : public V1_3::IDevice {
   // These methods are done over mojo
   hardware::Return<void> getCapabilities_1_3(
       getCapabilities_1_3_cb cb) override;
+  hardware::Return<void> getVersionString(getVersionString_cb cb) override;
+  hardware::Return<void> getSupportedOperations(
+      const V1_0::Model& model,
+      getSupportedOperations_cb cb) override;
   hardware::Return<V1_0::ErrorStatus> prepareModel(
       const V1_0::Model& model,
       const sp<V1_0::IPreparedModelCallback>& callback) override;
@@ -38,13 +42,9 @@ class IPCDriver : public V1_3::IDevice {
       getCapabilities_1_2_cb cb) override;
 
   // These methods are performed on the local CPU delegate
-  hardware::Return<void> getVersionString(getVersionString_cb cb) override;
   hardware::Return<void> getType(getType_cb cb) override;
   hardware::Return<void> getSupportedExtensions(
       getSupportedExtensions_cb) override;
-  hardware::Return<void> getSupportedOperations(
-      const V1_0::Model& model,
-      getSupportedOperations_cb cb) override;
   hardware::Return<void> getSupportedOperations_1_1(
       const V1_1::Model& model,
       getSupportedOperations_1_1_cb cb) override;

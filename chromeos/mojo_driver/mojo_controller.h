@@ -32,6 +32,11 @@ class MojoController {
   hardware::Return<V1_0::ErrorStatus> prepareModel(
       const V1_0::Model& model,
       const sp<V1_0::IPreparedModelCallback>& callback);
+  hardware::Return<void> getVersionString(
+      hardware::neuralnetworks::V1_3::IDevice::getVersionString_cb cb);
+  hardware::Return<void> getSupportedOperations(
+      const V1_0::Model& model,
+      hardware::neuralnetworks::V1_0::IDevice::getSupportedOperations_cb cb);
 
  private:
   void SendMojoInvitationAndGetRemote(pid_t child_pid,

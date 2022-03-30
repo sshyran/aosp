@@ -163,5 +163,24 @@ hardware::Return<V1_0::ErrorStatus> MojoController::prepareModel(
   return error_status;
 }
 
+hardware::Return<void> MojoController::getVersionString(
+    hardware::neuralnetworks::V1_3::IDevice::getVersionString_cb cb) {
+  std::string version;
+  V1_0::ErrorStatus status;
+  remote_->getVersionString(&status, &version);
+  cb(status, version);
+  return hardware::Void();
+}
+
+hardware::Return<void> MojoController::getSupportedOperations(
+    const V1_0::Model& model,
+    hardware::neuralnetworks::V1_0::IDevice::getSupportedOperations_cb cb) {
+  std::vector<bool> supported;
+  V1_0::ErrorStatus status;
+  remote_->getSupportedOperations(model, &status, &supported);
+  cb(status, supported);
+  return hardware::Void();
+}
+
 }  // namespace nn
 }  // namespace android

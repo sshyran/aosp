@@ -36,6 +36,9 @@ class IDeviceImpl : public chromeos::nnapi::mojom::IDevice {
       mojo::PendingRemote<chromeos::nnapi::mojom::IPreparedModelCallback>
           pm_callback,
       prepareModelCallback callback) override;
+  void getVersionString(getVersionStringCallback callback) override;
+  void getSupportedOperations(android::nn::V1_0::Model model,
+                              getSupportedOperationsCallback callback) override;
 
   V1_3::IDevice* wrapped_driver_;
 };
