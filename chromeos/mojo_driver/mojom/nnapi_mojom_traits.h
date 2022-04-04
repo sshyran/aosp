@@ -483,4 +483,21 @@ struct StructTraits<chromeos::nnapi::mojom::RequestDataView,
   }
 };
 
+template <>
+struct EnumTraits<chromeos::nnapi::mojom::DeviceStatus,
+                  android::hardware::neuralnetworks::V1_0::DeviceStatus> {
+  static chromeos::nnapi::mojom::DeviceStatus ToMojom(
+      android::hardware::neuralnetworks::V1_0::DeviceStatus input) {
+    return static_cast<chromeos::nnapi::mojom::DeviceStatus>(input);
+  }
+  static bool FromMojom(
+      chromeos::nnapi::mojom::DeviceStatus input,
+      android::hardware::neuralnetworks::V1_0::DeviceStatus* output) {
+    *output =
+        static_cast<android::hardware::neuralnetworks::V1_0::DeviceStatus>(
+            input);
+    return true;
+  }
+};
+
 }  // namespace mojo

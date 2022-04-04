@@ -67,7 +67,7 @@ enum OperandLifeTime {
   NO_VALUE,
 };
 
-enum DeviceStatus {
+[Stable] enum DeviceStatus {
   AVAILABLE,
   BUSY,
   OFFLINE,
@@ -173,4 +173,5 @@ interface IDevice {
   [Sync] getVersionString() => (ErrorStatus status, string version);
   [Sync] prepareModel(Model model,
                       pending_remote<IPreparedModelCallback> pm_callback) => (ErrorStatus status);
+  [Sync] getStatus() => (DeviceStatus status);
 };

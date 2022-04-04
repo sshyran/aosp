@@ -37,6 +37,7 @@ class MojoController {
   hardware::Return<void> getSupportedOperations(
       const V1_0::Model& model,
       hardware::neuralnetworks::V1_0::IDevice::getSupportedOperations_cb cb);
+  hardware::Return<hardware::neuralnetworks::V1_0::DeviceStatus> getStatus();
 
  private:
   void SendMojoInvitationAndGetRemote(pid_t child_pid,

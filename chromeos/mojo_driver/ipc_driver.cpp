@@ -36,6 +36,10 @@ hardware::Return<void> IPCDriver::getSupportedOperations(
   return mojo_->getSupportedOperations(model, cb);
 }
 
+hardware::Return<V1_0::DeviceStatus> IPCDriver::getStatus() {
+  return mojo_->getStatus();
+}
+
 // *************** LOCAL CPU DELEGATE ***************
 
 hardware::Return<void> IPCDriver::getSupportedOperations_1_3(
@@ -117,10 +121,6 @@ hardware::Return<V1_3::ErrorStatus> IPCDriver::prepareModelFromCache_1_3(
     const sp<V1_3::IPreparedModelCallback>& callback) {
   return delegate_->prepareModelFromCache_1_3(deadline, modelCache, dataCache,
                                               token, callback);
-}
-
-hardware::Return<V1_0::DeviceStatus> IPCDriver::getStatus() {
-  return delegate_->getStatus();
 }
 
 hardware::Return<void> IPCDriver::allocate(

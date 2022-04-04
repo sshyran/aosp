@@ -71,17 +71,20 @@ bool MojoController::SpawnWorkerProcessAndGetPid(
   DCHECK(worker_pid != nullptr);
 
   // Start the process.
+  auto mojo_bootstrap_fd =
+      channel.remote_endpoint().platform_handle().GetFD().get();
+
   ScopedMinijail jail(minijail_new());
 
+#ifdef NNAPI_HAL_IPC_DRIVER_IN_CHROOT
+  // Skip in order to conveniently run ipc driver in chroot during dev phase.
+#else
   minijail_namespace_ipc(jail.get());
   minijail_namespace_uts(jail.get());
   minijail_namespace_net(jail.get());
   minijail_namespace_cgroups(jail.get());
   minijail_namespace_pids(jail.get());
   minijail_namespace_vfs(jail.get());
-
-  auto mojo_bootstrap_fd =
-      channel.remote_endpoint().platform_handle().GetFD().get();
 
   // Closes the unused FDs in the worker process.
   // We keep the standard FDs here (should all point to `/dev/null`).
@@ -92,6 +95,7 @@ bool MojoController::SpawnWorkerProcessAndGetPid(
   CHECK(minijail_preserve_fd(jail.get(), mojo_bootstrap_fd,
                              mojo_bootstrap_fd) == 0);
   minijail_close_open_fds(jail.get());
+#endif
 
   std::string worker_path = "/usr/bin/nnapi_worker";
   std::string fd_argv = ::base::StringPrintf("%d", mojo_bootstrap_fd);
@@ -119,8 +123,12 @@ bool MojoController::SpawnWorkerProcessAndGetPid(
       "/usr/share/policy/nnapi-hal-driver-seccomp.policy";
   char* argv[3] = {&worker_path[0], &fd_argv[0], nullptr};
 
+#ifdef NNAPI_HAL_IPC_DRIVER_IN_CHROOT
+  // Skip in order to conveniently run ipc driver in chroot during dev phase.
+#else
   minijail_parse_seccomp_filters(jail.get(), &seccomp_policy_path[0]);
   minijail_use_seccomp_filter(jail.get());
+#endif
 
   if (minijail_run_pid(jail.get(), &worker_path[0], argv, worker_pid) != 0) {
     LOG(FATAL) << "Failed to spawn worker process using minijail";
@@ -180,6 +188,13 @@ hardware::Return<void> MojoController::getSupportedOperations(
   remote_->getSupportedOperations(model, &status, &supported);
   cb(status, supported);
   return hardware::Void();
+}
+
+hardware::Return<hardware::neuralnetworks::V1_0::DeviceStatus>
+MojoController::getStatus() {
+  V1_0::DeviceStatus device_status;
+  remote_->getStatus(&device_status);
+  return device_status;
 }
 
 }  // namespace nn

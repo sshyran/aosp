@@ -33,6 +33,7 @@ class IPCDriver : public V1_3::IDevice {
   hardware::Return<V1_0::ErrorStatus> prepareModel(
       const V1_0::Model& model,
       const sp<V1_0::IPreparedModelCallback>& callback) override;
+  hardware::Return<V1_0::DeviceStatus> getStatus() override;
 
   // These methods are done by converting to the 1_3 version.
   hardware::Return<void> getCapabilities(getCapabilities_cb cb) override;
@@ -87,7 +88,6 @@ class IPCDriver : public V1_3::IDevice {
       const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
       const HalCacheToken& token,
       const sp<V1_3::IPreparedModelCallback>& callback) override;
-  hardware::Return<V1_0::DeviceStatus> getStatus() override;
   hardware::Return<void> allocate(
       const V1_3::BufferDesc& desc,
       const hardware::hidl_vec<sp<V1_3::IPreparedModel>>& preparedModels,

@@ -101,5 +101,10 @@ void IExecutionCallbackImpl::notify(V1_0::ErrorStatus status) {
   wrapped_callback_->notify(status);
 }
 
+void IDeviceImpl::getStatus(getStatusCallback callback) {
+  V1_0::DeviceStatus result = wrapped_driver_->getStatus();
+  std::move(callback).Run(result);
+}
+
 }  // namespace nn
 }  // namespace android
