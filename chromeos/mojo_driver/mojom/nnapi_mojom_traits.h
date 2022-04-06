@@ -137,16 +137,16 @@ struct EnumTraits<chromeos::nnapi::mojom::ErrorStatus,
 
 template <>
 struct EnumTraits<chromeos::nnapi::mojom::OperationType,
-                  android::hardware::neuralnetworks::V1_0::OperationType> {
+                  android::hardware::neuralnetworks::V1_1::OperationType> {
   static chromeos::nnapi::mojom::OperationType ToMojom(
-      android::hardware::neuralnetworks::V1_0::OperationType input) {
+      android::hardware::neuralnetworks::V1_1::OperationType input) {
     return static_cast<chromeos::nnapi::mojom::OperationType>(input);
   }
   static bool FromMojom(
       chromeos::nnapi::mojom::OperationType input,
-      android::hardware::neuralnetworks::V1_0::OperationType* output) {
+      android::hardware::neuralnetworks::V1_1::OperationType* output) {
     *output =
-        static_cast<android::hardware::neuralnetworks::V1_0::OperationType>(
+        static_cast<android::hardware::neuralnetworks::V1_1::OperationType>(
             input);
     return true;
   }
@@ -187,27 +187,27 @@ struct EnumTraits<chromeos::nnapi::mojom::OperandLifeTime,
 
 template <>
 struct StructTraits<chromeos::nnapi::mojom::OperationDataView,
-                    android::nn::V1_0::Operation> {
+                    android::nn::V1_1::Operation> {
  public:
-  static android::hardware::neuralnetworks::V1_0::OperationType type(
-      const android::nn::V1_0::Operation& m) {
+  static android::hardware::neuralnetworks::V1_1::OperationType type(
+      const android::nn::V1_1::Operation& m) {
     return m.type;
   }
   static const android::hardware::hidl_vec<uint32_t>& inputs(
-      const android::nn::V1_0::Operation& m) {
+      const android::nn::V1_1::Operation& m) {
     return m.inputs;
   }
   static const android::hardware::hidl_vec<uint32_t>& outputs(
-      const android::nn::V1_0::Operation& m) {
+      const android::nn::V1_1::Operation& m) {
     return m.outputs;
   }
 
   static bool Read(chromeos::nnapi::mojom::OperationDataView operation,
-                   android::nn::V1_0::Operation* out) {
+                   android::nn::V1_1::Operation* out) {
     bool result = true;
 
     EnumTraits<chromeos::nnapi::mojom::OperationType,
-               android::hardware::neuralnetworks::V1_0::OperationType>::
+               android::hardware::neuralnetworks::V1_1::OperationType>::
         FromMojom(operation.type(), &out->type);
     result &= operation.ReadInputs(&out->inputs);
     result &= operation.ReadOutputs(&out->outputs);
@@ -269,37 +269,42 @@ struct StructTraits<chromeos::nnapi::mojom::OperandDataView,
 
 template <>
 struct StructTraits<chromeos::nnapi::mojom::ModelDataView,
-                    android::nn::V1_0::Model> {
+                    android::nn::V1_1::Model> {
  public:
   static const android::hardware::hidl_vec<
       android::hardware::neuralnetworks::V1_0::Operand>&
-  operands(const android::nn::V1_0::Model& m) {
+  operands(const android::nn::V1_1::Model& m) {
     return m.operands;
   }
   static const android::hardware::hidl_vec<
-      android::hardware::neuralnetworks::V1_0::Operation>&
-  operations(const android::nn::V1_0::Model& m) {
+      android::hardware::neuralnetworks::V1_1::Operation>&
+  operations(const android::nn::V1_1::Model& m) {
     return m.operations;
   }
   static const android::hardware::hidl_vec<uint32_t>& inputIndexes(
-      const android::nn::V1_0::Model& m) {
+      const android::nn::V1_1::Model& m) {
     return m.inputIndexes;
   }
   static const android::hardware::hidl_vec<uint32_t>& outputIndexes(
-      const android::nn::V1_0::Model& m) {
+      const android::nn::V1_1::Model& m) {
     return m.outputIndexes;
   }
   static const android::hardware::hidl_vec<uint8_t>& operandValues(
-      const android::nn::V1_0::Model& m) {
+      const android::nn::V1_1::Model& m) {
     return m.operandValues;
   }
   static const android::hardware::hidl_vec<android::hardware::hidl_memory>&
-  pools(const android::nn::V1_0::Model& m) {
+  pools(const android::nn::V1_1::Model& m) {
     return m.pools;
   }
 
+  static bool relaxComputationFloat32toFloat16(
+      const android::nn::V1_1::Model& m) {
+    return m.relaxComputationFloat32toFloat16;
+  }
+
   static bool Read(chromeos::nnapi::mojom::ModelDataView model,
-                   android::nn::V1_0::Model* out) {
+                   android::nn::V1_1::Model* out) {
     bool result = true;
 
     result &= model.ReadOperands(&out->operands);
@@ -308,6 +313,8 @@ struct StructTraits<chromeos::nnapi::mojom::ModelDataView,
     result &= model.ReadOutputIndexes(&out->outputIndexes);
     result &= model.ReadOperandValues(&out->operandValues);
     result &= model.ReadPools(&out->pools);
+    out->relaxComputationFloat32toFloat16 =
+        model.relaxComputationFloat32toFloat16();
 
     return result;
   }
@@ -495,6 +502,23 @@ struct EnumTraits<chromeos::nnapi::mojom::DeviceStatus,
       android::hardware::neuralnetworks::V1_0::DeviceStatus* output) {
     *output =
         static_cast<android::hardware::neuralnetworks::V1_0::DeviceStatus>(
+            input);
+    return true;
+  }
+};
+
+template <>
+struct EnumTraits<chromeos::nnapi::mojom::ExecutionPreference,
+                  android::hardware::neuralnetworks::V1_1::ExecutionPreference> {
+  static chromeos::nnapi::mojom::ExecutionPreference ToMojom(
+      android::hardware::neuralnetworks::V1_1::ExecutionPreference input) {
+    return static_cast<chromeos::nnapi::mojom::ExecutionPreference>(input);
+  }
+  static bool FromMojom(
+      chromeos::nnapi::mojom::ExecutionPreference input,
+      android::hardware::neuralnetworks::V1_1::ExecutionPreference* output) {
+    *output =
+        static_cast<android::hardware::neuralnetworks::V1_1::ExecutionPreference>(
             input);
     return true;
   }

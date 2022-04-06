@@ -45,5 +45,38 @@ hardware::Return<void> IPCDriver::getCapabilities_1_2(
       });
 }
 
+hardware::Return<V1_0::ErrorStatus> IPCDriver::prepareModel(
+    const V1_0::Model& model,
+    const sp<V1_0::IPreparedModelCallback>& callback) {
+  if (!validateModel(model)) {
+    callback->notify(V1_0::ErrorStatus::INVALID_ARGUMENT, nullptr);
+    return V1_0::ErrorStatus::INVALID_ARGUMENT;
+  }
+  return prepareModelRemote(convertToV1_1(model),
+                          V1_1::ExecutionPreference::FAST_SINGLE_ANSWER,
+                          callback);
+}
+
+hardware::Return<V1_0::ErrorStatus> IPCDriver::prepareModel_1_1(
+    const V1_1::Model& model,
+    V1_1::ExecutionPreference preference,
+    const sp<V1_0::IPreparedModelCallback>& callback) {
+  if (!validateModel(model) || !validateExecutionPreference(preference)) {
+    callback->notify(V1_0::ErrorStatus::INVALID_ARGUMENT, nullptr);
+    return V1_0::ErrorStatus::INVALID_ARGUMENT;
+  }
+  return prepareModelRemote(model, preference, callback);
+}
+
+hardware::Return<void> IPCDriver::getSupportedOperations(
+    const V1_0::Model& model,
+    getSupportedOperations_cb cb) {
+  if (!validateModel(model)) {
+    cb(V1_0::ErrorStatus::INVALID_ARGUMENT, {});
+    return hardware::Void();
+  }
+  return getSupportedOperations_1_1(convertToV1_1(model), cb);
+}
+
 }  // namespace nn
 }  // namespace android

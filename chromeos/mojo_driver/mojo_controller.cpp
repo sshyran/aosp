@@ -149,8 +149,9 @@ hardware::Return<void> MojoController::getCapabilities_1_3(
   return hardware::Void();
 }
 
-hardware::Return<V1_0::ErrorStatus> MojoController::prepareModel(
-    const V1_0::Model& model,
+hardware::Return<V1_0::ErrorStatus> MojoController::prepareModel_1_1(
+    const V1_1::Model& model,
+    V1_1::ExecutionPreference preference,
     const sp<V1_0::IPreparedModelCallback>& callback) {
   V1_0::ErrorStatus error_status;
   mojo::PendingRemote<mojom::IPreparedModelCallback> pmc_remote;
@@ -166,7 +167,8 @@ hardware::Return<V1_0::ErrorStatus> MojoController::prepareModel(
       FROM_HERE,
       ::base::BindOnce(fn, std::move(receiver), std::move(callback)));
 
-  remote_->prepareModel(model, std::move(pmc_remote), &error_status);
+  remote_->prepareModel(model, preference, std::move(pmc_remote),
+                        &error_status);
 
   return error_status;
 }
@@ -180,8 +182,8 @@ hardware::Return<void> MojoController::getVersionString(
   return hardware::Void();
 }
 
-hardware::Return<void> MojoController::getSupportedOperations(
-    const V1_0::Model& model,
+hardware::Return<void> MojoController::getSupportedOperations_1_1(
+    const V1_1::Model& model,
     hardware::neuralnetworks::V1_0::IDevice::getSupportedOperations_cb cb) {
   std::vector<bool> supported;
   V1_0::ErrorStatus status;

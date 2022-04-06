@@ -50,7 +50,7 @@
     },
     "chromeos.nnapi.mojom.Model": {
       "hashable": false,
-      "typename": "android::nn::V1_0::Model",
+      "typename": "android::nn::V1_1::Model",
       "forward_declaration": null,
       "traits_headers": [
         "nnapi_mojom_traits.h"
@@ -67,6 +67,22 @@
     "chromeos.nnapi.mojom.DeviceStatus": {
       "hashable": false,
       "typename": "android::nn::V1_0::DeviceStatus",
+      "forward_declaration": null,
+      "traits_headers": [
+        "nnapi_mojom_traits.h"
+      ],
+      "copyable_pass_by_value": true,
+      "force_serialize": false,
+      "move_only": false,
+      "nullable_is_same_type": false,
+      "non_copyable_non_movable": false,
+      "public_headers": [
+        "HalInterfaces.h"
+      ]
+    },
+    "chromeos.nnapi.mojom.ExecutionPreference": {
+      "hashable": false,
+      "typename": "android::nn::V1_1::ExecutionPreference",
       "forward_declaration": null,
       "traits_headers": [
         "nnapi_mojom_traits.h"

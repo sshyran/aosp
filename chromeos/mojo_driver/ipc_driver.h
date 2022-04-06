@@ -27,13 +27,14 @@ class IPCDriver : public V1_3::IDevice {
   hardware::Return<void> getCapabilities_1_3(
       getCapabilities_1_3_cb cb) override;
   hardware::Return<void> getVersionString(getVersionString_cb cb) override;
-  hardware::Return<void> getSupportedOperations(
-      const V1_0::Model& model,
-      getSupportedOperations_cb cb) override;
-  hardware::Return<V1_0::ErrorStatus> prepareModel(
-      const V1_0::Model& model,
-      const sp<V1_0::IPreparedModelCallback>& callback) override;
+  hardware::Return<void> getSupportedOperations_1_1(
+      const V1_1::Model& model,
+      getSupportedOperations_1_1_cb cb) override;
   hardware::Return<V1_0::DeviceStatus> getStatus() override;
+  hardware::Return<V1_0::ErrorStatus> prepareModel_1_1(
+      const V1_1::Model& model,
+      V1_1::ExecutionPreference preference,
+      const sp<V1_0::IPreparedModelCallback>& callback) override;
 
   // These methods are done by converting to the 1_3 version.
   hardware::Return<void> getCapabilities(getCapabilities_cb cb) override;
@@ -41,14 +42,17 @@ class IPCDriver : public V1_3::IDevice {
       getCapabilities_1_1_cb cb) override;
   hardware::Return<void> getCapabilities_1_2(
       getCapabilities_1_2_cb cb) override;
+  hardware::Return<void> getSupportedOperations(
+      const V1_0::Model& model,
+      getSupportedOperations_cb cb) override;
+  hardware::Return<V1_0::ErrorStatus> prepareModel(
+      const V1_0::Model& model,
+      const sp<V1_0::IPreparedModelCallback>& callback) override;
 
   // These methods are performed on the local CPU delegate
   hardware::Return<void> getType(getType_cb cb) override;
   hardware::Return<void> getSupportedExtensions(
       getSupportedExtensions_cb) override;
-  hardware::Return<void> getSupportedOperations_1_1(
-      const V1_1::Model& model,
-      getSupportedOperations_1_1_cb cb) override;
   hardware::Return<void> getSupportedOperations_1_2(
       const V1_2::Model& model,
       getSupportedOperations_1_2_cb cb) override;
@@ -57,10 +61,6 @@ class IPCDriver : public V1_3::IDevice {
       getSupportedOperations_1_3_cb cb) override;
   hardware::Return<void> getNumberOfCacheFilesNeeded(
       getNumberOfCacheFilesNeeded_cb cb) override;
-  hardware::Return<V1_0::ErrorStatus> prepareModel_1_1(
-      const V1_1::Model& model,
-      V1_1::ExecutionPreference preference,
-      const sp<V1_0::IPreparedModelCallback>& callback) override;
   hardware::Return<V1_0::ErrorStatus> prepareModel_1_2(
       const V1_2::Model& model,
       V1_1::ExecutionPreference preference,
@@ -101,6 +101,11 @@ class IPCDriver : public V1_3::IDevice {
   // TODO: Remove this once all the methods have been implemented
   // on the mojo object.
   sp<V1_3::IDevice> delegate_;
+
+  hardware::Return<V1_0::ErrorStatus> prepareModelRemote(
+      const V1_1::Model& model,
+      V1_1::ExecutionPreference preference,
+      const sp<V1_0::IPreparedModelCallback>& callback);
 };
 
 }  // namespace nn

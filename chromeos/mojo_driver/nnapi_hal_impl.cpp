@@ -46,10 +46,10 @@ void IDeviceImpl::getVersionString(getVersionStringCallback callback) {
 }
 
 void IDeviceImpl::getSupportedOperations(
-    android::nn::V1_0::Model model,
+    android::nn::V1_1::Model model,
     getSupportedOperationsCallback callback) {
   auto fn = [callback = std::move(callback)](
-                V1_0::Model model, V1_0::ErrorStatus status,
+                V1_1::Model model, V1_0::ErrorStatus status,
                 const hardware::hidl_vec<bool>& supportedOperations) mutable {
     std::move(callback).Run(static_cast<V1_0::ErrorStatus>(status),
                             supportedOperations);
@@ -60,18 +60,20 @@ void IDeviceImpl::getSupportedOperations(
                          const hardware::hidl_vec<bool>& supportedOperations) {
     (*shared_fn)(model, status, supportedOperations);
   };
-  wrapped_driver_->getSupportedOperations(model, std::move(copyable_fn));
+  wrapped_driver_->getSupportedOperations_1_1(model, std::move(copyable_fn));
 }
 
 void IDeviceImpl::prepareModel(
-    android::nn::V1_0::Model model,
-    mojo::PendingRemote<mojom::IPreparedModelCallback> pm_callback,
+    android::nn::V1_1::Model model,
+    android::nn::V1_1::ExecutionPreference preference,
+    ::mojo::PendingRemote<chromeos::nnapi::mojom::IPreparedModelCallback>
+        pm_callback,
     prepareModelCallback callback) {
   auto wrapped_callback = sp<V1_0::IPreparedModelCallback>(
       new PreparedModelCallbackStub(std::move(pm_callback)));
 
   V1_0::ErrorStatus result =
-      wrapped_driver_->prepareModel(model, wrapped_callback);
+      wrapped_driver_->prepareModel_1_1(model, preference, wrapped_callback);
   std::move(callback).Run(result);
 }
 

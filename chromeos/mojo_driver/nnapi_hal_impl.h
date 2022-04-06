@@ -32,12 +32,13 @@ class IDeviceImpl : public chromeos::nnapi::mojom::IDevice {
  private:
   void getCapabilities(getCapabilitiesCallback callback) override;
   void prepareModel(
-      android::nn::V1_0::Model model,
-      mojo::PendingRemote<chromeos::nnapi::mojom::IPreparedModelCallback>
+      android::nn::V1_1::Model model,
+      android::nn::V1_1::ExecutionPreference preference,
+      ::mojo::PendingRemote<chromeos::nnapi::mojom::IPreparedModelCallback>
           pm_callback,
       prepareModelCallback callback) override;
   void getVersionString(getVersionStringCallback callback) override;
-  void getSupportedOperations(android::nn::V1_0::Model model,
+  void getSupportedOperations(android::nn::V1_1::Model model,
                               getSupportedOperationsCallback callback) override;
   void getStatus(getStatusCallback callback) override;
 

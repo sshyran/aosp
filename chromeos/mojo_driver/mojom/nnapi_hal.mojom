@@ -48,6 +48,15 @@ module chromeos.nnapi.mojom;
   SPACE_TO_DEPTH = 26,
   SVDF = 27,
   TANH = 28,
+  BATCH_TO_SPACE_ND = 29,
+  DIV = 30,
+  MEAN = 31,
+  PAD = 32,
+  SPACE_TO_BATCH_ND = 33,
+  SQUEEZE = 34,
+  STRIDED_SLICE = 35,
+  SUB = 36,
+  TRANSPOSE = 37,
   OEM_OPERATION = 10000,
 };
 
@@ -72,6 +81,12 @@ enum OperandLifeTime {
   BUSY,
   OFFLINE,
   UNKNOWN,
+};
+
+enum ExecutionPreference {
+  LOW_POWER = 0,
+  FAST_SINGLE_ANSWER = 1,
+  SUSTAINED_SPEED = 2,
 };
 
 struct HidlHandle {
@@ -117,6 +132,7 @@ struct Model {
   array<uint32> outputIndexes;
   array<uint8> operandValues;
   array<HidlMemory> pools;
+  bool relaxComputationFloat32toFloat16;
 };
 
 struct RequestArgument {
@@ -171,7 +187,7 @@ interface IDevice {
   [Sync] getCapabilities() => (ErrorStatus status, Capabilities capabilities);
   [Sync] getSupportedOperations(Model model) => (ErrorStatus status, array<bool> supportedOperations);
   [Sync] getVersionString() => (ErrorStatus status, string version);
-  [Sync] prepareModel(Model model,
+  [Sync] prepareModel(Model model, ExecutionPreference preference,
                       pending_remote<IPreparedModelCallback> pm_callback) => (ErrorStatus status);
   [Sync] getStatus() => (DeviceStatus status);
 };

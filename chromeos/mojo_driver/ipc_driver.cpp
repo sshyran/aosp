@@ -20,20 +20,21 @@ hardware::Return<void> IPCDriver::getCapabilities_1_3(
   return mojo_->getCapabilities_1_3(cb);
 }
 
-hardware::Return<V1_0::ErrorStatus> IPCDriver::prepareModel(
-    const V1_0::Model& model,
+hardware::Return<V1_0::ErrorStatus> IPCDriver::prepareModelRemote(
+    const V1_1::Model& model,
+    V1_1::ExecutionPreference preference,
     const sp<V1_0::IPreparedModelCallback>& callback) {
-  return mojo_->prepareModel(model, callback);
+  return mojo_->prepareModel_1_1(model, preference, callback);
 }
 
 hardware::Return<void> IPCDriver::getVersionString(getVersionString_cb cb) {
   return mojo_->getVersionString(cb);
 }
 
-hardware::Return<void> IPCDriver::getSupportedOperations(
-    const V1_0::Model& model,
-    getSupportedOperations_cb cb) {
-  return mojo_->getSupportedOperations(model, cb);
+hardware::Return<void> IPCDriver::getSupportedOperations_1_1(
+    const V1_1::Model& model,
+    getSupportedOperations_1_1_cb cb) {
+  return mojo_->getSupportedOperations_1_1(model, cb);
 }
 
 hardware::Return<V1_0::DeviceStatus> IPCDriver::getStatus() {
@@ -56,12 +57,6 @@ hardware::Return<void> IPCDriver::getSupportedExtensions(
   return delegate_->getSupportedExtensions(cb);
 }
 
-hardware::Return<void> IPCDriver::getSupportedOperations_1_1(
-    const V1_1::Model& model,
-    getSupportedOperations_1_1_cb cb) {
-  return delegate_->getSupportedOperations_1_1(model, cb);
-}
-
 hardware::Return<void> IPCDriver::getSupportedOperations_1_2(
     const V1_2::Model& model,
     getSupportedOperations_1_2_cb cb) {
@@ -71,13 +66,6 @@ hardware::Return<void> IPCDriver::getSupportedOperations_1_2(
 hardware::Return<void> IPCDriver::getNumberOfCacheFilesNeeded(
     getNumberOfCacheFilesNeeded_cb cb) {
   return delegate_->getNumberOfCacheFilesNeeded(cb);
-}
-
-hardware::Return<V1_0::ErrorStatus> IPCDriver::prepareModel_1_1(
-    const V1_1::Model& model,
-    V1_1::ExecutionPreference preference,
-    const sp<V1_0::IPreparedModelCallback>& callback) {
-  return delegate_->prepareModel_1_1(model, preference, callback);
 }
 
 hardware::Return<V1_0::ErrorStatus> IPCDriver::prepareModel_1_2(
