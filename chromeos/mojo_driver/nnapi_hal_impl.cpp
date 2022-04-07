@@ -108,5 +108,53 @@ void IDeviceImpl::getStatus(getStatusCallback callback) {
   std::move(callback).Run(result);
 }
 
+void IDeviceImpl::getType(getTypeCallback callback) {
+  auto fn = [callback = std::move(callback)](
+                V1_0::ErrorStatus status,
+                const V1_2::DeviceType& type) mutable {
+    std::move(callback).Run(static_cast<V1_0::ErrorStatus>(status), type);
+  };
+  auto shared_fn = std::make_shared<decltype(fn)>(std::move(fn));
+  auto copyable_fn = [shared_fn = std::move(shared_fn)](
+                         V1_0::ErrorStatus status,
+                         const V1_2::DeviceType& type) {
+    (*shared_fn)(status, type);
+  };
+  wrapped_driver_->getType(std::move(copyable_fn));
+}
+
+void IDeviceImpl::getSupportedExtensions(
+    getSupportedExtensionsCallback callback) {
+  auto fn = [callback = std::move(callback)](
+                V1_0::ErrorStatus status,
+                const std::vector<V1_2::Extension>& extension) mutable {
+    std::move(callback).Run(status, extension);
+  };
+  auto shared_fn = std::make_shared<decltype(fn)>(std::move(fn));
+  auto copyable_fn = [shared_fn = std::move(shared_fn)](
+                         V1_0::ErrorStatus status,
+                         const std::vector<V1_2::Extension>& extension) {
+    (*shared_fn)(status, extension);
+  };
+  wrapped_driver_->getSupportedExtensions(std::move(copyable_fn));
+}
+
+void IDeviceImpl::getNumberOfCacheFilesNeeded(
+    getNumberOfCacheFilesNeededCallback callback) {
+  auto fn = [callback = std::move(callback)](
+                V1_0::ErrorStatus status, const uint32_t& numModelCache,
+                const uint32_t& numDataCache) mutable {
+    std::move(callback).Run(status, numModelCache, numDataCache);
+  };
+  auto shared_fn = std::make_shared<decltype(fn)>(std::move(fn));
+  auto copyable_fn = [shared_fn = std::move(shared_fn)](
+                         V1_0::ErrorStatus status,
+                         const uint32_t& numModelCache,
+                         const uint32_t& numDataCache) {
+    (*shared_fn)(status, numModelCache, numDataCache);
+  };
+  wrapped_driver_->getNumberOfCacheFilesNeeded(std::move(copyable_fn));
+}
+
 }  // namespace nn
 }  // namespace android

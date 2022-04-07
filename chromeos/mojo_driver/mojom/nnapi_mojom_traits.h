@@ -524,4 +524,96 @@ struct EnumTraits<chromeos::nnapi::mojom::ExecutionPreference,
   }
 };
 
+template <>
+struct EnumTraits<chromeos::nnapi::mojom::DeviceType,
+                  android::hardware::neuralnetworks::V1_2::DeviceType> {
+  static chromeos::nnapi::mojom::DeviceType ToMojom(
+      android::hardware::neuralnetworks::V1_2::DeviceType input) {
+    return static_cast<chromeos::nnapi::mojom::DeviceType>(input);
+  }
+  static bool FromMojom(
+      chromeos::nnapi::mojom::DeviceType input,
+      android::hardware::neuralnetworks::V1_2::DeviceType* output) {
+    *output =
+        static_cast<android::hardware::neuralnetworks::V1_2::DeviceType>(input);
+    return true;
+  }
+};
+
+template <>
+struct StructTraits<chromeos::nnapi::mojom::OperandTypeInformationDataView,
+                    android::nn::V1_2::Extension::OperandTypeInformation> {
+ public:
+  static uint16_t type(
+      const android::nn::V1_2::Extension::OperandTypeInformation& obj) {
+    return obj.type;
+  }
+
+  static bool isTensor(
+      const android::nn::V1_2::Extension::OperandTypeInformation& obj) {
+    return obj.isTensor;
+  }
+
+  static uint32_t byteSize(
+      const android::nn::V1_2::Extension::OperandTypeInformation& obj) {
+    return obj.byteSize;
+  }
+
+  static bool Read(chromeos::nnapi::mojom::OperandTypeInformationDataView data,
+                   android::nn::V1_2::Extension::OperandTypeInformation* out) {
+    out->type = data.type();
+    out->isTensor = data.isTensor();
+    out->byteSize = data.byteSize();
+    return true;
+  }
+};
+
+template <>
+struct StructTraits<chromeos::nnapi::mojom::ExtensionDataView,
+                    android::nn::V1_2::Extension> {
+ public:
+  static std::string name(const android::nn::V1_2::Extension& obj) {
+    return obj.name;
+  }
+
+  static const android::hardware::hidl_vec<
+      android::nn::V1_2::Extension::OperandTypeInformation>&
+  operandTypes(const android::nn::V1_2::Extension& obj) {
+    return obj.operandTypes;
+  }
+
+  static bool Read(chromeos::nnapi::mojom::ExtensionDataView data,
+                   android::nn::V1_2::Extension* out) {
+    bool result = true;
+    result &= data.ReadName(&out->name);
+    result &= data.ReadOperandTypes(&out->operandTypes);
+    return result;
+  }
+};
+
+template <>
+struct StringTraits<android::hardware::hidl_string> {
+  static bool IsNull(android::hardware::hidl_string input) { return false; }
+
+  static void SetToNull(android::hardware::hidl_string* output) {
+    // Convert null to an "empty" android::hardware::hidl_string.
+    *output = android::hardware::hidl_string();
+  }
+
+  static android::hardware::hidl_string GetUTF8(
+      android::hardware::hidl_string input) {
+    return input;
+  }
+
+  static bool Read(StringDataView input,
+                   android::hardware::hidl_string* output) {
+    *output = android::hardware::hidl_string(input.storage(), input.size());
+    return true;
+  }
+
+  static bool IsValidUTF8(const android::hardware::hidl_string& value) {
+    return true;
+  }
+};
+
 }  // namespace mojo

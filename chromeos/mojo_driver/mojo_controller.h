@@ -28,17 +28,22 @@ class MojoController {
   MojoController();
 
   hardware::Return<void> getCapabilities_1_3(
-      hardware::neuralnetworks::V1_3::IDevice::getCapabilities_1_3_cb cb);
+      V1_3::IDevice::getCapabilities_1_3_cb cb);
   hardware::Return<V1_0::ErrorStatus> prepareModel_1_1(
       const V1_1::Model& model,
       V1_1::ExecutionPreference preference,
       const sp<V1_0::IPreparedModelCallback>& callback);
   hardware::Return<void> getVersionString(
-      hardware::neuralnetworks::V1_3::IDevice::getVersionString_cb cb);
+      V1_3::IDevice::getVersionString_cb cb);
   hardware::Return<void> getSupportedOperations_1_1(
       const V1_1::Model& model,
-      hardware::neuralnetworks::V1_0::IDevice::getSupportedOperations_cb cb);
-  hardware::Return<hardware::neuralnetworks::V1_0::DeviceStatus> getStatus();
+      V1_0::IDevice::getSupportedOperations_cb cb);
+  hardware::Return<V1_0::DeviceStatus> getStatus();
+  hardware::Return<void> getType(V1_2::IDevice::getType_cb cb);
+  hardware::Return<void> getSupportedExtensions(
+      V1_2::IDevice::getSupportedExtensions_cb cb);
+  hardware::Return<void> getNumberOfCacheFilesNeeded(
+      V1_2::IDevice::getNumberOfCacheFilesNeeded_cb cb);
 
  private:
   void SendMojoInvitationAndGetRemote(pid_t child_pid,

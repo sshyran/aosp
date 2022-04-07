@@ -141,7 +141,7 @@ bool MojoController::SpawnWorkerProcessAndGetPid(
 }
 
 hardware::Return<void> MojoController::getCapabilities_1_3(
-    hardware::neuralnetworks::V1_3::IDevice::getCapabilities_1_3_cb cb) {
+    V1_3::IDevice::getCapabilities_1_3_cb cb) {
   V1_3::Capabilities cap;
   V1_0::ErrorStatus status;
   remote_->getCapabilities(&status, &cap);
@@ -174,7 +174,7 @@ hardware::Return<V1_0::ErrorStatus> MojoController::prepareModel_1_1(
 }
 
 hardware::Return<void> MojoController::getVersionString(
-    hardware::neuralnetworks::V1_3::IDevice::getVersionString_cb cb) {
+    V1_3::IDevice::getVersionString_cb cb) {
   std::string version;
   V1_0::ErrorStatus status;
   remote_->getVersionString(&status, &version);
@@ -184,7 +184,7 @@ hardware::Return<void> MojoController::getVersionString(
 
 hardware::Return<void> MojoController::getSupportedOperations_1_1(
     const V1_1::Model& model,
-    hardware::neuralnetworks::V1_0::IDevice::getSupportedOperations_cb cb) {
+    V1_0::IDevice::getSupportedOperations_cb cb) {
   std::vector<bool> supported;
   V1_0::ErrorStatus status;
   remote_->getSupportedOperations(model, &status, &supported);
@@ -192,12 +192,37 @@ hardware::Return<void> MojoController::getSupportedOperations_1_1(
   return hardware::Void();
 }
 
-hardware::Return<hardware::neuralnetworks::V1_0::DeviceStatus>
-MojoController::getStatus() {
+hardware::Return<V1_0::DeviceStatus> MojoController::getStatus() {
   V1_0::DeviceStatus device_status;
   remote_->getStatus(&device_status);
   return device_status;
 }
 
+hardware::Return<void> MojoController::getType(V1_2::IDevice::getType_cb cb) {
+  V1_2::DeviceType type;
+  V1_0::ErrorStatus status;
+  remote_->getType(&status, &type);
+  cb(static_cast<V1_0::ErrorStatus>(status), type);
+  return hardware::Void();
+}
+
+hardware::Return<void> MojoController::getSupportedExtensions(
+    V1_2::IDevice::getSupportedExtensions_cb cb) {
+  std::vector<V1_2::Extension> extension;
+  V1_0::ErrorStatus status;
+  remote_->getSupportedExtensions(&status, &extension);
+  cb(status, extension);
+  return hardware::Void();
+}
+
+hardware::Return<void> MojoController::getNumberOfCacheFilesNeeded(
+    V1_2::IDevice::getNumberOfCacheFilesNeeded_cb cb) {
+  V1_0::ErrorStatus status;
+  uint32_t numModelCache;
+  uint32_t numDataCache;
+  remote_->getNumberOfCacheFilesNeeded(&status, &numModelCache, &numDataCache);
+  cb(status, numModelCache, numDataCache);
+  return hardware::Void();
+}
 }  // namespace nn
 }  // namespace android

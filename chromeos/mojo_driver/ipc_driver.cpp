@@ -41,6 +41,20 @@ hardware::Return<V1_0::DeviceStatus> IPCDriver::getStatus() {
   return mojo_->getStatus();
 }
 
+hardware::Return<void> IPCDriver::getType(getType_cb cb) {
+  return mojo_->getType(cb);
+}
+
+hardware::Return<void> IPCDriver::getSupportedExtensions(
+    getSupportedExtensions_cb cb) {
+  return mojo_->getSupportedExtensions(cb);
+}
+
+hardware::Return<void> IPCDriver::getNumberOfCacheFilesNeeded(
+    getNumberOfCacheFilesNeeded_cb cb) {
+  return mojo_->getNumberOfCacheFilesNeeded(cb);
+}
+
 // *************** LOCAL CPU DELEGATE ***************
 
 hardware::Return<void> IPCDriver::getSupportedOperations_1_3(
@@ -49,23 +63,10 @@ hardware::Return<void> IPCDriver::getSupportedOperations_1_3(
   return delegate_->getSupportedOperations_1_3(model, cb);
 }
 
-hardware::Return<void> IPCDriver::getType(getType_cb cb) {
-  return delegate_->getType(cb);
-}
-hardware::Return<void> IPCDriver::getSupportedExtensions(
-    getSupportedExtensions_cb cb) {
-  return delegate_->getSupportedExtensions(cb);
-}
-
 hardware::Return<void> IPCDriver::getSupportedOperations_1_2(
     const V1_2::Model& model,
     getSupportedOperations_1_2_cb cb) {
   return delegate_->getSupportedOperations_1_2(model, cb);
-}
-
-hardware::Return<void> IPCDriver::getNumberOfCacheFilesNeeded(
-    getNumberOfCacheFilesNeeded_cb cb) {
-  return delegate_->getNumberOfCacheFilesNeeded(cb);
 }
 
 hardware::Return<V1_0::ErrorStatus> IPCDriver::prepareModel_1_2(

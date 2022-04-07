@@ -41,6 +41,10 @@ class IDeviceImpl : public chromeos::nnapi::mojom::IDevice {
   void getSupportedOperations(android::nn::V1_1::Model model,
                               getSupportedOperationsCallback callback) override;
   void getStatus(getStatusCallback callback) override;
+  void getType(getTypeCallback callback) override;
+  void getSupportedExtensions(getSupportedExtensionsCallback callback) override;
+  void getNumberOfCacheFilesNeeded(
+      getNumberOfCacheFilesNeededCallback cb) override;
 
   V1_3::IDevice* wrapped_driver_;
 };

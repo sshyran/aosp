@@ -89,6 +89,13 @@ enum ExecutionPreference {
   SUSTAINED_SPEED = 2,
 };
 
+enum DeviceType {
+  OTHER = 1,
+  CPU = 2,
+  GPU = 3,
+  ACCELERATOR = 4,
+};
+
 struct HidlHandle {
   int32 version;
   int32 numFds;
@@ -170,6 +177,18 @@ struct Request {
   PerformanceInfo relaxedFloat32toFloat16Performance;
 };
 
+
+struct OperandTypeInformation {
+  uint16 type;
+  bool isTensor;
+  uint32 byteSize;
+};
+
+struct Extension {
+  string name;
+  array<OperandTypeInformation> operandTypes;
+};
+
 interface IExecutionCallback {
   notify(ErrorStatus status);
 };
@@ -190,4 +209,7 @@ interface IDevice {
   [Sync] prepareModel(Model model, ExecutionPreference preference,
                       pending_remote<IPreparedModelCallback> pm_callback) => (ErrorStatus status);
   [Sync] getStatus() => (DeviceStatus status);
+  [Sync] getType() => (ErrorStatus status, DeviceType type);
+  [Sync] getSupportedExtensions() => (ErrorStatus status, array<Extension> extensions);
+  [Sync] getNumberOfCacheFilesNeeded() => (ErrorStatus status, uint32 numModelCache, uint32 numDataCache);
 };
