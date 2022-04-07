@@ -20,6 +20,7 @@
 #include <nnapi/Types.h>
 
 #include <chrono>
+#include <limits>
 #include <memory>
 #include <optional>
 #include <set>
@@ -96,8 +97,8 @@ class CompilationBuilder {
             int resultCode);  // If not ANEURALNETWORKS_NO_ERROR, then simulate partitioning failure
 
     struct TelemetryInfo {
-        uint64_t compilationTimeNanos;
-        bool fallbackToCpuFromError;
+        uint64_t compilationTimeNanos = std::numeric_limits<uint64_t>::max();
+        bool fallbackToCpuFromError = false;
     };
     const std::optional<TelemetryInfo>& getTelemetryInfo() const { return mTelemetryInfo; }
 

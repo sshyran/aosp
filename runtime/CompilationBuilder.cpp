@@ -59,8 +59,8 @@ int CompilationBuilder::finish() {
     // TODO validate the rest
 
     // Init telemetry info, start measuring compilation time
-    mTelemetryInfo = {};
-    TimeNanoMeasurer(&mTelemetryInfo->compilationTimeNanos);
+    mTelemetryInfo = TelemetryInfo{};
+    const auto scopedTimeNanoMeasurer = TimeNanoMeasurer(&mTelemetryInfo->compilationTimeNanos);
 
     const auto deadline = makeDeadline(mTimeoutDuration);
 

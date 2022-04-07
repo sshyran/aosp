@@ -303,7 +303,7 @@ constexpr auto kHalVersionV1_3ToApi = ApiVersion{.canonical = kVersionFeatureLev
 // Utility that measures time period, in nanoseconds, from creation
 // to destruction and stores result in the supplied memory location
 // on destruction
-struct TimeNanoMeasurer {
+struct [[nodiscard]] TimeNanoMeasurer {
     TimePoint start;
     uint64_t* saveAt;
 
