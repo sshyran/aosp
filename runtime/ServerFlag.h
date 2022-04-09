@@ -32,10 +32,10 @@ namespace android::nn {
 constexpr char kExprCategoryName[] = "nnapi_native";
 constexpr char kCurrentFeatureLevelFlagName[] = "current_feature_level";
 constexpr char kTelemetryEnableFlagName[] = "telemetry_enable";
-constexpr int64_t kDefaultFeatureLevelNum = 5;
+constexpr int64_t kDefaultFeatureLevelNum = 8;
 // When this value is updated, update kMinFeatureLevelCode in runtime/test/TestUpdatability.cpp with
 // the corresponding ANEURALNETWORKS_FEATURE_LEVEL_* version.
-constexpr int64_t kMinFeatureLevelNum = 5;
+constexpr int64_t kMinFeatureLevelNum = 8;
 constexpr int64_t kMaxFeatureLevelNum = 8;
 constexpr bool kDefaultTelemetryEnableValue = false;
 

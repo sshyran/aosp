@@ -109,8 +109,8 @@ TEST(ServerFlagTest, ServerFeatureLevelToVersion) {
     EXPECT_EQ(serverFeatureLevelToVersion(7), kVersionFeatureLevel7);
     EXPECT_EQ(serverFeatureLevelToVersion(8), kVersionFeatureLevel8);
 
-    EXPECT_EQ(serverFeatureLevelToVersion(kMinFeatureLevelNum), kVersionFeatureLevel5);
-    EXPECT_EQ(serverFeatureLevelToVersion(kDefaultFeatureLevelNum), kVersionFeatureLevel5);
+    EXPECT_EQ(serverFeatureLevelToVersion(kMinFeatureLevelNum), kVersionFeatureLevel8);
+    EXPECT_EQ(serverFeatureLevelToVersion(kDefaultFeatureLevelNum), kVersionFeatureLevel8);
     EXPECT_EQ(serverFeatureLevelToVersion(kMaxFeatureLevelNum), kVersionFeatureLevel8);
 }
 
