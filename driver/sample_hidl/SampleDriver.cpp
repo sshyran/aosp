@@ -248,8 +248,13 @@ hardware::Return<void> SampleDriver::allocate(
     const hardware::hidl_vec<sp<V1_3::IPreparedModel>>& preparedModels,
     const hardware::hidl_vec<V1_3::BufferRole>& inputRoles,
     const hardware::hidl_vec<V1_3::BufferRole>& outputRoles, allocate_cb cb) {
-#if !defined(NNAPI_CHROMEOS)
     constexpr uint32_t kInvalidBufferToken = 0;
+
+#if defined(NNAPI_CHROMEOS)
+    VLOG(DRIVER) << "SampleDriver::allocate not supported";
+    cb(V1_3::ErrorStatus::GENERAL_FAILURE, nullptr, kInvalidBufferToken);
+    return hardware::Void();
+#endif // NNAPI_CHROMEOS
 
     VLOG(DRIVER) << "SampleDriver::allocate";
     std::set<HalPreparedModelRole> roles;
@@ -304,11 +309,6 @@ hardware::Return<void> SampleDriver::allocate(
     sp<SampleBuffer> sampleBuffer = new SampleBuffer(std::move(bufferWrapper), std::move(token));
     VLOG(DRIVER) << "SampleDriver::allocate -- successfully allocates the requested memory";
     cb(V1_3::ErrorStatus::NONE, std::move(sampleBuffer), tokenValue);
-#else
-    VLOG(DRIVER) << "SampleDriver::allocate not supported";
-    constexpr uint32_t kInvalidBufferToken = 0;
-    cb(V1_3::ErrorStatus::INVALID_ARGUMENT, nullptr, kInvalidBufferToken);
-#endif // NNAPI_CHROMEOS
     return hardware::Void();
 }
 
