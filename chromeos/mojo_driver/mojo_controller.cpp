@@ -99,7 +99,6 @@ bool MojoController::SpawnWorkerProcessAndGetPid(
 
   std::string worker_path = "/usr/bin/nnapi_worker";
   std::string fd_argv = ::base::StringPrintf("%d", mojo_bootstrap_fd);
-
 #ifdef STRACE_NNAPI_HAL_IPC_DRIVER
   // We use strace to create the log file to generate seccomp policy only for
   // the nnapi_worker. When we use strace, we do not call
@@ -173,13 +172,60 @@ hardware::Return<V1_0::ErrorStatus> MojoController::prepareModel_1_1(
   return error_status;
 }
 
-hardware::Return<void> MojoController::getVersionString(
-    V1_3::IDevice::getVersionString_cb cb) {
-  std::string version;
-  V1_0::ErrorStatus status;
-  remote_->getVersionString(&status, &version);
-  cb(status, version);
-  return hardware::Void();
+hardware::Return<V1_0::ErrorStatus> MojoController::prepareModel_1_2(
+    const V1_2::Model& model,
+    V1_1::ExecutionPreference preference,
+    const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+    const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
+    const HalCacheToken& token,
+    const sp<V1_2::IPreparedModelCallback>& callback) {
+  V1_0::ErrorStatus error_status;
+  mojo::PendingRemote<mojom::IPreparedModelCallback_1_2> pmc_remote;
+  auto receiver = pmc_remote.InitWithNewPipeAndPassReceiver();
+
+  auto fn =
+      [](mojo::PendingReceiver<mojom::IPreparedModelCallback_1_2> receiver,
+         const sp<V1_2::IPreparedModelCallback>& callback) {
+        mojo::MakeSelfOwnedReceiver(
+            std::make_unique<IPreparedModelCallback_1_2Impl>(callback),
+            std::move(receiver));
+      };
+  ipc_thread_.task_runner()->PostTask(
+      FROM_HERE,
+      ::base::BindOnce(fn, std::move(receiver), std::move(callback)));
+  remote_->prepareModel_1_2(model, preference, modelCache, dataCache, token,
+                            std::move(pmc_remote), &error_status);
+
+  return error_status;
+}
+
+hardware::Return<V1_3::ErrorStatus> MojoController::prepareModel_1_3(
+    const V1_3::Model& model,
+    V1_1::ExecutionPreference preference,
+    V1_3::Priority priority,
+    const V1_3::OptionalTimePoint& deadline,
+    const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+    const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
+    const HalCacheToken& token,
+    const sp<V1_3::IPreparedModelCallback>& callback) {
+  mojo::PendingRemote<mojom::IPreparedModelCallback_1_3> pmc_remote;
+  auto receiver = pmc_remote.InitWithNewPipeAndPassReceiver();
+
+  auto fn =
+      [](mojo::PendingReceiver<mojom::IPreparedModelCallback_1_3> receiver,
+         const sp<V1_3::IPreparedModelCallback>& callback) {
+        mojo::MakeSelfOwnedReceiver(
+            std::make_unique<IPreparedModelCallback_1_3Impl>(callback),
+            std::move(receiver));
+      };
+  ipc_thread_.task_runner()->PostTask(
+      FROM_HERE,
+      ::base::BindOnce(fn, std::move(receiver), std::move(callback)));
+
+  V1_3::ErrorStatus status;
+  remote_->prepareModel_1_3(model, preference, priority, deadline, modelCache,
+                            dataCache, token, std::move(pmc_remote), &status);
+  return status;
 }
 
 hardware::Return<void> MojoController::getSupportedOperations_1_1(
@@ -189,6 +235,35 @@ hardware::Return<void> MojoController::getSupportedOperations_1_1(
   V1_0::ErrorStatus status;
   remote_->getSupportedOperations(model, &status, &supported);
   cb(status, supported);
+  return hardware::Void();
+}
+
+hardware::Return<void> MojoController::getSupportedOperations_1_2(
+    const V1_2::Model& model,
+    V1_2::IDevice::getSupportedOperations_1_2_cb cb) {
+  std::vector<bool> supported;
+  V1_0::ErrorStatus status;
+  remote_->getSupportedOperations_1_2(model, &status, &supported);
+  cb(status, supported);
+  return hardware::Void();
+}
+
+hardware::Return<void> MojoController::getSupportedOperations_1_3(
+    const V1_3::Model& model,
+    V1_3::IDevice::getSupportedOperations_1_3_cb cb) {
+  std::vector<bool> supported;
+  V1_3::ErrorStatus status;
+  remote_->getSupportedOperations_1_3(model, &status, &supported);
+  cb(status, supported);
+  return hardware::Void();
+}
+
+hardware::Return<void> MojoController::getVersionString(
+    V1_3::IDevice::getVersionString_cb cb) {
+  std::string version;
+  V1_0::ErrorStatus status;
+  remote_->getVersionString(&status, &version);
+  cb(status, version);
   return hardware::Void();
 }
 
@@ -224,5 +299,57 @@ hardware::Return<void> MojoController::getNumberOfCacheFilesNeeded(
   cb(status, numModelCache, numDataCache);
   return hardware::Void();
 }
+
+hardware::Return<V1_0::ErrorStatus> MojoController::prepareModelFromCache(
+    const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+    const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
+    const HalCacheToken& token,
+    const sp<V1_2::IPreparedModelCallback>& callback) {
+  mojo::PendingRemote<mojom::IPreparedModelCallback_1_2> pmc_remote;
+  auto receiver = pmc_remote.InitWithNewPipeAndPassReceiver();
+
+  auto fn =
+      [](mojo::PendingReceiver<mojom::IPreparedModelCallback_1_2> receiver,
+         const sp<V1_2::IPreparedModelCallback>& callback) {
+        mojo::MakeSelfOwnedReceiver(
+            std::make_unique<IPreparedModelCallback_1_2Impl>(callback),
+            std::move(receiver));
+      };
+  ipc_thread_.task_runner()->PostTask(
+      FROM_HERE,
+      ::base::BindOnce(fn, std::move(receiver), std::move(callback)));
+
+  V1_0::ErrorStatus status;
+  remote_->prepareModelFromCache(modelCache, dataCache, token,
+                                 std::move(pmc_remote), &status);
+  return status;
+}
+
+hardware::Return<V1_3::ErrorStatus> MojoController::prepareModelFromCache_1_3(
+    const V1_3::OptionalTimePoint& deadline,
+    const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+    const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
+    const HalCacheToken& token,
+    const sp<V1_3::IPreparedModelCallback>& callback) {
+  mojo::PendingRemote<mojom::IPreparedModelCallback_1_3> pmc_remote;
+  auto receiver = pmc_remote.InitWithNewPipeAndPassReceiver();
+
+  auto fn =
+      [](mojo::PendingReceiver<mojom::IPreparedModelCallback_1_3> receiver,
+         const sp<V1_3::IPreparedModelCallback>& callback) {
+        mojo::MakeSelfOwnedReceiver(
+            std::make_unique<IPreparedModelCallback_1_3Impl>(callback),
+            std::move(receiver));
+      };
+  ipc_thread_.task_runner()->PostTask(
+      FROM_HERE,
+      ::base::BindOnce(fn, std::move(receiver), std::move(callback)));
+
+  V1_3::ErrorStatus status;
+  remote_->prepareModelFromCache_1_3(deadline, modelCache, dataCache, token,
+                                     std::move(pmc_remote), &status);
+  return status;
+}
+
 }  // namespace nn
 }  // namespace android

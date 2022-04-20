@@ -7,6 +7,8 @@
 
 module chromeos.nnapi.mojom;
 
+// V1_0, V1_1
+
 [Extensible] enum OperandType {
   FLOAT32 = 0,
   INT32 = 1,
@@ -83,7 +85,7 @@ enum OperandLifeTime {
   UNKNOWN,
 };
 
-enum ExecutionPreference {
+[Extensible] enum ExecutionPreference {
   LOW_POWER = 0,
   FAST_SINGLE_ANSWER = 1,
   SUSTAINED_SPEED = 2,
@@ -160,10 +162,6 @@ struct Request {
   GENERAL_FAILURE,
   OUTPUT_INSUFFICIENT_SIZE,
   INVALID_ARGUMENT,
-  MISSED_DEADLINE_TRANSIENT,
-  MISSED_DEADLINE_PERSISTENT,
-  RESOURCE_EXHAUSTED_TRANSIENT,
-  RESOURCE_EXHAUSTED_PERSISTENT,
 };
 
 [Stable] struct PerformanceInfo {
@@ -175,18 +173,6 @@ struct Request {
   PerformanceInfo float32Performance;
   PerformanceInfo quantized8Performance;
   PerformanceInfo relaxedFloat32toFloat16Performance;
-};
-
-
-struct OperandTypeInformation {
-  uint16 type;
-  bool isTensor;
-  uint32 byteSize;
-};
-
-struct Extension {
-  string name;
-  array<OperandTypeInformation> operandTypes;
 };
 
 interface IExecutionCallback {
@@ -202,14 +188,494 @@ interface IPreparedModelCallback {
   notify(ErrorStatus status, pending_remote<IPreparedModel> preparedModel);
 };
 
+// V1_2
+
+struct OperandTypeInformation {
+  uint16 type;
+  bool isTensor;
+  uint32 byteSize;
+};
+
+struct Extension {
+  string name;
+  array<OperandTypeInformation> operandTypes;
+};
+
+struct OutputShape {
+  array<uint32> dimensions;
+  bool isSufficient;
+};
+
+struct Timing {
+  uint64 timeOnDevice;
+  uint64 timeInDriver;
+};
+
+struct ExtensionNameAndPrefix {
+  string name;
+  uint16 prefix;
+};
+
+struct SymmPerChannelQuantParams {
+    array<float> scales;
+    uint32 channelDim;
+};
+
+struct Monostate {
+};
+
+union ExtraParams {
+  Monostate none;
+  SymmPerChannelQuantParams channelQuant;
+  array<uint8> extension;
+};
+
+struct Operand_1_2 {
+  OperandType_1_2 type;
+  array<uint32> dimensions;
+  uint32 numberOfConsumers;
+  float scale;
+  int32 zeroPoint;
+  OperandLifeTime lifetime;
+  DataLocation location;
+  ExtraParams extraParams;
+};
+
+[Extensible] enum OperationType_1_2 {
+  ADD = 0,
+  AVERAGE_POOL_2D = 1,
+  CONCATENATION = 2,
+  CONV_2D = 3,
+  DEPTHWISE_CONV_2D = 4,
+  DEPTH_TO_SPACE = 5,
+  DEQUANTIZE = 6,
+  EMBEDDING_LOOKUP = 7,
+  FLOOR = 8,
+  FULLY_CONNECTED = 9,
+  HASHTABLE_LOOKUP = 10,
+  L2_NORMALIZATION = 11,
+  L2_POOL_2D = 12,
+  LOCAL_RESPONSE_NORMALIZATION = 13,
+  LOGISTIC = 14,
+  LSH_PROJECTION = 15,
+  LSTM = 16,
+  MAX_POOL_2D = 17,
+  MUL = 18,
+  RELU = 19,
+  RELU1 = 20,
+  RELU6 = 21,
+  RESHAPE = 22,
+  RESIZE_BILINEAR = 23,
+  RNN = 24,
+  SOFTMAX = 25,
+  SPACE_TO_DEPTH = 26,
+  SVDF = 27,
+  TANH = 28,
+  BATCH_TO_SPACE_ND = 29,
+  DIV = 30,
+  MEAN = 31,
+  PAD = 32,
+  SPACE_TO_BATCH_ND = 33,
+  SQUEEZE = 34,
+  STRIDED_SLICE = 35,
+  SUB = 36,
+  TRANSPOSE = 37,
+  ABS = 38,
+  ARGMAX = 39,
+  ARGMIN = 40,
+  AXIS_ALIGNED_BBOX_TRANSFORM = 41,
+  BIDIRECTIONAL_SEQUENCE_LSTM = 42,
+  BIDIRECTIONAL_SEQUENCE_RNN = 43,
+  BOX_WITH_NMS_LIMIT = 44,
+  CAST = 45,
+  CHANNEL_SHUFFLE = 46,
+  DETECTION_POSTPROCESSING = 47,
+  EQUAL = 48,
+  EXP = 49,
+  EXPAND_DIMS = 50,
+  GATHER = 51,
+  GENERATE_PROPOSALS = 52,
+  GREATER = 53,
+  GREATER_EQUAL = 54,
+  GROUPED_CONV_2D = 55,
+  HEATMAP_MAX_KEYPOINT = 56,
+  INSTANCE_NORMALIZATION = 57,
+  LESS = 58,
+  LESS_EQUAL = 59,
+  LOG = 60,
+  LOGICAL_AND = 61,
+  LOGICAL_NOT = 62,
+  LOGICAL_OR = 63,
+  LOG_SOFTMAX = 64,
+  MAXIMUM = 65,
+  MINIMUM = 66,
+  NEG = 67,
+  NOT_EQUAL = 68,
+  PAD_V2 = 69,
+  POW = 70,
+  PRELU = 71,
+  QUANTIZE = 72,
+  QUANTIZED_16BIT_LSTM = 73,
+  RANDOM_MULTINOMIAL = 74,
+  REDUCE_ALL = 75,
+  REDUCE_ANY = 76,
+  REDUCE_MAX = 77,
+  REDUCE_MIN = 78,
+  REDUCE_PROD = 79,
+  REDUCE_SUM = 80,
+  ROI_ALIGN = 81,
+  ROI_POOLING = 82,
+  RSQRT = 83,
+  SELECT = 84,
+  SIN = 85,
+  SLICE = 86,
+  SPLIT = 87,
+  SQRT = 88,
+  TILE = 89,
+  TOPK_V2 = 90,
+  TRANSPOSE_CONV_2D = 91,
+  UNIDIRECTIONAL_SEQUENCE_LSTM = 92,
+  UNIDIRECTIONAL_SEQUENCE_RNN = 93,
+  RESIZE_NEAREST_NEIGHBOR = 94,
+  OEM_OPERATION = 10000,
+};
+
+struct Operation_1_2 {
+  OperationType_1_2 type;
+  array<uint32> inputs;
+  array<uint32> outputs;
+};
+
+[Extensible] enum OperandType_1_2 {
+  FLOAT32 = 0,
+  INT32 = 1,
+  UINT32 = 2,
+  TENSOR_FLOAT32 = 3,
+  TENSOR_INT32 = 4,
+  TENSOR_QUANT8_ASYMM = 5,
+  BOOL = 6,
+  TENSOR_QUANT16_SYMM = 7,
+  TENSOR_FLOAT16 = 8,
+  TENSOR_BOOL8 = 9,
+  FLOAT16 = 10,
+  TENSOR_QUANT8_SYMM_PER_CHANNEL = 11,
+  TENSOR_QUANT16_ASYMM = 12,
+  TENSOR_QUANT8_SYMM = 13,
+  OEM = 10000,
+  TENSOR_OEM_BYTE = 10001,
+};
+
+struct Model_1_2 {
+  array<Operand_1_2> operands;
+  array<Operation_1_2> operations;
+  array<uint32> inputIndexes;
+  array<uint32> outputIndexes;
+  array<uint8> operandValues;
+  array<HidlMemory> pools;
+  bool relaxComputationFloat32toFloat16;
+  array<ExtensionNameAndPrefix> extensionNameToPrefix;
+};
+
+[Stable] enum MeasureTiming {
+  NO = 0,
+  YES = 1,
+};
+
+interface IExecutionCallback_1_2 {
+  notify(ErrorStatus status);
+  notify_1_2(ErrorStatus status, array<OutputShape> outputShapes, Timing timing);
+};
+
+interface IPreparedModel_1_2 {
+  [Sync] execute(Request request,
+                 pending_remote<IExecutionCallback> e_callback) => (ErrorStatus status);
+  [Sync] execute_1_2(Request request, MeasureTiming measure, pending_remote<IExecutionCallback_1_2> e_callback)
+           => (ErrorStatus status);
+  [Sync] executeSynchronously(Request request, MeasureTiming measure)
+           => (ErrorStatus status, array<OutputShape> outputShapes, Timing timing);
+};
+
+interface IPreparedModelCallback_1_2 {
+  notify(ErrorStatus status, pending_remote<IPreparedModel> preparedModel);
+  notify_1_2(ErrorStatus status, pending_remote<IPreparedModel_1_2> preparedModel);
+};
+
+
+// V1_3
+
+[Stable] enum ErrorStatus_1_3 {
+  NONE,
+  DEVICE_UNAVAILABLE,
+  GENERAL_FAILURE,
+  OUTPUT_INSUFFICIENT_SIZE,
+  INVALID_ARGUMENT,
+  MISSED_DEADLINE_TRANSIENT,
+  MISSED_DEADLINE_PERSISTENT,
+  RESOURCE_EXHAUSTED_TRANSIENT,
+  RESOURCE_EXHAUSTED_PERSISTENT,
+};
+
+[Extensible] enum OperandType_1_3 {
+  FLOAT32 = 0,
+  INT32 = 1,
+  UINT32 = 2,
+  TENSOR_FLOAT32 = 3,
+  TENSOR_INT32 = 4,
+  TENSOR_QUANT8_ASYMM = 5,
+  BOOL = 6,
+  TENSOR_QUANT16_SYMM = 7,
+  TENSOR_FLOAT16 = 8,
+  TENSOR_BOOL8 = 9,
+  FLOAT16 = 10,
+  TENSOR_QUANT8_SYMM_PER_CHANNEL = 11,
+  TENSOR_QUANT16_ASYMM = 12,
+  TENSOR_QUANT8_SYMM = 13,
+  TENSOR_QUANT8_ASYMM_SIGNED = 14,
+  SUBGRAPH = 15,
+  OEM = 10000,
+  TENSOR_OEM_BYTE = 10001,
+};
+
+[Extensible] enum OperandLifeTime_1_3 {
+  TEMPORARY_VARIABLE,
+  MODEL_INPUT,
+  MODEL_OUTPUT,
+  CONSTANT_COPY,
+  CONSTANT_REFERENCE,
+  NO_VALUE,
+  SUBGRAPH,
+};
+
+[Extensible] enum Priority {
+  LOW,
+  MEDIUM,
+  HIGH,
+};
+
+[Extensible] enum OperationType_1_3 {
+  ADD = 0,
+  AVERAGE_POOL_2D = 1,
+  CONCATENATION = 2,
+  CONV_2D = 3,
+  DEPTHWISE_CONV_2D = 4,
+  DEPTH_TO_SPACE = 5,
+  DEQUANTIZE = 6,
+  EMBEDDING_LOOKUP = 7,
+  FLOOR = 8,
+  FULLY_CONNECTED = 9,
+  HASHTABLE_LOOKUP = 10,
+  L2_NORMALIZATION = 11,
+  L2_POOL_2D = 12,
+  LOCAL_RESPONSE_NORMALIZATION = 13,
+  LOGISTIC = 14,
+  LSH_PROJECTION = 15,
+  LSTM = 16,
+  MAX_POOL_2D = 17,
+  MUL = 18,
+  RELU = 19,
+  RELU1 = 20,
+  RELU6 = 21,
+  RESHAPE = 22,
+  RESIZE_BILINEAR = 23,
+  RNN = 24,
+  SOFTMAX = 25,
+  SPACE_TO_DEPTH = 26,
+  SVDF = 27,
+  TANH = 28,
+  BATCH_TO_SPACE_ND = 29,
+  DIV = 30,
+  MEAN = 31,
+  PAD = 32,
+  SPACE_TO_BATCH_ND = 33,
+  SQUEEZE = 34,
+  STRIDED_SLICE = 35,
+  SUB = 36,
+  TRANSPOSE = 37,
+  ABS = 38,
+  ARGMAX = 39,
+  ARGMIN = 40,
+  AXIS_ALIGNED_BBOX_TRANSFORM = 41,
+  BIDIRECTIONAL_SEQUENCE_LSTM = 42,
+  BIDIRECTIONAL_SEQUENCE_RNN = 43,
+  BOX_WITH_NMS_LIMIT = 44,
+  CAST = 45,
+  CHANNEL_SHUFFLE = 46,
+  DETECTION_POSTPROCESSING = 47,
+  EQUAL = 48,
+  EXP = 49,
+  EXPAND_DIMS = 50,
+  GATHER = 51,
+  GENERATE_PROPOSALS = 52,
+  GREATER = 53,
+  GREATER_EQUAL = 54,
+  GROUPED_CONV_2D = 55,
+  HEATMAP_MAX_KEYPOINT = 56,
+  INSTANCE_NORMALIZATION = 57,
+  LESS = 58,
+  LESS_EQUAL = 59,
+  LOG = 60,
+  LOGICAL_AND = 61,
+  LOGICAL_NOT = 62,
+  LOGICAL_OR = 63,
+  LOG_SOFTMAX = 64,
+  MAXIMUM = 65,
+  MINIMUM = 66,
+  NEG = 67,
+  NOT_EQUAL = 68,
+  PAD_V2 = 69,
+  POW = 70,
+  PRELU = 71,
+  QUANTIZE = 72,
+  QUANTIZED_16BIT_LSTM = 73,
+  RANDOM_MULTINOMIAL = 74,
+  REDUCE_ALL = 75,
+  REDUCE_ANY = 76,
+  REDUCE_MAX = 77,
+  REDUCE_MIN = 78,
+  REDUCE_PROD = 79,
+  REDUCE_SUM = 80,
+  ROI_ALIGN = 81,
+  ROI_POOLING = 82,
+  RSQRT = 83,
+  SELECT = 84,
+  SIN = 85,
+  SLICE = 86,
+  SPLIT = 87,
+  SQRT = 88,
+  TILE = 89,
+  TOPK_V2 = 90,
+  TRANSPOSE_CONV_2D = 91,
+  UNIDIRECTIONAL_SEQUENCE_LSTM = 92,
+  UNIDIRECTIONAL_SEQUENCE_RNN = 93,
+  RESIZE_NEAREST_NEIGHBOR = 94,
+  QUANTIZED_LSTM = 95,
+  IF = 96,
+  WHILE = 97,
+  ELU = 98,
+  HARD_SWISH = 99,
+  FILL = 100,
+  RANK = 101,
+  OEM_OPERATION = 10000,
+};
+
+struct Operand_1_3 {
+  OperandType_1_3 type;
+  array<uint32> dimensions;
+  uint32 numberOfConsumers;
+  float scale;
+  int32 zeroPoint;
+  OperandLifeTime_1_3 lifetime;
+  DataLocation location;
+  ExtraParams extraParams;
+};
+
+struct Operation_1_3 {
+  OperationType_1_3 type;
+  array<uint32> inputs;
+  array<uint32> outputs;
+};
+
+struct Subgraph {
+  array<Operand_1_3> operands;
+  array<Operation_1_3> operations;
+  array<uint32> inputIndexes;
+  array<uint32> outputIndexes;
+};
+
+struct Model_1_3 {
+  Subgraph main;
+  array<Subgraph> referenced;
+  array<uint8> operandValues;
+  array<HidlMemory> pools;
+  bool relaxComputationFloat32toFloat16;
+  array<ExtensionNameAndPrefix> extensionNameToPrefix;
+};
+
+union OptionalTimePoint {
+  Monostate none;
+  uint64 nanosecondsSinceEpoch;
+};
+
+union OptionalTimeoutDuration {
+  Monostate none;
+  uint64 nanoseconds;
+};
+
+union MemoryPool {
+  HidlMemory hidlMemory;
+  uint32 token;
+};
+
+struct Request_1_3 {
+  array<RequestArgument> inputs;
+  array<RequestArgument> outputs;
+  array<MemoryPool> pools;
+};
+
+struct HalCacheToken {
+  array<uint8> token;
+};
+
+interface IExecutionCallback_1_3 {
+  notify(ErrorStatus status);
+  notify_1_2(ErrorStatus status, array<OutputShape> outputShapes, Timing timing);
+  notify_1_3(ErrorStatus_1_3 status, array<OutputShape> outputShapes, Timing timing);
+};
+
+interface IFencedExecutionCallback {
+  [Sync] getExecutionInfo() => (ErrorStatus_1_3 status, Timing timingLaunched, Timing timingFenced);
+};
+
+interface IPreparedModel_1_3 {
+  [Sync] execute(Request request,
+                 pending_remote<IExecutionCallback> e_callback) => (ErrorStatus status);
+  [Sync] execute_1_2(Request request, MeasureTiming measure, pending_remote<IExecutionCallback_1_2> e_callback)
+          => (ErrorStatus status);
+  [Sync] execute_1_3(Request_1_3 request, MeasureTiming measure, OptionalTimePoint deadline,
+                OptionalTimeoutDuration loopTimeoutDuration, pending_remote<IExecutionCallback_1_3> e_callback)
+          => (ErrorStatus_1_3 status);
+  [Sync] executeSynchronously(Request request, MeasureTiming measure)
+          => (ErrorStatus status, array<OutputShape> outputShapes, Timing timing);
+  [Sync] executeSynchronously_1_3(Request_1_3 request, MeasureTiming measure,
+                             OptionalTimePoint deadline,
+                             OptionalTimeoutDuration loopTimeoutDuration)
+          => (ErrorStatus_1_3 status, array<OutputShape> outputShapes,
+                             Timing timing);
+  [Sync] executeFenced(Request_1_3 request, array<HidlHandle> waitFor, MeasureTiming measure,
+                  OptionalTimePoint deadline, OptionalTimeoutDuration loopTimeoutDuration,
+                  OptionalTimeoutDuration duration)
+          => (ErrorStatus_1_3 status, HidlHandle syncFence, pending_remote<IFencedExecutionCallback> e_callback);
+};
+
+interface IPreparedModelCallback_1_3 {
+  notify(ErrorStatus status, pending_remote<IPreparedModel> preparedModel);
+  notify_1_2(ErrorStatus status, pending_remote<IPreparedModel_1_2> preparedModel);
+  notify_1_3(ErrorStatus_1_3 status, pending_remote<IPreparedModel_1_3> preparedModel);
+};
+
 interface IDevice {
   [Sync] getCapabilities() => (ErrorStatus status, Capabilities capabilities);
   [Sync] getSupportedOperations(Model model) => (ErrorStatus status, array<bool> supportedOperations);
-  [Sync] getVersionString() => (ErrorStatus status, string version);
+  [Sync] getSupportedOperations_1_2(Model_1_2 model) => (ErrorStatus status, array<bool> supportedOperations);
+  [Sync] getSupportedOperations_1_3(Model_1_3 model) => (ErrorStatus_1_3 status, array<bool> supportedOperations);
   [Sync] prepareModel(Model model, ExecutionPreference preference,
                       pending_remote<IPreparedModelCallback> pm_callback) => (ErrorStatus status);
+  [Sync] prepareModel_1_2(Model_1_2 model, ExecutionPreference preference,
+                      array<HidlHandle> modelCache, array<HidlHandle> dataCache, HalCacheToken token,
+                      pending_remote<IPreparedModelCallback_1_2> pm_callback) => (ErrorStatus status);
+  [Sync] prepareModel_1_3(Model_1_3 model, ExecutionPreference preference,
+                     Priority priority, OptionalTimePoint deadline,
+                     array<HidlHandle> modelCache, array<HidlHandle> dataCache, HalCacheToken token,
+                     pending_remote<IPreparedModelCallback_1_3> pm_callback) => (ErrorStatus_1_3 status);
   [Sync] getStatus() => (DeviceStatus status);
+  [Sync] getVersionString() => (ErrorStatus status, string version);
   [Sync] getType() => (ErrorStatus status, DeviceType type);
   [Sync] getSupportedExtensions() => (ErrorStatus status, array<Extension> extensions);
   [Sync] getNumberOfCacheFilesNeeded() => (ErrorStatus status, uint32 numModelCache, uint32 numDataCache);
+  [Sync] prepareModelFromCache(array<HidlHandle> modelCache, array<HidlHandle> dataCache, HalCacheToken token,
+                      pending_remote<IPreparedModelCallback_1_2> pm_callback) => (ErrorStatus status);
+  [Sync] prepareModelFromCache_1_3(OptionalTimePoint deadline,
+                      array<HidlHandle> modelCache, array<HidlHandle> dataCache, HalCacheToken token,
+                      pending_remote<IPreparedModelCallback_1_3> pm_callback) => (ErrorStatus_1_3 status);
+  // TODO: allocate
 };

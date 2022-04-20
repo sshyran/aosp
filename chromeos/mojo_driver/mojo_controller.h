@@ -33,17 +33,50 @@ class MojoController {
       const V1_1::Model& model,
       V1_1::ExecutionPreference preference,
       const sp<V1_0::IPreparedModelCallback>& callback);
+  hardware::Return<V1_0::ErrorStatus> prepareModel_1_2(
+      const V1_2::Model& model,
+      V1_1::ExecutionPreference preference,
+      const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+      const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
+      const HalCacheToken& token,
+      const sp<V1_2::IPreparedModelCallback>& callback);
   hardware::Return<void> getVersionString(
       V1_3::IDevice::getVersionString_cb cb);
   hardware::Return<void> getSupportedOperations_1_1(
       const V1_1::Model& model,
       V1_0::IDevice::getSupportedOperations_cb cb);
+  hardware::Return<void> getSupportedOperations_1_2(
+      const V1_2::Model& model,
+      V1_2::IDevice::getSupportedOperations_1_2_cb cb);
   hardware::Return<V1_0::DeviceStatus> getStatus();
   hardware::Return<void> getType(V1_2::IDevice::getType_cb cb);
   hardware::Return<void> getSupportedExtensions(
       V1_2::IDevice::getSupportedExtensions_cb cb);
   hardware::Return<void> getNumberOfCacheFilesNeeded(
       V1_2::IDevice::getNumberOfCacheFilesNeeded_cb cb);
+  hardware::Return<V1_0::ErrorStatus> prepareModelFromCache(
+      const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+      const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
+      const HalCacheToken& token,
+      const sp<V1_2::IPreparedModelCallback>& callback);
+  hardware::Return<void> getSupportedOperations_1_3(
+      const V1_3::Model& model,
+      V1_3::IDevice::getSupportedOperations_1_3_cb cb);
+  hardware::Return<V1_3::ErrorStatus> prepareModel_1_3(
+      const V1_3::Model& model,
+      V1_1::ExecutionPreference preference,
+      V1_3::Priority priority,
+      const V1_3::OptionalTimePoint& deadline,
+      const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+      const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
+      const HalCacheToken& token,
+      const sp<V1_3::IPreparedModelCallback>& callback);
+  hardware::Return<V1_3::ErrorStatus> prepareModelFromCache_1_3(
+      const V1_3::OptionalTimePoint& deadline,
+      const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+      const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
+      const HalCacheToken& token,
+      const sp<V1_3::IPreparedModelCallback>& callback);
 
  private:
   void SendMojoInvitationAndGetRemote(pid_t child_pid,

@@ -27,6 +27,17 @@ hardware::Return<V1_0::ErrorStatus> IPCDriver::prepareModelRemote(
   return mojo_->prepareModel_1_1(model, preference, callback);
 }
 
+hardware::Return<V1_0::ErrorStatus> IPCDriver::prepareModelRemote_1_2(
+    const V1_2::Model& model,
+    V1_1::ExecutionPreference preference,
+    const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+    const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
+    const HalCacheToken& token,
+    const sp<V1_2::IPreparedModelCallback>& callback) {
+  return mojo_->prepareModel_1_2(model, preference, modelCache, dataCache,
+                                 token, callback);
+}
+
 hardware::Return<void> IPCDriver::getVersionString(getVersionString_cb cb) {
   return mojo_->getVersionString(cb);
 }
@@ -35,6 +46,12 @@ hardware::Return<void> IPCDriver::getSupportedOperations_1_1(
     const V1_1::Model& model,
     getSupportedOperations_1_1_cb cb) {
   return mojo_->getSupportedOperations_1_1(model, cb);
+}
+
+hardware::Return<void> IPCDriver::getSupportedOperations_1_2(
+    const V1_2::Model& model,
+    getSupportedOperations_1_2_cb cb) {
+  return mojo_->getSupportedOperations_1_2(model, cb);
 }
 
 hardware::Return<V1_0::DeviceStatus> IPCDriver::getStatus() {
@@ -55,29 +72,19 @@ hardware::Return<void> IPCDriver::getNumberOfCacheFilesNeeded(
   return mojo_->getNumberOfCacheFilesNeeded(cb);
 }
 
-// *************** LOCAL CPU DELEGATE ***************
-
-hardware::Return<void> IPCDriver::getSupportedOperations_1_3(
-    const V1_3::Model& model,
-    getSupportedOperations_1_3_cb cb) {
-  return delegate_->getSupportedOperations_1_3(model, cb);
-}
-
-hardware::Return<void> IPCDriver::getSupportedOperations_1_2(
-    const V1_2::Model& model,
-    getSupportedOperations_1_2_cb cb) {
-  return delegate_->getSupportedOperations_1_2(model, cb);
-}
-
-hardware::Return<V1_0::ErrorStatus> IPCDriver::prepareModel_1_2(
-    const V1_2::Model& model,
-    V1_1::ExecutionPreference preference,
+hardware::Return<V1_0::ErrorStatus> IPCDriver::prepareModelFromCache(
     const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
     const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
     const HalCacheToken& token,
     const sp<V1_2::IPreparedModelCallback>& callback) {
-  return delegate_->prepareModel_1_2(model, preference, modelCache, dataCache,
-                                     token, callback);
+  return mojo_->prepareModelFromCache(modelCache, dataCache, token,
+                                          callback);
+}
+
+hardware::Return<void> IPCDriver::getSupportedOperations_1_3(
+    const V1_3::Model& model,
+    getSupportedOperations_1_3_cb cb) {
+  return mojo_->getSupportedOperations_1_3(model, cb);
 }
 
 hardware::Return<V1_3::ErrorStatus> IPCDriver::prepareModel_1_3(
@@ -89,17 +96,8 @@ hardware::Return<V1_3::ErrorStatus> IPCDriver::prepareModel_1_3(
     const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
     const HalCacheToken& token,
     const sp<V1_3::IPreparedModelCallback>& callback) {
-  return delegate_->prepareModel_1_3(model, preference, priority, deadline,
-                                     modelCache, dataCache, token, callback);
-}
-
-hardware::Return<V1_0::ErrorStatus> IPCDriver::prepareModelFromCache(
-    const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
-    const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
-    const HalCacheToken& token,
-    const sp<V1_2::IPreparedModelCallback>& callback) {
-  return delegate_->prepareModelFromCache(modelCache, dataCache, token,
-                                          callback);
+  return mojo_->prepareModel_1_3(model, preference, priority, deadline,
+                                 modelCache, dataCache, token, callback);
 }
 
 hardware::Return<V1_3::ErrorStatus> IPCDriver::prepareModelFromCache_1_3(
@@ -108,8 +106,8 @@ hardware::Return<V1_3::ErrorStatus> IPCDriver::prepareModelFromCache_1_3(
     const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
     const HalCacheToken& token,
     const sp<V1_3::IPreparedModelCallback>& callback) {
-  return delegate_->prepareModelFromCache_1_3(deadline, modelCache, dataCache,
-                                              token, callback);
+  return mojo_->prepareModelFromCache_1_3(deadline, modelCache, dataCache,
+                                          token, callback);
 }
 
 hardware::Return<void> IPCDriver::allocate(
@@ -118,7 +116,10 @@ hardware::Return<void> IPCDriver::allocate(
     const hardware::hidl_vec<V1_3::BufferRole>& inputRoles,
     const hardware::hidl_vec<V1_3::BufferRole>& outputRoles,
     allocate_cb cb) {
-  return delegate_->allocate(desc, preparedModels, inputRoles, outputRoles, cb);
+  LOG(INFO) << "IPCDriver::allocate not supported";
+  constexpr uint32_t kInvalidBufferToken = 0;
+  cb(V1_3::ErrorStatus::GENERAL_FAILURE, nullptr, kInvalidBufferToken);
+  return hardware::Void();
 }
 
 }  // namespace nn

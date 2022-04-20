@@ -53,8 +53,8 @@ hardware::Return<V1_0::ErrorStatus> IPCDriver::prepareModel(
     return V1_0::ErrorStatus::INVALID_ARGUMENT;
   }
   return prepareModelRemote(convertToV1_1(model),
-                          V1_1::ExecutionPreference::FAST_SINGLE_ANSWER,
-                          callback);
+                            V1_1::ExecutionPreference::FAST_SINGLE_ANSWER,
+                            callback);
 }
 
 hardware::Return<V1_0::ErrorStatus> IPCDriver::prepareModel_1_1(
@@ -66,6 +66,17 @@ hardware::Return<V1_0::ErrorStatus> IPCDriver::prepareModel_1_1(
     return V1_0::ErrorStatus::INVALID_ARGUMENT;
   }
   return prepareModelRemote(model, preference, callback);
+}
+
+hardware::Return<V1_0::ErrorStatus> IPCDriver::prepareModel_1_2(
+    const V1_2::Model& model,
+    V1_1::ExecutionPreference preference,
+    const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+    const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
+    const HalCacheToken& token,
+    const sp<V1_2::IPreparedModelCallback>& callback) {
+  return prepareModelRemote_1_2(model, preference, modelCache, dataCache, token,
+                                callback);
 }
 
 hardware::Return<void> IPCDriver::getSupportedOperations(

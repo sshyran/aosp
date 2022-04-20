@@ -30,37 +30,17 @@ class IPCDriver : public V1_3::IDevice {
   hardware::Return<void> getSupportedOperations_1_1(
       const V1_1::Model& model,
       getSupportedOperations_1_1_cb cb) override;
-  hardware::Return<V1_0::DeviceStatus> getStatus() override;
-  hardware::Return<V1_0::ErrorStatus> prepareModel_1_1(
-      const V1_1::Model& model,
-      V1_1::ExecutionPreference preference,
-      const sp<V1_0::IPreparedModelCallback>& callback) override;
-  hardware::Return<void> getType(getType_cb cb) override;
-  hardware::Return<void> getSupportedExtensions(
-      getSupportedExtensions_cb cb) override;
-  hardware::Return<void> getNumberOfCacheFilesNeeded(
-      getNumberOfCacheFilesNeeded_cb cb) override;
-
-  // These methods are done by converting to the 1_3 version.
-  hardware::Return<void> getCapabilities(getCapabilities_cb cb) override;
-  hardware::Return<void> getCapabilities_1_1(
-      getCapabilities_1_1_cb cb) override;
-  hardware::Return<void> getCapabilities_1_2(
-      getCapabilities_1_2_cb cb) override;
-  hardware::Return<void> getSupportedOperations(
-      const V1_0::Model& model,
-      getSupportedOperations_cb cb) override;
-  hardware::Return<V1_0::ErrorStatus> prepareModel(
-      const V1_0::Model& model,
-      const sp<V1_0::IPreparedModelCallback>& callback) override;
-
-  // These methods are performed on the local CPU delegate
   hardware::Return<void> getSupportedOperations_1_2(
       const V1_2::Model& model,
       getSupportedOperations_1_2_cb cb) override;
   hardware::Return<void> getSupportedOperations_1_3(
       const V1_3::Model& model,
       getSupportedOperations_1_3_cb cb) override;
+  hardware::Return<V1_0::DeviceStatus> getStatus() override;
+  hardware::Return<V1_0::ErrorStatus> prepareModel_1_1(
+      const V1_1::Model& model,
+      V1_1::ExecutionPreference preference,
+      const sp<V1_0::IPreparedModelCallback>& callback) override;
   hardware::Return<V1_0::ErrorStatus> prepareModel_1_2(
       const V1_2::Model& model,
       V1_1::ExecutionPreference preference,
@@ -77,6 +57,11 @@ class IPCDriver : public V1_3::IDevice {
       const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
       const HalCacheToken& token,
       const sp<V1_3::IPreparedModelCallback>& callback) override;
+  hardware::Return<void> getType(getType_cb cb) override;
+  hardware::Return<void> getSupportedExtensions(
+      getSupportedExtensions_cb cb) override;
+  hardware::Return<void> getNumberOfCacheFilesNeeded(
+      getNumberOfCacheFilesNeeded_cb cb) override;
   hardware::Return<V1_0::ErrorStatus> prepareModelFromCache(
       const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
       const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
@@ -88,6 +73,21 @@ class IPCDriver : public V1_3::IDevice {
       const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
       const HalCacheToken& token,
       const sp<V1_3::IPreparedModelCallback>& callback) override;
+
+  // These methods are done by converting to the 1_3 version.
+  hardware::Return<void> getCapabilities(getCapabilities_cb cb) override;
+  hardware::Return<void> getCapabilities_1_1(
+      getCapabilities_1_1_cb cb) override;
+  hardware::Return<void> getCapabilities_1_2(
+      getCapabilities_1_2_cb cb) override;
+  hardware::Return<void> getSupportedOperations(
+      const V1_0::Model& model,
+      getSupportedOperations_cb cb) override;
+  hardware::Return<V1_0::ErrorStatus> prepareModel(
+      const V1_0::Model& model,
+      const sp<V1_0::IPreparedModelCallback>& callback) override;
+
+  // These methods are performed on the local CPU delegate
   hardware::Return<void> allocate(
       const V1_3::BufferDesc& desc,
       const hardware::hidl_vec<sp<V1_3::IPreparedModel>>& preparedModels,
@@ -106,6 +106,13 @@ class IPCDriver : public V1_3::IDevice {
       const V1_1::Model& model,
       V1_1::ExecutionPreference preference,
       const sp<V1_0::IPreparedModelCallback>& callback);
+  hardware::Return<V1_0::ErrorStatus> prepareModelRemote_1_2(
+      const V1_2::Model& model,
+      V1_1::ExecutionPreference preference,
+      const hardware::hidl_vec<hardware::hidl_handle>& modelCache,
+      const hardware::hidl_vec<hardware::hidl_handle>& dataCache,
+      const HalCacheToken& token,
+      const sp<V1_2::IPreparedModelCallback>& callback);
 };
 
 }  // namespace nn
