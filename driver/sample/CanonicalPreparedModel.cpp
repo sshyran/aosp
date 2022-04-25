@@ -74,6 +74,7 @@ ErrorStatus updateDeviceMemories(ErrorStatus status, const Request& request,
                                  const std::vector<OutputShape>& outputShapes) {
     if (status == ErrorStatus::NONE) {
         for (uint32_t i = 0; i < request.outputs.size(); i++) {
+            if (request.outputs[i].lifetime != Request::Argument::LifeTime::POOL) continue;
             const uint32_t poolIndex = request.outputs[i].location.poolIndex;
             const auto& pool = request.pools[poolIndex];
             if (std::holds_alternative<Request::MemoryDomainToken>(pool)) {
@@ -83,6 +84,7 @@ ErrorStatus updateDeviceMemories(ErrorStatus status, const Request& request,
             }
         }
         for (uint32_t i = 0; i < request.outputs.size(); i++) {
+            if (request.outputs[i].lifetime != Request::Argument::LifeTime::POOL) continue;
             const uint32_t poolIndex = request.outputs[i].location.poolIndex;
             const auto& pool = request.pools[poolIndex];
             if (std::holds_alternative<Request::MemoryDomainToken>(pool)) {
@@ -94,6 +96,7 @@ ErrorStatus updateDeviceMemories(ErrorStatus status, const Request& request,
         // dimensions of the device memory are incorrectly specified. The driver should return
         // GENERAL_FAILURE instead in this case.
         for (uint32_t i = 0; i < request.outputs.size(); i++) {
+            if (request.outputs[i].lifetime != Request::Argument::LifeTime::POOL) continue;
             const uint32_t poolIndex = request.outputs[i].location.poolIndex;
             const auto& pool = request.pools[poolIndex];
             if (std::holds_alternative<Request::MemoryDomainToken>(pool)) {
@@ -254,6 +257,7 @@ GeneralResult<std::pair<SyncFence, ExecuteFencedInfoCallback>> PreparedModel::ex
 
     // Set output memories to the initialized state.
     for (const auto& output : request.outputs) {
+        if (output.lifetime != Request::Argument::LifeTime::POOL) continue;
         const uint32_t poolIndex = output.location.poolIndex;
         const auto& pool = request.pools[poolIndex];
         if (std::holds_alternative<Request::MemoryDomainToken>(pool)) {
