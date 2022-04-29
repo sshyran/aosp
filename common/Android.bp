@@ -228,6 +228,7 @@ cc_library_static {
     defaults: [
         "libneuralnetworks_common_defaults",
     ],
+    min_sdk_version: "30",
 }
 
 cc_library_static {

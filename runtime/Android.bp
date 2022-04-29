@@ -54,6 +54,7 @@ cc_library_headers {
     host_supported: true,
     vendor_available: true,
     export_include_dirs: ["include"],
+    min_sdk_version: "30",
     apex_available: [
         "com.android.neuralnetworks",
         "test_com.android.neuralnetworks", // Due to the dependency from libneuralnetworks_common
@@ -180,11 +181,11 @@ cc_library_shared {
         "libneuralnetworks_defaults",
         "neuralnetworks_defaults",
     ],
+    min_sdk_version: "30",
     apex_available: [
         "com.android.neuralnetworks",
         "test_com.android.neuralnetworks",
     ],
-
     stubs: {
         versions: [
             "30",
